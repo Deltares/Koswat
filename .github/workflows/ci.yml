@@ -60,7 +60,7 @@ jobs:
           git checkout $GITHUB_HEAD_REF
           git commit -am "autoformat: isort & black" && git push || true
 
-      - id: Commitizen bump version
+      - id: cz
         name: Create bump and changelog
         uses: commitizen-tools/commitizen-action@master
         with:
