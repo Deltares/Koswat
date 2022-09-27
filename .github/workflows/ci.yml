@@ -50,7 +50,7 @@ jobs:
         run: poetry run pytest --cov=. --cov-report xml:coverage-reports/coverage-koswat-src.xml --junitxml=xunit-reports/xunit-result-koswat-src.xml
 
       - name: Autoformat code if the check fails
-        if: ${{ (matrix.os == ubuntu-latest) && (matrix.python-version == 3.10) }}
+        if: ${{ (matrix.os == 'ubuntu-latest') && (matrix.python-version == 3.10) }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         run: |
