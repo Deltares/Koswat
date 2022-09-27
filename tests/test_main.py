@@ -1,6 +1,7 @@
 from click.testing import CliRunner
 
 from koswat import main
+from tests import test_data
 
 
 class TestMain:
@@ -14,3 +15,19 @@ class TestMain:
         assert _run_result.exit_code == 1
         assert FileNotFoundError == type(_run_result.exc_info[1])
         assert _invalid_path == str(_run_result.exc_info[1])
+
+    def test_given_valid_input_succeeds(self):
+        # 1. Define test data.
+        _valid_path = test_data / "basic_examples" / "basic_input.ini"
+        assert _valid_path.is_file()
+        _cli_arg = f'--input_file "{_valid_path}"'
+
+        # 2. Run test.
+        _run_result = CliRunner().invoke(
+            main.run_analysis,
+            _cli_arg,
+        )
+
+        # 3. Verify final expectations.
+        assert _run_result.exit_code == 0
+        

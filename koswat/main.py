@@ -11,9 +11,6 @@ import click
 @click.option("--input_file", default=None, help="Full path to the ini input file.")
 def run_analysis(input_file: str):
     def _as_path(ini_file: str) -> Optional[Path]:
-        if not ini_file:
-            return None
-
         _ini = Path(ini_file)
         if not _ini.is_file():
             raise FileNotFoundError(_ini)
