@@ -27,6 +27,7 @@ black = "^22.8.0"
 isort = "^5.10.1"
 commitizen = "^2.35.0"
 mypy = "^0.971"
+termcolor = "^2.0.1"
 
 
 [tool.black]
