@@ -1,5 +1,6 @@
 import pytest
 
+
 class TestAcceptance:
     def test_koswat_package_can_be_imported(self):
         """
