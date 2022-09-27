@@ -5,6 +5,7 @@ from typing import Optional
 
 import click
 
+
 ### Below is the documentation for the commandline interface, see the CLICK-package.
 @click.command()
 @click.option("--input_file", default=None, help="Full path to the ini input file.")
@@ -19,7 +20,6 @@ def run_analysis(input_file: str):
         return _ini
 
     _input_file = _as_path(input_file)
-    assert _input_file.is_file()
 
 
 if __name__ == "__main__":
