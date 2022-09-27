@@ -10,9 +10,7 @@ jobs:
         python-version: ['3.10']
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
-    permissions:
-      id-token: write
-      contents: read
+    permissions: write-all
     steps:
       - uses: actions/checkout@v2
         with:
