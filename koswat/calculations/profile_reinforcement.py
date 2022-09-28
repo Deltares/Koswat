@@ -5,19 +5,29 @@ from koswat.profiles.koswat_profile import KoswatProfile
 
 
 class ProfileReinforcement(CalculationProtocol):
-    def calculate_new_talud(
+    def _calculate_new_binnen_talud(
         self, old_data: KoswatInputProfile, scenario: KoswatScenario
     ) -> float:
-        _operand = (
-            scenario.d_s
-            - (scenario.d_h * scenario.buiten_talud)
-            - (scenario.kruin_breedte - old_data.kruin_breedte)
-            + old_data.kruin_hoogte * old_data.binnen_talud
-        )
+        """
+        MAX(
+            Binnen_Talud_Oud,
+            (
+                dS
+                -dH*Buiten_Talud_Nieuw
+                -(Kruin_Breedte_Nieuw-Kruin_Breedte_Oud)
+                +Kruin_Hoogte_Oud*Binnen_Talud_Oud)
+                /(Kruin_Hoogte_Oud+dH))
+        """
+        _first_part = scenario.d_h * scenario.buiten_talud
+        _second_part = scenario.kruin_breedte - old_data.kruin_breedte
+        _third_parth = old_data.kruin_hoogte * old_data.binnen_talud
         _dividend = old_data.kruin_hoogte + scenario.d_h
-        return max(old_data.binnen_talud, _operand / _dividend)
+        _right_side = (
+            scenario.d_s - _first_part - _second_part + _third_parth
+        ) / _dividend
+        return max(old_data.binnen_talud, _right_side)
 
-    def calculate_new_berm_hoogte(
+    def _calculate_new_binnen_berm_hoogte(
         self,
         old_data: KoswatInputProfile,
         new_data: KoswatInputProfile,
@@ -30,30 +40,25 @@ class ProfileReinforcement(CalculationProtocol):
             return min(_max, 0.4 * (old_data.kruin_hoogte + scenario.d_h))
         return 0
 
-    def calculate_new_berm_breedte(
+    def _calculate_new_binnen_berm_breedte(
         self,
         old_data: KoswatInputProfile,
         new_data: KoswatInputProfile,
         scenario: KoswatScenario,
     ) -> float:
-        _left_side = (
-            old_data.binnen_berm_breedte
-            + scenario.d_p
-            - (scenario.buiten_talud + new_data.binnen_talud)
-            * (old_data.kruin_hoogte + scenario.d_h)
-            + scenario.kruin_breedte
-            - (
-                (old_data.buiten_talud + old_data.binnen_talud) * old_data.kruin_hoogte
-                + old_data.kruin_breedte
-                - (new_data.buiten_berm_breedte - old_data.buiten_berm_breedte)
-            )
-        )
-        return max(_left_side, 0)
+        _c1 = scenario.buiten_talud + new_data.binnen_talud
+        _c2 = old_data.kruin_hoogte + scenario.d_h
+        _c3 = old_data.buiten_talud + old_data.binnen_talud
+        _c4 = new_data.buiten_berm_breedte - old_data.buiten_berm_breedte
+        _c5 = _c3 * old_data.kruin_hoogte + old_data.kruin_breedte - _c4
+        _c6 = _c1 * _c2 + new_data.kruin_breedte - _c5
+        _c7 = old_data.binnen_berm_breedte + scenario.d_p - _c6
+        return max(_c7, 0)
 
-    def calculate_new_kruin_hoogte(
+    def _calculate_new_kruin_hoogte(
         self, old_data: KoswatInputProfile, scenario: KoswatScenario
     ) -> float:
-        return old_data.buiten_berm_hoogte + scenario.d_h
+        return old_data.kruin_hoogte + scenario.d_h
 
     def _calculate_new_input_profile(
         self, old_data: KoswatInputProfile, scenario: KoswatScenario
@@ -63,17 +68,17 @@ class ProfileReinforcement(CalculationProtocol):
         _new_data.buiten_talud = scenario.buiten_talud
         _new_data.buiten_berm_hoogte = old_data.buiten_berm_hoogte
         _new_data.buiten_berm_breedte = old_data.buiten_berm_breedte
-        _new_data.kruin_hoogte = self.calculate_new_kruin_hoogte(old_data, scenario)
+        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(old_data, scenario)
         _new_data.kruin_breedte = scenario.kruin_breedte
-        _new_data.binnen_talud = self.calculate_new_talud(old_data, scenario)
-        _new_data.binnen_berm_breedte = self.calculate_new_berm_breedte(
+        _new_data.binnen_talud = self._calculate_new_binnen_talud(old_data, scenario)
+        _new_data.binnen_berm_breedte = self._calculate_new_binnen_berm_breedte(
             old_data, _new_data, scenario
         )
-        _new_data.binnen_berm_hoogte = self.calculate_new_berm_hoogte(
+        _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(
             old_data, _new_data, scenario
         )
         _new_data.binnen_maaiveld = old_data.binnen_maaiveld
-        return old_data
+        return _new_data
 
     def calculate_new_geometry(
         self, profile: KoswatProfile, scenario: KoswatScenario
