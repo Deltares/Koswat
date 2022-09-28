@@ -14,6 +14,12 @@ class Polderside(SideProtocol):
     p_7: Point
     p_8: Point
 
+    def __init__(self) -> None:
+        self.p_5 = None
+        self.p_6 = None
+        self.p_7 = None
+        self.p_8 = None
+
     @property
     def points(self) -> List[Point]:
         return [

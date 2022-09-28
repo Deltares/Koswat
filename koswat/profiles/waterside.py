@@ -1,10 +1,11 @@
+from __future__ import annotations
+
 from typing import List
 
 from shapely.geometry.point import Point
 
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.side_protocol import SideProtocol
-from __future__ import annotations
 
 
 class Waterside(SideProtocol):
@@ -12,6 +13,12 @@ class Waterside(SideProtocol):
     p_2: Point
     p_3: Point
     p_4: Point
+
+    def __init__(self) -> None:
+        self.p_1 = None
+        self.p_2 = None
+        self.p_3 = None
+        self.p_4 = None
 
     @property
     def points(self) -> List[Point]:
@@ -25,8 +32,9 @@ class Waterside(SideProtocol):
     @classmethod
     def from_input_profile(cls, input_profile: KoswatInputProfile) -> Waterside:
         _waterside = cls()
-        _waterside.p_4 = Point(0, input_profile.kruin_hoogte)
-        _p3_x = _waterside.p_4 - (
+        _p4_x = 0
+        _waterside.p_4 = Point(_p4_x, input_profile.kruin_hoogte)
+        _p3_x = _p4_x - (
             (input_profile.kruin_hoogte - input_profile.buiten_berm_hoogte)
             * input_profile.buiten_talud
         )
@@ -38,3 +46,4 @@ class Waterside(SideProtocol):
             * input_profile.buiten_talud
         )
         _waterside.p_1 = Point(_p1_x, input_profile.buiten_maaiveld)
+        return _waterside

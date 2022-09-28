@@ -30,4 +30,3 @@ class TestMain:
 
         # 3. Verify final expectations.
         assert _run_result.exit_code == 0
-        

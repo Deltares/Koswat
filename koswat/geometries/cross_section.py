@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional, Protocol
 
-from koswat.profiles.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.profiles.koswat_profile import KoswatProfile
 
 
 class KoswatGeometry(Protocol):
@@ -18,5 +18,5 @@ class CrossSection(KoswatGeometry):
     layers: Optional[List[Layer]]
 
     @classmethod
-    def from_koswat_profile(cls, profile: KoswatProfileProtocol) -> CrossSection:
+    def from_koswat_profile(cls, profile: KoswatProfile) -> CrossSection:
         pass

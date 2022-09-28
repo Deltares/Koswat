@@ -15,6 +15,11 @@ class KoswatProfile:
     waterside: Waterside
     polderside: Polderside
 
+    def __init__(self) -> None:
+        self.input_data = None
+        self.waterside = Waterside()
+        self.polderside = Polderside()
+
     @property
     def points(self) -> List[Point]:
         """
