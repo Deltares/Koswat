@@ -3,7 +3,7 @@ from typing import List
 import pytest
 from shapely.geometry.point import Point
 
-from koswat.calculations.calculation_protocol import CalculationProtocol
+from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
@@ -14,7 +14,7 @@ class TestProfileReinforcement:
     def test_initialize_profile_reinforcement(self):
         _calculation = ProfileReinforcement()
         assert _calculation
-        assert isinstance(_calculation, CalculationProtocol)
+        assert isinstance(_calculation, ProfileCalculationProtocol)
 
     def almost_equal(self, left_value: float, right_value: float) -> bool:
         return abs(left_value - right_value) <= 0.01
@@ -106,9 +106,7 @@ class TestProfileReinforcement:
         _expected_profile = KoswatProfile.from_koswat_input_profile(_expected_new_data)
 
         # 2. Run test.
-        _new_profile = ProfileReinforcement().calculate_new_geometry(
-            _profile, _scenario
-        )
+        _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
 
         # 3. Verify expectations.
         assert isinstance(_new_profile, KoswatProfile)

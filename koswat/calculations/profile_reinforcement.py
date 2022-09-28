@@ -1,10 +1,10 @@
-from koswat.calculations.calculation_protocol import CalculationProtocol
+from koswat.calculations.calculation_protocol import ProfileCalculationProtocol
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
-class ProfileReinforcement(CalculationProtocol):
+class ProfileReinforcement(ProfileCalculationProtocol):
     def _calculate_new_binnen_talud(
         self, old_data: KoswatInputProfile, scenario: KoswatScenario
     ) -> float:
@@ -80,7 +80,7 @@ class ProfileReinforcement(CalculationProtocol):
         _new_data.binnen_maaiveld = old_data.binnen_maaiveld
         return _new_data
 
-    def calculate_new_geometry(
+    def calculate_new_profile(
         self, profile: KoswatProfile, scenario: KoswatScenario
     ) -> KoswatProfile:
         _new_data = self._calculate_new_input_profile(profile.input_data, scenario)

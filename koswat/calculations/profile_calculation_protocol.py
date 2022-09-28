@@ -7,8 +7,8 @@ from koswat.profiles.koswat_profile import KoswatProfile
 
 
 @runtime_checkable
-class CalculationProtocol(Protocol):
-    def calculate_new_geometry(
+class ProfileCalculationProtocol(Protocol):
+    def calculate_new_profile(
         self, profile: KoswatProfile, scenario: KoswatScenario
     ) -> KoswatProfile:
         pass
