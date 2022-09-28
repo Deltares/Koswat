@@ -1,4 +1,4 @@
-from koswat.calculations.calculation_protocol import ProfileCalculationProtocol
+from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_profile import KoswatProfile
