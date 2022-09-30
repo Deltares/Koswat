@@ -2,6 +2,7 @@ from koswat.calculations.profile_calculation_protocol import ProfileCalculationP
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 
 
 class ProfileReinforcement(ProfileCalculationProtocol):
@@ -84,4 +85,4 @@ class ProfileReinforcement(ProfileCalculationProtocol):
         self, profile: KoswatProfile, scenario: KoswatScenario
     ) -> KoswatProfile:
         _new_data = self._calculate_new_input_profile(profile.input_data, scenario)
-        return KoswatProfile.from_koswat_input_profile(_new_data)
+        return KoswatProfileBuilder.with_data(_new_data, profile.layers).build()

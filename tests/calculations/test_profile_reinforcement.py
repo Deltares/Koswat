@@ -7,7 +7,9 @@ from koswat.calculations.profile_calculation_protocol import ProfileCalculationP
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
+from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 
 
 class TestProfileReinforcement:
@@ -77,7 +79,9 @@ class TestProfileReinforcement:
         )
         assert isinstance(_input_profile_data, KoswatInputProfile)
 
-        _profile = KoswatProfile.from_koswat_input_profile(_input_profile_data)
+        _profile = KoswatProfileBuilder.with_data(
+            _input_profile_data, KoswatLayers()
+        ).build()
         assert isinstance(_profile, KoswatProfile)
         _scenario = KoswatScenario.from_dict(
             dict(
@@ -103,7 +107,7 @@ class TestProfileReinforcement:
                 binnen_maaiveld=0,
             )
         )
-        _expected_profile = KoswatProfile.from_koswat_input_profile(_expected_new_data)
+        _expected_profile = KoswatProfileBuilder.with_data(_expected_new_data, KoswatLayers()).build()
 
         # 2. Run test.
         _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
