@@ -3,22 +3,20 @@ from __future__ import annotations
 import math
 from typing import List
 
+from shapely.geometry.polygon import Polygon
+
 from koswat.profiles.koswat_material import KoswatMaterial, KoswatMaterialFactory
 
 
 class KoswatLayer:
-    material: KoswatMaterial
-    depth: float
-
-    def __init__(self) -> None:
-        self.material = None
-        self.depth = math.nan
+    material: KoswatMaterial = None
+    geometry: Polygon = None
 
     @classmethod
     def from_dict(cls, data_dict: dict) -> KoswatLayer:
         _layer = cls()
         _layer.material = KoswatMaterialFactory.get_material(data_dict["material"])
-        _layer.depth = data_dict.get("depth", math.nan)
+        _layer.geometry = data_dict.get("geometry", math.nan)
         return _layer
 
 

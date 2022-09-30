@@ -9,11 +9,11 @@ class TestKoswatLayer:
         _layer = KoswatLayer()
         assert isinstance(_layer, KoswatLayer)
         assert not _layer.material
-        assert math.isnan(_layer.depth)
+        assert not _layer.geometry
 
     def test_initialize_from_dict(self):
         # 1. Define test data.
-        _data = dict(material="zand", depth=4.2)
+        _data = dict(material="zand", geometry=Polygon)
 
         # 2. Run test.
         _layer = KoswatLayer.from_dict(_data)
@@ -21,7 +21,7 @@ class TestKoswatLayer:
         # 3. Verify final expectations.
         assert isinstance(_layer, KoswatLayer)
         assert isinstance(_layer.material, KoswatMaterial)
-        assert not math.isnan(_layer.depth)
+        assert not _layer.geometry
 
 
 class TestKoswatLayers:
