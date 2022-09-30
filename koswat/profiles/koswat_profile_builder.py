@@ -29,17 +29,6 @@ class KoswatProfileBuilder:
         _profile.layers = _layers_builder.build()
         return _profile
 
-    @staticmethod
-    def build_from(
-        input_profile: KoswatInputProfile, layers: KoswatLayers
-    ) -> KoswatProfile:
-        _profile = KoswatProfile()
-        _profile.waterside = Waterside.from_input_profile(input_profile)
-        _profile.polderside = Polderside.from_input_profile(input_profile)
-        _profile.input_data = input_profile
-        _profile.layers = layers
-        return _profile
-
     @classmethod
     def with_data(
         cls, input_profile_data: dict, layers_data: dict

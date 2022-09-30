@@ -17,8 +17,8 @@ class KoswatLayersBuilder:
 
     def _build_layer(self, parent_geometry: Polygon, layer_data: dict) -> KoswatLayer:
         _layer = KoswatLayer()
-        _depth = layer_data.get("depth", math.nan)
-        if math.isnan(_depth):
+        _layer.depth = layer_data.get("depth", math.nan)
+        if math.isnan(_layer.depth):
             # Usually only for the base layer (sand)
             _layer.geometry = parent_geometry
         # else:
@@ -46,3 +46,9 @@ class KoswatLayersBuilder:
             _onion_geometry, self.layers_data["base_layer"]
         )
         return _koswat_layers
+
+    @staticmethod
+    def layers_as_dict(layers: KoswatLayers) -> dict:
+        _base_layer = dict(material=layers.base_layer.material.name, depth=math.nan)
+        # TODO: Logic for coating layers.
+        return dict(base_layer=_base_layer, coating_layers=dict())

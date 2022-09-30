@@ -1,3 +1,4 @@
+import enum
 from typing import List
 
 import pytest
@@ -48,11 +49,29 @@ class TestProfileReinforcement:
             if not self.almost_equal(_new_data_dict[key], value)
         ]
 
+    def _compare_koswat_layers(
+        self, new_layers: KoswatLayers, expected_layers: KoswatLayers
+    ) -> List[str]:
+        if not new_layers.base_layer.geometry.almost_equals(
+            expected_layers.base_layer.geometry
+        ):
+            return [f"Geometries differ for base_layer."]
+        _layers_errors = []
+        for _idx, _c_layer in enumerate(expected_layers.coating_layers):
+            _new_layer = new_layers.coating_layers[_idx]
+            if not _new_layer.geometry.almost_equals(_c_layer.geometry):
+                _layers_errors[f"Geometries differ for layer {_c_layer.material.name}"]
+
+        return _layers_errors
+
     def verify_equal_profiles(
         self, new_profile: KoswatProfile, expected_profile: KoswatProfile
     ):
         _found_errors = self._compare_koswat_input_profile(
             new_profile.input_data, expected_profile.input_data
+        )
+        _found_errors = self._compare_koswat_layers(
+            new_profile.layers, expected_profile.layers
         )
         _found_errors.extend(
             self._compare_points(new_profile.points, expected_profile.points)
