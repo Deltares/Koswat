@@ -25,14 +25,24 @@ class TestAcceptance:
 
     def test_given_default_case_returns_costs(self):
         # 1. Define test data.
-        _layers = KoswatLayers.from_dict(
-            dict(
-                base_layer=dict(material="zand"),
-                coating_layers=[
-                    dict(material="klei", depth=2.4),
-                    dict(material="gras", depth=4.2),
-                ],
-            )
+        _layers = dict(
+            base_layer=dict(material="zand"),
+            coating_layers=[
+                # dict(material="klei", depth=2.4),
+                # dict(material="gras", depth=4.2),
+            ],
+        )
+        _input_profile = dict(
+            buiten_maaiveld=0,
+            buiten_talud=3,
+            buiten_berm_hoogte=0,
+            buiten_berm_breedte=0,
+            kruin_hoogte=6,
+            kruin_breedte=5,
+            binnen_talud=3,
+            binnen_berm_hoogte=0,
+            binnen_berm_breedte=0,
+            binnen_maaiveld=0,
         )
         _scenario = KoswatScenario.from_dict(
             dict(
@@ -43,25 +53,9 @@ class TestAcceptance:
                 buiten_talud=3,
             )
         )
-        _input_profile = KoswatInputProfile.from_dict(
-            dict(
-                buiten_maaiveld=0,
-                buiten_talud=3,
-                buiten_berm_hoogte=0,
-                buiten_berm_breedte=0,
-                kruin_hoogte=6,
-                kruin_breedte=5,
-                binnen_talud=3,
-                binnen_berm_hoogte=0,
-                binnen_berm_breedte=0,
-                binnen_maaiveld=0,
-            )
-        )
-        assert isinstance(_layers, KoswatLayers)
         assert isinstance(_scenario, KoswatScenario)
-        assert isinstance(_input_profile, KoswatInputProfile)
 
-        _profile = KoswatProfileBuilder.with_data(_input_profile, _layers)
+        _profile = KoswatProfileBuilder.with_data(_input_profile, _layers).build()
         assert isinstance(_profile, KoswatProfile)
 
         # 2. Run test.
@@ -72,3 +66,4 @@ class TestAcceptance:
 
         # 3. Verify eexpectations.
         assert not math.isnan(_total_volume)
+        assert _total_volume > 0
