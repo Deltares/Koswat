@@ -52,14 +52,15 @@ class TestProfileReinforcement:
     def _compare_koswat_layers(
         self, new_layers: KoswatLayers, expected_layers: KoswatLayers
     ) -> List[str]:
+        _tolerance = 0.001
         if not new_layers.base_layer.geometry.almost_equals(
-            expected_layers.base_layer.geometry
+            expected_layers.base_layer.geometry, _tolerance
         ):
             return [f"Geometries differ for base_layer."]
         _layers_errors = []
         for _idx, _c_layer in enumerate(expected_layers.coating_layers):
             _new_layer = new_layers.coating_layers[_idx]
-            if not _new_layer.geometry.almost_equals(_c_layer.geometry):
+            if not _new_layer.geometry.almost_equals(_c_layer.geometry, _tolerance):
                 _layers_errors[f"Geometries differ for layer {_c_layer.material.name}"]
 
         return _layers_errors

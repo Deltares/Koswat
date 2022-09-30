@@ -3,7 +3,9 @@ from typing import List
 import pytest
 from shapely.geometry.point import Point
 
-from koswat.calculations.profile_volume_calculator import ProfileVolumeCalculator
+from koswat.calculations.koswat_profile_reinforcement_cost_builder import (
+    ProfileReinforcementCostBuilder,
+)
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
@@ -50,7 +52,7 @@ class TestProfileVolumeCalculator:
         assert isinstance(_old_profile, KoswatProfile)
 
         # 2. Run test
-        _total_volume = ProfileVolumeCalculator().calculate_total_volume(
+        _total_volume = ProfileReinforcementCostBuilder().calculate_total_volume(
             _old_profile, _new_profile
         )
 

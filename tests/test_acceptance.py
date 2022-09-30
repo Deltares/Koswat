@@ -3,7 +3,9 @@ import math
 import pytest
 
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
-from koswat.calculations.profile_volume_calculator import ProfileVolumeCalculator
+from koswat.calculations.koswat_profile_reinforcement_cost_builder import (
+    ProfileReinforcementCostBuilder,
+)
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
@@ -60,7 +62,7 @@ class TestAcceptance:
 
         # 2. Run test.
         _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
-        _total_volume = ProfileVolumeCalculator().calculate_total_volume(
+        _total_volume = ProfileReinforcementCostBuilder().calculate_total_volume(
             _profile, _new_profile
         )
 
