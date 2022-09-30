@@ -11,8 +11,8 @@ class TestKoswatProfileBuilder:
     def test_initialize_init_(self):
         _builder = KoswatProfileBuilder()
         assert isinstance(_builder, KoswatProfileBuilder)
-        assert not _builder.input_profile
-        assert not _builder.layers
+        assert not _builder.input_profile_data
+        assert not _builder.layers_data
 
     def test_initialized_with_data(self):
         # 1. Define test data.
