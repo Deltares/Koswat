@@ -3,9 +3,10 @@ import math
 import pytest
 
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
-from koswat.calculations.koswat_profile_reinforcement_cost_builder import (
+from koswat.calculations.profile_reinforcement_cost_builder import (
     ProfileReinforcementCostBuilder,
 )
+from koswat.koswat_report import LayerCostReport, ProfileCostReport
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
@@ -62,10 +63,16 @@ class TestAcceptance:
 
         # 2. Run test.
         _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
-        _total_volume = ProfileReinforcementCostBuilder().calculate_total_volume(
+        _cost_report = ProfileReinforcementCostBuilder().get_profile_cost_report(
             _profile, _new_profile
         )
 
         # 3. Verify eexpectations.
-        assert not math.isnan(_total_volume)
-        assert _total_volume > 0
+        assert isinstance(_cost_report, ProfileCostReport)
+        assert isinstance(_cost_report.layer_cost_reports, list)
+        assert len(_cost_report.layer_cost_reports) == 1
+        assert isinstance(_cost_report.layer_cost_reports[0], LayerCostReport)
+        assert not math.isnan(_cost_report.total_cost)
+        assert _cost_report.total_cost > 0
+        assert not math.isnan(_cost_report.total_volume)
+        assert _cost_report.total_volume > 0

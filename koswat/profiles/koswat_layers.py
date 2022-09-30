@@ -30,6 +30,13 @@ class KoswatLayers:
         self.base_layer = None
         self.coating_layers = []
 
+    @property
+    def _layers(self) -> List[KoswatLayer]:
+        _layers = []
+        _layers.append(self.base_layer)
+        _layers.extend(self.coating_layers)
+        return _layers
+
     def as_data_dict(self) -> dict:
         return dict(
             base_layer=self.base_layer.as_data_dict(),

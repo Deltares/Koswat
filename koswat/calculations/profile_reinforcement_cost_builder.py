@@ -10,12 +10,12 @@ class ProfileReinforcementCostBuilder:
     """
 
     def get_layer_cost_report(
-        old_layer: KoswatLayer, new_layer: KoswatLayer
+        self, old_layer: KoswatLayer, new_layer: KoswatLayer
     ) -> LayerCostReport:
-        if old_layer.material != new_layer.material:
+        if old_layer.material.name != new_layer.material.name:
             raise ValueError("Material differs between layers. Cannot compute costs.")
         _layer_report = LayerCostReport()
-        _diff_geometry = old_layer.geometry - new_layer.geometry
+        _diff_geometry = new_layer.geometry - old_layer.geometry
         _layer_report.total_volume = _diff_geometry.area
         _layer_report.layer = new_layer
         return _layer_report
@@ -24,12 +24,12 @@ class ProfileReinforcementCostBuilder:
         self, old_profile: KoswatProfile, new_profile: KoswatProfile
     ) -> ProfileCostReport:
         _report = ProfileCostReport()
-        if old_profile.layers != new_profile.layers:
+        if len(old_profile.layers._layers) != len(new_profile.layers._layers):
             raise ValueError(
                 "Layers not matching between old and new profile. Calculation of costs cannot be computed."
             )
         _report.layer_cost_reports = [
-            self.get_layer_cost_report(old_l, new_profile.layers[idx_l])
-            for idx_l, old_l in enumerate(old_profile.layers)
+            self.get_layer_cost_report(old_l, new_profile.layers._layers[idx_l])
+            for idx_l, old_l in enumerate(old_profile.layers._layers)
         ]
         return _report
