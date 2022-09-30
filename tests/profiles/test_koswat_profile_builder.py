@@ -35,9 +35,10 @@ class TestKoswatProfileBuilder:
 
         # 3. Verify final expectations.
         assert isinstance(_profile_builder, KoswatProfileBuilder)
-        assert isinstance(_profile_builder.input_profile, KoswatInputProfile)
-        assert isinstance(_profile_builder.layers, KoswatLayers)
-        assert _profile_builder.layers == _layers
+        assert isinstance(_profile_builder.input_profile_data, dict)
+        assert isinstance(_profile_builder.layers_data, dict)
+        assert _profile_builder.input_profile_data == _input_profile_data
+        assert _profile_builder.layers_data == _layers
 
     def test_given_valid_data_when_build_returns_profile(self):
         # 1. Define test data.
@@ -53,17 +54,17 @@ class TestKoswatProfileBuilder:
             binnen_berm_breedte=0,
             binnen_maaiveld=0,
         )
-        _layers = dict(base_layer=None, coating_layers=[])
+        _layers_data = dict(base_layer=dict(material="zand"), coating_layers=[])
 
         # 2. Run test.
         _profile_builder = KoswatProfileBuilder()
-        _profile_builder.input_profile = _input_profile_data
-        _profile_builder.layers = _layers
+        _profile_builder.input_profile_data = _input_profile_data
+        _profile_builder.layers_data = _layers_data
         _koswat_profile = _profile_builder.build()
 
         # 3. Verify final expectations.
         assert isinstance(_koswat_profile, KoswatProfile)
-        assert _koswat_profile.input_data == default_case
-        assert _koswat_profile.layers == _layers
+        assert isinstance(_koswat_profile.input_data, KoswatInputProfile)
+        assert isinstance(_koswat_profile.layers, KoswatLayers)
         assert isinstance(_koswat_profile.waterside, Waterside)
         assert isinstance(_koswat_profile.polderside, Polderside)

@@ -63,26 +63,42 @@ class TestProfileReinforcement:
 
     def test_given_profile_and_scenario_calculate_new_geometry(self):
         # 1. Define test data.
-        _input_profile_data = KoswatInputProfile.from_dict(
-            dict(
-                buiten_maaiveld=0,
-                buiten_talud=3,
-                buiten_berm_hoogte=0,
-                buiten_berm_breedte=0,
-                kruin_hoogte=6,
-                kruin_breedte=5,
-                binnen_talud=3,
-                binnen_berm_hoogte=0,
-                binnen_berm_breedte=0,
-                binnen_maaiveld=0,
-            )
+        _dummy_layers = dict(base_layer=dict(material="zand"), coating_layers=[])
+        _input_profile_data = dict(
+            buiten_maaiveld=0,
+            buiten_talud=3,
+            buiten_berm_hoogte=0,
+            buiten_berm_breedte=0,
+            kruin_hoogte=6,
+            kruin_breedte=5,
+            binnen_talud=3,
+            binnen_berm_hoogte=0,
+            binnen_berm_breedte=0,
+            binnen_maaiveld=0,
         )
-        assert isinstance(_input_profile_data, KoswatInputProfile)
 
         _profile = KoswatProfileBuilder.with_data(
-            _input_profile_data, KoswatLayers()
+            _input_profile_data, _dummy_layers
         ).build()
         assert isinstance(_profile, KoswatProfile)
+
+        _expected_new_data = dict(
+            buiten_maaiveld=0,
+            buiten_talud=3,
+            buiten_berm_breedte=0,
+            buiten_berm_hoogte=0,
+            kruin_hoogte=7,
+            kruin_breedte=5,
+            binnen_talud=3.57,
+            binnen_berm_hoogte=1,
+            binnen_berm_breedte=20,
+            binnen_maaiveld=0,
+        )
+        _expected_profile = KoswatProfileBuilder.with_data(
+            _expected_new_data, _dummy_layers
+        ).build()
+        assert isinstance(_expected_profile, KoswatProfile)
+
         _scenario = KoswatScenario.from_dict(
             dict(
                 d_h=1,
@@ -93,21 +109,6 @@ class TestProfileReinforcement:
             )
         )
         assert isinstance(_scenario, KoswatScenario)
-        _expected_new_data = KoswatInputProfile.from_dict(
-            dict(
-                buiten_maaiveld=0,
-                buiten_talud=3,
-                buiten_berm_breedte=0,
-                buiten_berm_hoogte=0,
-                kruin_hoogte=7,
-                kruin_breedte=5,
-                binnen_talud=3.57,
-                binnen_berm_hoogte=1,
-                binnen_berm_breedte=20,
-                binnen_maaiveld=0,
-            )
-        )
-        _expected_profile = KoswatProfileBuilder.with_data(_expected_new_data, KoswatLayers()).build()
 
         # 2. Run test.
         _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)

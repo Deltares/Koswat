@@ -1,5 +1,6 @@
 from typing import List
 
+import pytest
 from shapely.geometry.point import Point
 
 from koswat.calculations.profile_volume_calculator import ProfileVolumeCalculator
@@ -19,6 +20,7 @@ class TestProfileVolumeCalculator:
         _new_profile.polderside.p_8 = points[7]
         return _new_profile
 
+    @pytest.mark.skip(reason="Work in progress.")
     def test_profile_volume_calculator(self):
         _old_profile = self._get_koswat_profile_from_points(
             [

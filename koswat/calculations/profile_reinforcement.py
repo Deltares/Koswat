@@ -85,4 +85,4 @@ class ProfileReinforcement(ProfileCalculationProtocol):
         self, profile: KoswatProfile, scenario: KoswatScenario
     ) -> KoswatProfile:
         _new_data = self._calculate_new_input_profile(profile.input_data, scenario)
-        return KoswatProfileBuilder.with_data(_new_data, profile.layers).build()
+        return KoswatProfileBuilder.build_from(_new_data, profile.layers)
