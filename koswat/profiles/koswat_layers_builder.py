@@ -19,13 +19,14 @@ class KoswatLayersBuilder:
     profile_points: List[geometry.Point] = []
 
     def _build_base_layer(
-        self, upper_layer_points: geometry.LineString, layer_data: dict
+        self, upper_layer_linestring: geometry.LineString, layer_data: dict
     ) -> KoswatBaseLayer:
         _material = KoswatMaterialFactory.get_material(layer_data["material"])
         _layer = KoswatBaseLayer()
         _geometry_points = []
-        _geometry_points.extend(upper_layer_points)
-        _geometry_points.append(upper_layer_points[0])
+        _upper_layer_points = list(upper_layer_linestring.coords)
+        _geometry_points.extend(_upper_layer_points)
+        _geometry_points.append(_upper_layer_points[0])
         _layer.geometry = geometry.Polygon(_geometry_points)
         _layer.material = _material
         return _layer
