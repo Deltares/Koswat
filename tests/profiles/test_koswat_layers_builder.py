@@ -6,6 +6,7 @@ from koswat.profiles.koswat_layers import (
     KoswatLayers,
 )
 from koswat.profiles.koswat_layers_builder import KoswatLayersBuilder
+from koswat.profiles.koswat_material import KoswatMaterial
 from tests.library_test_cases import InputProfileCases, LayersCases
 
 
@@ -31,7 +32,14 @@ class TestKoswatLayersBuilder:
         # 3. Verify expectations
         assert isinstance(_layers, KoswatLayers)
         assert isinstance(_layers.base_layer, KoswatBaseLayer)
-        assert isinstance(_layers.coating_layers, list)
+        assert isinstance(_layers.base_layer.material, KoswatMaterial)
+        assert _layers.base_layer.material.name == layers_case["base_layer"]["material"]
         assert len(_layers.coating_layers) == len(layers_case["coating_layers"])
-        for c_layer in _layers.coating_layers:
+        for c_idx, c_layer in enumerate(_layers.coating_layers):
             assert isinstance(c_layer, KoswatCoatingLayer)
+            assert c_layer.depth == layers_case["coating_layers"][c_idx]["depth"]
+            assert isinstance(c_layer.material, KoswatMaterial)
+            assert (
+                c_layer.material.name
+                == layers_case["coating_layers"][c_idx]["material"]
+            )

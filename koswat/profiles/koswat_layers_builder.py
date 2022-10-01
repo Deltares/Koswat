@@ -85,6 +85,7 @@ class KoswatLayersBuilder:
         _layer.layer_points = geometry.LineString(_offset_geom_coords)
         _layer.geometry = geometry.Polygon(_layer_geometry_points)
         _layer.material = _material
+        _layer.depth = _depth
         return _layer
 
     def _set_profile_geometry(self):
