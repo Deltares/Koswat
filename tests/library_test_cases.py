@@ -28,7 +28,7 @@ class LayersCases(CasesProtocol):
     with_clay = dict(
         base_layer=dict(material="zand"),
         coating_layers=[
-            dict(material="klei", depth=4.2),
+            dict(material="klei", depth=.75),
         ],
     )
 
