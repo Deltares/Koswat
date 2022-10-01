@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import math
 
 import pytest
@@ -8,10 +10,9 @@ from koswat.calculations.profile_reinforcement_cost_builder import (
 )
 from koswat.koswat_report import LayerCostReport, ProfileCostReport
 from koswat.koswat_scenario import KoswatScenario
-from koswat.profiles.koswat_input_profile import KoswatInputProfile
-from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_profile import KoswatProfile
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
+from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
 class TestAcceptance:
@@ -26,36 +27,31 @@ class TestAcceptance:
         except ImportError as exc_err:
             pytest.fail(f"It was not possible to import required packages {exc_err}")
 
-    def test_given_default_case_returns_costs(self):
-        # 1. Define test data.
-        _layers = dict(
-            base_layer=dict(material="zand"),
-            coating_layers=[
-                # dict(material="klei", depth=2.4),
-                # dict(material="gras", depth=4.2),
-            ],
-        )
-        _input_profile = dict(
-            buiten_maaiveld=0,
-            buiten_talud=3,
-            buiten_berm_hoogte=0,
-            buiten_berm_breedte=0,
-            kruin_hoogte=6,
-            kruin_breedte=5,
-            binnen_talud=3,
-            binnen_berm_hoogte=0,
-            binnen_berm_breedte=0,
-            binnen_maaiveld=0,
-        )
-        _scenario = KoswatScenario.from_dict(
+    acceptance_test_cases = [
+        pytest.param(
             dict(
-                d_h=1,
-                d_s=10,
-                d_p=30,
-                kruin_breedte=5,
-                buiten_talud=3,
-            )
+                layers=LayersCases.without_layers,
+                input_profile=InputProfileCases.default,
+                scenario=ScenarioCases.default,
+            ),
+            id="Default Reinforcement without layers.",
         )
+        pytest.param(
+            dict(
+                layers=LayersCases.with_clay,
+                input_profile=InputProfileCases.default,
+                scenario=ScenarioCases.default,
+            ),
+            id="Default Reinforcement with layers.",
+        )
+    ]
+
+    @pytest.mark.parametrize("case_dict", acceptance_test_cases)
+    def test_given_default_case_returns_costs(self, case_dict: dict):
+        # 1. Define test data.
+        _layers = case_dict["layers"]
+        _input_profile = case_dict["input_profile"]
+        _scenario = KoswatScenario.from_dict(case_dict["scenario"])
         assert isinstance(_scenario, KoswatScenario)
 
         _profile = KoswatProfileBuilder.with_data(_input_profile, _layers).build()
@@ -67,7 +63,7 @@ class TestAcceptance:
             _profile, _new_profile
         )
 
-        # 3. Verify eexpectations.
+        # 3. Verify expectations.
         assert isinstance(_cost_report, ProfileCostReport)
         assert isinstance(_cost_report.layer_cost_reports, list)
         assert len(_cost_report.layer_cost_reports) == 1
