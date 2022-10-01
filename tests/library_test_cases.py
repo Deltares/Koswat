@@ -1,6 +1,7 @@
 from typing import List, Protocol
 
 import pytest
+from shapely.geometry.point import Point
 
 
 class CasesProtocol(Protocol):
@@ -50,5 +51,15 @@ class InputProfileCases(CasesProtocol):
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
     )
+    default_points = [
+        Point(-18.0, 0.0),
+        Point(-18.0, 0.0),
+        Point(-18.0, 0.0),
+        Point(0.0, 6.0),
+        Point(5.0, 6.0),
+        Point(23.0, 0.0),
+        Point(23.0, 0.0),
+        Point(23.0, 0.0),
+    ]
 
     cases = [pytest.param(default, id="Default Input Profile")]

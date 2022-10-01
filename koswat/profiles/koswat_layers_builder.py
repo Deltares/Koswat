@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import math
-from cmath import isnan
 from typing import List
 
 from shapely.geometry.point import Point
@@ -12,8 +11,8 @@ from koswat.profiles.koswat_material import KoswatMaterialFactory
 
 
 class KoswatLayersBuilder:
-    layers_data: dict
-    profile_points: List[Point]
+    layers_data: dict = {}
+    profile_points: List[Point] = []
 
     def _build_layer(self, parent_geometry: Polygon, layer_data: dict) -> KoswatLayer:
         _layer = KoswatLayer()
