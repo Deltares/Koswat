@@ -73,8 +73,12 @@ class TestAcceptance:
         # 3. Verify expectations.
         assert isinstance(_cost_report, ProfileCostReport)
         assert isinstance(_cost_report.layer_cost_reports, list)
-        assert len(_cost_report.layer_cost_reports) == 1
-        assert isinstance(_cost_report.layer_cost_reports[0], LayerCostReport)
+        assert len(_cost_report.layer_cost_reports) == 1 + len(
+            layers_case["coating_layers"]
+        )
+        assert all(
+            isinstance(lcr, LayerCostReport) for lcr in _cost_report.layer_cost_reports
+        )
         assert not math.isnan(_cost_report.total_cost)
         assert _cost_report.total_cost > 0
         assert not math.isnan(_cost_report.total_volume)
