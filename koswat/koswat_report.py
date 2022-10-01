@@ -3,14 +3,12 @@ from __future__ import annotations
 import math
 from typing import List
 
-from shapely.geometry.polygon import Polygon
-
-from koswat.profiles.koswat_layers import KoswatLayer
+from koswat.profiles.koswat_layers import KoswatLayerProtocol
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
 class LayerCostReport:
-    layer: KoswatLayer = None
+    layer: KoswatLayerProtocol = None
     total_volume: float = math.nan
 
     @property

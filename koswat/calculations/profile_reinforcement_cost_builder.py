@@ -1,5 +1,5 @@
 from koswat.koswat_report import LayerCostReport, ProfileCostReport
-from koswat.profiles.koswat_layers import KoswatLayer
+from koswat.profiles.koswat_layers import KoswatLayerProtocol
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
@@ -10,7 +10,7 @@ class ProfileReinforcementCostBuilder:
     """
 
     def get_layer_cost_report(
-        self, old_layer: KoswatLayer, new_layer: KoswatLayer
+        self, old_layer: KoswatLayerProtocol, new_layer: KoswatLayerProtocol
     ) -> LayerCostReport:
         if old_layer.material.name != new_layer.material.name:
             raise ValueError("Material differs between layers. Cannot compute costs.")

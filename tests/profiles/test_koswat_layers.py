@@ -1,22 +1,45 @@
 import math
 
-from koswat.profiles.koswat_layers import KoswatLayer, KoswatLayers
+from koswat.profiles.koswat_layers import (
+    KoswatBaseLayer,
+    KoswatCoatingLayer,
+    KoswatLayerProtocol,
+    KoswatLayers,
+)
 from koswat.profiles.koswat_material import KoswatMaterial
 
 
-class TestKoswatLayer:
+class TestKoswatBaseLayer:
     def test_initialize(self):
-        _layer = KoswatLayer()
-        assert isinstance(_layer, KoswatLayer)
+        _layer = KoswatBaseLayer()
+        assert isinstance(_layer, KoswatBaseLayer)
+        assert isinstance(_layer, KoswatLayerProtocol)
+        assert not _layer.material
+        assert not _layer.geometry
+
+    def test_as_dict(self):
+        _layer = KoswatBaseLayer()
+        _layer.material = KoswatMaterial()
+
+        _dict = _layer.as_data_dict()
+
+        assert isinstance(_dict, dict)
+        assert _dict["material"] == ""
+
+
+class TestKoswatCoatingLayer:
+    def test_initialize(self):
+        _layer = KoswatCoatingLayer()
+        assert isinstance(_layer, KoswatCoatingLayer)
+        assert isinstance(_layer, KoswatLayerProtocol)
         assert not _layer.material
         assert not _layer.geometry
         assert math.isnan(_layer.depth)
 
     def test_as_dict(self):
-        _layer = KoswatLayer()
+        _layer = KoswatCoatingLayer()
         _layer.material = KoswatMaterial()
         _layer.depth = 4.2
-
         _dict = _layer.as_data_dict()
 
         assert isinstance(_dict, dict)
@@ -37,10 +60,9 @@ class TestKoswatLayers:
         _material_a.name = "a material"
         _material_b = KoswatMaterial()
         _material_b.name = "b material"
-        _layers.base_layer = KoswatLayer()
-        _layers.base_layer.depth = 4.2
+        _layers.base_layer = KoswatBaseLayer()
         _layers.base_layer.material = _material_a
-        _layers.coating_layers = [KoswatLayer()]
+        _layers.coating_layers = [KoswatCoatingLayer()]
         _layers.coating_layers[0].depth = 2.4
         _layers.coating_layers[0].material = _material_b
 
@@ -49,6 +71,6 @@ class TestKoswatLayers:
 
         # 3. Verify final expectations
         assert _dict == dict(
-            base_layer=dict(material="a material", depth=4.2),
+            base_layer=dict(material="a material"),
             coating_layers=[dict(material="b material", depth=2.4)],
         )
