@@ -1,4 +1,13 @@
-class ScenarioCases:
+from typing import List, Protocol
+
+import pytest
+
+
+class CasesProtocol(Protocol):
+    cases: List[pytest.param]
+
+
+class ScenarioCases(CasesProtocol):
     default = dict(
         d_h=1,
         d_s=10,
@@ -7,8 +16,10 @@ class ScenarioCases:
         buiten_talud=3,
     )
 
+    cases = [pytest.param(default, id="Default Scenario")]
 
-class LayersCases:
+
+class LayersCases(CasesProtocol):
     without_layers = dict(
         base_layer=dict(material="zand"),
         coating_layers=[],
@@ -20,8 +31,13 @@ class LayersCases:
         ],
     )
 
+    cases = [
+        pytest.param(without_layers, id="Without layers"),
+        pytest.param(with_clay, id="With clay layer"),
+    ]
 
-class InputProfileCases:
+
+class InputProfileCases(CasesProtocol):
     default = dict(
         buiten_maaiveld=0,
         buiten_talud=3,
@@ -34,3 +50,5 @@ class InputProfileCases:
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
     )
+
+    cases = [pytest.param(default, id="Default Input Profile")]

@@ -35,7 +35,7 @@ class TestAcceptance:
                 scenario=ScenarioCases.default,
             ),
             id="Default Reinforcement without layers.",
-        )
+        ),
         pytest.param(
             dict(
                 layers=LayersCases.with_clay,
@@ -43,18 +43,25 @@ class TestAcceptance:
                 scenario=ScenarioCases.default,
             ),
             id="Default Reinforcement with layers.",
-        )
+        ),
     ]
 
-    @pytest.mark.parametrize("case_dict", acceptance_test_cases)
-    def test_given_default_case_returns_costs(self, case_dict: dict):
+    @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
+    @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
+    @pytest.mark.parametrize(
+        "layers_case",
+        LayersCases.cases,
+    )
+    def test_given_default_case_returns_costs(
+        self, input_profile_case: dict, layers_case: dict, scenario_case: dict
+    ):
         # 1. Define test data.
-        _layers = case_dict["layers"]
-        _input_profile = case_dict["input_profile"]
-        _scenario = KoswatScenario.from_dict(case_dict["scenario"])
+        _scenario = KoswatScenario.from_dict(scenario_case)
         assert isinstance(_scenario, KoswatScenario)
 
-        _profile = KoswatProfileBuilder.with_data(_input_profile, _layers).build()
+        _profile = KoswatProfileBuilder.with_data(
+            input_profile_case, layers_case
+        ).build()
         assert isinstance(_profile, KoswatProfile)
 
         # 2. Run test.
