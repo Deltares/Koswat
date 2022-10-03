@@ -7,10 +7,15 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-.scannerwork/
 .vscode/
 
 # IDEs
 .vscode
+
+# Coverages
+.scannerwork/
+*-reports/**
+.coverage
+coverage.xml
 
 # Koswat ignore
