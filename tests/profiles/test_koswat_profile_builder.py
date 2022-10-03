@@ -12,6 +12,7 @@ from tests.library_test_cases import (
     InitialPointsLookup,
     InputProfileCases,
     InputProfileScenarioLookup,
+    LayersCases,
 )
 
 
@@ -23,33 +24,54 @@ class TestKoswatProfileBuilder:
         assert not _builder.input_profile_data
         assert not _builder.layers_data
 
-    def test_initialized_with_data(self):
-        # 1. Define test data.
-        _input_profile_data = dict(
-            buiten_maaiveld=0,
-            buiten_talud=3,
-            buiten_berm_hoogte=0,
-            buiten_berm_breedte=0,
-            kruin_hoogte=6,
-            kruin_breedte=5,
-            binnen_talud=3,
-            binnen_berm_hoogte=0,
-            binnen_berm_breedte=0,
-            binnen_maaiveld=0,
-        )
-        _layers = dict(base_layer=None, coating_layers=[])
+    @pytest.mark.parametrize(
+        "input_dict",
+        [
+            pytest.param(
+                dict(),
+                id="Missing Input Profile Data and Layers",
+            ),
+            pytest.param(
+                dict(input_profile_data=None),
+                id="Missing Layers",
+            ),
+            pytest.param(dict(layers_data=None), id="Missing Input Profile Data"),
+        ],
+    )
+    def test_initialize_with_data_missing_item_raises_error(self, input_dict: dict):
+        with pytest.raises(KeyError):
+            KoswatProfileBuilder.with_data(input_dict)
 
+    @pytest.mark.parametrize(
+        "input_dict",
+        [
+            pytest.param(
+                dict(
+                    input_profile_data=InputProfileCases.default,
+                    layers_data=LayersCases.without_layers,
+                ),
+                id="No p4_x coordinate",
+            ),
+            pytest.param(
+                dict(
+                    input_profile_data=InputProfileCases.default,
+                    layers_data=LayersCases.without_layers,
+                    p4_x_coordinate=0,
+                ),
+                id="Given p4_x coordinate",
+            ),
+        ],
+    )
+    def test_initialized_with_data(self, input_dict: dict):
         # 2. Run test.
-        _profile_builder = KoswatProfileBuilder.with_data(
-            dict(input_profile_data=_input_profile_data, layers_data=_layers)
-        )
+        _profile_builder = KoswatProfileBuilder.with_data(input_dict)
 
         # 3. Verify final expectations.
         assert isinstance(_profile_builder, KoswatProfileBuilder)
         assert isinstance(_profile_builder.input_profile_data, dict)
         assert isinstance(_profile_builder.layers_data, dict)
-        assert _profile_builder.input_profile_data == _input_profile_data
-        assert _profile_builder.layers_data == _layers
+        assert _profile_builder.input_profile_data == input_dict["input_profile_data"]
+        assert _profile_builder.layers_data == input_dict["layers_data"]
 
     @pytest.mark.parametrize(
         "input_profile_data, expected_points",
