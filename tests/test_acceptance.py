@@ -60,7 +60,7 @@ class TestAcceptance:
         assert isinstance(_scenario, KoswatScenario)
 
         _profile = KoswatProfileBuilder.with_data(
-            input_profile_case, layers_case
+            dict(input_profile_data=input_profile_case, layers_data=layers_case)
         ).build()
         assert isinstance(_profile, KoswatProfile)
 
