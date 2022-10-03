@@ -7,4 +7,5 @@ class TestKoswatProfile:
         assert _koswat_profile
         assert not _koswat_profile.input_data
         assert not _koswat_profile.layers
+        assert not _koswat_profile.characteristic_points
         assert _koswat_profile.points == []

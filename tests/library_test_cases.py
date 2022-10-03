@@ -1,7 +1,10 @@
-from typing import List, Protocol
+from typing import Dict, List, Protocol, Tuple
 
 import pytest
 from shapely.geometry.point import Point
+
+from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 
 
 class CasesProtocol(Protocol):
@@ -61,17 +64,8 @@ class InputProfileCases(CasesProtocol):
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
     )
-    default_points = [
-        Point(-18.0, 0.0),
-        Point(-18.0, 0.0),
-        Point(-18.0, 0.0),
-        Point(0.0, 6.0),
-        Point(5.0, 6.0),
-        Point(23.0, 0.0),
-        Point(23.0, 0.0),
-        Point(23.0, 0.0),
-    ]
-    scenario_2 = dict(
+
+    profile_case_2 = dict(
         buiten_maaiveld=0,
         buiten_talud=4,
         buiten_berm_hoogte=0,
@@ -83,7 +77,22 @@ class InputProfileCases(CasesProtocol):
         binnen_berm_breedte=54,
         binnen_maaiveld=0,
     )
-    scenario_2_points = [
+
+    cases = [pytest.param(default, id="Default Input Profile")]
+
+
+class InitialPointsLookup(CasesProtocol):
+    default = [
+        Point(-18.0, 0.0),
+        Point(-18.0, 0.0),
+        Point(-18.0, 0.0),
+        Point(0.0, 6.0),
+        Point(5.0, 6.0),
+        Point(23.0, 0.0),
+        Point(23.0, 0.0),
+        Point(23.0, 0.0),
+    ]
+    calc_profile_scenario_2 = [
         Point(-24, 0),
         Point(-24, 0),
         Point(-24, 0),
@@ -93,5 +102,42 @@ class InputProfileCases(CasesProtocol):
         Point(82.60, 2.6),
         Point(97, 0),
     ]
+    cases = [
+        pytest.param(default, id="Default initial profile."),
+        pytest.param(calc_profile_scenario_2, id="Scenario 2 calculated profile."),
+    ]
 
-    cases = [pytest.param(default, id="Default Input Profile")]
+
+class InputProfileScenarioLookup:
+    default_default_no_layers = dict(
+        input_profile_data=dict(
+            buiten_maaiveld=0,
+            buiten_talud=3,
+            buiten_berm_breedte=0,
+            buiten_berm_hoogte=0,
+            kruin_hoogte=7,
+            kruin_breedte=5,
+            binnen_talud=3.57,
+            binnen_berm_hoogte=1,
+            binnen_berm_breedte=20,
+            binnen_maaiveld=0,
+        ),
+        layers_data=LayersCases.without_layers,
+        p4_x_coordinate=3,
+    )
+    default_scenario_2_no_layers = dict(
+        input_profile_data=dict(
+            buiten_maaiveld=0,
+            buiten_talud=4,
+            buiten_berm_breedte=0,
+            buiten_berm_hoogte=0,
+            kruin_hoogte=6.5,
+            kruin_breedte=5,
+            binnen_talud=5.54,
+            binnen_berm_hoogte=2.6,
+            binnen_berm_breedte=54,
+            binnen_maaiveld=0,
+        ),
+        layers_data=LayersCases.without_layers,
+        p4_x_coordinate=2,
+    )

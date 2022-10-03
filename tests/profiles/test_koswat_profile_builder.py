@@ -8,7 +8,11 @@ from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_profile import KoswatProfile
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
-from tests.library_test_cases import InputProfileCases
+from tests.library_test_cases import (
+    InitialPointsLookup,
+    InputProfileCases,
+    InputProfileScenarioLookup,
+)
 
 
 class TestKoswatProfileBuilder:
@@ -52,20 +56,18 @@ class TestKoswatProfileBuilder:
         [
             pytest.param(
                 InputProfileCases.default,
-                InputProfileCases.default_points,
+                InitialPointsLookup.default,
                 id="Initial profile case",
             ),
             pytest.param(
-                InputProfileCases.scenario_2,
-                InputProfileCases.scenario_2_points,
+                InputProfileCases.profile_case_2,
+                InitialPointsLookup.calc_profile_scenario_2,
                 id="Aftermath Default input and default scenario",
             ),
         ],
     )
     def test_given_valid_data_when_build_returns_profile(
-        self,
-        input_profile_data: dict,
-        expected_points: List[Point],
+        self, input_profile_data: dict, expected_points: List[Point]
     ):
         # 1. Define test data.
         _layers_data = dict(base_layer=dict(material="zand"), coating_layers=[])

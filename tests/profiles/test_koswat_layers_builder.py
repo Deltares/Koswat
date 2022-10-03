@@ -1,4 +1,7 @@
+from typing import List
+
 import pytest
+from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.koswat_layers import (
@@ -8,7 +11,7 @@ from koswat.profiles.koswat_layers import (
 )
 from koswat.profiles.koswat_layers_builder import KoswatLayersBuilder
 from koswat.profiles.koswat_material import KoswatMaterial
-from tests.library_test_cases import InputProfileCases, LayersCases
+from tests.library_test_cases import InitialPointsLookup, InputProfileCases, LayersCases
 
 
 class TestKoswatLayersBuilder:
@@ -23,11 +26,14 @@ class TestKoswatLayersBuilder:
         "layers_case",
         LayersCases.cases,
     )
-    def test_build_given_valid_data(self, layers_case: dict):
+    @pytest.mark.parametrize("profile_points", InitialPointsLookup.cases)
+    def test_build_given_valid_data(
+        self, layers_case: dict, profile_points: List[Point]
+    ):
         # 1. Define test data.
         _layers_builder = KoswatLayersBuilder()
         _layers_builder.layers_data = layers_case
-        _layers_builder.profile_points = InputProfileCases.default_points
+        _layers_builder.profile_points = profile_points
         # 2. Run test
         _layers = _layers_builder.build()
 
