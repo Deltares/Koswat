@@ -17,8 +17,6 @@ class KoswatProfileBuilder:
 
         _profile = KoswatProfile()
         _input_data = KoswatInputProfile.from_dict(self.input_profile_data)
-        _profile.waterside = Waterside.from_input_profile(_input_data)
-        _profile.polderside = Polderside.from_input_profile(_input_data)
         _profile.input_data = _input_data
         _layers_builder = KoswatLayersBuilder()
         _layers_builder.layers_data = self.layers_data

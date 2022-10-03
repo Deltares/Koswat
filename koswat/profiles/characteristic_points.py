@@ -24,7 +24,7 @@ class CharacteristicPoints:
             self.p_4,
         ]
 
-    @property.setter
+    @waterside.setter
     def waterside(self, points: List[Point]):
         if not points or len(points) != 4:
             raise ValueError("Exactly 4 points should be given")
@@ -45,7 +45,7 @@ class CharacteristicPoints:
             self.p_8,
         ]
 
-    @property.setter
+    @polderside.setter
     def waterside(self, points: List[Point]):
         if not points or len(points) != 4:
             raise ValueError("Exactly 4 points should be given")

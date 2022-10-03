@@ -6,21 +6,15 @@ from shapely.geometry.point import Point
 
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
-from koswat.profiles.polderside import Polderside
-from koswat.profiles.waterside import Waterside
 
 
 class KoswatProfile:
 
     input_data: KoswatInputProfile
-    waterside: Waterside
-    polderside: Polderside
     layers: KoswatLayers
 
     def __init__(self) -> None:
         self.input_data = None
-        self.waterside = Waterside()
-        self.polderside = Polderside()
         self.layers = None
 
     @property
@@ -31,7 +25,6 @@ class KoswatProfile:
         Returns:
             List[Point]: A total of eight points comforming the `KoswatProfile`.
         """
-        _points = []
-        _points.extend(self.waterside.points)
-        _points.extend(self.polderside.points)
-        return _points
+        if not self.input_data or not self.input_data.characteristic_points:
+            return []
+        return self.input_data.characteristic_points.points

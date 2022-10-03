@@ -1,14 +1,9 @@
-from typing import List
-
 from shapely.geometry.point import Point
-from shapely.geometry.polygon import Polygon
 
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_profile import KoswatProfile
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
-from koswat.profiles.polderside import Polderside
-from koswat.profiles.waterside import Waterside
 
 
 class TestKoswatProfileBuilder:
@@ -60,13 +55,15 @@ class TestKoswatProfileBuilder:
         )
         _layers_data = dict(base_layer=dict(material="zand"), coating_layers=[])
         _expected_points = [
-            Point(-18.0, 0.0), 
+            Point(-18.0, 0.0),
             Point(-18.0, 0.0),
             Point(-18.0, 0.0),
             Point(0.0, 6.0),
             Point(5.0, 6.0),
-            Point(23.0, 0.0), 
-            Point(23.0, 0.0), Point(23.0, 0.0)]
+            Point(23.0, 0.0),
+            Point(23.0, 0.0),
+            Point(23.0, 0.0),
+        ]
 
         # 2. Run test.
         _profile_builder = KoswatProfileBuilder()
@@ -78,7 +75,5 @@ class TestKoswatProfileBuilder:
         assert isinstance(_koswat_profile, KoswatProfile)
         assert isinstance(_koswat_profile.input_data, KoswatInputProfile)
         assert isinstance(_koswat_profile.layers, KoswatLayers)
-        assert isinstance(_koswat_profile.waterside, Waterside)
-        assert isinstance(_koswat_profile.polderside, Polderside)
         for p_idx, p in enumerate(_expected_points):
             assert p.almost_equals(_koswat_profile.points[p_idx])
