@@ -71,5 +71,27 @@ class InputProfileCases(CasesProtocol):
         Point(23.0, 0.0),
         Point(23.0, 0.0),
     ]
+    scenario_2 = dict(
+        buiten_maaiveld=0,
+        buiten_talud=4,
+        buiten_berm_hoogte=0,
+        buiten_berm_breedte=0,
+        kruin_hoogte=6.5,
+        kruin_breedte=5,
+        binnen_talud=5.54,
+        binnen_berm_hoogte=2.6,
+        binnen_berm_breedte=54,
+        binnen_maaiveld=0,
+    )
+    scenario_2_points = [
+        Point(-24, 0),
+        Point(-24, 0),
+        Point(-24, 0),
+        Point(2, 6.5),
+        Point(7, 6.5),
+        Point(28.60, 2.6),
+        Point(82.60, 2.6),
+        Point(97, 0),
+    ]
 
     cases = [pytest.param(default, id="Default Input Profile")]

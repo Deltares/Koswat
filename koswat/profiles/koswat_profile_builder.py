@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 from cmath import isnan
+from typing import Optional
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.characteristic_points import CharacteristicPoints
@@ -15,7 +16,7 @@ from koswat.profiles.koswat_profile import KoswatProfile
 class KoswatProfileBuilder(BuilderProtocol):
     input_profile_data: dict = {}
     layers_data: dict = {}
-    p4_x_coordinate: float = math.nan
+    p4_x_coordinate: Optional[float] = math.nan
 
     def _build_characteristic_points(
         self, input_profile: KoswatInputProfile
@@ -23,7 +24,7 @@ class KoswatProfileBuilder(BuilderProtocol):
         _char_points_builder = CharacteristicPointsBuilder()
         _char_points_builder.input_profile = input_profile
         if math.isnan(self.p4_x_coordinate):
-            raise ValueError("P4 x-coordinate should be specified.")
+            self.p4_x_coordinate = 0
         _char_points_builder.p4_x_coordinate = self.p4_x_coordinate
         return _char_points_builder.build()
 

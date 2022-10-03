@@ -60,8 +60,8 @@ class CharacteristicPoints:
     @property
     def points(self) -> List[Point]:
         _points = []
-        _points.extend(self.polderside)
         _points.extend(self.waterside)
+        _points.extend(self.polderside)
         return _points
 
     @property

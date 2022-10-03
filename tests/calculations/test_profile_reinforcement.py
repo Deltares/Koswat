@@ -40,12 +40,12 @@ class TestProfileReinforcement:
         self, new_profile: KoswatInputProfile, expected_profile: KoswatInputProfile
     ) -> List[str]:
         _new_data_dict = new_profile.__dict__
-        _old_data_dict = expected_profile.__dict__
+        _expected_data_dict = expected_profile.__dict__
         assert len(_new_data_dict) >= 10
-        assert len(_new_data_dict) == len(_old_data_dict)
+        assert len(_new_data_dict) == len(_expected_data_dict)
         return [
             f"Values differ for {key}, expected {value}, got: {_new_data_dict[key]}"
-            for key, value in _old_data_dict.items()
+            for key, value in _expected_data_dict.items()
             if not self.almost_equal(_new_data_dict[key], value)
         ]
 
@@ -65,64 +65,28 @@ class TestProfileReinforcement:
 
         return _layers_errors
 
-    def verify_equal_profiles(
-        self, new_profile: KoswatProfile, expected_profile: KoswatProfile
-    ):
-        _found_errors = self._compare_koswat_input_profile(
-            new_profile.input_data, expected_profile.input_data
-        )
-        _found_errors = self._compare_koswat_layers(
-            new_profile.layers, expected_profile.layers
-        )
-        _found_errors.extend(
-            self._compare_points(new_profile.points, expected_profile.points)
-        )
-        if _found_errors:
-            _mssg = "\n".join(_found_errors)
-            pytest.fail(_mssg)
-
     def test_given_profile_and_scenario_calculate_new_geometry(self):
         # 1. Define test data.
         _dummy_layers = dict(base_layer=dict(material="zand"), coating_layers=[])
-        _input_profile_data = dict(
-            buiten_maaiveld=0,
-            buiten_talud=3,
-            buiten_berm_hoogte=0,
-            buiten_berm_breedte=0,
-            kruin_hoogte=6,
-            kruin_breedte=5,
-            binnen_talud=3,
-            binnen_berm_hoogte=0,
-            binnen_berm_breedte=0,
-            binnen_maaiveld=0,
-        )
-
         _profile = KoswatProfileBuilder.with_data(
             dict(
-                input_profile_data=_input_profile_data,
+                input_profile_data=dict(
+                    buiten_maaiveld=0,
+                    buiten_talud=3,
+                    buiten_berm_hoogte=0,
+                    buiten_berm_breedte=0,
+                    kruin_hoogte=6,
+                    kruin_breedte=5,
+                    binnen_talud=3,
+                    binnen_berm_hoogte=0,
+                    binnen_berm_breedte=0,
+                    binnen_maaiveld=0,
+                ),
                 layers_data=_dummy_layers,
                 p4_x_coordinate=0,
             )
         ).build()
         assert isinstance(_profile, KoswatProfile)
-
-        _expected_new_data = dict(
-            buiten_maaiveld=0,
-            buiten_talud=3,
-            buiten_berm_breedte=0,
-            buiten_berm_hoogte=0,
-            kruin_hoogte=7,
-            kruin_breedte=5,
-            binnen_talud=3.57,
-            binnen_berm_hoogte=1,
-            binnen_berm_breedte=20,
-            binnen_maaiveld=0,
-        )
-        _expected_profile = KoswatProfileBuilder.with_data(
-            dict(input_profile_data=_expected_new_data, layers_data=_dummy_layers)
-        ).build()
-        assert isinstance(_expected_profile, KoswatProfile)
-
         _scenario = KoswatScenario.from_dict(
             dict(
                 d_h=1,
@@ -134,13 +98,53 @@ class TestProfileReinforcement:
         )
         assert isinstance(_scenario, KoswatScenario)
 
+        _expected_profile = KoswatProfileBuilder.with_data(
+            dict(
+                input_profile_data=dict(
+                    buiten_maaiveld=0,
+                    buiten_talud=3,
+                    buiten_berm_breedte=0,
+                    buiten_berm_hoogte=0,
+                    kruin_hoogte=7,
+                    kruin_breedte=5,
+                    binnen_talud=3.57,
+                    binnen_berm_hoogte=1,
+                    binnen_berm_breedte=20,
+                    binnen_maaiveld=0,
+                ),
+                layers_data=_dummy_layers,
+                p4_x_coordinate=3,
+            )
+        ).build()
+        _expected_char_points = [
+            Point(-18, 0),
+            Point(-18, 0),
+            Point(-18, 0),
+            Point(3, 7),
+            Point(8, 7),
+            Point(29.43, 1),
+            Point(49.43, 1),
+            Point(53, 0),
+        ]
+
         # 2. Run test.
         _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
 
         # 3. Verify expectations.
         assert isinstance(_new_profile, KoswatProfile)
         assert isinstance(_new_profile.input_data, KoswatInputProfile)
-        self.verify_equal_profiles(_new_profile, _expected_profile)
+        _found_errors = self._compare_koswat_input_profile(
+            _new_profile.input_data, _expected_profile
+        )
+        _found_errors = self._compare_koswat_layers(
+            _new_profile.layers, _expected_profile.layers
+        )
+        _found_errors.extend(
+            self._compare_points(_new_profile.points, _expected_profile.points)
+        )
+        if _found_errors:
+            _mssg = "\n".join(_found_errors)
+            pytest.fail(_mssg)
 
     def test_calculate_new_binnen_talud(self):
         # 1. Define test data.
