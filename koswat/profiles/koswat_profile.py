@@ -4,6 +4,7 @@ from typing import List
 
 from shapely.geometry.point import Point
 
+from koswat.profiles.characteristic_points import CharacteristicPoints
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
 
@@ -11,11 +12,13 @@ from koswat.profiles.koswat_layers import KoswatLayers
 class KoswatProfile:
 
     input_data: KoswatInputProfile
+    characteristic_points: CharacteristicPoints
     layers: KoswatLayers
 
     def __init__(self) -> None:
         self.input_data = None
         self.layers = None
+        self.characteristic_points = None
 
     @property
     def points(self) -> List[Point]:
@@ -25,6 +28,6 @@ class KoswatProfile:
         Returns:
             List[Point]: A total of eight points comforming the `KoswatProfile`.
         """
-        if not self.input_data or not self.input_data.characteristic_points:
+        if not self.input_data.characteristic_points:
             return []
         return self.input_data.characteristic_points.points

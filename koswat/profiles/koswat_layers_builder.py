@@ -6,6 +6,7 @@ from typing import List
 from matplotlib import pyplot
 from shapely import geometry
 
+from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.koswat_layers import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
@@ -21,7 +22,7 @@ def plot_line(ax, ob, color):
         ax.plot(x, y, color=color, linewidth=3, solid_capstyle="round", zorder=1)
 
 
-class KoswatLayersBuilder:
+class KoswatLayersBuilder(BuilderProtocol):
     layers_data: dict = {}
     profile_points: List[geometry.Point] = []
     profile_geometry: geometry.Polygon = None

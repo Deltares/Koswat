@@ -1,9 +1,10 @@
+from koswat.builder_protocol import BuilderProtocol
 from koswat.koswat_report import LayerCostReport, ProfileCostReport
 from koswat.profiles.koswat_layers import KoswatLayerProtocol
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
-class ProfileReinforcementCostBuilder:
+class ProfileReinforcementCostBuilder(BuilderProtocol):
     """
     TODO: This class (like many others) is still a work in progress.
     Not entirely sure yet which structure will be applied once we start using layers.

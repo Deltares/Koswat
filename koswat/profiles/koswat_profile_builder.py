@@ -1,13 +1,29 @@
 from __future__ import annotations
 
+from koswat.builder_protocol import BuilderProtocol
+from koswat.profiles.characteristic_points import CharacteristicPoints
+from koswat.profiles.characteristic_points_builder import CharacteristicPointsBuilder
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
+from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_layers_builder import KoswatLayersBuilder
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
-class KoswatProfileBuilder:
+class KoswatProfileBuilder(BuilderProtocol):
     input_profile_data: dict = {}
     layers_data: dict = {}
+
+    def _build_characteristic_points(self, input_profile: KoswatInputProfile) -> CharacteristicPoints:
+        _char_points_builder = CharacteristicPointsBuilder()
+        _char_points_builder.input_profile = input_profile
+        _char_points_builder.p4_x_coordinate = 0
+        return _char_points_builder.build()
+
+    def _build_layers(self, profile_points: CharacteristicPoints) -> KoswatLayers:
+        _layers_builder = KoswatLayersBuilder()
+        _layers_builder.layers_data = self.layers_data
+        _layers_builder.profile_points = profile_points.points
+        return _layers_builder.build()
 
     def build(self) -> KoswatProfile:
         if not isinstance(self.input_profile_data, dict):
@@ -18,10 +34,8 @@ class KoswatProfileBuilder:
         _profile = KoswatProfile()
         _input_data = KoswatInputProfile.from_dict(self.input_profile_data)
         _profile.input_data = _input_data
-        _layers_builder = KoswatLayersBuilder()
-        _layers_builder.layers_data = self.layers_data
-        _layers_builder.profile_points = _profile.points
-        _profile.layers = _layers_builder.build()
+        _profile.characteristic_points = self._build_characteristic_points()
+        _profile.layers = self._build_layers()
         return _profile
 
     @classmethod

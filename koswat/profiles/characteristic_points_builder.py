@@ -3,16 +3,16 @@ from typing import List
 
 from shapely.geometry.point import Point
 
+from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.characteristic_points import CharacteristicPoints
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 
 
-class CharacteristicPointsBuilder:
+class CharacteristicPointsBuilder(BuilderProtocol):
     input_profile: KoswatInputProfile = None
     p4_x_coordinate: float = math.nan
 
     def _build_waterside(self, p4_x: float) -> List[Point]:
-        # _p_4 = self.input_profile.characteristic_points.p_4
         _p4 = Point(p4_x, self.input_profile.kruin_hoogte)
         _p3_x = _p4.x - (
             (self.input_profile.kruin_hoogte - self.input_profile.buiten_berm_hoogte)
@@ -29,7 +29,6 @@ class CharacteristicPointsBuilder:
         return [_p1, _p2, _p3, _p4]
 
     def _build_polderside(self, p4_x: float) -> List[Point]:
-        # _x_p4 = 0
         _x_p5 = p4_x + self.input_profile.kruin_breedte
         _p5 = Point(_x_p5, self.input_profile.kruin_hoogte)
         _x_p6 = _p5.x + (

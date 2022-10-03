@@ -1,5 +1,6 @@
 from shapely.geometry.point import Point
 
+from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_profile import KoswatProfile
@@ -10,6 +11,7 @@ class TestKoswatProfileBuilder:
     def test_initialize_init_(self):
         _builder = KoswatProfileBuilder()
         assert isinstance(_builder, KoswatProfileBuilder)
+        assert isinstance(_builder, BuilderProtocol)
         assert not _builder.input_profile_data
         assert not _builder.layers_data
 

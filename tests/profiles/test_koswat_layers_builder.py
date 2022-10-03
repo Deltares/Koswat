@@ -1,5 +1,6 @@
 import pytest
 
+from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.koswat_layers import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
@@ -14,6 +15,7 @@ class TestKoswatLayersBuilder:
     def test_initialize(self):
         _builder = KoswatLayersBuilder()
         assert isinstance(_builder, KoswatLayersBuilder)
+        assert isinstance(_builder, BuilderProtocol)
         assert not _builder.layers_data
         assert not _builder.profile_points
 
