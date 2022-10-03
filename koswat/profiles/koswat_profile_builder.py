@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import math
+from cmath import isnan
+
 from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.characteristic_points import CharacteristicPoints
 from koswat.profiles.characteristic_points_builder import CharacteristicPointsBuilder
@@ -12,11 +15,16 @@ from koswat.profiles.koswat_profile import KoswatProfile
 class KoswatProfileBuilder(BuilderProtocol):
     input_profile_data: dict = {}
     layers_data: dict = {}
+    p4_x_coordinate: float = math.nan
 
-    def _build_characteristic_points(self, input_profile: KoswatInputProfile) -> CharacteristicPoints:
+    def _build_characteristic_points(
+        self, input_profile: KoswatInputProfile
+    ) -> CharacteristicPoints:
         _char_points_builder = CharacteristicPointsBuilder()
         _char_points_builder.input_profile = input_profile
-        _char_points_builder.p4_x_coordinate = 0
+        if math.isnan(self.p4_x_coordinate):
+            raise ValueError("P4 x-coordinate should be specified.")
+        _char_points_builder.p4_x_coordinate = self.p4_x_coordinate
         return _char_points_builder.build()
 
     def _build_layers(self, profile_points: CharacteristicPoints) -> KoswatLayers:
@@ -40,9 +48,11 @@ class KoswatProfileBuilder(BuilderProtocol):
 
     @classmethod
     def with_data(
-        cls, input_profile_data: dict, layers_data: dict
+        cls,
+        builder_data: dict,
     ) -> KoswatProfileBuilder:
         _builder = cls()
-        _builder.input_profile_data = input_profile_data
-        _builder.layers_data = layers_data
+        _builder.input_profile_data = builder_data["input_profile_data"]
+        _builder.layers_data = builder_data["layers_data"]
+        _builder.p4_x_coordinate = builder_data["p4_x_coordinate"]
         return _builder

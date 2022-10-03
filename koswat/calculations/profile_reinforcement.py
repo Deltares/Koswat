@@ -87,4 +87,9 @@ class ProfileReinforcement(ProfileCalculationProtocol):
     ) -> KoswatProfile:
         _new_data = self._calculate_new_input_profile(profile.input_data, scenario)
         _data_layers = profile.layers.as_data_dict()
-        return KoswatProfileBuilder.with_data(_new_data.__dict__, _data_layers).build()
+        _builder_dict = dict(
+            input_profile_data=_new_data.__dict__,
+            layers_data=_data_layers,
+            p4_x_coordinate=scenario.d_h * scenario.buiten_talud,
+        )
+        return KoswatProfileBuilder.with_data(_builder_dict).build()
