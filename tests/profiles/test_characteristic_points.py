@@ -70,3 +70,19 @@ class TestCharacteristicPoints:
         _char_points.polderside = _points_to_add
         assert _points_to_add == _char_points.polderside
         assert _points_to_add == _char_points.points[4:]
+
+    def test_points_returns_both_water_and_polder_side_points(self):
+        # 1. Define test data.
+        _char_points = CharacteristicPoints()
+        _polderside_points = [Point(4.2, 2.4)] * 4
+        _waterside_points = [Point(2.4, 4.2)] * 4
+        _char_points.polderside = _polderside_points
+        _char_points.waterside = _waterside_points
+
+        # 2. Run test
+        _expected_points = []
+        _expected_points = _waterside_points
+        _expected_points.extend(_polderside_points)
+
+        # 3. Verify expectations
+        assert _char_points.points == _expected_points
