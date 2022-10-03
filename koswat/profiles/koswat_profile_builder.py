@@ -40,10 +40,11 @@ class KoswatProfileBuilder(BuilderProtocol):
             raise ValueError("Koswat Layers data dictionary required.")
 
         _profile = KoswatProfile()
-        _input_data = KoswatInputProfile.from_dict(self.input_profile_data)
-        _profile.input_data = _input_data
-        _profile.characteristic_points = self._build_characteristic_points()
-        _profile.layers = self._build_layers()
+        _profile.input_data = KoswatInputProfile.from_dict(self.input_profile_data)
+        _profile.characteristic_points = self._build_characteristic_points(
+            _profile.input_data
+        )
+        _profile.layers = self._build_layers(_profile.characteristic_points)
         return _profile
 
     @classmethod
@@ -54,5 +55,5 @@ class KoswatProfileBuilder(BuilderProtocol):
         _builder = cls()
         _builder.input_profile_data = builder_data["input_profile_data"]
         _builder.layers_data = builder_data["layers_data"]
-        _builder.p4_x_coordinate = builder_data["p4_x_coordinate"]
+        _builder.p4_x_coordinate = builder_data.get("p4_x_coordinate", 0)
         return _builder

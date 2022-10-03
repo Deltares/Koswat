@@ -98,7 +98,11 @@ class TestProfileReinforcement:
         )
 
         _profile = KoswatProfileBuilder.with_data(
-            _input_profile_data, _dummy_layers
+            dict(
+                input_profile_data=_input_profile_data,
+                layers_data=_dummy_layers,
+                p4_x_coordinate=0,
+            )
         ).build()
         assert isinstance(_profile, KoswatProfile)
 
@@ -115,7 +119,7 @@ class TestProfileReinforcement:
             binnen_maaiveld=0,
         )
         _expected_profile = KoswatProfileBuilder.with_data(
-            _expected_new_data, _dummy_layers
+            dict(input_profile_data=_expected_new_data, layers_data=_dummy_layers)
         ).build()
         assert isinstance(_expected_profile, KoswatProfile)
 

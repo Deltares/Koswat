@@ -28,6 +28,6 @@ class KoswatProfile:
         Returns:
             List[Point]: A total of eight points comforming the `KoswatProfile`.
         """
-        if not self.input_data.characteristic_points:
+        if not self.characteristic_points:
             return []
-        return self.input_data.characteristic_points.points
+        return self.characteristic_points.points

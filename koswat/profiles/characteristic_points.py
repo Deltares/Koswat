@@ -46,16 +46,16 @@ class CharacteristicPoints:
         ]
 
     @polderside.setter
-    def waterside(self, points: List[Point]):
+    def polderside(self, points: List[Point]):
         if not points or len(points) != 4:
             raise ValueError("Exactly 4 points should be given")
         if not all(isinstance(p, Point) for p in points):
             raise ValueError(f"All points given should be of type {type(Point)}")
 
-        self.p_5 = points[4]
-        self.p_6 = points[5]
-        self.p_7 = points[6]
-        self.p_8 = points[7]
+        self.p_5 = points[0]
+        self.p_6 = points[1]
+        self.p_7 = points[2]
+        self.p_8 = points[3]
 
     @property
     def points(self) -> List[Point]:
