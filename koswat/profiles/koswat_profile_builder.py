@@ -1,11 +1,8 @@
 from __future__ import annotations
 
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
-from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_layers_builder import KoswatLayersBuilder
 from koswat.profiles.koswat_profile import KoswatProfile
-from koswat.profiles.polderside import Polderside
-from koswat.profiles.waterside import Waterside
 
 
 class KoswatProfileBuilder:

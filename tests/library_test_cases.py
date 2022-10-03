@@ -16,8 +16,18 @@ class ScenarioCases(CasesProtocol):
         kruin_breedte=5,
         buiten_talud=3,
     )
+    scenario_2 = dict(
+        d_h=0.5,
+        d_s=20,
+        d_p=80,
+        kruin_breedte=5,
+        buiten_talud=4,
+    )
 
-    cases = [pytest.param(default, id="Default Scenario")]
+    cases = [
+        pytest.param(default, id="Default Scenario"),
+        pytest.param(scenario_2, id="Scenario 2"),
+    ]
 
 
 class LayersCases(CasesProtocol):
@@ -28,7 +38,7 @@ class LayersCases(CasesProtocol):
     with_clay = dict(
         base_layer=dict(material="zand"),
         coating_layers=[
-            dict(material="klei", depth=.75),
+            dict(material="klei", depth=0.75),
         ],
     )
 

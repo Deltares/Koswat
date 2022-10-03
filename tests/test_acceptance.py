@@ -52,7 +52,7 @@ class TestAcceptance:
         "layers_case",
         LayersCases.cases,
     )
-    def test_given_default_case_returns_costs(
+    def test_given_acceptance_test_case_returns_costs(
         self, input_profile_case: dict, layers_case: dict, scenario_case: dict
     ):
         # 1. Define test data.

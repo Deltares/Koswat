@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from koswat.profiles.characteristic_points import CharacteristicPoints
+
 
 class KoswatInputProfile:
     buiten_maaiveld: float
@@ -12,6 +14,8 @@ class KoswatInputProfile:
     binnen_berm_hoogte: float
     binnen_berm_breedte: float
     binnen_maaiveld: float
+
+    characteristic_points: CharacteristicPoints
 
     @classmethod
     def from_dict(cls, profile_data: dict) -> KoswatInputProfile:
@@ -26,4 +30,7 @@ class KoswatInputProfile:
         _input_profile.binnen_berm_hoogte = profile_data["binnen_berm_hoogte"]
         _input_profile.binnen_berm_breedte = profile_data["binnen_berm_breedte"]
         _input_profile.binnen_maaiveld = profile_data["binnen_maaiveld"]
+        _input_profile.characteristic_points = CharacteristicPoints.from_tuple_list(
+            profile_data.get("characteristic_points", [])
+        )
         return _input_profile
