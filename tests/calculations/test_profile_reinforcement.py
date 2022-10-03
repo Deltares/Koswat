@@ -162,7 +162,7 @@ class TestProfileReinforcement:
 
     def test_calculate_new_binnen_berm_hoogte(self):
         # 1. Define test data.
-        _exepcted_value = 1
+        _expected_value = 1
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _old_data = KoswatInputProfile()
@@ -179,11 +179,11 @@ class TestProfileReinforcement:
         )
 
         # 3. Verify expectations
-        assert _new_binnen_berm_hoogte == pytest.approx(_exepcted_value, 0.001)
+        assert _new_binnen_berm_hoogte == pytest.approx(_expected_value, 0.001)
 
     def test_calculate_new_binnen_berm_hoogte_negative_binnen_berm_breedte(self):
         # 1. Define test data.
-        _exepcted_value = 0
+        _expected_value = 0
         _scenario = KoswatScenario()
         _old_data = KoswatInputProfile()
         _new_data = KoswatInputProfile()
@@ -197,7 +197,7 @@ class TestProfileReinforcement:
         )
 
         # 3. Verify expectations
-        assert _new_binnen_berm_hoogte == pytest.approx(_exepcted_value, 0.001)
+        assert _new_binnen_berm_hoogte == pytest.approx(_expected_value, 0.001)
 
     def test_calculate_new_binnen_berm_breedte(self):
         # 1. Define test data.
@@ -234,7 +234,7 @@ class TestProfileReinforcement:
 
     def test_calculate_new_kruin_hoogte(self):
         # 1. Define test data.
-        _exepcted_value = 42.24
+        _expected_value = 42.24
         _scenario = KoswatScenario()
         _scenario.d_h = 2.2
         _old_data = KoswatInputProfile()
@@ -246,4 +246,4 @@ class TestProfileReinforcement:
         )
 
         # 3. Verify expectations
-        assert _new_kruin_hoogte == pytest.approx(_exepcted_value, 0.001)
+        assert _new_kruin_hoogte == pytest.approx(_expected_value, 0.001)
