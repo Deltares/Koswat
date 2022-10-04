@@ -19,3 +19,4 @@ venv.bak/
 coverage.xml
 
 # Koswat ignore
+tests/test_results/
