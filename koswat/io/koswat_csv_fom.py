@@ -5,15 +5,7 @@ from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
-
-
-class PointSurroundings(FileObjectModelProtocol):
-    section: str = ""
-    location: Point = None
-    distance_to_buildings: List[float] = []
-
-    def is_valid(self) -> bool:
-        return self.section and self.location
+from koswat.surroundings.koswat_buildings_polderside import PointSurroundings
 
 
 class KoswatCsvFom(FileObjectModelProtocol):
@@ -21,9 +13,7 @@ class KoswatCsvFom(FileObjectModelProtocol):
     distances_list: List[float] = []
 
     def is_valid(self) -> bool:
-        return self.points_surroundings_list and all(
-            ps.is_valid for ps in self.points_surroundings_list
-        )
+        return self.points_surroundings_list and any(self.points_surroundings_list)
 
 
 class KoswatCsvFomBuilder(BuilderProtocol):

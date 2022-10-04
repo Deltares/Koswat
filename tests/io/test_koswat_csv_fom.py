@@ -9,17 +9,6 @@ from koswat.io.koswat_csv_reader import KoswatCsvFom
 from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
 
 
-class TestPointSurroundings:
-    def test_initialize_point_surroundings(self):
-        _p_s = PointSurroundings()
-        assert isinstance(_p_s, PointSurroundings)
-        assert isinstance(_p_s, FileObjectModelProtocol)
-        assert not _p_s.section
-        assert not _p_s.location
-        assert not _p_s.distance_to_buildings
-        assert not _p_s.is_valid()
-
-
 class TestKoswatCsvFom:
     def test_initialize_koswat_csv_fom(self):
         _csv_fom = KoswatCsvFom()
