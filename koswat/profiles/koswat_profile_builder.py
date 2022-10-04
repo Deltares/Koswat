@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import math
-from cmath import isnan
 from typing import Optional
 
 from koswat.builder_protocol import BuilderProtocol
