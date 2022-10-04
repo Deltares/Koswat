@@ -39,9 +39,10 @@ class KoswatCsvFomBuilder(BuilderProtocol):
     def _get_surroundings_distances(self, distance_list: List[str]) -> List[float]:
         def to_distance_float(header_value: str) -> float:
             _d_values = re.findall(r"\d+", header_value)
-            assert (
-                len(_d_values) == 1
-            ), "More than one distance captured, distance headers should be like `afst_42m`."
+            if len(_d_values) != 1:
+                raise ValueError(
+                    "More than one distance captured, distance headers should be like `afst_42m`."
+                )
             return float(_d_values[0])
 
         return list(map(to_distance_float, distance_list))
