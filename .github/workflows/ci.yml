@@ -1,7 +1,10 @@
 name: ci-on-push-and-autoformat
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
 jobs:
 
   CI:
