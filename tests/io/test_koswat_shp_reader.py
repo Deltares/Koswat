@@ -8,14 +8,14 @@ from koswat.io.koswat_reader_protocol import (
     FileObjectModelProtocol,
     KoswatReaderProtocol,
 )
-from koswat.io.koswat_shp_reader import KoswatShpModel, KoswatShpReader
+from koswat.io.koswat_shp_reader import KoswatShpFom, KoswatShpReader
 from tests import test_data
 
 
-class TestKoswatShpModel:
-    def test_initialize_koswat_shp_model(self):
-        _model = KoswatShpModel()
-        assert isinstance(_model, KoswatShpModel)
+class TestKoswatShpFom:
+    def test_initialize_koswat_shp_fom(self):
+        _model = KoswatShpFom()
+        assert isinstance(_model, KoswatShpFom)
         assert isinstance(_model, FileObjectModelProtocol)
         assert not _model.is_valid()
 
@@ -73,7 +73,7 @@ class TestKoswatShpReader:
         _data = KoswatShpReader().read(_test_file)
 
         # 3. Verify expectations
-        assert isinstance(_data, KoswatShpModel)
+        assert isinstance(_data, KoswatShpFom)
         assert isinstance(_data.initial_point, Point)
         assert isinstance(_data.end_point, Point)
         assert _data.is_valid()
