@@ -2,10 +2,21 @@ from pathlib import Path
 from typing import Union
 
 import pytest
+from shapely.geometry import Point
 
-from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
-from koswat.io.koswat_shp_reader import KoswatShpReader
+from koswat.io.koswat_reader_protocol import (
+    FileObjectModelProtocol,
+    KoswatReaderProtocol,
+)
+from koswat.io.koswat_shp_reader import KoswatShpModel, KoswatShpReader
 from tests import test_data
+
+
+class TestKoswatShpModel:
+    def test_initialize_koswat_shp_model(self):
+        _model = KoswatShpModel()
+        assert isinstance(_model, KoswatShpModel)
+        assert isinstance(_model, FileObjectModelProtocol)
 
 
 class TestKoswatShpReader:
@@ -48,4 +59,6 @@ class TestKoswatShpReader:
         _data = KoswatShpReader().read(_test_file)
 
         # 3. Verify expectations
-        assert _data is not None
+        assert isinstance(_data, KoswatShpModel)
+        assert isinstance(_data.initial_point, Point)
+        assert isinstance(_data.end_point, Point)
