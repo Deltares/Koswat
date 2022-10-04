@@ -11,12 +11,21 @@ from koswat.io.koswat_reader_protocol import (
 
 
 class KoswatShpModel(FileObjectModelProtocol):
-    initial_point: Point
-    end_point: Point
+    initial_point: Point = None
+    end_point: Point = None
+
+    def is_valid(self) -> bool:
+        if not self.initial_point or not self.end_point:
+            return False
+        return self.initial_point.is_valid and self.end_point.is_valid
 
 class KoswatShpReader(KoswatReaderProtocol):
+
+    def supports_file(self, file_path: Path) -> bool:
+        return isinstance(file_path, Path) and file_path.suffix == ".shp"
+
     def read(self, file_path: Path) -> KoswatShpModel:
-        if not isinstance(file_path, Path) or file_path.suffix != ".shp": 
+        if not self.supports_file(file_path):
             raise ValueError("Shp file should be provided")
         if not file_path.is_file():
             raise FileNotFoundError(file_path)

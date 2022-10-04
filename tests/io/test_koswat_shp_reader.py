@@ -17,6 +17,7 @@ class TestKoswatShpModel:
         _model = KoswatShpModel()
         assert isinstance(_model, KoswatShpModel)
         assert isinstance(_model, FileObjectModelProtocol)
+        assert not _model.is_valid()
 
 
 class TestKoswatShpReader:
@@ -26,11 +27,17 @@ class TestKoswatShpReader:
         assert isinstance(_reader, KoswatReaderProtocol)
 
     def test_read_given_invalid_file_raises_error(self):
+        # 1. Define test data.
         _file = Path() / "not_a_file.shp"
         assert not _file.is_file()
-        with pytest.raises(FileNotFoundError) as exc_err:
-            KoswatShpReader().read(_file)
+        _reader = KoswatShpReader()
+        assert _reader.supports_file(_file)
 
+        # 2. Run test.
+        with pytest.raises(FileNotFoundError) as exc_err:
+            _reader.read(_file)
+
+        # 3. Verify expectations.
         assert _file.name in str(exc_err.value)
 
     @pytest.mark.parametrize(
@@ -45,8 +52,15 @@ class TestKoswatShpReader:
     def test_read_given_invalid_shp_file_raises_error(
         self, shp_file: Union[None, str, Path]
     ):
+        # 1. Define test data.
+        _reader = KoswatShpReader()
+        assert not _reader.supports_file(shp_file)
+
+        # 2. Run test.
         with pytest.raises(ValueError) as exc_err:
             KoswatShpReader().read(shp_file)
+
+        # 3. Verify final expectations.
         assert str(exc_err.value) == "Shp file should be provided"
 
     def test_given_valid_data_then_returns_data(self):
@@ -62,3 +76,4 @@ class TestKoswatShpReader:
         assert isinstance(_data, KoswatShpModel)
         assert isinstance(_data.initial_point, Point)
         assert isinstance(_data.end_point, Point)
+        assert _data.is_valid()
