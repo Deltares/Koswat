@@ -1,4 +1,6 @@
-from typing import List
+import math
+from collections import defaultdict
+from typing import Dict, List
 
 from shapely.geometry import Point
 
@@ -10,6 +12,10 @@ class PointSurroundings:
     location: Point = None
     distance_to_buildings: List[float] = []
 
+    @property
+    def closest_building(self) -> float:
+        return min(self.distance_to_buildings, default=math.nan)
+
 
 class KoswatBuildingsPolderside(SurroundingsProtocol):
     points: List[PointSurroundings] = []
@@ -17,3 +23,17 @@ class KoswatBuildingsPolderside(SurroundingsProtocol):
     @property
     def conflicting_points(self) -> List[PointSurroundings]:
         return [_cf for _cf in self.points if any(_cf.distance_to_buildings)]
+
+    def get_classify_surroundings(self) -> Dict[float, List[PointSurroundings]]:
+        """
+        Gets all the `points` in a dictionary indexed by their closest distance to a building.
+
+        Returns:
+            Dict[float, List[PointSurroundings]]: Keys represent distance to a building, values are the points matching that criteria.
+        """
+        if not self.points:
+            return {}
+        _surroundings_dict = defaultdict(list)
+        for ps in self.points:
+            _surroundings_dict[ps.closest_building].append(ps.location)
+        return _surroundings_dict
