@@ -25,6 +25,7 @@ class ProfileReinforcementCostBuilder(BuilderProtocol):
         self, old_profile: KoswatProfile, new_profile: KoswatProfile
     ) -> ProfileCostReport:
         _report = ProfileCostReport()
+        _report.profile_id = new_profile.location
         if len(old_profile.layers._layers) != len(new_profile.layers._layers):
             raise ValueError(
                 "Layers not matching between old and new profile. Calculation of costs cannot be computed."

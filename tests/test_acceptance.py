@@ -8,10 +8,18 @@ from koswat.calculations.profile_reinforcement import ProfileReinforcement
 from koswat.calculations.profile_reinforcement_cost_builder import (
     ProfileReinforcementCostBuilder,
 )
-from koswat.koswat_report import LayerCostReport, ProfileCostReport
+from koswat.koswat_report import (
+    LayerCostReport,
+    MultipleProfileCostReport,
+    ProfileCostReport,
+)
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_profile import KoswatProfile
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
+from koswat.surroundings.koswat_buildings_polderside import KoswatBuildingsPolderside
+from koswat.surroundings.koswat_surroundings import KoswatSurroundings
+from koswat.surroundings.koswat_surroundings_builder import KoswatSurroundingsBuilder
+from tests import test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -53,7 +61,10 @@ class TestAcceptance:
         LayersCases.cases,
     )
     def test_given_acceptance_test_case_returns_costs(
-        self, input_profile_case: dict, layers_case: dict, scenario_case: dict
+        self,
+        input_profile_case: dict,
+        layers_case: dict,
+        scenario_case: dict,
     ):
         # 1. Define test data.
         _scenario = KoswatScenario.from_dict(scenario_case)
@@ -83,3 +94,49 @@ class TestAcceptance:
         assert _cost_report.total_cost > 0
         assert not math.isnan(_cost_report.total_volume)
         assert _cost_report.total_volume > 0
+
+    def test_given_surrounding_files_run_calculations_for_all_included_profiles(self):
+        # 1. Define test data.
+        _csv_test_file = (
+            test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
+        )
+        _shp_test_file = (
+            test_data
+            / "shp_reader"
+            / "Dijkvak"
+            / "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp"
+        )
+        assert _csv_test_file.is_file()
+        assert _shp_test_file.is_file()
+
+        _surroundings = KoswatSurroundingsBuilder.from_files(
+            dict(csv_file=_csv_test_file, shp_file=_shp_test_file)
+        ).build()
+        assert isinstance(_surroundings, KoswatSurroundings)
+        assert isinstance(_surroundings.buldings_polderside, KoswatBuildingsPolderside)
+
+        _scenario = KoswatScenario.from_dict(ScenarioCases.default)
+        assert isinstance(_scenario, KoswatScenario)
+
+        # 2. Run test
+        _multi_report = MultipleProfileCostReport()
+        for _polder_point in _surroundings.locations:
+            _polder_profile = KoswatProfileBuilder.with_data(
+                dict(
+                    input_profile_data=InputProfileCases.default,
+                    layers_data=LayersCases.without_layers,
+                )
+            ).build()
+            _polder_profile.location = _polder_point.location
+            _new_polder_profile = ProfileReinforcement().calculate_new_profile(
+                _polder_profile, _scenario
+            )
+            _cost_report = ProfileReinforcementCostBuilder().get_profile_cost_report(
+                _polder_profile, _new_polder_profile
+            )
+            _multi_report.profile_list_reports.append(_cost_report)
+
+        # 3. Verify expectations.
+        assert _multi_report.profile_list_reports
+        assert _multi_report.total_cost > 0
+        assert _multi_report.total_volume > 0

@@ -13,6 +13,7 @@ from koswat.surroundings.koswat_buildings_polderside import (
 from koswat.surroundings.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
+from tests import test_data
 
 
 class TestKoswatBuildingsPoldersideBuilder:
@@ -39,7 +40,7 @@ class TestKoswatBuildingsPoldersideBuilder:
 
         # 2. Run test
         with pytest.raises(ValueError) as exc_err:
-            _builder._find_conflicting_point_idx(None)
+            _builder._find_polderside_point_idx(None)
 
         # 3. Verify expectations.
         assert (
@@ -66,7 +67,7 @@ class TestKoswatBuildingsPoldersideBuilder:
         ]
 
         # 2. Run test.
-        _idx_found = _builder._find_conflicting_point_idx(limit_point)
+        _idx_found = _builder._find_polderside_point_idx(limit_point)
 
         # 3. Verify expectations.
         assert _idx_found == 2
@@ -96,7 +97,7 @@ class TestKoswatBuildingsPoldersideBuilder:
         ]
 
         # 2. Run test.
-        _found_points = _builder._get_conflicting_points(start_idx, end_idx)
+        _found_points = _builder._get_polderside_points(start_idx, end_idx)
 
         # 3. Verify expectations.
         assert _found_points == _expected_points
@@ -130,3 +131,31 @@ class TestKoswatBuildingsPoldersideBuilder:
         # 3. Verify expectations.
         assert isinstance(_kbp, KoswatBuildingsPolderside)
         assert len(_kbp.conflicting_points) == len(_expected_points)
+
+    def test_from_files_then_build_returns_expected_model(self):
+        # 1. Define test data.
+        _csv_test_file = (
+            test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
+        )
+        _shp_test_file = (
+            test_data
+            / "shp_reader"
+            / "Dijkvak"
+            / "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp"
+        )
+        assert _csv_test_file.is_file()
+        assert _shp_test_file.is_file()
+
+        # 2. Run test
+        _builder = KoswatBuildingsPoldersideBuilder.from_files(
+            _csv_test_file, _shp_test_file
+        )
+        assert isinstance(_builder, KoswatBuildingsPoldersideBuilder)
+        assert isinstance(_builder.koswat_csv_fom, KoswatCsvFom)
+        assert isinstance(_builder.koswat_shp_fom, KoswatShpFom)
+        _buildings = _builder.build()
+
+        # 3. Verify expectations.
+        assert isinstance(_buildings, KoswatBuildingsPolderside)
+        assert len(_buildings.points) == 14623
+        assert _buildings.conflicting_points

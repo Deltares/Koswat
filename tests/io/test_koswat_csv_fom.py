@@ -23,8 +23,8 @@ class TestKoswatCsvFomBuilder:
         self, point: PointSurroundings, location: Point, distances: List[float]
     ):
         assert isinstance(point, PointSurroundings)
-        assert point.is_valid()
         assert point.section == "A"
+        assert point.location.is_valid
         assert point.location.almost_equals(location, 0.001)
         assert point.distance_to_buildings == distances
 

@@ -1,13 +1,21 @@
 from __future__ import annotations
 
 import math
-from typing import List
+from typing import List, Optional, Protocol
 
 from koswat.profiles.koswat_layers import KoswatLayerProtocol
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
-class LayerCostReport:
+class ReportProtocol(Protocol):
+    total_cost: float
+    total_volume: float
+
+    def as_dict(self) -> float:
+        pass
+
+
+class LayerCostReport(ReportProtocol):
     layer: KoswatLayerProtocol = None
     total_volume: float = math.nan
 
@@ -23,8 +31,9 @@ class LayerCostReport:
         )
 
 
-class ProfileCostReport:
+class ProfileCostReport(ReportProtocol):
     layer_cost_reports: List[LayerCostReport] = []
+    profile_id: Optional[str] = ""
 
     @property
     def total_cost(self) -> float:
@@ -40,7 +49,31 @@ class ProfileCostReport:
 
     def as_dict(self) -> dict:
         return dict(
+            profile=self.profile_id,
             total_cost=self.total_cost,
             total_volume=self.total_volume,
             per_layer=[lcr.as_dict() for lcr in self.layer_cost_reports],
+        )
+
+
+class MultipleProfileCostReport(ReportProtocol):
+    profile_list_reports: List[ProfileCostReport] = []
+
+    @property
+    def total_cost(self) -> float:
+        if not self.profile_list_reports:
+            return math.nan
+        return sum(plr.total_cost for plr in self.profile_list_reports)
+
+    @property
+    def total_volume(self) -> float:
+        if not self.profile_list_reports:
+            return math.nan
+        return sum(plr.total_volume for plr in self.profile_list_reports)
+
+    def as_dict(self) -> float:
+        return dict(
+            total_cost=self.total_cost,
+            total_volume=self.total_volume,
+            per_layer=[lcr.as_dict() for lcr in self.profile_list_reports],
         )

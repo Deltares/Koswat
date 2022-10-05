@@ -12,4 +12,8 @@ class PointSurroundings:
 
 
 class KoswatBuildingsPolderside(SurroundingsProtocol):
-    conflicting_points: List[PointSurroundings] = []
+    points: List[PointSurroundings] = []
+
+    @property
+    def conflicting_points(self) -> List[PointSurroundings]:
+        return [_cf for _cf in self.points if any(_cf.distance_to_buildings)]
