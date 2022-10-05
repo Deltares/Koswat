@@ -6,14 +6,14 @@ import pytest
 
 from koswat.calculations.multi_profile_cost_builder import MultiProfileCostBuilder
 from koswat.calculations.profile_cost_builder import ProfileCostBuilder
-from koswat.calculations.profile_reinforcement import ProfileReinforcement
+from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
 from koswat.koswat_report import (
     LayerCostReport,
-    MultipleProfileCostReport,
+    MultipleLocationProfileCostReport,
     ProfileCostReport,
 )
 from koswat.koswat_scenario import KoswatScenario
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 from koswat.surroundings.koswat_buildings_polderside import KoswatBuildingsPolderside
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
@@ -72,10 +72,12 @@ class TestAcceptance:
         _profile = KoswatProfileBuilder.with_data(
             dict(input_profile_data=input_profile_case, layers_data=layers_case)
         ).build()
-        assert isinstance(_profile, KoswatProfile)
+        assert isinstance(_profile, KoswatProfileBase)
 
         # 2. Run test.
-        _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
+        _new_profile = ProfileReinforcementCalculation().calculate_new_profile(
+            _profile, _scenario
+        )
         _profile_cost_builder = ProfileCostBuilder()
         _profile_cost_builder.base_profile = _profile
         _profile_cost_builder.calculated_profile = _new_profile
@@ -132,7 +134,7 @@ class TestAcceptance:
         _multi_profile_cost_builder.base_profile = _base_profile
         _multi_report = _multi_profile_cost_builder.build()
 
-        _multi_report = MultipleProfileCostReport()
+        _multi_report = MultipleLocationProfileCostReport()
         for _polder_point in _surroundings.locations:
             _polder_profile = KoswatProfileBuilder.with_data(
                 dict(
@@ -141,8 +143,10 @@ class TestAcceptance:
                 )
             ).build()
             _polder_profile.location = _polder_point.location
-            _new_polder_profile = ProfileReinforcement().calculate_new_profile(
-                _polder_profile, _scenario
+            _new_polder_profile = (
+                ProfileReinforcementCalculation().calculate_new_profile(
+                    _polder_profile, _scenario
+                )
             )
             _cost_report = ProfileCostBuilder()._get_profile_cost_report(
                 _polder_profile, _new_polder_profile

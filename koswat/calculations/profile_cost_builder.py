@@ -1,12 +1,12 @@
 from koswat.builder_protocol import BuilderProtocol
 from koswat.koswat_report import LayerCostReport, ProfileCostReport
 from koswat.profiles.koswat_layers import KoswatLayerProtocol
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostBuilder(BuilderProtocol):
-    base_profile: KoswatProfile
-    calculated_profile: KoswatProfile
+    base_profile: KoswatProfileBase
+    calculated_profile: KoswatProfileBase
 
     def _get_layer_cost_report(
         self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol

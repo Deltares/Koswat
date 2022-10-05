@@ -3,7 +3,7 @@ from typing import Dict, List, Protocol, Tuple
 import pytest
 from shapely.geometry.point import Point
 
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 
 

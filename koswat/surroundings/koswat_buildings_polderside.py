@@ -41,3 +41,11 @@ class KoswatBuildingsPolderside(SurroundingsProtocol):
         for ps in self.points:
             _surroundings_dict[ps.closest_building].append(ps.location)
         return _surroundings_dict
+
+    def get_locations_after_distance(self, distance: float) -> List[Point]:
+        def is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
+            if not point_surroundings.distance_to_buildings:
+                return True
+            return distance < point_surroundings.distance_to_buildings[0]
+
+        return list(filter(is_at_safe_distance, self.points))

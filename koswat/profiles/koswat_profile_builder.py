@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from typing import Optional
+from typing import Optional, Type
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.characteristic_points import CharacteristicPoints
@@ -9,7 +9,7 @@ from koswat.profiles.characteristic_points_builder import CharacteristicPointsBu
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
 from koswat.profiles.koswat_layers_builder import KoswatLayersBuilder
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile import KoswatProfileBase
 
 
 class KoswatProfileBuilder(BuilderProtocol):
@@ -33,13 +33,13 @@ class KoswatProfileBuilder(BuilderProtocol):
         _layers_builder.profile_points = profile_points.points
         return _layers_builder.build()
 
-    def build(self) -> KoswatProfile:
+    def build(self, profile_type: Type[KoswatProfileBase]) -> KoswatProfileBase:
         if not isinstance(self.input_profile_data, dict):
             raise ValueError("Koswat Input Profile data dictionary required.")
         if not isinstance(self.layers_data, dict):
             raise ValueError("Koswat Layers data dictionary required.")
 
-        _profile = KoswatProfile()
+        _profile = profile_type()
         _profile.input_data = KoswatInputProfile.from_dict(self.input_profile_data)
         _profile.characteristic_points = self._build_characteristic_points(
             _profile.input_data

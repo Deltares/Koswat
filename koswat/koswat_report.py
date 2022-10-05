@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import math
-from typing import List, Optional, Protocol
+from typing import List, Optional, Protocol, Type
 
+from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
 from koswat.profiles.koswat_layers import KoswatLayerProtocol
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile import KoswatProfileBase
+from koswat.surroundings.koswat_buildings_polderside import PointSurroundings
 
 
 class ReportProtocol(Protocol):
@@ -33,7 +35,7 @@ class LayerCostReport(ReportProtocol):
 
 class ProfileCostReport(ReportProtocol):
     layer_cost_reports: List[LayerCostReport] = []
-    profile: KoswatProfile
+    profile: KoswatProfileBase
 
     @property
     def total_cost(self) -> float:
@@ -55,24 +57,27 @@ class ProfileCostReport(ReportProtocol):
         )
 
 
-class MultipleProfileCostReport(ReportProtocol):
-    profile_list_reports: List[ProfileCostReport] = []
+class MultipleLocationProfileCostReport(ReportProtocol):
+    locations: List[PointSurroundings]
+    profile_cost_report: ProfileCostReport
+    profile_type: Type[ProfileCalculationProtocol]
 
     @property
     def total_cost(self) -> float:
-        if not self.profile_list_reports:
+        if not self.profile_cost_report or not self.locations:
             return math.nan
-        return sum(plr.total_cost for plr in self.profile_list_reports)
+        return self.profile_cost_report.total_cost * len(self.locations)
 
     @property
     def total_volume(self) -> float:
-        if not self.profile_list_reports:
+        if not self.profile_cost_report or not self.locations:
             return math.nan
-        return sum(plr.total_volume for plr in self.profile_list_reports)
+        return self.profile_cost_report.total_volume * len(self.locations)
 
     def as_dict(self) -> float:
         return dict(
             total_cost=self.total_cost,
             total_volume=self.total_volume,
-            per_layer=[lcr.as_dict() for lcr in self.profile_list_reports],
+            profile_type=str(self.profile_cost_report.profile),
+            locations=[_loc.location for _loc in self.locations],
         )
