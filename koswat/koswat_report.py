@@ -33,7 +33,6 @@ class LayerCostReport(ReportProtocol):
 
 class ProfileCostReport(ReportProtocol):
     layer_cost_reports: List[LayerCostReport] = []
-    profile_id: Optional[str] = ""
 
     @property
     def total_cost(self) -> float:
@@ -49,7 +48,6 @@ class ProfileCostReport(ReportProtocol):
 
     def as_dict(self) -> dict:
         return dict(
-            profile=self.profile_id,
             total_cost=self.total_cost,
             total_volume=self.total_volume,
             per_layer=[lcr.as_dict() for lcr in self.layer_cost_reports],

@@ -4,10 +4,9 @@ import math
 
 import pytest
 
+from koswat.calculations.multi_profile_cost_builder import MultiProfileCostBuilder
+from koswat.calculations.profile_cost_builder import ProfileCostBuilder
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
-from koswat.calculations.profile_reinforcement_cost_builder import (
-    ProfileReinforcementCostBuilder,
-)
 from koswat.koswat_report import (
     LayerCostReport,
     MultipleProfileCostReport,
@@ -77,7 +76,7 @@ class TestAcceptance:
 
         # 2. Run test.
         _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
-        _cost_report = ProfileReinforcementCostBuilder().get_profile_cost_report(
+        _cost_report = ProfileCostBuilder().get_profile_cost_report(
             _profile, _new_profile
         )
 
@@ -118,7 +117,20 @@ class TestAcceptance:
         _scenario = KoswatScenario.from_dict(ScenarioCases.default)
         assert isinstance(_scenario, KoswatScenario)
 
+        _base_profile = KoswatProfileBuilder.with_data(
+            dict(
+                input_profile_data=InputProfileCases.default,
+                layers_data=LayersCases.without_layers,
+            )
+        ).build()
+
         # 2. Run test
+        _multi_profile_cost_builder = MultiProfileCostBuilder()
+        _multi_profile_cost_builder.surroundings = _surroundings
+        _multi_profile_cost_builder.scenario = _scenario
+        _multi_profile_cost_builder.base_profile = _base_profile
+        _multi_report = _multi_profile_cost_builder.build()
+
         _multi_report = MultipleProfileCostReport()
         for _polder_point in _surroundings.locations:
             _polder_profile = KoswatProfileBuilder.with_data(
@@ -131,7 +143,7 @@ class TestAcceptance:
             _new_polder_profile = ProfileReinforcement().calculate_new_profile(
                 _polder_profile, _scenario
             )
-            _cost_report = ProfileReinforcementCostBuilder().get_profile_cost_report(
+            _cost_report = ProfileCostBuilder().get_profile_cost_report(
                 _polder_profile, _new_polder_profile
             )
             _multi_report.profile_list_reports.append(_cost_report)

@@ -157,5 +157,5 @@ class TestKoswatBuildingsPoldersideBuilder:
 
         # 3. Verify expectations.
         assert isinstance(_buildings, KoswatBuildingsPolderside)
-        assert len(_buildings.points) == 14623
+        assert len(_buildings.points) == 3728
         assert _buildings.conflicting_points

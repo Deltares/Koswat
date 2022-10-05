@@ -8,6 +8,10 @@ from koswat.surroundings.surroundings_protocol import SurroundingsProtocol
 
 
 class PointSurroundings:
+    """
+    Object representing a `meter` with `x`, `y` coordinates in a polder (or else).
+    """
+
     section: str = ""
     location: Point = None
     distance_to_buildings: List[float] = []

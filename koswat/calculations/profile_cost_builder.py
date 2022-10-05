@@ -4,7 +4,7 @@ from koswat.profiles.koswat_layers import KoswatLayerProtocol
 from koswat.profiles.koswat_profile import KoswatProfile
 
 
-class ProfileReinforcementCostBuilder(BuilderProtocol):
+class ProfileCostBuilder(BuilderProtocol):
     """
     TODO: This class (like many others) is still a work in progress.
     Not entirely sure yet which structure will be applied once we start using layers.
@@ -25,7 +25,6 @@ class ProfileReinforcementCostBuilder(BuilderProtocol):
         self, old_profile: KoswatProfile, new_profile: KoswatProfile
     ) -> ProfileCostReport:
         _report = ProfileCostReport()
-        _report.profile_id = new_profile.location
         if len(old_profile.layers._layers) != len(new_profile.layers._layers):
             raise ValueError(
                 "Layers not matching between old and new profile. Calculation of costs cannot be computed."
