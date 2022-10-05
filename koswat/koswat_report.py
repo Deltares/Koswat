@@ -33,6 +33,7 @@ class LayerCostReport(ReportProtocol):
 
 class ProfileCostReport(ReportProtocol):
     layer_cost_reports: List[LayerCostReport] = []
+    profile: KoswatProfile
 
     @property
     def total_cost(self) -> float:

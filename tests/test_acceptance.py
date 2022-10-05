@@ -76,9 +76,10 @@ class TestAcceptance:
 
         # 2. Run test.
         _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
-        _cost_report = ProfileCostBuilder().get_profile_cost_report(
-            _profile, _new_profile
-        )
+        _profile_cost_builder = ProfileCostBuilder()
+        _profile_cost_builder.base_profile = _profile
+        _profile_cost_builder.calculated_profile = _new_profile
+        _cost_report = _profile_cost_builder.build()
 
         # 3. Verify expectations.
         assert isinstance(_cost_report, ProfileCostReport)
@@ -143,7 +144,7 @@ class TestAcceptance:
             _new_polder_profile = ProfileReinforcement().calculate_new_profile(
                 _polder_profile, _scenario
             )
-            _cost_report = ProfileCostBuilder().get_profile_cost_report(
+            _cost_report = ProfileCostBuilder()._get_profile_cost_report(
                 _polder_profile, _new_polder_profile
             )
             _multi_report.profile_list_reports.append(_cost_report)

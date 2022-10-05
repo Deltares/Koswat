@@ -16,29 +16,28 @@ class MultiProfileCostBuilder(BuilderProtocol):
     scenario: KoswatScenario
 
     def _get_calculated_profiles(self) -> List[KoswatProfile]:
+        # Calculate all possible profiles:
+        # grondmaatregel_profile
+        # kwelscherm_profile
+        # stability_wall_profile
+        # chest_dam_profile
         _grondmaatregel_profile = ProfileReinforcement().calculate_new_profile(
             self.base_profile, self.scenario
         )
         return [_grondmaatregel_profile]
 
-    def build(self) -> MultipleProfileCostReport:
-        _classified_surroundings = (
-            self.surroundings.buldings_polderside.get_classify_surroundings()
-        )
-        # Calculate all possible profiles:
-        # grondmaatregel_profile
-        _profiles_report = self._get_calculated_profiles()
-        # kwelscherm_profile
-        # stability_wall_profile
-        # chest_dam_profile
-        # for (
-        #     _distance_to_building,
-        #     profile_locations,
-        # ) in _classified_surroundings.items():
-        #     if _distance_to_building > _grondmaatregel_profile.points[-1].x:
-        #         # _Grondmaatregel applies here.
-        #         pass
+    def _get_profile_cost_report_list(self) -> List[ProfileCostReport]:
+        _profile_cost_builder = ProfileCostBuilder()
+        _profile_cost_builder.base_profile = self.base_profile
+        _reports = []
+        for _calc_profile in self._get_calculated_profiles():
+            _profile_cost_builder.calculated_profile = _calc_profile
+            _reports.append(_profile_cost_builder.build())
+        return _reports
 
-        # _cost_report = ProfileReinforcementCostBuilder().get_profile_cost_report(
-        #         self.base_profile, _new_polder_profile
-        #     )
+    def build(self) -> MultipleProfileCostReport:
+
+        _reports = self._get_profile_cost_report_list()
+        for _rep in _reports:
+            _min_width = _rep.profile.location.x
+            pass

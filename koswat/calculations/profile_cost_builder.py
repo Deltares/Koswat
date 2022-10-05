@@ -5,32 +5,36 @@ from koswat.profiles.koswat_profile import KoswatProfile
 
 
 class ProfileCostBuilder(BuilderProtocol):
-    """
-    TODO: This class (like many others) is still a work in progress.
-    Not entirely sure yet which structure will be applied once we start using layers.
-    """
+    base_profile: KoswatProfile
+    calculated_profile: KoswatProfile
 
-    def get_layer_cost_report(
-        self, old_layer: KoswatLayerProtocol, new_layer: KoswatLayerProtocol
+    def _get_layer_cost_report(
+        self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol
     ) -> LayerCostReport:
-        if old_layer.material.name != new_layer.material.name:
+        if base_layer.material.name != calculated_layer.material.name:
             raise ValueError("Material differs between layers. Cannot compute costs.")
         _layer_report = LayerCostReport()
-        _diff_geometry = new_layer.geometry - old_layer.geometry
+        _diff_geometry = calculated_layer.geometry - base_layer.geometry
         _layer_report.total_volume = _diff_geometry.area
-        _layer_report.layer = new_layer
+        _layer_report.layer = calculated_layer
         return _layer_report
 
-    def get_profile_cost_report(
-        self, old_profile: KoswatProfile, new_profile: KoswatProfile
-    ) -> ProfileCostReport:
+    def _get_profile_cost_report(self) -> ProfileCostReport:
         _report = ProfileCostReport()
-        if len(old_profile.layers._layers) != len(new_profile.layers._layers):
+        _report.profile = self.calculated_profile
+        if len(self.base_profile.layers._layers) != len(
+            self.calculated_profile.layers._layers
+        ):
             raise ValueError(
                 "Layers not matching between old and new profile. Calculation of costs cannot be computed."
             )
         _report.layer_cost_reports = [
-            self.get_layer_cost_report(old_l, new_profile.layers._layers[idx_l])
-            for idx_l, old_l in enumerate(old_profile.layers._layers)
+            self._get_layer_cost_report(
+                old_l, self.calculated_profile.layers._layers[idx_l]
+            )
+            for idx_l, old_l in enumerate(self.base_profile.layers._layers)
         ]
         return _report
+
+    def build(self) -> ProfileCostReport:
+        return self._get_profile_cost_report()
