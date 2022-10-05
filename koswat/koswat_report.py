@@ -81,6 +81,8 @@ class MultipleLocationProfileCostReport(ReportProtocol):
 
     @property
     def profile_type(self) -> str:
+        if not self.profile_cost_report or not self.profile_cost_report.profile:
+            return ""
         return str(self.profile_cost_report.profile)
 
     def as_dict(self) -> float:
