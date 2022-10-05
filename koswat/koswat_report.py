@@ -60,7 +60,12 @@ class ProfileCostReport(ReportProtocol):
 class MultipleLocationProfileCostReport(ReportProtocol):
     locations: List[PointSurroundings]
     profile_cost_report: ProfileCostReport
-    profile_type: Type[ProfileCalculationProtocol]
+
+    @property
+    def cost_per_km(self) -> float:
+        if not self.profile_cost_report or not self.locations:
+            return math.nan
+        return self.profile_cost_report.total_cost * 1000
 
     @property
     def total_cost(self) -> float:
@@ -74,10 +79,14 @@ class MultipleLocationProfileCostReport(ReportProtocol):
             return math.nan
         return self.profile_cost_report.total_volume * len(self.locations)
 
+    @property
+    def profile_type(self) -> str:
+        return str(self.profile_cost_report.profile)
+
     def as_dict(self) -> float:
         return dict(
             total_cost=self.total_cost,
             total_volume=self.total_volume,
-            profile_type=str(self.profile_cost_report.profile),
+            profile_type=self.profile_type,
             locations=[_loc.location for _loc in self.locations],
         )

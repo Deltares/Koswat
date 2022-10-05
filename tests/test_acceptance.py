@@ -4,7 +4,9 @@ import math
 
 import pytest
 
-from koswat.calculations.multi_profile_cost_builder import MultiProfileCostBuilder
+from koswat.calculations.list_multi_location_profile_cost_builder import (
+    ListMultiProfileCostBuilder,
+)
 from koswat.calculations.profile_cost_builder import ProfileCostBuilder
 from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
 from koswat.koswat_report import (
@@ -71,7 +73,7 @@ class TestAcceptance:
 
         _profile = KoswatProfileBuilder.with_data(
             dict(input_profile_data=input_profile_case, layers_data=layers_case)
-        ).build()
+        ).build(KoswatProfileBase)
         assert isinstance(_profile, KoswatProfileBase)
 
         # 2. Run test.
@@ -125,35 +127,19 @@ class TestAcceptance:
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
             )
-        ).build()
+        ).build(KoswatProfileBase)
 
         # 2. Run test
-        _multi_profile_cost_builder = MultiProfileCostBuilder()
-        _multi_profile_cost_builder.surroundings = _surroundings
-        _multi_profile_cost_builder.scenario = _scenario
-        _multi_profile_cost_builder.base_profile = _base_profile
-        _multi_report = _multi_profile_cost_builder.build()
-
-        _multi_report = MultipleLocationProfileCostReport()
-        for _polder_point in _surroundings.locations:
-            _polder_profile = KoswatProfileBuilder.with_data(
-                dict(
-                    input_profile_data=InputProfileCases.default,
-                    layers_data=LayersCases.without_layers,
-                )
-            ).build()
-            _polder_profile.location = _polder_point.location
-            _new_polder_profile = (
-                ProfileReinforcementCalculation().calculate_new_profile(
-                    _polder_profile, _scenario
-                )
-            )
-            _cost_report = ProfileCostBuilder()._get_profile_cost_report(
-                _polder_profile, _new_polder_profile
-            )
-            _multi_report.profile_list_reports.append(_cost_report)
+        _list_multi_profile_cost_builder = ListMultiProfileCostBuilder()
+        _list_multi_profile_cost_builder.surroundings = _surroundings
+        _list_multi_profile_cost_builder.base_profile = _base_profile
+        _list_multi_profile_cost_builder.scenario = _scenario
+        _multi_report_list = _list_multi_profile_cost_builder.build()
 
         # 3. Verify expectations.
-        assert _multi_report.profile_list_reports
-        assert _multi_report.total_cost > 0
-        assert _multi_report.total_volume > 0
+        assert any(_multi_report_list)
+        for _multi_report in _multi_report_list:
+            assert isinstance(_multi_report, MultipleLocationProfileCostReport)
+            assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
+            assert _multi_report.total_cost > 0
+            assert _multi_report.total_volume > 0
