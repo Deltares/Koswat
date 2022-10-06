@@ -7,8 +7,8 @@ from koswat.calculations.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
-from koswat.koswat_report import (
-    MultiLocationMultiProfileCostSummary,
+from koswat.cost_report.koswat_report import MultiLocationMultiProfileCostSummary
+from koswat.cost_report.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
 from koswat.koswat_scenario import KoswatScenario

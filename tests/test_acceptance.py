@@ -5,15 +5,12 @@ import pytest
 from koswat.calculations.multi_location_multi_profile_cost_builder import (
     MultiLocationMultiProfileCostBuilder,
 )
-from koswat.calculations.multi_location_profile_cost_builder import (
-    MultiLocationProfileCostBuilder,
-)
-from koswat.koswat_report import (
-    LayerCostReport,
-    MultiLocationMultiProfileCostSummary,
+from koswat.cost_report.koswat_report import MultiLocationMultiProfileCostSummary
+from koswat.cost_report.layer_cost_report import LayerCostReport
+from koswat.cost_report.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
-    ProfileCostReport,
 )
+from koswat.cost_report.profile_cost_report import ProfileCostReport
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
@@ -35,25 +32,6 @@ class TestAcceptance:
             import koswat.main
         except ImportError as exc_err:
             pytest.fail(f"It was not possible to import required packages {exc_err}")
-
-    acceptance_test_cases = [
-        pytest.param(
-            dict(
-                layers=LayersCases.without_layers,
-                input_profile=InputProfileCases.default,
-                scenario=ScenarioCases.default,
-            ),
-            id="Default Reinforcement without layers.",
-        ),
-        pytest.param(
-            dict(
-                layers=LayersCases.with_clay,
-                input_profile=InputProfileCases.default,
-                scenario=ScenarioCases.default,
-            ),
-            id="Default Reinforcement with layers.",
-        ),
-    ]
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)

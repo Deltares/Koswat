@@ -4,14 +4,11 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.calculations.profile_cost_builder import ProfileCostBuilder
-from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
-from koswat.koswat_report import LayerCostReport, ProfileCostReport
-from koswat.koswat_scenario import KoswatScenario
+from koswat.cost_report.layer_cost_report import LayerCostReport
+from koswat.cost_report.profile_cost_report import ProfileCostReport
 from koswat.profiles.koswat_layers import KoswatBaseLayer, KoswatLayers
 from koswat.profiles.koswat_material import KoswatMaterial
 from koswat.profiles.koswat_profile import KoswatProfileBase
-from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
-from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
 class TestProfileCostBuilder:
