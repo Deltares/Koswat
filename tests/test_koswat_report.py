@@ -13,7 +13,8 @@ class TestLayerCostReport:
     def test_initialize(self):
         _report = LayerCostReport()
         assert isinstance(_report, LayerCostReport)
-        assert not _report.layer
+        assert not _report.new_layer
+        assert not _report.old_layer
         assert math.isnan(_report.total_volume)
         assert math.isnan(_report.total_cost)
 
@@ -22,7 +23,8 @@ class TestProfileCostReport:
     def test_initialize(self):
         _report = ProfileCostReport()
         assert isinstance(_report, ProfileCostReport)
-        assert not _report.profile
+        assert not _report.new_profile
+        assert not _report.old_profile
         assert not any(_report.layer_cost_reports)
         assert math.isnan(_report.total_cost)
         assert math.isnan(_report.total_volume)

@@ -18,18 +18,19 @@ class ReportProtocol(Protocol):
 
 
 class LayerCostReport(ReportProtocol):
-    layer: KoswatLayerProtocol = None
+    new_layer: KoswatLayerProtocol = None
+    old_layer: KoswatLayerProtocol = None
     total_volume: float = math.nan
 
     @property
     def total_cost(self) -> float:
-        if not self.layer:
+        if not self.new_layer:
             return math.nan
-        return self.total_volume * self.layer.material.cost
+        return self.total_volume * self.new_layer.material.cost
 
     def as_dict(self) -> dict:
         return dict(
-            material=self.layer.material.name,
+            material=self.new_layer.material.name,
             total_volume=self.total_volume,
             total_cost=self.total_cost,
         )
@@ -37,7 +38,8 @@ class LayerCostReport(ReportProtocol):
 
 class ProfileCostReport(ReportProtocol):
     layer_cost_reports: List[LayerCostReport] = []
-    profile: KoswatProfileBase = None
+    new_profile: KoswatProfileBase = None
+    old_profile: KoswatProfileBase = None
 
     @property
     def total_cost(self) -> float:
@@ -83,9 +85,9 @@ class MultipleLocationProfileCostReport(ReportProtocol):
 
     @property
     def profile_type(self) -> str:
-        if not self.profile_cost_report or not self.profile_cost_report.profile:
+        if not self.profile_cost_report or not self.profile_cost_report.new_profile:
             return ""
-        return str(self.profile_cost_report.profile)
+        return str(self.profile_cost_report.new_profile)
 
     def as_dict(self) -> float:
         return dict(

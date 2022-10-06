@@ -59,7 +59,7 @@ class TestProfileCostBuilder:
 
         # 3. Verify expectations
         assert isinstance(_layer_report, LayerCostReport)
-        assert _layer_report.layer == _calc_layer
+        assert _layer_report.new_layer == _calc_layer
 
         assert _layer_report.total_volume == pytest.approx(37.64, 0.001)
 
@@ -88,10 +88,10 @@ class TestProfileCostBuilder:
 
         # 3. Verify expectations
         assert isinstance(_profile_cost_report, ProfileCostReport)
-        assert _profile_cost_report.profile == _builder.calculated_profile
+        assert _profile_cost_report.new_profile == _builder.calculated_profile
         assert len(_profile_cost_report.layer_cost_reports) == 1
         assert isinstance(_profile_cost_report.layer_cost_reports[0], LayerCostReport)
-        assert _profile_cost_report.layer_cost_reports[0].layer == _calc_layer
+        assert _profile_cost_report.layer_cost_reports[0].new_layer == _calc_layer
         assert _profile_cost_report.total_volume == pytest.approx(37.64, 0.001)
 
     def test_get_profile_cost_builder_different_layers_number_raises_error(self):
@@ -150,8 +150,8 @@ class TestProfileCostBuilder:
 
         # 3. Verify expectations
         assert isinstance(_profile_cost_report, ProfileCostReport)
-        assert _profile_cost_report.profile == _builder.calculated_profile
+        assert _profile_cost_report.new_profile == _builder.calculated_profile
         assert len(_profile_cost_report.layer_cost_reports) == 1
         assert isinstance(_profile_cost_report.layer_cost_reports[0], LayerCostReport)
-        assert _profile_cost_report.layer_cost_reports[0].layer == _calc_layer
+        assert _profile_cost_report.layer_cost_reports[0].new_layer == _calc_layer
         assert _profile_cost_report.total_volume == pytest.approx(37.64, 0.001)
