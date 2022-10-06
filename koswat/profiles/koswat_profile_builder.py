@@ -13,9 +13,14 @@ from koswat.profiles.koswat_profile import KoswatProfileBase
 
 
 class KoswatProfileBuilder(BuilderProtocol):
-    input_profile_data: dict = {}
-    layers_data: dict = {}
-    p4_x_coordinate: Optional[float] = math.nan
+    input_profile_data: dict
+    layers_data: dict
+    p4_x_coordinate: Optional[float]
+
+    def __init__(self) -> None:
+        self.input_profile_data = {}
+        self.layers_data = {}
+        self.p4_x_coordinate = math.nan
 
     def _build_characteristic_points(
         self, input_profile: KoswatInputProfile
