@@ -6,7 +6,7 @@ from shapely.geometry.point import Point
 from koswat.builder_protocol import BuilderProtocol
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 from tests.library_test_cases import (
     InitialPointsLookup,
@@ -99,10 +99,10 @@ class TestKoswatProfileBuilder:
         _profile_builder.input_profile_data = input_profile_data
         _profile_builder.layers_data = _layers_data
         _profile_builder.p4_x_coordinate = _p4_x_coordinate
-        _koswat_profile = _profile_builder.build()
+        _koswat_profile = _profile_builder.build(KoswatProfileBase)
 
         # 3. Verify final expectations.
-        assert isinstance(_koswat_profile, KoswatProfile)
+        assert isinstance(_koswat_profile, KoswatProfileBase)
         assert isinstance(_koswat_profile.input_data, KoswatInputProfile)
         assert isinstance(_koswat_profile.layers, KoswatLayers)
         for p_idx, p in enumerate(expected_points):

@@ -1,12 +1,16 @@
 from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_input_profile import KoswatInputProfile
-from koswat.profiles.koswat_layers_builder import KoswatLayersBuilder
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 
 
-class ProfileReinforcement(ProfileCalculationProtocol):
+class ProfileReinforcement(KoswatProfileBase):
+    def __str__(self) -> str:
+        return "Grondmaatregel profiel"
+
+
+class ProfileReinforcementCalculation(ProfileCalculationProtocol):
     def _calculate_new_binnen_talud(
         self, old_data: KoswatInputProfile, scenario: KoswatScenario
     ) -> float:
@@ -83,8 +87,8 @@ class ProfileReinforcement(ProfileCalculationProtocol):
         return _new_data
 
     def calculate_new_profile(
-        self, profile: KoswatProfile, scenario: KoswatScenario
-    ) -> KoswatProfile:
+        self, profile: KoswatProfileBase, scenario: KoswatScenario
+    ) -> KoswatProfileBase:
         _new_data = self._calculate_new_input_profile(profile.input_data, scenario)
         _data_layers = profile.layers.as_data_dict()
         _builder_dict = dict(
@@ -92,4 +96,4 @@ class ProfileReinforcement(ProfileCalculationProtocol):
             layers_data=_data_layers,
             p4_x_coordinate=scenario.d_h * scenario.buiten_talud,
         )
-        return KoswatProfileBuilder.with_data(_builder_dict).build()
+        return KoswatProfileBuilder.with_data(_builder_dict).build(ProfileReinforcement)

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import List
+import math
+from typing import List, Optional
 
 from shapely.geometry.point import Point
 
@@ -9,16 +10,18 @@ from koswat.profiles.koswat_input_profile import KoswatInputProfile
 from koswat.profiles.koswat_layers import KoswatLayers
 
 
-class KoswatProfile:
+class KoswatProfileBase:
 
     input_data: KoswatInputProfile
     characteristic_points: CharacteristicPoints
     layers: KoswatLayers
+    location: Optional[Point]
 
     def __init__(self) -> None:
         self.input_data = None
         self.layers = None
         self.characteristic_points = None
+        self.location = None
 
     @property
     def points(self) -> List[Point]:
@@ -31,3 +34,9 @@ class KoswatProfile:
         if not self.characteristic_points:
             return []
         return self.characteristic_points.points
+
+    @property
+    def profile_width(self) -> float:
+        if not self.points:
+            return math.nan
+        return self.points[-1].x

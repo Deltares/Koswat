@@ -3,20 +3,10 @@ from typing import Union
 
 import pytest
 
-from koswat.io.koswat_csv_reader import KoswatCsvFom, KoswatCsvReader
-from koswat.io.koswat_reader_protocol import (
-    FileObjectModelProtocol,
-    KoswatReaderProtocol,
-)
+from koswat.io.koswat_csv_fom import KoswatCsvFom
+from koswat.io.koswat_csv_reader import KoswatCsvReader
+from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 from tests import test_data
-
-
-class TestKoswatCsvFom:
-    def test_initialize_koswat_csv_fom(self):
-        _csv_fom = KoswatCsvFom()
-        assert isinstance(_csv_fom, KoswatCsvFom)
-        assert isinstance(_csv_fom, FileObjectModelProtocol)
-        assert not _csv_fom.is_valid()
 
 
 class TestKoswatCsvReader:

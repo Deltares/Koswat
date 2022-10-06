@@ -9,8 +9,12 @@ from koswat.profiles.koswat_input_profile import KoswatInputProfile
 
 
 class CharacteristicPointsBuilder(BuilderProtocol):
-    input_profile: KoswatInputProfile = None
-    p4_x_coordinate: float = math.nan
+    input_profile: KoswatInputProfile
+    p4_x_coordinate: float
+
+    def __init__(self) -> None:
+        self.input_profile = None
+        self.p4_x_coordinate = math.nan
 
     def _build_waterside(self, p4_x: float) -> List[Point]:
         _p4 = Point(p4_x, self.input_profile.kruin_hoogte)

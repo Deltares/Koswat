@@ -1,30 +1,20 @@
-from __future__ import annotations
-
 import math
 from typing import List
 
-from koswat.profiles.koswat_layers import KoswatLayerProtocol
-from koswat.profiles.koswat_profile import KoswatProfile
+from koswat.cost_report.cost_report_protocol import CostReportProtocol
+from koswat.cost_report.layer.layer_cost_report import LayerCostReport
+from koswat.profiles.koswat_profile import KoswatProfileBase
 
 
-class LayerCostReport:
-    layer: KoswatLayerProtocol = None
-    total_volume: float = math.nan
+class ProfileCostReport(CostReportProtocol):
+    layer_cost_reports: List[LayerCostReport]
+    new_profile: KoswatProfileBase
+    old_profile: KoswatProfileBase
 
-    @property
-    def total_cost(self) -> float:
-        return self.total_volume * self.layer.material.cost
-
-    def as_dict(self) -> dict:
-        return dict(
-            material=self.layer.material.name,
-            total_volume=self.total_volume,
-            total_cost=self.total_cost,
-        )
-
-
-class ProfileCostReport:
-    layer_cost_reports: List[LayerCostReport] = []
+    def __init__(self) -> None:
+        self.layer_cost_reports = []
+        self.new_profile = None
+        self.old_profile = None
 
     @property
     def total_cost(self) -> float:
