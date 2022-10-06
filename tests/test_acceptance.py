@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from koswat.cost_report.builders.koswat_summary_builder import KoswatSummaryBuilder
-from koswat.cost_report.reports.koswat_summary import KoswatSummary
+from koswat.cost_report.koswat_summary import KoswatSummary
 from koswat.cost_report.reports.layer_cost_report import LayerCostReport
 from koswat.cost_report.reports.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,

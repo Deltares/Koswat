@@ -5,7 +5,7 @@ from koswat.cost_report.builders.koswat_summary_builder import KoswatSummaryBuil
 from koswat.cost_report.builders.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
-from koswat.cost_report.reports.koswat_summary import KoswatSummary
+from koswat.cost_report.koswat_summary import KoswatSummary
 from koswat.cost_report.reports.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
@@ -20,7 +20,7 @@ from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
-class TestMultiLocationMultiProfileCostBuilder:
+class TestKoswatSummaryBuilder:
     def test_initialize(self):
         _builder = KoswatSummaryBuilder()
         assert isinstance(_builder, KoswatSummaryBuilder)
