@@ -5,8 +5,13 @@ from koswat.profiles.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostBuilder(BuilderProtocol):
-    base_profile: KoswatProfileBase = None
-    calculated_profile: KoswatProfileBase = None
+    base_profile: KoswatProfileBase
+    calculated_profile: KoswatProfileBase
+
+    def __init__(self) -> None:
+        self.surroundings = None
+        self.base_profile = None
+        self.calc_profile = None
 
     def _get_layer_cost_report(
         self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol

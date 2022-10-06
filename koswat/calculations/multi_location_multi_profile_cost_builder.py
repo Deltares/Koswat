@@ -12,9 +12,14 @@ from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 
 
 class MultiLocationMultiProfileCostBuilder(BuilderProtocol):
-    surroundings: KoswatSurroundings = None
-    base_profile: KoswatProfileBase = None
-    scenario: KoswatScenario = None
+    surroundings: KoswatSurroundings
+    base_profile: KoswatProfileBase
+    scenario: KoswatScenario
+
+    def __init__(self) -> None:
+        self.surroundings = None
+        self.base_profile = None
+        self.scenario = None
 
     def _get_calculated_profiles(self) -> List[KoswatProfileBase]:
         # Calculate all possible profiles:
