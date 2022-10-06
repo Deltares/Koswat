@@ -1,9 +1,7 @@
 from shapely.geometry import Point
 
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
-from koswat.cost_report.builders.multi_location_multi_profile_cost_builder import (
-    MultiLocationMultiProfileCostBuilder,
-)
+from koswat.cost_report.builders.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.cost_report.builders.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
@@ -24,15 +22,15 @@ from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCas
 
 class TestMultiLocationMultiProfileCostBuilder:
     def test_initialize(self):
-        _builder = MultiLocationMultiProfileCostBuilder()
-        assert isinstance(_builder, MultiLocationMultiProfileCostBuilder)
+        _builder = KoswatSummaryBuilder()
+        assert isinstance(_builder, KoswatSummaryBuilder)
         assert not _builder.surroundings
         assert not _builder.base_profile
         assert not _builder.scenario
 
     def test_get_calculated_profiles(self):
         # 1. Define test data.
-        _builder = MultiLocationMultiProfileCostBuilder()
+        _builder = KoswatSummaryBuilder()
         _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
         _builder.base_profile = KoswatProfileBuilder.with_data(
             dict(
@@ -51,7 +49,7 @@ class TestMultiLocationMultiProfileCostBuilder:
 
     def test_get_multi_location_profile_cost_builder(self):
         # 1. Define test data.
-        _builder = MultiLocationMultiProfileCostBuilder()
+        _builder = KoswatSummaryBuilder()
         _builder.surroundings = KoswatSurroundings()
         _builder.base_profile = KoswatProfileBase()
 
@@ -74,7 +72,7 @@ class TestMultiLocationMultiProfileCostBuilder:
 
     def test_build(self):
         # 1. Define test data.
-        _builder = MultiLocationMultiProfileCostBuilder()
+        _builder = KoswatSummaryBuilder()
         _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
         _builder.surroundings = KoswatSurroundings()
         _p_surrounding = PointSurroundings()

@@ -11,7 +11,7 @@ from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 
 
-class MultiLocationMultiProfileCostBuilder(BuilderProtocol):
+class KoswatSummaryBuilder(BuilderProtocol):
     surroundings: KoswatSurroundings
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
