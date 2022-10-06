@@ -21,16 +21,6 @@ class TestProfileCostBuilder:
         assert not _builder.base_profile
         assert not _builder.calculated_profile
 
-    def test_build(self):
-        # 1. Define test data.
-        _builder = ProfileCostBuilder()
-        _base_layer = KoswatBaseLayer()
-        _calc_layer = KoswatBaseLayer()
-        # 2. Run test
-
-        # 3. Verify expectations
-        pytest.fail("ToDo")
-
     def test_get_layer_cost_report_different_material_raises(self):
         # 1. Define test data.
         _builder = ProfileCostBuilder()
