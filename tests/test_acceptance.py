@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import pytest
 
+from koswat.calculations.multi_location_multi_profile_cost_builder import (
+    MultiLocationMultiProfileCostBuilder,
+)
 from koswat.calculations.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
 from koswat.koswat_report import (
     LayerCostReport,
+    MultiLocationMultiProfileCostSummary,
     MultiLocationProfileCostReport,
     ProfileCostReport,
 )
@@ -90,15 +94,16 @@ class TestAcceptance:
         ).build(KoswatProfileBase)
 
         # 2. Run test
-        _list_multi_profile_cost_builder = MultiLocationProfileCostBuilder()
-        _list_multi_profile_cost_builder.surroundings = _surroundings
-        _list_multi_profile_cost_builder.base_profile = _base_profile
-        _list_multi_profile_cost_builder.scenario = _scenario
-        _multi_report_list = _list_multi_profile_cost_builder.build()
+        _multi_loc_multi_prof_cost_builder = MultiLocationMultiProfileCostBuilder()
+        _multi_loc_multi_prof_cost_builder.surroundings = _surroundings
+        _multi_loc_multi_prof_cost_builder.base_profile = _base_profile
+        _multi_loc_multi_prof_cost_builder.scenario = _scenario
+        _summary = _multi_loc_multi_prof_cost_builder.build()
 
         # 3. Verify expectations.
-        assert any(_multi_report_list)
-        for _multi_report in _multi_report_list:
+        assert isinstance(_summary, MultiLocationMultiProfileCostSummary)
+        assert any(_summary.locations_profile_report_list)
+        for _multi_report in _summary.locations_profile_report_list:
             assert isinstance(_multi_report, MultiLocationProfileCostReport)
             assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
             assert _multi_report.total_cost > 0

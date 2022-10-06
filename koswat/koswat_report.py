@@ -96,3 +96,7 @@ class MultiLocationProfileCostReport(ReportProtocol):
             profile_type=self.profile_type,
             locations=[_loc.location for _loc in self.locations],
         )
+
+
+class MultiLocationMultiProfileCostSummary:
+    locations_profile_report_list: List[MultiLocationProfileCostReport] = []
