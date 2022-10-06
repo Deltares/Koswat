@@ -1,14 +1,10 @@
 from __future__ import annotations
 
-import math
-
 import pytest
 
-from koswat.calculations.list_multi_location_profile_cost_builder import (
-    ListMultiProfileCostBuilder,
+from koswat.calculations.multi_location_profile_cost_builder import (
+    MultiLocationProfileCostBuilder,
 )
-from koswat.calculations.profile_cost_builder import ProfileCostBuilder
-from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
 from koswat.koswat_report import (
     LayerCostReport,
     MultiLocationProfileCostReport,
@@ -94,7 +90,7 @@ class TestAcceptance:
         ).build(KoswatProfileBase)
 
         # 2. Run test
-        _list_multi_profile_cost_builder = ListMultiProfileCostBuilder()
+        _list_multi_profile_cost_builder = MultiLocationProfileCostBuilder()
         _list_multi_profile_cost_builder.surroundings = _surroundings
         _list_multi_profile_cost_builder.base_profile = _base_profile
         _list_multi_profile_cost_builder.scenario = _scenario

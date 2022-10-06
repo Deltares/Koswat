@@ -9,7 +9,7 @@ from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 
 
-class ListMultiProfileCostBuilder(BuilderProtocol):
+class MultiLocationProfileCostBuilder(BuilderProtocol):
     surroundings: KoswatSurroundings = None
     base_profile: KoswatProfileBase = None
     scenario: KoswatScenario = None
