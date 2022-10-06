@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import math
-from typing import List, Optional, Protocol, Type
+from typing import List, Protocol
 
-from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
 from koswat.profiles.koswat_layers import KoswatLayerProtocol
 from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_buildings_polderside import PointSurroundings
@@ -13,14 +12,23 @@ class ReportProtocol(Protocol):
     total_cost: float
     total_volume: float
 
+    def __init__(self) -> None:
+        self.total_cost = math.nan
+        self.total_volume = math.nan
+
     def as_dict(self) -> float:
         pass
 
 
 class LayerCostReport(ReportProtocol):
-    new_layer: KoswatLayerProtocol = None
-    old_layer: KoswatLayerProtocol = None
-    total_volume: float = math.nan
+    new_layer: KoswatLayerProtocol
+    old_layer: KoswatLayerProtocol
+    total_volume: float
+
+    def __init__(self) -> None:
+        self.new_layer = None
+        self.old_layer = None
+        self.total_volume = math.nan
 
     @property
     def total_cost(self) -> float:
@@ -37,9 +45,14 @@ class LayerCostReport(ReportProtocol):
 
 
 class ProfileCostReport(ReportProtocol):
-    layer_cost_reports: List[LayerCostReport] = []
-    new_profile: KoswatProfileBase = None
-    old_profile: KoswatProfileBase = None
+    layer_cost_reports: List[LayerCostReport]
+    new_profile: KoswatProfileBase
+    old_profile: KoswatProfileBase
+
+    def __init__(self) -> None:
+        self.layer_cost_reports = []
+        self.new_profile = None
+        self.old_profile = None
 
     @property
     def total_cost(self) -> float:
@@ -62,8 +75,12 @@ class ProfileCostReport(ReportProtocol):
 
 
 class MultiLocationProfileCostReport(ReportProtocol):
-    locations: List[PointSurroundings] = []
-    profile_cost_report: ProfileCostReport = None
+    locations: List[PointSurroundings]
+    profile_cost_report: ProfileCostReport
+
+    def __init__(self) -> None:
+        self.locations = []
+        self.profile_cost_report = None
 
     @property
     def cost_per_km(self) -> float:
@@ -99,4 +116,7 @@ class MultiLocationProfileCostReport(ReportProtocol):
 
 
 class MultiLocationMultiProfileCostSummary:
-    locations_profile_report_list: List[MultiLocationProfileCostReport] = []
+    locations_profile_report_list: List[MultiLocationProfileCostReport]
+
+    def __init__(self) -> None:
+        self.locations_profile_report_list = []

@@ -109,5 +109,5 @@ class TestAcceptance:
             assert _multi_report.total_cost > 0
             assert _multi_report.total_volume > 0
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
-            assert len(_layers_report) == 1 + len(layers_case["coating_layers"])
+            assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
             assert all(isinstance(lcr, LayerCostReport) for lcr in _layers_report)
