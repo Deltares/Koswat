@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from koswat.cost_report.reports.multi_location_profile_cost_report import (
+from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
 

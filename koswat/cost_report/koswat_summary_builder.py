@@ -2,10 +2,10 @@ from typing import List
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
-from koswat.cost_report.builders.multi_location_profile_cost_builder import (
+from koswat.cost_report.koswat_summary import KoswatSummary
+from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
-from koswat.cost_report.koswat_summary import KoswatSummary
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
