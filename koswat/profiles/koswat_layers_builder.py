@@ -36,7 +36,7 @@ class KoswatLayersBuilder(BuilderProtocol):
         ax = fig.add_subplot(221)
         plot_line(ax, upper_linestring, color="#aaa")
         plot_line(ax, lower_linestring, color="#eee")
-        pyplot.show()
+        # pyplot.show()
 
     def _build_base_layer(
         self, upper_layer_linestring: geometry.LineString, layer_data: dict
