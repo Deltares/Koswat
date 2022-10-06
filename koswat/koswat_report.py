@@ -23,6 +23,8 @@ class LayerCostReport(ReportProtocol):
 
     @property
     def total_cost(self) -> float:
+        if not self.layer:
+            return math.nan
         return self.total_volume * self.layer.material.cost
 
     def as_dict(self) -> dict:
@@ -35,7 +37,7 @@ class LayerCostReport(ReportProtocol):
 
 class ProfileCostReport(ReportProtocol):
     layer_cost_reports: List[LayerCostReport] = []
-    profile: KoswatProfileBase
+    profile: KoswatProfileBase = None
 
     @property
     def total_cost(self) -> float:
@@ -58,8 +60,8 @@ class ProfileCostReport(ReportProtocol):
 
 
 class MultipleLocationProfileCostReport(ReportProtocol):
-    locations: List[PointSurroundings]
-    profile_cost_report: ProfileCostReport
+    locations: List[PointSurroundings] = []
+    profile_cost_report: ProfileCostReport = None
 
     @property
     def cost_per_km(self) -> float:
