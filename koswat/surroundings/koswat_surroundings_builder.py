@@ -1,10 +1,6 @@
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Dict
-
 from koswat.builder_protocol import BuilderProtocol
-from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
 from koswat.surroundings.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
@@ -12,7 +8,10 @@ from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 
 
 class KoswatSurroundingsBuilder(BuilderProtocol):
-    buildings_foms: KoswatBuildingsPoldersideBuilder = None
+    buildings_foms: KoswatBuildingsPoldersideBuilder
+
+    def __init__(self) -> None:
+        self.buildings_foms = None
 
     def build(self) -> KoswatSurroundings:
         _surroundings = KoswatSurroundings()

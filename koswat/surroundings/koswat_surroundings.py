@@ -6,7 +6,10 @@ from koswat.surroundings.koswat_buildings_polderside import KoswatBuildingsPolde
 
 
 class KoswatSurroundings:
-    buldings_polderside: KoswatBuildingsPolderside = None
+    buldings_polderside: KoswatBuildingsPolderside
+
+    def __init__(self) -> None:
+        self.buldings_polderside = None
 
     @property
     def locations(self) -> List[Point]:

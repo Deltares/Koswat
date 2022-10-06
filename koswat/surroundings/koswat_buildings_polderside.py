@@ -12,9 +12,14 @@ class PointSurroundings:
     Object representing a `meter` with `x`, `y` coordinates in a polder (or else).
     """
 
-    section: str = ""
-    location: Point = None
-    distance_to_buildings: List[float] = []
+    section: str
+    location: Point
+    distance_to_buildings: List[float]
+
+    def __init__(self) -> None:
+        self.section = ""
+        self.location = None
+        self.distance_to_buildings = []
 
     @property
     def closest_building(self) -> float:
@@ -22,7 +27,10 @@ class PointSurroundings:
 
 
 class KoswatBuildingsPolderside(SurroundingsProtocol):
-    points: List[PointSurroundings] = []
+    points: List[PointSurroundings]
+
+    def __init__(self) -> None:
+        self.points = []
 
     @property
     def conflicting_points(self) -> List[PointSurroundings]:

@@ -15,8 +15,12 @@ from koswat.surroundings.koswat_buildings_polderside import (
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
-    koswat_shp_fom: KoswatShpFom = None
-    koswat_csv_fom: KoswatCsvFom = None
+    koswat_shp_fom: KoswatShpFom
+    koswat_csv_fom: KoswatCsvFom
+
+    def __init__(self) -> None:
+        self.koswat_csv_fom = None
+        self.koswat_shp_fom = None
 
     def _find_polderside_point_idx(self, limit_point: Point) -> int:
         for _ps_idx, ps in enumerate(self.koswat_csv_fom.points_surroundings_list):
