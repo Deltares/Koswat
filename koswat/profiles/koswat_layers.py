@@ -56,7 +56,8 @@ class KoswatLayers:
     @property
     def _layers(self) -> List[KoswatLayerProtocol]:
         _layers = []
-        _layers.append(self.base_layer)
+        if self.base_layer:
+            _layers.append(self.base_layer)
         _layers.extend(self.coating_layers)
         return _layers
 

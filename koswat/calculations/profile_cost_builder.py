@@ -5,8 +5,8 @@ from koswat.profiles.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostBuilder(BuilderProtocol):
-    base_profile: KoswatProfileBase
-    calculated_profile: KoswatProfileBase
+    base_profile: KoswatProfileBase = None
+    calculated_profile: KoswatProfileBase = None
 
     def _get_layer_cost_report(
         self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol
@@ -14,7 +14,7 @@ class ProfileCostBuilder(BuilderProtocol):
         if base_layer.material.name != calculated_layer.material.name:
             raise ValueError("Material differs between layers. Cannot compute costs.")
         _layer_report = LayerCostReport()
-        _diff_geometry = calculated_layer.geometry - base_layer.geometry
+        _diff_geometry = calculated_layer.geometry.difference(base_layer.geometry)
         _layer_report.total_volume = _diff_geometry.area
         _layer_report.layer = calculated_layer
         return _layer_report

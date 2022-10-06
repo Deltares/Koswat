@@ -61,45 +61,9 @@ class TestAcceptance:
         "layers_case",
         LayersCases.cases,
     )
-    def test_given_acceptance_test_case_returns_costs(
-        self,
-        input_profile_case: dict,
-        layers_case: dict,
-        scenario_case: dict,
+    def test_given_surrounding_files_run_calculations_for_all_included_profiles(
+        self, input_profile_case, scenario_case, layers_case
     ):
-        # 1. Define test data.
-        _scenario = KoswatScenario.from_dict(scenario_case)
-        assert isinstance(_scenario, KoswatScenario)
-
-        _profile = KoswatProfileBuilder.with_data(
-            dict(input_profile_data=input_profile_case, layers_data=layers_case)
-        ).build(KoswatProfileBase)
-        assert isinstance(_profile, KoswatProfileBase)
-
-        # 2. Run test.
-        _new_profile = ProfileReinforcementCalculation().calculate_new_profile(
-            _profile, _scenario
-        )
-        _profile_cost_builder = ProfileCostBuilder()
-        _profile_cost_builder.base_profile = _profile
-        _profile_cost_builder.calculated_profile = _new_profile
-        _cost_report = _profile_cost_builder.build()
-
-        # 3. Verify expectations.
-        assert isinstance(_cost_report, ProfileCostReport)
-        assert isinstance(_cost_report.layer_cost_reports, list)
-        assert len(_cost_report.layer_cost_reports) == 1 + len(
-            layers_case["coating_layers"]
-        )
-        assert all(
-            isinstance(lcr, LayerCostReport) for lcr in _cost_report.layer_cost_reports
-        )
-        assert not math.isnan(_cost_report.total_cost)
-        assert _cost_report.total_cost > 0
-        assert not math.isnan(_cost_report.total_volume)
-        assert _cost_report.total_volume > 0
-
-    def test_given_surrounding_files_run_calculations_for_all_included_profiles(self):
         # 1. Define test data.
         _csv_test_file = (
             test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
@@ -119,13 +83,13 @@ class TestAcceptance:
         assert isinstance(_surroundings, KoswatSurroundings)
         assert isinstance(_surroundings.buldings_polderside, KoswatBuildingsPolderside)
 
-        _scenario = KoswatScenario.from_dict(ScenarioCases.default)
+        _scenario = KoswatScenario.from_dict(scenario_case)
         assert isinstance(_scenario, KoswatScenario)
 
         _base_profile = KoswatProfileBuilder.with_data(
             dict(
-                input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.without_layers,
+                input_profile_data=input_profile_case,
+                layers_data=layers_case,
             )
         ).build(KoswatProfileBase)
 
@@ -143,3 +107,6 @@ class TestAcceptance:
             assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
             assert _multi_report.total_cost > 0
             assert _multi_report.total_volume > 0
+            _layers_report = _multi_report.profile_cost_report.layer_cost_reports
+            assert len(_layers_report) == 1 + len(layers_case["coating_layers"])
+            assert all(isinstance(lcr, LayerCostReport) for lcr in _layers_report)
