@@ -1,6 +1,4 @@
-from koswat.cost_report.reports.koswat_report import (
-    KoswatSummary,
-)
+from koswat.cost_report.reports.koswat_summary import KoswatSummary
 
 
 class TestKoswatSummary:

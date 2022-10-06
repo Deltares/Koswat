@@ -7,9 +7,7 @@ from koswat.cost_report.builders.multi_location_multi_profile_cost_builder impor
 from koswat.cost_report.builders.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
-from koswat.cost_report.reports.koswat_report import (
-    KoswatSummary,
-)
+from koswat.cost_report.reports.koswat_summary import KoswatSummary
 from koswat.cost_report.reports.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
