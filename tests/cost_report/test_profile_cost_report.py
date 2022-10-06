@@ -1,6 +1,6 @@
 import math
 
-from koswat.cost_report.profile_cost_report import ProfileCostReport
+from koswat.cost_report.reports.profile_cost_report import ProfileCostReport
 
 
 class TestProfileCostReport:

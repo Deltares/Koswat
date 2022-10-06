@@ -1,11 +1,11 @@
 import pytest
 from shapely.geometry import Point
 
-from koswat.calculations.multi_location_profile_cost_builder import (
+from koswat.cost_report.builders.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
-from koswat.calculations.profile_cost_builder import ProfileCostBuilder
-from koswat.cost_report.multi_location_profile_cost_report import (
+from koswat.cost_report.builders.profile_cost_builder import ProfileCostBuilder
+from koswat.cost_report.reports.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
 from koswat.koswat_scenario import KoswatScenario

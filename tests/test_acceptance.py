@@ -2,15 +2,17 @@ from __future__ import annotations
 
 import pytest
 
-from koswat.calculations.multi_location_multi_profile_cost_builder import (
+from koswat.cost_report.builders.multi_location_multi_profile_cost_builder import (
     MultiLocationMultiProfileCostBuilder,
 )
-from koswat.cost_report.koswat_report import MultiLocationMultiProfileCostSummary
-from koswat.cost_report.layer_cost_report import LayerCostReport
-from koswat.cost_report.multi_location_profile_cost_report import (
+from koswat.cost_report.reports.koswat_report import (
+    KoswatSummary,
+)
+from koswat.cost_report.reports.layer_cost_report import LayerCostReport
+from koswat.cost_report.reports.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
-from koswat.cost_report.profile_cost_report import ProfileCostReport
+from koswat.cost_report.reports.profile_cost_report import ProfileCostReport
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
@@ -79,7 +81,7 @@ class TestAcceptance:
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
         # 3. Verify expectations.
-        assert isinstance(_summary, MultiLocationMultiProfileCostSummary)
+        assert isinstance(_summary, KoswatSummary)
         assert any(_summary.locations_profile_report_list)
         for _multi_report in _summary.locations_profile_report_list:
             assert isinstance(_multi_report, MultiLocationProfileCostReport)

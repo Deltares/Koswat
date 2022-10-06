@@ -1,11 +1,13 @@
 from typing import List
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations.multi_location_profile_cost_builder import (
+from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
+from koswat.cost_report.builders.multi_location_profile_cost_builder import (
     MultiLocationProfileCostBuilder,
 )
-from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
-from koswat.cost_report.koswat_report import MultiLocationMultiProfileCostSummary
+from koswat.cost_report.reports.koswat_report import (
+    KoswatSummary,
+)
 from koswat.koswat_scenario import KoswatScenario
 from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
@@ -42,8 +44,8 @@ class MultiLocationMultiProfileCostBuilder(BuilderProtocol):
         _builder.surroundings = self.surroundings
         return _builder
 
-    def build(self) -> MultiLocationMultiProfileCostSummary:
-        _summary = MultiLocationMultiProfileCostSummary()
+    def build(self) -> KoswatSummary:
+        _summary = KoswatSummary()
         _mlpc_builder = self._get_multi_location_profile_cost_builder()
         for _calc_profile in self._get_calculated_profiles():
             _mlpc_builder.calc_profile = _calc_profile

@@ -2,7 +2,7 @@ import math
 from typing import List
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.cost_report.profile_cost_report import ProfileCostReport
+from koswat.cost_report.reports.profile_cost_report import ProfileCostReport
 from koswat.surroundings.koswat_buildings_polderside import PointSurroundings
 
 

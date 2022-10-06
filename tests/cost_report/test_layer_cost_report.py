@@ -1,6 +1,6 @@
 import math
 
-from koswat.cost_report.layer_cost_report import LayerCostReport
+from koswat.cost_report.reports.layer_cost_report import LayerCostReport
 
 
 class TestLayerCostReport:

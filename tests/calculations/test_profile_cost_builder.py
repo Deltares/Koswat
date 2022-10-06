@@ -3,9 +3,9 @@ import math
 import pytest
 from shapely.geometry import Point
 
-from koswat.calculations.profile_cost_builder import ProfileCostBuilder
-from koswat.cost_report.layer_cost_report import LayerCostReport
-from koswat.cost_report.profile_cost_report import ProfileCostReport
+from koswat.cost_report.builders.profile_cost_builder import ProfileCostBuilder
+from koswat.cost_report.reports.layer_cost_report import LayerCostReport
+from koswat.cost_report.reports.profile_cost_report import ProfileCostReport
 from koswat.profiles.koswat_layers import KoswatBaseLayer, KoswatLayers
 from koswat.profiles.koswat_material import KoswatMaterial
 from koswat.profiles.koswat_profile import KoswatProfileBase
