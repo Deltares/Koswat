@@ -11,7 +11,7 @@ from koswat.calculations.profile_cost_builder import ProfileCostBuilder
 from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
 from koswat.koswat_report import (
     LayerCostReport,
-    MultipleLocationProfileCostReport,
+    MultiLocationProfileCostReport,
     ProfileCostReport,
 )
 from koswat.koswat_scenario import KoswatScenario
@@ -103,7 +103,7 @@ class TestAcceptance:
         # 3. Verify expectations.
         assert any(_multi_report_list)
         for _multi_report in _multi_report_list:
-            assert isinstance(_multi_report, MultipleLocationProfileCostReport)
+            assert isinstance(_multi_report, MultiLocationProfileCostReport)
             assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
             assert _multi_report.total_cost > 0
             assert _multi_report.total_volume > 0

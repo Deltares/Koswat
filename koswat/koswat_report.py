@@ -61,7 +61,7 @@ class ProfileCostReport(ReportProtocol):
         )
 
 
-class MultipleLocationProfileCostReport(ReportProtocol):
+class MultiLocationProfileCostReport(ReportProtocol):
     locations: List[PointSurroundings] = []
     profile_cost_report: ProfileCostReport = None
 

@@ -4,7 +4,7 @@ import pytest
 
 from koswat.koswat_report import (
     LayerCostReport,
-    MultipleLocationProfileCostReport,
+    MultiLocationProfileCostReport,
     ProfileCostReport,
 )
 
@@ -32,8 +32,8 @@ class TestProfileCostReport:
 
 class TestMultipleLocationProfileCostReport:
     def test_initialize(self):
-        _report = MultipleLocationProfileCostReport()
-        assert isinstance(_report, MultipleLocationProfileCostReport)
+        _report = MultiLocationProfileCostReport()
+        assert isinstance(_report, MultiLocationProfileCostReport)
         assert not any(_report.locations)
         assert not _report.profile_cost_report
         assert not _report.profile_type
