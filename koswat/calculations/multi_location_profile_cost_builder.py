@@ -1,6 +1,8 @@
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.profile_cost_builder import ProfileCostBuilder
-from koswat.koswat_report import MultiLocationProfileCostReport
+from koswat.cost_report.multi_location_profile_cost_report import (
+    MultiLocationProfileCostReport,
+)
 from koswat.profiles.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 

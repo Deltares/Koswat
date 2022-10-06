@@ -1,5 +1,6 @@
 from koswat.builder_protocol import BuilderProtocol
-from koswat.koswat_report import LayerCostReport, ProfileCostReport
+from koswat.cost_report.layer_cost_report import LayerCostReport
+from koswat.cost_report.profile_cost_report import ProfileCostReport
 from koswat.profiles.koswat_layers import KoswatLayerProtocol
 from koswat.profiles.koswat_profile import KoswatProfileBase
 
