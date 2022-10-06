@@ -9,16 +9,24 @@ from koswat.surroundings.koswat_buildings_polderside import PointSurroundings
 
 
 class KoswatCsvFom(FileObjectModelProtocol):
-    points_surroundings_list: List[PointSurroundings] = []
-    distances_list: List[float] = []
+    points_surroundings_list: List[PointSurroundings]
+    distances_list: List[float]
+
+    def __init__(self) -> None:
+        self.points_surroundings_list = []
+        self.distances_list = []
 
     def is_valid(self) -> bool:
         return self.points_surroundings_list and any(self.points_surroundings_list)
 
 
 class KoswatCsvFomBuilder(BuilderProtocol):
-    headers: List[str] = []
-    entries: List[List[str]] = []
+    headers: List[str]
+    entries: List[List[str]]
+
+    def __init__(self) -> None:
+        self.headers = []
+        self.entries = []
 
     def _is_valid(self) -> bool:
         if not self.headers or not self.entries:

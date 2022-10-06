@@ -11,7 +11,7 @@ class ProfileCostBuilder(BuilderProtocol):
     def __init__(self) -> None:
         self.surroundings = None
         self.base_profile = None
-        self.calc_profile = None
+        self.calculated_profile = None
 
     def _get_layer_cost_report(
         self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol
