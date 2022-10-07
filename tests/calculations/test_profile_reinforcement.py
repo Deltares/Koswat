@@ -77,7 +77,9 @@ class TestProfileReinforcementCalculation:
         for _idx, _c_layer in enumerate(expected_layers.coating_layers):
             _new_layer = new_layers.coating_layers[_idx]
             if not _new_layer.geometry.almost_equals(_c_layer.geometry, _tolerance):
-                _layers_errors[f"Geometries differ for layer {_c_layer.material.name}"]
+                _layers_errors.append(
+                    f"Geometries differ for layer {_c_layer.material.name}"
+                )
 
         return _layers_errors
 
