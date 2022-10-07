@@ -4,7 +4,7 @@ from typing import List
 from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.characteristic_points import CharacteristicPoints
+from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_profile.koswat_input_profile import KoswatInputProfile
 
 

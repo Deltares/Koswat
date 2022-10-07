@@ -1,4 +1,4 @@
-from koswat.dike.koswat_profile import KoswatProfileBase
+from koswat.dike.koswat_profile.koswat_profile import KoswatProfileBase
 
 
 class TestKoswatProfile:
