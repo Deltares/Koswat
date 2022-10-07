@@ -1,12 +1,12 @@
 from shapely.geometry import Point
 
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
-    MultiLocationProfileCostBuilder,
+    MultiLocationProfileCostReportBuilder,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
-from koswat.cost_report.profile.profile_cost_builder import ProfileCostBuilder
+from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
@@ -18,16 +18,16 @@ from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
-class TestMultiLocationProfileCostBuilder:
+class TestMultiLocationProfileCostReportBuilder:
     def test_initialize(self):
-        _builder = MultiLocationProfileCostBuilder()
-        assert isinstance(_builder, MultiLocationProfileCostBuilder)
+        _builder = MultiLocationProfileCostReportBuilder()
+        assert isinstance(_builder, MultiLocationProfileCostReportBuilder)
         assert not _builder.surroundings
         assert not _builder.base_profile
 
     def test_get_profile_cost_builder(self):
         # 1. Define test data.
-        _builder = MultiLocationProfileCostBuilder()
+        _builder = MultiLocationProfileCostReportBuilder()
         _builder.base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
@@ -47,11 +47,11 @@ class TestMultiLocationProfileCostBuilder:
         _profile_builder = _builder._get_profile_cost_builder()
 
         # 3. Verify expectations.
-        assert isinstance(_profile_builder, ProfileCostBuilder)
+        assert isinstance(_profile_builder, ProfileCostReportBuilder)
 
     def test_build(self):
         # 1. Define test data.
-        _builder = MultiLocationProfileCostBuilder()
+        _builder = MultiLocationProfileCostReportBuilder()
         _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
         _builder.surroundings = KoswatSurroundings()
         _p_surrounding = PointSurroundings()

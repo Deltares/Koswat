@@ -2,23 +2,23 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.cost_report.profile.profile_cost_builder import ProfileCostBuilder
+from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.layers.koswat_layers import KoswatBaseLayer, KoswatLayers
 from koswat.dike.material.koswat_material import KoswatMaterial
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
-class TestProfileCostBuilder:
+class TestProfileCostReportBuilder:
     def test_initialize(self):
-        _builder = ProfileCostBuilder()
-        assert isinstance(_builder, ProfileCostBuilder)
+        _builder = ProfileCostReportBuilder()
+        assert isinstance(_builder, ProfileCostReportBuilder)
         assert not _builder.base_profile
         assert not _builder.calculated_profile
 
     def test_get_layer_cost_report_different_material_raises(self):
         # 1. Define test data.
-        _builder = ProfileCostBuilder()
+        _builder = ProfileCostReportBuilder()
         _base_layer = KoswatBaseLayer()
         _base_layer.material = KoswatMaterial()
         _base_layer.material.name = "a material"
@@ -37,7 +37,7 @@ class TestProfileCostBuilder:
 
     def test_get_layer_cost_report_same_material_returns_report(self):
         # 1. Define test data.
-        _builder = ProfileCostBuilder()
+        _builder = ProfileCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _base_layer = KoswatBaseLayer()
@@ -60,7 +60,7 @@ class TestProfileCostBuilder:
 
     def test_get_profile_cost_report(self):
         # 1. Define test data.
-        _builder = ProfileCostBuilder()
+        _builder = ProfileCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _builder.base_profile = KoswatProfileBase()
@@ -92,7 +92,7 @@ class TestProfileCostBuilder:
 
     def test_get_profile_cost_builder_different_layers_number_raises_error(self):
         # 1. Define test data.
-        _builder = ProfileCostBuilder()
+        _builder = ProfileCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _builder.base_profile = KoswatProfileBase()
@@ -123,7 +123,7 @@ class TestProfileCostBuilder:
         self,
     ):
         # 1. Define test data.
-        _builder = ProfileCostBuilder()
+        _builder = ProfileCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _builder.base_profile = KoswatProfileBase()

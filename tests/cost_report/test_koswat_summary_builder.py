@@ -4,7 +4,7 @@ from koswat.calculations.profile_reinforcement import ProfileReinforcement
 from koswat.cost_report.koswat_summary import KoswatSummary
 from koswat.cost_report.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
-    MultiLocationProfileCostBuilder,
+    MultiLocationProfileCostReportBuilder,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
@@ -60,7 +60,7 @@ class TestKoswatSummaryBuilder:
 
         # 3. Verify expectations.
         assert isinstance(
-            _multi_location_profile_cost_builder, MultiLocationProfileCostBuilder
+            _multi_location_profile_cost_builder, MultiLocationProfileCostReportBuilder
         )
         assert (
             _multi_location_profile_cost_builder.base_profile == _builder.base_profile

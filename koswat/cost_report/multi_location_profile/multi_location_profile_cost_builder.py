@@ -1,5 +1,5 @@
 from koswat.builder_protocol import BuilderProtocol
-from koswat.cost_report.profile.profile_cost_builder import ProfileCostBuilder
+from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
@@ -7,7 +7,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 
 
-class MultiLocationProfileCostBuilder(BuilderProtocol):
+class MultiLocationProfileCostReportBuilder(BuilderProtocol):
     surroundings: KoswatSurroundings
     base_profile: KoswatProfileBase
     calc_profile: KoswatProfileBase
@@ -17,8 +17,8 @@ class MultiLocationProfileCostBuilder(BuilderProtocol):
         self.base_profile = None
         self.calc_profile = None
 
-    def _get_profile_cost_builder(self) -> ProfileCostBuilder:
-        _profile_cost_builder = ProfileCostBuilder()
+    def _get_profile_cost_builder(self) -> ProfileCostReportBuilder:
+        _profile_cost_builder = ProfileCostReportBuilder()
         _profile_cost_builder.base_profile = self.base_profile
         _profile_cost_builder.calculated_profile = self.calc_profile
         return _profile_cost_builder
