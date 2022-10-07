@@ -4,8 +4,6 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.io.koswat_csv_fom import KoswatCsvFom
-from koswat.io.koswat_shp_reader import KoswatShpFom
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
@@ -13,6 +11,8 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
+from koswat.io.koswat_csv_fom import KoswatCsvFom
+from koswat.io.koswat_shp_reader import KoswatShpFom
 from tests import test_data
 
 
