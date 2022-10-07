@@ -45,6 +45,10 @@ class KoswatProfileBuilder(BuilderProtocol):
             raise ValueError("Koswat Input Profile data dictionary required.")
         if not isinstance(self.layers_data, dict):
             raise ValueError("Koswat Layers data dictionary required.")
+        if not issubclass(profile_type, KoswatProfileBase):
+            raise ValueError(
+                f"Koswat profile type should be subclass of {KoswatProfileBase.__name__}."
+            )
 
         _profile = profile_type()
         _profile.input_data = KoswatInputProfile.from_dict(self.input_profile_data)

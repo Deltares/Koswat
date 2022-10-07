@@ -1,10 +1,11 @@
-from typing import List
+from re import A
+from typing import Any, List, Type
 
 import pytest
 from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.layers.koswat_layers import KoswatLayers
+from koswat.dike.layers.koswat_layers import KoswatBaseLayer, KoswatLayers
 from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
@@ -12,7 +13,7 @@ from tests.library_test_cases import InitialPointsLookup, InputProfileCases, Lay
 
 
 class TestKoswatProfileBuilder:
-    def test_initialize_init_(self):
+    def test_initialize(self):
         _builder = KoswatProfileBuilder()
         assert isinstance(_builder, KoswatProfileBuilder)
         assert isinstance(_builder, BuilderProtocol)
@@ -67,6 +68,33 @@ class TestKoswatProfileBuilder:
         assert isinstance(_profile_builder.layers_data, dict)
         assert _profile_builder.input_profile_data == input_dict["input_profile_data"]
         assert _profile_builder.layers_data == input_dict["layers_data"]
+
+    def test_build_given_no_input_profile_data_then_raises(self):
+        _builder = KoswatProfileBuilder()
+        _builder.input_profile_data = None
+        _builder.layers_data = dict(base_layer=dict(material="zand"), coating_layers=[])
+        with pytest.raises(ValueError) as exc_err:
+            _builder.build(KoswatProfileBase)
+        assert str(exc_err.value) == "Koswat Input Profile data dictionary required."
+
+    def test_build_given_no_layers_data_then_raises(self):
+        _builder = KoswatProfileBuilder()
+        _builder.input_profile_data = InputProfileCases.default
+        _builder.layers_data = None
+        with pytest.raises(ValueError) as exc_err:
+            _builder.build(KoswatProfileBase)
+        assert str(exc_err.value) == "Koswat Layers data dictionary required."
+
+    def test_build_given_invalid_profile_type_then_raises(self):
+        _builder = KoswatProfileBuilder()
+        _builder.input_profile_data = InputProfileCases.default
+        _builder.layers_data = dict(base_layer=dict(material="zand"), coating_layers=[])
+        with pytest.raises(ValueError) as exc_err:
+            _builder.build(KoswatBaseLayer)
+        assert (
+            str(exc_err.value)
+            == f"Koswat profile type should be subclass of {KoswatProfileBase.__name__}."
+        )
 
     @pytest.mark.parametrize(
         "input_profile_data, expected_points",
