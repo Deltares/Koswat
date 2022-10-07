@@ -1,8 +1,8 @@
 from shapely.geometry import Point
 
 from koswat.calculations.profile_reinforcement import ProfileReinforcement
-from koswat.cost_report.koswat_summary import KoswatSummary
-from koswat.cost_report.koswat_summary_builder import KoswatSummaryBuilder
+from koswat.cost_report.summary.koswat_summary import KoswatSummary
+from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
