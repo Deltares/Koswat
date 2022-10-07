@@ -6,9 +6,9 @@ from shapely.geometry import Point
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.profile.profile_cost_builder import ProfileCostBuilder
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
-from koswat.dike.koswat_layers.koswat_layers import KoswatBaseLayer, KoswatLayers
-from koswat.dike.koswat_material.koswat_material import KoswatMaterial
-from koswat.dike.koswat_profile.koswat_profile import KoswatProfileBase
+from koswat.dike.layers.koswat_layers import KoswatBaseLayer, KoswatLayers
+from koswat.dike.material.koswat_material import KoswatMaterial
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class TestProfileCostBuilder:

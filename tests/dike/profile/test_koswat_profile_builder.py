@@ -4,10 +4,10 @@ import pytest
 from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.koswat_layers.koswat_layers import KoswatLayers
-from koswat.dike.koswat_profile.koswat_input_profile import KoswatInputProfile
-from koswat.dike.koswat_profile.koswat_profile import KoswatProfileBase
-from koswat.dike.koswat_profile.koswat_profile_builder import KoswatProfileBuilder
+from koswat.dike.layers.koswat_layers import KoswatLayers
+from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from tests.library_test_cases import InitialPointsLookup, InputProfileCases, LayersCases
 
 

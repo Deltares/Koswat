@@ -1,12 +1,12 @@
 import math
 
-from koswat.dike.koswat_layers.koswat_layers import (
+from koswat.dike.layers.koswat_layers import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
     KoswatLayerProtocol,
     KoswatLayers,
 )
-from koswat.dike.koswat_material.koswat_material import KoswatMaterial
+from koswat.dike.material.koswat_material import KoswatMaterial
 
 
 class TestKoswatBaseLayer:

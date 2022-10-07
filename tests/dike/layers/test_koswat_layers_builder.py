@@ -4,13 +4,13 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.koswat_layers.koswat_layers import (
+from koswat.dike.layers.koswat_layers import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
     KoswatLayers,
 )
-from koswat.dike.koswat_layers.koswat_layers_builder import KoswatLayersBuilder
-from koswat.dike.koswat_material.koswat_material import KoswatMaterial
+from koswat.dike.layers.koswat_layers_builder import KoswatLayersBuilder
+from koswat.dike.material.koswat_material import KoswatMaterial
 from tests.library_test_cases import InitialPointsLookup, LayersCases
 
 

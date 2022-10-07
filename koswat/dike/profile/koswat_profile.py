@@ -6,8 +6,8 @@ from typing import List, Optional
 from shapely.geometry.point import Point
 
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
-from koswat.dike.koswat_layers.koswat_layers import KoswatLayers
-from koswat.dike.koswat_profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.layers.koswat_layers import KoswatLayers
+from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
 
 
 class KoswatProfileBase:
