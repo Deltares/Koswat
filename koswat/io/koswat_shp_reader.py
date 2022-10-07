@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import shapefile
@@ -23,8 +22,8 @@ class KoswatShpFom(FileObjectModelProtocol):
             return False
         return self.initial_point.is_valid and self.end_point.is_valid
 
-class KoswatShpReader(KoswatReaderProtocol):
 
+class KoswatShpReader(KoswatReaderProtocol):
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix == ".shp"
 
@@ -33,11 +32,10 @@ class KoswatShpReader(KoswatReaderProtocol):
             raise ValueError("Shp file should be provided")
         if not file_path.is_file():
             raise FileNotFoundError(file_path)
-        
+
         _shp_model = KoswatShpFom()
         with shapefile.Reader(file_path) as shp:
             _shp_points = shp.shapes()[0].points
             _shp_model.initial_point = Point(_shp_points[0])
             _shp_model.end_point = Point(_shp_points[-1])
         return _shp_model
-        

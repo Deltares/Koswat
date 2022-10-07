@@ -3,10 +3,7 @@ from typing import Callable
 
 import pytest
 
-from koswat.dike.material.koswat_material import (
-    KoswatMaterial,
-    KoswatMaterialFactory,
-)
+from koswat.dike.material.koswat_material import KoswatMaterial, KoswatMaterialFactory
 
 
 class TestKoswatMaterial:
