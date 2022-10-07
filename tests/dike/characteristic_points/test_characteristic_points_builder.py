@@ -4,9 +4,9 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.profiles.characteristic_points import CharacteristicPoints
-from koswat.profiles.characteristic_points_builder import CharacteristicPointsBuilder
-from koswat.profiles.koswat_input_profile import KoswatInputProfile
+from koswat.dike.characteristic_points import CharacteristicPoints
+from koswat.dike.characteristic_points_builder import CharacteristicPointsBuilder
+from koswat.dike.koswat_input_profile import KoswatInputProfile
 from tests.library_test_cases import InitialPointsLookup, InputProfileCases
 
 

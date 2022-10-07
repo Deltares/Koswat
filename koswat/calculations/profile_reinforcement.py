@@ -1,8 +1,8 @@
 from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
 from koswat.koswat_scenario import KoswatScenario
-from koswat.profiles.koswat_input_profile import KoswatInputProfile
-from koswat.profiles.koswat_profile import KoswatProfileBase
-from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
+from koswat.dike.koswat_input_profile import KoswatInputProfile
+from koswat.dike.koswat_profile import KoswatProfileBase
+from koswat.dike.koswat_profile_builder import KoswatProfileBuilder
 
 
 class ProfileReinforcement(KoswatProfileBase):

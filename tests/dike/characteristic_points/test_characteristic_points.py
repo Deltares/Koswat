@@ -3,7 +3,7 @@ from typing import Callable, List, Optional
 import pytest
 from shapely.geometry import Point
 
-from koswat.profiles.characteristic_points import CharacteristicPoints
+from koswat.dike.characteristic_points import CharacteristicPoints
 
 
 def set_polderside(char_points: CharacteristicPoints, points: Optional[List[Point]]):

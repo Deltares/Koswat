@@ -3,8 +3,8 @@ from typing import Dict, List, Protocol, Tuple
 import pytest
 from shapely.geometry.point import Point
 
-from koswat.profiles.koswat_profile import KoswatProfileBase
-from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
+from koswat.dike.koswat_profile import KoswatProfileBase
+from koswat.dike.koswat_profile_builder import KoswatProfileBuilder
 
 
 class CasesProtocol(Protocol):

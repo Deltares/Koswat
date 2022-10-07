@@ -6,7 +6,7 @@ from typing import List, Protocol
 from shapely import geometry
 from typing_extensions import runtime_checkable
 
-from koswat.profiles.koswat_material import KoswatMaterial
+from koswat.dike.koswat_material import KoswatMaterial
 
 
 @runtime_checkable

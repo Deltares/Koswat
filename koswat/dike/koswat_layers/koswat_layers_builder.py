@@ -7,12 +7,12 @@ from matplotlib import pyplot
 from shapely import geometry
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.profiles.koswat_layers import (
+from koswat.dike.koswat_layers import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
     KoswatLayers,
 )
-from koswat.profiles.koswat_material import KoswatMaterialFactory
+from koswat.dike.koswat_material import KoswatMaterialFactory
 
 
 def plot_line(ax, ob, color):

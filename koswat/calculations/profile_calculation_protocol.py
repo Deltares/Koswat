@@ -3,7 +3,7 @@ from typing import Protocol
 from typing_extensions import runtime_checkable
 
 from koswat.koswat_scenario import KoswatScenario
-from koswat.profiles.koswat_profile import KoswatProfileBase
+from koswat.dike.koswat_profile import KoswatProfileBase
 
 
 @runtime_checkable

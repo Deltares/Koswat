@@ -7,7 +7,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_build
     MultiLocationProfileCostBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from koswat.profiles.koswat_profile import KoswatProfileBase
+from koswat.dike.koswat_profile import KoswatProfileBase
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 
 

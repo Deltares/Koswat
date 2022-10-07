@@ -4,12 +4,12 @@ import math
 from typing import Optional, Type
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.profiles.characteristic_points import CharacteristicPoints
-from koswat.profiles.characteristic_points_builder import CharacteristicPointsBuilder
-from koswat.profiles.koswat_input_profile import KoswatInputProfile
-from koswat.profiles.koswat_layers import KoswatLayers
-from koswat.profiles.koswat_layers_builder import KoswatLayersBuilder
-from koswat.profiles.koswat_profile import KoswatProfileBase
+from koswat.dike.characteristic_points import CharacteristicPoints
+from koswat.dike.characteristic_points_builder import CharacteristicPointsBuilder
+from koswat.dike.koswat_input_profile import KoswatInputProfile
+from koswat.dike.koswat_layers import KoswatLayers
+from koswat.dike.koswat_layers_builder import KoswatLayersBuilder
+from koswat.dike.koswat_profile import KoswatProfileBase
 
 
 class KoswatProfileBuilder(BuilderProtocol):

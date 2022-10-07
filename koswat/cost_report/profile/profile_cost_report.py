@@ -3,7 +3,7 @@ from typing import List
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.profiles.koswat_profile import KoswatProfileBase
+from koswat.dike.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostReport(CostReportProtocol):
