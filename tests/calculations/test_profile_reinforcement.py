@@ -4,12 +4,15 @@ import pytest
 from shapely.geometry.point import Point
 
 from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
-from koswat.calculations.profile_reinforcement import ProfileReinforcement
+from koswat.calculations.profile_reinforcement import (
+    ProfileReinforcement,
+    ProfileReinforcementCalculation,
+)
+from koswat.dike.layers.koswat_layers import KoswatLayers
+from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
-from koswat.profiles.koswat_input_profile import KoswatInputProfile
-from koswat.profiles.koswat_layers import KoswatLayers
-from koswat.profiles.koswat_profile import KoswatProfile
-from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 from tests.library_test_cases import (
     InputProfileCases,
     InputProfileScenarioLookup,
@@ -19,8 +22,16 @@ from tests.library_test_cases import (
 
 
 class TestProfileReinforcement:
+    def test_initialize(self):
+        _profile = ProfileReinforcement()
+        assert isinstance(_profile, ProfileReinforcement)
+        assert isinstance(_profile, KoswatProfileBase)
+        assert str(_profile) == "Grondmaatregel profiel"
+
+
+class TestProfileReinforcementCalculation:
     def test_initialize_profile_reinforcement(self):
-        _calculation = ProfileReinforcement()
+        _calculation = ProfileReinforcementCalculation()
         assert _calculation
         assert isinstance(_calculation, ProfileCalculationProtocol)
 
@@ -66,12 +77,14 @@ class TestProfileReinforcement:
         for _idx, _c_layer in enumerate(expected_layers.coating_layers):
             _new_layer = new_layers.coating_layers[_idx]
             if not _new_layer.geometry.almost_equals(_c_layer.geometry, _tolerance):
-                _layers_errors[f"Geometries differ for layer {_c_layer.material.name}"]
+                _layers_errors.append(
+                    f"Geometries differ for layer {_c_layer.material.name}"
+                )
 
         return _layers_errors
 
     def compare_koswat_profiles(
-        self, new_profile: KoswatProfile, expected_profile: KoswatProfile
+        self, new_profile: KoswatProfileBase, expected_profile: KoswatProfileBase
     ):
         _found_errors = self._compare_koswat_input_profile(
             new_profile.input_data, expected_profile.input_data
@@ -111,26 +124,28 @@ class TestProfileReinforcement:
     ):
         # 1. Define test data.
         _dummy_layers = LayersCases.without_layers
-        _expected_profile = KoswatProfileBuilder.with_data(
-            expected_profile_data
-        ).build()
-        assert isinstance(_expected_profile, KoswatProfile)
+        _expected_profile = KoswatProfileBuilder.with_data(expected_profile_data).build(
+            ProfileReinforcement
+        )
+        assert isinstance(_expected_profile, ProfileReinforcement)
         _profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=profile_data,
                 layers_data=_dummy_layers,
                 p4_x_coordinate=0,
             )
-        ).build()
-        assert isinstance(_profile, KoswatProfile)
+        ).build(ProfileReinforcement)
+        assert isinstance(_profile, ProfileReinforcement)
         _scenario = KoswatScenario.from_dict(dict(scenario_data))
         assert isinstance(_scenario, KoswatScenario)
 
         # 2. Run test.
-        _new_profile = ProfileReinforcement().calculate_new_profile(_profile, _scenario)
+        _new_profile = ProfileReinforcementCalculation().calculate_new_profile(
+            _profile, _scenario
+        )
 
         # 3. Verify expectations.
-        assert isinstance(_new_profile, KoswatProfile)
+        assert isinstance(_new_profile, KoswatProfileBase)
         assert isinstance(_new_profile.input_data, KoswatInputProfile)
         self.compare_koswat_profiles(_new_profile, _expected_profile)
 
@@ -149,8 +164,10 @@ class TestProfileReinforcement:
         _input_profile.binnen_talud = 3
 
         # 2. Run test
-        _new_binnen_talud = ProfileReinforcement()._calculate_new_binnen_talud(
-            _input_profile, _scenario
+        _new_binnen_talud = (
+            ProfileReinforcementCalculation()._calculate_new_binnen_talud(
+                _input_profile, _scenario
+            )
         )
 
         # 3. Verify expectations
@@ -169,7 +186,7 @@ class TestProfileReinforcement:
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
-            ProfileReinforcement()._calculate_new_binnen_berm_hoogte(
+            ProfileReinforcementCalculation()._calculate_new_binnen_berm_hoogte(
                 _old_data, _new_data, _scenario
             )
         )
@@ -187,7 +204,7 @@ class TestProfileReinforcement:
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
-            ProfileReinforcement()._calculate_new_binnen_berm_hoogte(
+            ProfileReinforcementCalculation()._calculate_new_binnen_berm_hoogte(
                 _old_data, _new_data, _scenario
             )
         )
@@ -220,7 +237,7 @@ class TestProfileReinforcement:
 
         # 2. Run test
         _new_binnen_berm_breedte = (
-            ProfileReinforcement()._calculate_new_binnen_berm_breedte(
+            ProfileReinforcementCalculation()._calculate_new_binnen_berm_breedte(
                 _old_profile, _new_profile, _scenario
             )
         )
@@ -237,8 +254,10 @@ class TestProfileReinforcement:
         _old_data.kruin_hoogte = 40.04
 
         # 2. Run test
-        _new_kruin_hoogte = ProfileReinforcement()._calculate_new_kruin_hoogte(
-            _old_data, _scenario
+        _new_kruin_hoogte = (
+            ProfileReinforcementCalculation()._calculate_new_kruin_hoogte(
+                _old_data, _scenario
+            )
         )
 
         # 3. Verify expectations

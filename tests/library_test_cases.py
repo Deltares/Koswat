@@ -1,10 +1,7 @@
-from typing import Dict, List, Protocol, Tuple
+from typing import List, Protocol
 
 import pytest
 from shapely.geometry.point import Point
-
-from koswat.profiles.koswat_profile import KoswatProfile
-from koswat.profiles.koswat_profile_builder import KoswatProfileBuilder
 
 
 class CasesProtocol(Protocol):
