@@ -2,7 +2,9 @@ from typing import List
 
 from shapely.geometry import Point
 
-from koswat.surroundings.koswat_buildings_polderside import KoswatBuildingsPolderside
+from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+    KoswatBuildingsPolderside,
+)
 
 
 class KoswatSurroundings:

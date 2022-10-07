@@ -1,6 +1,6 @@
 from shapely.geometry import Point
 
-from koswat.surroundings.koswat_buildings_polderside import (
+from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
 )

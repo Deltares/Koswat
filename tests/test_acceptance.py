@@ -12,7 +12,9 @@ from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
-from koswat.surroundings.koswat_buildings_polderside import KoswatBuildingsPolderside
+from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+    KoswatBuildingsPolderside,
+)
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 from koswat.surroundings.koswat_surroundings_builder import KoswatSurroundingsBuilder
 from tests import test_data
@@ -84,6 +86,7 @@ class TestAcceptance:
             assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
             assert _multi_report.total_cost > 0
             assert _multi_report.total_volume > 0
+            assert _multi_report.cost_per_km > 1000
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
             assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
             assert all(isinstance(lcr, LayerCostReport) for lcr in _layers_report)

@@ -23,6 +23,7 @@ class ProfileCostBuilder(BuilderProtocol):
         _diff_geometry = calculated_layer.geometry.difference(base_layer.geometry)
         _layer_report.total_volume = _diff_geometry.area
         _layer_report.new_layer = calculated_layer
+        _layer_report.old_layer = base_layer
         return _layer_report
 
     def _get_profile_cost_report(self) -> ProfileCostReport:

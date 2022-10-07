@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.surroundings.koswat_buildings_polderside_builder import (
+from koswat.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
 from koswat.surroundings.koswat_surroundings import KoswatSurroundings
