@@ -10,6 +10,7 @@ from koswat.io.koswat_reader_protocol import (
 )
 from koswat.io.koswat_shp_reader import KoswatShpFom, KoswatShpReader
 from tests import test_data
+from tests.io import invalid_paths_cases
 
 
 class TestKoswatShpFom:
@@ -40,15 +41,7 @@ class TestKoswatShpReader:
         # 3. Verify expectations.
         assert _file.name in str(exc_err.value)
 
-    @pytest.mark.parametrize(
-        "shp_file",
-        [
-            pytest.param(None, id="None given"),
-            pytest.param("", id="Empty string given"),
-            pytest.param("not\\a\\path", id="Path as string"),
-            pytest.param(Path() / "not_a_valid_file", id="Wrong extension"),
-        ],
-    )
+    @pytest.mark.parametrize("shp_file", invalid_paths_cases)
     def test_read_given_invalid_shp_file_raises_error(
         self, shp_file: Union[None, str, Path]
     ):
