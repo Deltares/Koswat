@@ -1,6 +1,6 @@
 import math
 
-from koswat.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class TestPointSurroundings:

@@ -2,12 +2,12 @@ from typing import List
 
 from shapely.geometry import Point
 
-from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
 )
 
 
-class KoswatSurroundings:
+class SurroundingsWrapper:
     buldings_polderside: KoswatBuildingsPolderside
 
     def __init__(self) -> None:

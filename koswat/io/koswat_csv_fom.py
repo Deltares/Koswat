@@ -4,10 +4,10 @@ from typing import List
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
-from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     PointSurroundings,
 )
+from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
 
 
 class KoswatCsvFom(FileObjectModelProtocol):

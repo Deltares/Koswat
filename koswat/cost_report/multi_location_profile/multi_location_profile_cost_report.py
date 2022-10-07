@@ -3,7 +3,7 @@ from typing import List
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
-from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     PointSurroundings,
 )
 

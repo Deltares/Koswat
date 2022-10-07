@@ -4,11 +4,11 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 )
 from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.surroundings.koswat_surroundings import KoswatSurroundings
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
 class MultiLocationProfileCostReportBuilder(BuilderProtocol):
-    surroundings: KoswatSurroundings
+    surroundings: SurroundingsWrapper
     base_profile: KoswatProfileBase
     calc_profile: KoswatProfileBase
 

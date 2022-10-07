@@ -4,5 +4,5 @@ from typing_extensions import runtime_checkable
 
 
 @runtime_checkable
-class SurroundingsProtocol(Protocol):
+class KoswatSurroundingsProtocol(Protocol):
     pass
