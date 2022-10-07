@@ -1,29 +1,10 @@
-import math
 from collections import defaultdict
 from typing import Dict, List
 
 from shapely.geometry import Point
 
+from koswat.surroundings.point.point_surroundings import PointSurroundings
 from koswat.surroundings.surroundings_protocol import SurroundingsProtocol
-
-
-class PointSurroundings:
-    """
-    Object representing a `meter` with `x`, `y` coordinates in a polder (or else).
-    """
-
-    section: str
-    location: Point
-    distance_to_buildings: List[float]
-
-    def __init__(self) -> None:
-        self.section = ""
-        self.location = None
-        self.distance_to_buildings = []
-
-    @property
-    def closest_building(self) -> float:
-        return min(self.distance_to_buildings, default=math.nan)
 
 
 class KoswatBuildingsPolderside(SurroundingsProtocol):
