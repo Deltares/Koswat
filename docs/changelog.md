@@ -1,3 +1,24 @@
+## v0.4.0 (2022-10-07)
+
+### Feat
+
+- **MultiLocationMultiProfileCostBuilder**: Added new report to summarize reports of profile per location.
+- **ListMultiLocationProfileCostBuilder**: It is now possible to make a report for multiple locations and multiple possible profiles
+- **KoswatBuildingsPolderside.get_classify_surroundings**: We can now retrieve all points classified by their distance to the closest building
+- **KoswatSurroundings**: Added wrapper class for surroundings and a builder for it. Extended other `koswat/surrounding` builder classes to be initialized from files.
+- **KoswatCsvFomBuilder;Koswat\surroundings**: We can now map the csv data to surrounding points and their distances to buildings. Adapted related code
+- **KoswatCsvReader**: It is possible to read a CSV file into a `FileObjectModelProtocol` instance of `KoswatCsvFom`. Added new methods to fom and reader protocols, adapted related classes
+- **KoswatShpReader**: Added KoswatShpReader to read from a shapefile. Added reader protocol and io module
+
+### Refactor
+
+- **koswat/surroundings**: Moved files into separate module
+- **dike**: Renamed profiles module to dike for a more coherent approach
+- **cost_report**: Moved directories into a better  tree structure
+- **koswat/cost_report**: Seggregated module into builders and reports.
+- **koswat/cost_report**: Extracted reports into their own modules
+- **ProfileCostBuilder**: Profile cost builder is independent of the profile type. All types of new profiles are calculated and then a report is done for each of them"
+
 ## v0.3.0 (2022-10-03)
 
 ### Feat
