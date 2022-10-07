@@ -1,11 +1,10 @@
 import re
 from typing import List
 
-from shapely.geometry import Point
-
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    PointSurroundings,
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point.point_surroundings_builder import (
+    PointSurroundingsBuilder,
 )
 from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
 
@@ -50,17 +49,18 @@ class KoswatCsvFomBuilder(BuilderProtocol):
     def _build_point_surroundings(
         self, entry: List[str], distances_list: List[float]
     ) -> PointSurroundings:
-        _point = PointSurroundings()
-        _point.section = entry[0]
-        _x_coord = float(entry[1])
-        _y_coord = float(entry[2])
-        _point.location = Point((_x_coord, _y_coord))
-        _point.distance_to_buildings = [
-            distances_list[e_idx]
-            for e_idx, e_val in enumerate(entry[3:])
-            if e_val == "1"
-        ]
-        return _point
+        _point_dict = dict(
+            section=entry[0],
+            location=(float(entry[1]), float(entry[2])),
+            distance_to_buildings=[
+                distances_list[e_idx]
+                for e_idx, e_val in enumerate(entry[3:])
+                if e_val == "1"
+            ],
+        )
+        _builder = PointSurroundingsBuilder()
+        _builder.point_surroundings_data = _point_dict
+        return _builder.build()
 
     def _build_points_surroundings_list(
         self, distances_list: List[float]
