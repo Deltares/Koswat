@@ -1,16 +1,16 @@
 from shapely.geometry import Point
 
-from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
 )
-from koswat.surroundings.koswat_surroundings import KoswatSurroundings
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
-class TestKoswatSurroundings:
+class TestSurroundingsWrapper:
     def test_initialize(self):
-        _surroundings = KoswatSurroundings()
-        assert isinstance(_surroundings, KoswatSurroundings)
+        _surroundings = SurroundingsWrapper()
+        assert isinstance(_surroundings, SurroundingsWrapper)
         assert not _surroundings.buldings_polderside
         assert not _surroundings.locations
 
@@ -29,8 +29,8 @@ class TestKoswatSurroundings:
             Point(2.4, 2.4),
         ]
         _bulidings_polderside.points = list(map(self._to_surrounding_point, _locations))
-        _surroundings = KoswatSurroundings()
-        assert isinstance(_surroundings, KoswatSurroundings)
+        _surroundings = SurroundingsWrapper()
+        assert isinstance(_surroundings, SurroundingsWrapper)
 
         # 2. Run test.
         _surroundings.buldings_polderside = _bulidings_polderside

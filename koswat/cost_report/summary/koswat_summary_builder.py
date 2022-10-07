@@ -7,12 +7,12 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_build
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.koswat_scenario import KoswatScenario
-from koswat.surroundings.koswat_surroundings import KoswatSurroundings
 
 
 class KoswatSummaryBuilder(BuilderProtocol):
-    surroundings: KoswatSurroundings
+    surroundings: SurroundingsWrapper
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
 

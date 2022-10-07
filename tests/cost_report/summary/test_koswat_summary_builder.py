@@ -11,12 +11,12 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from koswat.koswat_scenario import KoswatScenario
-from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
 )
-from koswat.surroundings.koswat_surroundings import KoswatSurroundings
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.koswat_scenario import KoswatScenario
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -50,7 +50,7 @@ class TestKoswatSummaryBuilder:
     def test_get_multi_location_profile_cost_builder(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
-        _builder.surroundings = KoswatSurroundings()
+        _builder.surroundings = SurroundingsWrapper()
         _builder.base_profile = KoswatProfileBase()
 
         # 2. Run test.
@@ -74,7 +74,7 @@ class TestKoswatSummaryBuilder:
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
         _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
-        _builder.surroundings = KoswatSurroundings()
+        _builder.surroundings = SurroundingsWrapper()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []
         _p_surrounding.location = Point(2.4, 4.2)

@@ -3,11 +3,13 @@ from typing import Dict, List
 
 from shapely.geometry import Point
 
-from koswat.surroundings.point.point_surroundings import PointSurroundings
-from koswat.surroundings.surroundings_protocol import SurroundingsProtocol
+from koswat.dike.surroundings.koswat_surroundings_protocol import (
+    KoswatSurroundingsProtocol,
+)
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
-class KoswatBuildingsPolderside(SurroundingsProtocol):
+class KoswatBuildingsPolderside(KoswatSurroundingsProtocol):
     points: List[PointSurroundings]
 
     def __init__(self) -> None:

@@ -11,12 +11,14 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from koswat.koswat_scenario import KoswatScenario
-from koswat.surroundings.buildings_polderside.koswat_buildings_polderside import (
+from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
 )
-from koswat.surroundings.koswat_surroundings import KoswatSurroundings
-from koswat.surroundings.koswat_surroundings_builder import KoswatSurroundingsBuilder
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
+    SurroundingsWrapperBuilder,
+)
+from koswat.koswat_scenario import KoswatScenario
 from tests import test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
@@ -55,10 +57,10 @@ class TestAcceptance:
         assert _csv_test_file.is_file()
         assert _shp_test_file.is_file()
 
-        _surroundings = KoswatSurroundingsBuilder.from_files(
+        _surroundings = SurroundingsWrapperBuilder.from_files(
             dict(csv_file=_csv_test_file, shp_file=_shp_test_file)
         ).build()
-        assert isinstance(_surroundings, KoswatSurroundings)
+        assert isinstance(_surroundings, SurroundingsWrapper)
         assert isinstance(_surroundings.buldings_polderside, KoswatBuildingsPolderside)
 
         _scenario = KoswatScenario.from_dict(scenario_case)
