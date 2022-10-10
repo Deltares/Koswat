@@ -40,8 +40,9 @@ class TestKoswatSummaryBuilder:
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=0,
+                profile_type=KoswatProfileBase,
             )
-        ).build(KoswatProfileBase)
+        ).build()
 
         # 2. Run test.
         _calc_profiles = _builder._get_calculated_profiles()
@@ -92,8 +93,9 @@ class TestKoswatSummaryBuilder:
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=0,
+                profile_type=KoswatProfileBase,
             )
-        ).build(KoswatProfileBase)
+        ).build()
 
         # 2. Run test.
         _summary = _builder.build()

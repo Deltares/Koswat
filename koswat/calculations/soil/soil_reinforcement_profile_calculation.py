@@ -96,7 +96,6 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
             input_profile_data=_new_data.__dict__,
             layers_data=_data_layers,
             p4_x_coordinate=scenario.d_h * scenario.buiten_talud,
+            profile_type=SoilReinforcementProfile,
         )
-        return KoswatProfileBuilder.with_data(_builder_dict).build(
-            SoilReinforcementProfile
-        )
+        return KoswatProfileBuilder.with_data(_builder_dict).build()

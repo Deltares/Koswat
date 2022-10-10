@@ -123,17 +123,19 @@ class TestSoilReinforcementProfileCalculation:
     ):
         # 1. Define test data.
         _dummy_layers = LayersCases.without_layers
-        _expected_profile = KoswatProfileBuilder.with_data(expected_profile_data).build(
-            SoilReinforcementProfile
-        )
+        expected_profile_data["profile_type"] = SoilReinforcementProfile
+        _expected_profile = KoswatProfileBuilder.with_data(
+            expected_profile_data
+        ).build()
         assert isinstance(_expected_profile, SoilReinforcementProfile)
         _profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=profile_data,
                 layers_data=_dummy_layers,
                 p4_x_coordinate=0,
+                profile_type=SoilReinforcementProfile,
             )
-        ).build(SoilReinforcementProfile)
+        ).build()
         assert isinstance(_profile, SoilReinforcementProfile)
         _scenario = KoswatScenario.from_dict(dict(scenario_data))
         assert isinstance(_scenario, KoswatScenario)
