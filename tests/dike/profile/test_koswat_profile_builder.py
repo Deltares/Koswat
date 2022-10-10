@@ -106,7 +106,7 @@ class TestKoswatProfileBuilder:
             _builder.build()
         assert (
             str(exc_err.value)
-            == f"Koswat profile type should be instance of {KoswatProfileProtocol.__name__}."
+            == f"Koswat profile type should be a concrete class of {KoswatProfileBase.__name__}."
         )
 
     @pytest.mark.parametrize(

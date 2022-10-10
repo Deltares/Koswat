@@ -43,14 +43,14 @@ class KoswatProfileBuilder(BuilderProtocol):
         _layers_builder.profile_points = profile_points.points
         return _layers_builder.build()
 
-    def build(self) -> KoswatProfileBase:
+    def build(self) -> KoswatProfileProtocol:
         if not isinstance(self.input_profile_data, dict):
             raise ValueError("Koswat Input Profile data dictionary required.")
         if not isinstance(self.layers_data, dict):
             raise ValueError("Koswat Layers data dictionary required.")
         if not (self.profile_type and issubclass(self.profile_type, KoswatProfileBase)):
             raise ValueError(
-                f"Koswat profile type should be instance of {KoswatProfileProtocol.__name__}."
+                f"Koswat profile type should be a concrete class of {KoswatProfileBase.__name__}."
             )
 
         _profile = self.profile_type()
