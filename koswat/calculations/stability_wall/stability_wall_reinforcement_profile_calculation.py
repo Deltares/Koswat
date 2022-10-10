@@ -78,7 +78,7 @@ class StabilityWallReinforcementProfileCalculation(
         _new_data.binnen_berm_breedte = 0
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         _new_data.length_stability_wall = self._calculate_length_stability_wall(
-            _new_data, self.scenario
+            _new_data, scenario
         )
         return _new_data
 
