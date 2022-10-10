@@ -19,7 +19,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from tests import test_data
+from tests import plot_profiles, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -90,6 +90,10 @@ class TestAcceptance:
             assert _multi_report.total_cost > 0
             assert _multi_report.total_volume > 0
             assert _multi_report.cost_per_km > 1000
+            plot_profiles(
+                _multi_report.profile_cost_report.old_profile,
+                _multi_report.profile_cost_report.new_profile,
+            )
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
             assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
             assert all(isinstance(lcr, LayerCostReport) for lcr in _layers_report)

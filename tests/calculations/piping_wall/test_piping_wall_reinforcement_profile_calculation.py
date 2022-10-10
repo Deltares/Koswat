@@ -14,11 +14,11 @@ from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.layers.koswat_layers import KoswatLayers
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
+from tests import plot_profiles
 from tests.calculations import compare_koswat_profiles
 from tests.library_test_cases import (
     InputProfileCases,
@@ -59,15 +59,18 @@ class TestPipingWallReinforcementProfileCalculation:
             kruin_hoogte: float
 
         # 1. Define test data.
-        _calculator = PipingWallReinforcementProfileCalculation()
+        _expected_result = 6.6
         _profile_data = MockProfile()
         _profile_data.kruin_hoogte = 4.2
         _scenario = KoswatScenario()
         _scenario.d_h = 2.4
-        _expected_result = 6.6
 
         # 2. Run test.
-        _result = _calculator._calculate_new_kruin_hoogte(_profile_data)
+        _result = (
+            PipingWallReinforcementProfileCalculation()._calculate_new_kruin_hoogte(
+                _profile_data, _scenario
+            )
+        )
 
         # 3. Verify Expectations.
         assert _result == _expected_result
@@ -125,7 +128,7 @@ class TestPipingWallReinforcementProfileCalculation:
             expected_profile_data
         ).build()
         assert isinstance(_expected_profile, PipingWallReinforcementProfile)
-        _profile = KoswatProfileBuilder.with_data(
+        _base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=profile_data,
                 layers_data=_dummy_layers,
@@ -133,13 +136,13 @@ class TestPipingWallReinforcementProfileCalculation:
                 profile_type=KoswatProfileBase,
             )
         ).build()
-        assert isinstance(_profile, KoswatProfileBase)
+        assert isinstance(_base_profile, KoswatProfileBase)
         _scenario = KoswatScenario.from_dict(dict(scenario_data))
         assert isinstance(_scenario, KoswatScenario)
 
         # 2. Run test.
         _builder = PipingWallReinforcementProfileCalculation()
-        _builder.base_profile = _profile
+        _builder.base_profile = _base_profile
         _builder.scenario = _scenario
         _new_profile = _builder.build()
 
@@ -147,3 +150,4 @@ class TestPipingWallReinforcementProfileCalculation:
         assert isinstance(_new_profile, PipingWallReinforcementProfile)
         assert isinstance(_new_profile.input_data, KoswatInputProfileBase)
         compare_koswat_profiles(_new_profile, _expected_profile)
+        plot_profiles(_base_profile, _new_profile)
