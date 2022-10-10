@@ -8,6 +8,7 @@ from koswat.dike.characteristic_points.characteristic_points import Characterist
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_layers import KoswatLayers
 from koswat.dike.layers.koswat_layers_builder import KoswatLayersBuilder
 from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
@@ -18,11 +19,13 @@ class KoswatProfileBuilder(BuilderProtocol):
     input_profile_data: dict
     layers_data: dict
     p4_x_coordinate: Optional[float]
+    profile_type: Type[KoswatProfileProtocol]
 
     def __init__(self) -> None:
         self.input_profile_data = {}
         self.layers_data = {}
         self.p4_x_coordinate = math.nan
+        self.profile_type = None
 
     def _build_characteristic_points(
         self, input_profile: KoswatInputProfile
@@ -40,17 +43,17 @@ class KoswatProfileBuilder(BuilderProtocol):
         _layers_builder.profile_points = profile_points.points
         return _layers_builder.build()
 
-    def build(self, profile_type: Type[KoswatProfileBase]) -> KoswatProfileBase:
+    def build(self) -> KoswatProfileProtocol:
         if not isinstance(self.input_profile_data, dict):
             raise ValueError("Koswat Input Profile data dictionary required.")
         if not isinstance(self.layers_data, dict):
             raise ValueError("Koswat Layers data dictionary required.")
-        if not issubclass(profile_type, KoswatProfileBase):
+        if not (self.profile_type and issubclass(self.profile_type, KoswatProfileBase)):
             raise ValueError(
-                f"Koswat profile type should be subclass of {KoswatProfileBase.__name__}."
+                f"Koswat profile type should be a concrete class of {KoswatProfileBase.__name__}."
             )
 
-        _profile = profile_type()
+        _profile = self.profile_type()
         _profile.input_data = KoswatInputProfile.from_dict(self.input_profile_data)
         _profile.characteristic_points = self._build_characteristic_points(
             _profile.input_data
@@ -67,4 +70,5 @@ class KoswatProfileBuilder(BuilderProtocol):
         _builder.input_profile_data = builder_data["input_profile_data"]
         _builder.layers_data = builder_data["layers_data"]
         _builder.p4_x_coordinate = builder_data.get("p4_x_coordinate", 0)
+        _builder.profile_type = builder_data.get("profile_type", KoswatProfileBase)
         return _builder
