@@ -1,7 +1,4 @@
-from typing import List
-
 import pytest
-from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
@@ -11,11 +8,10 @@ from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcemen
 from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
-from koswat.dike.layers.koswat_layers import KoswatLayers
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
+from tests.calculations import compare_koswat_profiles
 from tests.library_test_cases import (
     InputProfileCases,
     InputProfileScenarioLookup,
@@ -34,85 +30,19 @@ class TestSoilReinforcementProfileCalculation:
         assert isinstance(_calculation, ReinforcementProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
-    def almost_equal(self, left_value: float, right_value: float) -> bool:
-        return abs(left_value - right_value) <= 0.01
-
-    def _compare_points(
-        self, new_points: List[Point], expected_points: List[Point]
-    ) -> List[str]:
-        _new_points = [(p.x, p.y) for p in new_points]
-        _expected_points = [(p.x, p.y) for p in expected_points]
-        _wrong_points = []
-        for idx, (x, y) in enumerate(_expected_points):
-            _new_x, _new_y = _new_points[idx]
-            if not (self.almost_equal(_new_x, x) and self.almost_equal(_new_y, y)):
-                _wrong_points.append(
-                    f"Point {idx + 1} differs expected: ({x},{y}), got: ({_new_x},{_new_y})"
-                )
-        return _wrong_points
-
-    def _compare_koswat_input_profile(
-        self,
-        new_profile: KoswatInputProfileBase,
-        expected_profile: KoswatInputProfileBase,
-    ) -> List[str]:
-        _new_data_dict = new_profile.__dict__
-        _expected_data_dict = expected_profile.__dict__
-        assert len(_new_data_dict) >= 10
-        assert len(_new_data_dict) == len(_expected_data_dict)
-        return [
-            f"Values differ for {key}, expected {value}, got: {_new_data_dict[key]}"
-            for key, value in _expected_data_dict.items()
-            if not self.almost_equal(_new_data_dict[key], value)
-        ]
-
-    def _compare_koswat_layers(
-        self, new_layers: KoswatLayers, expected_layers: KoswatLayers
-    ) -> List[str]:
-        _tolerance = 0.001
-        if not new_layers.base_layer.geometry.almost_equals(
-            expected_layers.base_layer.geometry, _tolerance
-        ):
-            return [f"Geometries differ for base_layer."]
-        _layers_errors = []
-        for _idx, _c_layer in enumerate(expected_layers.coating_layers):
-            _new_layer = new_layers.coating_layers[_idx]
-            if not _new_layer.geometry.almost_equals(_c_layer.geometry, _tolerance):
-                _layers_errors.append(
-                    f"Geometries differ for layer {_c_layer.material.name}"
-                )
-
-        return _layers_errors
-
-    def compare_koswat_profiles(
-        self, new_profile: KoswatProfileBase, expected_profile: KoswatProfileBase
-    ):
-        _found_errors = self._compare_koswat_input_profile(
-            new_profile.input_data, expected_profile.input_data
-        )
-        _found_errors.extend(
-            self._compare_koswat_layers(new_profile.layers, expected_profile.layers)
-        )
-        _found_errors.extend(
-            self._compare_points(new_profile.points, expected_profile.points)
-        )
-        if _found_errors:
-            _mssg = "\n".join(_found_errors)
-            pytest.fail(_mssg)
-
     @pytest.mark.parametrize(
         "profile_data, scenario_data, expected_profile_data",
         [
             pytest.param(
                 InputProfileCases.default,
                 ScenarioCases.default,
-                InputProfileScenarioLookup.default_default_no_layers,
+                InputProfileScenarioLookup.reinforcement_soil_default_default_no_layers,
                 id="Default input profile, Default Scenario",
             ),
             pytest.param(
                 InputProfileCases.default,
                 ScenarioCases.scenario_2,
-                InputProfileScenarioLookup.default_scenario_2_no_layers,
+                InputProfileScenarioLookup.reinforcement_soil_default_scenario_2_no_layers,
                 id="Default input profile, Scenario 2",
             ),
         ],
@@ -151,7 +81,7 @@ class TestSoilReinforcementProfileCalculation:
         # 3. Verify expectations.
         assert isinstance(_new_profile, SoilReinforcementProfile)
         assert isinstance(_new_profile.input_data, KoswatInputProfileBase)
-        self.compare_koswat_profiles(_new_profile, _expected_profile)
+        compare_koswat_profiles(_new_profile, _expected_profile)
 
     def test_calculate_new_binnen_talud(self):
         # 1. Define test data.

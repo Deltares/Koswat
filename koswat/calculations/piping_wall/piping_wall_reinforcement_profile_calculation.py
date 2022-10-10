@@ -75,7 +75,7 @@ class PipingWallReinforcementProfileCalculation(
         _new_data.length_stability_wall = self._calculate_length_stability_wall(
             _new_data
         )
-        return
+        return _new_data
 
     def build(self) -> PipingWallReinforcementProfile:
         _new_data = self._calculate_new_input_profile(
