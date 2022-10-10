@@ -2,6 +2,12 @@ from __future__ import annotations
 
 import pytest
 
+from koswat.calculations import (
+    CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+    StabilityWallReinforcementProfile,
+)
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
@@ -45,6 +51,12 @@ class TestAcceptance:
         self, input_profile_case, scenario_case, layers_case
     ):
         # 1. Define test data.
+        _expected_reinforcements = [
+            CofferdamReinforcementProfile,
+            SoilReinforcementProfile,
+            PipingWallReinforcementProfile,
+            StabilityWallReinforcementProfile,
+        ]
         _csv_test_file = (
             test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
         )
@@ -84,6 +96,13 @@ class TestAcceptance:
         # 3. Verify expectations.
         assert isinstance(_summary, KoswatSummary)
         assert any(_summary.locations_profile_report_list)
+        for _reinforcement_profile in _expected_reinforcements:
+            assert any(
+                isinstance(
+                    _rep_profile.profile_cost_report.new_profile, _reinforcement_profile
+                )
+                for _rep_profile in _summary.locations_profile_report_list
+            ), f"Profile type {_reinforcement_profile.__name__} not found."
         for _multi_report in _summary.locations_profile_report_list:
             assert isinstance(_multi_report, MultiLocationProfileCostReport)
             assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
