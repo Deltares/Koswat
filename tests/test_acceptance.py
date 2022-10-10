@@ -70,9 +70,8 @@ class TestAcceptance:
             dict(
                 input_profile_data=input_profile_case,
                 layers_data=layers_case,
-                profile_type=KoswatProfileBase,
             )
-        ).build()
+        ).build(KoswatProfileBase)
 
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()

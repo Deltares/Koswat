@@ -1,17 +1,16 @@
-from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
-from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
 from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
 
 
-class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtocol):
+class ProfileReinforcement(KoswatProfileBase):
+    def __str__(self) -> str:
+        return "Grondmaatregel profiel"
+
+
+class ProfileReinforcementCalculation(ProfileCalculationProtocol):
     def _calculate_new_binnen_talud(
         self, old_data: KoswatInputProfile, scenario: KoswatScenario
     ) -> float:
@@ -88,14 +87,13 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
         return _new_data
 
     def calculate_new_profile(
-        self, profile: KoswatProfileProtocol, scenario: KoswatScenario
-    ) -> ReinforcementProfileProtocol:
+        self, profile: KoswatProfileBase, scenario: KoswatScenario
+    ) -> KoswatProfileBase:
         _new_data = self._calculate_new_input_profile(profile.input_data, scenario)
         _data_layers = profile.layers.as_data_dict()
         _builder_dict = dict(
             input_profile_data=_new_data.__dict__,
             layers_data=_data_layers,
             p4_x_coordinate=scenario.d_h * scenario.buiten_talud,
-            profile_type=SoilReinforcementProfile,
         )
-        return KoswatProfileBuilder.with_data(_builder_dict).build()
+        return KoswatProfileBuilder.with_data(_builder_dict).build(ProfileReinforcement)
