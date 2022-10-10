@@ -7,6 +7,9 @@ from koswat.calculations.piping_wall.piping_wall_reinforcement_profile import (
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
 )
+from koswat.calculations.stability_wall.stability_wall_reinforcement_profile import (
+    StabilityWallReinforcementProfile,
+)
 from koswat.calculations.stability_wall.stability_wall_reinforcement_profile_calculation import (
     StabilityWallReinforcementProfileCalculation,
 )
@@ -78,7 +81,7 @@ class TestStabilityWallReinforcementProfileCalculation:
         _new_profile = _builder.build()
 
         # 3. Verify expectations.
-        assert isinstance(_new_profile, PipingWallReinforcementProfile)
+        assert isinstance(_new_profile, StabilityWallReinforcementProfile)
         assert isinstance(_new_profile.input_data, KoswatInputProfileBase)
         compare_koswat_profiles(_new_profile, _expected_profile)
         plot_profiles(_base_profile, _new_profile)
