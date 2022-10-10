@@ -3,6 +3,8 @@ from typing import Type
 import pytest
 
 from koswat.calculations import (
+    CofferdamReinforcementProfile,
+    CofferdamReinforcementProfileCalculation,
     PipingWallReinforcementProfile,
     PipingWallReinforcementProfileCalculation,
     ReinforcementProfileCalculationProtocol,
@@ -67,6 +69,13 @@ class TestReinforcementProfileCalculationProtocol:
                 ScenarioCases.scenario_2,
                 InputProfileScenarioLookup.reinforcement_soil_default_scenario_2_no_layers,
                 id="Soil, Default input profile, Scenario 2",
+            ),
+            pytest.param(
+                CofferdamReinforcementProfile,
+                CofferdamReinforcementProfileCalculation,
+                InputProfileCases.default,
+                ScenarioCases.scenario_3,
+                InputProfileScenarioLookup.reinforcement_coffer_dam_wall_default_scenario_3_no_layers,
             ),
         ],
     )
