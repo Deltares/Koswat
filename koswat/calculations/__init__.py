@@ -1,4 +1,5 @@
 from koswat.calculations.cofferdam.cofferdam_reinforcement_profile_calculation import (
+    CofferDamInputProfile,
     CofferdamReinforcementProfile,
     CofferdamReinforcementProfileCalculation,
 )
