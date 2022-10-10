@@ -1,17 +1,12 @@
 from typing import List, Type
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations.piping_wall.piping_wall_reinforcement_profile_calculation import (
+from koswat.calculations import (
     PipingWallReinforcementProfileCalculation,
-)
-from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
-)
-from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
+    StabilityWallReinforcementProfileCalculation,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
@@ -44,6 +39,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _profile_calculations = [
             SoilReinforcementProfileCalculation,
             PipingWallReinforcementProfileCalculation,
+            StabilityWallReinforcementProfileCalculation,
         ]
         # kwelscherm_profile
         # chest_dam_profile

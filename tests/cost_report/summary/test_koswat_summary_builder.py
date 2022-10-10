@@ -1,14 +1,14 @@
 from shapely.geometry import Point
 
-from koswat.calculations.piping_wall.piping_wall_reinforcement_profile import (
+from koswat.calculations import (
     PipingWallReinforcementProfile,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
-)
-from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
-from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
+    SoilReinforcementProfile,
     SoilReinforcementProfileCalculation,
+    StabilityWallInputProfile,
+)
+from koswat.calculations.stability_wall.stability_wall_reinforcement_profile import (
+    StabilityWallReinforcementProfile,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
@@ -42,6 +42,7 @@ class TestKoswatSummaryBuilder:
         _expected_profile_types = [
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
+            StabilityWallReinforcementProfile,
         ]
         _builder = KoswatSummaryBuilder()
         _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
@@ -68,7 +69,7 @@ class TestKoswatSummaryBuilder:
             assert any(
                 isinstance(_calc_prof, _required_profile)
                 for _calc_prof in _calc_profiles
-            )
+            ), f"Profile {_required_profile} not found."
 
     def test_get_calculated_profile(self):
         # 1. Define test data.

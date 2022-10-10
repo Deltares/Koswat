@@ -12,6 +12,7 @@ from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
 from koswat.calculations.stability_wall.stability_wall_reinforcement_profile_calculation import (
+    StabilityWallInputProfile,
     StabilityWallReinforcementProfile,
     StabilityWallReinforcementProfileCalculation,
 )
