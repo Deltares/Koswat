@@ -1,7 +1,4 @@
-from typing import List
-
 import pytest
-from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.piping_wall.piping_wall_reinforcement_profile import (
