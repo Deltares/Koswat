@@ -1,6 +1,9 @@
 from typing import List, Type
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.calculations.piping_wall.piping_wall_reinforcement_profile_calculation import (
+    PipingWallReinforcementProfileCalculation,
+)
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
 )
@@ -38,15 +41,13 @@ class KoswatSummaryBuilder(BuilderProtocol):
         return _builder.build()
 
     def _get_calculated_profile_list(self) -> List[ReinforcementProfileProtocol]:
-        # Calculate all possible profiles:
-        # grondmaatregel_profile
-        _grondmaatregel_profile = self._get_calculated_profile(
-            SoilReinforcementProfileCalculation
-        )
+        _profile_calculations = [
+            SoilReinforcementProfileCalculation,
+            PipingWallReinforcementProfileCalculation,
+        ]
         # kwelscherm_profile
-        # stability_wall_profile
         # chest_dam_profile
-        return [_grondmaatregel_profile]
+        return list(map(self._get_calculated_profile, _profile_calculations))
 
     def _get_multi_location_profile_cost_builder(
         self,

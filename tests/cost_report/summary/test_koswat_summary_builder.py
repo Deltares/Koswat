@@ -1,10 +1,7 @@
-from typing import Type
-
-import pytest
 from shapely.geometry import Point
 
-from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
+from koswat.calculations.piping_wall.piping_wall_reinforcement_profile import (
+    PipingWallReinforcementProfile,
 )
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -42,6 +39,10 @@ class TestKoswatSummaryBuilder:
 
     def test_get_calculated_profile_list(self):
         # 1. Define test data.
+        _expected_profile_types = [
+            SoilReinforcementProfile,
+            PipingWallReinforcementProfile,
+        ]
         _builder = KoswatSummaryBuilder()
         _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
         _builder.base_profile = KoswatProfileBuilder.with_data(
@@ -57,12 +58,17 @@ class TestKoswatSummaryBuilder:
         _calc_profiles = _builder._get_calculated_profile_list()
 
         # 3. Verify expectations.
-        assert len(_calc_profiles) == 1
+        assert any(_calc_profiles)
         assert all(
             isinstance(_calc_profile, ReinforcementProfileProtocol)
             for _calc_profile in _calc_profiles
         )
-        assert isinstance(_calc_profiles[0], SoilReinforcementProfile)
+
+        for _required_profile in _expected_profile_types:
+            assert any(
+                isinstance(_calc_prof, _required_profile)
+                for _calc_prof in _calc_profiles
+            )
 
     def test_get_calculated_profile(self):
         # 1. Define test data.

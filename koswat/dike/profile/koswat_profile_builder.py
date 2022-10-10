@@ -11,7 +11,7 @@ from koswat.dike.characteristic_points.characteristic_points_builder import (
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_layers import KoswatLayers
 from koswat.dike.layers.koswat_layers_builder import KoswatLayersBuilder
-from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
@@ -28,7 +28,7 @@ class KoswatProfileBuilder(BuilderProtocol):
         self.profile_type = None
 
     def _build_characteristic_points(
-        self, input_profile: KoswatInputProfile
+        self, input_profile: KoswatInputProfileBase
     ) -> CharacteristicPoints:
         _char_points_builder = CharacteristicPointsBuilder()
         _char_points_builder.input_profile = input_profile
@@ -54,7 +54,7 @@ class KoswatProfileBuilder(BuilderProtocol):
             )
 
         _profile = self.profile_type()
-        _profile.input_data = KoswatInputProfile.from_dict(self.input_profile_data)
+        _profile.input_data = KoswatInputProfileBase.from_dict(self.input_profile_data)
         _profile.characteristic_points = self._build_characteristic_points(
             _profile.input_data
         )

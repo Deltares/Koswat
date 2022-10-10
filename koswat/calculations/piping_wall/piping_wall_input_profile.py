@@ -1,20 +1,13 @@
 from __future__ import annotations
 
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
-class KoswatInputProfile:
-    buiten_maaiveld: float
-    buiten_talud: float
-    buiten_berm_hoogte: float
-    buiten_berm_breedte: float
-    kruin_hoogte: float
-    kruin_breedte: float
-    binnen_talud: float
-    binnen_berm_hoogte: float
-    binnen_berm_breedte: float
-    binnen_maaiveld: float
+
+class PipingWallInputProfile(KoswatInputProfileBase):
+    length_stability_wall: float
 
     @classmethod
-    def from_dict(cls, profile_data: dict) -> KoswatInputProfile:
+    def from_dict(cls, profile_data: dict) -> PipingWallInputProfile:
         _input_profile = cls()
         _input_profile.buiten_maaiveld = profile_data["buiten_maaiveld"]
         _input_profile.buiten_talud = profile_data["buiten_talud"]
@@ -26,4 +19,5 @@ class KoswatInputProfile:
         _input_profile.binnen_berm_hoogte = profile_data["binnen_berm_hoogte"]
         _input_profile.binnen_berm_breedte = profile_data["binnen_berm_breedte"]
         _input_profile.binnen_maaiveld = profile_data["binnen_maaiveld"]
+        _input_profile.length_stability_wall = profile_data["length_stability_wall"]
         return _input_profile

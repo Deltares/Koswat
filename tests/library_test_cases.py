@@ -23,10 +23,18 @@ class ScenarioCases(CasesProtocol):
         kruin_breedte=5,
         buiten_talud=4,
     )
+    scenario_3 = dict(
+        d_h=2,
+        d_s=10,
+        d_p=30,
+        kruin_breedte=5,
+        buiten_talud=3,
+    )
 
     cases = [
         pytest.param(default, id="Default Scenario"),
         pytest.param(scenario_2, id="Scenario 2"),
+        pytest.param(scenario_3, id="Scenario 3"),
     ]
 
 
@@ -106,7 +114,7 @@ class InitialPointsLookup(CasesProtocol):
 
 
 class InputProfileScenarioLookup:
-    default_default_no_layers = dict(
+    reinforcement_soil_default_default_no_layers = dict(
         input_profile_data=dict(
             buiten_maaiveld=0,
             buiten_talud=3,
@@ -122,7 +130,7 @@ class InputProfileScenarioLookup:
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=3,
     )
-    default_scenario_2_no_layers = dict(
+    reinforcement_soil_default_scenario_2_no_layers = dict(
         input_profile_data=dict(
             buiten_maaiveld=0,
             buiten_talud=4,
@@ -137,4 +145,55 @@ class InputProfileScenarioLookup:
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=2,
+    )
+    reinforcement_piping_wall_default_scenario_3_no_layers = dict(
+        input_profile_data=dict(
+            buiten_maaiveld=0,
+            buiten_talud=3,
+            buiten_berm_breedte=0,
+            buiten_berm_hoogte=0,
+            kruin_hoogte=8,
+            kruin_breedte=5,
+            binnen_talud=3,
+            binnen_berm_hoogte=0,
+            binnen_berm_breedte=0,
+            binnen_maaiveld=0,
+            length_piping_wall=4.5,
+        ),
+        layers_data=LayersCases.without_layers,
+        p4_x_coordinate=6,
+    )
+    reinforcement_stability_wall_default_scenario_3_no_layers = dict(
+        input_profile_data=dict(
+            buiten_maaiveld=0,
+            buiten_talud=3,
+            buiten_berm_breedte=0,
+            buiten_berm_hoogte=0,
+            kruin_hoogte=8,
+            kruin_breedte=5,
+            binnen_talud=2.00,
+            binnen_berm_hoogte=0,
+            binnen_berm_breedte=0,
+            binnen_maaiveld=0,
+            length_piping_wall=17,
+        ),
+        layers_data=LayersCases.without_layers,
+        p4_x_coordinate=6,
+    )
+    reinforcement_coffer_dam_wall_default_scenario_3_no_layers = dict(
+        input_profile_data=dict(
+            buiten_maaiveld=0,
+            buiten_talud=2.25,
+            buiten_berm_breedte=0,
+            buiten_berm_hoogte=0,
+            kruin_hoogte=8,
+            kruin_breedte=5,
+            binnen_talud=2.25,
+            binnen_berm_hoogte=0,
+            binnen_berm_breedte=0,
+            binnen_maaiveld=0,
+            length_piping_wall=17,
+        ),
+        layers_data=LayersCases.without_layers,
+        p4_x_coordinate=0,
     )

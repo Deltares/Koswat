@@ -3,7 +3,6 @@ from __future__ import annotations
 import math
 from typing import List
 
-from matplotlib import pyplot
 from shapely import geometry
 
 from koswat.builder_protocol import BuilderProtocol
@@ -15,28 +14,10 @@ from koswat.dike.layers.koswat_layers import (
 from koswat.dike.material.koswat_material import KoswatMaterialFactory
 
 
-def plot_line(ax, ob, color):
-    parts = hasattr(ob, "geoms") and ob or [ob]
-    for part in parts:
-        x, y = part.xy
-        ax.plot(x, y, color=color, linewidth=3, solid_capstyle="round", zorder=1)
-
-
 class KoswatLayersBuilder(BuilderProtocol):
     layers_data: dict = {}
     profile_points: List[geometry.Point] = []
     profile_geometry: geometry.Polygon = None
-
-    def _plot_linestrings(
-        self,
-        upper_linestring: geometry.LineString,
-        lower_linestring: geometry.LineString,
-    ) -> None:
-        fig = pyplot.figure(1, dpi=90)
-        ax = fig.add_subplot(221)
-        plot_line(ax, upper_linestring, color="#aaa")
-        plot_line(ax, lower_linestring, color="#eee")
-        # pyplot.show()
 
     def _build_base_layer(
         self, upper_layer_linestring: geometry.LineString, layer_data: dict
@@ -70,7 +51,6 @@ class KoswatLayersBuilder(BuilderProtocol):
         _offset_geom_linestring = _offset_geom_linestring.intersection(
             self.profile_geometry
         )
-        self._plot_linestrings(upper_layer_linestring, _offset_geom_linestring)
         _offset_geom_coords = list(_offset_geom_linestring.coords)
         if _offset_geom_coords[-1][0] > _offset_geom_coords[0][0]:
             # Reverse it so it can be built into a polygon with the upper layer.
