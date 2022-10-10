@@ -13,7 +13,6 @@ from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcemen
 from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_layers import KoswatLayers
 from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
@@ -88,8 +87,8 @@ class TestSoilReinforcementProfileCalculation:
         _found_errors = self._compare_koswat_input_profile(
             new_profile.input_data, expected_profile.input_data
         )
-        _found_errors = self._compare_koswat_layers(
-            new_profile.layers, expected_profile.layers
+        _found_errors.extend(
+            self._compare_koswat_layers(new_profile.layers, expected_profile.layers)
         )
         _found_errors.extend(
             self._compare_points(new_profile.points, expected_profile.points)
