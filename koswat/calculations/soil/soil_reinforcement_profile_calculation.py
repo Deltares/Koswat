@@ -1,9 +1,6 @@
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
 )
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
@@ -94,7 +91,7 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
         _new_data.binnen_maaiveld = old_data.binnen_maaiveld
         return _new_data
 
-    def build(self) -> ReinforcementProfileProtocol:
+    def build(self) -> SoilReinforcementProfile:
         _new_data = self._calculate_new_input_profile(
             self.base_profile.input_data, self.scenario
         )
