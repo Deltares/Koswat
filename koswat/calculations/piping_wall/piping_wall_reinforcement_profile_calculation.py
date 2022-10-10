@@ -26,7 +26,7 @@ class PipingWallReinforcementProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
-    def _calculate_length_stability_wall(
+    def _calculate_length_piping_wall(
         self, new_data: KoswatInputProfileProtocol
     ) -> float:
         return (new_data.binnen_berm_breedte / 6) + 1.5
@@ -72,9 +72,7 @@ class PipingWallReinforcementProfileCalculation(
         _new_data.binnen_berm_hoogte = 0
         _new_data.binnen_berm_breedte = 0
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
-        _new_data.length_stability_wall = self._calculate_length_stability_wall(
-            _new_data
-        )
+        _new_data.length_piping_wall = self._calculate_length_piping_wall(_new_data)
         return _new_data
 
     def build(self) -> PipingWallReinforcementProfile:
