@@ -16,4 +16,10 @@ class ReinforcementProfileCalculationProtocol(BuilderProtocol, Protocol):
     scenario: KoswatScenario
 
     def build(self) -> ReinforcementProfileProtocol:
+        """
+        Builds a `ReinforcementProfileProtocol` instance based on the `base_profile` and `scenario` specified in this class.
+
+        Returns:
+            ReinforcementProfileProtocol: Calculated reinforcement profile.
+        """
         pass
