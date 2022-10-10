@@ -3,7 +3,7 @@ from koswat.calculations.reinforcement_profile_calculation_protocol import (
 )
 from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
 
@@ -17,7 +17,7 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
         self.scenario = None
 
     def _calculate_new_binnen_talud(
-        self, old_data: KoswatInputProfile, scenario: KoswatScenario
+        self, old_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         """
         MAX(
@@ -40,8 +40,8 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
 
     def _calculate_new_binnen_berm_hoogte(
         self,
-        old_data: KoswatInputProfile,
-        new_data: KoswatInputProfile,
+        old_data: KoswatInputProfileBase,
+        new_data: KoswatInputProfileBase,
         scenario: KoswatScenario,
     ) -> float:
         if new_data.binnen_berm_breedte > 0:
@@ -53,8 +53,8 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
 
     def _calculate_new_binnen_berm_breedte(
         self,
-        old_data: KoswatInputProfile,
-        new_data: KoswatInputProfile,
+        old_data: KoswatInputProfileBase,
+        new_data: KoswatInputProfileBase,
         scenario: KoswatScenario,
     ) -> float:
         _c1 = scenario.buiten_talud + new_data.binnen_talud
@@ -67,14 +67,14 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
         return max(_c7, 0)
 
     def _calculate_new_kruin_hoogte(
-        self, old_data: KoswatInputProfile, scenario: KoswatScenario
+        self, old_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         return old_data.kruin_hoogte + scenario.d_h
 
     def _calculate_new_input_profile(
-        self, old_data: KoswatInputProfile, scenario: KoswatScenario
-    ) -> KoswatInputProfile:
-        _new_data = KoswatInputProfile()
+        self, old_data: KoswatInputProfileBase, scenario: KoswatScenario
+    ) -> KoswatInputProfileBase:
+        _new_data = KoswatInputProfileBase()
         _new_data.buiten_maaiveld = old_data.buiten_maaiveld
         _new_data.buiten_talud = scenario.buiten_talud
         _new_data.buiten_berm_hoogte = old_data.buiten_berm_hoogte

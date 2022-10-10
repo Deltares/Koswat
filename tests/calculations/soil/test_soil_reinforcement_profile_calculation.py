@@ -12,7 +12,7 @@ from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
 from koswat.dike.layers.koswat_layers import KoswatLayers
-from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
@@ -52,7 +52,9 @@ class TestSoilReinforcementProfileCalculation:
         return _wrong_points
 
     def _compare_koswat_input_profile(
-        self, new_profile: KoswatInputProfile, expected_profile: KoswatInputProfile
+        self,
+        new_profile: KoswatInputProfileBase,
+        expected_profile: KoswatInputProfileBase,
     ) -> List[str]:
         _new_data_dict = new_profile.__dict__
         _expected_data_dict = expected_profile.__dict__
@@ -148,7 +150,7 @@ class TestSoilReinforcementProfileCalculation:
 
         # 3. Verify expectations.
         assert isinstance(_new_profile, SoilReinforcementProfile)
-        assert isinstance(_new_profile.input_data, KoswatInputProfile)
+        assert isinstance(_new_profile.input_data, KoswatInputProfileBase)
         self.compare_koswat_profiles(_new_profile, _expected_profile)
 
     def test_calculate_new_binnen_talud(self):
@@ -160,7 +162,7 @@ class TestSoilReinforcementProfileCalculation:
         _scenario.d_p = 30
         _scenario.kruin_breedte = 5
         _scenario.buiten_talud = 3
-        _input_profile = KoswatInputProfile()
+        _input_profile = KoswatInputProfileBase()
         _input_profile.kruin_breedte = 5
         _input_profile.kruin_hoogte = 6
         _input_profile.binnen_talud = 3
@@ -180,10 +182,10 @@ class TestSoilReinforcementProfileCalculation:
         _expected_value = 1
         _scenario = KoswatScenario()
         _scenario.d_h = 1
-        _old_data = KoswatInputProfile()
+        _old_data = KoswatInputProfileBase()
         _old_data.binnen_berm_hoogte = 0
         _old_data.kruin_hoogte = 6
-        _new_data = KoswatInputProfile()
+        _new_data = KoswatInputProfileBase()
         _new_data.binnen_berm_breedte = 20
 
         # 2. Run test
@@ -200,8 +202,8 @@ class TestSoilReinforcementProfileCalculation:
         # 1. Define test data.
         _expected_value = 0
         _scenario = KoswatScenario()
-        _old_data = KoswatInputProfile()
-        _new_data = KoswatInputProfile()
+        _old_data = KoswatInputProfileBase()
+        _new_data = KoswatInputProfileBase()
         _new_data.binnen_berm_breedte = -1
 
         # 2. Run test
@@ -221,7 +223,7 @@ class TestSoilReinforcementProfileCalculation:
         _scenario.d_h = 1
         _scenario.d_p = 30
         _scenario.buiten_talud = 3
-        _old_profile = KoswatInputProfile()
+        _old_profile = KoswatInputProfileBase()
         _old_profile.buiten_maaiveld = 0
         _old_profile.buiten_talud = 3
         _old_profile.buiten_berm_hoogte = 0
@@ -232,7 +234,7 @@ class TestSoilReinforcementProfileCalculation:
         _old_profile.binnen_berm_hoogte = 0
         _old_profile.binnen_berm_breedte = 0
         _old_profile.binnen_maaiveld = 0
-        _new_profile = KoswatInputProfile()
+        _new_profile = KoswatInputProfileBase()
         _new_profile.binnen_talud = 3.5714
         _new_profile.buiten_berm_breedte = 0
         _new_profile.kruin_breedte = 5
@@ -252,7 +254,7 @@ class TestSoilReinforcementProfileCalculation:
         _expected_value = 42.24
         _scenario = KoswatScenario()
         _scenario.d_h = 2.2
-        _old_data = KoswatInputProfile()
+        _old_data = KoswatInputProfileBase()
         _old_data.kruin_hoogte = 40.04
 
         # 2. Run test

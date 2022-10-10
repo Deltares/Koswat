@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
-class KoswatInputProfile:
+
+class KoswatInputProfileBase(KoswatInputProfileProtocol):
     buiten_maaiveld: float
     buiten_talud: float
     buiten_berm_hoogte: float
@@ -14,7 +16,7 @@ class KoswatInputProfile:
     binnen_maaiveld: float
 
     @classmethod
-    def from_dict(cls, profile_data: dict) -> KoswatInputProfile:
+    def from_dict(cls, profile_data: dict) -> KoswatInputProfileBase:
         _input_profile = cls()
         _input_profile.buiten_maaiveld = profile_data["buiten_maaiveld"]
         _input_profile.buiten_talud = profile_data["buiten_talud"]

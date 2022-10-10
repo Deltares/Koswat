@@ -7,7 +7,7 @@ from koswat.dike.characteristic_points.characteristic_points import Characterist
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
-from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from tests.library_test_cases import InitialPointsLookup, InputProfileCases
 
 
@@ -21,7 +21,7 @@ class TestCharacteristicPointsBuilder:
 
     def test_build_without_p4_x_coordinate(self):
         # 1. Define data.
-        _input_data = KoswatInputProfile.from_dict(InputProfileCases.default)
+        _input_data = KoswatInputProfileBase.from_dict(InputProfileCases.default)
         _builder = CharacteristicPointsBuilder()
         _builder.input_profile = _input_data
         _expected_points = InitialPointsLookup.default
@@ -39,7 +39,7 @@ class TestCharacteristicPointsBuilder:
         _tolerance = 0.001
         _p4_x_coord = 2
         _builder = CharacteristicPointsBuilder()
-        _builder.input_profile = KoswatInputProfile.from_dict(
+        _builder.input_profile = KoswatInputProfileBase.from_dict(
             InputProfileCases.profile_case_2
         )
         _expected_points = InitialPointsLookup.calc_profile_scenario_2[:4]
@@ -57,7 +57,7 @@ class TestCharacteristicPointsBuilder:
         _p4_x_coord = 2
         _tolerance = 0.001
         _builder = CharacteristicPointsBuilder()
-        _builder.input_profile = KoswatInputProfile.from_dict(
+        _builder.input_profile = KoswatInputProfileBase.from_dict(
             InputProfileCases.profile_case_2
         )
         _expected_points = InitialPointsLookup.calc_profile_scenario_2[4:]
