@@ -15,4 +15,4 @@ class TestPipingWallReinforcementProfile:
         assert isinstance(_profile, ReinforcementProfileProtocol)
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)
-        assert str(_profile) == "Stabiliteitswand"
+        assert str(_profile) == "Kwelscherm"
