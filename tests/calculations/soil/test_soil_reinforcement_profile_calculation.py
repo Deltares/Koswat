@@ -3,11 +3,9 @@ from typing import List
 import pytest
 from shapely.geometry.point import Point
 
+from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
 )
 from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
 from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
@@ -30,8 +28,11 @@ class TestSoilReinforcementProfileCalculation:
     def test_initialize(self):
         _calculation = SoilReinforcementProfileCalculation()
         assert _calculation
+        assert not _calculation.base_profile
+        assert not _calculation.scenario
         assert isinstance(_calculation, SoilReinforcementProfileCalculation)
         assert isinstance(_calculation, ReinforcementProfileCalculationProtocol)
+        assert isinstance(_calculation, BuilderProtocol)
 
     def almost_equal(self, left_value: float, right_value: float) -> bool:
         return abs(left_value - right_value) <= 0.01
@@ -140,9 +141,10 @@ class TestSoilReinforcementProfileCalculation:
         assert isinstance(_scenario, KoswatScenario)
 
         # 2. Run test.
-        _new_profile = SoilReinforcementProfileCalculation().calculate_new_profile(
-            _profile, _scenario
-        )
+        _builder = SoilReinforcementProfileCalculation()
+        _builder.base_profile = _profile
+        _builder.scenario = _scenario
+        _new_profile = _builder.build()
 
         # 3. Verify expectations.
         assert isinstance(_new_profile, SoilReinforcementProfile)

@@ -12,6 +12,13 @@ from koswat.koswat_scenario import KoswatScenario
 
 
 class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtocol):
+    base_profile: KoswatProfileProtocol
+    scenario: KoswatScenario
+
+    def __init__(self) -> None:
+        self.base_profile = None
+        self.scenario = None
+
     def _calculate_new_binnen_talud(
         self, old_data: KoswatInputProfile, scenario: KoswatScenario
     ) -> float:
@@ -87,15 +94,15 @@ class SoilReinforcementProfileCalculation(ReinforcementProfileCalculationProtoco
         _new_data.binnen_maaiveld = old_data.binnen_maaiveld
         return _new_data
 
-    def calculate_new_profile(
-        self, profile: KoswatProfileProtocol, scenario: KoswatScenario
-    ) -> ReinforcementProfileProtocol:
-        _new_data = self._calculate_new_input_profile(profile.input_data, scenario)
-        _data_layers = profile.layers.as_data_dict()
+    def build(self) -> ReinforcementProfileProtocol:
+        _new_data = self._calculate_new_input_profile(
+            self.base_profile.input_data, self.scenario
+        )
+        _data_layers = self.base_profile.layers.as_data_dict()
         _builder_dict = dict(
             input_profile_data=_new_data.__dict__,
             layers_data=_data_layers,
-            p4_x_coordinate=scenario.d_h * scenario.buiten_talud,
+            p4_x_coordinate=self.scenario.d_h * self.scenario.buiten_talud,
             profile_type=SoilReinforcementProfile,
         )
         return KoswatProfileBuilder.with_data(_builder_dict).build()

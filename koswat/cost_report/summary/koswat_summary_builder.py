@@ -1,6 +1,9 @@
-from typing import List
+from typing import List, Type
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.calculations.reinforcement_profile_calculation_protocol import (
+    ReinforcementProfileCalculationProtocol,
+)
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -26,13 +29,19 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self.base_profile = None
         self.scenario = None
 
-    def _get_calculated_profiles(self) -> List[ReinforcementProfileProtocol]:
+    def _get_calculated_profile(
+        self, builder_type: Type[ReinforcementProfileCalculationProtocol]
+    ) -> ReinforcementProfileProtocol:
+        _builder = builder_type()
+        _builder.base_profile = self.base_profile
+        _builder.scenario = self.scenario
+        return _builder.build()
+
+    def _get_calculated_profile_list(self) -> List[ReinforcementProfileProtocol]:
         # Calculate all possible profiles:
         # grondmaatregel_profile
-        _grondmaatregel_profile = (
-            SoilReinforcementProfileCalculation().calculate_new_profile(
-                self.base_profile, self.scenario
-            )
+        _grondmaatregel_profile = self._get_calculated_profile(
+            SoilReinforcementProfileCalculation
         )
         # kwelscherm_profile
         # stability_wall_profile
@@ -50,7 +59,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()
         _mlpc_builder = self._get_multi_location_profile_cost_builder()
-        for _calc_profile in self._get_calculated_profiles():
+        for _calc_profile in self._get_calculated_profile_list():
             _mlpc_builder.calc_profile = _calc_profile
             _summary.locations_profile_report_list.append(_mlpc_builder.build())
         return _summary
