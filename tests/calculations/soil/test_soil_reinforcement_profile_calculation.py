@@ -3,11 +3,17 @@ from typing import List
 import pytest
 from shapely.geometry.point import Point
 
-from koswat.calculations.profile_calculation_protocol import ProfileCalculationProtocol
-from koswat.calculations.profile_reinforcement import (
-    ProfileReinforcement,
-    ProfileReinforcementCalculation,
+from koswat.calculations.reinforcement_profile_calculation_protocol import (
+    ReinforcementProfileCalculationProtocol,
 )
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
+from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
+    SoilReinforcementProfileCalculation,
+)
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_layers import KoswatLayers
 from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
@@ -21,19 +27,12 @@ from tests.library_test_cases import (
 )
 
 
-class TestProfileReinforcement:
+class TestSoilReinforcementProfileCalculation:
     def test_initialize(self):
-        _profile = ProfileReinforcement()
-        assert isinstance(_profile, ProfileReinforcement)
-        assert isinstance(_profile, KoswatProfileBase)
-        assert str(_profile) == "Grondmaatregel profiel"
-
-
-class TestProfileReinforcementCalculation:
-    def test_initialize_profile_reinforcement(self):
-        _calculation = ProfileReinforcementCalculation()
+        _calculation = SoilReinforcementProfileCalculation()
         assert _calculation
-        assert isinstance(_calculation, ProfileCalculationProtocol)
+        assert isinstance(_calculation, SoilReinforcementProfileCalculation)
+        assert isinstance(_calculation, ReinforcementProfileCalculationProtocol)
 
     def almost_equal(self, left_value: float, right_value: float) -> bool:
         return abs(left_value - right_value) <= 0.01
@@ -125,27 +124,27 @@ class TestProfileReinforcementCalculation:
         # 1. Define test data.
         _dummy_layers = LayersCases.without_layers
         _expected_profile = KoswatProfileBuilder.with_data(expected_profile_data).build(
-            ProfileReinforcement
+            SoilReinforcementProfile
         )
-        assert isinstance(_expected_profile, ProfileReinforcement)
+        assert isinstance(_expected_profile, SoilReinforcementProfile)
         _profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=profile_data,
                 layers_data=_dummy_layers,
                 p4_x_coordinate=0,
             )
-        ).build(ProfileReinforcement)
-        assert isinstance(_profile, ProfileReinforcement)
+        ).build(SoilReinforcementProfile)
+        assert isinstance(_profile, SoilReinforcementProfile)
         _scenario = KoswatScenario.from_dict(dict(scenario_data))
         assert isinstance(_scenario, KoswatScenario)
 
         # 2. Run test.
-        _new_profile = ProfileReinforcementCalculation().calculate_new_profile(
+        _new_profile = SoilReinforcementProfileCalculation().calculate_new_profile(
             _profile, _scenario
         )
 
         # 3. Verify expectations.
-        assert isinstance(_new_profile, KoswatProfileBase)
+        assert isinstance(_new_profile, SoilReinforcementProfile)
         assert isinstance(_new_profile.input_data, KoswatInputProfile)
         self.compare_koswat_profiles(_new_profile, _expected_profile)
 
@@ -165,7 +164,7 @@ class TestProfileReinforcementCalculation:
 
         # 2. Run test
         _new_binnen_talud = (
-            ProfileReinforcementCalculation()._calculate_new_binnen_talud(
+            SoilReinforcementProfileCalculation()._calculate_new_binnen_talud(
                 _input_profile, _scenario
             )
         )
@@ -186,7 +185,7 @@ class TestProfileReinforcementCalculation:
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
-            ProfileReinforcementCalculation()._calculate_new_binnen_berm_hoogte(
+            SoilReinforcementProfileCalculation()._calculate_new_binnen_berm_hoogte(
                 _old_data, _new_data, _scenario
             )
         )
@@ -204,7 +203,7 @@ class TestProfileReinforcementCalculation:
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
-            ProfileReinforcementCalculation()._calculate_new_binnen_berm_hoogte(
+            SoilReinforcementProfileCalculation()._calculate_new_binnen_berm_hoogte(
                 _old_data, _new_data, _scenario
             )
         )
@@ -237,7 +236,7 @@ class TestProfileReinforcementCalculation:
 
         # 2. Run test
         _new_binnen_berm_breedte = (
-            ProfileReinforcementCalculation()._calculate_new_binnen_berm_breedte(
+            SoilReinforcementProfileCalculation()._calculate_new_binnen_berm_breedte(
                 _old_profile, _new_profile, _scenario
             )
         )
@@ -255,7 +254,7 @@ class TestProfileReinforcementCalculation:
 
         # 2. Run test
         _new_kruin_hoogte = (
-            ProfileReinforcementCalculation()._calculate_new_kruin_hoogte(
+            SoilReinforcementProfileCalculation()._calculate_new_kruin_hoogte(
                 _old_data, _scenario
             )
         )

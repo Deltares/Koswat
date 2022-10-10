@@ -1,7 +1,9 @@
 from typing import List
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations.profile_reinforcement import ProfileReinforcementCalculation
+from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
+    SoilReinforcementProfileCalculation,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -25,7 +27,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         # Calculate all possible profiles:
         # grondmaatregel_profile
         _grondmaatregel_profile = (
-            ProfileReinforcementCalculation().calculate_new_profile(
+            SoilReinforcementProfileCalculation().calculate_new_profile(
                 self.base_profile, self.scenario
             )
         )

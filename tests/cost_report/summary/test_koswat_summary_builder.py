@@ -1,6 +1,6 @@
 from shapely.geometry import Point
 
-from koswat.calculations.profile_reinforcement import ProfileReinforcement
+from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -45,7 +45,7 @@ class TestKoswatSummaryBuilder:
 
         # 3. Verify expectations.
         assert len(_calc_profiles) == 1
-        assert isinstance(_calc_profiles[0], ProfileReinforcement)
+        assert isinstance(_calc_profiles[0], SoilReinforcementProfile)
 
     def test_get_multi_location_profile_cost_builder(self):
         # 1. Define test data.
