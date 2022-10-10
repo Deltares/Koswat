@@ -1,6 +1,9 @@
 from typing import List
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
@@ -23,7 +26,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self.base_profile = None
         self.scenario = None
 
-    def _get_calculated_profiles(self) -> List[KoswatProfileBase]:
+    def _get_calculated_profiles(self) -> List[ReinforcementProfileProtocol]:
         # Calculate all possible profiles:
         # grondmaatregel_profile
         _grondmaatregel_profile = (
