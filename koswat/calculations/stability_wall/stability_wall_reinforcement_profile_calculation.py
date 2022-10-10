@@ -1,6 +1,9 @@
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
 )
+from koswat.calculations.stability_wall.stability_wall_input_profile import (
+    StabilityWallInputProfile,
+)
 from koswat.calculations.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
@@ -62,8 +65,8 @@ class StabilityWallReinforcementProfileCalculation(
 
     def _calculate_new_input_profile(
         self, base_data: KoswatInputProfileProtocol, scenario: KoswatScenario
-    ) -> StabilityWallReinforcementProfile:
-        _new_data = StabilityWallReinforcementProfile()
+    ) -> StabilityWallInputProfile:
+        _new_data = StabilityWallInputProfile()
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
         _new_data.buiten_talud = scenario.buiten_talud
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
