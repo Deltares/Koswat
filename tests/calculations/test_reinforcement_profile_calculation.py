@@ -2,26 +2,14 @@ from typing import Type
 
 import pytest
 
-from koswat.calculations.piping_wall.piping_wall_reinforcement_profile import (
+from koswat.calculations import (
     PipingWallReinforcementProfile,
-)
-from koswat.calculations.piping_wall.piping_wall_reinforcement_profile_calculation import (
     PipingWallReinforcementProfileCalculation,
-)
-from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementProfileCalculationProtocol,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
-)
-from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
-from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
+    SoilReinforcementProfile,
     SoilReinforcementProfileCalculation,
-)
-from koswat.calculations.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
-)
-from koswat.calculations.stability_wall.stability_wall_reinforcement_profile_calculation import (
     StabilityWallReinforcementProfileCalculation,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
