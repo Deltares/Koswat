@@ -2,6 +2,7 @@ from typing import List, Type
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations import (
+    CofferdamReinforcementProfileCalculation,
     PipingWallReinforcementProfileCalculation,
     ReinforcementProfileCalculationProtocol,
     ReinforcementProfileProtocol,
@@ -40,9 +41,8 @@ class KoswatSummaryBuilder(BuilderProtocol):
             SoilReinforcementProfileCalculation,
             PipingWallReinforcementProfileCalculation,
             StabilityWallReinforcementProfileCalculation,
+            CofferdamReinforcementProfileCalculation,
         ]
-        # kwelscherm_profile
-        # chest_dam_profile
         return list(map(self._get_calculated_profile, _profile_calculations))
 
     def _get_multi_location_profile_cost_builder(

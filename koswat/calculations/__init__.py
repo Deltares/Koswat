@@ -1,3 +1,7 @@
+from koswat.calculations.cofferdam.cofferdam_reinforcement_profile_calculation import (
+    CofferdamReinforcementProfile,
+    CofferdamReinforcementProfileCalculation,
+)
 from koswat.calculations.piping_wall.piping_wall_reinforcement_profile_calculation import (
     PipingWallInputProfile,
     PipingWallReinforcementProfile,

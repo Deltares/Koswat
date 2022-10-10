@@ -1,11 +1,11 @@
 from shapely.geometry import Point
 
 from koswat.calculations import (
+    CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     ReinforcementProfileProtocol,
     SoilReinforcementProfile,
     SoilReinforcementProfileCalculation,
-    StabilityWallInputProfile,
 )
 from koswat.calculations.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
@@ -43,6 +43,7 @@ class TestKoswatSummaryBuilder:
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,
+            CofferdamReinforcementProfile,
         ]
         _builder = KoswatSummaryBuilder()
         _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
