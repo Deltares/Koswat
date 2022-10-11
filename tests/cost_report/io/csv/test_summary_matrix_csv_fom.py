@@ -15,7 +15,8 @@ class TestSummaryMatrixCsvFom:
     def test_is_valid(self):
         # 1. Define test data.
         _fom = SummaryMatrixCsvFom()
-        _fom.headers = ["a header"]
+        _header = "Officia excepteur elit commodo aliquip id nisi."
+        _fom.headers = [_header]
         _fom.cost_rows = [["a row in a list"]]
         _fom.location_rows = [["another row in a list"]]
 
@@ -25,10 +26,11 @@ class TestSummaryMatrixCsvFom:
     def test_get_lines(self):
         # 1. Define test data.
         _fom = SummaryMatrixCsvFom()
-        _fom.headers = ["a header"]
+        _header = "Amet nisi ad duis nostrud irure proident dolore nisi culpa."
+        _fom.headers = [_header]
         _fom.cost_rows = [["a", "b"], ["c", "d"]]
         _fom.location_rows = [["1", "2"], ["3", "4"]]
-        _expected_result = ["a header", "a;b", "c;d", "1;2", "3;4"]
+        _expected_result = [_header, "a;b", "c;d", "1;2", "3;4"]
 
         # 2. Run test
         _lines = _fom.get_lines()
