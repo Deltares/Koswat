@@ -39,11 +39,3 @@ class MultiLocationProfileCostReport(CostReportProtocol):
         if not self.profile_cost_report or not self.profile_cost_report.new_profile:
             return ""
         return str(self.profile_cost_report.new_profile)
-
-    def as_dict(self) -> dict:
-        return dict(
-            profile_type=self.profile_type,
-            total_cost=self.total_cost,
-            total_volume=self.total_volume,
-            locations=[_loc.location for _loc in self.locations],
-        )

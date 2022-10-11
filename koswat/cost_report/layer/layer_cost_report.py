@@ -25,10 +25,3 @@ class LayerCostReport(CostReportProtocol):
         if not self.new_layer or not self.new_layer.material:
             return ""
         return self.new_layer.material.name
-
-    def as_dict(self) -> dict:
-        return dict(
-            material=self.new_layer.material.name,
-            total_volume=self.total_volume,
-            total_cost=self.total_cost,
-        )

@@ -1,48 +1,10 @@
 from __future__ import annotations
 
-import math
-from typing import List, Protocol
+from typing import List
 
-from shapely import geometry
-from typing_extensions import runtime_checkable
-
-from koswat.dike.material.koswat_material import KoswatMaterial
-
-
-@runtime_checkable
-class KoswatLayerProtocol(Protocol):
-    material: KoswatMaterial
-    geometry: geometry.Polygon
-
-    def as_data_dict(self) -> dict:
-        pass
-
-
-class KoswatBaseLayer(KoswatLayerProtocol):
-    material: KoswatMaterial
-    geometry: geometry.Polygon
-
-    def __init__(self) -> None:
-        self.material = None
-        self.geometry = None
-
-    def as_data_dict(self) -> dict:
-        return dict(material=self.material.name)
-
-
-class KoswatCoatingLayer(KoswatLayerProtocol):
-    depth: float
-    layer_points: geometry.LineString
-    material: KoswatMaterial
-    geometry: geometry.Polygon
-
-    def __init__(self) -> None:
-        self.material = None
-        self.geometry = None
-        self.depth = math.nan
-
-    def as_data_dict(self) -> dict:
-        return dict(material=self.material.name, depth=self.depth)
+from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
+from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
+from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 
 class KoswatLayers:

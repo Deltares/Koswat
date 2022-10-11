@@ -27,10 +27,3 @@ class ProfileCostReport(CostReportProtocol):
         if not self.layer_cost_reports:
             return math.nan
         return sum(lr.total_volume for lr in self.layer_cost_reports)
-
-    def as_dict(self) -> dict:
-        return dict(
-            total_cost=self.total_cost,
-            total_volume=self.total_volume,
-            per_layer=[lcr.as_dict() for lcr in self.layer_cost_reports],
-        )
