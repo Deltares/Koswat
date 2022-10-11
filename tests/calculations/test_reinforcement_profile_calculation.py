@@ -1,3 +1,4 @@
+import shutil
 from typing import Type
 
 import pytest
@@ -20,7 +21,7 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
-from tests import plot_profiles
+from tests import get_fixturerequest_case_name, plot_profiles, test_results
 from tests.calculations import compare_koswat_profiles
 from tests.library_test_cases import (
     InputProfileCases,
@@ -86,8 +87,14 @@ class TestReinforcementProfileCalculationProtocol:
         profile_data: dict,
         scenario_data: dict,
         expected_profile_data: dict,
+        request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
+        _plot_dir = test_results / get_fixturerequest_case_name(request)
+        if _plot_dir.is_dir():
+            shutil.rmtree(_plot_dir)
+        _plot_dir.mkdir(parents=True)
+
         _dummy_layers = LayersCases.without_layers
         _base_profile = KoswatProfileBuilder.with_data(
             dict(
@@ -112,7 +119,10 @@ class TestReinforcementProfileCalculationProtocol:
         assert isinstance(_new_profile, KoswatProfileProtocol)
         assert isinstance(_new_profile.input_data, KoswatInputProfileBase)
         assert isinstance(_new_profile.input_data, KoswatInputProfileProtocol)
-        plot_profiles(_base_profile, _new_profile)
+        _plot = plot_profiles(_base_profile, _new_profile)
+        _plot_filename = _plot_dir / str(_new_profile)
+        _plot_filename.with_suffix(".png")
+        _plot.savefig(_plot_filename)
 
         expected_profile_data["profile_type"] = profile_type
         _expected_profile = KoswatProfileBuilder.with_data(
