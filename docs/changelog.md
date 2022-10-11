@@ -1,3 +1,24 @@
+## v0.5.0 (2022-10-11)
+
+### Feat
+
+- **SummaryMatrixCsvExporter**: We now also export the CsvFom into a file
+- **SummaryMatrixCsvFom;SummaryMatrixCsvExporter**: Added Summary Matrix Csv Fom and Exporter initial logic
+- **CofferDamInputProfile**: Added concrete input profile for CofferDamReinforcementProfile
+- **calculations/cofferdam;CofferdamReinforcementProfileCalculation;CofferdamReinforcementProfile**: Added Cofferdam Reinforcement Profile and Calculation to the calculations module. Added information to the summary to also build their report.
+- **StabilityWallInputProfile;StabilityWallReinforcementProfileCalculation**: Created both concrete input profile and profile calculation for StabilityWallReinforcementProfile
+- **StabilityWallReinforcemetnProfile**: Added StabilityWallReinforcementProfile type
+- **PipingWallInputProfile**: Created dedicated input profile for PipingWall
+- **KoswatInputProfileProtocol**: Made a Koswat Input Profile protocol to manage better concrete input profiles. Adapted existing code and tests
+- **PipingWallReinforcementProfileCalculation**: Added calculation for PipingWall Reinforcement Profile
+- **PipingWall**: Added PipingWallReinforcementProfile class
+- **ReinforcementProfileProtocol**: Introduced ReinforcementProfileProtocol as a sub protocol of KoswatProfileProtocol. Adapted existent classes and tests. Moved existing calculations into calculations\soil
+
+### Fix
+
+- **CofferdamReinforcementProfileCalculation**: P4 x coordinate set to 0 for all builds from this calculation
+- **KoswatProfileBuilder**: Removed paramater from build method to make it complier to the BuilderProtocol
+
 ## v0.4.0 (2022-10-07)
 
 ### Feat
