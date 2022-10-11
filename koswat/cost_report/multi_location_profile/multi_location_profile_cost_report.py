@@ -40,7 +40,7 @@ class MultiLocationProfileCostReport(CostReportProtocol):
             return ""
         return str(self.profile_cost_report.new_profile)
 
-    def as_dict(self) -> float:
+    def as_dict(self) -> dict:
         return dict(
             total_cost=self.total_cost,
             total_volume=self.total_volume,
