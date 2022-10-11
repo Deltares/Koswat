@@ -5,11 +5,11 @@ from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
-from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class CharacteristicPointsBuilder(BuilderProtocol):
-    input_profile: KoswatInputProfile
+    input_profile: KoswatInputProfileBase
     p4_x_coordinate: float
 
     def __init__(self) -> None:

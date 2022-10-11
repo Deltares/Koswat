@@ -20,6 +20,12 @@ class LayerCostReport(CostReportProtocol):
             return math.nan
         return self.total_volume * self.new_layer.material.cost
 
+    @property
+    def material(self) -> str:
+        if not self.new_layer or not self.new_layer.material:
+            return ""
+        return self.new_layer.material.name
+
     def as_dict(self) -> dict:
         return dict(
             material=self.new_layer.material.name,

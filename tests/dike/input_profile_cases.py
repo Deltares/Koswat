@@ -1,8 +1,8 @@
 import pytest
 
-from koswat.dike.profile.koswat_input_profile import KoswatInputProfile
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
-default_case = KoswatInputProfile.from_dict(
+default_case = KoswatInputProfileBase.from_dict(
     dict(
         buiten_maaiveld=0,
         buiten_talud=3,

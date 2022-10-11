@@ -1,7 +1,19 @@
 from __future__ import annotations
 
+import shutil
+
 import pytest
 
+from koswat.calculations import (
+    CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+    StabilityWallReinforcementProfile,
+)
+from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
+    SummaryMatrixCsvExporter,
+)
+from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
@@ -19,7 +31,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from tests import test_data
+from tests import get_fixturerequest_case_name, plot_profiles, test_data, test_results
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -42,9 +54,23 @@ class TestAcceptance:
         LayersCases.cases,
     )
     def test_given_surrounding_files_run_calculations_for_all_included_profiles(
-        self, input_profile_case, scenario_case, layers_case
+        self,
+        input_profile_case,
+        scenario_case,
+        layers_case,
+        request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
+        _case_name = get_fixturerequest_case_name(request)
+        _test_dir = test_results / _case_name
+        if _test_dir.is_dir():
+            shutil.rmtree(_test_dir)
+        _expected_reinforcements = [
+            CofferdamReinforcementProfile,
+            SoilReinforcementProfile,
+            PipingWallReinforcementProfile,
+            StabilityWallReinforcementProfile,
+        ]
         _csv_test_file = (
             test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
         )
@@ -70,8 +96,9 @@ class TestAcceptance:
             dict(
                 input_profile_data=input_profile_case,
                 layers_data=layers_case,
+                profile_type=KoswatProfileBase,
             )
-        ).build(KoswatProfileBase)
+        ).build()
 
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
@@ -80,15 +107,36 @@ class TestAcceptance:
         _multi_loc_multi_prof_cost_builder.scenario = _scenario
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
+        _exporter = SummaryMatrixCsvExporter()
+        _exporter.data_object_model = _summary
+        _exporter.export_filepath = _test_dir / "matrix_results.csv"
+        _fom = _exporter.build()
+        assert isinstance(_fom, SummaryMatrixCsvFom)
+        _exporter.export(_fom)
+
         # 3. Verify expectations.
         assert isinstance(_summary, KoswatSummary)
         assert any(_summary.locations_profile_report_list)
+        for _reinforcement_profile in _expected_reinforcements:
+            assert any(
+                isinstance(
+                    _rep_profile.profile_cost_report.new_profile, _reinforcement_profile
+                )
+                for _rep_profile in _summary.locations_profile_report_list
+            ), f"Profile type {_reinforcement_profile.__name__} not found."
         for _multi_report in _summary.locations_profile_report_list:
             assert isinstance(_multi_report, MultiLocationProfileCostReport)
             assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
             assert _multi_report.total_cost > 0
             assert _multi_report.total_volume > 0
             assert _multi_report.cost_per_km > 1000
+            _profiles_plots = plot_profiles(
+                _multi_report.profile_cost_report.old_profile,
+                _multi_report.profile_cost_report.new_profile,
+            )
+            _fig_file = _test_dir / _multi_report.profile_type
+            _fig_file.with_suffix(".png")
+            _profiles_plots.savefig(_fig_file)
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
             assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
             assert all(isinstance(lcr, LayerCostReport) for lcr in _layers_report)

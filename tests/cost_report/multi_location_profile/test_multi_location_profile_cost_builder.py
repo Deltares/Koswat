@@ -33,15 +33,17 @@ class TestMultiLocationProfileCostReportBuilder:
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=0,
+                profile_type=KoswatProfileBase,
             )
-        ).build(KoswatProfileBase)
+        ).build()
         _builder.calc_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.profile_case_2,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=3,
+                profile_type=KoswatProfileBase,
             )
-        ).build(KoswatProfileBase)
+        ).build()
 
         # 2. Run test.
         _profile_builder = _builder._get_profile_cost_builder()
@@ -64,15 +66,17 @@ class TestMultiLocationProfileCostReportBuilder:
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=0,
+                profile_type=KoswatProfileBase,
             )
-        ).build(KoswatProfileBase)
+        ).build()
         _builder.calc_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.profile_case_2,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=3,
+                profile_type=KoswatProfileBase,
             )
-        ).build(KoswatProfileBase)
+        ).build()
 
         # 2. Run test.
         _profile_cost_report = _builder.build()
