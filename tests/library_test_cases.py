@@ -195,5 +195,5 @@ class InputProfileScenarioLookup:
             length_piping_wall=17,
         ),
         layers_data=LayersCases.without_layers,
-        p4_x_coordinate=6,
+        p4_x_coordinate=0,
     )

@@ -119,14 +119,13 @@ class TestReinforcementProfileCalculationProtocol:
         assert isinstance(_new_profile, KoswatProfileProtocol)
         assert isinstance(_new_profile.input_data, KoswatInputProfileBase)
         assert isinstance(_new_profile.input_data, KoswatInputProfileProtocol)
-        _plot = plot_profiles(_base_profile, _new_profile)
-        _plot_filename = _plot_dir / str(_new_profile)
-        _plot_filename.with_suffix(".png")
-        _plot.savefig(_plot_filename)
-
         expected_profile_data["profile_type"] = profile_type
         _expected_profile = KoswatProfileBuilder.with_data(
             expected_profile_data
         ).build()
         assert isinstance(_expected_profile, profile_type)
         compare_koswat_profiles(_new_profile, _expected_profile)
+        _plot = plot_profiles(_base_profile, _new_profile)
+        _plot_filename = _plot_dir / str(_new_profile)
+        _plot_filename.with_suffix(".png")
+        _plot.savefig(_plot_filename)

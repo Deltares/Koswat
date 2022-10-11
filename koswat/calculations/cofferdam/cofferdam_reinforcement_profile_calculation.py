@@ -84,7 +84,7 @@ class CofferdamReinforcementProfileCalculation(ReinforcementProfileCalculationPr
         _builder_dict = dict(
             input_profile_data=_new_data.__dict__,
             layers_data=_data_layers,
-            p4_x_coordinate=self.scenario.d_h * self.scenario.buiten_talud,
+            p4_x_coordinate=0,
             profile_type=CofferdamReinforcementProfile,
         )
         return KoswatProfileBuilder.with_data(_builder_dict).build()
