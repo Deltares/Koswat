@@ -26,7 +26,7 @@ class SummaryMatrixCsvFom(FileObjectModelProtocol):
 
     def get_lines(self) -> List[str]:
         def format_line(line: List[str]) -> str:
-            return ";".join(line)
+            return ";".join(map(str, line))
 
         _lines = [self.headers]
         _lines.extend(self.cost_rows)

@@ -21,12 +21,9 @@ def plot_line(ax, ob, color):
 
 def plot_profiles(
     base_profile: KoswatProfileProtocol, reinforced_profile: KoswatProfileProtocol
-) -> None:
+) -> pyplot:
     fig = pyplot.figure(1, dpi=90)
     _subplot = fig.add_subplot(221)
     plot_line(_subplot, geometry.LineString(base_profile.points), color="#03a9fc")
     plot_line(_subplot, geometry.LineString(reinforced_profile.points), color="#fc0303")
-
-    if __debug__:
-        pyplot.show()
-        pyplot.close()
+    return fig
