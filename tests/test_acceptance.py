@@ -31,7 +31,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from tests import plot_profiles, test_data, test_results
+from tests import get_fixturerequest_case_name, plot_profiles, test_data, test_results
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -61,7 +61,8 @@ class TestAcceptance:
         request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
-        _test_dir = test_results / request.node.name
+        _case_name = get_fixturerequest_case_name(request)
+        _test_dir = test_results / _case_name
         if _test_dir.is_dir():
             shutil.rmtree(_test_dir)
         _expected_reinforcements = [

@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from matplotlib import pyplot
+from pytest import FixtureRequest
 from shapely import geometry
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -10,6 +11,14 @@ test_results = Path(__file__).parent / "test_results"
 
 if not test_results.is_dir():
     test_results.mkdir(parents=True)
+
+
+def get_fixturerequest_case_name(request: FixtureRequest):
+    _case_name_idx = request.node.name.index("[") + 1
+    _case_name = (
+        request.node.name[_case_name_idx:-1].lower().replace(" ", "_").replace("-", "_")
+    )
+    return _case_name
 
 
 def plot_line(ax, ob, color):
