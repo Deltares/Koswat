@@ -114,7 +114,7 @@ class TestKoswatCsvFomBuilder:
         # 1. Define test data
         _builder = KoswatCsvFomBuilder()
         _distance_list = [24, 42]
-        _entry = ["A", "2.4", "2.4", "0", "1"]
+        _entry = [0, "A", "2.4", "2.4", "0", "1"]
 
         # 2. Run test.
         _point_surroundings = _builder._build_point_surroundings(_entry, _distance_list)

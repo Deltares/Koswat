@@ -13,6 +13,7 @@ class PointSurroundingsBuilder(BuilderProtocol):
     def build(self) -> PointSurroundings:
         _point = PointSurroundings()
         _point.section = self.point_surroundings_data.get("section", "")
+        _point.traject_order = self.point_surroundings_data.get("traject_order", -1)
         _point.location = Point(self.point_surroundings_data["location"])
         _point.distance_to_buildings = self.point_surroundings_data.get(
             "distance_to_buildings", []

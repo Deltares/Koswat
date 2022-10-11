@@ -50,11 +50,12 @@ class KoswatCsvFomBuilder(BuilderProtocol):
         self, entry: List[str], distances_list: List[float]
     ) -> PointSurroundings:
         _point_dict = dict(
-            section=entry[0],
-            location=(float(entry[1]), float(entry[2])),
+            traject_order=entry[0],
+            section=entry[1],
+            location=(float(entry[2]), float(entry[3])),
             distance_to_buildings=[
                 distances_list[e_idx]
-                for e_idx, e_val in enumerate(entry[3:])
+                for e_idx, e_val in enumerate(entry[4:])
                 if e_val == "1"
             ],
         )
@@ -65,12 +66,12 @@ class KoswatCsvFomBuilder(BuilderProtocol):
     def _build_points_surroundings_list(
         self, distances_list: List[float]
     ) -> List[PointSurroundings]:
-        return list(
-            map(
-                lambda x: self._build_point_surroundings(x, distances_list),
-                self.entries,
-            )
-        )
+        _point_list = []
+        for idx, _point_entry in enumerate(self.entries):
+            _point_entry.insert(0, idx)
+            _ps = self._build_point_surroundings(_point_entry, distances_list)
+            _point_list.append(_ps)
+        return _point_list
 
     def build(self) -> KoswatCsvFom:
         if not self._is_valid():

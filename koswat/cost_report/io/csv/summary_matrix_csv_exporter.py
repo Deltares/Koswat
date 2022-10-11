@@ -33,7 +33,12 @@ class SummaryMatrixCsvExporter(KoswatExporterProtocol):
                 if not _matrix[_loc]:
                     _matrix[_loc] = [0] * len(locations_lists)
                 _matrix[_loc][idx] = 1
-        return list(map(location_as_row, _matrix.items()))
+        return list(
+            map(
+                location_as_row,
+                sorted(_matrix.items(), key=lambda x: x[0].traject_order),
+            )
+        )
 
     def build(self) -> SummaryMatrixCsvFom:
         _fom = SummaryMatrixCsvFom()

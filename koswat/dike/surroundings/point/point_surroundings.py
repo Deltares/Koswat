@@ -10,12 +10,14 @@ class PointSurroundings:
     """
 
     section: str
+    traject_order: int
     location: Point
     distance_to_buildings: List[float]
 
     def __init__(self) -> None:
         self.section = ""
         self.location = None
+        self.traject_order = -1
         self.distance_to_buildings = []
 
     @property
