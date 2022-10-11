@@ -42,8 +42,8 @@ class MultiLocationProfileCostReport(CostReportProtocol):
 
     def as_dict(self) -> dict:
         return dict(
+            profile_type=self.profile_type,
             total_cost=self.total_cost,
             total_volume=self.total_volume,
-            profile_type=self.profile_type,
             locations=[_loc.location for _loc in self.locations],
         )
