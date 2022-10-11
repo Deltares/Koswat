@@ -6,6 +6,10 @@ from shapely import geometry
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
 test_data = Path(__file__).parent / "test_data"
+test_results = Path(__file__).parent / "test_results"
+
+if not test_results.is_dir():
+    test_results.mkdir(parents=True)
 
 
 def plot_line(ax, ob, color):

@@ -1,4 +1,5 @@
 from collections import defaultdict
+from pathlib import Path
 from typing import Any, List, Tuple
 
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
@@ -9,9 +10,11 @@ from koswat.io.koswat_exporter_protocol import KoswatExporterProtocol
 
 class SummaryMatrixCsvExporter(KoswatExporterProtocol):
     data_object_model: KoswatSummary
+    export_filepath: Path
 
     def __init__(self) -> None:
         self.data_object_model = None
+        self.export_filepath = None
 
     def _get_locations_matrix(
         self, locations_lists: List[List[PointSurroundings]]
@@ -74,4 +77,10 @@ class SummaryMatrixCsvExporter(KoswatExporterProtocol):
         return _fom
 
     def export(self, file_object_model: SummaryMatrixCsvFom) -> None:
-        return super().export(file_object_model)
+        if not self.export_filepath:
+            raise ValueError("No path provided.")
+        if not self.export_filepath.parent.is_dir():
+            self.export_filepath.parent.mkdir(parents=True)
+        _lines = file_object_model.get_lines()
+        _text = "\n".join(_lines)
+        self.export_filepath.write_text(_text)

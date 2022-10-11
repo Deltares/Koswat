@@ -1,6 +1,8 @@
 import random
+import shutil
 from typing import List, Type
 
+import pytest
 from shapely.geometry import Point
 
 from koswat.calculations import (
@@ -22,6 +24,7 @@ from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.io.koswat_exporter_protocol import KoswatExporterProtocol
+from tests import test_results
 
 
 class MockSummary(MultiLocationProfileCostReport):
@@ -100,3 +103,28 @@ class TestSummaryMatrixCsvExporter:
         # 3. Verify expectations
         assert isinstance(_matrix_fom, SummaryMatrixCsvFom)
         assert _matrix_fom.is_valid()
+
+    def test_export(self, request: pytest.FixtureRequest):
+        # 1. Define test data.
+        _test_dir = test_results / request.node.name
+        if _test_dir.is_dir():
+            shutil.rmtree(_test_dir)
+
+        _exporter = SummaryMatrixCsvExporter()
+        _exporter.export_filepath = _test_dir / "matrix_results.csv"
+        _fom_summary = SummaryMatrixCsvFom()
+        _fom_summary.headers = ["a", "header"]
+        _fom_summary.cost_rows = [["two", "entries"], ["other", "more"]]
+        _fom_summary.location_rows = [["a", "location"], ["another", "one"]]
+
+        _expected_result = (
+            """a;header\ntwo;entries\nother;more\na;location\nanother;one"""
+        )
+
+        # 2. Run test
+        _exporter.export(_fom_summary)
+
+        # 3. Validate results
+        assert _exporter.export_filepath.exists()
+        _written_text = _exporter.export_filepath.read_text()
+        assert _written_text == _expected_result
