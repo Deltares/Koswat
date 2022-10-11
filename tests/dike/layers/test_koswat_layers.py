@@ -1,50 +1,5 @@
-import math
-
-from koswat.dike.layers.koswat_layers import (
-    KoswatBaseLayer,
-    KoswatCoatingLayer,
-    KoswatLayerProtocol,
-    KoswatLayers,
-)
+from koswat.dike.layers import KoswatBaseLayer, KoswatCoatingLayer, KoswatLayers
 from koswat.dike.material.koswat_material import KoswatMaterial
-
-
-class TestKoswatBaseLayer:
-    def test_initialize(self):
-        _layer = KoswatBaseLayer()
-        assert isinstance(_layer, KoswatBaseLayer)
-        assert isinstance(_layer, KoswatLayerProtocol)
-        assert not _layer.material
-        assert not _layer.geometry
-
-    def test_as_dict(self):
-        _layer = KoswatBaseLayer()
-        _layer.material = KoswatMaterial()
-
-        _dict = _layer.as_data_dict()
-
-        assert isinstance(_dict, dict)
-        assert _dict["material"] == ""
-
-
-class TestKoswatCoatingLayer:
-    def test_initialize(self):
-        _layer = KoswatCoatingLayer()
-        assert isinstance(_layer, KoswatCoatingLayer)
-        assert isinstance(_layer, KoswatLayerProtocol)
-        assert not _layer.material
-        assert not _layer.geometry
-        assert math.isnan(_layer.depth)
-
-    def test_as_dict(self):
-        _layer = KoswatCoatingLayer()
-        _layer.material = KoswatMaterial()
-        _layer.depth = 4.2
-        _dict = _layer.as_data_dict()
-
-        assert isinstance(_dict, dict)
-        assert _dict["material"] == ""
-        assert _dict["depth"] == 4.2
 
 
 class TestKoswatLayers:
