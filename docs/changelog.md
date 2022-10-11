@@ -1,3 +1,9 @@
+## v0.5.1 (2022-10-11)
+
+### Fix
+
+- **SummaryMatrixCsvExporter**: We now export the locations in order of import
+
 ## v0.5.0 (2022-10-11)
 
 ### Feat
