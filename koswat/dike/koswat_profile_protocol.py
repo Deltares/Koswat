@@ -12,7 +12,7 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 class KoswatProfileProtocol(Protocol):
     input_data: KoswatInputProfileBase
     characteristic_points: CharacteristicPoints
-    layers: KoswatLayers
+    layers_wrapper: KoswatLayers
     location: Optional[Point]
     points: List[Point]
     profile_width: float

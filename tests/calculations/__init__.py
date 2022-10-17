@@ -66,7 +66,9 @@ def compare_koswat_profiles(
         new_profile.input_data, expected_profile.input_data
     )
     _found_errors.extend(
-        _compare_koswat_layers(new_profile.layers, expected_profile.layers)
+        _compare_koswat_layers(
+            new_profile.layers_wrapper, expected_profile.layers_wrapper
+        )
     )
     _found_errors.extend(_compare_points(new_profile.points, expected_profile.points))
     if _found_errors:

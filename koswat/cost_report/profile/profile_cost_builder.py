@@ -27,17 +27,17 @@ class ProfileCostReportBuilder(BuilderProtocol):
         _report = ProfileCostReport()
         _report.new_profile = self.calculated_profile
         _report.old_profile = self.base_profile
-        if len(self.base_profile.layers._layers) != len(
-            self.calculated_profile.layers._layers
+        if len(self.base_profile.layers.layers) != len(
+            self.calculated_profile.layers.layers
         ):
             raise ValueError(
                 "Layers not matching between old and new profile. Calculation of costs cannot be computed."
             )
         _report.layer_cost_reports = [
             self._get_layer_cost_report(
-                old_l, self.calculated_profile.layers._layers[idx_l]
+                old_l, self.calculated_profile.layers.layers[idx_l]
             )
-            for idx_l, old_l in enumerate(self.base_profile.layers._layers)
+            for idx_l, old_l in enumerate(self.base_profile.layers.layers)
         ]
         return _report
 
