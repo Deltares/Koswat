@@ -62,9 +62,3 @@ class KoswatLayersWrapperBuilder(BuilderProtocol):
         )
         _koswat_layers.base_layer = self._get_base_layer(_base_layer_surface)
         return _koswat_layers
-
-    @staticmethod
-    def layers_as_dict(layers: KoswatLayersWrapper) -> dict:
-        _base_layer = dict(material=layers.base_layer.material.name, depth=math.nan)
-        # TODO: Logic for coating layers.
-        return dict(base_layer=_base_layer, coating_layers=dict())

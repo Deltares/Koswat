@@ -13,4 +13,10 @@ class KoswatLayerBuilderProtocol(BuilderProtocol, Protocol):
     layer_data: dict
 
     def build(self) -> KoswatLayerProtocol:
+        """
+        Builds an instance of a `KoswatLayerProtocol` based on the provided `upper_linestring` and `layer_data`
+
+        Returns:
+            KoswatLayerProtocol: Valid instance of a `KoswatLayerProtocol`.
+        """
         pass
