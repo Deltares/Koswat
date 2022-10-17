@@ -5,7 +5,7 @@ from shapely.geometry import Point
 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.layers.koswat_layers import KoswatLayers
+from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapper
 
 
 def almost_equal(left_value: float, right_value: float) -> bool:
@@ -41,7 +41,7 @@ def _compare_koswat_input_profile(
 
 
 def _compare_koswat_layers(
-    new_layers: KoswatLayers, expected_layers: KoswatLayers
+    new_layers: KoswatLayersWrapper, expected_layers: KoswatLayersWrapper
 ) -> List[str]:
     _tolerance = 0.001
     if not new_layers.base_layer.geometry.almost_equals(

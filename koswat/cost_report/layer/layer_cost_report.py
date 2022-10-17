@@ -1,7 +1,7 @@
 import math
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.dike.layers.koswat_layers import KoswatLayerProtocol
+from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 
 
 class LayerCostReport(CostReportProtocol):

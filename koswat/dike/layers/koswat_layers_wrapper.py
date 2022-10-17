@@ -7,7 +7,7 @@ from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 
-class KoswatLayers:
+class KoswatLayersWrapper:
     base_layer: KoswatBaseLayer
     coating_layers: List[KoswatCoatingLayer]
 

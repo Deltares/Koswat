@@ -4,7 +4,10 @@ from shapely.geometry import Point
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
-from koswat.dike.layers.koswat_layers import KoswatBaseLayer, KoswatLayers
+from koswat.dike.layers.koswat_layers_wrapper import (
+    KoswatBaseLayer,
+    KoswatLayersWrapper,
+)
 from koswat.dike.material.koswat_material import KoswatMaterial
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
@@ -44,14 +47,14 @@ class TestProfileCostReportBuilder:
         _base_layer.material = KoswatMaterial()
         _base_layer.material.name = _material_name
         _base_layer.geometry = _ref_point.buffer(2)
-        _builder.base_profile.layers_wrapper = KoswatLayers()
+        _builder.base_profile.layers_wrapper = KoswatLayersWrapper()
         _builder.base_profile.layers_wrapper.base_layer = _base_layer
         _builder.calculated_profile = KoswatProfileBase()
         _calc_layer = KoswatBaseLayer()
         _calc_layer.material = KoswatMaterial()
         _calc_layer.material.name = _material_name
         _calc_layer.geometry = _ref_point.buffer(4)
-        _builder.calculated_profile.layers_wrapper = KoswatLayers()
+        _builder.calculated_profile.layers_wrapper = KoswatLayersWrapper()
         _builder.calculated_profile.layers_wrapper.base_layer = _calc_layer
         return _builder
 
@@ -81,7 +84,7 @@ class TestProfileCostReportBuilder:
     def test_get_profile_cost_builder_different_layers_number_raises_error(self):
         # 1. Define test data.
         _builder = self._get_valid_profile_builder()
-        _builder.calculated_profile.layers_wrapper = KoswatLayers()
+        _builder.calculated_profile.layers_wrapper = KoswatLayersWrapper()
 
         # 2. Run test
         with pytest.raises(ValueError) as exc_err:

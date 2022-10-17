@@ -8,16 +8,14 @@ from shapely import geometry
 from koswat.builder_protocol import BuilderProtocol
 from koswat.dike.layers.koswat_base_layer_builder import KoswatBaseLayerBuilder
 from koswat.dike.layers.koswat_coating_layer_builder import KoswatCoatingLayerBuilder
-from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
-from koswat.dike.layers.koswat_layers import (
+from koswat.dike.layers.koswat_layers_wrapper import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
-    KoswatLayers,
+    KoswatLayersWrapper,
 )
-from koswat.dike.material.koswat_material import KoswatMaterialFactory
 
 
-class KoswatLayersBuilder(BuilderProtocol):
+class KoswatLayersWrapperBuilder(BuilderProtocol):
     layers_data: dict
     profile_points: List[geometry.Point]
     profile_geometry: geometry.Polygon
@@ -54,8 +52,8 @@ class KoswatLayersBuilder(BuilderProtocol):
         _builder.upper_linestring = upper_linestring
         return _builder.build()
 
-    def build(self) -> KoswatLayers:
-        _koswat_layers = KoswatLayers()
+    def build(self) -> KoswatLayersWrapper:
+        _koswat_layers = KoswatLayersWrapper()
         _koswat_layers.coating_layers = self._get_coating_layers()
         _base_layer_surface = (
             _koswat_layers.coating_layers[-1].layer_points
@@ -66,7 +64,7 @@ class KoswatLayersBuilder(BuilderProtocol):
         return _koswat_layers
 
     @staticmethod
-    def layers_as_dict(layers: KoswatLayers) -> dict:
+    def layers_as_dict(layers: KoswatLayersWrapper) -> dict:
         _base_layer = dict(material=layers.base_layer.material.name, depth=math.nan)
         # TODO: Logic for coating layers.
         return dict(base_layer=_base_layer, coating_layers=dict())

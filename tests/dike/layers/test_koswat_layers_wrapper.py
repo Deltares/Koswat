@@ -1,16 +1,16 @@
-from koswat.dike.layers import KoswatBaseLayer, KoswatCoatingLayer, KoswatLayers
+from koswat.dike.layers import KoswatBaseLayer, KoswatCoatingLayer, KoswatLayersWrapper
 from koswat.dike.material.koswat_material import KoswatMaterial
 
 
-class TestKoswatLayers:
+class TestKoswatLayersWrapper:
     def test_initialize(self):
-        _layers = KoswatLayers()
-        assert isinstance(_layers, KoswatLayers)
+        _layers = KoswatLayersWrapper()
+        assert isinstance(_layers, KoswatLayersWrapper)
         assert not _layers.base_layer
         assert not _layers.coating_layers
 
     def test_as_dict(self):
-        _layers = KoswatLayers()
+        _layers = KoswatLayersWrapper()
         _material_a = KoswatMaterial()
         _material_a.name = "a material"
         _material_b = KoswatMaterial()
