@@ -1,3 +1,13 @@
+## Unreleased
+
+### Feat
+
+- **koswat/dike/layers**: Fixed builder and renamed layer properties for better maintainability
+
+### Refactor
+
+- **KoswatLayersWrapper;KoswatLayersWrapperBuilder**: Renamed classes for better distinction
+
 ## v0.5.1 (2022-10-11)
 
 ### Fix
