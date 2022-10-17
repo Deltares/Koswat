@@ -45,8 +45,9 @@ def plot_profile(
 def plot_profiles(
     base_profile: KoswatProfileProtocol, reinforced_profile: KoswatProfileProtocol
 ) -> pyplot:
-    fig = pyplot.figure(1, dpi=90)
-    _subplot = fig.add_subplot(221)
+    fig = pyplot.figure(dpi=180)
+    _subplot = fig.add_subplot()
     plot_profile(_subplot, base_profile, color="#03a9fc")
     plot_profile(_subplot, reinforced_profile, color="#fc0303")
+
     return fig
