@@ -2,7 +2,7 @@ from koswat.builder_protocol import BuilderProtocol
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.layer.layer_cost_report_builder import LayerCostReportBuilder
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
-from koswat.dike.layers.koswat_layers import KoswatLayerProtocol
+from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
@@ -27,17 +27,17 @@ class ProfileCostReportBuilder(BuilderProtocol):
         _report = ProfileCostReport()
         _report.new_profile = self.calculated_profile
         _report.old_profile = self.base_profile
-        if len(self.base_profile.layers._layers) != len(
-            self.calculated_profile.layers._layers
+        if len(self.base_profile.layers_wrapper.layers) != len(
+            self.calculated_profile.layers_wrapper.layers
         ):
             raise ValueError(
                 "Layers not matching between old and new profile. Calculation of costs cannot be computed."
             )
         _report.layer_cost_reports = [
             self._get_layer_cost_report(
-                old_l, self.calculated_profile.layers._layers[idx_l]
+                old_l, self.calculated_profile.layers_wrapper.layers[idx_l]
             )
-            for idx_l, old_l in enumerate(self.base_profile.layers._layers)
+            for idx_l, old_l in enumerate(self.base_profile.layers_wrapper.layers)
         ]
         return _report
 

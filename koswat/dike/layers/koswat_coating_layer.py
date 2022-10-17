@@ -9,12 +9,15 @@ from koswat.dike.material.koswat_material import KoswatMaterial
 class KoswatCoatingLayer(KoswatLayerProtocol):
     depth: float
     layer_points: LineString
+    upper_points: LineString
     material: KoswatMaterial
     geometry: Polygon
 
     def __init__(self) -> None:
         self.material = None
         self.geometry = None
+        self.layer_points = None
+        self.upper_points = None
         self.depth = math.nan
 
     def as_data_dict(self) -> dict:

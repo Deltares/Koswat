@@ -49,10 +49,18 @@ class LayersCases(CasesProtocol):
             dict(material="klei", depth=0.75),
         ],
     )
+    with_clay_and_grass = dict(
+        base_layer=dict(material="zand"),
+        coating_layers=[
+            dict(material="gras", depth=0.5),
+            dict(material="klei", depth=0.75),
+        ],
+    )
 
     cases = [
         pytest.param(without_layers, id="Without layers"),
         pytest.param(with_clay, id="With clay layer"),
+        pytest.param(with_clay_and_grass, id="With grass and clay layer"),
     ]
 
 

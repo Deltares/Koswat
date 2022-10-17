@@ -10,6 +10,8 @@ from koswat.dike.material.koswat_material import KoswatMaterial
 class KoswatLayerProtocol(Protocol):
     material: KoswatMaterial
     geometry: geometry.Polygon
+    layer_points: geometry.LineString
+    upper_points: geometry.LineString
 
     def as_data_dict(self) -> dict:
         pass
