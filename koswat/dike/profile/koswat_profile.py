@@ -15,12 +15,12 @@ class KoswatProfileBase(KoswatProfileProtocol):
 
     input_data: KoswatInputProfileBase
     characteristic_points: CharacteristicPoints
-    layers: KoswatLayers
+    layers_wrapper: KoswatLayers
     location: Optional[Point]
 
     def __init__(self) -> None:
         self.input_data = None
-        self.layers = None
+        self.layers_wrapper = None
         self.characteristic_points = None
         self.location = None
 

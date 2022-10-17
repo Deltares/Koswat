@@ -141,6 +141,6 @@ class TestKoswatProfileBuilder:
         # 3. Verify final expectations.
         assert isinstance(_koswat_profile, KoswatProfileBase)
         assert isinstance(_koswat_profile.input_data, KoswatInputProfileBase)
-        assert isinstance(_koswat_profile.layers, KoswatLayers)
+        assert isinstance(_koswat_profile.layers_wrapper, KoswatLayers)
         for p_idx, p in enumerate(expected_points):
             assert p.almost_equals(_koswat_profile.points[p_idx], 0.001)

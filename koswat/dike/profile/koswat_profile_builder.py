@@ -58,7 +58,7 @@ class KoswatProfileBuilder(BuilderProtocol):
         _profile.characteristic_points = self._build_characteristic_points(
             _profile.input_data
         )
-        _profile.layers = self._build_layers(_profile.characteristic_points)
+        _profile.layers_wrapper = self._build_layers(_profile.characteristic_points)
         return _profile
 
     @classmethod

@@ -6,6 +6,9 @@ from typing import List
 from shapely import geometry
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.dike.layers.koswat_base_layer_builder import KoswatBaseLayerBuilder
+from koswat.dike.layers.koswat_coating_layer_builder import KoswatCoatingLayerBuilder
+from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.koswat_layers import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
@@ -15,60 +18,14 @@ from koswat.dike.material.koswat_material import KoswatMaterialFactory
 
 
 class KoswatLayersBuilder(BuilderProtocol):
-    layers_data: dict = {}
-    profile_points: List[geometry.Point] = []
-    profile_geometry: geometry.Polygon = None
+    layers_data: dict
+    profile_points: List[geometry.Point]
+    profile_geometry: geometry.Polygon
 
-    def _build_base_layer(
-        self, upper_layer_linestring: geometry.LineString, layer_data: dict
-    ) -> KoswatBaseLayer:
-        _material = KoswatMaterialFactory.get_material(layer_data["material"])
-        _layer = KoswatBaseLayer()
-        _geometry_points = []
-        _upper_layer_points = list(upper_layer_linestring.coords)
-        _geometry_points.extend(_upper_layer_points)
-        _geometry_points.append(_upper_layer_points[0])
-        _layer.geometry = geometry.Polygon(_geometry_points)
-        _layer.material = _material
-        _layer.upper_points = upper_layer_linestring
-        return _layer
-
-    def _build_coating_layer(
-        self, upper_layer_linestring: geometry.LineString, layer_data: dict
-    ) -> KoswatCoatingLayer:
-        _depth = layer_data.get("depth", math.nan)
-        _material = KoswatMaterialFactory.get_material(layer_data["material"])
-        _base_geometry = self._get_profile_geometry()
-        if math.isnan(_depth):
-            # Usually only for the base layer (sand)
-            raise ValueError(
-                f"Depth cannot be negative in a coating layer. Layer: {_material.name}"
-            )
-
-        # Get the offset linestring
-        _offset_geom_linestring = upper_layer_linestring.parallel_offset(
-            -_depth, side="left", join_style=2
-        )
-        # We need to cut the 'y' axis as it might have gone below
-        _offset_geom_linestring = _offset_geom_linestring.intersection(_base_geometry)
-        _offset_geom_coords = list(_offset_geom_linestring.coords)
-        if _offset_geom_coords[-1][0] > _offset_geom_coords[0][0]:
-            # Reverse it so it can be built into a polygon with the upper layer.
-            _offset_geom_coords.reverse()
-        # Avoid duplicates while preserving order
-        _layer_geometry_points = list(dict.fromkeys(upper_layer_linestring.coords))
-        _layer_geometry_points.extend(_offset_geom_coords)
-        _layer_geometry_points.append(_layer_geometry_points[0])
-        _offset_geom_coords.reverse()
-
-        # Create the new coating layer
-        _layer = KoswatCoatingLayer()
-        _layer.upper_points = upper_layer_linestring
-        _layer.layer_points = geometry.LineString(_offset_geom_coords)
-        _layer.geometry = geometry.Polygon(_layer_geometry_points)
-        _layer.material = _material
-        _layer.depth = _depth
-        return _layer
+    def __init__(self) -> None:
+        self.layers_data = {}
+        self.profile_points = []
+        self.profile_geometry = None
 
     def _get_profile_geometry(self) -> geometry.Polygon:
         _geometry_points = []
@@ -76,17 +33,36 @@ class KoswatLayersBuilder(BuilderProtocol):
         _geometry_points.append(self.profile_points[0])
         return geometry.Polygon(_geometry_points)
 
+    def _get_coating_layers(self) -> List[KoswatCoatingLayer]:
+        _c_layers_data = self.layers_data.get("coating_layers", [])
+        if not _c_layers_data:
+            return []
+        _builder = KoswatCoatingLayerBuilder()
+        _builder.upper_linestring = geometry.LineString(self.profile_points)
+        _builder.base_geometry = self._get_profile_geometry()
+        _layers = []
+        for c_layer_data in _c_layers_data:
+            _builder.layer_data = c_layer_data
+            _c_layer = _builder.build()
+            _builder.upper_linestring = _c_layer.layer_points
+            _layers.append(_c_layer)
+        return _layers
+
+    def _get_base_layer(self, upper_linestring: geometry.LineString) -> KoswatBaseLayer:
+        _builder = KoswatBaseLayerBuilder()
+        _builder.layer_data = self.layers_data["base_layer"]
+        _builder.upper_linestring = upper_linestring
+        return _builder.build()
+
     def build(self) -> KoswatLayers:
         _koswat_layers = KoswatLayers()
-        _koswat_layers.coating_layers = []
-        _surface_coating_layer = geometry.LineString(self.profile_points)
-        for c_layer_data in self.layers_data.get("coating_layers", []):
-            _c_layer = self._build_coating_layer(_surface_coating_layer, c_layer_data)
-            _surface_coating_layer = _c_layer.layer_points
-            _koswat_layers.coating_layers.append(_c_layer)
-        _koswat_layers.base_layer = self._build_base_layer(
-            _surface_coating_layer, self.layers_data["base_layer"]
+        _koswat_layers.coating_layers = self._get_coating_layers()
+        _base_layer_surface = (
+            _koswat_layers.coating_layers[-1].layer_points
+            if any(_koswat_layers.coating_layers)
+            else geometry.LineString(self.profile_points)
         )
+        _koswat_layers.base_layer = self._get_base_layer(_base_layer_surface)
         return _koswat_layers
 
     @staticmethod
