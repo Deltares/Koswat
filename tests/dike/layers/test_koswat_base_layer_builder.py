@@ -1,8 +1,11 @@
 import pytest
+from shapely.geometry import LineString
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_base_layer_builder import KoswatBaseLayerBuilder
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
+from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 
 class TestKoswatBaseLayerBuilder:
@@ -26,3 +29,18 @@ class TestKoswatBaseLayerBuilder:
         with pytest.raises(ValueError) as exc_err:
             _builder.build()
         assert str(exc_err.value) == "Material data needs to be provided."
+
+    def test_when_build_given_valid_data_returns_koswat_base_layer(self):
+        # 1. Define test data
+        _builder = KoswatBaseLayerBuilder()
+        _builder.layer_data = dict(material="zand")
+        x_coords = range(0, 5)
+        y_coords = [0, 2, 4, 2, 0]
+        _builder.upper_linestring = LineString(zip(x_coords, y_coords))
+
+        # 2. Run test
+        _base_layer = _builder.build()
+
+        # 3. Verify expectations.
+        assert isinstance(_base_layer, KoswatBaseLayer)
+        assert isinstance(_base_layer, KoswatLayerProtocol)
