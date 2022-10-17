@@ -4,7 +4,7 @@ from shapely.geometry import Point
 from koswat.builder_protocol import BuilderProtocol
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.layer.layer_cost_report_builder import LayerCostReportBuilder
-from koswat.dike.layers.koswat_layers import KoswatBaseLayer
+from koswat.dike.layers.koswat_layers_wrapper import KoswatBaseLayer
 from koswat.dike.material.koswat_material import KoswatMaterial
 
 

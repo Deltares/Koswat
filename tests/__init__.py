@@ -2,9 +2,9 @@ from pathlib import Path
 
 from matplotlib import pyplot
 from pytest import FixtureRequest
-from shapely import geometry
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 test_data = Path(__file__).parent / "test_data"
 test_results = Path(__file__).parent / "test_results"
@@ -21,11 +21,25 @@ def get_fixturerequest_case_name(request: FixtureRequest):
     return _case_name
 
 
-def plot_line(ax, ob, color):
-    parts = hasattr(ob, "geoms") and ob or [ob]
-    for part in parts:
-        x, y = part.xy
-        ax.plot(x, y, color=color, linewidth=3, solid_capstyle="round", zorder=1)
+def plot_layer(layer: KoswatLayerProtocol, ax: pyplot.axes, color: str):
+    _x_coords, y_coords = zip(*layer.upper_points.coords)
+    dict_values = dict(color=color, linewidth=2, zorder=1)
+    if layer.material.name == "zand":
+        dict_values["linestyle"] = "dashdot"
+    elif layer.material.name == "klei":
+        dict_values["linestyle"] = "dashed"
+    elif layer.material.name == "gras":
+        dict_values["linestyle"] = "solid"
+    else:
+        raise ValueError(f"Material {layer.material.name} not supported for plotting.")
+    ax.plot(_x_coords, y_coords, **dict_values)
+
+
+def plot_profile(
+    subplot: pyplot.axes, profile: KoswatProfileProtocol, color: str
+) -> None:
+    for _layer in profile.layers_wrapper.layers:
+        plot_layer(_layer, subplot, color)
 
 
 def plot_profiles(
@@ -33,6 +47,6 @@ def plot_profiles(
 ) -> pyplot:
     fig = pyplot.figure(1, dpi=90)
     _subplot = fig.add_subplot(221)
-    plot_line(_subplot, geometry.LineString(base_profile.points), color="#03a9fc")
-    plot_line(_subplot, geometry.LineString(reinforced_profile.points), color="#fc0303")
+    plot_profile(_subplot, base_profile, color="#03a9fc")
+    plot_profile(_subplot, reinforced_profile, color="#fc0303")
     return fig

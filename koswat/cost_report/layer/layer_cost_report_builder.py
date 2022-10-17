@@ -1,6 +1,6 @@
 from koswat.builder_protocol import BuilderProtocol
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.dike.layers.koswat_layers import KoswatLayerProtocol
+from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 
 
 class LayerCostReportBuilder(BuilderProtocol):

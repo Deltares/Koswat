@@ -7,7 +7,7 @@ from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 
-class KoswatLayers:
+class KoswatLayersWrapper:
     base_layer: KoswatBaseLayer
     coating_layers: List[KoswatCoatingLayer]
 
@@ -16,11 +16,17 @@ class KoswatLayers:
         self.coating_layers = []
 
     @property
-    def _layers(self) -> List[KoswatLayerProtocol]:
+    def layers(self) -> List[KoswatLayerProtocol]:
+        """
+        All the stored layers being the `KoswatBaseLayer` the latest one in the collection.
+
+        Returns:
+            List[KoswatLayerProtocol]: Ordered list of `KoswatLayerProtocol`.
+        """
         _layers = []
+        _layers.extend(self.coating_layers)
         if self.base_layer:
             _layers.append(self.base_layer)
-        _layers.extend(self.coating_layers)
         return _layers
 
     def as_data_dict(self) -> dict:

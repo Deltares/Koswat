@@ -79,7 +79,7 @@ class CofferdamReinforcementProfileCalculation(ReinforcementProfileCalculationPr
         _new_data = self._calculate_new_input_profile(
             self.base_profile.input_data, self.scenario
         )
-        _data_layers = self.base_profile.layers.as_data_dict()
+        _data_layers = self.base_profile.layers_wrapper.as_data_dict()
         _builder_dict = dict(
             input_profile_data=_new_data.__dict__,
             layers_data=_data_layers,

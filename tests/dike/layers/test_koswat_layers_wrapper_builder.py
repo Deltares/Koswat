@@ -4,20 +4,20 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.layers.koswat_layers import (
+from koswat.dike.layers.koswat_layers_wrapper import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
-    KoswatLayers,
+    KoswatLayersWrapper,
 )
-from koswat.dike.layers.koswat_layers_builder import KoswatLayersBuilder
+from koswat.dike.layers.koswat_layers_wrapper_builder import KoswatLayersWrapperBuilder
 from koswat.dike.material.koswat_material import KoswatMaterial
 from tests.library_test_cases import InitialPointsLookup, LayersCases
 
 
-class TestKoswatLayersBuilder:
+class TestKoswatLayersWrapperBuilder:
     def test_initialize(self):
-        _builder = KoswatLayersBuilder()
-        assert isinstance(_builder, KoswatLayersBuilder)
+        _builder = KoswatLayersWrapperBuilder()
+        assert isinstance(_builder, KoswatLayersWrapperBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.layers_data
         assert not _builder.profile_points
@@ -31,14 +31,14 @@ class TestKoswatLayersBuilder:
         self, layers_case: dict, profile_points: List[Point]
     ):
         # 1. Define test data.
-        _layers_builder = KoswatLayersBuilder()
+        _layers_builder = KoswatLayersWrapperBuilder()
         _layers_builder.layers_data = layers_case
         _layers_builder.profile_points = profile_points
         # 2. Run test
         _layers = _layers_builder.build()
 
         # 3. Verify expectations
-        assert isinstance(_layers, KoswatLayers)
+        assert isinstance(_layers, KoswatLayersWrapper)
         assert isinstance(_layers.base_layer, KoswatBaseLayer)
         assert isinstance(_layers.base_layer.material, KoswatMaterial)
         assert _layers.base_layer.material.name == layers_case["base_layer"]["material"]
