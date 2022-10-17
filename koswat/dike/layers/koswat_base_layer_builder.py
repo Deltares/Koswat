@@ -9,7 +9,16 @@ class KoswatBaseLayerBuilder(KoswatLayerBuilderProtocol):
     layer_data: dict
     upper_linestring: geometry.LineString
 
+    def __init__(self) -> None:
+        self.layer_data = {}
+        self.upper_linestring = None
+
     def build(self) -> KoswatBaseLayer:
+        if not self.upper_linestring:
+            raise ValueError("Profile line geometry needs to be provided.")
+        _material_data = self.layer_data.get("material", None)
+        if not _material_data:
+            raise ValueError("Material data needs to be provided.")
         _material = KoswatMaterialFactory.get_material(self.layer_data["material"])
         _layer = KoswatBaseLayer()
         _geometry_points = []
