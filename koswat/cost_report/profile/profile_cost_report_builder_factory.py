@@ -20,12 +20,12 @@ class ProfileCostReportBuilderFactory:
     @staticmethod
     def get_builder(
         reinforcement_type: Type[ReinforcementProfileProtocol],
-    ) -> Type[ProfileCostReportBuilderProtocol]:
+    ) -> ProfileCostReportBuilderProtocol:
 
         if issubclass(reinforcement_type, OutsideSlopeReinforcementProfile):
-            return OutsideSlopeProfileCostReportBuilder
+            return OutsideSlopeProfileCostReportBuilder()
         elif issubclass(reinforcement_type, StandardReinforcementProfile):
-            return StandardProfileCostReportBuilder
+            return StandardProfileCostReportBuilder()
         raise NotImplementedError(
             "No profile cost report builder available for {}".format(reinforcement_type)
         )

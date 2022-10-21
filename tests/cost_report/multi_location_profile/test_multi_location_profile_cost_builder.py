@@ -12,6 +12,9 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.outside_slope_profile_cost_report_builder import (
     OutsideSlopeProfileCostReportBuilder,
 )
+from koswat.cost_report.profile.profile_cost_report_builder_protocol import (
+    ProfileCostReportBuilderProtocol,
+)
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
@@ -46,7 +49,7 @@ class TestMultiLocationProfileCostReportBuilder:
                 input_profile_data=InputProfileCases.profile_case_2,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=3,
-                profile_type=KoswatProfileBase,
+                profile_type=CofferdamReinforcementProfile,
             )
         ).build()
 
@@ -54,6 +57,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _profile_builder = _builder._get_profile_cost_builder()
 
         # 3. Verify expectations.
+        assert isinstance(_profile_builder, ProfileCostReportBuilderProtocol)
         assert isinstance(_profile_builder, OutsideSlopeProfileCostReportBuilder)
 
     def test_build(self):
