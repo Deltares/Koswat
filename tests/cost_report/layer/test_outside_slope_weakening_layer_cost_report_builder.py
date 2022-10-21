@@ -6,7 +6,7 @@ from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
     LayerCostReportBuilderProtocol,
 )
-from koswat.cost_report.layer.standard_layer_cost_report_builder import (
+from koswat.cost_report.layer.outside_slope_weakening_layer_cost_report_builder import (
     OustideSlopeWeakeningLayerCostReportBuilder,
 )
 from koswat.dike.layers.koswat_layers_wrapper import KoswatBaseLayer

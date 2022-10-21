@@ -1,6 +1,9 @@
 import pytest
 from shapely.geometry import Point
 
+from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
+    OutsideSlopeReinforcementProfileProtocol,
+)
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
@@ -20,8 +23,12 @@ class TestProfileCostReportBuilder:
         assert not _builder.calculated_profile
 
     def test_get_layer_cost_report_different_material_raises(self):
+        class MockReinforcement(OutsideSlopeReinforcementProfileProtocol):
+            pass
+
         # 1. Define test data.
         _builder = ProfileCostReportBuilder()
+        _builder.calculated_profile = MockReinforcement()
         _base_layer = KoswatBaseLayer()
         _base_layer.material = KoswatMaterial()
         _base_layer.material.name = "a material"
@@ -58,9 +65,15 @@ class TestProfileCostReportBuilder:
         _builder.calculated_profile.layers_wrapper.base_layer = _calc_layer
         return _builder
 
-    def test_get_layer_cost_report_same_material_returns_report(self):
+    def test_get_layer_cost_report_oustide_slope_reinforcement_profile_same_material_returns_report(
+        self,
+    ):
+        class MockReinforcement(OutsideSlopeReinforcementProfileProtocol):
+            pass
+
         # 1. Define test data.
         _builder = ProfileCostReportBuilder()
+        _builder.calculated_profile = MockReinforcement()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _base_layer = KoswatBaseLayer()

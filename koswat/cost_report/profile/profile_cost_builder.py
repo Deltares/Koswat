@@ -20,7 +20,10 @@ class ProfileCostReportBuilder(BuilderProtocol):
     def _get_layer_cost_report(
         self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol
     ) -> LayerCostReport:
-        _builder = LayerCostReportBuilderFactory.get_builder(self.calculated_profile)
+        _builder_type = LayerCostReportBuilderFactory.get_builder(
+            self.calculated_profile
+        )
+        _builder = _builder_type()
         _builder.base_layer = base_layer
         _builder.calc_layer = calculated_layer
         return _builder.build()
