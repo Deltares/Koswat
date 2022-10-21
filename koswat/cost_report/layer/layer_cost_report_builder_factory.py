@@ -1,4 +1,4 @@
-from koswat.cost_report.layer.layer_cost_report_builder import (
+from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
     LayerCostReportBuilderProtocol,
 )
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol

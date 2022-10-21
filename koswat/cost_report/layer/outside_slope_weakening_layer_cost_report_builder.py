@@ -1,11 +1,11 @@
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.cost_report.layer.layer_cost_report_builder import (
+from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
     LayerCostReportBuilderProtocol,
 )
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 
 
-class StandardLayerCostReportBuilder(LayerCostReportBuilderProtocol):
+class OustideSlopeWeakeningLayerCostReportBuilder(LayerCostReportBuilderProtocol):
     base_layer: KoswatLayerProtocol
     calc_layer: KoswatLayerProtocol
 
