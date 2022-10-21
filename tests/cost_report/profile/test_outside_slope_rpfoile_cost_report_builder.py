@@ -8,7 +8,9 @@ from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
 )
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
+from koswat.cost_report.profile.outside_slope_profile_cost_report_builder import (
+    OutsideSlopeProfileCostReportBuilder,
+)
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.layers.koswat_layers_wrapper import (
     KoswatBaseLayer,
@@ -18,10 +20,10 @@ from koswat.dike.material.koswat_material import KoswatMaterial
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
-class TestProfileCostReportBuilder:
+class TestOutsideSlopeProfileCostReportBuilder:
     def test_initialize(self):
-        _builder = ProfileCostReportBuilder()
-        assert isinstance(_builder, ProfileCostReportBuilder)
+        _builder = OutsideSlopeProfileCostReportBuilder()
+        assert isinstance(_builder, OutsideSlopeProfileCostReportBuilder)
         assert not _builder.base_profile
         assert not _builder.calculated_profile
 
@@ -30,7 +32,7 @@ class TestProfileCostReportBuilder:
             pass
 
         # 1. Define test data.
-        _builder = ProfileCostReportBuilder()
+        _builder = OutsideSlopeProfileCostReportBuilder()
         _builder.calculated_profile = MockReinforcement()
         _base_layer = KoswatBaseLayer()
         _base_layer.material = KoswatMaterial()
@@ -48,8 +50,8 @@ class TestProfileCostReportBuilder:
             == "Material differs between layers. Cannot compute costs."
         )
 
-    def _get_valid_profile_builder(self) -> ProfileCostReportBuilder:
-        _builder = ProfileCostReportBuilder()
+    def _get_valid_profile_builder(self) -> OutsideSlopeProfileCostReportBuilder:
+        _builder = OutsideSlopeProfileCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _builder.base_profile = KoswatProfileBase()
@@ -75,7 +77,7 @@ class TestProfileCostReportBuilder:
             pass
 
         # 1. Define test data.
-        _builder = ProfileCostReportBuilder()
+        _builder = OutsideSlopeProfileCostReportBuilder()
         _builder.calculated_profile = MockReinforcement()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
@@ -133,7 +135,9 @@ class TestProfileCostReportBuilder:
         self._validate_valid_profile_builder_build(_builder, _profile_cost_report)
 
     def _validate_valid_profile_builder_build(
-        self, builder: ProfileCostReportBuilder, cost_report: ProfileCostReport
+        self,
+        builder: OutsideSlopeProfileCostReportBuilder,
+        cost_report: ProfileCostReport,
     ):
         assert isinstance(cost_report, ProfileCostReport)
         assert cost_report.new_profile == builder.calculated_profile

@@ -9,7 +9,9 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_build
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
-from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
+from koswat.cost_report.profile.outside_slope_profile_cost_report_builder import (
+    OutsideSlopeProfileCostReportBuilder,
+)
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
@@ -52,7 +54,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _profile_builder = _builder._get_profile_cost_builder()
 
         # 3. Verify expectations.
-        assert isinstance(_profile_builder, ProfileCostReportBuilder)
+        assert isinstance(_profile_builder, OutsideSlopeProfileCostReportBuilder)
 
     def test_build(self):
         # 1. Define test data.

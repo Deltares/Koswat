@@ -1,17 +1,19 @@
-from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.cost_report.layer.layer_cost_report_builder_factory import (
-    LayerCostReportBuilderFactory,
+from koswat.cost_report.layer.outside_slope_weakening_layer_cost_report_builder import (
+    OustideSlopeWeakeningLayerCostReportBuilder,
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
+from koswat.cost_report.profile.profile_cost_report_builder_protocol import (
+    ProfileCostReportBuilderProtocol,
+)
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 
 
-class ProfileCostReportBuilder(BuilderProtocol):
+class OutsideSlopeProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
     base_profile: KoswatProfileProtocol
     calculated_profile: ReinforcementProfileProtocol
 
@@ -23,10 +25,7 @@ class ProfileCostReportBuilder(BuilderProtocol):
     def _get_layer_cost_report(
         self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol
     ) -> LayerCostReport:
-        _builder_type = LayerCostReportBuilderFactory.get_builder(
-            type(self.calculated_profile)
-        )
-        _builder = _builder_type()
+        _builder = OustideSlopeWeakeningLayerCostReportBuilder()
         _builder.base_layer = base_layer
         _builder.calc_layer = calculated_layer
         return _builder.build()
