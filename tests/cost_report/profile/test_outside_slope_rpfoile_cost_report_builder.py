@@ -99,30 +99,20 @@ class TestOutsideSlopeProfileCostReportBuilder:
         assert _layer_report.old_layer == _base_layer
         assert _layer_report.total_volume == pytest.approx(37.64, 0.001)
 
-    def test_get_profile_cost_builder_different_layers_number_raises_error(self):
+    def test_given_different_layers_number_when_build_then_raises_error(self):
         # 1. Define test data.
         _builder = self._get_valid_profile_builder()
         _builder.calculated_profile.layers_wrapper = KoswatLayersWrapper()
 
         # 2. Run test
         with pytest.raises(ValueError) as exc_err:
-            _builder._get_profile_cost_report()
+            _builder.build()
 
         # 3. Verify expectations
         assert (
             str(exc_err.value)
             == "Layers not matching between old and new profile. Calculation of costs cannot be computed."
         )
-
-    def test_get_profile_cost_report(self):
-        # 1. Define test data.
-        _builder = self._get_valid_profile_builder()
-
-        # 2. Run test
-        _profile_cost_report = _builder._get_profile_cost_report()
-
-        # 3. Verify expectations
-        self._validate_valid_profile_builder_build(_builder, _profile_cost_report)
 
     def test_build(self):
         # 1. Define test data.

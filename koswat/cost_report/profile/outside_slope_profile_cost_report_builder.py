@@ -30,7 +30,7 @@ class OutsideSlopeProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         _builder.calc_layer = calculated_layer
         return _builder.build()
 
-    def _get_profile_cost_report(self) -> ProfileCostReport:
+    def build(self) -> ProfileCostReport:
         _report = ProfileCostReport()
         _report.new_profile = self.calculated_profile
         _report.old_profile = self.base_profile
@@ -47,6 +47,3 @@ class OutsideSlopeProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
             for idx_l, old_l in enumerate(self.base_profile.layers_wrapper.layers)
         ]
         return _report
-
-    def build(self) -> ProfileCostReport:
-        return self._get_profile_cost_report()
