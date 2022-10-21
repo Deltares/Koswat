@@ -1,15 +1,12 @@
 from koswat.calculations.cofferdam.cofferdam_input_profile import CofferDamInputProfile
 from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
-    OutsideSlopeReinforcementProfileProtocol,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
+    OutsideSlopeReinforcementProfile,
 )
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class CofferdamReinforcementProfile(
-    OutsideSlopeReinforcementProfileProtocol, KoswatProfileBase
+    OutsideSlopeReinforcementProfile, KoswatProfileBase
 ):
     input_data: CofferDamInputProfile
 

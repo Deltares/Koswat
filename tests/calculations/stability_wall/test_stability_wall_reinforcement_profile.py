@@ -5,7 +5,7 @@ from koswat.calculations.stability_wall.stability_wall_reinforcement_profile imp
     StabilityWallReinforcementProfile,
 )
 from koswat.calculations.standard_reinforcement_profile_protocol import (
-    StandardReinforcementProfileProtocol,
+    StandardReinforcementProfile,
 )
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
@@ -15,7 +15,7 @@ class TestStabilityReinforcementProfile:
     def test_initialize(self):
         _profile = StabilityWallReinforcementProfile()
         assert isinstance(_profile, StabilityWallReinforcementProfile)
-        assert isinstance(_profile, StandardReinforcementProfileProtocol)
+        assert isinstance(_profile, StandardReinforcementProfile)
         assert isinstance(_profile, ReinforcementProfileProtocol)
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)

@@ -2,13 +2,13 @@ from koswat.calculations.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
 from koswat.calculations.standard_reinforcement_profile_protocol import (
-    StandardReinforcementProfileProtocol,
+    StandardReinforcementProfile,
 )
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class StabilityWallReinforcementProfile(
-    StandardReinforcementProfileProtocol, KoswatProfileBase
+    StandardReinforcementProfile, KoswatProfileBase
 ):
     input_data: StabilityWallInputProfile
 

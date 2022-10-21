@@ -1,8 +1,11 @@
 import pytest
 from shapely.geometry import Point
 
+from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
 from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
-    OutsideSlopeReinforcementProfileProtocol,
+    OutsideSlopeReinforcementProfile,
 )
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
@@ -23,7 +26,7 @@ class TestProfileCostReportBuilder:
         assert not _builder.calculated_profile
 
     def test_get_layer_cost_report_different_material_raises(self):
-        class MockReinforcement(OutsideSlopeReinforcementProfileProtocol):
+        class MockReinforcement(OutsideSlopeReinforcementProfile):
             pass
 
         # 1. Define test data.
@@ -56,7 +59,7 @@ class TestProfileCostReportBuilder:
         _base_layer.geometry = _ref_point.buffer(2)
         _builder.base_profile.layers_wrapper = KoswatLayersWrapper()
         _builder.base_profile.layers_wrapper.base_layer = _base_layer
-        _builder.calculated_profile = KoswatProfileBase()
+        _builder.calculated_profile = CofferdamReinforcementProfile()
         _calc_layer = KoswatBaseLayer()
         _calc_layer.material = KoswatMaterial()
         _calc_layer.material.name = _material_name
@@ -68,7 +71,7 @@ class TestProfileCostReportBuilder:
     def test_get_layer_cost_report_oustide_slope_reinforcement_profile_same_material_returns_report(
         self,
     ):
-        class MockReinforcement(OutsideSlopeReinforcementProfileProtocol):
+        class MockReinforcement(OutsideSlopeReinforcementProfile):
             pass
 
         # 1. Define test data.

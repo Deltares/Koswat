@@ -1,16 +1,19 @@
 from koswat.builder_protocol import BuilderProtocol
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.layer.layer_cost_report_builder_factory import (
     LayerCostReportBuilderFactory,
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostReportBuilder(BuilderProtocol):
-    base_profile: KoswatProfileBase
-    calculated_profile: KoswatProfileBase
+    base_profile: KoswatProfileProtocol
+    calculated_profile: ReinforcementProfileProtocol
 
     def __init__(self) -> None:
         self.surroundings = None
@@ -21,7 +24,7 @@ class ProfileCostReportBuilder(BuilderProtocol):
         self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol
     ) -> LayerCostReport:
         _builder_type = LayerCostReportBuilderFactory.get_builder(
-            self.calculated_profile
+            type(self.calculated_profile)
         )
         _builder = _builder_type()
         _builder.base_layer = base_layer

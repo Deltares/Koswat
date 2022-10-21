@@ -7,4 +7,4 @@ from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
 @runtime_checkable
 class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
-    pass
+    reinforcement_subtype: str

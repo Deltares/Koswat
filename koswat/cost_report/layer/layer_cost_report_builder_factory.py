@@ -1,10 +1,13 @@
 from typing import Type
 
 from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
-    OutsideSlopeReinforcementProfileProtocol,
+    OutsideSlopeReinforcementProfile,
+)
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
 )
 from koswat.calculations.standard_reinforcement_profile_protocol import (
-    StandardReinforcementProfileProtocol,
+    StandardReinforcementProfile,
 )
 from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
     LayerCostReportBuilderProtocol,
@@ -15,28 +18,18 @@ from koswat.cost_report.layer.outside_slope_weakening_layer_cost_report_builder 
 from koswat.cost_report.layer.standard_layer_cost_reinforcement_builder import (
     StandardLayerCostReportBuilder,
 )
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
 
 class LayerCostReportBuilderFactory:
     @staticmethod
     def get_builder(
-        koswat_profile: KoswatProfileProtocol,
+        reinforcement_type: Type[ReinforcementProfileProtocol],
     ) -> Type[LayerCostReportBuilderProtocol]:
-        _builders_dict = {
-            OutsideSlopeReinforcementProfileProtocol: OustideSlopeWeakeningLayerCostReportBuilder,
-            StandardReinforcementProfileProtocol: StandardLayerCostReportBuilder,
-        }
-        _builder_type = next(
-            (
-                _type_build
-                for _type_proto, _type_build in _builders_dict.items()
-                if isinstance(koswat_profile, _type_proto)
-            ),
-            None,
+
+        if issubclass(reinforcement_type, OutsideSlopeReinforcementProfile):
+            return OustideSlopeWeakeningLayerCostReportBuilder
+        elif issubclass(reinforcement_type, StandardReinforcementProfile):
+            return StandardLayerCostReportBuilder
+        raise NotImplementedError(
+            "No layer cost report builder available for {}".format(reinforcement_type)
         )
-        if not _builder_type:
-            raise NotImplementedError(
-                "No layer cost report builder available for {}".format(koswat_profile)
-            )
-        return _builder_type
