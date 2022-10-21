@@ -3,22 +3,28 @@ from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.cost_report.layer.layer_cost_report_builder import LayerCostReportBuilder
+from koswat.cost_report.layer.layer_cost_report_builder import (
+    LayerCostReportBuilderProtocol,
+)
+from koswat.cost_report.layer.standard_layer_cost_report_builder import (
+    StandardLayerCostReportBuilder,
+)
 from koswat.dike.layers.koswat_layers_wrapper import KoswatBaseLayer
 from koswat.dike.material.koswat_material import KoswatMaterial
 
 
-class TestLayerCostReportBuilder:
+class TestStandardLayerCostReportBuilder:
     def test_initialize(self):
-        _builder = LayerCostReportBuilder()
-        assert isinstance(_builder, LayerCostReportBuilder)
+        _builder = StandardLayerCostReportBuilder()
+        assert isinstance(_builder, StandardLayerCostReportBuilder)
+        assert isinstance(_builder, LayerCostReportBuilderProtocol)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.base_layer
         assert not _builder.calc_layer
 
     def test_given_different_material_when_build_then_raises(self):
         # 1. Define test data.
-        _builder = LayerCostReportBuilder()
+        _builder = StandardLayerCostReportBuilder()
         _builder.base_layer = KoswatBaseLayer()
         _builder.base_layer.material = KoswatMaterial()
         _builder.base_layer.material.name = "a material"
@@ -37,7 +43,7 @@ class TestLayerCostReportBuilder:
 
     def test_given_same_material_when_build_then_returns_report(self):
         # 1. Define test data.
-        _builder = LayerCostReportBuilder()
+        _builder = StandardLayerCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _builder.base_layer = KoswatBaseLayer()

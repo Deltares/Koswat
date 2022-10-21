@@ -1,9 +1,11 @@
+from typing import Protocol
+
 from koswat.builder_protocol import BuilderProtocol
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 
 
-class LayerCostReportBuilder(BuilderProtocol):
+class LayerCostReportBuilderProtocol(BuilderProtocol, Protocol):
     base_layer: KoswatLayerProtocol
     calc_layer: KoswatLayerProtocol
 
@@ -12,11 +14,4 @@ class LayerCostReportBuilder(BuilderProtocol):
         self.calc_layer = None
 
     def build(self) -> LayerCostReport:
-        if self.base_layer.material.name != self.calc_layer.material.name:
-            raise ValueError("Material differs between layers. Cannot compute costs.")
-        _layer_report = LayerCostReport()
-        _diff_geometry = self.calc_layer.geometry.difference(self.base_layer.geometry)
-        _layer_report.total_volume = _diff_geometry.area
-        _layer_report.new_layer = self.calc_layer
-        _layer_report.old_layer = self.base_layer
-        return _layer_report
+        pass
