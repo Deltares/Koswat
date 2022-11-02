@@ -6,6 +6,7 @@ from shapely import geometry
 from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
 from koswat.dike.material.koswat_material import KoswatMaterialFactory
+from koswat.geometries import remove_layer_from_polygon
 
 
 class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
@@ -21,7 +22,7 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
     def _get_offset_coordinates(self, depth: float) -> List[geometry.Point]:
         # Get the offset linestring
         _offset_geom_linestring = self.upper_linestring.parallel_offset(
-            -depth, side="left", join_style=2
+            -depth, side="left", join_style=2, mitre_limit=10
         )
         # We need to cut the 'y' axis as it might have gone below
         _offset_geom_linestring = _offset_geom_linestring.intersection(
@@ -66,7 +67,8 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
         # Create the new coating layer
         _layer = KoswatCoatingLayer()
         _layer.upper_points = self.upper_linestring
-        _layer.geometry = self._get_layer_geometry(_offset_geom_coords)
+        _layer.geometry = remove_layer_from_polygon(self.base_geometry, _depth)
+        # _layer.geometry = self._get_layer_geometry(_offset_geom_coords)
         _layer.layer_points = self._get_offset_geometry(_offset_geom_coords)
         _layer.material = _material
         _layer.depth = _depth

@@ -21,7 +21,12 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
-from tests import get_fixturerequest_case_name, plot_profiles, test_results
+from tests import (
+    get_fixturerequest_case_name,
+    get_testcase_results_dir,
+    plot_profiles,
+    test_results,
+)
 from tests.calculations import compare_koswat_profiles
 from tests.library_test_cases import (
     InputProfileCases,
@@ -90,11 +95,7 @@ class TestReinforcementProfileCalculationProtocol:
         request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
-        _plot_dir = test_results / get_fixturerequest_case_name(request)
-        if _plot_dir.is_dir():
-            shutil.rmtree(_plot_dir)
-        _plot_dir.mkdir(parents=True)
-
+        _plot_dir = get_testcase_results_dir(request)
         _dummy_layers = LayersCases.without_layers
         _base_profile = KoswatProfileBuilder.with_data(
             dict(

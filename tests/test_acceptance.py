@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import shutil
+from codecs import ignore_errors
+from pathlib import Path
 
 import pytest
 
@@ -10,6 +12,7 @@ from koswat.calculations import (
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
 )
+from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
@@ -31,7 +34,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from tests import get_fixturerequest_case_name, plot_profiles, test_data, test_results
+from tests import get_testcase_results_dir, plot_profiles, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -61,10 +64,7 @@ class TestAcceptance:
         request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
-        _case_name = get_fixturerequest_case_name(request)
-        _test_dir = test_results / _case_name
-        if _test_dir.is_dir():
-            shutil.rmtree(_test_dir)
+        _test_dir = get_testcase_results_dir(request)
         _expected_reinforcements = [
             CofferdamReinforcementProfile,
             SoilReinforcementProfile,
@@ -125,11 +125,6 @@ class TestAcceptance:
                 for _rep_profile in _summary.locations_profile_report_list
             ), f"Profile type {_reinforcement_profile.__name__} not found."
         for _multi_report in _summary.locations_profile_report_list:
-            assert isinstance(_multi_report, MultiLocationProfileCostReport)
-            assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
-            assert _multi_report.total_cost > 0
-            assert _multi_report.total_volume > 0
-            assert _multi_report.cost_per_km > 1000
             _profiles_plots = plot_profiles(
                 _multi_report.profile_cost_report.old_profile,
                 _multi_report.profile_cost_report.new_profile,
@@ -137,6 +132,13 @@ class TestAcceptance:
             _fig_file = _test_dir / _multi_report.profile_type
             _fig_file.with_suffix(".png")
             _profiles_plots.savefig(_fig_file)
+
+        for _multi_report in _summary.locations_profile_report_list:
+            assert isinstance(_multi_report, MultiLocationProfileCostReport)
+            assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
+            assert _multi_report.total_cost > 0
+            assert _multi_report.total_volume > 0
+            assert _multi_report.cost_per_km > 1000
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
             assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
-            assert all(isinstance(lcr, LayerCostReport) for lcr in _layers_report)
+            assert all(isinstance(lcr, CostReportProtocol) for lcr in _layers_report)
