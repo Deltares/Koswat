@@ -28,6 +28,8 @@ class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         new_layer: KoswatLayerProtocol,
         core_layer: KoswatLayerProtocol,
     ) -> StandardLayerCostReport:
+        if old_layer.material.name != new_layer.material.name:
+            raise ValueError("Material differs between layers. Cannot compute costs.")
         _report = StandardLayerCostReport()
         _report.new_layer = new_layer
         _report.old_layer = old_layer

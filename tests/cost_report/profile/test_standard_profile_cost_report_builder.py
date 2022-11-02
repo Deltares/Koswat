@@ -1,11 +1,12 @@
 import pytest
-from shapely.geometry import Point
+from shapely.geometry import Point, Polygon
 
 from koswat.calculations import StandardReinforcementProfile
 from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
+from koswat.cost_report.layer.standard_layer_cost_report import StandardLayerCostReport
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.profile.profile_cost_report_builder_protocol import (
     ProfileCostReportBuilderProtocol,
@@ -92,15 +93,21 @@ class TestStandardProfileCostReportBuilder:
         _calc_layer.material = KoswatMaterial()
         _calc_layer.material.name = _material_name
         _calc_layer.geometry = _ref_point.buffer(4)
+        _core_layer = KoswatBaseLayer()
+        _core_layer.material = _calc_layer.material
+        _core_layer.geometry = _ref_point.buffer(3)
 
         # 2. Run test
-        _layer_report = _builder._get_layer_cost_report(_base_layer, _calc_layer)
+        _layer_report = _builder._get_layer_cost_report(
+            _base_layer, _calc_layer, _core_layer
+        )
 
         # 3. Verify expectations
-        assert isinstance(_layer_report, LayerCostReport)
+        assert isinstance(_layer_report, StandardLayerCostReport)
         assert _layer_report.new_layer == _calc_layer
         assert _layer_report.old_layer == _base_layer
-        assert _layer_report.total_volume == pytest.approx(37.64, 0.001)
+        assert _layer_report.core_layer == _core_layer
+        assert _layer_report.total_volume == pytest.approx(21.95, 0.001)
 
     def test_given_different_layers_number_when_build_then_raises_error(self):
         # 1. Define test data.
@@ -135,5 +142,5 @@ class TestStandardProfileCostReportBuilder:
         assert isinstance(cost_report, ProfileCostReport)
         assert cost_report.new_profile == builder.calculated_profile
         assert len(cost_report.layer_cost_reports) == 1
-        assert isinstance(cost_report.layer_cost_reports[0], LayerCostReport)
+        assert isinstance(cost_report.layer_cost_reports[0], StandardLayerCostReport)
         assert cost_report.total_volume == pytest.approx(37.64, 0.001)
