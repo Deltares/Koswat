@@ -69,53 +69,32 @@ def export_multi_report_plots(multi_report, export_dir: Path):
 
     _comparing_profiles()
 
-    def _comparing_layers(report: ProfileCostReport, report_name: str):
-        for _layer_c_report in report.layer_cost_reports:
-            _layers_to_plot = []
-            _layers_to_plot.append(report.new_profile.layers_wrapper.coating_layers[0])
-            _layers_to_plot.append(_layer_c_report.new_layer)
-            _layers_to_plot.append(_layer_c_report.old_layer)
-            _material = _layer_c_report.material
-            _legend = [
-                "New Dike Profile",
-                f"New {_material} layer",
-                f"Old {_material} layer",
-            ]
-            if isinstance(_layer_c_report, StandardLayerCostReport):
-                _layers_to_plot.append(_layer_c_report.core_layer)
-                if _layer_c_report.removed_layer:
-                    _layers_to_plot.append(_layer_c_report.removed_layer)
-                _legend.extend(["Core layer", f"Removed {_material} layer"])
-
-            _fig_file = export_dir / f"{report_name}_{_material}"
-            _fig_file.with_suffix(".png")
-            _layers_plots = plot_multiple_layers(_layers_to_plot)
-            _layers_plots.legend(_legend)
-            _layers_plots.savefig(_fig_file)
-
     def _displaying_layers(report: ProfileCostReport, report_name: str):
-        def _export_layers(layer_type: str, layer, layers_to_plot):
-            _fig_file = export_dir / layer_type
-            _fig_file.with_suffix(".png")
+        def _export_layers(output_file: Path, layer, layers_to_plot):
+            output_file.with_suffix(".png")
             _layers_plots = plot_highlight_layer(layers_to_plot, layer)
-            _layers_plots.savefig(_fig_file)
+            _layers_plots.savefig(output_file)
 
         _layers_to_plot = []
         _layers_to_plot.extend(report.old_profile.layers_wrapper.layers)
         _layers_to_plot.extend(report.new_profile.layers_wrapper.layers)
         for _layer_c_report in report.layer_cost_reports:
-            if isinstance(_layer_c_report, StandardLayerCostReport):
+            _export_dir: Path = export_dir / report_name
+            _export_dir.mkdir(parents=True, exist_ok=True)
+            _base_name = f"{report_name}_{_layer_c_report.material}"
+            _export_layers(
+                _export_dir / f"added_{_base_name}",
+                _layer_c_report.added_layer,
+                _layers_to_plot,
+            )
+            if (
+                isinstance(_layer_c_report, StandardLayerCostReport)
+                and _layer_c_report.removed_layer
+            ):
                 _export_layers(
-                    f"{report_name}_new_{_layer_c_report.material}",
-                    _layer_c_report.new_layer,
+                    _export_dir / f"removed_{_base_name}",
+                    _layer_c_report.removed_layer,
                     _layers_to_plot,
                 )
-                if _layer_c_report.removed_layer:
-                    _export_layers(
-                        f"{report_name}_removal_{_layer_c_report.material}",
-                        _layer_c_report.removed_layer,
-                        _layers_to_plot,
-                    )
 
-    _comparing_layers(multi_report.profile_cost_report, multi_report.profile_type)
     _displaying_layers(multi_report.profile_cost_report, multi_report.profile_type)

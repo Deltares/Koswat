@@ -7,12 +7,18 @@ from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 class LayerCostReport(CostReportProtocol):
     new_layer: KoswatLayerProtocol
     old_layer: KoswatLayerProtocol
-    total_volume: float
+    added_layer: KoswatLayerProtocol
 
     def __init__(self) -> None:
         self.new_layer = None
         self.old_layer = None
-        self.total_volume = math.nan
+        self.added_layer = None
+
+    @property
+    def total_volume(self) -> float:
+        if not self.added_layer:
+            return math.nan
+        return self.added_layer.geometry.area
 
     @property
     def total_cost(self) -> float:

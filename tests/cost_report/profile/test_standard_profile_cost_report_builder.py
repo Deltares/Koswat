@@ -74,41 +74,6 @@ class TestStandardProfileCostReportBuilder:
         _builder.calculated_profile.layers_wrapper.base_layer = _calc_layer
         return _builder
 
-    def test_get_layer_cost_report_oustide_slope_reinforcement_profile_same_material_returns_report(
-        self,
-    ):
-        class MockReinforcement(StandardReinforcementProfile):
-            pass
-
-        # 1. Define test data.
-        _builder = StandardProfileCostReportBuilder()
-        _builder.calculated_profile = MockReinforcement()
-        _ref_point = Point(4.2, 2.4)
-        _material_name = "Vibranium"
-        _base_layer = KoswatBaseLayer()
-        _base_layer.material = KoswatMaterial()
-        _base_layer.material.name = _material_name
-        _base_layer.geometry = _ref_point.buffer(2)
-        _calc_layer = KoswatBaseLayer()
-        _calc_layer.material = KoswatMaterial()
-        _calc_layer.material.name = _material_name
-        _calc_layer.geometry = _ref_point.buffer(4)
-        _core_layer = KoswatBaseLayer()
-        _core_layer.material = _calc_layer.material
-        _core_layer.geometry = _ref_point.buffer(3)
-
-        # 2. Run test
-        _layer_report = _builder._get_layer_cost_report(
-            _base_layer, _calc_layer, _core_layer
-        )
-
-        # 3. Verify expectations
-        assert isinstance(_layer_report, StandardLayerCostReport)
-        assert _layer_report.new_layer == _calc_layer
-        assert _layer_report.old_layer == _base_layer
-        assert _layer_report.core_layer == _core_layer
-        assert _layer_report.total_volume == pytest.approx(21.95, 0.001)
-
     def test_given_different_layers_number_when_build_then_raises_error(self):
         # 1. Define test data.
         _builder = self._get_valid_profile_builder()
@@ -142,5 +107,6 @@ class TestStandardProfileCostReportBuilder:
         assert isinstance(cost_report, ProfileCostReport)
         assert cost_report.new_profile == builder.calculated_profile
         assert len(cost_report.layer_cost_reports) == 1
-        assert isinstance(cost_report.layer_cost_reports[0], StandardLayerCostReport)
+        # The core layer report is a basic one (sand)
+        assert isinstance(cost_report.layer_cost_reports[0], LayerCostReport)
         assert cost_report.total_volume == pytest.approx(37.64, 0.001)

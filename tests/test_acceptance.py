@@ -34,12 +34,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from tests import (
-    export_multi_report_plots,
-    get_testcase_results_dir,
-    plot_profiles,
-    test_data,
-)
+from tests import export_multi_report_plots, get_testcase_results_dir, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
