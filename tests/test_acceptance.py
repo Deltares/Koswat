@@ -34,7 +34,12 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from tests import get_testcase_results_dir, plot_profiles, test_data
+from tests import (
+    export_multi_report_plots,
+    get_testcase_results_dir,
+    plot_profiles,
+    test_data,
+)
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -125,13 +130,7 @@ class TestAcceptance:
                 for _rep_profile in _summary.locations_profile_report_list
             ), f"Profile type {_reinforcement_profile.__name__} not found."
         for _multi_report in _summary.locations_profile_report_list:
-            _profiles_plots = plot_profiles(
-                _multi_report.profile_cost_report.old_profile,
-                _multi_report.profile_cost_report.new_profile,
-            )
-            _fig_file = _test_dir / _multi_report.profile_type
-            _fig_file.with_suffix(".png")
-            _profiles_plots.savefig(_fig_file)
+            export_multi_report_plots(_multi_report, _test_dir)
 
         for _multi_report in _summary.locations_profile_report_list:
             assert isinstance(_multi_report, MultiLocationProfileCostReport)
