@@ -5,8 +5,7 @@ from matplotlib import pyplot
 from pytest import FixtureRequest
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
-from koswat.geometries import plot_layer, plot_layers
+from koswat.geometries.plot_library import plot_layer, plot_layers
 
 test_data = Path(__file__).parent / "test_data"
 test_results = Path(__file__).parent / "test_results"

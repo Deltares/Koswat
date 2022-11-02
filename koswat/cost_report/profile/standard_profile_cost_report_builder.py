@@ -1,4 +1,3 @@
-from shapely import affinity
 from shapely.geometry import LineString, Point, Polygon
 
 from koswat.calculations import ReinforcementProfileProtocol
@@ -10,7 +9,6 @@ from koswat.cost_report.profile.profile_cost_report_builder_protocol import (
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
-from koswat.geometries import plot_layers, plot_polygons
 
 
 class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
@@ -39,8 +37,6 @@ class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
             core_layer.geometry
         )
         _report.removed_layer.material = new_layer.material
-        # pl1 = plot_layers(_report.core_layer, _report.removed_layer)
-        # pl2 = plot_layers(_report.core_layer, _report.new_layer)
         return _report
 
     def _get_base_layer_report(
@@ -51,10 +47,6 @@ class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         _report.core_layer = old_base_layer
         _report.new_layer = new_base_layer
         _report.removed_layer = None
-        # _diff_geometry = new_base_layer.geometry.difference(old_base_layer.geometry)
-        # _report.new_layer = KoswatBaseLayer()
-        # _report.new_layer.geometry = _diff_geometry
-        # _report.new_layer.material = new_base_layer.material
         return _report
 
     def _get_relative_core_layer(
@@ -80,8 +72,6 @@ class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         _new_layer = KoswatBaseLayer()
         _new_layer.geometry = _fixed_layer_geom.union(core_layer.geometry)
         _new_layer.material = core_layer.material
-        # pl = plot_layers(core_layer, _new_layer)
-        # pl = plot_polygons(_fixed_layer_geom, coating_layer.geometry)
         return _new_layer
 
     def build(self) -> ProfileCostReport:
