@@ -42,8 +42,14 @@ def plot_highlight_layer(layer_list: List[Any], layer_to_highlight: Any) -> pypl
     _colors = get_cmap(n_colors=len(layer_list))
     for idx, _layer in enumerate(layer_list):
         plot_layer(_layer, _subplot, color=_colors(idx))
-    _x_coords, y_coords = layer_to_highlight.geometry.boundary.coords.xy
-    _subplot.fill(_x_coords, y_coords)
+
+    if layer_to_highlight.geometry.geom_type.lower() == "polygon":
+        _x_coords, y_coords = layer_to_highlight.geometry.boundary.coords.xy
+        _subplot.fill(_x_coords, y_coords)
+    elif layer_to_highlight.geometry.geom_type.lower() == "multipolygon":
+        for _layer_geom in layer_to_highlight.geometry.geoms:
+            _x_coords, y_coords = _layer_geom.boundary.coords.xy
+            _subplot.fill(_x_coords, y_coords)
     return fig
 
 

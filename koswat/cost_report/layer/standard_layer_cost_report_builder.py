@@ -52,14 +52,14 @@ class StandardLayerCostReportBuilder(LayerCostReportBuilderProtocol):
         # Removed Layer
         _layer_report.removed_layer = KoswatCoatingLayer()
         _layer_report.removed_layer.material = self.calc_layer.material
-        _layer_report.removed_layer.geometry = Polygon(
-            self.base_layer.geometry.difference(self.base_core_geometry)
+        _layer_report.removed_layer.geometry = self.base_layer.geometry.difference(
+            self.base_core_geometry
         )
 
         # Added layer
         _new_calculated_geom = self.calc_layer.geometry
         _added_geom = _new_calculated_geom.difference(
-            Polygon(self.base_core_geometry.union(self.calc_core_geometry))
+            self.base_core_geometry.union(self.calc_core_geometry)
         )
         _layer_report.added_layer = KoswatCoatingLayer()
         _layer_report.added_layer.material = self.calc_layer.material
