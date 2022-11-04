@@ -1,10 +1,10 @@
 import math
 
-from koswat.cost_report.cost_report_protocol import CostReportProtocol
+from koswat.cost_report.layer.layer_cost_report_protocol import LayerCostReportProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 
 
-class StandardLayerCostReport(CostReportProtocol):
+class StandardLayerCostReport(LayerCostReportProtocol):
     new_layer: KoswatLayerProtocol
     old_layer: KoswatLayerProtocol
     added_layer: KoswatLayerProtocol

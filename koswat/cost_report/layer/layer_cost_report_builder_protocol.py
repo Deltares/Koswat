@@ -1,7 +1,7 @@
 from typing import Protocol
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
+from koswat.cost_report.layer.layer_cost_report_protocol import LayerCostReportProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 
 
@@ -13,5 +13,5 @@ class LayerCostReportBuilderProtocol(BuilderProtocol, Protocol):
         self.base_layer = None
         self.calc_layer = None
 
-    def build(self) -> LayerCostReport:
+    def build(self) -> LayerCostReportProtocol:
         pass

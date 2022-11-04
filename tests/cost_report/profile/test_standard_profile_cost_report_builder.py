@@ -30,30 +30,6 @@ class TestStandardProfileCostReportBuilder:
         assert not _builder.base_profile
         assert not _builder.calculated_profile
 
-    def test_get_layer_cost_report_different_material_raises(self):
-        class MockReinforcement(StandardReinforcementProfile):
-            pass
-
-        # 1. Define test data.
-        _builder = StandardProfileCostReportBuilder()
-        _builder.calculated_profile = MockReinforcement()
-        _base_layer = KoswatBaseLayer()
-        _base_layer.material = KoswatMaterial()
-        _base_layer.material.name = "a material"
-        _calc_layer = KoswatBaseLayer()
-        _calc_layer.material = KoswatMaterial()
-        _core_layer = KoswatBaseLayer()
-
-        # 2. Run test
-        with pytest.raises(ValueError) as exc_err:
-            _builder._get_layer_cost_report(_base_layer, _calc_layer, _core_layer)
-
-        # 3. Verify expectations
-        assert (
-            str(exc_err.value)
-            == "Material differs between layers. Cannot compute costs."
-        )
-
     def _get_valid_profile_builder(self) -> StandardProfileCostReportBuilder:
         _builder = StandardProfileCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
