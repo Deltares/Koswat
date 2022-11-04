@@ -18,7 +18,7 @@ class TestStandardLayerCostReportBuilder:
         assert not _builder.base_layer
         assert not _builder.calc_layer
         assert not _builder.base_core_geometry
-        assert not _builder.calc_core_geometry
+        assert not _builder.added_to_core_geometry
 
     def test_build_different_material_raises(self):
         # 1. Define test data.

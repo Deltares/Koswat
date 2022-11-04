@@ -1,5 +1,3 @@
-from shapely.geometry import LineString, Point, Polygon
-
 from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
     LayerCostReportBuilderProtocol,
