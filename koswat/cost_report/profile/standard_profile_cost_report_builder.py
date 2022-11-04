@@ -39,14 +39,11 @@ class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         _layer_report_builder.calc_layer = new_layer
         _layer_report_builder.base_core_geometry = base_core_geometry
         _layer_report_builder.wrapped_calc_geometry = latest_report.new_layer.geometry
-        _layer_report_builder.wrapped_base_geometry = old_layer.geometry.difference(
-            base_core_geometry
-        )
+        _layer_report_builder.wrapped_base_geometry = None
         if isinstance(latest_report, StandardLayerCostReport):
+            # TODO improve this logic.
             _layer_report_builder.wrapped_base_geometry = (
-                _layer_report_builder.wrapped_base_geometry.difference(
-                    latest_report.removed_layer.geometry
-                )
+                latest_report.removed_layer.geometry
             )
 
         return _layer_report_builder.build()
