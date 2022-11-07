@@ -4,6 +4,9 @@ from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
+from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
+    LayerCostReportBuilderProtocol,
+)
 from koswat.cost_report.layer.outside_slope_weakening_layer_cost_report_builder import (
     OustideSlopeWeakeningLayerCostReportBuilder,
 )
@@ -55,9 +58,12 @@ class OutsideSlopeProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
                 self.calculated_profile.layers_wrapper.layers,
             )
         )
+        _add_layers_reference = self.calculated_profile.layers_wrapper.layers[1:]
+        _add_layers_reference.append(self.base_profile.layers_wrapper.layers[-1])
         for idx, (_base_layer, _calc_layer) in enumerate(_layers):
             _core_idx = min(idx + 1, len(_layers) - 1)
-            _base_core, _calc_core = _layers[_core_idx]
+            _base_core, _ = _layers[_core_idx]
+            _calc_core = _add_layers_reference[idx]
             _layer_report = self._get_layer_cost_report(
                 _base_layer, _calc_layer, _base_core.geometry, _calc_core.geometry
             )

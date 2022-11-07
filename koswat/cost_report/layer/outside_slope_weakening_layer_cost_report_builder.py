@@ -44,7 +44,7 @@ class OustideSlopeWeakeningLayerCostReportBuilder(LayerCostReportBuilderProtocol
         # Added layer
         _layer_report.added_layer = KoswatCoatingLayer()
         _layer_report.added_layer.material = self.calc_layer.material
-        _added_geometry = self.calc_layer.geometry.difference(self.base_layer.geometry)
+        _added_geometry = self.calc_layer.geometry.difference(self.calc_core_geometry)
         _layer_report.added_layer.geometry = _added_geometry
         _layer_report.added_layer.layer_points = get_polygon_coordinates(
             _added_geometry

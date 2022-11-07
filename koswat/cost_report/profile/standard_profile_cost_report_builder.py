@@ -67,16 +67,20 @@ class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         _report.layer_cost_reports.append(_core_report_builder.build())
         _relative_core = _core_report_builder.base_layer.geometry
         # Get x_layer_removal and x_layer_added
-        for idx_l, _old_coating_layer in reversed(
-            list(enumerate(self.base_profile.layers_wrapper.coating_layers))
-        ):
+        _layers = list(
+            zip(
+                self.base_profile.layers_wrapper.coating_layers,
+                self.calculated_profile.layers_wrapper.coating_layers,
+            )
+        )
+        for (_old_coating_layer, _new_coating_layer) in reversed(_layers):
             _relative_core = get_relative_core_layer(
                 _relative_core, _old_coating_layer.geometry
             )
 
             _layer_cost_report = self._get_layer_cost_report(
                 _old_coating_layer,
-                self.calculated_profile.layers_wrapper.coating_layers[idx_l],
+                _new_coating_layer,
                 _report.layer_cost_reports[-1],
                 _relative_core,
             )
