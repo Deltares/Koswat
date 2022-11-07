@@ -34,12 +34,13 @@ class OustideSlopeWeakeningLayerCostReportBuilder(LayerCostReportBuilderProtocol
         _layer_report.old_layer = self.base_layer
 
         # Removed Layer
-        _layer_report.removed_layer = KoswatCoatingLayer()
-        _layer_report.removed_layer.material = self.calc_layer.material
-        _removed_layer_geometry = self.base_layer.geometry.difference(
-            self.base_core_geometry
-        )
-        _layer_report.removed_layer.geometry = _removed_layer_geometry
+        if isinstance(self.base_layer, KoswatCoatingLayer):
+            _layer_report.removed_layer = KoswatCoatingLayer()
+            _layer_report.removed_layer.material = self.calc_layer.material
+            _removed_layer_geometry = self.base_layer.geometry.difference(
+                self.base_core_geometry
+            )
+            _layer_report.removed_layer.geometry = _removed_layer_geometry
 
         # Added layer
         _layer_report.added_layer = KoswatCoatingLayer()
