@@ -17,6 +17,8 @@ def plot_layer(layer, ax: pyplot.axes, color: str):
     else:
         raise ValueError(f"Material {layer.material.name} not supported for plotting.")
     ax.plot(_x_coords, y_coords, **dict_values)
+    _x_points, _y_points = list(zip(*layer.upper_points.coords))
+    ax.scatter(_x_points, _y_points)
 
 
 def get_cmap(n_colors: int, name="hsv"):
@@ -33,12 +35,16 @@ def plot_polygon(polygon: Union[Polygon, List[Point]], ax: pyplot.axes, color: s
     if isinstance(polygon, Polygon) and polygon.geom_type.lower() == "polygon":
         _x_coords, y_coords = polygon.boundary.coords.xy
         ax.plot(_x_coords, y_coords, **dict_values)
+    elif isinstance(polygon, MultiPolygon):
+        for geom in polygon.geoms:
+            plot_polygon(geom, ax, color)
     elif isinstance(polygon, list):
         _x_points, _y_points = list(zip(*polygon))
         ax.scatter(_x_points, _y_points)
 
 
-def plot_multiple_poligons(polygon_list: List[Any]) -> pyplot:
+def plot_multiple_polygons(*args) -> pyplot:
+    polygon_list = args
     fig = pyplot.figure(dpi=180)
     _subplot = fig.add_subplot()
     _colors = get_cmap(n_colors=len(polygon_list))
@@ -65,10 +71,10 @@ def plot_highlight_layer(layer_list: List[Any], layer_to_highlight: Any) -> pypl
     for idx, _layer in enumerate(layer_list):
         plot_layer(_layer, _subplot, color=_colors(idx))
 
-    if layer_to_highlight.geometry.geom_type.lower() == "polygon":
+    if isinstance(layer_to_highlight.geometry, Polygon):
         _x_coords, y_coords = layer_to_highlight.geometry.boundary.coords.xy
         _subplot.fill(_x_coords, y_coords)
-    elif layer_to_highlight.geometry.geom_type.lower() == "multipolygon":
+    elif isinstance(layer_to_highlight.geometry, MultiPolygon):
         for _layer_geom in layer_to_highlight.geometry.geoms:
             _x_coords, y_coords = _layer_geom.boundary.coords.xy
             _subplot.fill(_x_coords, y_coords)

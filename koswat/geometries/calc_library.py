@@ -1,11 +1,11 @@
 from typing import List, Union
 
-from shapely.geometry import LineString, MultiPolygon, Point, Polygon
+from shapely import geometry, ops
 
 
 def get_relative_core_layer(
-    core_geometry: Polygon, coating_geometry: Polygon
-) -> Polygon:
+    core_geometry: geometry.Polygon, coating_geometry: geometry.Polygon
+) -> geometry.Polygon:
     """
     Returns a new 'core' from the original `core_geometry` relative to the `coating_geometry`.
 
@@ -19,8 +19,8 @@ def get_relative_core_layer(
     # Create a 'fake' base layer geometry to later do proper intersections.
     _core_points = list(core_geometry.boundary.coords)
     _coating_points = list(coating_geometry.boundary.coords)
-    _aux_coord = Point(_coating_points[0][0], _core_points[1][1])
-    _wrapper_points = LineString(
+    _aux_coord = geometry.Point(_coating_points[0][0], _core_points[1][1])
+    _wrapper_points = geometry.LineString(
         [
             _coating_points[0],
             _aux_coord,
@@ -29,22 +29,25 @@ def get_relative_core_layer(
             _coating_points[0],
         ]
     )
-    _wrapper_polygon = Polygon(_wrapper_points)
+    _wrapper_polygon = geometry.Polygon(_wrapper_points)
     _fixed_layer_geom = _wrapper_polygon.intersection(coating_geometry)
     return _fixed_layer_geom.union(core_geometry)
 
 
-def get_polygon_coordinates(geometry: Union[Polygon, MultiPolygon]) -> LineString:
-    if geometry.geom_type.lower() == "polygon":
-        return LineString(geometry.boundary.coords)
-    elif geometry.geom_type.lower() == "multipolygon":
-        raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
+def get_polygon_coordinates(
+    pol_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
+) -> Union[geometry.LineString, geometry.MultiLineString]:
+    if isinstance(pol_geometry, geometry.Polygon):
+        return geometry.LineString(pol_geometry.exterior.coords)
+    elif isinstance(pol_geometry, geometry.MultiPolygon):
+        _geoms_coords = [_geom.exterior.coords for _geom in pol_geometry.geoms]
+        return ops.linemerge(_geoms_coords)
     raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
 
 
-def get_polygon_surface_points(
-    base_geometry: Union[Polygon, MultiPolygon]
-) -> LineString:
+def _get_single_polygon_surface_points(
+    base_geometry: geometry.Polygon,
+) -> geometry.LineString:
     _coordinates = list(get_polygon_coordinates(base_geometry).coords)
     _coordinates.pop(-1)
     _x_coords, _ = list(zip(*_coordinates))
@@ -56,4 +59,14 @@ def get_polygon_surface_points(
     else:
         _surface_points = _coordinates[_idx_mlc : (_idx_mrc + 1)]
 
-    return LineString(_surface_points)
+    return geometry.LineString(_surface_points)
+
+
+def get_polygon_surface_points(
+    base_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
+) -> geometry.LineString:
+    if isinstance(base_geometry, geometry.MultiPolygon):
+        return ops.linemerge(
+            list(map(_get_single_polygon_surface_points, base_geometry.geoms))
+        )
+    return _get_single_polygon_surface_points(base_geometry)
