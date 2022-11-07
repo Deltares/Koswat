@@ -8,9 +8,6 @@ from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
 from koswat.cost_report.profile.profile_cost_report_builder_protocol import (
     ProfileCostReportBuilderProtocol,
 )
-from koswat.cost_report.profile.standard_profile_cost_report_builder import (
-    StandardProfileCostReportBuilder,
-)
 from koswat.dike.layers.koswat_layers_wrapper import (
     KoswatBaseLayer,
     KoswatLayersWrapper,
@@ -21,7 +18,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 def get_valid_profile_builder(
     builder_type: Type[ProfileCostReportBuilderProtocol],
-) -> StandardProfileCostReportBuilder:
+) -> ProfileCostReportBuilderProtocol:
     _builder = builder_type()
     _ref_point = Point(4.2, 2.4)
     _material_name = "Vibranium"

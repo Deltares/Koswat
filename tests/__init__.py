@@ -4,7 +4,7 @@ from pathlib import Path
 from matplotlib import pyplot
 from pytest import FixtureRequest
 
-from koswat.cost_report.layer.standard_layer_cost_report import StandardLayerCostReport
+from koswat.cost_report.layer.coating_layer_cost_report import CoatingLayerCostReport
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.geometries.plot_library import plot_highlight_layer, plot_layer
@@ -84,7 +84,7 @@ def export_multi_report_plots(multi_report, export_dir: Path):
                 _layers_to_plot,
             )
             if (
-                isinstance(_layer_c_report, StandardLayerCostReport)
+                isinstance(_layer_c_report, CoatingLayerCostReport)
                 and _layer_c_report.removed_layer
             ):
                 _export_layers(

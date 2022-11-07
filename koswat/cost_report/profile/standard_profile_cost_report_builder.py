@@ -4,8 +4,8 @@ from koswat.calculations import ReinforcementProfileProtocol
 from koswat.cost_report.layer.base_layer_cost_report_builder import (
     BaseLayerCostReportBuilder,
 )
+from koswat.cost_report.layer.coating_layer_cost_report import CoatingLayerCostReport
 from koswat.cost_report.layer.layer_cost_report_protocol import LayerCostReportProtocol
-from koswat.cost_report.layer.standard_layer_cost_report import StandardLayerCostReport
 from koswat.cost_report.layer.standard_layer_cost_report_builder import (
     StandardLayerCostReportBuilder,
 )
@@ -40,7 +40,7 @@ class StandardProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         _layer_report_builder.base_core_geometry = base_core_geometry
         _layer_report_builder.wrapped_calc_geometry = latest_report.new_layer.geometry
         _layer_report_builder.wrapped_base_geometry = None
-        if isinstance(latest_report, StandardLayerCostReport):
+        if isinstance(latest_report, CoatingLayerCostReport):
             # TODO improve this logic.
             _layer_report_builder.wrapped_base_geometry = (
                 latest_report.removed_layer.geometry

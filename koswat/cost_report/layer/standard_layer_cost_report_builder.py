@@ -1,9 +1,9 @@
 from shapely.geometry import Polygon
 
+from koswat.cost_report.layer.coating_layer_cost_report import CoatingLayerCostReport
 from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
     LayerCostReportBuilderProtocol,
 )
-from koswat.cost_report.layer.standard_layer_cost_report import StandardLayerCostReport
 from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
 from koswat.geometries.calc_library import (
@@ -26,12 +26,12 @@ class StandardLayerCostReportBuilder(LayerCostReportBuilderProtocol):
         self.wrapped_calc_geometry = None
         self.wrapped_base_geometry = None
 
-    def build(self) -> StandardLayerCostReport:
+    def build(self) -> CoatingLayerCostReport:
         if self.base_layer.material.name != self.calc_layer.material.name:
             raise ValueError("Material differs between layers. Cannot compute costs.")
 
         # Layer cost report
-        _layer_report = StandardLayerCostReport()
+        _layer_report = CoatingLayerCostReport()
         _layer_report.new_layer = self.calc_layer
         _layer_report.old_layer = self.base_layer
 

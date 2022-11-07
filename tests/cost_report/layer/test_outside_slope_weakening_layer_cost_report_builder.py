@@ -9,6 +9,7 @@ from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
 from koswat.cost_report.layer.outside_slope_weakening_layer_cost_report_builder import (
     OustideSlopeWeakeningLayerCostReportBuilder,
 )
+from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layers_wrapper import KoswatBaseLayer
 from koswat.dike.material.koswat_material import KoswatMaterial
 
@@ -62,4 +63,13 @@ class TestOustideSlopeWeakiningLayerCostReportBuilder:
         assert isinstance(_layer_report, BaseLayerCostReport)
         assert _layer_report.new_layer == _builder.calc_layer
         assert _layer_report.old_layer == _builder.base_layer
+
+        def verify_layer(layer_to_verify: KoswatCoatingLayer) -> None:
+            assert isinstance(layer_to_verify, KoswatCoatingLayer)
+            assert layer_to_verify.geometry
+            assert layer_to_verify.layer_points
+            assert layer_to_verify.upper_points
+
+        verify_layer(_layer_report.added_layer)
+        verify_layer(_layer_report.removed_layer)
         assert _layer_report.total_volume == pytest.approx(37.64, 0.001)
