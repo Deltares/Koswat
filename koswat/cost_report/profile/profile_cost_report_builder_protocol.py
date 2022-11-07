@@ -11,4 +11,10 @@ class ProfileCostReportBuilderProtocol(BuilderProtocol, Protocol):
     calculated_profile: reinforcement_profile_protocol
 
     def build(self) -> ProfileCostReport:
+        """
+        Generates an instance of a `ProfileCostReport` based on the required properties.
+
+        Returns:
+            ProfileCostReport: Instance of a `ProfileCostReport`.
+        """
         pass

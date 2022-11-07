@@ -5,7 +5,17 @@ from shapely.geometry import MultiPolygon, Point, Polygon
 
 
 def plot_layer(layer, ax: pyplot.axes, color: str):
-    # _x_coords, y_coords = zip(*layer.upper_points.coords)
+    """
+    Plots a Koswat layer into the provided canvas `ax` with the requested `color`.
+
+    Args:
+        layer (KoswatLayerProtocol): Koswat layer containing a geometry.
+        ax (pyplot.axes): Canvas.
+        color (str): Color code.
+
+    Raises:
+        ValueError: When the `layer` material has not been registered.
+    """
     _x_coords, y_coords = layer.geometry.boundary.coords.xy
     dict_values = dict(color=color, linewidth=2, zorder=1)
     if layer.material.name == "zand":
@@ -30,7 +40,14 @@ def get_cmap(n_colors: int, name="hsv"):
 
 
 def plot_polygon(polygon: Union[Polygon, List[Point]], ax: pyplot.axes, color: str):
-    # _x_coords, y_coords = zip(*layer.upper_points.coords)
+    """
+    Plots a `Polygon` into the provided plot `ax` with the requested `color`.
+
+    Args:
+        polygon (Union[Polygon, List[Point], MultiPolygon]): Polygon to display.
+        ax (pyplot.axes): Pyplot containing the drawing canvas.
+        color (str): Color string.
+    """
     dict_values = dict(color=color, linewidth=2, zorder=1)
     if isinstance(polygon, Polygon) and polygon.geom_type.lower() == "polygon":
         _x_coords, y_coords = polygon.boundary.coords.xy
@@ -44,6 +61,12 @@ def plot_polygon(polygon: Union[Polygon, List[Point]], ax: pyplot.axes, color: s
 
 
 def plot_multiple_polygons(*args) -> pyplot:
+    """
+    Plots all provided polygons.
+
+    Returns:
+        pyplot: Canvas containig all drawings.
+    """
     polygon_list = args
     fig = pyplot.figure(dpi=180)
     _subplot = fig.add_subplot()
@@ -54,17 +77,34 @@ def plot_multiple_polygons(*args) -> pyplot:
     return fig
 
 
-def plot_multiple_layers(layer_list: List[Any]) -> pyplot:
+def plot_multiple_layers(*args) -> pyplot:
+    """
+    Plots all provided Koswat Layers.
+
+    Returns:
+        pyplot: Canvas containing all drawings.
+    """
+    _layer_list = args
     fig = pyplot.figure(dpi=180)
     _subplot = fig.add_subplot()
-    _colors = get_cmap(n_colors=len(layer_list))
-    for idx, _layer in enumerate(layer_list):
+    _colors = get_cmap(n_colors=len(_layer_list))
+    for idx, _layer in enumerate(_layer_list):
         plot_layer(_layer, _subplot, color=_colors(idx))
 
     return fig
 
 
 def plot_highlight_layer(layer_list: List[Any], layer_to_highlight: Any) -> pyplot:
+    """
+    Plots a layer highlighting its content.
+
+    Args:
+        layer_list (List[Any]): List of layers to plot.
+        layer_to_highlight (Any): Layer that requireds 'filling'.
+
+    Returns:
+        pyplot: Canvas containing all drawings.
+    """
     fig = pyplot.figure(dpi=180)
     _subplot = fig.add_subplot()
     _colors = get_cmap(n_colors=len(layer_list))
@@ -78,22 +118,4 @@ def plot_highlight_layer(layer_list: List[Any], layer_to_highlight: Any) -> pypl
         for _layer_geom in layer_to_highlight.geometry.geoms:
             _x_coords, y_coords = _layer_geom.boundary.coords.xy
             _subplot.fill(_x_coords, y_coords)
-    return fig
-
-
-def plot_layers(layer_left, layer_right) -> pyplot:
-    return plot_multiple_layers([layer_left, layer_right])
-
-
-def plot_polygons(pol_left, pol_right) -> pyplot:
-    fig = pyplot.figure(dpi=180)
-    _subplot = fig.add_subplot()
-
-    def plot_polygon(pol, ax: pyplot.axes, color):
-        dict_values = dict(linestyle="dashdot", color=color, linewidth=2, zorder=1)
-        x, y = pol.boundary.xy
-        ax.plot(x, y, **dict_values)
-
-    plot_polygon(pol_left, _subplot, color="#03a9fc")
-    plot_polygon(pol_right, _subplot, color="#fc0303")
     return fig

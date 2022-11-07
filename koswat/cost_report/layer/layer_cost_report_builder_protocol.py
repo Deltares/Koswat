@@ -17,4 +17,10 @@ class LayerCostReportBuilderProtocol(BuilderProtocol, Protocol):
         self.calc_layer = None
 
     def build(self) -> LayerCostReportProtocol:
+        """
+        Generates a `LayerCostReportProtocol` based on the required properties.
+
+        Returns:
+            LayerCostReportProtocol: Instance of a `LayerCostReportProtocol`.
+        """
         pass

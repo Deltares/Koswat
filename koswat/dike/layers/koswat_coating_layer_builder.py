@@ -68,7 +68,6 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
         _layer = KoswatCoatingLayer()
         _layer.upper_points = self.upper_linestring
         _layer.geometry = remove_layer_from_polygon(self.base_geometry, _depth)
-        # _layer.geometry = self._get_layer_geometry(_offset_geom_coords)
         _layer.layer_points = self._get_offset_geometry(_offset_geom_coords)
         _layer.material = _material
         _layer.depth = _depth

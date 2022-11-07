@@ -7,11 +7,7 @@ from pytest import FixtureRequest
 from koswat.cost_report.layer.standard_layer_cost_report import StandardLayerCostReport
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.geometries.plot_library import (
-    plot_highlight_layer,
-    plot_layer,
-    plot_multiple_layers,
-)
+from koswat.geometries.plot_library import plot_highlight_layer, plot_layer
 
 test_data = Path(__file__).parent / "test_data"
 test_results = Path(__file__).parent / "test_results"
