@@ -23,6 +23,7 @@ class OustideSlopeWeakeningLayerCostReportBuilder(LayerCostReportBuilderProtocol
         self.base_layer = None
         self.calc_layer = None
         self.base_core_geometry = None
+        self.calc_core_geometry = None
 
     def build(self) -> CoatingLayerCostReport:
         if self.base_layer.material.name != self.calc_layer.material.name:
