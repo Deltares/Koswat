@@ -6,6 +6,10 @@ from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
 from koswat.cost_report.layer.standard_layer_cost_report import StandardLayerCostReport
 from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayerProtocol
+from koswat.geometries.calc_library import (
+    get_polygon_coordinates,
+    get_polygon_surface_points,
+)
 
 
 class StandardLayerCostReportBuilder(LayerCostReportBuilderProtocol):
@@ -47,8 +51,14 @@ class StandardLayerCostReportBuilder(LayerCostReportBuilderProtocol):
         # Added layer
         _layer_report.added_layer = KoswatCoatingLayer()
         _layer_report.added_layer.material = self.calc_layer.material
-        _layer_report.added_layer.geometry = self.calc_layer.geometry.difference(
+        _added_geometry = self.calc_layer.geometry.difference(
             self.base_core_geometry.union(self.wrapped_calc_geometry)
         )
-
+        _layer_report.added_layer.geometry = _added_geometry
+        _layer_report.added_layer.layer_points = get_polygon_coordinates(
+            _added_geometry
+        )
+        _layer_report.added_layer.upper_points = get_polygon_surface_points(
+            _added_geometry
+        )
         return _layer_report

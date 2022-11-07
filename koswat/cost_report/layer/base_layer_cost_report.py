@@ -27,6 +27,12 @@ class BaseLayerCostReport(LayerCostReportProtocol):
         return self.total_volume * self.new_layer.material.cost
 
     @property
+    def total_surface(self) -> float:
+        if not self.added_layer:
+            return math.nan
+        return self.added_layer.upper_points.total_length
+
+    @property
     def material(self) -> str:
         if not self.new_layer or not self.new_layer.material:
             return ""

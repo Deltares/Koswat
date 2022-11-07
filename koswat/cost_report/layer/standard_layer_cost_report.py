@@ -35,6 +35,12 @@ class StandardLayerCostReport(LayerCostReportProtocol):
         return self.added_volume - self.removed_volume
 
     @property
+    def total_surface(self) -> float:
+        if not self.added_layer:
+            return math.nan
+        return self.added_layer.upper_points.total_length
+
+    @property
     def total_cost(self) -> float:
         if not self.new_layer:
             return math.nan

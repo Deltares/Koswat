@@ -1,4 +1,6 @@
-from shapely.geometry import LineString, Point, Polygon
+from typing import List, Union
+
+from shapely.geometry import LineString, MultiPolygon, Point, Polygon
 
 
 def get_relative_core_layer(
@@ -30,3 +32,28 @@ def get_relative_core_layer(
     _wrapper_polygon = Polygon(_wrapper_points)
     _fixed_layer_geom = _wrapper_polygon.intersection(coating_geometry)
     return _fixed_layer_geom.union(core_geometry)
+
+
+def get_polygon_coordinates(geometry: Union[Polygon, MultiPolygon]) -> LineString:
+    if geometry.geom_type.lower() == "polygon":
+        return LineString(geometry.boundary.coords)
+    elif geometry.geom_type.lower() == "multipolygon":
+        raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
+    raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
+
+
+def get_polygon_surface_points(
+    base_geometry: Union[Polygon, MultiPolygon]
+) -> LineString:
+    _coordinates = list(get_polygon_coordinates(base_geometry).coords)
+    _coordinates.pop(-1)
+    _x_coords, _ = list(zip(*_coordinates))
+    _idx_mlc = _x_coords.index(min(_x_coords))
+    _idx_mrc = _x_coords.index(max(_x_coords))
+    if _idx_mlc > _idx_mrc:
+        _surface_points = _coordinates[: (_idx_mrc + 1)] + _coordinates[_idx_mlc:]
+        _surface_points.reverse()
+    else:
+        _surface_points = _coordinates[_idx_mlc : (_idx_mrc + 1)]
+
+    return LineString(_surface_points)

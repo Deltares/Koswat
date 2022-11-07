@@ -1,6 +1,7 @@
-from typing import Any, List
+from typing import Any, List, Union
 
 from matplotlib import pyplot
+from shapely.geometry import MultiPolygon, Point, Polygon
 
 
 def plot_layer(layer, ax: pyplot.axes, color: str):
@@ -24,6 +25,27 @@ def get_cmap(n_colors: int, name="hsv"):
     RGB color; the keyword argument name must be a standard mpl colormap name.
     """
     return pyplot.cm.get_cmap(name, n_colors)
+
+
+def plot_polygon(polygon: Union[Polygon, List[Point]], ax: pyplot.axes, color: str):
+    # _x_coords, y_coords = zip(*layer.upper_points.coords)
+    dict_values = dict(color=color, linewidth=2, zorder=1)
+    if isinstance(polygon, Polygon) and polygon.geom_type.lower() == "polygon":
+        _x_coords, y_coords = polygon.boundary.coords.xy
+        ax.plot(_x_coords, y_coords, **dict_values)
+    elif isinstance(polygon, list):
+        _x_points, _y_points = list(zip(*polygon))
+        ax.scatter(_x_points, _y_points)
+
+
+def plot_multiple_poligons(polygon_list: List[Any]) -> pyplot:
+    fig = pyplot.figure(dpi=180)
+    _subplot = fig.add_subplot()
+    _colors = get_cmap(n_colors=len(polygon_list))
+    for idx, _polygon in enumerate(polygon_list):
+        plot_polygon(_polygon, _subplot, color=_colors(idx))
+
+    return fig
 
 
 def plot_multiple_layers(layer_list: List[Any]) -> pyplot:
