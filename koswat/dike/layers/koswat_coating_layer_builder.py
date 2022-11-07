@@ -6,7 +6,7 @@ from shapely import geometry
 from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
 from koswat.dike.material.koswat_material import KoswatMaterialFactory
-from koswat.geometries import remove_layer_from_polygon
+from koswat.geometries.calc_library import remove_layer_from_polygon
 
 
 class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
