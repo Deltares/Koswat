@@ -2,11 +2,22 @@
 
 ### Feat
 
-- **koswat/dike/layers**: Fixed builder and renamed layer properties for better maintainability
+- **CoatingLayerCostReport**: Extended usage of previous StandardLayerCostReport so that other reinforcements can also use it
+- Added logic to extract the surface of a layer
+- **LayerCostReportProtocol;StandardLayerCostReportBuilder**: Extracted standard layer cost report builder logic into separate class. Added protocol to represent the layer cost reports
+- **koswat/geometries; standard_layer_cost_report**: Implemented logic for StandardLayer cost calculation
+- **OutsideSlopeReinforcementProfileProtocol;StandardReinforcementProfileProtocol**: Added protocols to represent the different types of reinforcement - per volume; Added tests for factory
+- **LayerCostReportbuilderFactory**: Added logic to retrieve the corresponding LayerCostReportBuilderProtocol; Adapted tests and related imports
+- **LayerCostReportBuilderFactory**: Introduced layer cost report builder factory for the different types of volume calculators available
+
+### Fix
+
+- **OutsideSlopeProfileCostReportBuilder**: Now we properly calculate the added core layer
+- **OutsideSlopeProfileCostReportBuilder**: Calculation of the 'kistdam' layers is now done properly
 
 ### Refactor
 
-- **KoswatLayersWrapper;KoswatLayersWrapperBuilder**: Renamed classes for better distinction
+- **cost_report**: Moved layer factory to profile factory as the logic should be in a higher level
 
 ## v0.5.1 (2022-10-11)
 
