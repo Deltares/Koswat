@@ -112,7 +112,7 @@ def plot_highlight_layer(layer_list: List[Any], layer_to_highlight: Any) -> pypl
         plot_layer(_layer, _subplot, color=_colors(idx))
 
     if isinstance(layer_to_highlight.geometry, Polygon):
-        _x_coords, y_coords = layer_to_highlight.geometry.boundary.coords.xy
+        _x_coords, y_coords = layer_to_highlight.geometry.exterior.coords.xy
         _subplot.fill(_x_coords, y_coords)
     elif isinstance(layer_to_highlight.geometry, MultiPolygon):
         for _layer_geom in layer_to_highlight.geometry.geoms:

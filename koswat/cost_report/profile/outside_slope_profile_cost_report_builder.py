@@ -1,3 +1,5 @@
+from shapely.geometry import Polygon
+
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -23,11 +25,17 @@ class OutsideSlopeProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
         self.calculated_profile = None
 
     def _get_layer_cost_report(
-        self, base_layer: KoswatLayerProtocol, calculated_layer: KoswatLayerProtocol
+        self,
+        base_layer: KoswatLayerProtocol,
+        calc_layer: KoswatLayerProtocol,
+        base_geom: Polygon,
+        calc_geom: Polygon,
     ) -> BaseLayerCostReport:
         _builder = OustideSlopeWeakeningLayerCostReportBuilder()
         _builder.base_layer = base_layer
-        _builder.calc_layer = calculated_layer
+        _builder.calc_layer = calc_layer
+        _builder.base_core_geometry = base_geom
+        _builder.calc_core_geometry = calc_geom
         return _builder.build()
 
     def build(self) -> ProfileCostReport:
@@ -40,10 +48,18 @@ class OutsideSlopeProfileCostReportBuilder(ProfileCostReportBuilderProtocol):
             raise ValueError(
                 "Layers not matching between old and new profile. Calculation of costs cannot be computed."
             )
-        _report.layer_cost_reports = [
-            self._get_layer_cost_report(
-                old_l, self.calculated_profile.layers_wrapper.layers[idx_l]
+
+        _layers = list(
+            zip(
+                self.base_profile.layers_wrapper.layers,
+                self.calculated_profile.layers_wrapper.layers,
             )
-            for idx_l, old_l in enumerate(self.base_profile.layers_wrapper.layers)
-        ]
+        )
+        for idx, (_base_layer, _calc_layer) in enumerate(_layers):
+            _core_idx = min(idx + 1, len(_layers) - 1)
+            _base_core, _calc_core = _layers[_core_idx]
+            _layer_report = self._get_layer_cost_report(
+                _base_layer, _calc_layer, _base_core.geometry, _calc_core.geometry
+            )
+            _report.layer_cost_reports.append(_layer_report)
         return _report
