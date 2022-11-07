@@ -7,7 +7,7 @@ from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
 from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
 )
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
+from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
 from koswat.cost_report.profile.outside_slope_profile_cost_report_builder import (
     OutsideSlopeProfileCostReportBuilder,
 )
@@ -94,7 +94,7 @@ class TestOutsideSlopeProfileCostReportBuilder:
         _layer_report = _builder._get_layer_cost_report(_base_layer, _calc_layer)
 
         # 3. Verify expectations
-        assert isinstance(_layer_report, LayerCostReport)
+        assert isinstance(_layer_report, BaseLayerCostReport)
         assert _layer_report.new_layer == _calc_layer
         assert _layer_report.old_layer == _base_layer
         assert _layer_report.total_volume == pytest.approx(37.64, 0.001)
@@ -132,5 +132,5 @@ class TestOutsideSlopeProfileCostReportBuilder:
         assert isinstance(cost_report, ProfileCostReport)
         assert cost_report.new_profile == builder.calculated_profile
         assert len(cost_report.layer_cost_reports) == 1
-        assert isinstance(cost_report.layer_cost_reports[0], LayerCostReport)
+        assert isinstance(cost_report.layer_cost_reports[0], BaseLayerCostReport)
         assert cost_report.total_volume == pytest.approx(37.64, 0.001)

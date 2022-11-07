@@ -5,7 +5,7 @@ from koswat.calculations import StandardReinforcementProfile
 from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
+from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
 from koswat.cost_report.layer.standard_layer_cost_report import StandardLayerCostReport
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.profile.profile_cost_report_builder_protocol import (
@@ -84,5 +84,5 @@ class TestStandardProfileCostReportBuilder:
         assert cost_report.new_profile == builder.calculated_profile
         assert len(cost_report.layer_cost_reports) == 1
         # The core layer report is a basic one (sand)
-        assert isinstance(cost_report.layer_cost_reports[0], LayerCostReport)
+        assert isinstance(cost_report.layer_cost_reports[0], BaseLayerCostReport)
         assert cost_report.total_volume == pytest.approx(37.64, 0.001)

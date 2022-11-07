@@ -2,7 +2,7 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
+from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
 from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
     LayerCostReportBuilderProtocol,
 )
@@ -59,7 +59,7 @@ class TestOustideSlopeWeakiningLayerCostReportBuilder:
         _layer_report = _builder.build()
 
         # 3. Verify expectations
-        assert isinstance(_layer_report, LayerCostReport)
+        assert isinstance(_layer_report, BaseLayerCostReport)
         assert _layer_report.new_layer == _builder.calc_layer
         assert _layer_report.old_layer == _builder.base_layer
         assert _layer_report.total_volume == pytest.approx(37.64, 0.001)

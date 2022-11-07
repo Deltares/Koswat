@@ -1,12 +1,12 @@
 import math
 
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
+from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
 
 
-class TestLayerCostReport:
+class TestBaseLayerCostReport:
     def test_initialize(self):
-        _report = LayerCostReport()
-        assert isinstance(_report, LayerCostReport)
+        _report = BaseLayerCostReport()
+        assert isinstance(_report, BaseLayerCostReport)
         assert not _report.new_layer
         assert not _report.old_layer
         assert not _report.added_layer
