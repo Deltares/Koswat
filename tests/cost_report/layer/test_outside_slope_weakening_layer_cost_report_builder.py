@@ -2,23 +2,31 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
-from koswat.cost_report.layer.layer_cost_report_builder import LayerCostReportBuilder
+from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
+from koswat.cost_report.layer.coating_layer_cost_report import CoatingLayerCostReport
+from koswat.cost_report.layer.layer_cost_report_builder_protocol import (
+    LayerCostReportBuilderProtocol,
+)
+from koswat.cost_report.layer.outside_slope_weakening_layer_cost_report_builder import (
+    OustideSlopeWeakeningLayerCostReportBuilder,
+)
+from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layers_wrapper import KoswatBaseLayer
 from koswat.dike.material.koswat_material import KoswatMaterial
 
 
-class TestLayerCostReportBuilder:
+class TestOustideSlopeWeakiningLayerCostReportBuilder:
     def test_initialize(self):
-        _builder = LayerCostReportBuilder()
-        assert isinstance(_builder, LayerCostReportBuilder)
+        _builder = OustideSlopeWeakeningLayerCostReportBuilder()
+        assert isinstance(_builder, OustideSlopeWeakeningLayerCostReportBuilder)
+        assert isinstance(_builder, LayerCostReportBuilderProtocol)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.base_layer
         assert not _builder.calc_layer
 
     def test_given_different_material_when_build_then_raises(self):
         # 1. Define test data.
-        _builder = LayerCostReportBuilder()
+        _builder = OustideSlopeWeakeningLayerCostReportBuilder()
         _builder.base_layer = KoswatBaseLayer()
         _builder.base_layer.material = KoswatMaterial()
         _builder.base_layer.material.name = "a material"
@@ -37,7 +45,7 @@ class TestLayerCostReportBuilder:
 
     def test_given_same_material_when_build_then_returns_report(self):
         # 1. Define test data.
-        _builder = LayerCostReportBuilder()
+        _builder = OustideSlopeWeakeningLayerCostReportBuilder()
         _ref_point = Point(4.2, 2.4)
         _material_name = "Vibranium"
         _builder.base_layer = KoswatBaseLayer()
@@ -48,12 +56,22 @@ class TestLayerCostReportBuilder:
         _builder.calc_layer.material = KoswatMaterial()
         _builder.calc_layer.material.name = _material_name
         _builder.calc_layer.geometry = _ref_point.buffer(4)
+        _builder.base_core_geometry = _ref_point.buffer(1)
+        _builder.calc_core_geometry = _ref_point.buffer(3)
 
         # 2. Run test
         _layer_report = _builder.build()
 
         # 3. Verify expectations
-        assert isinstance(_layer_report, LayerCostReport)
+        assert isinstance(_layer_report, CoatingLayerCostReport)
         assert _layer_report.new_layer == _builder.calc_layer
         assert _layer_report.old_layer == _builder.base_layer
-        assert _layer_report.total_volume == pytest.approx(37.64, 0.001)
+
+        def verify_layer(layer_to_verify: KoswatCoatingLayer) -> None:
+            assert isinstance(layer_to_verify, KoswatCoatingLayer)
+            assert layer_to_verify.geometry
+            assert layer_to_verify.layer_points
+            assert layer_to_verify.upper_points
+
+        verify_layer(_layer_report.added_layer)
+        assert _layer_report.total_volume == pytest.approx(21.95, 0.001)

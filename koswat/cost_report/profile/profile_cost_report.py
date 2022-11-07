@@ -2,12 +2,11 @@ import math
 from typing import List
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostReport(CostReportProtocol):
-    layer_cost_reports: List[LayerCostReport]
+    layer_cost_reports: List[CostReportProtocol]
     new_profile: KoswatProfileBase
     old_profile: KoswatProfileBase
 
