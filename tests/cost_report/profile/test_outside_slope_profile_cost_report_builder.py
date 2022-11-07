@@ -18,6 +18,7 @@ from koswat.dike.layers.koswat_layers_wrapper import (
 )
 from koswat.dike.material.koswat_material import KoswatMaterial
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from tests.cost_report import get_valid_profile_builder
 
 
 class TestOutsideSlopeProfileCostReportBuilder:
@@ -50,26 +51,6 @@ class TestOutsideSlopeProfileCostReportBuilder:
             == "Material differs between layers. Cannot compute costs."
         )
 
-    def _get_valid_profile_builder(self) -> OutsideSlopeProfileCostReportBuilder:
-        _builder = OutsideSlopeProfileCostReportBuilder()
-        _ref_point = Point(4.2, 2.4)
-        _material_name = "Vibranium"
-        _builder.base_profile = KoswatProfileBase()
-        _base_layer = KoswatBaseLayer()
-        _base_layer.material = KoswatMaterial()
-        _base_layer.material.name = _material_name
-        _base_layer.geometry = _ref_point.buffer(2)
-        _builder.base_profile.layers_wrapper = KoswatLayersWrapper()
-        _builder.base_profile.layers_wrapper.base_layer = _base_layer
-        _builder.calculated_profile = CofferdamReinforcementProfile()
-        _calc_layer = KoswatBaseLayer()
-        _calc_layer.material = KoswatMaterial()
-        _calc_layer.material.name = _material_name
-        _calc_layer.geometry = _ref_point.buffer(4)
-        _builder.calculated_profile.layers_wrapper = KoswatLayersWrapper()
-        _builder.calculated_profile.layers_wrapper.base_layer = _calc_layer
-        return _builder
-
     def test_get_layer_cost_report_oustide_slope_reinforcement_profile_same_material_returns_report(
         self,
     ):
@@ -101,7 +82,7 @@ class TestOutsideSlopeProfileCostReportBuilder:
 
     def test_given_different_layers_number_when_build_then_raises_error(self):
         # 1. Define test data.
-        _builder = self._get_valid_profile_builder()
+        _builder = get_valid_profile_builder(OutsideSlopeProfileCostReportBuilder)
         _builder.calculated_profile.layers_wrapper = KoswatLayersWrapper()
 
         # 2. Run test
@@ -116,7 +97,7 @@ class TestOutsideSlopeProfileCostReportBuilder:
 
     def test_build(self):
         # 1. Define test data.
-        _builder = self._get_valid_profile_builder()
+        _builder = get_valid_profile_builder(OutsideSlopeProfileCostReportBuilder)
 
         # 2. Run test
         _profile_cost_report = _builder.build()
