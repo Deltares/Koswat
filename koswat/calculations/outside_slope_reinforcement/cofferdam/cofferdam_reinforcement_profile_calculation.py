@@ -1,9 +1,6 @@
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
-    CofferdamReinforcementProfile,
-)
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
@@ -79,15 +76,7 @@ class CofferdamReinforcementProfileCalculation(
         )
         return _new_data
 
-    def build(self) -> CofferdamReinforcementProfile:
-        _new_data = self._calculate_new_input_profile(
+    def build(self) -> CofferDamInputProfile:
+        return self._calculate_new_input_profile(
             self.base_profile.input_data, self.scenario
         )
-        _data_layers = self.base_profile.layers_wrapper.as_data_dict()
-        _builder_dict = dict(
-            input_profile_data=_new_data.__dict__,
-            layers_data=_data_layers,
-            p4_x_coordinate=0,
-            profile_type=CofferdamReinforcementProfile,
-        )
-        return KoswatProfileBuilder.with_data(_builder_dict).build()
