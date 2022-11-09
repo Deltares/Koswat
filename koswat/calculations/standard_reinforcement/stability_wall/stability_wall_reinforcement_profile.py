@@ -1,4 +1,4 @@
-from koswat.calculations.stability_wall.stability_wall_input_profile import (
+from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (

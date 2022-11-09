@@ -1,8 +1,10 @@
 import pytest
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations.cofferdam.cofferdam_input_profile import CofferDamInputProfile
-from koswat.calculations.cofferdam.cofferdam_reinforcement_profile_calculation import (
+from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
+    CofferDamInputProfile,
+)
+from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile_calculation import (
     CofferdamReinforcementProfileCalculation,
 )
 from koswat.calculations.reinforcement_profile_calculation_protocol import (

@@ -1,13 +1,13 @@
 from email.mime import base
 
-from koswat.calculations.piping_wall.piping_wall_input_profile import (
-    PipingWallInputProfile,
-)
-from koswat.calculations.piping_wall.piping_wall_reinforcement_profile import (
-    PipingWallReinforcementProfile,
-)
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
+)
+from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
+    PipingWallInputProfile,
+)
+from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile import (
+    PipingWallReinforcementProfile,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol

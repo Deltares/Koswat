@@ -2,7 +2,7 @@ from typing import Type
 
 from shapely.geometry import Point
 
-from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
+from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
 from koswat.cost_report.profile.profile_cost_report_builder_protocol import (

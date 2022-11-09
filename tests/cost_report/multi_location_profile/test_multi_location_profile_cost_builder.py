@@ -1,6 +1,6 @@
 from shapely.geometry import Point
 
-from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
+from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
