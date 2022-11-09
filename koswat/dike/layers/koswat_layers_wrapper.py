@@ -1,13 +1,19 @@
 from __future__ import annotations
 
-from typing import List
+from typing import List, Protocol
 
 from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 
-class KoswatLayersWrapper:
+class KoswatLayersWrapperProtocol(Protocol):
+    base_layer: KoswatBaseLayer
+    coating_layers: List[KoswatCoatingLayer]
+    layers: List[KoswatLayerProtocol]
+
+
+class KoswatLayersWrapper(KoswatLayersWrapperProtocol):
     base_layer: KoswatBaseLayer
     coating_layers: List[KoswatCoatingLayer]
 
