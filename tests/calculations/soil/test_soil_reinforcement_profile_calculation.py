@@ -2,7 +2,7 @@ import pytest
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
+    ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcementProfile
 from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
@@ -19,7 +19,7 @@ class TestSoilReinforcementProfileCalculation:
         assert not _calculation.base_profile
         assert not _calculation.scenario
         assert isinstance(_calculation, SoilReinforcementProfileCalculation)
-        assert isinstance(_calculation, ReinforcementProfileCalculationProtocol)
+        assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
     def test_calculate_new_binnen_talud(self):

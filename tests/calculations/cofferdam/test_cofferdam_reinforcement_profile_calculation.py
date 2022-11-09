@@ -6,7 +6,7 @@ from koswat.calculations.cofferdam.cofferdam_reinforcement_profile_calculation i
     CofferdamReinforcementProfileCalculation,
 )
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
+    ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
@@ -20,7 +20,7 @@ class TestCofferDamReinforcementProfileCalculation:
         assert not _calculation.base_profile
         assert not _calculation.scenario
         assert isinstance(_calculation, CofferdamReinforcementProfileCalculation)
-        assert isinstance(_calculation, ReinforcementProfileCalculationProtocol)
+        assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
     def test_calculate_length_coffer_dam(self):

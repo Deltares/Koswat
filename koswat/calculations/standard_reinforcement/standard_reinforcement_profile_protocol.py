@@ -4,4 +4,4 @@ from koswat.calculations.reinforcement_profile_protocol import (
 
 
 class StandardReinforcementProfile(ReinforcementProfileProtocol):
-    reinforcement_subtype: str = "Standaard profiel"
+    pass

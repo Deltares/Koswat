@@ -1,5 +1,5 @@
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
+    ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.calculations.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
@@ -15,7 +15,7 @@ from koswat.koswat_scenario import KoswatScenario
 
 
 class StabilityWallReinforcementProfileCalculation(
-    ReinforcementProfileCalculationProtocol
+    ReinforcementInputProfileCalculationProtocol
 ):
     base_profile: KoswatProfileProtocol
     scenario: KoswatScenario

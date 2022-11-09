@@ -8,7 +8,7 @@ from koswat.calculations import (
     CofferdamReinforcementProfileCalculation,
     PipingWallReinforcementProfile,
     PipingWallReinforcementProfileCalculation,
-    ReinforcementProfileCalculationProtocol,
+    ReinforcementInputProfileCalculationProtocol,
     ReinforcementProfileProtocol,
     SoilReinforcementProfile,
     SoilReinforcementProfileCalculation,
@@ -39,7 +39,7 @@ from tests.library_test_cases import (
 class TestReinforcementProfileCalculationProtocol:
     def test_initialize(self):
         with pytest.raises(TypeError):
-            ReinforcementProfileCalculationProtocol()
+            ReinforcementInputProfileCalculationProtocol()
 
     @pytest.mark.parametrize(
         "profile_type, calculation_type, profile_data, scenario_data, expected_profile_data",
@@ -88,7 +88,7 @@ class TestReinforcementProfileCalculationProtocol:
     def test_given_profile_and_scenario_calculate_new_geometry(
         self,
         profile_type: Type[ReinforcementProfileProtocol],
-        calculation_type: Type[ReinforcementProfileCalculationProtocol],
+        calculation_type: Type[ReinforcementInputProfileCalculationProtocol],
         profile_data: dict,
         scenario_data: dict,
         expected_profile_data: dict,

@@ -11,7 +11,7 @@ from koswat.koswat_scenario import KoswatScenario
 
 
 @runtime_checkable
-class ReinforcementProfileCalculationProtocol(BuilderProtocol, Protocol):
+class ReinforcementInputProfileCalculationProtocol(BuilderProtocol, Protocol):
     base_profile: KoswatProfileProtocol
     scenario: KoswatScenario
 

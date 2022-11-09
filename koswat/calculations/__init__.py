@@ -12,7 +12,7 @@ from koswat.calculations.piping_wall.piping_wall_reinforcement_profile_calculati
     PipingWallReinforcementProfileCalculation,
 )
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
+    ReinforcementInputProfileCalculationProtocol,
     ReinforcementProfileProtocol,
 )
 from koswat.calculations.soil.soil_reinforcement_profile_calculation import (
