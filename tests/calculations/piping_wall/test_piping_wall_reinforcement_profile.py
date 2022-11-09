@@ -4,7 +4,7 @@ from koswat.calculations.piping_wall.piping_wall_reinforcement_profile import (
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.calculations.standard_reinforcement_profile_protocol import (
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
     StandardReinforcementProfile,
 )
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol

@@ -3,7 +3,7 @@ from koswat.calculations.cofferdam.cofferdam_reinforcement_profile_calculation i
     CofferdamReinforcementProfile,
     CofferdamReinforcementProfileCalculation,
 )
-from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
 )
 from koswat.calculations.piping_wall.piping_wall_reinforcement_profile_calculation import (
@@ -24,6 +24,6 @@ from koswat.calculations.stability_wall.stability_wall_reinforcement_profile_cal
     StabilityWallReinforcementProfile,
     StabilityWallReinforcementProfileCalculation,
 )
-from koswat.calculations.standard_reinforcement_profile_protocol import (
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
     StandardReinforcementProfile,
 )

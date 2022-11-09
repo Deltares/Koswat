@@ -1,4 +1,4 @@
-from koswat.calculations.standard_reinforcement_profile_protocol import (
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
     StandardReinforcementProfile,
 )
 from koswat.dike.profile.koswat_profile import KoswatProfileBase

@@ -1,10 +1,9 @@
 import pytest
 from shapely.geometry import Point
 
-from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
 )
-from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
 from koswat.cost_report.layer.coating_layer_cost_report import CoatingLayerCostReport
 from koswat.cost_report.profile.outside_slope_profile_cost_report_builder import (
     OutsideSlopeProfileCostReportBuilder,
