@@ -4,6 +4,9 @@ from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
+    OutsideSlopeReinforcementProfileBuilder,
+)
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
 )
@@ -17,8 +20,8 @@ from koswat.calculations.soil.soil_reinforcement_profile import SoilReinforcemen
 from koswat.calculations.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
-from koswat.calculations.standard_reinforcement.standard_reinforcement_builder import (
-    StandardReinforcementFactoryBuilder,
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
+    StandardReinforcementProfileBuilder,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
     StandardReinforcementProfile,
@@ -43,14 +46,17 @@ class ReinforcementProfileCalculationFactoryBuilder(BuilderProtocol):
 
     def build(self) -> ReinforcementProfileProtocol:
         if issubclass(self.reinforcement_profile_type, StandardReinforcementProfile):
-            _builder = StandardReinforcementFactoryBuilder()
+            _builder = StandardReinforcementProfileBuilder()
             _builder.base_profile = self.base_profile
             _builder.scenario = self.scenario
             return _builder.build()
         elif issubclass(
             self.reinforcement_profile_type, OutsideSlopeReinforcementProfile
         ):
-            pass
+            _builder = OutsideSlopeReinforcementProfileBuilder()
+            _builder.base_profile = self.base_profile
+            _builder.scenario = self.scenario
+            return _builder.build()
         else:
             raise NotImplementedError(
                 f"Type {self.reinforcement_profile_type} not currently supported."
