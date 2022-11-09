@@ -33,7 +33,7 @@ from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_p
 )
 
 
-class ReinforcementProfileCalculationFactory:
+class ReinforcementProfileBuilderFactory:
     @staticmethod
     def get_available_reinforcements() -> List[ReinforcementProfileProtocol]:
         return [
