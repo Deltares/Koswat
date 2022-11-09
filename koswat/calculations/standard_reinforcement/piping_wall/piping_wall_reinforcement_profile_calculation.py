@@ -1,5 +1,3 @@
-from email.mime import base
-
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
@@ -75,15 +73,7 @@ class PipingWallReinforcementProfileCalculation(
         _new_data.length_piping_wall = self._calculate_length_piping_wall(_new_data)
         return _new_data
 
-    def build(self) -> PipingWallReinforcementProfile:
-        _new_data = self._calculate_new_input_profile(
+    def build(self) -> PipingWallInputProfile:
+        return self._calculate_new_input_profile(
             self.base_profile.input_data, self.scenario
         )
-        _data_layers = self.base_profile.layers_wrapper.as_data_dict()
-        _builder_dict = dict(
-            input_profile_data=_new_data.__dict__,
-            layers_data=_data_layers,
-            p4_x_coordinate=self.scenario.d_h * self.scenario.buiten_talud,
-            profile_type=PipingWallReinforcementProfile,
-        )
-        return KoswatProfileBuilder.with_data(_builder_dict).build()

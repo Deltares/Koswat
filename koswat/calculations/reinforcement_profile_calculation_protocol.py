@@ -3,8 +3,8 @@ from typing import Protocol
 from typing_extensions import runtime_checkable
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
+from koswat.calculations.reinforcement_input_profile_protocol import (
+    ReinforcementInputProfileProtocol,
 )
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.koswat_scenario import KoswatScenario
@@ -15,11 +15,11 @@ class ReinforcementInputProfileCalculationProtocol(BuilderProtocol, Protocol):
     base_profile: KoswatProfileProtocol
     scenario: KoswatScenario
 
-    def build(self) -> ReinforcementProfileProtocol:
+    def build(self) -> ReinforcementInputProfileProtocol:
         """
-        Builds a `ReinforcementProfileProtocol` instance based on the `base_profile` and `scenario` specified in this class.
+        Builds a `ReinforcementInputProfileProtocol` instance based on the `base_profile` and `scenario` specified in this class.
 
         Returns:
-            ReinforcementProfileProtocol: Calculated reinforcement profile.
+            ReinforcementInputProfileProtocol: Calculated reinforcement input profile.
         """
         pass

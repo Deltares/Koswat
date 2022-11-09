@@ -82,15 +82,7 @@ class StabilityWallReinforcementProfileCalculation(
         )
         return _new_data
 
-    def build(self) -> StabilityWallReinforcementProfile:
-        _new_data = self._calculate_new_input_profile(
+    def build(self) -> StabilityWallInputProfile:
+        return self._calculate_new_input_profile(
             self.base_profile.input_data, self.scenario
         )
-        _data_layers = self.base_profile.layers_wrapper.as_data_dict()
-        _builder_dict = dict(
-            input_profile_data=_new_data.__dict__,
-            layers_data=_data_layers,
-            p4_x_coordinate=self.scenario.d_h * self.scenario.buiten_talud,
-            profile_type=StabilityWallReinforcementProfile,
-        )
-        return KoswatProfileBuilder.with_data(_builder_dict).build()

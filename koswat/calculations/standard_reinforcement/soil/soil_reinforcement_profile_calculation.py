@@ -1,6 +1,12 @@
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
+    SoilInputProfile,
+)
 from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
@@ -76,7 +82,7 @@ class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationPr
     def _calculate_new_input_profile(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> KoswatInputProfileBase:
-        _new_data = KoswatInputProfileBase()
+        _new_data = SoilInputProfile()
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
         _new_data.buiten_talud = scenario.buiten_talud
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
@@ -93,15 +99,7 @@ class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationPr
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         return _new_data
 
-    def build(self) -> SoilReinforcementProfile:
-        _new_data = self._calculate_new_input_profile(
+    def build(self) -> SoilInputProfile:
+        return self._calculate_new_input_profile(
             self.base_profile.input_data, self.scenario
         )
-        _data_layers = self.base_profile.layers_wrapper.as_data_dict()
-        _builder_dict = dict(
-            input_profile_data=_new_data.__dict__,
-            layers_data=_data_layers,
-            p4_x_coordinate=self.scenario.d_h * self.scenario.buiten_talud,
-            profile_type=SoilReinforcementProfile,
-        )
-        return KoswatProfileBuilder.with_data(_builder_dict).build()

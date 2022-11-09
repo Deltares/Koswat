@@ -1,9 +1,9 @@
-from typing import List, Type
+from typing import List
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations import ReinforcementProfileProtocol
 from koswat.calculations.reinforcement_profile_calculation_factory import (
-    ReinforcementProfileCalculationFactoryBuilder,
+    ReinforcementProfileCalculationFactory,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
@@ -25,14 +25,17 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self.scenario = None
 
     def _get_calculated_profile_list(self) -> List[ReinforcementProfileProtocol]:
-        _factory = ReinforcementProfileCalculationFactoryBuilder()
-        _available_reinforcements = _factory.get_available_reinforcements()
-        _factory.base_profile = self.base_profile
-        _factory.scenario = self.scenario
+        _available_reinforcements = (
+            ReinforcementProfileCalculationFactory.get_available_reinforcements()
+        )
         _calculated_profiles = []
-        for _reinfrocement_type in _available_reinforcements:
-            _factory.reinforcement_profile_type = _reinfrocement_type
-            _calculated_profiles.append(_factory.build())
+        for _reinforcement_type in _available_reinforcements:
+            _builder = ReinforcementProfileCalculationFactory.get_builder(
+                _reinforcement_type
+            )
+            _builder.base_profile = self.base_profile
+            _builder.scenario = self.scenario
+            _calculated_profiles.append(_builder.build())
         return _calculated_profiles
 
     def _get_multi_location_profile_cost_builder(
