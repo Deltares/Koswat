@@ -3,12 +3,6 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
     MultiLocationProfileCostReport,
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
-from koswat.cost_report.profile.profile_cost_report_builder_factory import (
-    ProfileCostReportBuilderFactory,
-)
-from koswat.cost_report.profile.profile_cost_report_builder_protocol import (
-    ProfileCostReportBuilderProtocol,
-)
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
@@ -22,14 +16,6 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
         self.surroundings = None
         self.base_profile = None
         self.calc_profile = None
-
-    def _get_profile_cost_builder(self) -> ProfileCostReportBuilderProtocol:
-        _profile_cost_builder = ProfileCostReportBuilderFactory.get_builder(
-            type(self.calc_profile)
-        )
-        _profile_cost_builder.base_profile = self.base_profile
-        _profile_cost_builder.calculated_profile = self.calc_profile
-        return _profile_cost_builder
 
     def build(self) -> MultiLocationProfileCostReport:
         _multiple_location_cost_report = MultiLocationProfileCostReport()

@@ -8,7 +8,6 @@ from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatin
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.cost_report.layer.coating_layer_cost_report import CoatingLayerCostReport
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.geometries.plot_library import plot_highlight_geometry, plot_layer
