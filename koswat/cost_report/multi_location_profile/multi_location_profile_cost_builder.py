@@ -2,6 +2,7 @@ from koswat.builder_protocol import BuilderProtocol
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
+from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.profile.profile_cost_report_builder_factory import (
     ProfileCostReportBuilderFactory,
 )
@@ -37,7 +38,8 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
                 self.calc_profile.profile_width
             )
         )
-        _multiple_location_cost_report.profile_cost_report = (
-            self._get_profile_cost_builder().build()
-        )
+        _profile_cost_report = ProfileCostReport()
+        _profile_cost_report.new_profile = self.calc_profile
+        _profile_cost_report.old_profile = self.base_profile
+        _multiple_location_cost_report.profile_cost_report = _profile_cost_report
         return _multiple_location_cost_report

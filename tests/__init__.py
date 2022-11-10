@@ -4,10 +4,14 @@ from pathlib import Path
 from matplotlib import pyplot
 from pytest import FixtureRequest
 
+from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.cost_report.layer.coating_layer_cost_report import CoatingLayerCostReport
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.geometries.plot_library import plot_highlight_layer, plot_layer
+from koswat.geometries.plot_library import plot_highlight_geometry, plot_layer
 
 test_data = Path(__file__).parent / "test_data"
 test_results = Path(__file__).parent / "test_results"
@@ -43,7 +47,8 @@ def plot_profile(
 
 
 def plot_profiles(
-    base_profile: KoswatProfileProtocol, reinforced_profile: KoswatProfileProtocol
+    base_profile: KoswatProfileProtocol,
+    reinforced_profile: ReinforcementProfileProtocol,
 ) -> pyplot:
     fig = pyplot.figure(dpi=180)
     _subplot = fig.add_subplot()
@@ -68,28 +73,25 @@ def export_multi_report_plots(multi_report, export_dir: Path):
     def _displaying_layers(report: ProfileCostReport, report_name: str):
         def _export_layers(output_file: Path, layer, layers_to_plot):
             output_file.with_suffix(".png")
-            _layers_plots = plot_highlight_layer(layers_to_plot, layer)
+            _layers_plots = plot_highlight_geometry(layers_to_plot, layer)
             _layers_plots.savefig(output_file)
 
         _layers_to_plot = []
-        _layers_to_plot.extend(report.old_profile.layers_wrapper.layers)
         _layers_to_plot.extend(report.new_profile.layers_wrapper.layers)
-        for _layer_c_report in report.layer_cost_reports:
+        _layers_to_plot.extend(report.old_profile.layers_wrapper.layers)
+        for _reinf_layer in report.new_profile.layers_wrapper.layers:
             _export_dir: Path = export_dir / report_name
             _export_dir.mkdir(parents=True, exist_ok=True)
-            _base_name = f"{report_name}_{_layer_c_report.material}"
+            _base_name = f"{report_name}_{_reinf_layer.material.name}"
             _export_layers(
                 _export_dir / f"added_{_base_name}",
-                _layer_c_report.added_layer,
+                _reinf_layer.new_layer_geometry,
                 _layers_to_plot,
             )
-            if (
-                isinstance(_layer_c_report, CoatingLayerCostReport)
-                and _layer_c_report.removed_layer
-            ):
+            if isinstance(_reinf_layer, ReinforcementCoatingLayer):
                 _export_layers(
                     _export_dir / f"removed_{_base_name}",
-                    _layer_c_report.removed_layer,
+                    _reinf_layer.removal_layer_geometry,
                     _layers_to_plot,
                 )
 

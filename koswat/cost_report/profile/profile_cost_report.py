@@ -1,13 +1,16 @@
 import math
 from typing import List
 
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostReport(CostReportProtocol):
     layer_cost_reports: List[CostReportProtocol]
-    new_profile: KoswatProfileBase
+    new_profile: ReinforcementProfileProtocol
     old_profile: KoswatProfileBase
 
     def __init__(self) -> None:
@@ -17,12 +20,14 @@ class ProfileCostReport(CostReportProtocol):
 
     @property
     def total_cost(self) -> float:
+        return math.nan
         if not self.layer_cost_reports:
             return math.nan
         return sum(lr.total_cost for lr in self.layer_cost_reports)
 
     @property
     def total_volume(self) -> float:
+        return math.nan
         if not self.layer_cost_reports:
             return math.nan
         return sum(lr.total_volume for lr in self.layer_cost_reports)

@@ -94,28 +94,30 @@ def plot_multiple_layers(*args) -> pyplot:
     return fig
 
 
-def plot_highlight_layer(layer_list: List[Any], layer_to_highlight: Any) -> pyplot:
+def plot_highlight_geometry(
+    geometry_list: List[Polygon], layer_to_highlight: Polygon
+) -> pyplot:
     """
     Plots a layer highlighting its content.
 
     Args:
-        layer_list (List[Any]): List of layers to plot.
-        layer_to_highlight (Any): Layer that requireds 'filling'.
+        layer_list (List[Polygon]): List of layers to plot.
+        layer_to_highlight (Polygon): Layer that requireds 'filling'.
 
     Returns:
         pyplot: Canvas containing all drawings.
     """
     fig = pyplot.figure(dpi=180)
     _subplot = fig.add_subplot()
-    _colors = get_cmap(n_colors=len(layer_list))
-    for idx, _layer in enumerate(layer_list):
+    _colors = get_cmap(n_colors=len(geometry_list))
+    for idx, _layer in enumerate(geometry_list):
         plot_layer(_layer, _subplot, color=_colors(idx))
 
-    if isinstance(layer_to_highlight.geometry, Polygon):
-        _x_coords, y_coords = layer_to_highlight.geometry.exterior.coords.xy
+    if isinstance(layer_to_highlight, Polygon):
+        _x_coords, y_coords = layer_to_highlight.exterior.coords.xy
         _subplot.fill(_x_coords, y_coords)
-    elif isinstance(layer_to_highlight.geometry, MultiPolygon):
-        for _layer_geom in layer_to_highlight.geometry.geoms:
+    elif isinstance(layer_to_highlight, MultiPolygon):
+        for _layer_geom in layer_to_highlight.geoms:
             _x_coords, y_coords = _layer_geom.boundary.coords.xy
             _subplot.fill(_x_coords, y_coords)
     return fig

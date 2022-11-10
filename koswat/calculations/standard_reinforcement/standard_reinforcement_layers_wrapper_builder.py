@@ -44,7 +44,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         _old_geom = Polygon(self.layers_data["base_layer"]["geometry"])
         _added_geometry = new_layer.geometry.difference(_old_geom)
         _reinforced_base_layer.old_layer_geometry = _old_geom
-        _reinforced_base_layer.new_geometry = _added_geometry
+        _reinforced_base_layer.new_layer_geometry = _added_geometry
         _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
             _added_geometry
         )

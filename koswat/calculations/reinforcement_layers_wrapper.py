@@ -46,7 +46,7 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
     material: KoswatMaterial
     geometry: Polygon
     upper_points: LineString
-    new_geometry: Polygon
+    new_layer_geometry: Polygon
     new_layer_surface: LineString
     old_layer_geometry: Polygon
 
@@ -54,7 +54,7 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
         self.material = None
         self.geometry = None
         self.upper_points = None
-        self.new_geometry = None
+        self.new_layer_geometry = None
 
     @property
     def layer_points(self) -> LineString:

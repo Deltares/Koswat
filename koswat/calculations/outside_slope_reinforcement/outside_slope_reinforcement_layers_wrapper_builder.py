@@ -31,7 +31,7 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
             rl for rl in _reinforced_layers if isinstance(rl, ReinforcementBaseLayer)
         )
         _reinforcement_layers_wrapper.coating_layers = [
-            rl for rl in _reinforced_layers if isinstance(rl, ReinforcementCoatingLayer) 
+            rl for rl in _reinforced_layers if isinstance(rl, ReinforcementCoatingLayer)
         ]
         return _reinforcement_layers_wrapper
 
@@ -93,7 +93,7 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
         _reinforced_base_layer.old_layer_geometry = old_geometry
         # New Geometry (Added volume)
         _added_geometry = new_layer.geometry.difference(calc_geometry)
-        _reinforced_base_layer.new_geometry = _added_geometry
+        _reinforced_base_layer.new_layer_geometry = _added_geometry
         _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
             _added_geometry
         )
@@ -117,7 +117,7 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
 
         # New Geometry (Added volume)
         _added_geometry = new_layer.geometry.difference(calc_geometry)
-        _rc_layer.new_geometry = _added_geometry
+        _rc_layer.new_layer_geometry = _added_geometry
         _rc_layer.new_layer_surface = get_polygon_surface_points(_added_geometry)
 
         return _rc_layer
