@@ -1,14 +1,12 @@
 from typing import List
 
-from shapely.geometry import LineString, Point, Polygon
+from shapely.geometry import Point, Polygon
 
 from koswat.calculations.reinforcement_layers_wrapper import (
     ReinforcementBaseLayer,
     ReinforcementCoatingLayer,
     ReinforcementLayersWrapper,
 )
-from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
-from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapperProtocol
 from koswat.dike.layers.koswat_layers_wrapper_builder import (
@@ -85,7 +83,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
 
             # Update wrapped calc geometry.
             _wrapped_calc_geometry = _rc_layer.geometry
-        return _rc_layer_list
+        return reversed(_rc_layer_list)
 
     def _get_basic_wrapper(self) -> KoswatLayersWrapperProtocol:
         """
