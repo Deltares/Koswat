@@ -83,7 +83,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
 
             # Update wrapped calc geometry.
             _wrapped_calc_geometry = _rc_layer.geometry
-        return reversed(_rc_layer_list)
+        return list(reversed(_rc_layer_list))
 
     def _get_basic_wrapper(self) -> KoswatLayersWrapperProtocol:
         """
