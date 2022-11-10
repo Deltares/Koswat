@@ -2,6 +2,7 @@ from shapely.geometry import LineString, Polygon
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material import KoswatMaterial
+from koswat.geometries.calc_library import get_polygon_coordinates
 
 
 class KoswatBaseLayer(KoswatLayerProtocol):
@@ -25,4 +26,9 @@ class KoswatBaseLayer(KoswatLayerProtocol):
         return None
 
     def as_data_dict(self) -> dict:
-        return dict(material=self.material.name)
+        if self.geometry:
+            _geometry = list(get_polygon_coordinates(self.geometry).coords)
+        return dict(
+            material=self.material.name,
+            geometry=_geometry,
+        )

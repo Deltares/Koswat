@@ -50,7 +50,7 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     ):
         if issubclass(reinforcement_type, PipingWallReinforcementProfile):
             return PipingWallReinforcementProfileCalculation
-        elif issubclass(reinforcement_type, ReinforcementProfileProtocol):
+        elif issubclass(reinforcement_type, StandardReinforcementProfile):
             return SoilReinforcementProfileCalculation
         elif issubclass(reinforcement_type, StabilityWallReinforcementProfile):
             return StabilityWallReinforcementProfileCalculation
@@ -87,7 +87,9 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         _profile = self.reinforcement_profile_type()
         _profile.characteristic_points = self._get_characteristic_points(_input_profile)
         _profile.input_data = _input_profile.__dict__
-        _profile.layers_wrapper = self._get_reinforcement_layers_wrapper()
+        _profile.layers_wrapper = self._get_reinforcement_layers_wrapper(
+            _profile.characteristic_points
+        )
         # _data_layers = self.base_profile.layers_wrapper.as_data_dict()
         # _builder_dict = dict(
         #     input_profile_data=_new_data.__dict__,

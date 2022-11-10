@@ -4,6 +4,7 @@ from shapely.geometry import LineString, Polygon
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material import KoswatMaterial
+from koswat.geometries.calc_library import get_polygon_coordinates
 
 
 class KoswatCoatingLayer(KoswatLayerProtocol):
@@ -21,4 +22,10 @@ class KoswatCoatingLayer(KoswatLayerProtocol):
         self.depth = math.nan
 
     def as_data_dict(self) -> dict:
-        return dict(material=self.material.name, depth=self.depth)
+        if self.geometry:
+            _geometry = list(get_polygon_coordinates(self.geometry).coords)
+        return dict(
+            material=self.material.name,
+            depth=self.depth,
+            geometry= _geometry,
+        )

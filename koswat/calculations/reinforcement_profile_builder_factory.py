@@ -49,11 +49,11 @@ class ReinforcementProfileBuilderFactory:
     ) -> ReinforcementProfileBuilderProtocol:
         if issubclass(reinforcement_profile_type, StandardReinforcementProfile):
             _builder = StandardReinforcementProfileBuilder()
-            _builder.reinforcement_profile_type
+            _builder.reinforcement_profile_type = reinforcement_profile_type
             return _builder
         elif issubclass(reinforcement_profile_type, OutsideSlopeReinforcementProfile):
             _builder = OutsideSlopeReinforcementProfileBuilder()
-            _builder.reinforcement_profile_type
+            _builder.reinforcement_profile_type = reinforcement_profile_type
             return _builder
         else:
             raise NotImplementedError(
