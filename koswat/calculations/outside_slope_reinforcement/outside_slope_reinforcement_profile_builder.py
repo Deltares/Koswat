@@ -6,11 +6,11 @@ from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinfor
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile_calculation import (
     CofferdamReinforcementProfileCalculation,
 )
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
-)
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcment_layers_wrapper_builder import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,

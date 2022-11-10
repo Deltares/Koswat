@@ -26,15 +26,13 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
     def build(self) -> ReinforcementLayersWrapper:
         _reinforcement_layers_wrapper = ReinforcementLayersWrapper()
         _koswat_layers_wrapper = self._get_basic_wrapper()
-
-        _reinforcement_layers_wrapper.base_layer = self._get_base_layer(
-            _koswat_layers_wrapper.base_layer
+        _reinforced_layers = self._get_reinforced_layers(_koswat_layers_wrapper)
+        _reinforcement_layers_wrapper.base_layer = next(
+            rl for rl in _reinforced_layers if isinstance(rl, ReinforcementBaseLayer)
         )
-        _reinforcement_layers_wrapper.coating_layers = self._get_coating_layers(
-            _koswat_layers_wrapper.coating_layers,
-            _reinforcement_layers_wrapper.base_layer.old_layer_geometry,
-        )
-
+        _reinforcement_layers_wrapper.coating_layers = [
+            rl for rl in _reinforced_layers if isinstance(rl, ReinforcementCoatingLayer) 
+        ]
         return _reinforcement_layers_wrapper
 
     def _get_reinforced_layers(
@@ -52,32 +50,34 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
         _add_layers_reference.append(
             Polygon(self.layers_data["base_layer"]["geometry"])
         )
-        _reinforcement_list = List[ReinforcementLayerProtocol] = []
+        _reinforcement_list: List[ReinforcementLayerProtocol] = []
         for idx, (_base_layer_data, _calc_layer) in enumerate(_mapped_layers):
             _core_idx = min(idx + 1, len(_mapped_layers) - 1)
             _base_core, _ = _mapped_layers[_core_idx]
             _calc_core_geom = _add_layers_reference[idx]
             _reinforced_layer = self._get_reinforced_layer(
-                _base_layer_data, _calc_layer, _base_core.geometry, _calc_core_geom
+                _calc_layer,
+                Polygon(_base_layer_data["geometry"]),
+                Polygon(_base_core["geometry"]),
+                _calc_core_geom,
             )
             _reinforcement_list.append(_reinforced_layer)
         return _reinforcement_list
 
     def _get_reinforced_layer(
         self,
-        layer_data: dict,
         new_layer: KoswatLayerProtocol,
+        old_geom: dict,
         base_core_geom: Polygon,
         calc_core_geom: Polygon,
     ) -> ReinforcementLayerProtocol:
         # Removed Layer
-        _old_geom = Polygon(layer_data["base_layer"]["geometry"])
         if isinstance(new_layer, KoswatCoatingLayer):
-            return self._get_coating_layer(new_layer, calc_core_geom, base_core_geom)
-        elif isinstance(new_layer, KoswatBaseLayer):
-            return self._get_base_layer(
-                new_layer, _old_geom, calc_core_geom, base_core_geom
+            return self._get_coating_layer(
+                new_layer, old_geom, calc_core_geom, base_core_geom
             )
+        elif isinstance(new_layer, KoswatBaseLayer):
+            return self._get_base_layer(new_layer, old_geom, calc_core_geom)
         else:
             raise NotImplementedError(f"Layer type not recognized {new_layer}")
 

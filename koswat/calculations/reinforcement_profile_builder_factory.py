@@ -1,6 +1,5 @@
 from typing import List, Type
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )

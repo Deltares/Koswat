@@ -35,7 +35,8 @@ class KoswatSummaryBuilder(BuilderProtocol):
             )
             _builder.base_profile = self.base_profile
             _builder.scenario = self.scenario
-            _calculated_profiles.append(_builder.build())
+            _calc_profile = _builder.build()
+            _calculated_profiles.append(_calc_profile)
         return _calculated_profiles
 
     def _get_multi_location_profile_cost_builder(
