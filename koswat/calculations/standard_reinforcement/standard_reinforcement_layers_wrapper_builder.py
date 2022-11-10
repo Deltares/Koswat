@@ -60,19 +60,23 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         )
         _rc_layer_list: List[ReinforcementCoatingLayer] = []
         _relative_core_geom = base_layer.old_layer_geometry
-        _wrapped_calc_geometry = base_layer.geometry
+        _wrapped_calc_layer = base_layer
         for (_old_coating_data, _new_coating_layer) in reversed(_mapped_layers):
             # Define old and relative geometries.
             _old_geom = Polygon(_old_coating_data["geometry"])
-            _relative_core = get_relative_core_layer(_relative_core_geom, _old_geom)
+            _relative_core_geom = get_relative_core_layer(
+                _relative_core_geom, _old_geom
+            )
 
             # Calculate the removed geometry.
-            _removed_geom = _old_geom.difference(_relative_core)
+            _removed_geom = _old_geom.difference(_relative_core_geom)
             if any(_rc_layer_list):
-                _removed_geom = _removed_geom.difference(_wrapped_calc_geometry)
+                _removed_geom = _removed_geom.difference(
+                    _wrapped_calc_layer.old_layer_geometry
+                )
             # Calculate the added geometry.
             _added_geometry = _new_coating_layer.geometry.difference(
-                _relative_core.union(_wrapped_calc_geometry)
+                _relative_core_geom.union(_wrapped_calc_layer.geometry)
             )
             # Create new Reinforced Coating Layer
             _rc_layer = ReinforcementCoatingLayer.from_koswat_coating_layer(
@@ -85,7 +89,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             _rc_layer_list.append(_rc_layer)
 
             # Update wrapped calc geometry.
-            _wrapped_calc_geometry = _rc_layer.geometry
+            _wrapped_calc_layer = _rc_layer
         return list(reversed(_rc_layer_list))
 
     def _get_basic_wrapper(self) -> KoswatLayersWrapperProtocol:
