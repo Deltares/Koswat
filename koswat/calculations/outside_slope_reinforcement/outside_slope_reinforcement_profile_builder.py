@@ -9,11 +9,22 @@ from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinfor
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
 )
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcment_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
+from koswat.calculations.reinforcement_input_profile_protocol import (
+    ReinforcementInputProfileProtocol,
+)
+from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
 from koswat.calculations.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
 )
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
+)
+from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
+from koswat.dike.characteristic_points.characteristic_points_builder import (
+    CharacteristicPointsBuilder,
 )
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.koswat_scenario import KoswatScenario
@@ -43,18 +54,28 @@ class OutsideSlopeReinforcementProfileBuilder(ReinforcementProfileBuilderProtoco
         _calculator.scenario = self.scenario
         return _calculator.build()
 
-    def _get_reinforcement_layers_wrapper(self):
-        pass
+    def _get_reinforcement_layers_wrapper(
+        self, profile_points: CharacteristicPoints
+    ) -> ReinforcementLayersWrapper:
+        _layers_builder = OutsideSlopeReinforcementLayersWrapperBuilder()
+        _layers_builder.layers_data = self.base_profile.layers_wrapper.as_data_dict()
+        _layers_builder.profile_points = profile_points.points
+        return _layers_builder.build()
+
+    def _get_characteristic_points(
+        self, input_profile: ReinforcementInputProfileProtocol
+    ) -> CharacteristicPoints:
+        _char_points_builder = CharacteristicPointsBuilder()
+        _char_points_builder.input_profile = input_profile
+        _char_points_builder.p4_x_coordinate = 0
+        return _char_points_builder.build()
 
     def build(self) -> OutsideSlopeReinforcementProfile:
         _input_profile = self._get_reinforcement_profile_input()
-        # _data_layers = self.base_profile.layers_wrapper.as_data_dict()
-        # _builder_dict = dict(
-        #     input_profile_data=_new_data.__dict__,
-        #     layers_data=_data_layers,
-        #     p4_x_coordinate=0,
-        #     profile_type=CofferdamReinforcementProfile,
-        # )
-        # return KoswatProfileBuilder.with_data(_builder_dict).build()
-
-        return super().build()
+        _profile = self.reinforcement_profile_type()
+        _profile.characteristic_points = self._get_characteristic_points(_input_profile)
+        _profile.input_data = _input_profile.__dict__
+        _profile.layers_wrapper = self._get_reinforcement_layers_wrapper(
+            _profile.characteristic_points
+        )
+        return _profile

@@ -16,16 +16,9 @@ from koswat.dike.layers.koswat_layers_wrapper_builder import (
     KoswatLayersWrapperBuilderProtocol,
 )
 from koswat.geometries.calc_library import (
-    get_polygon_coordinates,
     get_polygon_surface_points,
     get_relative_core_layer,
 )
-
-
-class StandardReinforcementCoatingLayerBuilder(KoswatLayerBuilderProtocol):
-    upper_linestring: LineString
-    layer_data: dict
-    base_geometry: Polygon
 
 
 class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):

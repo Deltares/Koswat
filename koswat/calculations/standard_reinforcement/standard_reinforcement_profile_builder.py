@@ -70,8 +70,9 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     ) -> CharacteristicPoints:
         _char_points_builder = CharacteristicPointsBuilder()
         _char_points_builder.input_profile = input_profile
-        self.p4_x_coordinate = self.scenario.d_h * self.scenario.buiten_talud
-        _char_points_builder.p4_x_coordinate = self.p4_x_coordinate
+        _char_points_builder.p4_x_coordinate = (
+            self.scenario.d_h * self.scenario.buiten_talud
+        )
         return _char_points_builder.build()
 
     def _get_reinforcement_layers_wrapper(
@@ -90,11 +91,4 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         _profile.layers_wrapper = self._get_reinforcement_layers_wrapper(
             _profile.characteristic_points
         )
-        # _data_layers = self.base_profile.layers_wrapper.as_data_dict()
-        # _builder_dict = dict(
-        #     input_profile_data=_new_data.__dict__,
-        #     layers_data=_data_layers,
-        # )
-        # return KoswatProfileBuilder.with_data(_builder_dict).build()
-
         return _profile
