@@ -76,7 +76,6 @@ class TestKoswatSummaryBuilder:
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
         _builder.surroundings = SurroundingsWrapper()
-        _builder.base_profile = KoswatProfileBase()
 
         # 2. Run test.
         _multi_location_profile_cost_builder = (
@@ -88,12 +87,9 @@ class TestKoswatSummaryBuilder:
             _multi_location_profile_cost_builder, MultiLocationProfileCostReportBuilder
         )
         assert (
-            _multi_location_profile_cost_builder.base_profile == _builder.base_profile
-        )
-        assert (
             _multi_location_profile_cost_builder.surroundings == _builder.surroundings
         )
-        assert not _multi_location_profile_cost_builder.calc_profile
+        assert not _multi_location_profile_cost_builder.reinforced_profile
 
     def test_build(self):
         # 1. Define test data.

@@ -43,7 +43,6 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self,
     ) -> MultiLocationProfileCostReportBuilder:
         _builder = MultiLocationProfileCostReportBuilder()
-        _builder.base_profile = self.base_profile
         _builder.surroundings = self.surroundings
         return _builder
 
@@ -51,6 +50,6 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _summary = KoswatSummary()
         _mlpc_builder = self._get_multi_location_profile_cost_builder()
         for _calc_profile in self._get_calculated_profile_list():
-            _mlpc_builder.calc_profile = _calc_profile
+            _mlpc_builder.reinforced_profile = _calc_profile
             _summary.locations_profile_report_list.append(_mlpc_builder.build())
         return _summary

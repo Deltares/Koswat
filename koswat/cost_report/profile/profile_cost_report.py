@@ -5,13 +5,11 @@ from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class ProfileCostReport(CostReportProtocol):
     layer_cost_reports: List[CostReportProtocol]
-    new_profile: ReinforcementProfileProtocol
-    old_profile: KoswatProfileBase
+    reinforced_profile: ReinforcementProfileProtocol
 
     def __init__(self) -> None:
         self.layer_cost_reports = []

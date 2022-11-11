@@ -28,7 +28,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _builder = MultiLocationProfileCostReportBuilder()
         assert isinstance(_builder, MultiLocationProfileCostReportBuilder)
         assert not _builder.surroundings
-        assert not _builder.base_profile
+        assert not _builder.reinforced_profile
 
     def test_build(self):
         # 1. Define test data.
@@ -40,14 +40,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _p_surrounding.location = Point(2.4, 4.2)
         _builder.surroundings.buldings_polderside = KoswatBuildingsPolderside()
         _builder.surroundings.buldings_polderside.points = [_p_surrounding]
-        _builder.base_profile = KoswatProfileBuilder.with_data(
-            dict(
-                input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.without_layers,
-                p4_x_coordinate=0,
-            )
-        ).build()
-        _builder.calc_profile = KoswatProfileBuilder.with_data(
+        _builder.reinforced_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.profile_case_2,
                 layers_data=LayersCases.without_layers,
