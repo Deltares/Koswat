@@ -1,13 +1,12 @@
 from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
 )
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
-class PipingWallReinforcementProfile(StandardReinforcementProfile, KoswatProfileBase):
+class PipingWallReinforcementProfile(StandardReinforcementProfile):
     input_data: PipingWallInputProfile
 
     def __str__(self) -> str:

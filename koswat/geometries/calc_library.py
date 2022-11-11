@@ -44,6 +44,12 @@ def get_polygon_coordinates(
         return ops.linemerge(_geoms_coords)
     raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
 
+def get_groundlevel_surface(pol_geometry: geometry.Polygon) -> geometry.LineString:
+    def _in_groundlevel(geom_coord: geometry.Point) -> bool:
+        return geom_coord.y == 0
+    
+    return geometry.LineString(list(set(filter(_in_groundlevel, get_polygon_coordinates(pol_geometry)))))
+    
 
 def _get_single_polygon_surface_points(
     base_geometry: geometry.Polygon,

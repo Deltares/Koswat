@@ -20,7 +20,7 @@ from koswat.calculations.standard_reinforcement import (
 from koswat.calculations.standard_reinforcement.standard_reinforcement_layers_wrapper_builder import (
     StandardReinforcementLayersWrapperBuilder,
 )
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints

@@ -13,3 +13,5 @@ from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
     input_data: ReinforcementInputProfileProtocol
     layers_wrapper: ReinforcementLayersWrapper
+    old_profile: KoswatProfileProtocol
+    new_ground_level_surface: float

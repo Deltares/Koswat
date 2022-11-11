@@ -16,9 +16,9 @@ from koswat.calculations.standard_reinforcement.stability_wall import (
 from koswat.calculations.standard_reinforcement.standard_reinforcement_layers_wrapper_builder import (
     StandardReinforcementLayersWrapperBuilder,
 )
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
+    StandardReinforcementProfile,
+)
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
-)
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
-    StandardReinforcementProfile,
 )

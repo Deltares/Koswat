@@ -40,4 +40,4 @@ class KoswatProfileBase(KoswatProfileProtocol):
     def profile_width(self) -> float:
         if not self.points:
             return math.nan
-        return self.points[-1].x
+        return self.points[-1].x - self.points[0]
