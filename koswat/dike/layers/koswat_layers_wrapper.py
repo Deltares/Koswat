@@ -12,6 +12,14 @@ class KoswatLayersWrapperProtocol(Protocol):
     coating_layers: List[KoswatCoatingLayer]
     layers: List[KoswatLayerProtocol]
 
+    def as_data_dict(self) -> dict:
+        """
+        Returns the layers as a dictionary.
+
+        Returns:
+            dict: Dictionary containing all the information of the wrapper layers (`KoswatLayerProtocol`).
+        """
+        pass
 
 class KoswatLayersWrapper(KoswatLayersWrapperProtocol):
     base_layer: KoswatBaseLayer

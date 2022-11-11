@@ -9,6 +9,7 @@ from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapperProtocol
 from koswat.dike.material.koswat_material import KoswatMaterial
+from koswat.geometries.calc_library import get_polygon_coordinates
 
 
 class ReinforcementLayerProtocol(KoswatLayerProtocol, Protocol):
@@ -32,6 +33,16 @@ class ReinforcementCoatingLayer(KoswatLayerProtocol):
         self.upper_points = None
         self.new_layer_geometry = None
         self.removal_layer_geometry = None
+
+    def as_data_dict(self) -> dict:
+        _geometry = []
+        if self.geometry:
+            _geometry = list(get_polygon_coordinates(self.geometry).coords)
+        return dict(
+            material=self.material.name,
+            depth=self.depth,
+            geometry=_geometry,
+        )
 
     @classmethod
     def from_koswat_coating_layer(
@@ -66,6 +77,15 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
         """
         return None
 
+    def as_data_dict(self) -> dict:
+        _geometry = []
+        if self.geometry:
+            _geometry = list(get_polygon_coordinates(self.geometry).coords)
+        return dict(
+            material=self.material.name,
+            geometry=_geometry,
+        )
+
     @classmethod
     def from_koswat_base_layer(
         cls, base_layer: KoswatBaseLayer
@@ -82,6 +102,12 @@ class ReinforcementLayersWrapper(KoswatLayersWrapperProtocol):
     def __init__(self) -> None:
         self.base_layer = None
         self.coating_layers = []
+
+    def as_data_dict(self) -> dict:
+        return dict(
+            base_layer=self.base_layer.as_data_dict(),
+            coating_layers=[c_l.as_data_dict() for c_l in self.coating_layers],
+        )
 
     @property
     def layers(self) -> List[ReinforcementLayerProtocol]:

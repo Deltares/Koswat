@@ -37,7 +37,7 @@ from tests import (
     plot_profiles,
     test_results,
 )
-from tests.calculations import validated_reinforced_profile
+from tests.calculations import get_reinforced_profile, validated_reinforced_profile
 from tests.library_test_cases import (
     InputProfileCases,
     InputProfileScenarioLookup,
@@ -165,8 +165,10 @@ class TestReinforcementProfileBuilderFactory:
             )
         ).build()
         _scenario = KoswatScenario.from_dict(dict(scenario_data))
-        _expected_profile = profile_type.with_data(expected_profile_data)
+        _expected_profile = get_reinforced_profile(profile_type, expected_profile_data)
         assert isinstance(_base_profile, KoswatProfileBase)
+        assert isinstance(_expected_profile, profile_type)
+        assert isinstance(_expected_profile, ReinforcementProfileProtocol)
         assert isinstance(_scenario, KoswatScenario)
 
         # 2. Run test.
@@ -184,7 +186,7 @@ class TestReinforcementProfileBuilderFactory:
         assert isinstance(
             _reinforcement_profile.input_data, ReinforcementInputProfileProtocol
         )
-        validated_reinforced_profile(_reinforcement_profile, expected_profile_data)
+        validated_reinforced_profile(_reinforcement_profile, _expected_profile)
         _plot = plot_profiles(_base_profile, _reinforcement_profile)
         _plot_filename = _plot_dir / str(_reinforcement_profile)
         _plot_filename.with_suffix(".png")
