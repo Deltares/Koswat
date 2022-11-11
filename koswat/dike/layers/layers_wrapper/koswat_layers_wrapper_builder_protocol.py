@@ -15,4 +15,10 @@ class KoswatLayersWrapperBuilderProtocol(BuilderProtocol, Protocol):
     profile_points: List[geometry.Point]
 
     def build(self) -> KoswatLayersWrapperProtocol:
+        """
+        Builds an instance of `KoswatLayersWrapperProtocol` based on the class required fields `layers_data` and `profile_points`.
+
+        Returns:
+            KoswatLayersWrapperProtocol: Valid initialized instance of a `KoswatLayersWrapperProtocol`.
+        """
         pass
