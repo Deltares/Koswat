@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import List
+import math
+from typing import List, Tuple
 
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -30,10 +31,43 @@ class VolumeCostParameters:
     new_core_layer_surface: VolumeCostParameter
     new_maaiveld_surface: VolumeCostParameter
 
+    def __init__(self) -> None:
+        self.reused_grass_volume = None
+        self.aanleg_grass_volume = None
+        self.aanleg_clay_volume = None
+        self.reused_core_volume = None
+        self.aanleg_core_volume = None
+        self.removed_material_volume = None
+        self.new_grass_layer_surface = None
+        self.new_clay_layer_surface = None
+        self.new_core_layer_surface = None
+        self.new_maaiveld_surface = None
+
     def get_parameters(self) -> List[VolumeCostParameter]:
         return list(
             filter(lambda x: isinstance(x, VolumeCostParameter), self.__dict__.values())
         )
+
+    def get_material_total_volume_parameters(
+        self, material_name: str
+    ) -> Tuple[float, float]:
+        _material_name = material_name.lower()
+        if _material_name == "zand":
+            if not self.aanleg_core_volume:
+                return math.nan, math.nan
+            return self.aanleg_core_volume.volume, self.aanleg_core_volume.total_cost
+        elif _material_name == "klei":
+            if not self.aanleg_clay_volume:
+                return math.nan, math.nan
+            return self.aanleg_clay_volume.volume, self.aanleg_clay_volume.total_cost
+        elif _material_name == "gras":
+            if not self.aanleg_grass_volume:
+                return math.nan, math.nan
+            return self.aanleg_grass_volume.volume, self.aanleg_grass_volume.total_cost
+        else:
+            raise ValueError(
+                "Material {} currently not supported.".format(material_name)
+            )
 
     @classmethod
     def from_reinforced_profile(
@@ -49,6 +83,8 @@ class VolumeCostParameters:
         _vcp = VolumeCostParametersCalculator.from_reinforced_profile(
             reinforced_profile
         )
+        if not _vcp:
+            return _volume_parameters
         _volume_parameters.reused_grass_volume = _create(
             _vcp.get_reused_grass_volume(), 6.04
         )

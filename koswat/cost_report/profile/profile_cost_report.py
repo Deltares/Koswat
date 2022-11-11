@@ -65,29 +65,10 @@ class ProfileCostReport(CostReportProtocol):
             _lcr = LayerCostReport()
             _reports.append(_lcr)
             _lcr.layer = _layer
-            if _layer.material.name.lower() == "zand":
-                _lcr.total_cost = (
-                    self.volume_cost_parameters.aanleg_core_volume.total_cost
-                )
-                _lcr.total_volume = (
-                    self.volume_cost_parameters.aanleg_core_volume.volume
-                )
-            elif _layer.material.name.lower() == "klei":
-                _lcr.total_cost = (
-                    self.volume_cost_parameters.aanleg_clay_volume.total_cost
-                )
-                _lcr.total_volume = (
-                    self.volume_cost_parameters.aanleg_clay_volume.volume
-                )
-            elif _layer.material.name.lower() == "gras":
-                _lcr.total_cost = (
-                    self.volume_cost_parameters.aanleg_grass_volume.total_cost
-                )
-                _lcr.total_volume = (
-                    self.volume_cost_parameters.aanleg_grass_volume.volume
-                )
-            else:
-                raise ValueError(
-                    "Material {} currently not supported.".format(_layer.material.name)
-                )
+            (
+                _lcr.total_volume,
+                _lcr.total_cost,
+            ) = self.volume_cost_parameters.get_material_total_volume_parameters(
+                _layer.material.name
+            )
         return _reports
