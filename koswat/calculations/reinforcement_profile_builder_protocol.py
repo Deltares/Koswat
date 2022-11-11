@@ -15,3 +15,12 @@ class ReinforcementProfileBuilderProtocol(BuilderProtocol, Protocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
     reinforcement_profile_type: Type[ReinforcementProfileProtocol]
+
+    def build(self) -> ReinforcementProfileProtocol:
+        """
+        Builds a concrete instance of a `ReinforcementProfileProtocol` base don the required data.
+
+        Returns:
+            ReinforcementProfileProtocol: Valid instance of a `ReinforcementProfileProtocol`.
+        """
+        pass
