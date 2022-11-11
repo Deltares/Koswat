@@ -1,10 +1,12 @@
 from typing import List
 
 import pytest
-from shapely.geometry import Point
+from shapely.geometry import Point, Polygon
 
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapper
 
 
@@ -26,51 +28,55 @@ def _compare_points(new_points: List[Point], expected_points: List[Point]) -> Li
 
 
 def _compare_koswat_input_profile(
-    new_profile: KoswatInputProfileProtocol,
-    expected_profile: KoswatInputProfileProtocol,
+    reinforced_input_profile: KoswatInputProfileProtocol,
+    expected_input_profile_data: dict,
 ) -> List[str]:
-    _new_data_dict = new_profile.__dict__
-    _expected_data_dict = expected_profile.__dict__
+    _new_data_dict = reinforced_input_profile.__dict__
     assert len(_new_data_dict) >= 10
-    assert len(_new_data_dict) == len(_expected_data_dict)
+    assert len(_new_data_dict) == len(expected_input_profile_data)
     return [
         f"Values differ for {key}, expected {value}, got: {_new_data_dict[key]}"
-        for key, value in _expected_data_dict.items()
+        for key, value in expected_input_profile_data.items()
         if not almost_equal(_new_data_dict[key], value)
     ]
 
 
 def _compare_koswat_layers(
-    new_layers: KoswatLayersWrapper, expected_layers: KoswatLayersWrapper
+    new_layers: KoswatLayersWrapper, expected_layers_data: dict
 ) -> List[str]:
     _tolerance = 0.001
     if not new_layers.base_layer.geometry.almost_equals(
-        expected_layers.base_layer.geometry, _tolerance
+        Polygon(expected_layers_data["base_layer"]["geometry"]), _tolerance
     ):
         return [f"Geometries differ for base_layer."]
     _layers_errors = []
-    for _idx, _c_layer in enumerate(expected_layers.coating_layers):
+    for _idx, _c_layer in enumerate(expected_layers_data["coating_layers"]):
         _new_layer = new_layers.coating_layers[_idx]
-        if not _new_layer.geometry.almost_equals(_c_layer.geometry, _tolerance):
+        if not _new_layer.geometry.almost_equals(
+            Polygon(_c_layer["geometry"]), _tolerance
+        ):
             _layers_errors.append(
-                f"Geometries differ for layer {_c_layer.material.name}"
+                "Geometries differ for layer {}".format(_c_layer["material"])
             )
 
     return _layers_errors
 
 
-def compare_koswat_profiles(
-    new_profile: KoswatProfileProtocol, expected_profile: KoswatProfileProtocol
+def validated_reinforced_profile(
+    reinforced_profile: ReinforcementProfileProtocol,
+    expected_profile: dict,
 ):
     _found_errors = _compare_koswat_input_profile(
-        new_profile.input_data, expected_profile.input_data
+        reinforced_profile.input_data, expected_profile["input_profile_data"]
     )
     _found_errors.extend(
         _compare_koswat_layers(
-            new_profile.layers_wrapper, expected_profile.layers_wrapper
+            reinforced_profile.layers_wrapper, expected_profile["layers_data"]
         )
     )
-    _found_errors.extend(_compare_points(new_profile.points, expected_profile.points))
+    _found_errors.extend(
+        _compare_points(reinforced_profile.points, expected_profile.points)
+    )
     if _found_errors:
         _mssg = "\n".join(_found_errors)
         pytest.fail(_mssg)

@@ -200,7 +200,7 @@ class InputProfileScenarioLookup:
             binnen_berm_hoogte=0,
             binnen_berm_breedte=0,
             binnen_maaiveld=0,
-            length_piping_wall=17,
+            length_coffer_dam=17,
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=0,

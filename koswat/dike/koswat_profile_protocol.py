@@ -6,7 +6,6 @@ from typing_extensions import runtime_checkable
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapper
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 @runtime_checkable

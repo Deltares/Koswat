@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Type
 
 from koswat.calculations.reinforcement_input_profile_protocol import (
@@ -6,9 +8,6 @@ from koswat.calculations.reinforcement_input_profile_protocol import (
 from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
 from koswat.calculations.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
 )
 from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
@@ -84,10 +83,11 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         return _layers_builder.build()
 
     def build(self) -> StandardReinforcementProfile:
-        _input_profile = self._get_reinforcement_profile_input()
         _profile = self.reinforcement_profile_type()
-        _profile.characteristic_points = self._get_characteristic_points(_input_profile)
-        _profile.input_data = _input_profile.__dict__
+        _profile.input_data = self._get_reinforcement_profile_input()
+        _profile.characteristic_points = self._get_characteristic_points(
+            _profile.input_data
+        )
         _profile.layers_wrapper = self._get_reinforcement_layers_wrapper(
             _profile.characteristic_points
         )

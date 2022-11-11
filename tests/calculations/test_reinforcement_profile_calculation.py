@@ -13,6 +13,9 @@ from koswat.calculations import (
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
 )
+from koswat.calculations.reinforcement_input_profile_protocol import (
+    ReinforcementInputProfileProtocol,
+)
 from koswat.calculations.reinforcement_profile_builder_factory import (
     ReinforcementProfileBuilderFactory,
 )
@@ -34,7 +37,7 @@ from tests import (
     plot_profiles,
     test_results,
 )
-from tests.calculations import compare_koswat_profiles
+from tests.calculations import validated_reinforced_profile
 from tests.library_test_cases import (
     InputProfileCases,
     InputProfileScenarioLookup,
@@ -159,20 +162,12 @@ class TestReinforcementProfileBuilderFactory:
                 input_profile_data=profile_data,
                 layers_data=_dummy_layers,
                 p4_x_coordinate=0,
-                profile_type=KoswatProfileBase,
             )
         ).build()
         _scenario = KoswatScenario.from_dict(dict(scenario_data))
-        expected_profile_data["profile_type"] = profile_type
-
-        # TODO: This should not work anymore
-        _expected_profile = KoswatProfileBuilder.with_data(
-            expected_profile_data
-        ).build()
-
+        _expected_profile = profile_type.with_data(expected_profile_data)
         assert isinstance(_base_profile, KoswatProfileBase)
         assert isinstance(_scenario, KoswatScenario)
-        assert isinstance(_expected_profile, profile_type)
 
         # 2. Run test.
         _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
@@ -186,7 +181,10 @@ class TestReinforcementProfileBuilderFactory:
         assert isinstance(_reinforcement_profile, profile_type)
         assert isinstance(_reinforcement_profile, ReinforcementProfileProtocol)
         assert isinstance(_reinforcement_profile, KoswatProfileProtocol)
-        compare_koswat_profiles(_reinforcement_profile, _expected_profile)
+        assert isinstance(
+            _reinforcement_profile.input_data, ReinforcementInputProfileProtocol
+        )
+        validated_reinforced_profile(_reinforcement_profile, expected_profile_data)
         _plot = plot_profiles(_base_profile, _reinforcement_profile)
         _plot_filename = _plot_dir / str(_reinforcement_profile)
         _plot_filename.with_suffix(".png")

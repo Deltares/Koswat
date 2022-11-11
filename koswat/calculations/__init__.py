@@ -23,9 +23,11 @@ from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile_
     SoilReinforcementProfile,
     SoilReinforcementProfileCalculation,
 )
+from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
+    StabilityWallReinforcementProfile,
+)
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile_calculation import (
     StabilityWallInputProfile,
-    StabilityWallReinforcementProfile,
     StabilityWallReinforcementProfileCalculation,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
