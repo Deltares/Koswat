@@ -50,7 +50,7 @@ class SummaryMatrixCsvExporter(KoswatExporterProtocol):
         for _loc_prof_report in self.data_object_model.locations_profile_report_list:
             _dict_of_entries[_profile_type_key].append(_loc_prof_report.profile_type)
             _dict_of_entries[_cost_per_km_key].append(_loc_prof_report.cost_per_km)
-            for _layer in _loc_prof_report.profile_cost_report.get_layers_report():
+            for _layer in _loc_prof_report.profile_cost_report.layer_cost_reports:
                 _key = f"Volume {_layer.material} (m3)"
                 _dict_of_entries[_key].append(_layer.total_volume)
             _dict_of_entries[_locations_key].append(_loc_prof_report.locations)
