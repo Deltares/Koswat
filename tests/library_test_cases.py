@@ -49,10 +49,17 @@ class LayersCases(CasesProtocol):
             dict(material="klei", depth=0.75),
         ],
     )
+    with_clay_and_grass = dict(
+        base_layer=dict(material="zand"),
+        coating_layers=[
+            dict(material="gras", depth=0.5),
+            dict(material="klei", depth=0.75),
+        ],
+    )
 
+    # Only cases that should be 'realistic'.
     cases = [
-        pytest.param(without_layers, id="Without layers"),
-        pytest.param(with_clay, id="With clay layer"),
+        pytest.param(with_clay_and_grass, id="With grass and clay layer"),
     ]
 
 
@@ -175,7 +182,7 @@ class InputProfileScenarioLookup:
             binnen_berm_hoogte=0,
             binnen_berm_breedte=0,
             binnen_maaiveld=0,
-            length_piping_wall=17,
+            length_stability_wall=17,
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=6,
@@ -192,7 +199,7 @@ class InputProfileScenarioLookup:
             binnen_berm_hoogte=0,
             binnen_berm_breedte=0,
             binnen_maaiveld=0,
-            length_piping_wall=17,
+            length_coffer_dam=17,
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=0,

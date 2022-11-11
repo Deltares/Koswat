@@ -7,7 +7,7 @@ from shapely.geometry.point import Point
 
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.layers.koswat_layers import KoswatLayers
+from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
@@ -15,12 +15,12 @@ class KoswatProfileBase(KoswatProfileProtocol):
 
     input_data: KoswatInputProfileBase
     characteristic_points: CharacteristicPoints
-    layers: KoswatLayers
+    layers_wrapper: KoswatLayersWrapper
     location: Optional[Point]
 
     def __init__(self) -> None:
         self.input_data = None
-        self.layers = None
+        self.layers_wrapper = None
         self.characteristic_points = None
         self.location = None
 
@@ -40,4 +40,4 @@ class KoswatProfileBase(KoswatProfileProtocol):
     def profile_width(self) -> float:
         if not self.points:
             return math.nan
-        return self.points[-1].x
+        return self.points[-1].x - self.points[0].x

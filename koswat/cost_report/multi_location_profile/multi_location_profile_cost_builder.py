@@ -1,36 +1,34 @@
 from koswat.builder_protocol import BuilderProtocol
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
-from koswat.cost_report.profile.profile_cost_builder import ProfileCostReportBuilder
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.cost_report.profile.profile_cost_report_builder import (
+    ProfileCostReportBuilder,
+)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
 class MultiLocationProfileCostReportBuilder(BuilderProtocol):
     surroundings: SurroundingsWrapper
-    base_profile: KoswatProfileBase
-    calc_profile: KoswatProfileBase
+    reinforced_profile: ReinforcementProfileProtocol
 
     def __init__(self) -> None:
         self.surroundings = None
-        self.base_profile = None
-        self.calc_profile = None
-
-    def _get_profile_cost_builder(self) -> ProfileCostReportBuilder:
-        _profile_cost_builder = ProfileCostReportBuilder()
-        _profile_cost_builder.base_profile = self.base_profile
-        _profile_cost_builder.calculated_profile = self.calc_profile
-        return _profile_cost_builder
+        self.reinforced_profile = None
 
     def build(self) -> MultiLocationProfileCostReport:
         _multiple_location_cost_report = MultiLocationProfileCostReport()
         _multiple_location_cost_report.locations = (
             self.surroundings.buldings_polderside.get_locations_after_distance(
-                self.calc_profile.profile_width
+                self.reinforced_profile.profile_width
             )
         )
+        _profile_cost_report_builder = ProfileCostReportBuilder()
+        _profile_cost_report_builder.reinforced_profile = self.reinforced_profile
         _multiple_location_cost_report.profile_cost_report = (
-            self._get_profile_cost_builder().build()
+            _profile_cost_report_builder.build()
         )
         return _multiple_location_cost_report

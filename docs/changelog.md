@@ -1,3 +1,35 @@
+## Unreleased
+
+### Feat
+
+- **VolumeCalculationParameters**: Included all operations required to for volume calculation
+- **ReinforcementProfileProtocol**: Added new property to retrieve the new ground level surface
+- **OutsideSlopeReinforcementLayersWrapperBuilder**: Added builder for for the outside slope reinforcement layers wrapper
+- **StandardReinforcemetnLayersWrapperBuilder**: Added logic to generate the geometries of a standard reinforcement dike
+- **ReinforcementLayersWrapper**: We now have dedicated builders for the LayersWrapper associated with a Reinforcement
+- **ReinforcementProfileBuilderProtocol**: Created protocol for better hierarchy
+- **CoatingLayerCostReport**: Extended usage of previous StandardLayerCostReport so that other reinforcements can also use it
+- Added logic to extract the surface of a layer
+- **LayerCostReportProtocol;StandardLayerCostReportBuilder**: Extracted standard layer cost report builder logic into separate class. Added protocol to represent the layer cost reports
+- **koswat/geometries; standard_layer_cost_report**: Implemented logic for StandardLayer cost calculation
+- **OutsideSlopeReinforcementProfileProtocol;StandardReinforcementProfileProtocol**: Added protocols to represent the different types of reinforcement - per volume; Added tests for factory
+- **LayerCostReportbuilderFactory**: Added logic to retrieve the corresponding LayerCostReportBuilderProtocol; Adapted tests and related imports
+- **LayerCostReportBuilderFactory**: Introduced layer cost report builder factory for the different types of volume calculators available
+
+### Fix
+
+- **PipingWallReinforcementProfileCalculation**: Solved wrong calculation of the Length Piping Wall
+- **StabilityWallReinforcementProfileCalculation**: Corrected calculation of the length stability wall property
+- StabilityWall calculation was not properly mapped
+- **OutsideSlopeProfileCostReportBuilder**: Now we properly calculate the added core layer
+- **OutsideSlopeProfileCostReportBuilder**: Calculation of the 'kistdam' layers is now done properly
+
+### Refactor
+
+- **koswat/calculations**: Moved calculations into their respecitve reinforcement types
+- Starting to move logic of added / removed layers to the calculation module
+- **cost_report**: Moved layer factory to profile factory as the logic should be in a higher level
+
 ## v0.5.1 (2022-10-11)
 
 ### Fix

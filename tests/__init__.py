@@ -1,10 +1,19 @@
+import shutil
 from pathlib import Path
 
 from matplotlib import pyplot
 from pytest import FixtureRequest
-from shapely import geometry
 
+from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
+    MultiLocationProfileCostReport,
+)
+from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.geometries.plot_library import plot_highlight_geometry, plot_layer
 
 test_data = Path(__file__).parent / "test_data"
 test_results = Path(__file__).parent / "test_results"
@@ -21,18 +30,75 @@ def get_fixturerequest_case_name(request: FixtureRequest):
     return _case_name
 
 
-def plot_line(ax, ob, color):
-    parts = hasattr(ob, "geoms") and ob or [ob]
-    for part in parts:
-        x, y = part.xy
-        ax.plot(x, y, color=color, linewidth=3, solid_capstyle="round", zorder=1)
+def get_testcase_results_dir(request: FixtureRequest) -> Path:
+    _case_name = get_fixturerequest_case_name(request)
+    _test_dir: Path = test_results / request.node.originalname
+    _test_dir.mkdir(exist_ok=True, parents=True)
+    _test_dir = _test_dir / _case_name
+    if _test_dir.is_dir():
+        shutil.rmtree(_test_dir)
+    _test_dir.mkdir(parents=True)
+    return _test_dir
+
+
+def plot_profile(
+    subplot: pyplot.axes, profile: KoswatProfileProtocol, color: str
+) -> None:
+    for _layer in profile.layers_wrapper.layers:
+        plot_layer(_layer, subplot, color)
 
 
 def plot_profiles(
-    base_profile: KoswatProfileProtocol, reinforced_profile: KoswatProfileProtocol
+    base_profile: KoswatProfileProtocol,
+    reinforced_profile: ReinforcementProfileProtocol,
 ) -> pyplot:
-    fig = pyplot.figure(1, dpi=90)
-    _subplot = fig.add_subplot(221)
-    plot_line(_subplot, geometry.LineString(base_profile.points), color="#03a9fc")
-    plot_line(_subplot, geometry.LineString(reinforced_profile.points), color="#fc0303")
+    fig = pyplot.figure(dpi=180)
+    _subplot = fig.add_subplot()
+    plot_profile(_subplot, base_profile, color="#03a9fc")
+    plot_profile(_subplot, reinforced_profile, color="#fc0303")
+
     return fig
+
+
+def export_multi_report_plots(
+    multi_report: MultiLocationProfileCostReport, export_dir: Path
+):
+    def _comparing_profiles():
+        _profiles_plots = plot_profiles(
+            multi_report.profile_cost_report.reinforced_profile.old_profile,
+            multi_report.profile_cost_report.reinforced_profile,
+        )
+        _fig_file = export_dir / multi_report.profile_type
+        _fig_file.with_suffix(".png")
+        _profiles_plots.savefig(_fig_file)
+
+    _comparing_profiles()
+
+    def _displaying_layers(report: ProfileCostReport, report_name: str):
+        def _export_layers(output_file: Path, layer, layers_to_plot):
+            output_file.with_suffix(".png")
+            _layers_plots = plot_highlight_geometry(layers_to_plot, layer)
+            _layers_plots.savefig(output_file)
+
+        _layers_to_plot = []
+        _layers_to_plot.extend(report.reinforced_profile.layers_wrapper.layers)
+        _layers_to_plot.extend(
+            report.reinforced_profile.old_profile.layers_wrapper.layers
+        )
+        for _reinf_layer in report.reinforced_profile.layers_wrapper.layers:
+            _export_dir: Path = export_dir / report_name
+            _export_dir.mkdir(parents=True, exist_ok=True)
+            _base_name = f"{report_name}_{_reinf_layer.material.name}"
+            _export_layers(
+                _export_dir / f"added_{_base_name}",
+                _reinf_layer.new_layer_geometry,
+                _layers_to_plot,
+            )
+            if isinstance(_reinf_layer, ReinforcementCoatingLayer):
+                _export_layers(
+                    _export_dir / f"removed_{_base_name}",
+                    _reinf_layer.removal_layer_geometry,
+                    _layers_to_plot,
+                )
+
+    _displaying_layers(multi_report.profile_cost_report, multi_report.profile_type)

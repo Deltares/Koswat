@@ -1,11 +1,11 @@
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
+    ReinforcementInputProfileCalculationProtocol,
 )
-from koswat.calculations.stability_wall.stability_wall_input_profile import (
+from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
-from koswat.calculations.stability_wall.stability_wall_reinforcement_profile_calculation import (
+from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile_calculation import (
     StabilityWallReinforcementProfileCalculation,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
@@ -20,7 +20,7 @@ class TestStabilityWallReinforcementProfileCalculation:
         assert not _calculation.base_profile
         assert not _calculation.scenario
         assert isinstance(_calculation, StabilityWallReinforcementProfileCalculation)
-        assert isinstance(_calculation, ReinforcementProfileCalculationProtocol)
+        assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
     def test_calculate_length_stability_wall(self):

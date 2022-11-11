@@ -1,4 +1,5 @@
-from koswat.dike.layers import KoswatBaseLayer, KoswatLayerProtocol
+from koswat.dike.layers import KoswatLayerProtocol
+from koswat.dike.layers.base_layer import KoswatBaseLayer
 from koswat.dike.material.koswat_material import KoswatMaterial
 
 

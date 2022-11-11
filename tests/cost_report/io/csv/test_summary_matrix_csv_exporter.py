@@ -5,10 +5,12 @@ from typing import List, Type
 import pytest
 from shapely.geometry import Point
 
-from koswat.calculations import (
+from koswat.calculations import ReinforcementProfileProtocol
+from koswat.calculations.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
+)
+from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
-    ReinforcementProfileProtocol,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
 )
@@ -16,7 +18,6 @@ from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
-from koswat.cost_report.layer.layer_cost_report import LayerCostReport
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
@@ -33,7 +34,7 @@ class MockSummary(MultiLocationProfileCostReport):
     cost_per_km = 42
 
 
-class MockLayerReport(LayerCostReport):
+class MockLayerReport:
     material = ""
     total_volume = 42
 
