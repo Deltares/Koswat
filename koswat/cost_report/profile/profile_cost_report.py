@@ -3,11 +3,29 @@ from __future__ import annotations
 import math
 from typing import List
 
+from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayerProtocol
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameters
+
+
+class LayerCostReport(CostReportProtocol):
+    layer: ReinforcementLayerProtocol
+    total_cost: float
+    total_volume: float
+
+    def __init__(self) -> None:
+        self.layer = None
+        self.total_cost = math.nan
+        self.total_volume = math.nan
+
+    @property
+    def material(self) -> str:
+        if not self.layer or not self.layer.material:
+            return ""
+        return self.layer.material.name
 
 
 class ProfileCostReport(CostReportProtocol):
@@ -41,5 +59,35 @@ class ProfileCostReport(CostReportProtocol):
         # TODO: This is most likely wrong. Need to be refined (or perhaps removed indeed not needed).
         return sum(vcp.volume for vcp in self.volume_cost_parameters.get_parameters())
 
-    def get_layers_report(self) -> List[CostReportProtocol]:
-        return []
+    def get_layers_report(self) -> List[LayerCostReport]:
+        _reports = []
+        for _layer in self.reinforced_profile.layers_wrapper.layers:
+            _lcr = LayerCostReport()
+            _reports.append(_lcr)
+            _lcr.layer = _layer
+            if _layer.material.name.lower() == "zand":
+                _lcr.total_cost = (
+                    self.volume_cost_parameters.aanleg_core_volume.total_cost
+                )
+                _lcr.total_volume = (
+                    self.volume_cost_parameters.aanleg_core_volume.volume
+                )
+            elif _layer.material.name.lower() == "klei":
+                _lcr.total_cost = (
+                    self.volume_cost_parameters.aanleg_clay_volume.total_cost
+                )
+                _lcr.total_volume = (
+                    self.volume_cost_parameters.aanleg_clay_volume.volume
+                )
+            elif _layer.material.name.lower() == "gras":
+                _lcr.total_cost = (
+                    self.volume_cost_parameters.aanleg_grass_volume.total_cost
+                )
+                _lcr.total_volume = (
+                    self.volume_cost_parameters.aanleg_grass_volume.volume
+                )
+            else:
+                raise ValueError(
+                    "Material {} currently not supported.".format(_layer.material.name)
+                )
+        return _reports
