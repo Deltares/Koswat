@@ -4,14 +4,13 @@ from typing import List
 
 from shapely import geometry
 
-from koswat.dike.layers.koswat_base_layer_builder import KoswatBaseLayerBuilder
-from koswat.dike.layers.koswat_coating_layer_builder import KoswatCoatingLayerBuilder
-from koswat.dike.layers.koswat_layers_wrapper import (
-    KoswatBaseLayer,
+from koswat.dike.layers.base_layer import KoswatBaseLayer, KoswatBaseLayerBuilder
+from koswat.dike.layers.coating_layer import (
     KoswatCoatingLayer,
-    KoswatLayersWrapper,
+    KoswatCoatingLayerBuilder,
 )
-from koswat.dike.layers.koswat_layers_wrapper_builder_protocol import (
+from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper import KoswatLayersWrapper
+from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol import (
     KoswatLayersWrapperBuilderProtocol,
 )
 

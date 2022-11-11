@@ -1,7 +1,7 @@
 from typing import List, Protocol
 
-from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
-from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
+from koswat.dike.layers.base_layer import KoswatBaseLayer
+from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 

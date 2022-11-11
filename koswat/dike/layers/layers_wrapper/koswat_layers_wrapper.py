@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import List
 
-from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
-from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
+from koswat.dike.layers.base_layer import KoswatBaseLayer
+from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
-from koswat.dike.layers.koswat_layers_wrapper_protocol import (
+from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_protocol import (
     KoswatLayersWrapperProtocol,
 )
 
