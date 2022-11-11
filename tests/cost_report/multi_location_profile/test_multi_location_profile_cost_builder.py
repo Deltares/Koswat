@@ -3,6 +3,9 @@ from shapely.geometry import Point
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
+from koswat.calculations.reinforcement_profile_builder_factory import (
+    ReinforcementProfileBuilderFactory,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -42,7 +45,6 @@ class TestMultiLocationProfileCostReportBuilder:
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=0,
-                profile_type=KoswatProfileBase,
             )
         ).build()
         _builder.calc_profile = KoswatProfileBuilder.with_data(
@@ -50,7 +52,7 @@ class TestMultiLocationProfileCostReportBuilder:
                 input_profile_data=InputProfileCases.profile_case_2,
                 layers_data=LayersCases.without_layers,
                 p4_x_coordinate=3,
-                profile_type=CofferdamReinforcementProfile,
+                reinforcement_type=CofferdamReinforcementProfile,
             )
         ).build()
 

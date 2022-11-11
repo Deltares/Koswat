@@ -26,6 +26,7 @@ class KoswatBaseLayer(KoswatLayerProtocol):
         return None
 
     def as_data_dict(self) -> dict:
+        _geometry = []
         if self.geometry:
             _geometry = list(get_polygon_coordinates(self.geometry).coords)
         return dict(

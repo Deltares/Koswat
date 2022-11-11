@@ -22,10 +22,11 @@ class KoswatCoatingLayer(KoswatLayerProtocol):
         self.depth = math.nan
 
     def as_data_dict(self) -> dict:
+        _geometry = []
         if self.geometry:
             _geometry = list(get_polygon_coordinates(self.geometry).coords)
         return dict(
             material=self.material.name,
             depth=self.depth,
-            geometry= _geometry,
+            geometry=_geometry,
         )

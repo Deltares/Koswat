@@ -1,19 +1,26 @@
-import shutil
 from typing import Type
 
 import pytest
 
 from koswat.calculations import (
     CofferdamReinforcementProfile,
-    CofferdamReinforcementProfileCalculation,
     PipingWallReinforcementProfile,
-    PipingWallReinforcementProfileCalculation,
     ReinforcementInputProfileCalculationProtocol,
     ReinforcementProfileProtocol,
     SoilReinforcementProfile,
-    SoilReinforcementProfileCalculation,
     StabilityWallReinforcementProfile,
-    StabilityWallReinforcementProfileCalculation,
+)
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
+    OutsideSlopeReinforcementProfileBuilder,
+)
+from koswat.calculations.reinforcement_profile_builder_factory import (
+    ReinforcementProfileBuilderFactory,
+)
+from koswat.calculations.reinforcement_profile_builder_protocol import (
+    ReinforcementProfileBuilderProtocol,
+)
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
+    StandardReinforcementProfileBuilder,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -41,12 +48,67 @@ class TestReinforcementProfileCalculationProtocol:
         with pytest.raises(TypeError):
             ReinforcementInputProfileCalculationProtocol()
 
+
+class TestReinforcementProfileBuilderFactory:
+    def test_get_available_reinforcements(self):
+        _expected_reinforcements = [
+            SoilReinforcementProfile,
+            PipingWallReinforcementProfile,
+            StabilityWallReinforcementProfile,
+            CofferdamReinforcementProfile,
+        ]
+        _available_reinforcements = (
+            ReinforcementProfileBuilderFactory.get_available_reinforcements()
+        )
+        assert len(_available_reinforcements) == 4
+        assert all(
+            _reinforcement in _available_reinforcements
+            for _reinforcement in _expected_reinforcements
+        )
+
     @pytest.mark.parametrize(
-        "profile_type, calculation_type, profile_data, scenario_data, expected_profile_data",
+        "reinforcement_profile_type, expected_builder",
+        [
+            pytest.param(
+                SoilReinforcementProfile,
+                StandardReinforcementProfileBuilder,
+                id="[Standard] Soil reinforcement",
+            ),
+            pytest.param(
+                PipingWallReinforcementProfile,
+                StandardReinforcementProfileBuilder,
+                id="[Standard] Piping wall reinforcement",
+            ),
+            pytest.param(
+                StabilityWallReinforcementProfile,
+                StandardReinforcementProfileBuilder,
+                id="[Standard] Stability wall reinforcement",
+            ),
+            pytest.param(
+                CofferdamReinforcementProfile,
+                OutsideSlopeReinforcementProfileBuilder,
+                id="[Oustide Slope] Cofferdam reinforcement",
+            ),
+        ],
+    )
+    def test_get_builder(
+        self,
+        reinforcement_profile_type: Type[ReinforcementProfileProtocol],
+        expected_builder: ReinforcementProfileBuilderProtocol,
+    ):
+        _builder = ReinforcementProfileBuilderFactory.get_builder(
+            reinforcement_profile_type
+        )
+        # Verify expectations.
+        assert _builder.reinforcement_profile_type == reinforcement_profile_type
+        assert isinstance(_builder, expected_builder)
+        assert isinstance(_builder, ReinforcementProfileBuilderProtocol)
+
+    @pytest.mark.parametrize(
+        "profile_type, profile_data, scenario_data, expected_profile_data",
         [
             pytest.param(
                 PipingWallReinforcementProfile,
-                PipingWallReinforcementProfileCalculation,
                 InputProfileCases.default,
                 ScenarioCases.scenario_3,
                 InputProfileScenarioLookup.reinforcement_piping_wall_default_scenario_3_no_layers,
@@ -54,7 +116,6 @@ class TestReinforcementProfileCalculationProtocol:
             ),
             pytest.param(
                 StabilityWallReinforcementProfile,
-                StabilityWallReinforcementProfileCalculation,
                 InputProfileCases.default,
                 ScenarioCases.scenario_3,
                 InputProfileScenarioLookup.reinforcement_stability_wall_default_scenario_3_no_layers,
@@ -62,7 +123,6 @@ class TestReinforcementProfileCalculationProtocol:
             ),
             pytest.param(
                 SoilReinforcementProfile,
-                SoilReinforcementProfileCalculation,
                 InputProfileCases.default,
                 ScenarioCases.default,
                 InputProfileScenarioLookup.reinforcement_soil_default_default_no_layers,
@@ -70,7 +130,6 @@ class TestReinforcementProfileCalculationProtocol:
             ),
             pytest.param(
                 SoilReinforcementProfile,
-                SoilReinforcementProfileCalculation,
                 InputProfileCases.default,
                 ScenarioCases.scenario_2,
                 InputProfileScenarioLookup.reinforcement_soil_default_scenario_2_no_layers,
@@ -78,7 +137,6 @@ class TestReinforcementProfileCalculationProtocol:
             ),
             pytest.param(
                 CofferdamReinforcementProfile,
-                CofferdamReinforcementProfileCalculation,
                 InputProfileCases.default,
                 ScenarioCases.scenario_3,
                 InputProfileScenarioLookup.reinforcement_coffer_dam_wall_default_scenario_3_no_layers,
@@ -88,7 +146,6 @@ class TestReinforcementProfileCalculationProtocol:
     def test_given_profile_and_scenario_calculate_new_geometry(
         self,
         profile_type: Type[ReinforcementProfileProtocol],
-        calculation_type: Type[ReinforcementInputProfileCalculationProtocol],
         profile_data: dict,
         scenario_data: dict,
         expected_profile_data: dict,
@@ -105,28 +162,32 @@ class TestReinforcementProfileCalculationProtocol:
                 profile_type=KoswatProfileBase,
             )
         ).build()
-        assert isinstance(_base_profile, KoswatProfileBase)
         _scenario = KoswatScenario.from_dict(dict(scenario_data))
-        assert isinstance(_scenario, KoswatScenario)
-
-        # 2. Run test.
-        _builder = calculation_type()
-        _builder.base_profile = _base_profile
-        _builder.scenario = _scenario
-        _new_profile = _builder.build()
-
-        # 3. Verify expectations.
-        assert isinstance(_new_profile, profile_type)
-        assert isinstance(_new_profile, KoswatProfileProtocol)
-        assert isinstance(_new_profile.input_data, KoswatInputProfileBase)
-        assert isinstance(_new_profile.input_data, KoswatInputProfileProtocol)
         expected_profile_data["profile_type"] = profile_type
+
+        # TODO: This should not work anymore
         _expected_profile = KoswatProfileBuilder.with_data(
             expected_profile_data
         ).build()
+
+        assert isinstance(_base_profile, KoswatProfileBase)
+        assert isinstance(_scenario, KoswatScenario)
         assert isinstance(_expected_profile, profile_type)
-        compare_koswat_profiles(_new_profile, _expected_profile)
-        _plot = plot_profiles(_base_profile, _new_profile)
-        _plot_filename = _plot_dir / str(_new_profile)
+
+        # 2. Run test.
+        _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
+            profile_type
+        )
+        _reinforcement_builder.base_profile = _base_profile
+        _reinforcement_builder.scenario = _scenario
+        _reinforcement_profile = _reinforcement_builder.build()
+
+        # 3. Verify expectations.
+        assert isinstance(_reinforcement_profile, profile_type)
+        assert isinstance(_reinforcement_profile, ReinforcementProfileProtocol)
+        assert isinstance(_reinforcement_profile, KoswatProfileProtocol)
+        compare_koswat_profiles(_reinforcement_profile, _expected_profile)
+        _plot = plot_profiles(_base_profile, _reinforcement_profile)
+        _plot_filename = _plot_dir / str(_reinforcement_profile)
         _plot_filename.with_suffix(".png")
         _plot.savefig(_plot_filename)

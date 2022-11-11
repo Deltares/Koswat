@@ -72,28 +72,6 @@ class TestKoswatSummaryBuilder:
                 for _calc_prof in _calc_profiles
             ), f"Profile {_required_profile} not found."
 
-    def test_get_calculated_profile(self):
-        # 1. Define test data.
-        _builder = KoswatSummaryBuilder()
-        _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
-        _builder.base_profile = KoswatProfileBuilder.with_data(
-            dict(
-                input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.without_layers,
-                p4_x_coordinate=0,
-                profile_type=KoswatProfileBase,
-            )
-        ).build()
-
-        # 2. Run test.
-        _calc_profile = _builder._get_calculated_profile(
-            SoilReinforcementProfileCalculation
-        )
-
-        # 3. Verify expectations.
-        assert isinstance(_calc_profile, ReinforcementProfileProtocol)
-        assert isinstance(_calc_profile, SoilReinforcementProfile)
-
     def test_get_multi_location_profile_cost_builder(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
