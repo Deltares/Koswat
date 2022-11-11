@@ -70,6 +70,7 @@ class OutsideSlopeReinforcementProfileBuilder(ReinforcementProfileBuilderProtoco
 
     def build(self) -> OutsideSlopeReinforcementProfile:
         _profile = self.reinforcement_profile_type()
+        _profile.old_profile = self.base_profile
         _profile.input_data = self._get_reinforcement_profile_input()
         _profile.characteristic_points = self._get_characteristic_points(
             _profile.input_data
