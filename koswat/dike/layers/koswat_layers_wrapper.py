@@ -21,6 +21,7 @@ class KoswatLayersWrapperProtocol(Protocol):
         """
         pass
 
+
 class KoswatLayersWrapper(KoswatLayersWrapperProtocol):
     base_layer: KoswatBaseLayer
     coating_layers: List[KoswatCoatingLayer]

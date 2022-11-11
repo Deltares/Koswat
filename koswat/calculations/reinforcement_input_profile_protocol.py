@@ -10,4 +10,5 @@ class ReinforcementInputProfileProtocol(KoswatInputProfileProtocol, Protocol):
     """
     Just a wrapper (or alias) for the `ReinforcementProfileProtocol`
     """
+
     pass
