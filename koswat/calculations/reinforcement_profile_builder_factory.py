@@ -15,29 +15,15 @@ from koswat.calculations.reinforcement_profile_builder_protocol import (
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
+from koswat.calculations.standard_reinforcement import (
     PipingWallInputProfile,
-)
-from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
-)
-from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
     SoilInputProfile,
-)
-from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile import (
     SoilReinforcementProfile,
-)
-from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
-)
-from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
-)
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
-    StandardReinforcementProfileBuilder,
-)
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_protocol import (
     StandardReinforcementProfile,
+    StandardReinforcementProfileBuilder,
 )
 
 _reinforcements = {

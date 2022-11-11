@@ -1,9 +1,9 @@
 from typing import List
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations import ReinforcementProfileProtocol
-from koswat.calculations.reinforcement_profile_builder_factory import (
+from koswat.calculations import (
     ReinforcementProfileBuilderFactory,
+    ReinforcementProfileProtocol,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,

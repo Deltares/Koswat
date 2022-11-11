@@ -2,6 +2,8 @@ from typing import Type
 
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
+)
+from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile_calculation import (
     CofferdamReinforcementProfileCalculation,
 )
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_layers_wrapper_builder import (
