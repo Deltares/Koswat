@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-import shutil
-from codecs import ignore_errors
-from pathlib import Path
-
 import pytest
 
-from koswat.calculations import (
+from koswat.calculations.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
+)
+from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
@@ -17,7 +15,6 @@ from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
-from koswat.cost_report.layer.base_layer_cost_report import BaseLayerCostReport
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
@@ -120,7 +117,8 @@ class TestAcceptance:
         for _reinforcement_profile in _expected_reinforcements:
             assert any(
                 isinstance(
-                    _rep_profile.profile_cost_report.new_profile, _reinforcement_profile
+                    _rep_profile.profile_cost_report.reinforced_profile,
+                    _reinforcement_profile,
                 )
                 for _rep_profile in _summary.locations_profile_report_list
             ), f"Profile type {_reinforcement_profile.__name__} not found."

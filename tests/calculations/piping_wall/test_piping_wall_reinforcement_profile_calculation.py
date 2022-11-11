@@ -1,11 +1,11 @@
 import pytest
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations.piping_wall.piping_wall_reinforcement_profile_calculation import (
-    PipingWallReinforcementProfileCalculation,
-)
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementProfileCalculationProtocol,
+    ReinforcementInputProfileCalculationProtocol,
+)
+from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile_calculation import (
+    PipingWallReinforcementProfileCalculation,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.koswat_scenario import KoswatScenario
@@ -18,7 +18,7 @@ class TestPipingWallReinforcementProfileCalculation:
         assert not _calculation.base_profile
         assert not _calculation.scenario
         assert isinstance(_calculation, PipingWallReinforcementProfileCalculation)
-        assert isinstance(_calculation, ReinforcementProfileCalculationProtocol)
+        assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
     def test_calculate_length_stability_wall(self):

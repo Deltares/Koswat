@@ -1,13 +1,14 @@
 from shapely.geometry import Point
 
-from koswat.calculations import (
+from koswat.calculations import ReinforcementProfileProtocol
+from koswat.calculations.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
-    PipingWallReinforcementProfile,
-    ReinforcementProfileProtocol,
-    SoilReinforcementProfile,
-    SoilReinforcementProfileCalculation,
 )
-from koswat.calculations.stability_wall.stability_wall_reinforcement_profile import (
+from koswat.calculations.standard_reinforcement import (
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+)
+from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
@@ -72,33 +73,10 @@ class TestKoswatSummaryBuilder:
                 for _calc_prof in _calc_profiles
             ), f"Profile {_required_profile} not found."
 
-    def test_get_calculated_profile(self):
-        # 1. Define test data.
-        _builder = KoswatSummaryBuilder()
-        _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
-        _builder.base_profile = KoswatProfileBuilder.with_data(
-            dict(
-                input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.without_layers,
-                p4_x_coordinate=0,
-                profile_type=KoswatProfileBase,
-            )
-        ).build()
-
-        # 2. Run test.
-        _calc_profile = _builder._get_calculated_profile(
-            SoilReinforcementProfileCalculation
-        )
-
-        # 3. Verify expectations.
-        assert isinstance(_calc_profile, ReinforcementProfileProtocol)
-        assert isinstance(_calc_profile, SoilReinforcementProfile)
-
     def test_get_multi_location_profile_cost_builder(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
         _builder.surroundings = SurroundingsWrapper()
-        _builder.base_profile = KoswatProfileBase()
 
         # 2. Run test.
         _multi_location_profile_cost_builder = (
@@ -110,12 +88,9 @@ class TestKoswatSummaryBuilder:
             _multi_location_profile_cost_builder, MultiLocationProfileCostReportBuilder
         )
         assert (
-            _multi_location_profile_cost_builder.base_profile == _builder.base_profile
-        )
-        assert (
             _multi_location_profile_cost_builder.surroundings == _builder.surroundings
         )
-        assert not _multi_location_profile_cost_builder.calc_profile
+        assert not _multi_location_profile_cost_builder.reinforced_profile
 
     def test_build(self):
         # 1. Define test data.

@@ -1,0 +1,26 @@
+from typing import Protocol, Type
+
+from typing_extensions import runtime_checkable
+
+from koswat.builder_protocol import BuilderProtocol
+from koswat.calculations.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.koswat_scenario import KoswatScenario
+
+
+@runtime_checkable
+class ReinforcementProfileBuilderProtocol(BuilderProtocol, Protocol):
+    base_profile: KoswatProfileBase
+    scenario: KoswatScenario
+    reinforcement_profile_type: Type[ReinforcementProfileProtocol]
+
+    def build(self) -> ReinforcementProfileProtocol:
+        """
+        Builds a concrete instance of a `ReinforcementProfileProtocol` base don the required data.
+
+        Returns:
+            ReinforcementProfileProtocol: Valid instance of a `ReinforcementProfileProtocol`.
+        """
+        pass

@@ -2,10 +2,11 @@ import pytest
 from shapely.geometry import LineString, Point, Polygon
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
-from koswat.dike.layers.koswat_coating_layer_builder import KoswatCoatingLayerBuilder
-from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
-from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
+from koswat.dike.layers import KoswatLayerBuilderProtocol, KoswatLayerProtocol
+from koswat.dike.layers.coating_layer import (
+    KoswatCoatingLayer,
+    KoswatCoatingLayerBuilder,
+)
 
 
 class TestKoswatCoatingLayerBuilder:

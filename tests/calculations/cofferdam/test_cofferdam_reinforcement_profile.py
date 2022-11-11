@@ -1,7 +1,7 @@
-from koswat.calculations.cofferdam.cofferdam_reinforcement_profile import (
+from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.calculations.outside_slope_reinforcement_profile_protocol import (
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
 from koswat.calculations.reinforcement_profile_protocol import (
