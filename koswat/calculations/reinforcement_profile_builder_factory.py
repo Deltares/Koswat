@@ -1,16 +1,10 @@
 from typing import List, Type
 
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
+from koswat.calculations.outside_slope_reinforcement import (
     CofferDamInputProfile,
-)
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
-)
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
-    OutsideSlopeReinforcementProfileBuilder,
-)
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_protocol import (
     OutsideSlopeReinforcementProfile,
+    OutsideSlopeReinforcementProfileBuilder,
 )
 from koswat.calculations.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
