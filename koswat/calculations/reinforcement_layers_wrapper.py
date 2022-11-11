@@ -110,11 +110,17 @@ class ReinforcementLayersWrapper(KoswatLayersWrapperProtocol):
         )
 
     def get_layer(self, material: str) -> ReinforcementCoatingLayer:
-        return next(
-            _layer
-            for _layer in self.coating_layers
-            if _layer.material.name.lower() == material.lower()
+        _found_layer = next(
+            (
+                _layer
+                for _layer in self.coating_layers
+                if _layer.material.name.lower() == material.lower()
+            ),
+            None,
         )
+        if not _found_layer:
+            raise ValueError("Material {} not present in the layers.".format(material))
+        return _found_layer
 
     @property
     def layers(self) -> List[ReinforcementLayerProtocol]:

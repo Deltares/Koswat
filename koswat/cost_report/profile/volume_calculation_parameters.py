@@ -21,6 +21,8 @@ class VolumeCalculationParameters:
         cls, reinforced_profile: ReinforcementProfileProtocol
     ) -> VolumeCalculationParameters:
         _vcp = cls()
+        if len(reinforced_profile.layers_wrapper.layers) != 3:
+            return _vcp
         _grass_layer = reinforced_profile.layers_wrapper.get_layer("gras")
         _clay_layer = reinforced_profile.layers_wrapper.get_layer("klei")
         _core_layer = reinforced_profile.layers_wrapper.base_layer

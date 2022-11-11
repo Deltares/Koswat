@@ -19,8 +19,8 @@ class ProfileCostReport(CostReportProtocol):
 
     def __init__(self) -> None:
         self.layer_cost_reports = []
-        self.new_profile = None
-        self.old_profile = None
+        self.reinforced_profile = None
+        self.volume_calculation_parameters = None
 
     @classmethod
     def build(
