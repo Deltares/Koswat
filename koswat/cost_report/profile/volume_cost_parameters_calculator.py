@@ -5,7 +5,7 @@ from koswat.calculations.reinforcement_profile_protocol import (
 )
 
 
-class VolumeCalculationParameters:
+class VolumeCostParametersCalculator:
     grass_layer_removal_volume: float
     clay_layer_removal_volume: float
     new_core_layer_volume: float
@@ -19,7 +19,7 @@ class VolumeCalculationParameters:
     @classmethod
     def from_reinforced_profile(
         cls, reinforced_profile: ReinforcementProfileProtocol
-    ) -> VolumeCalculationParameters:
+    ) -> VolumeCostParametersCalculator:
         _vcp = cls()
         if len(reinforced_profile.layers_wrapper.layers) != 3:
             return _vcp
