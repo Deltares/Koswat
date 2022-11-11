@@ -115,7 +115,8 @@ class TestAcceptance:
         for _reinforcement_profile in _expected_reinforcements:
             assert any(
                 isinstance(
-                    _rep_profile.profile_cost_report.new_profile, _reinforcement_profile
+                    _rep_profile.profile_cost_report.reinforced_profile,
+                    _reinforcement_profile,
                 )
                 for _rep_profile in _summary.locations_profile_report_list
             ), f"Profile type {_reinforcement_profile.__name__} not found."
@@ -128,6 +129,6 @@ class TestAcceptance:
             assert _multi_report.total_cost > 0
             assert _multi_report.total_volume > 0
             assert _multi_report.cost_per_km > 1000
-            _layers_report = _multi_report.profile_cost_report.layer_cost_reports
+            _layers_report = _multi_report.profile_cost_report.get_layers_report()
             assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
             assert all(isinstance(lcr, CostReportProtocol) for lcr in _layers_report)

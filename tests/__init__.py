@@ -8,6 +8,9 @@ from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatin
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
+    MultiLocationProfileCostReport,
+)
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.geometries.plot_library import plot_highlight_geometry, plot_layer
@@ -57,11 +60,13 @@ def plot_profiles(
     return fig
 
 
-def export_multi_report_plots(multi_report, export_dir: Path):
+def export_multi_report_plots(
+    multi_report: MultiLocationProfileCostReport, export_dir: Path
+):
     def _comparing_profiles():
         _profiles_plots = plot_profiles(
-            multi_report.profile_cost_report.old_profile,
-            multi_report.profile_cost_report.new_profile,
+            multi_report.profile_cost_report.reinforced_profile.old_profile,
+            multi_report.profile_cost_report.reinforced_profile,
         )
         _fig_file = export_dir / multi_report.profile_type
         _fig_file.with_suffix(".png")
@@ -76,9 +81,11 @@ def export_multi_report_plots(multi_report, export_dir: Path):
             _layers_plots.savefig(output_file)
 
         _layers_to_plot = []
-        _layers_to_plot.extend(report.new_profile.layers_wrapper.layers)
-        _layers_to_plot.extend(report.old_profile.layers_wrapper.layers)
-        for _reinf_layer in report.new_profile.layers_wrapper.layers:
+        _layers_to_plot.extend(report.reinforced_profile.layers_wrapper.layers)
+        _layers_to_plot.extend(
+            report.reinforced_profile.old_profile.layers_wrapper.layers
+        )
+        for _reinf_layer in report.reinforced_profile.layers_wrapper.layers:
             _export_dir: Path = export_dir / report_name
             _export_dir.mkdir(parents=True, exist_ok=True)
             _base_name = f"{report_name}_{_reinf_layer.material.name}"

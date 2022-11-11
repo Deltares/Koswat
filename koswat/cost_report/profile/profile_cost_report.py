@@ -11,12 +11,10 @@ from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParamete
 
 
 class ProfileCostReport(CostReportProtocol):
-    layer_cost_reports: List[CostReportProtocol]
     reinforced_profile: ReinforcementProfileProtocol
     volume_cost_parameters: VolumeCostParameters
 
     def __init__(self) -> None:
-        self.layer_cost_reports = []
         self.reinforced_profile = None
         self.volume_cost_parameters = None
 
@@ -34,14 +32,14 @@ class ProfileCostReport(CostReportProtocol):
 
     @property
     def total_cost(self) -> float:
-        return math.nan
-        if not self.layer_cost_reports:
-            return math.nan
-        return sum(lr.total_cost for lr in self.layer_cost_reports)
+        return sum(
+            vcp.total_cost() for vcp in self.volume_cost_parameters.get_parameters()
+        )
 
     @property
     def total_volume(self) -> float:
-        return math.nan
-        if not self.layer_cost_reports:
-            return math.nan
-        return sum(lr.total_volume for lr in self.layer_cost_reports)
+        # TODO: This is most likely wrong. Need to be refined (or perhaps removed indeed not needed).
+        return sum(vcp.volume for vcp in self.volume_cost_parameters.get_parameters())
+
+    def get_layers_report(self) -> List[CostReportProtocol]:
+        return []

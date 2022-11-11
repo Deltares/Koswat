@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import List
+
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -11,6 +13,9 @@ from koswat.cost_report.profile.volume_cost_parameters_calculator import (
 class VolumeCostParameter:
     volume: float
     cost: float
+
+    def total_cost(self) -> float:
+        return self.volume * self.cost
 
 
 class VolumeCostParameters:
@@ -24,6 +29,11 @@ class VolumeCostParameters:
     new_clay_layer_surface: VolumeCostParameter
     new_core_layer_surface: VolumeCostParameter
     new_maaiveld_surface: VolumeCostParameter
+
+    def get_parameters(self) -> List[VolumeCostParameter]:
+        return list(
+            filter(lambda x: isinstance(x, VolumeCostParameter), self.__dict__.values())
+        )
 
     @classmethod
     def from_reinforced_profile(
