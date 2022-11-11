@@ -15,6 +15,9 @@ from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforc
 from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile_calculation import (
     PipingWallReinforcementProfileCalculation,
 )
+from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile import (
+    SoilReinforcementProfile,
+)
 from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
@@ -49,7 +52,7 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     ):
         if issubclass(reinforcement_type, PipingWallReinforcementProfile):
             return PipingWallReinforcementProfileCalculation
-        elif issubclass(reinforcement_type, StandardReinforcementProfile):
+        elif issubclass(reinforcement_type, SoilReinforcementProfile):
             return SoilReinforcementProfileCalculation
         elif issubclass(reinforcement_type, StabilityWallReinforcementProfile):
             return StabilityWallReinforcementProfileCalculation
