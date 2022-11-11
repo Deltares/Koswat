@@ -1,6 +1,7 @@
 import math
 
-from koswat.dike.layers import KoswatCoatingLayer, KoswatLayerProtocol
+from koswat.dike.layers import KoswatLayerProtocol
+from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.material.koswat_material import KoswatMaterial
 
 

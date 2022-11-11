@@ -1,15 +1,11 @@
 import math
-from typing import List, Type
+from typing import List
 
 import pytest
 from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.layers.koswat_layers_wrapper import (
-    KoswatBaseLayer,
-    KoswatLayersWrapper,
-)
+from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder

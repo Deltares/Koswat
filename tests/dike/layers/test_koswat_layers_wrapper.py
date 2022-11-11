@@ -1,4 +1,6 @@
-from koswat.dike.layers import KoswatBaseLayer, KoswatCoatingLayer, KoswatLayersWrapper
+from koswat.dike.layers.base_layer import KoswatBaseLayer
+from koswat.dike.layers.coating_layer import KoswatCoatingLayer
+from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
 from koswat.dike.material.koswat_material import KoswatMaterial
 
 
@@ -26,8 +28,6 @@ class TestKoswatLayersWrapper:
 
         # 3. Verify final expectations
         assert _dict == dict(
-            base_layer=dict(
-                material="a material",
-                geometry=[]),
+            base_layer=dict(material="a material", geometry=[]),
             coating_layers=[dict(material="b material", depth=2.4, geometry=[])],
         )

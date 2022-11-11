@@ -4,11 +4,15 @@ import pytest
 from shapely.geometry import Point, Polygon
 
 from koswat.calculations import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
-    OutsideSlopeReinforcementProfile,
     ReinforcementLayersWrapper,
     ReinforcementProfileBuilderFactory,
     ReinforcementProfileProtocol,
+)
+from koswat.calculations.outside_slope_reinforcement import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+    OutsideSlopeReinforcementProfile,
+)
+from koswat.calculations.standard_reinforcement import (
     StandardReinforcementLayersWrapperBuilder,
     StandardReinforcementProfile,
 )
@@ -16,13 +20,10 @@ from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.layers.koswat_layers_wrapper import (
-    KoswatLayersWrapper,
-    KoswatLayersWrapperProtocol,
-)
-from koswat.dike.layers.koswat_layers_wrapper_builder import (
+from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperBuilder,
     KoswatLayersWrapperBuilderProtocol,
+    KoswatLayersWrapperProtocol,
 )
 
 

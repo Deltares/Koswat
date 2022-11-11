@@ -1,6 +1,6 @@
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper import KoswatLayersWrapper
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder import (
-    KoswatBaseLayerBuilder,
+    KoswatLayersWrapperBuilder,
 )
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol import (
     KoswatLayersWrapperBuilderProtocol,

@@ -4,10 +4,10 @@ from typing import List, Protocol
 
 from shapely.geometry import LineString, Polygon
 
-from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
-from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
-from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
-from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapperProtocol
+from koswat.dike.layers import KoswatLayerProtocol
+from koswat.dike.layers.base_layer import KoswatBaseLayer
+from koswat.dike.layers.coating_layer import KoswatCoatingLayer
+from koswat.dike.layers.layers_wrapper import KoswatLayersWrapperProtocol
 from koswat.dike.material.koswat_material import KoswatMaterial
 from koswat.geometries.calc_library import get_polygon_coordinates
 

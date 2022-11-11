@@ -9,8 +9,10 @@ from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapper
-from koswat.dike.layers.koswat_layers_wrapper_builder import KoswatLayersWrapperBuilder
+from koswat.dike.layers.layers_wrapper import (
+    KoswatLayersWrapper,
+    KoswatLayersWrapperBuilder,
+)
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 

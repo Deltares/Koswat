@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from koswat.calculations import (
-    CofferdamReinforcementProfile,
+from koswat.calculations.outside_slope_reinforcement import (
+    CofferdamReinforcementProfileCalculation,
+)
+from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,

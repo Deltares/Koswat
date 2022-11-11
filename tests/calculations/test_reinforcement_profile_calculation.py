@@ -3,40 +3,31 @@ from typing import Type
 import pytest
 
 from koswat.calculations import (
-    CofferdamReinforcementProfile,
-    PipingWallReinforcementProfile,
     ReinforcementInputProfileCalculationProtocol,
+    ReinforcementInputProfileProtocol,
+    ReinforcementProfileBuilderFactory,
+    ReinforcementProfileBuilderProtocol,
     ReinforcementProfileProtocol,
-    SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+)
+from koswat.calculations.outside_slope_reinforcement import (
+    CofferdamReinforcementProfile,
 )
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
 )
-from koswat.calculations.reinforcement_input_profile_protocol import (
-    ReinforcementInputProfileProtocol,
-)
-from koswat.calculations.reinforcement_profile_builder_factory import (
-    ReinforcementProfileBuilderFactory,
-)
-from koswat.calculations.reinforcement_profile_builder_protocol import (
-    ReinforcementProfileBuilderProtocol,
+from koswat.calculations.standard_reinforcement import (
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+    StabilityWallReinforcementProfile,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
-from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
-from tests import (
-    get_fixturerequest_case_name,
-    get_testcase_results_dir,
-    plot_profiles,
-    test_results,
-)
+from tests import get_testcase_results_dir, plot_profiles
 from tests.calculations import get_reinforced_profile, validated_reinforced_profile
 from tests.library_test_cases import (
     InputProfileCases,
