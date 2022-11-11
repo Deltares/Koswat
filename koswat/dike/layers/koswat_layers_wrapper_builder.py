@@ -1,26 +1,19 @@
 from __future__ import annotations
 
-from typing import List, Protocol
+from typing import List
 
 from shapely import geometry
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.dike.layers.koswat_base_layer_builder import KoswatBaseLayerBuilder
 from koswat.dike.layers.koswat_coating_layer_builder import KoswatCoatingLayerBuilder
 from koswat.dike.layers.koswat_layers_wrapper import (
     KoswatBaseLayer,
     KoswatCoatingLayer,
     KoswatLayersWrapper,
-    KoswatLayersWrapperProtocol,
 )
-
-
-class KoswatLayersWrapperBuilderProtocol(BuilderProtocol, Protocol):
-    layers_data: dict
-    profile_points: List[geometry.Point]
-
-    def build(self) -> KoswatLayersWrapperProtocol:
-        pass
+from koswat.dike.layers.koswat_layers_wrapper_builder_protocol import (
+    KoswatLayersWrapperBuilderProtocol,
+)
 
 
 class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):

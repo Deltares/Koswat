@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Optional
+
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -19,7 +21,7 @@ class VolumeCostParametersCalculator:
     @classmethod
     def from_reinforced_profile(
         cls, reinforced_profile: ReinforcementProfileProtocol
-    ) -> VolumeCostParametersCalculator:
+    ) -> Optional[VolumeCostParametersCalculator]:
         _vcp = cls()
         if len(reinforced_profile.layers_wrapper.layers) != 3:
             return None

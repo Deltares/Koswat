@@ -1,25 +1,14 @@
 from __future__ import annotations
 
-from typing import List, Protocol
+from typing import List
 
 from koswat.dike.layers.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
+from koswat.dike.layers.koswat_layers_wrapper_protocol import (
+    KoswatLayersWrapperProtocol,
+)
 
-
-class KoswatLayersWrapperProtocol(Protocol):
-    base_layer: KoswatBaseLayer
-    coating_layers: List[KoswatCoatingLayer]
-    layers: List[KoswatLayerProtocol]
-
-    def as_data_dict(self) -> dict:
-        """
-        Returns the layers as a dictionary.
-
-        Returns:
-            dict: Dictionary containing all the information of the wrapper layers (`KoswatLayerProtocol`).
-        """
-        pass
 
 class KoswatLayersWrapper(KoswatLayersWrapperProtocol):
     base_layer: KoswatBaseLayer
