@@ -9,10 +9,7 @@ from koswat.dike.layers.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.koswat_layers_wrapper import KoswatLayersWrapperProtocol
 from koswat.dike.material.koswat_material import KoswatMaterial
-from koswat.geometries.calc_library import (
-    get_groundlevel_surface,
-    get_polygon_coordinates,
-)
+from koswat.geometries.calc_library import get_polygon_coordinates
 
 
 class ReinforcementLayerProtocol(KoswatLayerProtocol, Protocol):
@@ -110,6 +107,13 @@ class ReinforcementLayersWrapper(KoswatLayersWrapperProtocol):
         return dict(
             base_layer=self.base_layer.as_data_dict(),
             coating_layers=[c_l.as_data_dict() for c_l in self.coating_layers],
+        )
+
+    def get_layer(self, material: str) -> ReinforcementCoatingLayer:
+        return next(
+            _layer
+            for _layer in self.coating_layers
+            if _layer.material.name.lower() == material.lower()
         )
 
     @property

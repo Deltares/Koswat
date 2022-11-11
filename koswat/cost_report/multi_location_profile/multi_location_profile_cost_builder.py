@@ -22,7 +22,7 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
                 self.reinforced_profile.profile_width
             )
         )
-        _profile_cost_report = ProfileCostReport()
-        _profile_cost_report.reinforced_profile = self.reinforced_profile
-        _multiple_location_cost_report.profile_cost_report = _profile_cost_report
+        _multiple_location_cost_report.profile_cost_report = ProfileCostReport.build(
+            self.reinforced_profile
+        )
         return _multiple_location_cost_report
