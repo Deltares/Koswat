@@ -8,6 +8,7 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 class GeometryPlot(KoswatPlotProtocol):
     koswat_object: Union[Polygon, List[Point]]
+    subplot: pyplot.axes
 
     def _plot_simple_polygon(self, plot_axes: pyplot.axes, color: str):
         _dict_values = dict(color=color, linewidth=2, zorder=1)
@@ -22,7 +23,7 @@ class GeometryPlot(KoswatPlotProtocol):
         for geom in self.koswat_object.geoms:
             self.plot(geom, plot_axes, color)
 
-    def plot(self, plot_axes: pyplot.axes, color: str):
+    def plot(self, color: str, *args, **kwargs) -> pyplot.axes:
         """
         Plots a `Polygon` into the provided plot `ax` with the requested `color`.
 
@@ -35,8 +36,10 @@ class GeometryPlot(KoswatPlotProtocol):
             isinstance(self.koswat_object, Polygon)
             and self.koswat_object.geom_type.lower() == "polygon"
         ):
-            self._plot_simple_polygon(plot_axes, color)
+            self._plot_simple_polygon(self.subplot, color)
         elif isinstance(self.koswat_object, MultiPolygon):
             self._plot_multi_polygon(self.koswat_object.geoms, color)
         elif isinstance(self.koswat_object, list):
-            self._plot_simple_polygon_list(plot_axes)
+            self._plot_simple_polygon_list(self.subplot)
+        
+        return self.subplot

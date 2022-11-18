@@ -10,10 +10,12 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 class GeometryPlotList(KoswatPlotProtocol):
     koswat_object: List[BaseGeometry]
+    subplot: pyplot.axes
 
-    def plot(self, plot_axes: pyplot.axes):
+    def plot(self, *args, **kwargs) -> pyplot.axes:
         _colors = get_cmap(n_colors=len(self.koswat_object))
         _geom_plot = GeometryPlot()
+        _geom_plot.subplot = self.subplot
         for idx, _polygon in enumerate(self.koswat_object):
             _geom_plot.koswat_geom = _polygon
-            _geom_plot.plot(plot_axes, color=_colors(idx))
+            _geom_plot.plot(color=_colors(idx))
