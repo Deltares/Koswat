@@ -41,5 +41,5 @@ class GeometryPlot(KoswatPlotProtocol):
             self._plot_multi_polygon(self.koswat_object.geoms, color)
         elif isinstance(self.koswat_object, list):
             self._plot_simple_polygon_list(self.subplot)
-        
+
         return self.subplot
