@@ -114,7 +114,7 @@ class TestAcceptance:
             ), f"Profile type {_reinforcement_profile.__name__} not found."
         for _multi_report in _summary.locations_profile_report_list:
             _mlp_plot = MultiLocationProfileComparisonPlotExporter()
-            _mlp_plot._cost_report = _multi_report
+            _mlp_plot.cost_report = _multi_report
             _mlp_plot.export_dir = _test_dir
             _mlp_plot.export()
 

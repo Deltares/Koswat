@@ -32,7 +32,7 @@ class ReinforcedProfileComparisonPlotExporter(PlotExporterProtocol):
                 self.reinforced_profile.old_profile,
                 "#03a9fc",
             ),
-            (self.profile_report.reinforced_profile, "#fc0303"),
+            (self.reinforced_profile, "#fc0303"),
         ]
         _list_profile_plot.subplot = _subplot
         _list_profile_plot.plot()
