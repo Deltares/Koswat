@@ -1,7 +1,10 @@
-from typing import Optional
+from __future__ import annotations
+
+from typing import List, Optional
 
 from matplotlib import pyplot
 
+from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.layers_wrapper import KoswatLayersWrapperProtocol
 from koswat.plots import get_cmap
 from koswat.plots.dike.koswat_layer_plot import KoswatLayerPlot
@@ -12,14 +15,35 @@ class KoswatLayersWrapperPlot(KoswatPlotProtocol):
     koswat_object: KoswatLayersWrapperProtocol
     subplot: pyplot.axes
 
-    def plot(self, unique_color: Optional[str], *args, **kwargs) -> pyplot.axes:
+    def plot(self, *args, **kwargs) -> pyplot.axes:
         _n_layers = len(self.koswat_object.layers)
-        if unique_color:
-            _colors = [unique_color] * _n_layers
-        else:
-            _colors = kwargs.get("color", get_cmap(n_colors=_n_layers))
+        _unique_color = kwargs.get("unique_color", None)
+        _colors = get_cmap(n_colors=_n_layers)
         _layer_plot = KoswatLayerPlot()
         _layer_plot.subplot = self.subplot
         for idx, _polygon in enumerate(self.koswat_object.layers):
             _layer_plot.koswat_object = _polygon
-            _layer_plot.plot(color=_colors[idx])
+            _layer_plot.plot(color=_unique_color if _unique_color else _colors(idx))
+
+    @classmethod
+    def with_layers_list(
+        cls, layers_list: List[KoswatLayerProtocol]
+    ) -> KoswatLayersWrapperPlot:
+        """
+        Class method to aid the usage of this class with unrelated layers from different wrappers.
+
+        Args:
+            layers_list (List[KoswatLayerProtocol]): List of layers to wrap just for plotting.
+
+        Returns:
+            KoswatLayersWrapperPlot: Initialized valid instance with custom intenal wrapper `PlotLayersWrapper`.
+        """
+
+        class PlotLayersWrapper(KoswatLayersWrapperProtocol):
+            layers: List[KoswatLayerProtocol]
+
+        _plot = cls()
+        _wrapper = PlotLayersWrapper()
+        _wrapper.layers = layers_list
+        _plot.koswat_object = _wrapper
+        return _plot

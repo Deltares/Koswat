@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List
 
 from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
 from koswat.calculations.reinforcement_profile_protocol import (
@@ -7,7 +8,9 @@ from koswat.calculations.reinforcement_profile_protocol import (
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
+from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.plots import close_figure, get_plot
+from koswat.plots.dike.koswat_layers_wrapper_plot import KoswatLayersWrapperPlot
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.geometries import HighlightGeometryPlot
 from koswat.plots.geometries.geometry_plot_list import GeometryPlotList
@@ -35,20 +38,24 @@ class MultiLocationProfilePlot:
         _figure.savefig(file_path)
         close_figure()
 
-    def _export_layers(self, output_file: Path, geom_to_highlight, geoms_to_plot):
+    def _export_layers(
+        self,
+        output_file: Path,
+        layer_to_highlight,
+        layers_to_plot: List[KoswatLayerProtocol],
+    ):
         # Define cavnas
         _figure = get_plot(180)
         _subplot = _figure.add_subplot()
 
         # Create plot builder for regular layers.
-        _gpl_plot = GeometryPlotList()
-        _gpl_plot.koswat_object = geoms_to_plot
+        _gpl_plot = KoswatLayersWrapperPlot.with_layers_list(layers_to_plot)
         _gpl_plot.subplot = _subplot
         _gpl_plot.plot()
 
         # Create plot builder for highlighted geom.
         _hg_plot = HighlightGeometryPlot()
-        _hg_plot.koswat_object = geom_to_highlight
+        _hg_plot.koswat_object = layer_to_highlight
         _hg_plot.subplot = _subplot
         _hg_plot.plot()
 
