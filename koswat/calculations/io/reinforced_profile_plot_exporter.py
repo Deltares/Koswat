@@ -14,12 +14,11 @@ from koswat.plots.plot_exporter_protocol import PlotExporterProtocol
 
 class ReinforcedProfilePlotExporter(PlotExporterProtocol):
     export_dir: Path
-
-    def export(self, plot_object_model: ReinforcementProfileProtocol) -> None:
-        # _fig_filepath = self.export_filepath / self._cost_report.profile_type
-        _export_path: Path = self.export_dir / str(plot_object_model)
+    reinforced_profile: ReinforcementProfileProtocol
+    def export(self) -> None:
+        _export_path: Path = self.export_dir / str(self.reinforced_profile)
         _export_path.mkdir(parents=True, exist_ok=True)
-        self._displaying_layers(plot_object_model, _export_path)
+        self._displaying_layers(self.reinforced_profile, _export_path)
 
     def _displaying_layers(self, reinforced_profile: ReinforcementProfileProtocol, export_path: Path):
         _layers_to_plot = []

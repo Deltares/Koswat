@@ -1,17 +1,16 @@
 from pathlib import Path
-from typing import Any
+
+from typing_extensions import runtime_checkable
 
 from koswat.io.koswat_exporter_protocol import KoswatExporterProtocol
 
 
+@runtime_checkable
 class PlotExporterProtocol(KoswatExporterProtocol):
     export_dir: Path
 
-    def export(self, plot_object_model: Any) -> None:
+    def export(self) -> None:
         """
-        Exports the given `plot_object_model` into a concrete file format.
-
-        Args:
-            plot_object_model (Any): Model containing data to be exported into a plot.
+        Exports a given object into a plot.
         """
         pass
