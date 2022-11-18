@@ -10,8 +10,8 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
     KoswatBuildingsPolderside,
     PointSurroundings,
 )
-from koswat.io.koswat_csv_reader import KoswatCsvFom, KoswatCsvReader
-from koswat.io.koswat_shp_reader import KoswatShpFom, KoswatShpReader
+from koswat.io.csv import KoswatCsvFom, KoswatCsvReader
+from koswat.io.shp.koswat_shp_reader import KoswatShpFom, KoswatShpReader
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):

@@ -8,7 +8,7 @@ from koswat.io.koswat_reader_protocol import (
     FileObjectModelProtocol,
     KoswatReaderProtocol,
 )
-from koswat.io.koswat_shp_reader import KoswatShpFom, KoswatShpReader
+from koswat.io.shp import KoswatShpFom, KoswatShpReader
 from tests import test_data
 from tests.io import invalid_paths_cases
 
