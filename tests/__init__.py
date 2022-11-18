@@ -13,7 +13,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.geometries.plot_library import plot_highlight_geometry, plot_layer
+from koswat.plots.plot_library import plot_highlight_geometry, plot_layer
 
 test_data = Path(__file__).parent / "test_data"
 test_results = Path(__file__).parent / "test_results"
