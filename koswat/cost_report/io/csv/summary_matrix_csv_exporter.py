@@ -5,10 +5,10 @@ from typing import Any, List, Tuple
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.io.koswat_exporter_protocol import KoswatExporterProtocol
+from koswat.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
 
 
-class SummaryMatrixCsvExporter(KoswatExporterProtocol):
+class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):
     data_object_model: KoswatSummary
     export_filepath: Path
 

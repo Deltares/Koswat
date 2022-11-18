@@ -24,7 +24,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.io.koswat_exporter_protocol import KoswatExporterProtocol
+from koswat.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
 from tests import test_results
 
 
@@ -43,7 +43,7 @@ class TestSummaryMatrixCsvExporter:
     def test_initialize(self):
         _exporter = SummaryMatrixCsvExporter()
         assert isinstance(_exporter, SummaryMatrixCsvExporter)
-        assert isinstance(_exporter, KoswatExporterProtocol)
+        assert isinstance(_exporter, KoswatFileExporterProtocol)
         assert not _exporter.data_object_model
 
     def _create_locations(self, locations: int) -> List[PointSurroundings]:

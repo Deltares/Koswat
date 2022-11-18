@@ -1,4 +1,4 @@
-from typing import List, Protocol
+from typing import Any, List, Protocol
 
 from typing_extensions import runtime_checkable
 
@@ -14,11 +14,11 @@ class FileObjectModelProtocol(Protocol):
         """
         pass
 
-    def get_lines(self) -> List[str]:
+    def get_lines(self) -> List[Any]:
         """
         Returns all the data from this `FileObjectModelProtocol` as lines.
 
         Returns:
-            List[str]: Data ordered in lines
+            List[Any]: Data ordered in lines
         """
         pass

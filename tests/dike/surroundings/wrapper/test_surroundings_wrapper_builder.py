@@ -14,8 +14,8 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
-from koswat.io.koswat_csv_fom import KoswatCsvFom
-from koswat.io.koswat_shp_reader import KoswatShpFom
+from koswat.io.csv import KoswatCsvFom
+from koswat.io.shp.koswat_shp_reader import KoswatShpFom
 from tests import test_data
 
 
