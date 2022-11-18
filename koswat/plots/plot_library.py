@@ -1,7 +1,7 @@
-from typing import Any, List, Union
+from typing import List
 
 from matplotlib import pyplot
-from shapely.geometry import MultiPolygon, Point, Polygon
+from shapely.geometry import MultiPolygon, Polygon
 
 
 def plot_layer(layer, ax: pyplot.axes, color: str):
@@ -29,52 +29,6 @@ def plot_layer(layer, ax: pyplot.axes, color: str):
     ax.plot(_x_coords, y_coords, **dict_values)
     _x_points, _y_points = list(zip(*layer.upper_points.coords))
     ax.scatter(_x_points, _y_points)
-
-
-def get_cmap(n_colors: int, name="hsv"):
-    """
-    Returns a function that maps each index in 0, 1, ..., n-1 to a distinct
-    RGB color; the keyword argument name must be a standard mpl colormap name.
-    """
-    return pyplot.cm.get_cmap(name, n_colors)
-
-
-def plot_polygon(polygon: Union[Polygon, List[Point]], ax: pyplot.axes, color: str):
-    """
-    Plots a `Polygon` into the provided plot `ax` with the requested `color`.
-
-    Args:
-        polygon (Union[Polygon, List[Point], MultiPolygon]): Polygon to display.
-        ax (pyplot.axes): Pyplot containing the drawing canvas.
-        color (str): Color string.
-    """
-    dict_values = dict(color=color, linewidth=2, zorder=1)
-    if isinstance(polygon, Polygon) and polygon.geom_type.lower() == "polygon":
-        _x_coords, y_coords = polygon.boundary.coords.xy
-        ax.plot(_x_coords, y_coords, **dict_values)
-    elif isinstance(polygon, MultiPolygon):
-        for geom in polygon.geoms:
-            plot_polygon(geom, ax, color)
-    elif isinstance(polygon, list):
-        _x_points, _y_points = list(zip(*polygon))
-        ax.scatter(_x_points, _y_points)
-
-
-def plot_multiple_polygons(*args) -> pyplot:
-    """
-    Plots all provided polygons.
-
-    Returns:
-        pyplot: Canvas containig all drawings.
-    """
-    polygon_list = args
-    fig = pyplot.figure(dpi=180)
-    _subplot = fig.add_subplot()
-    _colors = get_cmap(n_colors=len(polygon_list))
-    for idx, _polygon in enumerate(polygon_list):
-        plot_polygon(_polygon, _subplot, color=_colors(idx))
-
-    return fig
 
 
 def plot_multiple_layers(*args) -> pyplot:
