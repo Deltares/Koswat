@@ -1,3 +1,23 @@
+## v0.7.0 (2022-11-18)
+
+### Feat
+
+- **koswat/cost_report/io/plots/**: Added module for cost_report export plots logic
+- **koswat_profile_plot.py**: We can now set a unique color for layers_wrapper and profile plots
+- **koswat/plots/dike/**: Extracted dike plotting logic into separate classes
+- **koswat/plots/geometries**: Created module with plotting for regular geometries from shapely
+
+### Fix
+
+- **koswat/plots/utils.py**: Replaced wrapper as it is not a good approach
+- **characteristic_points_builder.py**: Resolved a circular dependency
+
+### Refactor
+
+- **koswat/calculations/io/**: Extracted plot exporters from calculations into their corresponding directory
+- **koswat/plots**: Create concrete module for plotting
+- **koswat/io**: Moved io files into their corresponding modules
+
 ## v0.6.0 (2022-11-11)
 
 ### Feat
