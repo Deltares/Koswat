@@ -6,13 +6,13 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 class KoswatLayerPlot(KoswatPlotProtocol):
     koswat_object: KoswatLayerProtocol
+    subplot: pyplot.axes
 
-    def plot(self, plot_axes: pyplot.axes, color: str) -> None:
+    def plot(self, color: str) -> None:
         """
         Plots a `KoswatLayerProtocol` into the provided canvas `plot_axes` with the requested `color`.
 
         Args:
-            ax (pyplot.axes): Canvas.
             color (str): Color code.
 
         Raises:
@@ -30,6 +30,7 @@ class KoswatLayerPlot(KoswatPlotProtocol):
             raise ValueError(
                 f"Material {self.koswat_object.material.name} not supported for plotting."
             )
-        plot_axes.plot(_x_coords, y_coords, **dict_values)
+        self.subplot.plot(_x_coords, y_coords, **dict_values)
         _x_points, _y_points = list(zip(*self.koswat_object.upper_points.coords))
-        plot_axes.scatter(_x_points, _y_points)
+        self.subplot.scatter(_x_points, _y_points)
+        return self.subplot
