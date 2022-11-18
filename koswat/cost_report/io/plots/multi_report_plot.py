@@ -7,7 +7,7 @@ from koswat.calculations.reinforcement_profile_protocol import (
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
-from koswat.plots import get_plot
+from koswat.plots import close_figure, get_plot
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.geometries import HighlightGeometryPlot
 from koswat.plots.geometries.geometry_plot_list import GeometryPlotList
@@ -33,7 +33,7 @@ class MultiLocationProfilePlot:
 
         # Export plots
         _figure.savefig(file_path)
-        _figure.close()
+        close_figure()
 
     def _export_layers(self, output_file: Path, geom_to_highlight, geoms_to_plot):
         # Define cavnas
@@ -54,6 +54,7 @@ class MultiLocationProfilePlot:
 
         # Export figure.
         _figure.savefig(output_file.with_suffix(".png"))
+        close_figure()
 
     def _displaying_layers(self, reinforced_profile: ReinforcementProfileProtocol):
         _layers_to_plot = []

@@ -28,7 +28,7 @@ from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
-from koswat.plots import get_plot
+from koswat.plots import close_figure, get_plot
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from tests import get_testcase_results_dir
 from tests.calculations import get_reinforced_profile, validated_reinforced_profile
@@ -201,4 +201,4 @@ class TestReinforcementProfileBuilderFactory:
         # Export
         _plot_filename = output_dir / str(reinforced_profile)
         _figure.savefig(_plot_filename.with_suffix(".png"))
-        _figure.close()
+        close_figure()
