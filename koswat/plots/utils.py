@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from pathlib import Path
+
 from matplotlib import pyplot
 from matplotlib.figure import Figure
 
@@ -9,7 +13,7 @@ def get_cmap(n_colors: int, name="hsv"):
     """
     return pyplot.cm.get_cmap(name, n_colors)
 
-def get_plot(dpi: int) -> Figure:
+def get_plot(dpi: int) -> KoswatFigure:
     """
     Auxiliar method to reduce the direct imports of pyplot across the `Koswat` solution.
 
@@ -17,6 +21,14 @@ def get_plot(dpi: int) -> Figure:
         dpi (int): Resolution of the image (dots-per-inch).
 
     Returns:
-        Figure: The initialize plotting figure.
+        KoswatFigure: A wrapper arround `Figure` to easily save and close its stream.
     """
-    return pyplot.figure(dpi=dpi)
+    return KoswatFigure(pyplot.figure(dpi=dpi))
+
+class KoswatFigure:
+    def __init__(self, fig: Figure) -> None:
+        self._fig = fig
+    def close(self):
+        pyplot.close()
+    def savefig(self, file_path: Path):
+        self._fig.savefig(file_path)

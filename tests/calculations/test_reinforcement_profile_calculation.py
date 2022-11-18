@@ -181,7 +181,7 @@ class TestReinforcementProfileBuilderFactory:
             _reinforcement_profile.input_data, ReinforcementInputProfileProtocol
         )
         validated_reinforced_profile(_reinforcement_profile, _expected_profile)
-        self._plot_profiles(_base_profile, _reinforcement_profile)
+        self._plot_profiles(_base_profile, _reinforcement_profile, _plot_dir)
 
     def _plot_profiles(
         self,
@@ -201,3 +201,4 @@ class TestReinforcementProfileBuilderFactory:
         # Export
         _plot_filename = output_dir / str(reinforced_profile)
         _figure.savefig(_plot_filename.with_suffix(".png"))
+        _figure.close()

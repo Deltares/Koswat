@@ -17,5 +17,5 @@ class GeometryPlotList(KoswatPlotProtocol):
         _geom_plot = GeometryPlot()
         _geom_plot.subplot = self.subplot
         for idx, _polygon in enumerate(self.koswat_object):
-            _geom_plot.koswat_geom = _polygon
+            _geom_plot.koswat_object = _polygon
             _geom_plot.plot(color=_colors(idx))

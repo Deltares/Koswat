@@ -14,5 +14,5 @@ class KoswatProfilePlot(KoswatPlotProtocol):
     def plot(self, unique_color: Optional[str], *args, **kwargs) -> pyplot.axes:
         _layer_plot = KoswatLayersWrapperPlot()
         _layer_plot.subplot = self.subplot
-        _layer_plot.koswat_object = self.koswat_object.layers_wrapper.layers
+        _layer_plot.koswat_object = self.koswat_object.layers_wrapper
         return _layer_plot.plot(unique_color=unique_color)

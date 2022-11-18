@@ -19,6 +19,7 @@ class KoswatLayersWrapperPlot(KoswatPlotProtocol):
         else:
             _colors = kwargs.get("color", get_cmap(n_colors=_n_layers))
         _layer_plot = KoswatLayerPlot()
+        _layer_plot.subplot = self.subplot
         for idx, _polygon in enumerate(self.koswat_object.layers):
             _layer_plot.koswat_object = _polygon
-            _layer_plot.plot(self.subplot, color=_colors(idx))
+            _layer_plot.plot(color=_colors[idx])

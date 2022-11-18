@@ -81,4 +81,4 @@ class MultiLocationProfilePlot:
     def export(self):
         _fig_filepath = self.export_dir / self.report.profile_type
         self._comparing_profiles(_fig_filepath.with_suffix(".png"))
-        self._displaying_layers(self.report.profile_cost_report)
+        self._displaying_layers(self.report.profile_cost_report.reinforced_profile)
