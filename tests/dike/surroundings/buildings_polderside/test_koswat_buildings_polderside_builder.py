@@ -11,8 +11,8 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
-from koswat.io.koswat_csv_fom import KoswatCsvFom
-from koswat.io.koswat_shp_reader import KoswatShpFom
+from koswat.io.csv import KoswatCsvFom
+from koswat.io.shp.koswat_shp_reader import KoswatShpFom
 from tests import test_data
 
 

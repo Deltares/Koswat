@@ -1,6 +1,7 @@
 from pathlib import Path
 
-from koswat.io.koswat_csv_fom import KoswatCsvFom, KoswatCsvFomBuilder
+from koswat.io.csv.koswat_csv_fom import KoswatCsvFom
+from koswat.io.csv.koswat_csv_fom_builder import KoswatCsvFomBuilder
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 
 

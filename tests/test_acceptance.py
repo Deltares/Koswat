@@ -8,6 +8,9 @@ from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
+from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
+    MultiLocationProfileComparisonPlotExporter,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
@@ -22,7 +25,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 from koswat.koswat_scenario import KoswatScenario
-from tests import export_multi_report_plots, get_testcase_results_dir, test_data
+from tests import get_testcase_results_dir, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -110,7 +113,10 @@ class TestAcceptance:
                 for _rep_profile in _summary.locations_profile_report_list
             ), f"Profile type {_reinforcement_profile.__name__} not found."
         for _multi_report in _summary.locations_profile_report_list:
-            export_multi_report_plots(_multi_report, _test_dir)
+            _mlp_plot = MultiLocationProfileComparisonPlotExporter()
+            _mlp_plot.cost_report = _multi_report
+            _mlp_plot.export_dir = _test_dir
+            _mlp_plot.export()
 
         for _multi_report in _summary.locations_profile_report_list:
             assert isinstance(_multi_report, MultiLocationProfileCostReport)

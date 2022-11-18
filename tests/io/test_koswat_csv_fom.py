@@ -4,8 +4,8 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.io.koswat_csv_fom import KoswatCsvFomBuilder, PointSurroundings
-from koswat.io.koswat_csv_reader import KoswatCsvFom
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.io.csv import KoswatCsvFom, KoswatCsvFomBuilder
 from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
 
 

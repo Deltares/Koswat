@@ -3,8 +3,7 @@ from typing import Union
 
 import pytest
 
-from koswat.io.koswat_csv_fom import KoswatCsvFom
-from koswat.io.koswat_csv_reader import KoswatCsvReader
+from koswat.io.csv import KoswatCsvFom, KoswatCsvReader
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 from tests import test_data
 from tests.io import invalid_paths_cases
