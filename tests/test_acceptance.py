@@ -8,7 +8,9 @@ from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
-from koswat.cost_report.io.plots.multi_report_plot import MultiLocationProfilePlot
+from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
+    MultiLocationProfileComparisonPlotExporter,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
@@ -111,8 +113,8 @@ class TestAcceptance:
                 for _rep_profile in _summary.locations_profile_report_list
             ), f"Profile type {_reinforcement_profile.__name__} not found."
         for _multi_report in _summary.locations_profile_report_list:
-            _mlp_plot = MultiLocationProfilePlot()
-            _mlp_plot.report = _multi_report
+            _mlp_plot = MultiLocationProfileComparisonPlotExporter()
+            _mlp_plot._cost_report = _multi_report
             _mlp_plot.export_dir = _test_dir
             _mlp_plot.export()
 

@@ -1,28 +1,13 @@
-from pathlib import Path
-from typing import Any, Protocol
+from typing import Protocol
 
-from koswat.builder_protocol import BuilderProtocol
-from koswat.io.file_object_model_protocol import FileObjectModelProtocol
+from typing_extensions import runtime_checkable
 
 
-class KoswatExporterProtocol(BuilderProtocol, Protocol):
-    data_object_model: Any
-    export_filepath: Path
+@runtime_checkable
+class KoswatExporterProtocol(Protocol):
 
-    def build(self) -> FileObjectModelProtocol:
+    def export(self, **kwargs) -> None:
         """
-        Builds a concrete `FileObjectModelProtocol` based on the `data_object_model`.
-
-        Returns:
-            FileObjectModelProtocol: Instance represented as the target file type.
-        """
-        pass
-
-    def export(self, file_object_model: FileObjectModelProtocol) -> None:
-        """
-        Exports the given `file_object_model` into a concrete file format.
-
-        Args:
-            file_object_model (FileObjectModelProtocol): File object model containing data to be written.
+        Exports an object model into a concrete file format.
         """
         pass
