@@ -15,23 +15,30 @@ class KoswatFigureContextHandler:
             ...
     """
 
-    def __init__(self, output_path: Path, dpi: int) -> Figure:
+    def __init__(self, output_path: Path, dpi: int) -> None:
         """
-        Initializes the context setting up the path where the `Figure` (with resolution set by `dpi`) will be saved.
+        Initializes the context by invoking `pyplot.figure(dpi=dpi)` and saving its output to an internal field.
 
         Args:
             output_path (Path): Export location for the generated plot.
             dpi (int): Canvas resolution in dots-per-inch.
 
-        Returns:
-            Figure: Initialized instance from `pyplot.figure(dpi=dpi)`.
         """
-        self._figure = pyplot.figure(dpi=dpi)
         self._output_path = output_path
+        self._dpi = dpi
 
     def __enter__(self) -> Figure:
+        """
+        Access to the context and invokation of `pyplot.figure(dpi)`.
+
+        Returns:
+            Figure: Initialized instance from `pyplot.figure(dpi=dpi)`."""
+        self._figure = pyplot.figure(dpi=self._dpi)
         return self._figure
 
     def __exit__(self, *args, **kwargs) -> None:
+        """
+        Exit the current context and save the previously initialized `Figure`.
+        """
         self._figure.savefig(self._output_path)
         pyplot.close()
