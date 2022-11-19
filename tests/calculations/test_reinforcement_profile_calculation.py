@@ -28,8 +28,8 @@ from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
-from koswat.plots import close_figure, get_plot
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
+from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import get_testcase_results_dir
 from tests.calculations import get_reinforced_profile, validated_reinforced_profile
 from tests.library_test_cases import (
@@ -189,16 +189,15 @@ class TestReinforcementProfileBuilderFactory:
         reinforced_profile: ReinforcementProfileProtocol,
         output_dir: Path,
     ):
-        _figure = get_plot(180)
-        _subplot = _figure.add_subplot()
-        _list_profile_plot = ListKoswatProfilePlot()
-        _list_profile_plot.koswat_object = [
-            (base_profile, "#03a9fc"),
-            (reinforced_profile, "#fc0303"),
-        ]
-        _list_profile_plot.subplot = _subplot
-        _list_profile_plot.plot()
-        # Export
         _plot_filename = output_dir / str(reinforced_profile)
-        _figure.savefig(_plot_filename.with_suffix(".png"))
-        close_figure()
+        with KoswatFigureContextHandler(
+            _plot_filename.with_suffix(".png"), 180
+        ) as _koswat_figure:
+            _subplot = _koswat_figure.add_subplot()
+            _list_profile_plot = ListKoswatProfilePlot()
+            _list_profile_plot.koswat_object = [
+                (base_profile, "#03a9fc"),
+                (reinforced_profile, "#fc0303"),
+            ]
+            _list_profile_plot.subplot = _subplot
+            _list_profile_plot.plot()

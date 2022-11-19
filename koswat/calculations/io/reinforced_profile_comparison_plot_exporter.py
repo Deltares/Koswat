@@ -1,13 +1,10 @@
 from pathlib import Path
-from typing import List
 
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
-from koswat.plots import close_figure, get_plot
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
+from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from koswat.plots.plot_exporter_protocol import PlotExporterProtocol
 
 
@@ -22,21 +19,17 @@ class ReinforcedProfileComparisonPlotExporter(PlotExporterProtocol):
         )
 
         # Define canvas
-        _figure = get_plot(180)
-        _subplot = _figure.add_subplot()
+        with KoswatFigureContextHandler(_file_path, 180) as _koswat_figure:
+            _subplot = _koswat_figure.add_subplot()
 
-        # Create plot builder.
-        _list_profile_plot = ListKoswatProfilePlot()
-        _list_profile_plot.koswat_object = [
-            (
-                self.reinforced_profile.old_profile,
-                "#03a9fc",
-            ),
-            (self.reinforced_profile, "#fc0303"),
-        ]
-        _list_profile_plot.subplot = _subplot
-        _list_profile_plot.plot()
-
-        # Export plots
-        _figure.savefig(_file_path)
-        close_figure()
+            # Create plot builder.
+            _list_profile_plot = ListKoswatProfilePlot()
+            _list_profile_plot.koswat_object = [
+                (
+                    self.reinforced_profile.old_profile,
+                    "#03a9fc",
+                ),
+                (self.reinforced_profile, "#fc0303"),
+            ]
+            _list_profile_plot.subplot = _subplot
+            _list_profile_plot.plot()
