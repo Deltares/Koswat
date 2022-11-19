@@ -189,8 +189,10 @@ class TestReinforcementProfileBuilderFactory:
         reinforced_profile: ReinforcementProfileProtocol,
         output_dir: Path,
     ):
-        # _figure = get_plot(180)
-        with KoswatFigureContext(180) as _koswat_figure:
+        _plot_filename = output_dir / str(reinforced_profile)
+        with KoswatFigureContext(
+            _plot_filename.with_suffix(".png"), 180
+        ) as _koswat_figure:
             _subplot = _koswat_figure.add_subplot()
             _list_profile_plot = ListKoswatProfilePlot()
             _list_profile_plot.koswat_object = [
@@ -199,6 +201,3 @@ class TestReinforcementProfileBuilderFactory:
             ]
             _list_profile_plot.subplot = _subplot
             _list_profile_plot.plot()
-            # Export
-            _plot_filename = output_dir / str(reinforced_profile)
-            _koswat_figure.savefig(_plot_filename.with_suffix(".png"))
