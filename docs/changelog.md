@@ -1,3 +1,9 @@
+## v0.8.0 (2022-11-19)
+
+### Feat
+
+- **KoswatPlotContext**: Created plot context handler so it's easier to initialize and close plots
+
 ## v0.7.0 (2022-11-18)
 
 ### Feat
