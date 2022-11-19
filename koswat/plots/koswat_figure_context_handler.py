@@ -6,7 +6,7 @@ from matplotlib import pyplot
 from matplotlib.figure import Figure
 
 
-class KoswatFigureContext:
+class KoswatFigureContextHandler:
     """
     PyPlot fig context handler that opens the figure stream and closes it saving it to the appointed path.
     Usage example:

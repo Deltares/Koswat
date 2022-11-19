@@ -29,7 +29,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_scenario import KoswatScenario
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
-from koswat.plots.koswat_figure_context import KoswatFigureContext
+from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import get_testcase_results_dir
 from tests.calculations import get_reinforced_profile, validated_reinforced_profile
 from tests.library_test_cases import (
@@ -190,7 +190,7 @@ class TestReinforcementProfileBuilderFactory:
         output_dir: Path,
     ):
         _plot_filename = output_dir / str(reinforced_profile)
-        with KoswatFigureContext(
+        with KoswatFigureContextHandler(
             _plot_filename.with_suffix(".png"), 180
         ) as _koswat_figure:
             _subplot = _koswat_figure.add_subplot()

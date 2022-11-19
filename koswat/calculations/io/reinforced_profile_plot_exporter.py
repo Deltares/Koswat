@@ -8,7 +8,7 @@ from koswat.calculations.reinforcement_profile_protocol import (
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.plots.dike.koswat_layers_wrapper_plot import KoswatLayersWrapperPlot
 from koswat.plots.geometries.highlight_geometry_plot import HighlightGeometryPlot
-from koswat.plots.koswat_figure_context import KoswatFigureContext
+from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from koswat.plots.plot_exporter_protocol import PlotExporterProtocol
 
 
@@ -49,7 +49,7 @@ class ReinforcedProfilePlotExporter(PlotExporterProtocol):
         layers_to_plot: List[KoswatLayerProtocol],
     ):
         # Define canvas
-        with KoswatFigureContext(
+        with KoswatFigureContextHandler(
             output_file.with_suffix(".png"), 180
         ) as _koswat_figure:
             _subplot = _koswat_figure.add_subplot()

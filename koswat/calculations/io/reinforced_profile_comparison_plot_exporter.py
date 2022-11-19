@@ -4,7 +4,7 @@ from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
-from koswat.plots.koswat_figure_context import KoswatFigureContext
+from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from koswat.plots.plot_exporter_protocol import PlotExporterProtocol
 
 
@@ -19,7 +19,7 @@ class ReinforcedProfileComparisonPlotExporter(PlotExporterProtocol):
         )
 
         # Define canvas
-        with KoswatFigureContext(_file_path, 180) as _koswat_figure:
+        with KoswatFigureContextHandler(_file_path, 180) as _koswat_figure:
             _subplot = _koswat_figure.add_subplot()
 
             # Create plot builder.
