@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Generator
 
 import pytest
 from matplotlib import pyplot
@@ -17,7 +18,7 @@ class TestKoswatFigureContextHandler:
         assert _context_handler._dpi == 42
 
     @pytest.fixture(autouse=False)
-    def valid_context(self) -> KoswatFigureContextHandler:
+    def valid_context(self) -> Generator:
         _test_dir = test_results / "koswat_figure_context_handler"
         _test_file = _test_dir / "test_plot.png"
         _test_dir.mkdir(parents=True, exist_ok=True)
