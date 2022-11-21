@@ -1,3 +1,4 @@
+import math
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
@@ -55,10 +56,10 @@ class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):
         ) in vc_parameters.items():
             _parameter_name = _format_parameter_name(_parameter_name)
             _volume_key = f"{_parameter_name} {self._volume_surface_key_column}:"
-            csv_dictionary[_volume_key].append(_vc_parameter.volume)
+            csv_dictionary[_volume_key].append(_vc_parameter.volume if _vc_parameter else math.nan)
 
             _cost_key = f"{_parameter_name} {self._cost_key_column}:"
-            csv_dictionary[_cost_key].append(_vc_parameter.total_cost())
+            csv_dictionary[_cost_key].append(_vc_parameter.total_cost() if _vc_parameter else math.nan)
 
     def build(self) -> SummaryMatrixCsvFom:
         _fom = SummaryMatrixCsvFom()
