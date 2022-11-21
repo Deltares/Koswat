@@ -20,6 +20,7 @@ class ProfileCostReport(CostReportProtocol):
         self.reinforced_profile = None
         self.volume_cost_parameters = None
         self.layer_cost_reports = []
+        self.volume_cost_parameters = VolumeCostParameters()
 
     @property
     def total_cost(self) -> float:
