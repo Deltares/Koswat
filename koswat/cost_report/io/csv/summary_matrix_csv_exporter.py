@@ -1,8 +1,9 @@
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
+from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
@@ -11,6 +12,9 @@ from koswat.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
 class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):
     data_object_model: KoswatSummary
     export_filepath: Path
+
+    _volume_surface_key_column = "(volume / surface)"
+    _cost_key_column = "(cost)"
 
     def __init__(self) -> None:
         self.data_object_model = None
@@ -40,6 +44,22 @@ class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):
             )
         )
 
+    def _get_volume_cost_parameters(
+        self, vc_parameters: Dict[str, VolumeCostParameter], csv_dictionary: dict
+    ):
+        def _format_parameter_name(dict_name: str) -> str:
+            return dict_name.replace("_", " ").capitalize().strip()
+        for (
+            _parameter_name,
+            _vc_parameter,
+        ) in vc_parameters.items():
+            _parameter_name = _format_parameter_name(_parameter_name)
+            _volume_key = f"{_parameter_name} {self._volume_surface_key_column}:"
+            csv_dictionary[_volume_key].append(_vc_parameter.volume)
+
+            _cost_key = f"{_parameter_name} {self._cost_key_column}:"
+            csv_dictionary[_cost_key].append(_vc_parameter.total_cost())
+
     def build(self) -> SummaryMatrixCsvFom:
         _fom = SummaryMatrixCsvFom()
         _profile_type_key = "Profile type"
@@ -50,9 +70,10 @@ class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):
         for _loc_prof_report in self.data_object_model.locations_profile_report_list:
             _dict_of_entries[_profile_type_key].append(_loc_prof_report.profile_type)
             _dict_of_entries[_cost_per_km_key].append(_loc_prof_report.cost_per_km)
-            for _layer in _loc_prof_report.profile_cost_report.layer_cost_reports:
-                _key = f"Volume {_layer.material} (m3)"
-                _dict_of_entries[_key].append(_layer.total_volume)
+            self._get_volume_cost_parameters(
+                _loc_prof_report.profile_cost_report.volume_cost_parameters.__dict__,
+                _dict_of_entries,
+            )
             _dict_of_entries[_locations_key].append(_loc_prof_report.locations)
 
         def dict_to_csv_row(key, placeholders: int) -> List[str]:
@@ -72,9 +93,10 @@ class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):
         )
         _fom.headers = dict_to_csv_row(_profile_type_key, _required_placeholders)
         _fom.cost_rows = [
-            dict_to_csv_row(_volume_key, _required_placeholders)
-            for _volume_key in _dict_of_entries.keys()
-            if "Volume " in _volume_key
+            dict_to_csv_row(_parameter_key, _required_placeholders)
+            for _parameter_key in _dict_of_entries.keys()
+            if self._volume_surface_key_column in _parameter_key
+            or self._cost_key_column in _parameter_key
         ]
         _fom.cost_rows.insert(
             0, dict_to_csv_row(_cost_per_km_key, _required_placeholders)
