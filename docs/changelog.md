@@ -1,3 +1,10 @@
+## v0.8.1 (2022-11-21)
+
+### Fix
+
+- **SummaryMatrixCsvExporter**: We now provide NANs when volume parameter is not defined
+- **summary_matrix_csv_exporter**: We now correctly export all required information to the csv for the user
+
 ## v0.8.0 (2022-11-19)
 
 ### Feat
