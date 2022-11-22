@@ -11,7 +11,6 @@ class TestKoswatMaterial:
         _material = KoswatMaterial()
         assert isinstance(_material, KoswatMaterial)
         assert not _material.name
-        assert math.isnan(_material.cost)
 
 
 class TestKoswatMaterialFactory:
@@ -48,4 +47,3 @@ class TestKoswatMaterialFactory:
         # 3. Verify expectations.
         assert isinstance(_material, KoswatMaterial)
         assert _material.name.lower() == material_name.lower().strip()
-        assert not math.isnan(_material.cost)
