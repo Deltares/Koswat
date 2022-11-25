@@ -12,5 +12,6 @@
 
 ```bash
 conda env create -f "environment.yml"
+conda activate koswat_env
 poetry install
 ```
