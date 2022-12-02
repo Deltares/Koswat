@@ -25,10 +25,10 @@ class KoswatIniReader:
         # 4- Remove double quotes around string
         return path_string.split(self.comment_character)[0].strip().strip('"')
 
-    def _add_config(self, configs, name, path):
-        config = configparser.ConfigParser()
-        config.read(path)
-        configs.update({name: [config, path]})
+    # def add_config(self, configs, name, path):
+    #     config = configparser.ConfigParser()
+    #     config.read(path)
+    #     configs.update({name: [config, path]})
 
     def read_ini(self, path) -> KoswatIniFom:
         ini_fom_builder = KoswatIniFomBuilder()
