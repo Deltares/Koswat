@@ -1,6 +1,10 @@
 import configparser
 import os
 
+from koswat.io.ini.koswat_ini_fom import KoswatIniFom
+from koswat.io.ini.koswat_ini_fom_builder import KoswatIniFomBuilder
+from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
+
 # reads top level ini file, searches for ini file references or directories and proceses them also.
 # produces a dict of configuration objects that contain the content of the ini files
 # key = key from top ini file or filename of inifile in directory
@@ -25,7 +29,7 @@ class KoswatIniReader:
         config.read(path)
         configs.update({name: [config, path]})
 
-    def read(self, path) -> dict:
+    def read(self, path) -> KoswatIniFom:
         configs = dict()
         # Read the top level ini file and add it to the configurations dict.
         self.add_config(configs, self.top_ini_name, path)
@@ -48,6 +52,9 @@ class KoswatIniReader:
                                 self.add_config(
                                     configs, file_name, section_key_and_file
                                 )
+        _ini_fom_builder = KoswatIniFomBuilder()
+        _ini_fom_builder.configs = configs
+        return _ini_fom_builder.build()
         return configs
 
 
