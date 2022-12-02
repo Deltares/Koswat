@@ -1,5 +1,6 @@
 import configparser
 import os
+from typing import Dict, List
 
 from koswat.io.ini.koswat_ini_fom import KoswatIniFom
 from koswat.io.ini.koswat_ini_fom_builder import KoswatIniFomBuilder
@@ -24,13 +25,22 @@ class KoswatIniReader:
         # 4- Remove double quotes around string
         return path_string.split(self.comment_character)[0].strip().strip('"')
 
-    def add_config(self, configs, name, path):
+    def _add_config(self, configs, name, path):
         config = configparser.ConfigParser()
         config.read(path)
         configs.update({name: [config, path]})
 
-    def read(self, path) -> KoswatIniFom:
+    def read_ini(self, path) -> KoswatIniFom:
+        ini_fom_builder = KoswatIniFomBuilder()
+        ini_fom_builder.configs = configs
+        return ini_fom_builder.build(path)
+
+    def read_ini_tree(self, path) -> Dict[str, List[KoswatIniFom, str]]:
         configs = dict()
+        #
+        # #TODO adapt read_ini_tree to use read_ini and build configs.
+        #
+
         # Read the top level ini file and add it to the configurations dict.
         self.add_config(configs, self.top_ini_name, path)
         # Looking for other ini file references
@@ -52,9 +62,6 @@ class KoswatIniReader:
                                 self.add_config(
                                     configs, file_name, section_key_and_file
                                 )
-        _ini_fom_builder = KoswatIniFomBuilder()
-        _ini_fom_builder.configs = configs
-        return _ini_fom_builder.build()
         return configs
 
 
