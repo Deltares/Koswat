@@ -1,6 +1,5 @@
-from typing import Dict, List
+from typing import Dict
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
 
 
