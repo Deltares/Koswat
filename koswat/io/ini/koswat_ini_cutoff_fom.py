@@ -3,7 +3,7 @@ import math
 from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
 
 
-class KoswatIniGroundMeasuresFom(FileObjectModelProtocol):
+class KoswatIniCutoffFom(FileObjectModelProtocol):
     storageFactorGround: str
     storageFactorConstruction: str
     storageFactorGroundPurchase: str
@@ -20,9 +20,6 @@ class KoswatIniGroundMeasuresFom(FileObjectModelProtocol):
         self.maxLenghtCutoff = math.nan
 
     def is_valid(self) -> bool:
-        # TODO add validation
-        #        check if values are initialized
-        # how to test for an uninitialized bool?
         return (
             (self.storageFactorGround != "")
             & (self.storageFactorGroundPurchase != "")

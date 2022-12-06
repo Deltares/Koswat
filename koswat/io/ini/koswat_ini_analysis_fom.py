@@ -20,9 +20,6 @@ class KoswatIniAnalysisFom(FileObjectModelProtocol):
         self.BTW = None
 
     def is_valid(self) -> bool:
-        # TODO add validation
-        #        check if values are initialized
-        # how to test for an uninitialized bool?
         return (
             (self.dijksectiesSelectie != "")
             & (self.dijksectieLigging != "")
