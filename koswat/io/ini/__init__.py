@@ -1,6 +1,7 @@
 from koswat.io.ini.koswat_ini_analysis_fom import KoswatIniAnalysisFom
 from koswat.io.ini.koswat_ini_analysis_fom_builder import KoswatIniAnalysisFomBuilder
 from koswat.io.ini.koswat_ini_coffer_dam_fom import KoswatIniCofferDamFom
+from koswat.io.ini.koswat_ini_coffer_dam_fom_builder import KoswatIniCofferDamFomBuilder
 from koswat.io.ini.koswat_ini_cutoff_fom import KoswatIniCutoffFom
 from koswat.io.ini.koswat_ini_dike_profile_fom import KoswatIniDikeProfileFom
 from koswat.io.ini.koswat_ini_environment_fom import KoswatIniEnvironmentFom
@@ -9,5 +10,4 @@ from koswat.io.ini.koswat_ini_infrastructure_fom import KoswatIniInfrastructureF
 from koswat.io.ini.koswat_ini_stability_wall_fom import KoswatIniStabilityWallFom
 
 # from koswat.io.ini.koswat_ini_environment_fom_builder import (KoswatIniEnvironmentFomBuilder)
-# from koswat.io.ini.koswat_ini_coffer_dam_fom_builder import KoswatIniCofferDamFomBuilder
 # from koswat.io.ini.koswat_ini_dike_profile_fom_builder import KoswatIniDikeProfileFomBuilder
