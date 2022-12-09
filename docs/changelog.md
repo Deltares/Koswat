@@ -1,3 +1,9 @@
+## v0.8.2 (2022-12-09)
+
+### Fix
+
+- **KoswatLayerProtocol**: we now have two different geometries for a layer, so that the profile with the layer and the stand alone representation of it are better reached
+
 ## v0.8.1 (2022-11-21)
 
 ### Fix

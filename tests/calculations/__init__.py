@@ -109,15 +109,15 @@ def _compare_koswat_layers(
     new_layers: ReinforcementLayersWrapper, expected_layers: ReinforcementLayersWrapper
 ) -> List[str]:
     _tolerance = 0.001
-    if not new_layers.base_layer.geometry.almost_equals(
-        expected_layers.base_layer.geometry, _tolerance
+    if not new_layers.base_layer.outer_geometry.almost_equals(
+        expected_layers.base_layer.outer_geometry, _tolerance
     ):
         return [f"Geometries differ for base_layer."]
     _layers_errors = []
     for _idx, _c_layer in enumerate(expected_layers.coating_layers):
         _new_layer = new_layers.coating_layers[_idx]
-        if not _new_layer.geometry.almost_equals(
-            Polygon(_c_layer.geometry), _tolerance
+        if not _new_layer.outer_geometry.almost_equals(
+            Polygon(_c_layer.outer_geometry), _tolerance
         ):
             _layers_errors.append(
                 "Geometries differ for layer {}".format(_c_layer.material.name)
