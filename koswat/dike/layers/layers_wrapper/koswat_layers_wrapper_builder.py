@@ -42,7 +42,7 @@ class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
         for c_layer_data in _c_layers_data:
             _builder.layer_data = c_layer_data
             _c_layer = _builder.build()
-            _builder.upper_linestring = _c_layer.layer_points
+            _builder.upper_linestring = _c_layer.lower_linestring
             _layers.append(_c_layer)
         return _layers
 
@@ -56,7 +56,7 @@ class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
         _koswat_layers = KoswatLayersWrapper()
         _koswat_layers.coating_layers = self._get_coating_layers()
         _base_layer_surface = (
-            _koswat_layers.coating_layers[-1].layer_points
+            _koswat_layers.coating_layers[-1].lower_linestring
             if any(_koswat_layers.coating_layers)
             else geometry.LineString(self.profile_points)
         )

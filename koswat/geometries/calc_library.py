@@ -3,6 +3,14 @@ from typing import List, Union
 from shapely import affinity, geometry, ops
 
 
+def as_unified_geometry(
+    source_geom: Union[geometry.Polygon, geometry.MultiPolygon]
+) -> geometry.Polygon:
+    if isinstance(source_geom, geometry.MultiPolygon):
+        return source_geom.union(source_geom.convex_hull)
+    return source_geom
+
+
 def get_relative_core_layer(
     core_geometry: geometry.Polygon, coating_geometry: geometry.Polygon
 ) -> geometry.Polygon:
@@ -31,7 +39,7 @@ def get_relative_core_layer(
     )
     _wrapper_polygon = geometry.Polygon(_wrapper_points)
     _fixed_layer_geom = _wrapper_polygon.intersection(coating_geometry)
-    return _fixed_layer_geom.union(core_geometry)
+    return as_unified_geometry(_fixed_layer_geom.union(core_geometry))
 
 
 def get_polygon_coordinates(
@@ -95,7 +103,12 @@ def remove_layer_from_polygon(
     dike_polygon: geometry.Polygon, layer_depth: float
 ) -> geometry.Polygon:
     _shift_y_geom = affinity.translate(dike_polygon, yoff=-layer_depth)
-    _shift_y_geom = dike_polygon.intersection(_shift_y_geom)
-    _shift_x = affinity.translate(dike_polygon, xoff=-layer_depth)
-    _shift_x = _shift_x.intersection(affinity.translate(dike_polygon, xoff=layer_depth))
-    return _shift_y_geom
+    _shift_y_geom = dike_polygon.difference(_shift_y_geom)
+    _first_coord = dike_polygon.boundary.coords[0]
+    _new_idx = list(_shift_y_geom.boundary.coords).index(_first_coord)
+    _ordered_layer_coords = (
+        _shift_y_geom.boundary.coords[_new_idx:]
+        + _shift_y_geom.boundary.coords[:_new_idx]
+        + [_first_coord]
+    )
+    return geometry.Polygon(_ordered_layer_coords)

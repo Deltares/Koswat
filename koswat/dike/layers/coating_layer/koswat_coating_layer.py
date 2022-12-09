@@ -9,7 +9,7 @@ from koswat.geometries.calc_library import get_polygon_coordinates
 
 class KoswatCoatingLayer(KoswatLayerProtocol):
     depth: float
-    layer_points: LineString
+    lower_linestring: LineString
     upper_points: LineString
     material: KoswatMaterial
     geometry: Polygon
@@ -17,7 +17,7 @@ class KoswatCoatingLayer(KoswatLayerProtocol):
     def __init__(self) -> None:
         self.material = None
         self.geometry = None
-        self.layer_points = None
+        self.lower_linestring = None
         self.upper_points = None
         self.depth = math.nan
 
