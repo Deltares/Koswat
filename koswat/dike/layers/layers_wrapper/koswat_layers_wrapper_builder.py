@@ -42,6 +42,7 @@ class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
         for c_layer_data in _c_layers_data:
             _builder.layer_data = c_layer_data
             _c_layer = _builder.build()
+            _builder.base_geometry = _c_layer.get_coated_geometry()
             _builder.upper_linestring = _c_layer.lower_linestring
             _layers.append(_c_layer)
         return _layers

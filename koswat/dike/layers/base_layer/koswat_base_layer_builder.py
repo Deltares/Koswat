@@ -22,7 +22,7 @@ class KoswatBaseLayerBuilder(KoswatLayerBuilderProtocol):
             raise ValueError("Material data needs to be provided.")
 
         _layer = KoswatBaseLayer()
-        _layer.geometry = points_to_polygon(list(self.upper_linestring.coords))
+        _layer.outer_geometry = points_to_polygon(list(self.upper_linestring.coords))
         _layer.material = KoswatMaterialFactory.get_material(_material_data)
         _layer.upper_points = self.upper_linestring
         return _layer

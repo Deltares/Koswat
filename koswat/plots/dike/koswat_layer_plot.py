@@ -18,7 +18,7 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         Raises:
             ValueError: When the `KoswatLayerProtocol` material has not been registered.
         """
-        _x_coords, y_coords = self.koswat_object.geometry.boundary.coords.xy
+        _x_coords, y_coords = self.koswat_object.outer_geometry.boundary.coords.xy
         dict_values = dict(color=color, linewidth=2, zorder=1)
         if self.koswat_object.material.name == "zand":
             dict_values["linestyle"] = "dashdot"

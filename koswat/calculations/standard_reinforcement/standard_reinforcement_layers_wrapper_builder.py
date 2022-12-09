@@ -43,7 +43,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             new_layer
         )
         _old_geom = Polygon(self.layers_data["base_layer"]["geometry"])
-        _added_geometry = new_layer.geometry.difference(_old_geom)
+        _added_geometry = new_layer.outer_geometry.difference(_old_geom)
         _reinforced_base_layer.old_layer_geometry = _old_geom
         _reinforced_base_layer.new_layer_geometry = _added_geometry
         _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
@@ -77,25 +77,10 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
                 )
             # Calculate the added geometry.
             _added_geometry = as_unified_geometry(
-                _new_coating_layer.geometry.difference(
-                    _relative_core_geom.union(_wrapped_calc_layer.geometry)
+                _new_coating_layer.material_geometry.difference(
+                    _relative_core_geom.union(_wrapped_calc_layer.outer_geometry)
                 )
             )
-
-            from matplotlib import pyplot
-
-            def plot_geometry(geometry):
-                _gx, _gy = geometry.boundary.coords.xy
-                _subplot.plot(_gx, _gy)
-
-            # _fig = pyplot.figure(dpi=140)
-            # _subplot = _fig.add_subplot()
-            # _fig.show()
-            # plot_geometry(_new_coating_layer.geometry)
-            # plot_geometry(_old_geom)
-            # plot_geometry(_added_geometry)
-            # plot_geometry(_removed_geom)
-            # pyplot.close(_fig)
 
             # Create new Reinforced Coating Layer
             _rc_layer = ReinforcementCoatingLayer.from_koswat_coating_layer(

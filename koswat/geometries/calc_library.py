@@ -103,12 +103,4 @@ def remove_layer_from_polygon(
     dike_polygon: geometry.Polygon, layer_depth: float
 ) -> geometry.Polygon:
     _shift_y_geom = affinity.translate(dike_polygon, yoff=-layer_depth)
-    _shift_y_geom = dike_polygon.difference(_shift_y_geom)
-    _first_coord = dike_polygon.boundary.coords[0]
-    _new_idx = list(_shift_y_geom.boundary.coords).index(_first_coord)
-    _ordered_layer_coords = (
-        _shift_y_geom.boundary.coords[_new_idx:]
-        + _shift_y_geom.boundary.coords[:_new_idx]
-        + [_first_coord]
-    )
-    return geometry.Polygon(_ordered_layer_coords)
+    return dike_polygon.difference(_shift_y_geom)
