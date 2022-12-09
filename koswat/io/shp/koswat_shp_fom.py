@@ -1,9 +1,9 @@
 from shapely.geometry import Point
 
-from koswat.io.koswat_reader_protocol import FileObjectModelProtocol
+from koswat.io.koswat_reader_protocol import ImportFileObjectModelProtocol
 
 
-class KoswatShpFom(FileObjectModelProtocol):
+class KoswatShpFom(ImportFileObjectModelProtocol):
     initial_point: Point
     end_point: Point
 
