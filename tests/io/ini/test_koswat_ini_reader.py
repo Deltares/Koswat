@@ -3,6 +3,7 @@ from typing import Type
 import pytest
 
 from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
+from koswat.io.ini.koswat_costs_ini_fom import *
 from koswat.io.ini.koswat_general_ini_fom import *
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
@@ -19,7 +20,10 @@ class TestKoswatIniReader:
 
     @pytest.mark.parametrize(
         "test_file, ini_fom_type",
-        [pytest.param("koswat_general.ini", KoswatGeneralIniFom, id="General INI")],
+        [
+            pytest.param("koswat_general.ini", KoswatGeneralIniFom, id="General INI"),
+            pytest.param("koswat_costs.ini", KoswatCostsIniFom, id="Costs INI"),
+        ],
     )
     def test_koswat_ini_reader_returns_fom_instance(
         self, test_file: str, ini_fom_type: Type[KoswatIniFomProtocol]
@@ -169,3 +173,107 @@ class TestKoswatIniReader:
         assert _ini_fom.infrastructuur_section.wegen_klasse47_breedte == 8
         assert _ini_fom.infrastructuur_section.wegen_klasse7_breedte == 12
         assert _ini_fom.infrastructuur_section.wegen_onbekend_breedte == 8
+
+    def test_koswat_ini_read_costs_ini(self):
+        # 1. Define test data.
+        _test_file_path = test_data / "ini_reader" / "koswat_costs.ini"
+        _ini_reader = KoswatIniReader()
+        _ini_reader.koswat_ini_fom_type = KoswatCostsIniFom
+
+        # 2. Run test
+        _ini_fom = _ini_reader.read(_test_file_path)
+
+        # 3. Validate expectations.
+        assert isinstance(_ini_fom, KoswatCostsIniFom)
+
+        # Eenheidsprijzen
+        assert isinstance(_ini_fom.eenheidsprijzen_section, EenheidsprijzenSection)
+        assert _ini_fom.eenheidsprijzen_section.prijspeil == 2017
+
+        # KostenDijkProfiel
+        assert isinstance(_ini_fom.kostendijkprofiel_section, KostenDijkprofielSection)
+        assert _ini_fom.kostendijkprofiel_section.aanleg_graslaag_m3 == 12.44
+        assert _ini_fom.kostendijkprofiel_section.aanleg_kleilaag_m3 == 18.05
+        assert _ini_fom.kostendijkprofiel_section.aanleg_kern_m3 == 10.98
+        assert _ini_fom.kostendijkprofiel_section.hergebruik_graslaag_m3 == 6.04
+        assert _ini_fom.kostendijkprofiel_section.hergebruik_kern_m3 == 4.67
+        assert _ini_fom.kostendijkprofiel_section.afvoeren_materiaal_m3 == 7.07
+        assert _ini_fom.kostendijkprofiel_section.profileren_graslaag_m2 == 0.88
+        assert _ini_fom.kostendijkprofiel_section.profileren_kleilaag_m2 == 0.65
+        assert _ini_fom.kostendijkprofiel_section.profileren_kern_m2 == 0.60
+        assert _ini_fom.kostendijkprofiel_section.bewerken_maaiveld_m2 == 0.25
+
+        # KostenInfrastructuur
+        assert isinstance(
+            _ini_fom.kosteninfrastructuur_section, KostenInfrastructuurSection
+        )
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse2_verwijderen == 7.40
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse24_verwijderen == 9.64
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse47_verwijderen == 23.99
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse7_verwijderen == 38.77
+        assert _ini_fom.kosteninfrastructuur_section.wegen_onbekend_verwijderen == 9.64
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse2_aanleg == 24.31
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse24_aanleg == 32.30
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse47_aanleg == 31.85
+        assert _ini_fom.kosteninfrastructuur_section.wegen_klasse7_aanleg == 36.64
+        assert _ini_fom.kosteninfrastructuur_section.wegen_onbekend_aanleg == 32.30
+
+        # KostenOpslagFactorenInclBTW
+        assert isinstance(
+            _ini_fom.kostenopslagfactoreninclbtw_section,
+            KostenOpslagfactorenInclBTWSection,
+        )
+        assert _ini_fom.kostenopslagfactoreninclbtw_section.grond_makkelijk == 1.714
+        assert _ini_fom.kostenopslagfactoreninclbtw_section.grond_normaal == 1.953
+        assert _ini_fom.kostenopslagfactoreninclbtw_section.grond_moeilijk == 2.177
+        assert (
+            _ini_fom.kostenopslagfactoreninclbtw_section.constructief_makkelijk == 2.097
+        )
+        assert (
+            _ini_fom.kostenopslagfactoreninclbtw_section.constructief_normaal == 2.413
+        )
+        assert (
+            _ini_fom.kostenopslagfactoreninclbtw_section.constructief_moeilijk == 2.690
+        )
+        assert _ini_fom.kostenopslagfactoreninclbtw_section.wegen_makkelijk == 2.097
+        assert _ini_fom.kostenopslagfactoreninclbtw_section.wegen_normaal == 2.413
+        assert _ini_fom.kostenopslagfactoreninclbtw_section.wegen_moeilijk == 2.690
+        assert (
+            _ini_fom.kostenopslagfactoreninclbtw_section.grondaankoop_makkelijk == 1.292
+        )
+        assert (
+            _ini_fom.kostenopslagfactoreninclbtw_section.grondaankoop_normaal == 1.412
+        )
+        assert (
+            _ini_fom.kostenopslagfactoreninclbtw_section.grondaankoop_moeilijk == 1.645
+        )
+
+        # KostenOpslagFactorenexclBTW
+        assert isinstance(
+            _ini_fom.kostenopslagfactorenexclbtw_section,
+            KostenOpslagfactorenExclBTWSection,
+        )
+        assert _ini_fom.kostenopslagfactorenexclbtw_section.grond_makkelijk == 1.421
+        assert _ini_fom.kostenopslagfactorenexclbtw_section.grond_normaal == 1.621
+        assert _ini_fom.kostenopslagfactorenexclbtw_section.grond_moeilijk == 1.810
+        assert (
+            _ini_fom.kostenopslagfactorenexclbtw_section.constructief_makkelijk == 1.741
+        )
+        assert (
+            _ini_fom.kostenopslagfactorenexclbtw_section.constructief_normaal == 2.003
+        )
+        assert (
+            _ini_fom.kostenopslagfactorenexclbtw_section.constructief_moeilijk == 2.233
+        )
+        assert _ini_fom.kostenopslagfactorenexclbtw_section.wegen_makkelijk == 1.741
+        assert _ini_fom.kostenopslagfactorenexclbtw_section.wegen_normaal == 2.003
+        assert _ini_fom.kostenopslagfactorenexclbtw_section.wegen_moeilijk == 2.233
+        assert (
+            _ini_fom.kostenopslagfactorenexclbtw_section.grondaankoop_makkelijk == 1.292
+        )
+        assert (
+            _ini_fom.kostenopslagfactorenexclbtw_section.grondaankoop_normaal == 1.412
+        )
+        assert (
+            _ini_fom.kostenopslagfactorenexclbtw_section.grondaankoop_moeilijk == 1.645
+        )
