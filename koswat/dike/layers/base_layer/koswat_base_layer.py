@@ -8,11 +8,13 @@ from koswat.geometries.calc_library import get_polygon_coordinates
 class KoswatBaseLayer(KoswatLayerProtocol):
     material: KoswatMaterial
     upper_points: LineString
-    geometry: Polygon
+    outer_geometry: Polygon
+    material_geometry: Polygon
 
     def __init__(self) -> None:
         self.material = None
-        self.geometry = None
+        self.outer_geometry = None
+        self.material_geometry = None
         self.upper_points = None
 
     @property
@@ -27,8 +29,8 @@ class KoswatBaseLayer(KoswatLayerProtocol):
 
     def as_data_dict(self) -> dict:
         _geometry = []
-        if self.geometry:
-            _geometry = list(get_polygon_coordinates(self.geometry).coords)
+        if self.outer_geometry:
+            _geometry = list(get_polygon_coordinates(self.outer_geometry).coords)
         return dict(
             material=self.material.name,
             geometry=_geometry,

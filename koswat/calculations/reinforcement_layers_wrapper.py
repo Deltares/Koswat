@@ -20,7 +20,8 @@ class ReinforcementLayerProtocol(KoswatLayerProtocol, Protocol):
 
 class ReinforcementCoatingLayer(KoswatLayerProtocol):
     material: KoswatMaterial
-    geometry: Polygon
+    outer_geometry: Polygon
+    material_geometry: Polygon
     upper_points: LineString
     old_layer_geometry: Polygon
     new_layer_geometry: Polygon
@@ -29,15 +30,16 @@ class ReinforcementCoatingLayer(KoswatLayerProtocol):
 
     def __init__(self) -> None:
         self.material = None
-        self.geometry = None
+        self.outer_geometry = None
+        self.material_geometry = None
         self.upper_points = None
         self.new_layer_geometry = None
         self.removal_layer_geometry = None
 
     def as_data_dict(self) -> dict:
         _geometry = []
-        if self.geometry:
-            _geometry = list(get_polygon_coordinates(self.geometry).coords)
+        if self.outer_geometry:
+            _geometry = list(get_polygon_coordinates(self.outer_geometry).coords)
         return dict(
             material=self.material.name,
             depth=self.depth,
@@ -55,7 +57,8 @@ class ReinforcementCoatingLayer(KoswatLayerProtocol):
 
 class ReinforcementBaseLayer(ReinforcementLayerProtocol):
     material: KoswatMaterial
-    geometry: Polygon
+    outer_geometry: Polygon
+    material_geometry: Polygon
     upper_points: LineString
     new_layer_geometry: Polygon
     new_layer_surface: LineString
@@ -63,7 +66,8 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
 
     def __init__(self) -> None:
         self.material = None
-        self.geometry = None
+        self.outer_geometry = None
+        self.material_geometry = None
         self.upper_points = None
         self.new_layer_geometry = None
 
@@ -79,8 +83,8 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
 
     def as_data_dict(self) -> dict:
         _geometry = []
-        if self.geometry:
-            _geometry = list(get_polygon_coordinates(self.geometry).coords)
+        if self.outer_geometry:
+            _geometry = list(get_polygon_coordinates(self.outer_geometry).coords)
         return dict(
             material=self.material.name,
             geometry=_geometry,

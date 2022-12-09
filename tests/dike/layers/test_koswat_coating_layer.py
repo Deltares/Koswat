@@ -11,7 +11,7 @@ class TestKoswatCoatingLayer:
         assert isinstance(_layer, KoswatCoatingLayer)
         assert isinstance(_layer, KoswatLayerProtocol)
         assert not _layer.material
-        assert not _layer.geometry
+        assert not _layer.outer_geometry
         assert math.isnan(_layer.depth)
 
     def test_as_dict(self):

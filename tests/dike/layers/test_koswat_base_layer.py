@@ -9,7 +9,7 @@ class TestKoswatBaseLayer:
         assert isinstance(_layer, KoswatBaseLayer)
         assert isinstance(_layer, KoswatLayerProtocol)
         assert not _layer.material
-        assert not _layer.geometry
+        assert not _layer.outer_geometry
 
     def test_as_dict(self):
         _layer = KoswatBaseLayer()

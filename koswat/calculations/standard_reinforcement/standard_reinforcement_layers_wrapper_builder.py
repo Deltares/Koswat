@@ -14,6 +14,7 @@ from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperProtocol,
 )
 from koswat.geometries.calc_library import (
+    as_unified_geometry,
     get_polygon_surface_points,
     get_relative_core_layer,
 )
@@ -42,7 +43,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             new_layer
         )
         _old_geom = Polygon(self.layers_data["base_layer"]["geometry"])
-        _added_geometry = new_layer.geometry.difference(_old_geom)
+        _added_geometry = new_layer.outer_geometry.difference(_old_geom)
         _reinforced_base_layer.old_layer_geometry = _old_geom
         _reinforced_base_layer.new_layer_geometry = _added_geometry
         _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
@@ -71,13 +72,16 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             # Calculate the removed geometry.
             _removed_geom = _old_geom.difference(_relative_core_geom)
             if any(_rc_layer_list):
-                _removed_geom = _removed_geom.difference(
-                    _wrapped_calc_layer.old_layer_geometry
+                _removed_geom = as_unified_geometry(
+                    _removed_geom.difference(_wrapped_calc_layer.old_layer_geometry)
                 )
             # Calculate the added geometry.
-            _added_geometry = _new_coating_layer.geometry.difference(
-                _relative_core_geom.union(_wrapped_calc_layer.geometry)
+            _added_geometry = as_unified_geometry(
+                _new_coating_layer.material_geometry.difference(
+                    _relative_core_geom.union(_wrapped_calc_layer.outer_geometry)
+                )
             )
+
             # Create new Reinforced Coating Layer
             _rc_layer = ReinforcementCoatingLayer.from_koswat_coating_layer(
                 _new_coating_layer
