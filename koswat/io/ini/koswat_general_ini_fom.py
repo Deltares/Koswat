@@ -4,9 +4,9 @@ import abc
 import enum
 from configparser import ConfigParser
 from pathlib import Path
-from typing import Optional, Protocol
+from typing import Optional
 
-from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
+from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
 class StorageFactorEnum(enum.Enum):
@@ -21,26 +21,7 @@ class InfraCostsEnum(enum.Enum):
     VERVANG = 2
 
 
-class KoswatIniFomProtocol(ImportFileObjectModelProtocol, Protocol):
-    @classmethod
-    def from_dict(cls, ini_dict: ConfigParser) -> KoswatIniFomProtocol:
-        """
-        Imports all the data stored in an dictionary into a `KoswatIniFomProtocol` instance.
-
-        Args:
-            ini_dict (ConfigParser): Dictionary containing Ini values (section - properties, property - value) to be parsed.
-
-        Returns:
-            KoswatIniFomProtocol: Valid instance of a `KoswatIniFomProtocol` with the provided values.
-        """
-        pass
-
-
-class IniSection(KoswatIniFomProtocol, Protocol):
-    pass
-
-
-class AnalysisSection(IniSection):
+class AnalysisSection(KoswatIniFomProtocol):
     dijksecties_selectie: Path  # Ini file
     dijksectie_ligging: Path  # shp file
     dijksectie_invoer: Path  # csv file
@@ -62,7 +43,7 @@ class AnalysisSection(IniSection):
         return _section
 
 
-class DikeProfileSection(IniSection):
+class DikeProfileSection(KoswatIniFomProtocol):
     dikte_graslaag: float
     dikte_kleilaag: float
 
@@ -74,7 +55,7 @@ class DikeProfileSection(IniSection):
         return _section
 
 
-class ReinforcementProfileSection(IniSection, abc.ABC):
+class ReinforcementProfileSection(KoswatIniFomProtocol, abc.ABC):
     opslagfactor_grond: StorageFactorEnum
     opslagfactor_constructief: StorageFactorEnum
     opslagfactor_grondaankoop: Optional[StorageFactorEnum]
@@ -167,7 +148,7 @@ class KistdamSection(ReinforcementProfileSection):
         return _section
 
 
-class OmgevingSection(IniSection):
+class OmgevingSection(KoswatIniFomProtocol):
     omgevingsdatabases: Path  # Directory
     constructieafstand: float
     constructieovergang: float
@@ -189,7 +170,7 @@ class OmgevingSection(IniSection):
         return _section
 
 
-class InfrastructuurSection(IniSection):
+class InfrastructuurSection(KoswatIniFomProtocol):
     infrastructuur: bool
     opslagfactor_wegen: StorageFactorEnum
     infrakosten_0dh: InfraCostsEnum

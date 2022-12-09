@@ -4,6 +4,7 @@ import pytest
 
 from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
 from koswat.io.ini.koswat_general_ini_fom import *
+from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 from tests import test_data
