@@ -28,4 +28,4 @@ class KoswatIniReader(KoswatReaderProtocol):
         # !IMPORTANT! CONFIGPARSER Sections are case sensitive whilst options are not.
         # https://docs.python.org/3.10/library/configparser.html#mapping-protocol-access
         _ini_parser.read(file_path)
-        return self.koswat_ini_fom_type.from_dict(_ini_parser)
+        return self.koswat_ini_fom_type.from_config(_ini_parser)

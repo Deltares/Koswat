@@ -8,7 +8,7 @@ from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
 
 class KoswatIniFomProtocol(ImportFileObjectModelProtocol, Protocol):
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         """
         Imports all the data stored in an dictionary into a `KoswatIniFomProtocol` instance.
 

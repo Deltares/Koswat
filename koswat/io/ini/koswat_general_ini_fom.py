@@ -31,7 +31,7 @@ class AnalysisSection(KoswatIniFomProtocol):
     btw: bool
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.dijksecties_selectie = Path(ini_config["dijksecties_selectie"])
         _section.dijksectie_ligging = Path(ini_config["dijksectie_ligging"])
@@ -48,7 +48,7 @@ class DikeProfileSection(KoswatIniFomProtocol):
     dikte_kleilaag: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.dikte_graslaag = ini_config.getfloat("dikte_graslaag")
         _section.dikte_kleilaag = ini_config.getfloat("dikte_kleilaag")
@@ -82,7 +82,7 @@ class GrondmaatregelSection(ReinforcementProfileSection):
     factor_toename_bermhoogte: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
         _section.min_bermhoogte = ini_config.getfloat("min_bermhoogte")
@@ -99,7 +99,7 @@ class KwelschermSection(ReinforcementProfileSection):
     max_lengte_kwelscherm: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
         _section.min_lengte_kwelscherm = ini_config.getfloat("min_lengte_kwelscherm")
@@ -117,7 +117,7 @@ class StabiliteitswandSection(ReinforcementProfileSection):
     max_lengte_stabiliteitswand: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
         _section.versteiling_binnentalud = ini_config.getfloat(
@@ -140,7 +140,7 @@ class KistdamSection(ReinforcementProfileSection):
     max_lengte_kistdam: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
         _section.min_lengte_kistdam = ini_config.getfloat("min_lengte_kistdam")
@@ -158,7 +158,7 @@ class OmgevingSection(KoswatIniFomProtocol):
     water: bool
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.omgevingsdatabases = Path(ini_config["omgevingsdatabases"])
         _section.constructieafstand = ini_config.getfloat("constructieafstand")
@@ -182,7 +182,7 @@ class InfrastructuurSection(KoswatIniFomProtocol):
     wegen_onbekend_breedte: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.infrastructuur = ini_config.getboolean("infrastructuur")
         _section.opslagfactor_wegen = StorageFactorEnum[
@@ -209,27 +209,27 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
     infrastructuur_section: InfrastructuurSection
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _general_ini = cls()
 
-        _general_ini.analyse_section = AnalysisSection.from_dict(ini_config["Analyse"])
-        _general_ini.dijkprofiel_section = DikeProfileSection.from_dict(
+        _general_ini.analyse_section = AnalysisSection.from_config(ini_config["Analyse"])
+        _general_ini.dijkprofiel_section = DikeProfileSection.from_config(
             ini_config["Dijkprofiel"]
         )
-        _general_ini.grondmaatregel_section = GrondmaatregelSection.from_dict(
+        _general_ini.grondmaatregel_section = GrondmaatregelSection.from_config(
             ini_config["Grondmaatregel"]
         )
-        _general_ini.kwelscherm_section = KwelschermSection.from_dict(
+        _general_ini.kwelscherm_section = KwelschermSection.from_config(
             ini_config["Kwelscherm"]
         )
-        _general_ini.stabiliteitswand_section = StabiliteitswandSection.from_dict(
+        _general_ini.stabiliteitswand_section = StabiliteitswandSection.from_config(
             ini_config["Stabiliteitswand"]
         )
-        _general_ini.kistdam_section = KistdamSection.from_dict(ini_config["Kistdam"])
-        _general_ini.omgeving_section = OmgevingSection.from_dict(
+        _general_ini.kistdam_section = KistdamSection.from_config(ini_config["Kistdam"])
+        _general_ini.omgeving_section = OmgevingSection.from_config(
             ini_config["Omgeving"]
         )
-        _general_ini.infrastructuur_section = InfrastructuurSection.from_dict(
+        _general_ini.infrastructuur_section = InfrastructuurSection.from_config(
             ini_config["Infrastructuur"]
         )
         return _general_ini

@@ -7,7 +7,7 @@ class EenheidsprijzenSection(KoswatIniFomProtocol):
     prijspeil: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.prijspeil = ini_config.getfloat("prijspeil")
         return _section
@@ -26,7 +26,7 @@ class KostenDijkprofielSection(KoswatIniFomProtocol):
     bewerken_maaiveld_m2: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.aanleg_graslaag_m3 = ini_config.getfloat("aanleg_graslaag_m3")
         _section.aanleg_kleilaag_m3 = ini_config.getfloat("aanleg_kleilaag_m3")
@@ -54,7 +54,7 @@ class KostenInfrastructuurSection(KoswatIniFomProtocol):
     wegen_onbekend_aanleg: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.wegen_klasse2_verwijderen = ini_config.getfloat(
             "wegen_klasse2_verwijderen"
@@ -94,7 +94,7 @@ class KostenOpslagfactorenInclBTWSection(KoswatIniFomProtocol):
     grondaankoop_moeilijk: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.grond_makkelijk = ini_config.getfloat("grond_makkelijk")
         _section.grond_normaal = ini_config.getfloat("grond_normaal")
@@ -126,7 +126,7 @@ class KostenOpslagfactorenExclBTWSection(KoswatIniFomProtocol):
     grondaankoop_moeilijk: float
 
     @classmethod
-    def from_dict(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.grond_makkelijk = ini_config.getfloat("grond_makkelijk")
         _section.grond_normaal = ini_config.getfloat("grond_normaal")
@@ -151,24 +151,24 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
     kostenopslagfactorenexclbtw_section: KostenOpslagfactorenExclBTWSection
 
     @classmethod
-    def from_dict(cls, ini_dict: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_dict: ConfigParser) -> KoswatIniFomProtocol:
         _ini_fom = cls()
-        _ini_fom.eenheidsprijzen_section = EenheidsprijzenSection.from_dict(
+        _ini_fom.eenheidsprijzen_section = EenheidsprijzenSection.from_config(
             ini_dict["Eenheidsprijzen"]
         )
-        _ini_fom.kostendijkprofiel_section = KostenDijkprofielSection.from_dict(
+        _ini_fom.kostendijkprofiel_section = KostenDijkprofielSection.from_config(
             ini_dict["KostenDijkprofiel"]
         )
-        _ini_fom.kosteninfrastructuur_section = KostenInfrastructuurSection.from_dict(
+        _ini_fom.kosteninfrastructuur_section = KostenInfrastructuurSection.from_config(
             ini_dict["KostenInfrastructuur"]
         )
         _ini_fom.kostenopslagfactoreninclbtw_section = (
-            KostenOpslagfactorenInclBTWSection.from_dict(
+            KostenOpslagfactorenInclBTWSection.from_config(
                 ini_dict["KostenOpslagfactorenInclBTW"]
             )
         )
         _ini_fom.kostenopslagfactorenexclbtw_section = (
-            KostenOpslagfactorenExclBTWSection.from_dict(
+            KostenOpslagfactorenExclBTWSection.from_config(
                 ini_dict["KostenOpslagfactorenExclBTW"]
             )
         )
