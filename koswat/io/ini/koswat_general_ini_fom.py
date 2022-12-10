@@ -212,7 +212,9 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _general_ini = cls()
 
-        _general_ini.analyse_section = AnalysisSection.from_config(ini_config["Analyse"])
+        _general_ini.analyse_section = AnalysisSection.from_config(
+            ini_config["Analyse"]
+        )
         _general_ini.dijkprofiel_section = DikeProfileSection.from_config(
             ini_config["Dijkprofiel"]
         )

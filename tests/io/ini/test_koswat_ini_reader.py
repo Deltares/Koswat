@@ -8,6 +8,7 @@ from koswat.io.ini.koswat_dike_selection_ini_fom import *
 from koswat.io.ini.koswat_general_ini_fom import *
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.io.ini.koswat_scenario_ini_fom import *
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 from tests import test_data
 
@@ -24,6 +25,9 @@ class TestKoswatIniReader:
         [
             pytest.param("koswat_general.ini", KoswatGeneralIniFom, id="General INI"),
             pytest.param("koswat_costs.ini", KoswatCostsIniFom, id="Costs INI"),
+            pytest.param(
+                "koswat_scenario.ini", KoswatScenarioIniFom, id="Scenario INI"
+            ),
             pytest.param(
                 "koswat_dike_selection.ini",
                 KoswatDikeSelectionIniFom,
@@ -285,7 +289,7 @@ class TestKoswatIniReader:
         )
 
     def test_koswat_ini_read_dike_selection_ini(self):
-         # 1. Define test data.
+        # 1. Define test data.
         _test_file_path = test_data / "ini_reader" / "koswat_dike_selection.ini"
         _ini_reader = KoswatIniReader()
         _ini_reader.koswat_ini_fom_type = KoswatDikeSelectionIniFom
@@ -301,3 +305,32 @@ class TestKoswatIniReader:
         assert _ini_fom.dijksecties_section.dike_sections[0] == "10-1-1-A-1-A"
         assert _ini_fom.dijksecties_section.dike_sections[1] == "10-1-2-A-1-A"
         assert _ini_fom.dijksecties_section.dike_sections[2] == "10-1-3-A-1-B-1"
+
+    def test_koswat_ini_read_scenario_ini(self):
+        # 1. Define test data.
+        _test_file_path = test_data / "ini_reader" / "koswat_scenario.ini"
+        _ini_reader = KoswatIniReader()
+        _ini_reader.koswat_ini_fom_type = KoswatScenarioIniFom
+
+        # 2. Run test
+        _ini_fom = _ini_reader.read(_test_file_path)
+
+        # 3. Validate expectations.
+        assert isinstance(_ini_fom, KoswatScenarioIniFom)
+
+        # Scenarios
+        assert len(_ini_fom.scenario_sections) == 2
+
+        # Scenario 0
+        assert _ini_fom.scenario_sections[0].dH == 0.5
+        assert _ini_fom.scenario_sections[0].dS == 10
+        assert _ini_fom.scenario_sections[0].dP == 50
+        assert _ini_fom.scenario_sections[0].buitentalud == None
+        assert _ini_fom.scenario_sections[0].kruinbreedte == None
+
+        # Scenario 1
+        assert _ini_fom.scenario_sections[1].dH == 1
+        assert _ini_fom.scenario_sections[1].dS == 15
+        assert _ini_fom.scenario_sections[1].dP == 75
+        assert _ini_fom.scenario_sections[1].buitentalud == 4
+        assert _ini_fom.scenario_sections[1].kruinbreedte == 10
