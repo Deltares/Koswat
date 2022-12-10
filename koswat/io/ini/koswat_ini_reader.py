@@ -2,7 +2,7 @@ import configparser
 from pathlib import Path
 from typing import Type
 
-from koswat.io.ini.koswat_general_ini_fom import KoswatIniFomProtocol
+from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
