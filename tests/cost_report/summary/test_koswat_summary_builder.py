@@ -11,6 +11,7 @@ from koswat.calculations.standard_reinforcement import (
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.configuration.models import KoswatScenario
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -26,7 +27,6 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from koswat.koswat_scenario import KoswatScenario
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 

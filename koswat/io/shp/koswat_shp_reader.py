@@ -9,7 +9,7 @@ from koswat.io.shp import KoswatShpFom
 
 class KoswatShpReader(KoswatReaderProtocol):
     def supports_file(self, file_path: Path) -> bool:
-        return isinstance(file_path, Path) and file_path.suffix == ".shp"
+        return isinstance(file_path, Path) and file_path.suffix.lower() == ".shp"
 
     def read(self, file_path: Path) -> KoswatShpFom:
         if not self.supports_file(file_path):

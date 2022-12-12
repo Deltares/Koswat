@@ -4,10 +4,10 @@ from koswat.calculations.reinforcement_profile_calculation_protocol import (
 from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
 )
+from koswat.configuration.models import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.koswat_scenario import KoswatScenario
 
 
 class PipingWallReinforcementProfileCalculation(

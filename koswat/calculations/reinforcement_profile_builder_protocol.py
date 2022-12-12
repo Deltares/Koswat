@@ -6,8 +6,8 @@ from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.configuration.models import KoswatScenario
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.koswat_scenario import KoswatScenario
 
 
 @runtime_checkable

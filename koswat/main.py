@@ -1,9 +1,12 @@
-# -*- coding: utf-8 -*-
 import logging
 from pathlib import Path
 from typing import Optional
 
 import click
+
+from koswat.configuration.io.koswat_configuration_importer import (
+    KoswatConfigurationImporter,
+)
 
 
 ### Below is the documentation for the commandline interface, see the CLICK-package.
@@ -16,7 +19,10 @@ def run_analysis(input_file: str):
             raise FileNotFoundError(_ini)
         return _ini
 
-    _input_file = _as_path(input_file)
+    _config_importer = KoswatConfigurationImporter()
+    _config_importer.ini_configuration = _as_path(input_file)
+    _koswat_config = _config_importer.build()
+    _koswat_config.run()
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ from typing import Protocol
 
 from typing_extensions import runtime_checkable
 
-from koswat.io.file_object_model_protocol import FileObjectModelProtocol
+from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
 
 
 @runtime_checkable
@@ -20,14 +20,14 @@ class KoswatReaderProtocol(Protocol):
         """
         pass
 
-    def read(self, file_path: Path) -> FileObjectModelProtocol:
+    def read(self, file_path: Path) -> ImportFileObjectModelProtocol:
         """
-        Imports the data from the `file_path` into a concrete implementation of a `FileObjectModelProtocol`.
+        Imports the data from the `file_path` into a concrete implementation of a `ImportFileObjectModelProtocol`.
 
         Args:
             file_path (Path): Path to a file that should be imported.
 
         Returns:
-            FileObjectModelProtocol: Model representing the data in the file.
+            ImportFileObjectModelProtocol: Model representing the data in the file.
         """
         pass
