@@ -31,5 +31,5 @@ class TestKoswatConfigurationImporter:
             isinstance(_scenario, KoswatScenario) for _scenario in _config.scenarios
         )
         assert isinstance(_config.costs, KoswatCosts)
-        assert isinstance(_config.dike_sections, KoswatDikeSelection)
+        assert isinstance(_config.dike_selection, KoswatDikeSelection)
         assert _config.is_valid()

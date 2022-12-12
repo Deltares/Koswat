@@ -34,16 +34,16 @@ class KoswatConfigurationImporter(BuilderProtocol):
             _section_scenarios: KoswatSectionScenariosIniFom = reader.read(_ini_file)
             _section_scenarios.section_name = _ini_file.stem
             for _s_scenario in _section_scenarios.section_scenarios:
-                yield super(KoswatScenario, _s_scenario)
+                yield _s_scenario
 
     def get_dike_selection(self, txt_file: Path) -> KoswatDikeSelection:
         _reader = KoswatTxtReader()
         _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
-        return super(KoswatDikeSelection, _reader.read(txt_file))
+        return _reader.read(txt_file)
 
     def get_dike_costs(self, reader: KoswatIniReader, ini_file: Path) -> KoswatCosts:
         reader.koswat_ini_fom_type = KoswatCostsIniFom
-        return super(KoswatCosts, reader.read(ini_file))
+        return reader.read(ini_file)
 
     def build(self) -> KoswatConfiguration:
         _config = KoswatConfiguration()

@@ -8,20 +8,20 @@ from koswat.configuration.models.koswat_scenario import KoswatScenario
 
 class KoswatConfiguration(KoswatConfigProtocol):
     scenarios: List[KoswatScenario]
-    dike_sections: KoswatDikeSelection
+    dike_selection: KoswatDikeSelection
     costs: KoswatCosts
 
     def __init__(self) -> None:
         self.scenarios = []
-        self.dike_sections = None
+        self.dike_selection = None
         self.costs = None
 
     def is_valid(self) -> bool:
         return (
             any(self.scenarios)
             and all(_s.is_valid() for _s in self.scenarios)
-            and self.dike_sections
-            and self.dike_sections.is_valid()
+            and self.dike_selection
+            and self.dike_selection.is_valid()
             and self.costs
             and self.costs.is_valid()
         )

@@ -14,7 +14,7 @@ class EenheidsprijzenSectionFom(UnitPrices, KoswatIniFomProtocol):
         return _section
 
 
-class KostenDijkprofielSectionFom(DikeProfilesCosts, KoswatIniFomProtocol):
+class KostenDijkprofielSectionFom(DikeProfileCosts, KoswatIniFomProtocol):
     aanleg_graslaag_m3: float
     aanleg_kleilaag_m3: float
     aanleg_kern_m3: float

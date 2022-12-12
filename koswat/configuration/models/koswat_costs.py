@@ -10,11 +10,14 @@ def _valid_float_prop(config_property: float) -> bool:
 class UnitPrices(KoswatConfigProtocol):
     prijspeil: float
 
+    def __init__(self) -> None:
+        self.prijspeil = math.nan
+
     def is_valid(self) -> bool:
-        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
+        return not math.isnan(self.prijspeil)
 
 
-class DikeProfilesCosts(KoswatConfigProtocol):
+class DikeProfileCosts(KoswatConfigProtocol):
     aanleg_graslaag_m3: float
     aanleg_kleilaag_m3: float
     aanleg_kern_m3: float
@@ -26,8 +29,22 @@ class DikeProfilesCosts(KoswatConfigProtocol):
     profileren_kern_m2: float
     bewerken_maaiveld_m2: float
 
+    def __init__(self) -> None:
+        self.aanleg_graslaag_m3 = math.nan
+        self.aanleg_kleilaag_m3 = math.nan
+        self.aanleg_kern_m3 = math.nan
+        self.hergebruik_graslaag_m3 = math.nan
+        self.hergebruik_kern_m3 = math.nan
+        self.afvoeren_materiaal_m3 = math.nan
+        self.profileren_graslaag_m2 = math.nan
+        self.profileren_kleilaag_m2 = math.nan
+        self.profileren_kern_m2 = math.nan
+        self.bewerken_maaiveld_m2 = math.nan
+
     def is_valid(self) -> bool:
-        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
+        return all(
+            _valid_float_prop(_prop) for _prop in super(DikeProfileCosts, self).values()
+        )
 
 
 class InfrastructureCosts(KoswatConfigProtocol):
@@ -42,8 +59,23 @@ class InfrastructureCosts(KoswatConfigProtocol):
     wegen_klasse7_aanleg: float
     wegen_onbekend_aanleg: float
 
+    def __init__(self) -> None:
+        self.wegen_klasse2_verwijderen = math.nan
+        self.wegen_klasse24_verwijderen = math.nan
+        self.wegen_klasse47_verwijderen = math.nan
+        self.wegen_klasse7_verwijderen = math.nan
+        self.wegen_onbekend_verwijderen = math.nan
+        self.wegen_klasse2_aanleg = math.nan
+        self.wegen_klasse24_aanleg = math.nan
+        self.wegen_klasse47_aanleg = math.nan
+        self.wegen_klasse7_aanleg = math.nan
+        self.wegen_onbekend_aanleg = math.nan
+
     def is_valid(self) -> bool:
-        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
+        return all(
+            _valid_float_prop(_prop)
+            for _prop in super(InfrastructureCosts, self).values()
+        )
 
 
 class StoringCostsIncludingTaxes(KoswatConfigProtocol):
@@ -60,8 +92,25 @@ class StoringCostsIncludingTaxes(KoswatConfigProtocol):
     grondaankoop_normaal: float
     grondaankoop_moeilijk: float
 
+    def __init__(self) -> None:
+        self.grond_makkelijk = math.nan
+        self.grond_normaal = math.nan
+        self.grond_moeilijk = math.nan
+        self.constructief_makkelijk = math.nan
+        self.constructief_normaal = math.nan
+        self.constructief_moeilijk = math.nan
+        self.wegen_makkelijk = math.nan
+        self.wegen_normaal = math.nan
+        self.wegen_moeilijk = math.nan
+        self.grondaankoop_makkelijk = math.nan
+        self.grondaankoop_normaal = math.nan
+        self.grondaankoop_moeilijk = math.nan
+
     def is_valid(self) -> bool:
-        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
+        return all(
+            _valid_float_prop(_prop)
+            for _prop in super(StoringCostsIncludingTaxes, self).values()
+        )
 
 
 class StoringCostsExcludingTaxes(KoswatConfigProtocol):
@@ -78,13 +127,30 @@ class StoringCostsExcludingTaxes(KoswatConfigProtocol):
     grondaankoop_normaal: float
     grondaankoop_moeilijk: float
 
+    def __init__(self) -> None:
+        self.grond_makkelijk = math.nan
+        self.grond_normaal = math.nan
+        self.grond_moeilijk = math.nan
+        self.constructief_makkelijk = math.nan
+        self.constructief_normaal = math.nan
+        self.constructief_moeilijk = math.nan
+        self.wegen_makkelijk = math.nan
+        self.wegen_normaal = math.nan
+        self.wegen_moeilijk = math.nan
+        self.grondaankoop_makkelijk = math.nan
+        self.grondaankoop_normaal = math.nan
+        self.grondaankoop_moeilijk = math.nan
+
     def is_valid(self) -> bool:
-        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
+        return all(
+            _valid_float_prop(_prop)
+            for _prop in super(StoringCostsExcludingTaxes, self).values()
+        )
 
 
 class KoswatCosts(KoswatConfigProtocol):
     eenheidsprijzen_section: UnitPrices
-    kostendijkprofiel_section: DikeProfilesCosts
+    kostendijkprofiel_section: DikeProfileCosts
     kosteninfrastructuur_section: InfrastructureCosts
     kostenopslagfactoreninclbtw_section: StoringCostsIncludingTaxes
     kostenopslagfactorenexclbtw_section: StoringCostsExcludingTaxes
@@ -100,4 +166,6 @@ class KoswatCosts(KoswatConfigProtocol):
         def valid_prop_config(config_property: KoswatConfigProtocol) -> bool:
             return config_property is not None and config_property.is_valid()
 
-        return all(valid_prop_config(_config) for _config in dict(self).values())
+        return all(
+            valid_prop_config(_config) for _config in super(KoswatCosts, self).values()
+        )
