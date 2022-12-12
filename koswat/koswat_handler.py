@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 from typing import Optional
@@ -9,9 +11,6 @@ from koswat.koswat_logger import KoswatLogger
 
 
 class KoswatHandler:
-    def __init__(self) -> None:
-        self._logger = KoswatLogger.init_logger("koswat.log")
-
     def run_analysis(self, analysis_file: str) -> None:
         def _as_path(ini_file: str) -> Optional[Path]:
             _ini = Path(ini_file)
@@ -22,5 +21,18 @@ class KoswatHandler:
 
         _config_importer = KoswatConfigurationImporter()
         _config_importer.ini_configuration = _as_path(analysis_file)
-        _koswat_config = _config_importer.build()
-        _koswat_config.run()
+        self._koswat_config = _config_importer.build()
+        logging.info("Running analysis")
+        raise NotImplementedError()
+
+    def __enter__(self) -> KoswatHandler:
+        self._logger = KoswatLogger.init_logger(Path("koswat.log"))
+        return self
+
+    def __exit__(self, *args, **kwargs) -> None:
+        try:
+            _output_dir = self._koswat_config.analysis_settings.analysis_output
+            _analysis_log = _output_dir / _analysis_log
+            self._logger.log_file.rename(_analysis_log)
+        except Exception as e_err:
+            logging.error("Log file could not be moved.")

@@ -18,13 +18,10 @@ class KoswatLogger:
             log_file.touch()
 
         _logger.log_file = log_file
+        _logger._set_console_handler()
+        _logger._set_file_handler()
+        _logger._set_formatter()
         return _logger
-
-    def __init__(self) -> None:
-        self._set_file_handler()
-        self._set_console_handler()
-        self._set_formatter()
-        logging.info(f"Initialized logging.")
 
     def _get_logger(self) -> logging.Logger:
         """
