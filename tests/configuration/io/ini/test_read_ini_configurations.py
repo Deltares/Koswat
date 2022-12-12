@@ -54,8 +54,8 @@ class TestReadIniConfigurations:
 
         # Analysis section
         assert isinstance(_ini_fom.analyse_section, AnalysisSectionFom)
-        assert _ini_fom.analyse_section.dijksecties_selectie == Path(
-            "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\DijksectieSelectie.ini"
+        assert _ini_fom.analyse_section.dike_sections_selection_ini_file == Path(
+            "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\DijksectieSelectie.txt"
         )
         assert _ini_fom.analyse_section.dijksectie_ligging == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
@@ -63,34 +63,34 @@ class TestReadIniConfigurations:
         assert _ini_fom.analyse_section.dijksectie_invoer == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\InputPerDijkvak_WV21_KOSWAT_v2022_DR10.csv"
         )
-        assert _ini_fom.analyse_section.scenario_invoer == Path(
+        assert _ini_fom.analyse_section.scenarios_dir == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Scenarios"
         )
-        assert _ini_fom.analyse_section.eenheidsprijzen == Path(
+        assert _ini_fom.analyse_section.costs_ini_file == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
         )
-        assert _ini_fom.analyse_section.uitvoerfolder == Path(
+        assert _ini_fom.analyse_section.analysis_output_dir == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Uitvoer"
         )
-        assert _ini_fom.analyse_section.btw == True
+        assert _ini_fom.analyse_section.include_taxes == True
 
         # Dijkprofiel section
         assert isinstance(_ini_fom.dijkprofiel_section, DikeProfileSectionFom)
-        assert _ini_fom.dijkprofiel_section.dikte_graslaag == 0.3
-        assert _ini_fom.dijkprofiel_section.dikte_kleilaag == 0.5
+        assert _ini_fom.dijkprofiel_section.thickness_grass_layer == 0.3
+        assert _ini_fom.dijkprofiel_section.thickness_clay_layer == 0.5
 
         # Grondmaatregel section
         assert isinstance(_ini_fom.grondmaatregel_section, GrondmaatregelSectionFom)
         assert (
-            _ini_fom.grondmaatregel_section.opslagfactor_grond
+            _ini_fom.grondmaatregel_section.soil_storage_factor
             == StorageFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.grondmaatregel_section.opslagfactor_constructief
+            _ini_fom.grondmaatregel_section.constructive_storage_factor
             == StorageFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.grondmaatregel_section.opslagfactor_grondaankoop
+            _ini_fom.grondmaatregel_section.purchased_soil_storage_factor
             == StorageFactorEnum.NORMAAL
         )
         assert _ini_fom.grondmaatregel_section.min_bermhoogte == 0.5
@@ -99,14 +99,14 @@ class TestReadIniConfigurations:
 
         assert isinstance(_ini_fom.kwelscherm_section, KwelschermSectionFom)
         assert (
-            _ini_fom.kwelscherm_section.opslagfactor_grond == StorageFactorEnum.NORMAAL
+            _ini_fom.kwelscherm_section.soil_storage_factor == StorageFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.kwelscherm_section.opslagfactor_constructief
+            _ini_fom.kwelscherm_section.constructive_storage_factor
             == StorageFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.kwelscherm_section.opslagfactor_grondaankoop
+            _ini_fom.kwelscherm_section.purchased_soil_storage_factor
             == StorageFactorEnum.NORMAAL
         )
         assert _ini_fom.kwelscherm_section.min_lengte_kwelscherm == 4
@@ -116,15 +116,15 @@ class TestReadIniConfigurations:
         # Stabiliteitswand section
         assert isinstance(_ini_fom.stabiliteitswand_section, StabiliteitswandSectionFom)
         assert (
-            _ini_fom.stabiliteitswand_section.opslagfactor_grond
+            _ini_fom.stabiliteitswand_section.soil_storage_factor
             == StorageFactorEnum.MOEILIJK
         )
         assert (
-            _ini_fom.stabiliteitswand_section.opslagfactor_constructief
+            _ini_fom.stabiliteitswand_section.constructive_storage_factor
             == StorageFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.stabiliteitswand_section.opslagfactor_grondaankoop
+            _ini_fom.stabiliteitswand_section.purchased_soil_storage_factor
             == StorageFactorEnum.MOEILIJK
         )
         assert _ini_fom.stabiliteitswand_section.versteiling_binnentalud == 2
@@ -134,13 +134,15 @@ class TestReadIniConfigurations:
 
         # Kistdam section
         assert isinstance(_ini_fom.kistdam_section, KistdamSectionFom)
-        assert _ini_fom.kistdam_section.opslagfactor_grond == StorageFactorEnum.MOEILIJK
         assert (
-            _ini_fom.kistdam_section.opslagfactor_constructief
+            _ini_fom.kistdam_section.soil_storage_factor == StorageFactorEnum.MOEILIJK
+        )
+        assert (
+            _ini_fom.kistdam_section.constructive_storage_factor
             == StorageFactorEnum.MOEILIJK
         )
         assert (
-            _ini_fom.kistdam_section.opslagfactor_grondaankoop
+            _ini_fom.kistdam_section.purchased_soil_storage_factor
             == StorageFactorEnum.NORMAAL
         )
         assert _ini_fom.kistdam_section.min_lengte_kistdam == 5

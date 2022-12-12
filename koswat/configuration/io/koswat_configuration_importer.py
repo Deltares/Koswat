@@ -11,12 +11,7 @@ from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
 from koswat.configuration.koswat_configuration import KoswatConfiguration
-from koswat.configuration.models import (
-    KoswatCosts,
-    KoswatDikeSelection,
-    KoswatGeneralSettings,
-    KoswatScenario,
-)
+from koswat.configuration.models import KoswatCosts, KoswatDikeSelection, KoswatScenario
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
@@ -27,7 +22,7 @@ class KoswatConfigurationImporter(BuilderProtocol):
     def __init__(self) -> None:
         self.ini_configuration = None
 
-    def get_general_ini(self, reader: KoswatIniReader) -> KoswatGeneralSettings:
+    def get_general_ini(self, reader: KoswatIniReader) -> KoswatGeneralIniFom:
         reader.koswat_ini_fom_type = KoswatGeneralIniFom
         return reader.read(self.ini_configuration)
 
@@ -57,15 +52,15 @@ class KoswatConfigurationImporter(BuilderProtocol):
         # Get FOMs
         _config.general = self.get_general_ini(_ini_reader)
         _config.dike_selection = self.get_dike_selection(
-            _config.general.analyse_section.dijksecties_selectie
+            _config.general.analyse_section.dike_sections_selection_ini_file
         )
         _config.scenarios = list(
             self.get_scenarios(
-                _ini_reader, _config.general.analyse_section.scenario_invoer
+                _ini_reader, _config.general.analyse_section.scenarios_dir
             )
         )
         _config.costs = self.get_dike_costs(
-            _ini_reader, _config.general.analyse_section.eenheidsprijzen
+            _ini_reader, _config.general.analyse_section.costs_ini_file
         )
 
         return _config

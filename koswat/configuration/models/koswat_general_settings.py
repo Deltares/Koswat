@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import abc
 import enum
+import math
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
-from koswat.io.ini.koswat_ini_fom_protocol import KoswatConfigProtocol
+from koswat.configuration.models.koswat_costs import KoswatCosts
+from koswat.configuration.models.koswat_dike_selection import KoswatDikeSelection
+from koswat.configuration.models.koswat_scenario import KoswatScenario
 
 
 class StorageFactorEnum(enum.Enum):
@@ -21,52 +24,78 @@ class InfraCostsEnum(enum.Enum):
     VERVANG = 2
 
 
-class Analysis(KoswatConfigProtocol):
-    dijksecties_selectie: Path  # Ini file
+class AnalysisSettings(KoswatConfigProtocol):
+    dike_selection: KoswatDikeSelection
+    scenarios: List[KoswatScenario]
+    costs: KoswatCosts
+    analysis_output: Path  # output folder
     dijksectie_ligging: Path  # shp file
     dijksectie_invoer: Path  # csv file
-    scenario_invoer: Path  # folder with ini files
-    eenheidsprijzen: Path  # ini file
-    uitvoerfolder: Path  # output folder
-    btw: bool
+    include_taxes: bool
+
+    def __init__(self) -> None:
+        self.dijksecties_selectie
+
+    def is_valid(self) -> bool:
+        pass
 
 
-class DikeProfile(KoswatConfigProtocol):
-    dikte_graslaag: float
-    dikte_kleilaag: float
+class DikeProfileSettings(KoswatConfigProtocol):
+    thickness_grass_layer: float
+    thickness_clay_layer: float
+
+    def is_valid(self) -> bool:
+        return not math.isnan(self.thickness_grass_layer) and not math.isnan(
+            self.thickness_clay_layer
+        )
 
 
-class ReinforcementProfile(KoswatConfigProtocol, abc.ABC):
-    opslagfactor_grond: StorageFactorEnum
-    opslagfactor_constructief: StorageFactorEnum
-    opslagfactor_grondaankoop: Optional[StorageFactorEnum]
+class ReinforcementProfileSettingsBase(KoswatConfigProtocol, abc.ABC):
+    soil_storage_factor: StorageFactorEnum
+    constructive_storage_factor: StorageFactorEnum
+    purchased_soil_storage_factor: Optional[StorageFactorEnum]
+
+    def is_valid(self) -> bool:
+        pass
 
 
-class Grondmaatregel(ReinforcementProfile):
+class GrondmaatregelSettings(ReinforcementProfileSettingsBase):
     min_bermhoogte: float
     max_bermhoogte_factor: float
     factor_toename_bermhoogte: float
 
+    def is_valid(self) -> bool:
+        pass
 
-class Kwelscherm(ReinforcementProfile):
+
+class KwelschermSettings(ReinforcementProfileSettingsBase):
     min_lengte_kwelscherm: float
     overgang_cbwand_damwand: float
     max_lengte_kwelscherm: float
 
+    def is_valid(self) -> bool:
+        pass
 
-class Stabiliteits(ReinforcementProfile):
+
+class StabiliteitswandSettings(ReinforcementProfileSettingsBase):
     versteiling_binnentalud: float
     min_lengte_stabiliteitswand: float
     overgang_damwand_diepwand: float
     max_lengte_stabiliteitswand: float
 
+    def is_valid(self) -> bool:
+        pass
 
-class Kistdam(ReinforcementProfile):
+
+class KistdamSettings(ReinforcementProfileSettingsBase):
     min_lengte_kistdam: float
     max_lengte_kistdam: float
 
+    def is_valid(self) -> bool:
+        pass
 
-class Omgeving(KoswatConfigProtocol):
+
+class OmgevingSettings(KoswatConfigProtocol):
     omgevingsdatabases: Path  # Directory
     constructieafstand: float
     constructieovergang: float
@@ -75,8 +104,11 @@ class Omgeving(KoswatConfigProtocol):
     spoorwegen: bool
     water: bool
 
+    def is_valid(self) -> bool:
+        pass
 
-class Infrastructuur(KoswatConfigProtocol):
+
+class InfrastructuurSettings(KoswatConfigProtocol):
     infrastructuur: bool
     opslagfactor_wegen: StorageFactorEnum
     infrakosten_0dh: InfraCostsEnum
@@ -87,13 +119,5 @@ class Infrastructuur(KoswatConfigProtocol):
     wegen_klasse7_breedte: float
     wegen_onbekend_breedte: float
 
-
-class KoswatGeneralSettings(KoswatConfigProtocol):
-    analyse_section: Analysis
-    dijkprofiel_section: DikeProfile
-    grondmaatregel_section: Grondmaatregel
-    kwelscherm_section: Kwelscherm
-    stabiliteitswand_section: Stabiliteits
-    kistdam_section: Kistdam
-    omgeving_section: Omgeving
-    infrastructuur_section: Infrastructuur
+    def is_valid(self) -> bool:
+        pass
