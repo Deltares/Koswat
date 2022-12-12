@@ -3,16 +3,18 @@ from typing import Iterator, List
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
-from koswat.configuration.io.ini.koswat_dike_selection_ini_fom import (
-    KoswatDikeSelectionIniFom,
-)
 from koswat.configuration.io.ini.koswat_general_ini_fom import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_scenario_ini_fom import KoswatScenarioIniFom
+from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
+    KoswatDikeSelectionTxtFom,
+)
 from koswat.configuration.koswat_configuration import KoswatConfiguration
+from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
 
-class KoswatConfigurationIniImporter(BuilderProtocol):
+class KoswatConfigurationImporter(BuilderProtocol):
     ini_configuration: Path
 
     def __init__(self) -> None:
@@ -24,18 +26,17 @@ class KoswatConfigurationIniImporter(BuilderProtocol):
 
     def get_scenarios(
         self, reader: KoswatIniReader, scenario_dir: Path
-    ) -> Iterator[KoswatScenarioIniFom]:
+    ) -> Iterator[KoswatScenario]:
         reader.koswat_ini_fom_type = KoswatScenarioIniFom
         for _ini_file in scenario_dir.glob("*.ini"):
             _scenario: KoswatScenarioIniFom = reader.read(_ini_file)
             _scenario.scenario_name = _ini_file.stem
-            yield _scenario
+            yield super(KoswatScenario, _scenario)
 
-    def get_dike_selection(
-        self, reader: KoswatIniReader, ini_file: Path
-    ) -> KoswatDikeSelectionIniFom:
-        reader.koswat_ini_fom_type = KoswatDikeSelectionIniFom
-        return reader.read(ini_file)
+    def get_dike_selection(self, txt_file: Path) -> KoswatDikeSelectionTxtFom:
+        _reader = KoswatTxtReader()
+        _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
+        return _reader.read(txt_file)
 
     def get_dike_costs(
         self, reader: KoswatIniReader, ini_file: Path
@@ -50,7 +51,7 @@ class KoswatConfigurationIniImporter(BuilderProtocol):
         # Get FOMs
         _config.general_ini = self.get_general_ini(_ini_reader)
         _config.dike_selection = self.get_dike_selection(
-            _ini_reader, _config.general_ini.analyse_section.dijksecties_selectie
+            _config.general_ini.analyse_section.dijksecties_selectie
         )
         _config.scenarios = list(
             self.get_scenarios(

@@ -4,8 +4,8 @@ from typing import Optional
 
 import click
 
-from koswat.configuration.io.koswat_configuration_ini_importer import (
-    KoswatConfigurationIniImporter,
+from koswat.configuration.io.koswat_configuration_importer import (
+    KoswatConfigurationImporter,
 )
 
 
@@ -19,7 +19,7 @@ def run_analysis(input_file: str):
             raise FileNotFoundError(_ini)
         return _ini
 
-    _config_importer = KoswatConfigurationIniImporter()
+    _config_importer = KoswatConfigurationImporter()
     _config_importer.ini_configuration = _as_path(input_file)
     _koswat_config = _config_importer.build()
     _koswat_config.run()

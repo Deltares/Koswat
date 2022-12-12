@@ -7,7 +7,7 @@ from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
-class ScenarioSection(KoswatIniFomProtocol, KoswatScenario):
+class ScenarioSection(KoswatScenario, KoswatIniFomProtocol):
     scenario_name: str
     d_h: float
     d_s: float

@@ -3,7 +3,6 @@ from typing import Type
 import pytest
 
 from koswat.configuration.io.ini.koswat_costs_ini_fom import *
-from koswat.configuration.io.ini.koswat_dike_selection_ini_fom import *
 from koswat.configuration.io.ini.koswat_general_ini_fom import *
 from koswat.configuration.io.ini.koswat_scenario_ini_fom import *
 from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
@@ -22,11 +21,6 @@ class TestReadIniConfigurations:
             pytest.param("koswat_costs.ini", KoswatCostsIniFom, id="Costs INI"),
             pytest.param(
                 "koswat_scenario.ini", KoswatScenarioIniFom, id="Scenario INI"
-            ),
-            pytest.param(
-                "koswat_dike_selection.ini",
-                KoswatDikeSelectionIniFom,
-                id="Dike sections INI",
             ),
         ],
     )
@@ -282,24 +276,6 @@ class TestReadIniConfigurations:
         assert (
             _ini_fom.kostenopslagfactorenexclbtw_section.grondaankoop_moeilijk == 1.645
         )
-
-    def test_koswat_ini_read_dike_selection_ini(self):
-        # 1. Define test data.
-        _test_file_path = test_ini_reader_data / "koswat_dike_selection.ini"
-        _ini_reader = KoswatIniReader()
-        _ini_reader.koswat_ini_fom_type = KoswatDikeSelectionIniFom
-
-        # 2. Run test
-        _ini_fom = _ini_reader.read(_test_file_path)
-
-        # 3. Validate expectations.
-        assert isinstance(_ini_fom, KoswatDikeSelectionIniFom)
-
-        # Dijksecties
-        assert len(_ini_fom.dijksecties_section.dike_sections) == 3
-        assert _ini_fom.dijksecties_section.dike_sections[0] == "10-1-1-A-1-A"
-        assert _ini_fom.dijksecties_section.dike_sections[1] == "10-1-2-A-1-A"
-        assert _ini_fom.dijksecties_section.dike_sections[2] == "10-1-3-A-1-B-1"
 
     def test_koswat_ini_read_scenario_ini(self):
         # 1. Define test data.
