@@ -1,3 +1,4 @@
+import pytest
 from click.testing import CliRunner
 
 from koswat import main
@@ -16,6 +17,7 @@ class TestMain:
         assert FileNotFoundError == type(_run_result.exc_info[1])
         assert _invalid_path == str(_run_result.exc_info[1])
 
+    @pytest.mark.skip(reason="We need a valid acceptance test for this.")
     def test_given_valid_input_succeeds(self):
         # 1. Define test data.
         _valid_path = test_data / "basic_examples" / "basic_input.ini"
