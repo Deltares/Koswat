@@ -1,27 +1,15 @@
 from __future__ import annotations
 
 import abc
-import enum
 from configparser import ConfigParser
 from pathlib import Path
 from typing import Optional
 
+from koswat.configuration.models.koswat_general_settings import *
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
-class StorageFactorEnum(enum.Enum):
-    MAKKELIJK = 0
-    NORMAAL = 1
-    MOEILIJK = 2
-
-
-class InfraCostsEnum(enum.Enum):
-    GEEN = 0
-    HERSTEL = 1
-    VERVANG = 2
-
-
-class AnalysisSection(KoswatIniFomProtocol):
+class AnalysisSectionFom(Analysis, KoswatIniFomProtocol):
     dijksecties_selectie: Path  # Ini file
     dijksectie_ligging: Path  # shp file
     dijksectie_invoer: Path  # csv file
@@ -43,7 +31,7 @@ class AnalysisSection(KoswatIniFomProtocol):
         return _section
 
 
-class DikeProfileSection(KoswatIniFomProtocol):
+class DikeProfileSectionFom(DikeProfile, KoswatIniFomProtocol):
     dikte_graslaag: float
     dikte_kleilaag: float
 
@@ -55,7 +43,7 @@ class DikeProfileSection(KoswatIniFomProtocol):
         return _section
 
 
-class ReinforcementProfileSection(KoswatIniFomProtocol, abc.ABC):
+class ReinforcementProfileSectionFom(KoswatIniFomProtocol, abc.ABC):
     opslagfactor_grond: StorageFactorEnum
     opslagfactor_constructief: StorageFactorEnum
     opslagfactor_grondaankoop: Optional[StorageFactorEnum]
@@ -76,7 +64,7 @@ class ReinforcementProfileSection(KoswatIniFomProtocol, abc.ABC):
         ]
 
 
-class GrondmaatregelSection(ReinforcementProfileSection):
+class GrondmaatregelSectionFom(ReinforcementProfileSectionFom):
     min_bermhoogte: float
     max_bermhoogte_factor: float
     factor_toename_bermhoogte: float
@@ -93,7 +81,7 @@ class GrondmaatregelSection(ReinforcementProfileSection):
         return _section
 
 
-class KwelschermSection(ReinforcementProfileSection):
+class KwelschermSectionFom(ReinforcementProfileSectionFom):
     min_lengte_kwelscherm: float
     overgang_cbwand_damwand: float
     max_lengte_kwelscherm: float
@@ -110,7 +98,7 @@ class KwelschermSection(ReinforcementProfileSection):
         return _section
 
 
-class StabiliteitswandSection(ReinforcementProfileSection):
+class StabiliteitswandSectionFom(ReinforcementProfileSectionFom):
     versteiling_binnentalud: float
     min_lengte_stabiliteitswand: float
     overgang_damwand_diepwand: float
@@ -135,7 +123,7 @@ class StabiliteitswandSection(ReinforcementProfileSection):
         return _section
 
 
-class KistdamSection(ReinforcementProfileSection):
+class KistdamSectionFom(ReinforcementProfileSectionFom):
     min_lengte_kistdam: float
     max_lengte_kistdam: float
 
@@ -148,7 +136,7 @@ class KistdamSection(ReinforcementProfileSection):
         return _section
 
 
-class OmgevingSection(KoswatIniFomProtocol):
+class OmgevingSectionFom(Omgeving, KoswatIniFomProtocol):
     omgevingsdatabases: Path  # Directory
     constructieafstand: float
     constructieovergang: float
@@ -170,7 +158,7 @@ class OmgevingSection(KoswatIniFomProtocol):
         return _section
 
 
-class InfrastructuurSection(KoswatIniFomProtocol):
+class InfrastructuurSectionFom(Infrastructuur, KoswatIniFomProtocol):
     infrastructuur: bool
     opslagfactor_wegen: StorageFactorEnum
     infrakosten_0dh: InfraCostsEnum
@@ -198,40 +186,42 @@ class InfrastructuurSection(KoswatIniFomProtocol):
         return _section
 
 
-class KoswatGeneralIniFom(KoswatIniFomProtocol):
-    analyse_section: AnalysisSection
-    dijkprofiel_section: DikeProfileSection
-    grondmaatregel_section: GrondmaatregelSection
-    kwelscherm_section: KwelschermSection
-    stabiliteitswand_section: StabiliteitswandSection
-    kistdam_section: KistdamSection
-    omgeving_section: OmgevingSection
-    infrastructuur_section: InfrastructuurSection
+class KoswatGeneralIniFom(KoswatGeneralSettings, KoswatIniFomProtocol):
+    analyse_section: AnalysisSectionFom
+    dijkprofiel_section: DikeProfileSectionFom
+    grondmaatregel_section: GrondmaatregelSectionFom
+    kwelscherm_section: KwelschermSectionFom
+    stabiliteitswand_section: StabiliteitswandSectionFom
+    kistdam_section: KistdamSectionFom
+    omgeving_section: OmgevingSectionFom
+    infrastructuur_section: InfrastructuurSectionFom
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _general_ini = cls()
 
-        _general_ini.analyse_section = AnalysisSection.from_config(
+        _general_ini.analyse_section = AnalysisSectionFom.from_config(
             ini_config["Analyse"]
         )
-        _general_ini.dijkprofiel_section = DikeProfileSection.from_config(
+        _general_ini.dijkprofiel_section = DikeProfileSectionFom.from_config(
             ini_config["Dijkprofiel"]
         )
-        _general_ini.grondmaatregel_section = GrondmaatregelSection.from_config(
+        _general_ini.grondmaatregel_section = GrondmaatregelSectionFom.from_config(
             ini_config["Grondmaatregel"]
         )
-        _general_ini.kwelscherm_section = KwelschermSection.from_config(
+        _general_ini.kwelscherm_section = KwelschermSectionFom.from_config(
             ini_config["Kwelscherm"]
         )
-        _general_ini.stabiliteitswand_section = StabiliteitswandSection.from_config(
+        _general_ini.stabiliteitswand_section = StabiliteitswandSectionFom.from_config(
             ini_config["Stabiliteitswand"]
         )
-        _general_ini.kistdam_section = KistdamSection.from_config(ini_config["Kistdam"])
-        _general_ini.omgeving_section = OmgevingSection.from_config(
+        _general_ini.kistdam_section = KistdamSectionFom.from_config(
+            ini_config["Kistdam"]
+        )
+        _general_ini.omgeving_section = OmgevingSectionFom.from_config(
             ini_config["Omgeving"]
         )
-        _general_ini.infrastructuur_section = InfrastructuurSection.from_config(
+        _general_ini.infrastructuur_section = InfrastructuurSectionFom.from_config(
             ini_config["Infrastructuur"]
         )
         return _general_ini

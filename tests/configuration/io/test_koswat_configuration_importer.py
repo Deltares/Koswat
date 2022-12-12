@@ -3,7 +3,12 @@ from koswat.configuration.io.koswat_configuration_importer import (
     KoswatConfigurationImporter,
 )
 from koswat.configuration.koswat_configuration import KoswatConfiguration
-from koswat.configuration.models import KoswatCosts, KoswatDikeSelection, KoswatScenario
+from koswat.configuration.models import (
+    KoswatCosts,
+    KoswatDikeSelection,
+    KoswatGeneralSettings,
+    KoswatScenario,
+)
 from tests import test_data
 
 
@@ -26,6 +31,7 @@ class TestKoswatConfigurationImporter:
 
         # 3. Verify final expectations.
         assert isinstance(_config, KoswatConfiguration)
+        assert isinstance(_config.general, KoswatGeneralSettings)
         assert any(_config.scenarios)
         assert all(
             isinstance(_scenario, KoswatScenario) for _scenario in _config.scenarios

@@ -53,7 +53,7 @@ class TestReadIniConfigurations:
         assert isinstance(_ini_fom, KoswatGeneralIniFom)
 
         # Analysis section
-        assert isinstance(_ini_fom.analyse_section, AnalysisSection)
+        assert isinstance(_ini_fom.analyse_section, AnalysisSectionFom)
         assert _ini_fom.analyse_section.dijksecties_selectie == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\DijksectieSelectie.ini"
         )
@@ -75,12 +75,12 @@ class TestReadIniConfigurations:
         assert _ini_fom.analyse_section.btw == True
 
         # Dijkprofiel section
-        assert isinstance(_ini_fom.dijkprofiel_section, DikeProfileSection)
+        assert isinstance(_ini_fom.dijkprofiel_section, DikeProfileSectionFom)
         assert _ini_fom.dijkprofiel_section.dikte_graslaag == 0.3
         assert _ini_fom.dijkprofiel_section.dikte_kleilaag == 0.5
 
         # Grondmaatregel section
-        assert isinstance(_ini_fom.grondmaatregel_section, GrondmaatregelSection)
+        assert isinstance(_ini_fom.grondmaatregel_section, GrondmaatregelSectionFom)
         assert (
             _ini_fom.grondmaatregel_section.opslagfactor_grond
             == StorageFactorEnum.NORMAAL
@@ -97,7 +97,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.grondmaatregel_section.max_bermhoogte_factor == 0.4
         assert _ini_fom.grondmaatregel_section.factor_toename_bermhoogte == 0.05
 
-        assert isinstance(_ini_fom.kwelscherm_section, KwelschermSection)
+        assert isinstance(_ini_fom.kwelscherm_section, KwelschermSectionFom)
         assert (
             _ini_fom.kwelscherm_section.opslagfactor_grond == StorageFactorEnum.NORMAAL
         )
@@ -114,7 +114,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.kwelscherm_section.max_lengte_kwelscherm == 25
 
         # Stabiliteitswand section
-        assert isinstance(_ini_fom.stabiliteitswand_section, StabiliteitswandSection)
+        assert isinstance(_ini_fom.stabiliteitswand_section, StabiliteitswandSectionFom)
         assert (
             _ini_fom.stabiliteitswand_section.opslagfactor_grond
             == StorageFactorEnum.MOEILIJK
@@ -133,7 +133,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.stabiliteitswand_section.max_lengte_stabiliteitswand == 25
 
         # Kistdam section
-        assert isinstance(_ini_fom.kistdam_section, KistdamSection)
+        assert isinstance(_ini_fom.kistdam_section, KistdamSectionFom)
         assert _ini_fom.kistdam_section.opslagfactor_grond == StorageFactorEnum.MOEILIJK
         assert (
             _ini_fom.kistdam_section.opslagfactor_constructief
@@ -147,7 +147,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.kistdam_section.max_lengte_kistdam == 25
 
         # Omgeving section
-        assert isinstance(_ini_fom.omgeving_section, OmgevingSection)
+        assert isinstance(_ini_fom.omgeving_section, OmgevingSectionFom)
         assert _ini_fom.omgeving_section.omgevingsdatabases == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Omgevingsanalyses"
         )
@@ -159,7 +159,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.omgeving_section.water == False
 
         # Infrastructuur section
-        assert isinstance(_ini_fom.infrastructuur_section, InfrastructuurSection)
+        assert isinstance(_ini_fom.infrastructuur_section, InfrastructuurSectionFom)
         assert _ini_fom.infrastructuur_section.infrastructuur == False
         assert (
             _ini_fom.infrastructuur_section.opslagfactor_wegen
