@@ -149,16 +149,16 @@ class TestReadIniConfigurations:
         assert _ini_fom.kistdam_section.max_lengte_kistdam == 25
 
         # Omgeving section
-        assert isinstance(_ini_fom.omgeving_section, OmgevingSectionFom)
-        assert _ini_fom.omgeving_section.omgevingsdatabases == Path(
+        assert isinstance(_ini_fom.surroundings_section, SurroundingsSectionFom)
+        assert _ini_fom.surroundings_section.omgevingsdatabases == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Omgevingsanalyses"
         )
-        assert _ini_fom.omgeving_section.constructieafstand == 50
-        assert _ini_fom.omgeving_section.constructieovergang == 10
-        assert _ini_fom.omgeving_section.buitendijks == False
-        assert _ini_fom.omgeving_section.bebouwing == True
-        assert _ini_fom.omgeving_section.spoorwegen == False
-        assert _ini_fom.omgeving_section.water == False
+        assert _ini_fom.surroundings_section.constructieafstand == 50
+        assert _ini_fom.surroundings_section.constructieovergang == 10
+        assert _ini_fom.surroundings_section.buitendijks == False
+        assert _ini_fom.surroundings_section.bebouwing == True
+        assert _ini_fom.surroundings_section.spoorwegen == False
+        assert _ini_fom.surroundings_section.water == False
 
         # Infrastructuur section
         assert isinstance(_ini_fom.infrastructuur_section, InfrastructuurSectionFom)

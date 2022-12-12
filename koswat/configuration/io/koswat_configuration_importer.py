@@ -7,12 +7,16 @@ from koswat.configuration.io.ini import (
     KoswatGeneralIniFom,
     KoswatSectionScenariosIniFom,
 )
+from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
 from koswat.configuration.koswat_configuration import KoswatConfiguration
 from koswat.configuration.models import KoswatCosts, KoswatDikeSelection, KoswatScenario
-from koswat.configuration.models.koswat_general_settings import AnalysisSettings
+from koswat.configuration.models.koswat_general_settings import (
+    AnalysisSettings,
+    SurroundingsSettings,
+)
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
@@ -63,6 +67,17 @@ class KoswatConfigurationImporter(BuilderProtocol):
         _settings.dijksectie_ligging = ini_fom.analyse_section.dijksectie_ligging
         _settings.dijksectie_invoer = ini_fom.analyse_section.dijksectie_invoer
         _settings.include_taxes = ini_fom.analyse_section.include_taxes
+        return _settings
+
+    def _get_surroundings_settings(self, surroundings_fom: SurroundingsSectionFom) -> SurroundingsSettings:
+        _settings = SurroundingsSettings()
+        _settings.constructieafstand = surroundings_fom.constructieafstand
+        _settings.constructieovergang = surroundings_fom.constructieovergang
+        _settings.buitendijks = surroundings_fom.buitendijks
+        _settings.bebouwing = surroundings_fom.bebouwing
+        _settings.spoorwegen = surroundings_fom.spoorwegen
+        _settings.water = surroundings_fom.water
+        _settings.surroundings_database = surroundings_fom.omgevingsdatabases
         return _settings
 
     def build(self) -> KoswatConfiguration:

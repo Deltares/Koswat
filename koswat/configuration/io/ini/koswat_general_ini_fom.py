@@ -142,7 +142,7 @@ class KistdamSectionFom(CofferdamSettings, ReinforcementProfileSectionFomBase):
         return _section
 
 
-class OmgevingSectionFom(SurroundingsSettings, KoswatIniFomProtocol):
+class SurroundingsSectionFom(KoswatIniFomProtocol):
     omgevingsdatabases: Path  # Directory
     constructieafstand: float
     constructieovergang: float
@@ -199,7 +199,7 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
     kwelscherm_section: KwelschermSectionFom
     stabiliteitswand_section: StabiliteitswandSectionFom
     kistdam_section: KistdamSectionFom
-    omgeving_section: OmgevingSectionFom
+    surroundings_section: SurroundingsSectionFom
     infrastructuur_section: InfrastructuurSectionFom
 
     @classmethod
@@ -224,7 +224,7 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
         _general_ini.kistdam_section = KistdamSectionFom.from_config(
             ini_config["Kistdam"]
         )
-        _general_ini.omgeving_section = OmgevingSectionFom.from_config(
+        _general_ini.surroundings_section = SurroundingsSectionFom.from_config(
             ini_config["Omgeving"]
         )
         _general_ini.infrastructuur_section = InfrastructuurSectionFom.from_config(

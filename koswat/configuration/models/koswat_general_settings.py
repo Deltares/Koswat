@@ -29,8 +29,8 @@ class AnalysisSettings(KoswatConfigProtocol):
     scenarios: List[KoswatScenario]
     costs: KoswatCosts
     analysis_output: Path  # output folder
-    dijksectie_ligging: Path  # shp file - at this stage this should already be an object!
-    dijksectie_invoer: Path  # csv file - at this stage this should already be an object!
+    dijksectie_ligging: Path  # shp file
+    dijksectie_invoer: Path  # csv file
     include_taxes: bool
 
     def __init__(self) -> None:
@@ -192,7 +192,7 @@ class CofferdamSettings(ReinforcementProfileSettingsBase):
 
 
 class SurroundingsSettings(KoswatConfigProtocol):
-    omgevingsdatabases: Path  # Directory
+    surroundings_database: Path  # Directory
     constructieafstand: float
     constructieovergang: float
     buitendijks: bool
@@ -201,7 +201,7 @@ class SurroundingsSettings(KoswatConfigProtocol):
     water: bool
 
     def __init__(self) -> None:
-        self.omgevingsdatabases = None
+        self.surroundings_database = None
         self.constructieafstand = math.nan
         self.constructieovergang = math.nan
         self.buitendijks = None
@@ -211,7 +211,7 @@ class SurroundingsSettings(KoswatConfigProtocol):
 
     def is_valid(self) -> bool:
         assert (
-            self.omgevingsdatabases is not None
+            self.surroundings_database is not None
             and not math.isnan(self.constructieafstand)
             and not math.isnan(self.constructieovergang)
             and self.buitendijks is not None
