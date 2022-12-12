@@ -43,7 +43,8 @@ class DikeProfileCosts(KoswatConfigProtocol):
 
     def is_valid(self) -> bool:
         return all(
-            _valid_float_prop(_prop) for _prop in super(DikeProfileCosts, self).values()
+            _valid_float_prop(_prop)
+            for _prop in super(DikeProfileCosts, self).__dict__.values()
         )
 
 
@@ -74,7 +75,7 @@ class InfrastructureCosts(KoswatConfigProtocol):
     def is_valid(self) -> bool:
         return all(
             _valid_float_prop(_prop)
-            for _prop in super(InfrastructureCosts, self).values()
+            for _prop in super(InfrastructureCosts, self).__dict__.values()
         )
 
 
@@ -109,7 +110,7 @@ class StoringCostsIncludingTaxes(KoswatConfigProtocol):
     def is_valid(self) -> bool:
         return all(
             _valid_float_prop(_prop)
-            for _prop in super(StoringCostsIncludingTaxes, self).values()
+            for _prop in super(StoringCostsIncludingTaxes, self).__dict__.values()
         )
 
 
@@ -144,7 +145,7 @@ class StoringCostsExcludingTaxes(KoswatConfigProtocol):
     def is_valid(self) -> bool:
         return all(
             _valid_float_prop(_prop)
-            for _prop in super(StoringCostsExcludingTaxes, self).values()
+            for _prop in super(StoringCostsExcludingTaxes, self).__dict__.values()
         )
 
 
@@ -167,5 +168,6 @@ class KoswatCosts(KoswatConfigProtocol):
             return config_property is not None and config_property.is_valid()
 
         return all(
-            valid_prop_config(_config) for _config in super(KoswatCosts, self).values()
+            valid_prop_config(_config)
+            for _config in super(KoswatCosts, self).__dict__.values()
         )
