@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from typing import List
 
+from koswat.configuration.koswat_dike_selection import KoswatDikeSelection
 from koswat.io.txt.koswat_txt_fom_protocol import KoswatTxtFomProtocol
 
 
-class KoswatDikeSelectionTxtFom(KoswatTxtFomProtocol):
+class KoswatDikeSelectionTxtFom(KoswatDikeSelection, KoswatTxtFomProtocol):
     dike_sections: List[str]
 
     @classmethod
@@ -13,6 +14,3 @@ class KoswatDikeSelectionTxtFom(KoswatTxtFomProtocol):
         _ini_fom = cls()
         _ini_fom.dike_sections = file_text.splitlines(keepends=False)
         return _ini_fom
-
-    def is_valid(self) -> bool:
-        return self.dike_sections is not None and len(self.dike_sections) > 0

@@ -12,7 +12,7 @@ class KoswatConfiguration:
         self.dike_sections = []
 
     def is_valid(self) -> bool:
-        raise NotImplementedError()
+        return any(self.scenarios) and all(_s.is_valid() for _s in self.scenarios) and any(self.dike_sections)
 
     def run(self) -> None:
         if not self.is_valid():

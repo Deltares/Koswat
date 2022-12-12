@@ -4,7 +4,9 @@ from typing import Iterator, List
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import KoswatGeneralIniFom
-from koswat.configuration.io.ini.koswat_scenario_ini_fom import KoswatScenarioIniFom
+from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
+    KoswatSectionScenariosIniFom,
+)
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
@@ -27,11 +29,12 @@ class KoswatConfigurationImporter(BuilderProtocol):
     def get_scenarios(
         self, reader: KoswatIniReader, scenario_dir: Path
     ) -> Iterator[KoswatScenario]:
-        reader.koswat_ini_fom_type = KoswatScenarioIniFom
+        reader.koswat_ini_fom_type = KoswatSectionScenariosIniFom
         for _ini_file in scenario_dir.glob("*.ini"):
-            _scenario: KoswatScenarioIniFom = reader.read(_ini_file)
-            _scenario.scenario_name = _ini_file.stem
-            yield super(KoswatScenario, _scenario)
+            _section_scenarios: KoswatSectionScenariosIniFom = reader.read(_ini_file)
+            _section_scenarios.section_name = _ini_file.stem
+            for _s_scenario in _section_scenarios.section_scenarios:
+                yield super(KoswatScenario, _s_scenario)
 
     def get_dike_selection(self, txt_file: Path) -> KoswatDikeSelectionTxtFom:
         _reader = KoswatTxtReader()
