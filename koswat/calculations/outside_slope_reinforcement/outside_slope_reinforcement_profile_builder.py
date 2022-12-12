@@ -20,7 +20,7 @@ from koswat.calculations.reinforcement_profile_builder_protocol import (
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
-from koswat.configuration.koswat_scenario import KoswatScenario
+from koswat.configuration.models import KoswatScenario
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,

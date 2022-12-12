@@ -1,4 +1,4 @@
-from koswat.configuration.koswat_scenario import KoswatScenario
+from koswat.configuration.models import KoswatScenario
 
 default_case = KoswatScenario.from_dict(
     dict(

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from koswat.configuration.koswat_dike_selection import KoswatDikeSelection
+from koswat.configuration.models.koswat_dike_selection import KoswatDikeSelection
 from koswat.io.txt.koswat_txt_fom_protocol import KoswatTxtFomProtocol
 
 

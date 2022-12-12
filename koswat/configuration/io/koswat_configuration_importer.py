@@ -2,16 +2,16 @@ from pathlib import Path
 from typing import Iterator, List
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
-from koswat.configuration.io.ini.koswat_general_ini_fom import KoswatGeneralIniFom
-from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
+from koswat.configuration.io.ini import (
+    KoswatCostsIniFom,
+    KoswatGeneralIniFom,
     KoswatSectionScenariosIniFom,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
 from koswat.configuration.koswat_configuration import KoswatConfiguration
-from koswat.configuration.koswat_scenario import KoswatScenario
+from koswat.configuration.models import KoswatScenario
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 

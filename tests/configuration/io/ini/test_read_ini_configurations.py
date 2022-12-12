@@ -186,11 +186,13 @@ class TestReadIniConfigurations:
         assert isinstance(_ini_fom, KoswatCostsIniFom)
 
         # Eenheidsprijzen
-        assert isinstance(_ini_fom.eenheidsprijzen_section, EenheidsprijzenSection)
+        assert isinstance(_ini_fom.eenheidsprijzen_section, EenheidsprijzenSectionFom)
         assert _ini_fom.eenheidsprijzen_section.prijspeil == 2017
 
         # KostenDijkProfiel
-        assert isinstance(_ini_fom.kostendijkprofiel_section, KostenDijkprofielSection)
+        assert isinstance(
+            _ini_fom.kostendijkprofiel_section, KostenDijkprofielSectionFom
+        )
         assert _ini_fom.kostendijkprofiel_section.aanleg_graslaag_m3 == 12.44
         assert _ini_fom.kostendijkprofiel_section.aanleg_kleilaag_m3 == 18.05
         assert _ini_fom.kostendijkprofiel_section.aanleg_kern_m3 == 10.98
@@ -204,7 +206,7 @@ class TestReadIniConfigurations:
 
         # KostenInfrastructuur
         assert isinstance(
-            _ini_fom.kosteninfrastructuur_section, KostenInfrastructuurSection
+            _ini_fom.kosteninfrastructuur_section, KostenInfrastructuurSectionFom
         )
         assert _ini_fom.kosteninfrastructuur_section.wegen_klasse2_verwijderen == 7.40
         assert _ini_fom.kosteninfrastructuur_section.wegen_klasse24_verwijderen == 9.64
@@ -220,7 +222,7 @@ class TestReadIniConfigurations:
         # KostenOpslagFactorenInclBTW
         assert isinstance(
             _ini_fom.kostenopslagfactoreninclbtw_section,
-            KostenOpslagfactorenInclBTWSection,
+            KostenOpslagfactorenInclBTWSectionFom,
         )
         assert _ini_fom.kostenopslagfactoreninclbtw_section.grond_makkelijk == 1.714
         assert _ini_fom.kostenopslagfactoreninclbtw_section.grond_normaal == 1.953
@@ -250,7 +252,7 @@ class TestReadIniConfigurations:
         # KostenOpslagFactorenexclBTW
         assert isinstance(
             _ini_fom.kostenopslagfactorenexclbtw_section,
-            KostenOpslagfactorenExclBTWSection,
+            KostenOpslagfactorenExclBTWSectionFom,
         )
         assert _ini_fom.kostenopslagfactorenexclbtw_section.grond_makkelijk == 1.421
         assert _ini_fom.kostenopslagfactorenexclbtw_section.grond_normaal == 1.621

@@ -5,7 +5,7 @@ from koswat.calculations import (
     ReinforcementProfileBuilderFactory,
     ReinforcementProfileProtocol,
 )
-from koswat.configuration.koswat_scenario import KoswatScenario
+from koswat.configuration.models import KoswatScenario
 from koswat.cost_report.multi_location_profile import (
     MultiLocationProfileCostReportBuilder,
 )
