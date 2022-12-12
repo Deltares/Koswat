@@ -24,7 +24,11 @@ class KoswatScenario(KoswatConfigProtocol):
         self.buiten_talud = math.nan
 
     def is_valid(self) -> bool:
-        return not math.isnan(self.d_h)  and not math.isnan(self.d_s) and not math.isnan(self.d_p)
+        return (
+            not math.isnan(self.d_h)
+            and not math.isnan(self.d_s)
+            and not math.isnan(self.d_p)
+        )
 
     @classmethod
     def from_dict(cls, scenario_data: dict) -> KoswatScenario:

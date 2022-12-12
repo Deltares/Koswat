@@ -69,7 +69,9 @@ class KoswatConfigurationImporter(BuilderProtocol):
         _settings.include_taxes = ini_fom.analyse_section.include_taxes
         return _settings
 
-    def _get_surroundings_settings(self, surroundings_fom: SurroundingsSectionFom) -> SurroundingsSettings:
+    def _get_surroundings_settings(
+        self, surroundings_fom: SurroundingsSectionFom
+    ) -> SurroundingsSettings:
         _settings = SurroundingsSettings()
         _settings.constructieafstand = surroundings_fom.constructieafstand
         _settings.constructieovergang = surroundings_fom.constructieovergang
