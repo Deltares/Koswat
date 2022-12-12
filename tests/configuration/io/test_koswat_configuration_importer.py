@@ -26,10 +26,4 @@ class TestKoswatConfigurationImporter:
 
         # 3. Verify final expectations.
         assert isinstance(_config, KoswatConfiguration)
-        assert any(_config.scenarios)
-        assert all(
-            isinstance(_scenario, KoswatScenario) for _scenario in _config.scenarios
-        )
-        assert isinstance(_config.costs, KoswatCosts)
-        assert isinstance(_config.dike_selection, KoswatDikeSelection)
         assert _config.is_valid()

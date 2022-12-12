@@ -12,6 +12,7 @@ from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
 )
 from koswat.configuration.koswat_configuration import KoswatConfiguration
 from koswat.configuration.models import KoswatCosts, KoswatDikeSelection, KoswatScenario
+from koswat.configuration.models.koswat_general_settings import AnalysisSettings
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
@@ -22,7 +23,8 @@ class KoswatConfigurationImporter(BuilderProtocol):
     def __init__(self) -> None:
         self.ini_configuration = None
 
-    def get_general_ini(self, reader: KoswatIniReader) -> KoswatGeneralIniFom:
+    def get_general_ini(self) -> KoswatGeneralIniFom:
+        reader = KoswatIniReader()
         reader.koswat_ini_fom_type = KoswatGeneralIniFom
         return reader.read(self.ini_configuration)
 
@@ -45,22 +47,36 @@ class KoswatConfigurationImporter(BuilderProtocol):
         reader.koswat_ini_fom_type = KoswatCostsIniFom
         return reader.read(ini_file)
 
+    def _get_analysis_settings(self, ini_fom: KoswatGeneralIniFom) -> AnalysisSettings:
+        _ini_reader = KoswatIniReader()
+        _settings = AnalysisSettings()
+        _settings.dike_selection = self.get_dike_selection(
+            ini_fom.analyse_section.dike_sections_selection_ini_file
+        )
+        _settings.scenarios = list(
+            self.get_scenarios(_ini_reader, ini_fom.analyse_section.scenarios_dir)
+        )
+        _settings.costs = self.get_dike_costs(
+            _ini_reader, ini_fom.analyse_section.costs_ini_file
+        )
+        _settings.analysis_output = ini_fom.analyse_section.analysis_output_dir
+        _settings.dijksectie_ligging = ini_fom.analyse_section.dijksectie_ligging
+        _settings.dijksectie_invoer = ini_fom.analyse_section.dijksectie_invoer
+        _settings.include_taxes = ini_fom.analyse_section.include_taxes
+        return _settings
+
     def build(self) -> KoswatConfiguration:
         _config = KoswatConfiguration()
-        _ini_reader = KoswatIniReader()
 
         # Get FOMs
-        _config.general = self.get_general_ini(_ini_reader)
-        _config.dike_selection = self.get_dike_selection(
-            _config.general.analyse_section.dike_sections_selection_ini_file
-        )
-        _config.scenarios = list(
-            self.get_scenarios(
-                _ini_reader, _config.general.analyse_section.scenarios_dir
-            )
-        )
-        _config.costs = self.get_dike_costs(
-            _ini_reader, _config.general.analyse_section.costs_ini_file
-        )
+        _ini_settings = self.get_general_ini()
+        _config.analysis_settings = self._get_analysis_settings(_ini_settings)
+        _config.dike_profile_settings = _ini_settings.dijkprofiel_section
+        _config.soil_settings = _ini_settings.dijkprofiel_section
+        _config.pipingwall_settings = _ini_settings.dijkprofiel_section
+        _config.stabilitywall_settings = _ini_settings.dijkprofiel_section
+        _config.cofferdam_settings = _ini_settings.dijkprofiel_section
+        _config.surroundings_settings = _ini_settings.dijkprofiel_section
+        _config.infrastructure_settings = _ini_settings.dijkprofiel_section
 
         return _config

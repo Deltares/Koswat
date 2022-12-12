@@ -68,9 +68,7 @@ class ReinforcementProfileSectionFomBase(
         ]
 
 
-class GrondmaatregelSectionFom(
-    GrondmaatregelSettings, ReinforcementProfileSectionFomBase
-):
+class GrondmaatregelSectionFom(SoilSettings, ReinforcementProfileSectionFomBase):
     min_bermhoogte: float
     max_bermhoogte_factor: float
     factor_toename_bermhoogte: float
@@ -87,7 +85,7 @@ class GrondmaatregelSectionFom(
         return _section
 
 
-class KwelschermSectionFom(KwelschermSettings, ReinforcementProfileSectionFomBase):
+class KwelschermSectionFom(PipingwallSettings, ReinforcementProfileSectionFomBase):
     min_lengte_kwelscherm: float
     overgang_cbwand_damwand: float
     max_lengte_kwelscherm: float
@@ -105,7 +103,7 @@ class KwelschermSectionFom(KwelschermSettings, ReinforcementProfileSectionFomBas
 
 
 class StabiliteitswandSectionFom(
-    StabiliteitswandSettings, ReinforcementProfileSectionFomBase
+    StabilitywallSettings, ReinforcementProfileSectionFomBase
 ):
     versteiling_binnentalud: float
     min_lengte_stabiliteitswand: float
@@ -131,7 +129,7 @@ class StabiliteitswandSectionFom(
         return _section
 
 
-class KistdamSectionFom(KistdamSettings, ReinforcementProfileSectionFomBase):
+class KistdamSectionFom(CofferdamSettings, ReinforcementProfileSectionFomBase):
     min_lengte_kistdam: float
     max_lengte_kistdam: float
 
@@ -144,7 +142,7 @@ class KistdamSectionFom(KistdamSettings, ReinforcementProfileSectionFomBase):
         return _section
 
 
-class OmgevingSectionFom(OmgevingSettings, KoswatIniFomProtocol):
+class OmgevingSectionFom(SurroundingsSettings, KoswatIniFomProtocol):
     omgevingsdatabases: Path  # Directory
     constructieafstand: float
     constructieovergang: float

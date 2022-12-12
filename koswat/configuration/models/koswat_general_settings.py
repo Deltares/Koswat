@@ -29,15 +29,28 @@ class AnalysisSettings(KoswatConfigProtocol):
     scenarios: List[KoswatScenario]
     costs: KoswatCosts
     analysis_output: Path  # output folder
-    dijksectie_ligging: Path  # shp file
-    dijksectie_invoer: Path  # csv file
+    dijksectie_ligging: Path  # shp file - at this stage this should already be an object!
+    dijksectie_invoer: Path  # csv file - at this stage this should already be an object!
     include_taxes: bool
 
     def __init__(self) -> None:
-        self.dijksecties_selectie
+        self.dike_selection = None
+        self.scenarios = None
+        self.costs = None
+        self.analysis_output = None
+        self.dijksectie_ligging = None
+        self.dijksectie_invoer = None
+        self.include_taxes = True  # Default value.
 
     def is_valid(self) -> bool:
-        pass
+        return (
+            self.dike_selection.is_valid()
+            and all(_s.is_valid() for _s in self.scenarios)
+            and self.costs.is_valid()
+            and self.analysis_output is not None
+            and self.dijksectie_ligging.is_file()
+            and self.dijksectie_invoer.is_file()
+        )
 
 
 class DikeProfileSettings(KoswatConfigProtocol):
@@ -56,46 +69,129 @@ class ReinforcementProfileSettingsBase(KoswatConfigProtocol, abc.ABC):
     purchased_soil_storage_factor: Optional[StorageFactorEnum]
 
     def is_valid(self) -> bool:
-        pass
+        return (
+            self.soil_storage_factor is not None
+            and self.constructive_storage_factor is not None
+        )
 
 
-class GrondmaatregelSettings(ReinforcementProfileSettingsBase):
+class SoilSettings(ReinforcementProfileSettingsBase):
     min_bermhoogte: float
     max_bermhoogte_factor: float
     factor_toename_bermhoogte: float
 
+    def __init__(self) -> None:
+        self.soil_storage_factor = None  # So that we can check they actually get set.
+        self.constructive_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.purchased_soil_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.min_bermhoogte = math.nan
+        self.max_bermhoogte_factor = math.nan
+        self.factor_toename_bermhoogte = math.nan
+
     def is_valid(self) -> bool:
-        pass
+        _reinforcent_base_validation = super(
+            ReinforcementProfileSettingsBase, self
+        ).is_valid()
+        return (
+            _reinforcent_base_validation
+            and not math.isnan(self.min_bermhoogte)
+            and not math.isnan(self.max_bermhoogte_factor)
+            and not math.isnan(self.factor_toename_bermhoogte)
+        )
 
 
-class KwelschermSettings(ReinforcementProfileSettingsBase):
+class PipingwallSettings(ReinforcementProfileSettingsBase):
     min_lengte_kwelscherm: float
     overgang_cbwand_damwand: float
     max_lengte_kwelscherm: float
 
+    def __init__(self) -> None:
+        self.soil_storage_factor = None  # So that we can check they actually get set.
+        self.constructive_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.purchased_soil_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.min_lengte_kwelscherm = math.nan
+        self.overgang_cbwand_damwand = math.nan
+        self.max_lengte_kwelscherm = math.nan
+
     def is_valid(self) -> bool:
-        pass
+        _reinforcent_base_validation = super(
+            ReinforcementProfileSettingsBase, self
+        ).is_valid()
+        return (
+            _reinforcent_base_validation
+            and not math.isnan(self.min_lengte_kwelscherm)
+            and not math.isnan(self.overgang_cbwand_damwand)
+            and not math.isnan(self.max_lengte_kwelscherm)
+        )
 
 
-class StabiliteitswandSettings(ReinforcementProfileSettingsBase):
+class StabilitywallSettings(ReinforcementProfileSettingsBase):
     versteiling_binnentalud: float
     min_lengte_stabiliteitswand: float
     overgang_damwand_diepwand: float
     max_lengte_stabiliteitswand: float
 
+    def __init__(self) -> None:
+        self.soil_storage_factor = None  # So that we can check they actually get set.
+        self.constructive_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.purchased_soil_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.versteiling_binnentalud = math.nan
+        self.min_lengte_stabiliteitswand = math.nan
+        self.overgang_damwand_diepwand = math.nan
+        self.max_lengte_stabiliteitswand = math.nan
+
     def is_valid(self) -> bool:
-        pass
+        _reinforcent_base_validation = super(
+            ReinforcementProfileSettingsBase, self
+        ).is_valid()
+        return (
+            _reinforcent_base_validation
+            and not math.isnan(self.versteiling_binnentalud)
+            and not math.isnan(self.min_lengte_stabiliteitswand)
+            and not math.isnan(self.overgang_damwand_diepwand)
+            and not math.isnan(self.max_lengte_stabiliteitswand)
+        )
 
 
-class KistdamSettings(ReinforcementProfileSettingsBase):
+class CofferdamSettings(ReinforcementProfileSettingsBase):
     min_lengte_kistdam: float
     max_lengte_kistdam: float
 
+    def __init__(self) -> None:
+        self.soil_storage_factor = None  # So that we can check they actually get set.
+        self.constructive_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.purchased_soil_storage_factor = (
+            None  # So that we can check they actually get set.
+        )
+        self.min_lengte_kistdam = math.nan
+        self.max_lengte_kistdam = math.nan
+
     def is_valid(self) -> bool:
-        pass
+        _reinforcent_base_validation = super(
+            ReinforcementProfileSettingsBase, self
+        ).is_valid()
+        return (
+            _reinforcent_base_validation
+            and not math.isnan(self.min_lengte_kistdam)
+            and not math.isnan(self.max_lengte_kistdam)
+        )
 
 
-class OmgevingSettings(KoswatConfigProtocol):
+class SurroundingsSettings(KoswatConfigProtocol):
     omgevingsdatabases: Path  # Directory
     constructieafstand: float
     constructieovergang: float
@@ -104,8 +200,25 @@ class OmgevingSettings(KoswatConfigProtocol):
     spoorwegen: bool
     water: bool
 
+    def __init__(self) -> None:
+        self.omgevingsdatabases = None
+        self.constructieafstand = math.nan
+        self.constructieovergang = math.nan
+        self.buitendijks = None
+        self.bebouwing = None
+        self.spoorwegen = None
+        self.water = None
+
     def is_valid(self) -> bool:
-        pass
+        assert (
+            self.omgevingsdatabases is not None
+            and not math.isnan(self.constructieafstand)
+            and not math.isnan(self.constructieovergang)
+            and self.buitendijks is not None
+            and self.bebouwing is not None
+            and self.spoorwegen is not None
+            and self.water is not None
+        )
 
 
 class InfrastructuurSettings(KoswatConfigProtocol):
@@ -119,5 +232,26 @@ class InfrastructuurSettings(KoswatConfigProtocol):
     wegen_klasse7_breedte: float
     wegen_onbekend_breedte: float
 
+    def __init__(self) -> None:
+        self.infrastructuur = None
+        self.opslagfactor_wegen = None
+        self.infrakosten_0dh = None
+        self.buffer_buitendijks = math.nan
+        self.wegen_klasse2_breedte = math.nan
+        self.wegen_klasse24_breedte = math.nan
+        self.wegen_klasse47_breedte = math.nan
+        self.wegen_klasse7_breedte = math.nan
+        self.wegen_onbekend_breedte = math.nan
+
     def is_valid(self) -> bool:
-        pass
+        return (
+            self.infrastructuur is not None
+            and self.opslagfactor_wegen is not None
+            and self.infrakosten_0dh is not None
+            and not math.isnan(self.buffer_buitendijks)
+            and not math.isnan(self.wegen_klasse2_breedte)
+            and not math.isnan(self.wegen_klasse24_breedte)
+            and not math.isnan(self.wegen_klasse47_breedte)
+            and not math.isnan(self.wegen_klasse7_breedte)
+            and not math.isnan(self.wegen_onbekend_breedte)
+        )
