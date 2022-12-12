@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Iterator
 
@@ -83,6 +84,10 @@ class KoswatConfigurationImporter(BuilderProtocol):
         return _settings
 
     def build(self) -> KoswatConfiguration:
+        logging.info(
+            "Importing INI configuration from {}".format(self.ini_configuration)
+        )
+
         _config = KoswatConfiguration()
 
         # Get FOMs
@@ -96,4 +101,5 @@ class KoswatConfigurationImporter(BuilderProtocol):
         _config.surroundings_settings = _ini_settings.dijkprofiel_section
         _config.infrastructure_settings = _ini_settings.dijkprofiel_section
 
+        logging.info("Importing INI configuration completed.")
         return _config
