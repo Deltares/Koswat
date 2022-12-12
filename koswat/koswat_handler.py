@@ -7,10 +7,21 @@ from typing import Optional
 from koswat.configuration.io.koswat_configuration_importer import (
     KoswatConfigurationImporter,
 )
+from koswat.configuration.koswat_configuration import KoswatConfiguration
 from koswat.koswat_logger import KoswatLogger
 
 
 class KoswatHandler:
+    def _prepare_scenarios(self, koswat_config: KoswatConfiguration) -> None:
+        if not koswat_config.is_valid():
+            logging.error(
+                "Current configuration is not valid. Analysis can't go further."
+            )
+
+        self._koswat_config.analysis_settings.analysis_output.mkdir(
+            parents=True, exist_ok=True
+        )
+
     def run_analysis(self, analysis_file: str) -> None:
         def _as_path(ini_file: str) -> Optional[Path]:
             _ini = Path(ini_file)
