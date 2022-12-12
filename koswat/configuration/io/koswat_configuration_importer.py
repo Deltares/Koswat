@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator, List
+from typing import Iterator
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini import (
@@ -11,7 +11,7 @@ from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
 from koswat.configuration.koswat_configuration import KoswatConfiguration
-from koswat.configuration.models import KoswatScenario
+from koswat.configuration.models import KoswatCosts, KoswatDikeSelection, KoswatScenario
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
@@ -36,16 +36,14 @@ class KoswatConfigurationImporter(BuilderProtocol):
             for _s_scenario in _section_scenarios.section_scenarios:
                 yield super(KoswatScenario, _s_scenario)
 
-    def get_dike_selection(self, txt_file: Path) -> KoswatDikeSelectionTxtFom:
+    def get_dike_selection(self, txt_file: Path) -> KoswatDikeSelection:
         _reader = KoswatTxtReader()
         _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
-        return _reader.read(txt_file)
+        return super(KoswatDikeSelection, _reader.read(txt_file))
 
-    def get_dike_costs(
-        self, reader: KoswatIniReader, ini_file: Path
-    ) -> KoswatCostsIniFom:
+    def get_dike_costs(self, reader: KoswatIniReader, ini_file: Path) -> KoswatCosts:
         reader.koswat_ini_fom_type = KoswatCostsIniFom
-        return reader.read(ini_file)
+        return super(KoswatCosts, reader.read(ini_file))
 
     def build(self) -> KoswatConfiguration:
         _config = KoswatConfiguration()

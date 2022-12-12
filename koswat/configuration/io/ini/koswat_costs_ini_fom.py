@@ -1,9 +1,10 @@
 from configparser import ConfigParser
 
+from koswat.configuration.models.koswat_costs import *
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
-class EenheidsprijzenSectionFom(KoswatIniFomProtocol):
+class EenheidsprijzenSectionFom(UnitPrices, KoswatIniFomProtocol):
     prijspeil: float
 
     @classmethod
@@ -13,7 +14,7 @@ class EenheidsprijzenSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class KostenDijkprofielSectionFom(KoswatIniFomProtocol):
+class KostenDijkprofielSectionFom(DikeProfilesCosts, KoswatIniFomProtocol):
     aanleg_graslaag_m3: float
     aanleg_kleilaag_m3: float
     aanleg_kern_m3: float
@@ -41,7 +42,7 @@ class KostenDijkprofielSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class KostenInfrastructuurSectionFom(KoswatIniFomProtocol):
+class KostenInfrastructuurSectionFom(InfrastructureCosts, KoswatIniFomProtocol):
     wegen_klasse2_verwijderen: float
     wegen_klasse24_verwijderen: float
     wegen_klasse47_verwijderen: float
@@ -79,7 +80,9 @@ class KostenInfrastructuurSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class KostenOpslagfactorenInclBTWSectionFom(KoswatIniFomProtocol):
+class KostenOpslagfactorenInclBTWSectionFom(
+    StoringCostsIncludingTaxes, KoswatIniFomProtocol
+):
     grond_makkelijk: float
     grond_normaal: float
     grond_moeilijk: float
@@ -111,7 +114,9 @@ class KostenOpslagfactorenInclBTWSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class KostenOpslagfactorenExclBTWSectionFom(KoswatIniFomProtocol):
+class KostenOpslagfactorenExclBTWSectionFom(
+    StoringCostsExcludingTaxes, KoswatIniFomProtocol
+):
     grond_makkelijk: float
     grond_normaal: float
     grond_moeilijk: float
@@ -143,7 +148,7 @@ class KostenOpslagfactorenExclBTWSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class KoswatCostsIniFom(KoswatIniFomProtocol):
+class KoswatCostsIniFom(KoswatCosts, KoswatIniFomProtocol):
     eenheidsprijzen_section: EenheidsprijzenSectionFom
     kostendijkprofiel_section: KostenDijkprofielSectionFom
     kosteninfrastructuur_section: KostenInfrastructuurSectionFom
