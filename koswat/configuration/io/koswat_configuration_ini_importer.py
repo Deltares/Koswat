@@ -30,13 +30,17 @@ class KoswatConfigurationIniImporter(BuilderProtocol):
             _scenario: KoswatScenarioIniFom = reader.read(_ini_file)
             _scenario.scenario_name = _ini_file.stem
             yield _scenario
-    
-    def get_dike_selection(self, reader: KoswatIniReader, ini_file: Path) -> KoswatDikeSelectionIniFom:
+
+    def get_dike_selection(
+        self, reader: KoswatIniReader, ini_file: Path
+    ) -> KoswatDikeSelectionIniFom:
         reader.koswat_ini_fom_type = KoswatDikeSelectionIniFom
         return reader.read(ini_file)
 
-    def get_dike_costs(self, reader: KoswatIniReader, ini_file: Path) -> KoswatCostsIniFom:
-        reader.koswat_ini_fom_type = KoswatDikeSelectionIniFom
+    def get_dike_costs(
+        self, reader: KoswatIniReader, ini_file: Path
+    ) -> KoswatCostsIniFom:
+        reader.koswat_ini_fom_type = KoswatCostsIniFom
         return reader.read(ini_file)
 
     def build(self) -> KoswatConfiguration:
@@ -45,12 +49,16 @@ class KoswatConfigurationIniImporter(BuilderProtocol):
 
         # Get FOMs
         _config.general_ini = self.get_general_ini(_ini_reader)
-        _config.dike_selection = self.get_dike_selection(_ini_reader, _config.general_ini.analyse_section.dijksecties_selectie)
+        _config.dike_selection = self.get_dike_selection(
+            _ini_reader, _config.general_ini.analyse_section.dijksecties_selectie
+        )
         _config.scenarios = list(
             self.get_scenarios(
                 _ini_reader, _config.general_ini.analyse_section.scenario_invoer
             )
         )
-        _config.costs = self.get_dike_costs(_ini_reader, _config.general_ini.analyse_section.eenheidsprijzen)
+        _config.costs = self.get_dike_costs(
+            _ini_reader, _config.general_ini.analyse_section.eenheidsprijzen
+        )
 
         return _config
