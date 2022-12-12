@@ -1,8 +1,17 @@
+import math
+
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
+
+
+def _valid_float_prop(config_property: float) -> bool:
+    return config_property is not None and not math.isnan(config_property)
 
 
 class UnitPrices(KoswatConfigProtocol):
     prijspeil: float
+
+    def is_valid(self) -> bool:
+        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
 
 
 class DikeProfilesCosts(KoswatConfigProtocol):
@@ -17,6 +26,9 @@ class DikeProfilesCosts(KoswatConfigProtocol):
     profileren_kern_m2: float
     bewerken_maaiveld_m2: float
 
+    def is_valid(self) -> bool:
+        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
+
 
 class InfrastructureCosts(KoswatConfigProtocol):
     wegen_klasse2_verwijderen: float
@@ -29,6 +41,9 @@ class InfrastructureCosts(KoswatConfigProtocol):
     wegen_klasse47_aanleg: float
     wegen_klasse7_aanleg: float
     wegen_onbekend_aanleg: float
+
+    def is_valid(self) -> bool:
+        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
 
 
 class StoringCostsIncludingTaxes(KoswatConfigProtocol):
@@ -45,6 +60,9 @@ class StoringCostsIncludingTaxes(KoswatConfigProtocol):
     grondaankoop_normaal: float
     grondaankoop_moeilijk: float
 
+    def is_valid(self) -> bool:
+        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
+
 
 class StoringCostsExcludingTaxes(KoswatConfigProtocol):
     grond_makkelijk: float
@@ -59,6 +77,9 @@ class StoringCostsExcludingTaxes(KoswatConfigProtocol):
     grondaankoop_makkelijk: float
     grondaankoop_normaal: float
     grondaankoop_moeilijk: float
+
+    def is_valid(self) -> bool:
+        return all(_valid_float_prop(_prop) for _prop in dict(self).values())
 
 
 class KoswatCosts(KoswatConfigProtocol):
