@@ -3,25 +3,27 @@ from __future__ import annotations
 from configparser import ConfigParser
 from typing import List, Optional
 
+from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
-class ScenarioSection(KoswatIniFomProtocol):
+class ScenarioSection(KoswatIniFomProtocol, KoswatScenario):
     scenario_name: str
-    dH: float
-    dS: float
-    dP: float
-    buitentalud: Optional[float]
-    kruinbreedte: Optional[float]
+    d_h: float
+    d_s: float
+    d_p: float
+    buiten_talud: Optional[float]
+    kruin_breedte: Optional[float]
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> ScenarioSection:
         _section = cls()
-        _section.dH = ini_config.getfloat("dH")
-        _section.dS = ini_config.getfloat("dS")
-        _section.dP = ini_config.getfloat("dP")
-        _section.buitentalud = ini_config.getfloat("Buitentalud")
-        _section.kruinbreedte = ini_config.getfloat("kruinbreedte")
+        # Retrieves the values as written (and expected) in the ini file.
+        _section.d_h = ini_config.getfloat("dH")
+        _section.d_s = ini_config.getfloat("dS")
+        _section.d_p = ini_config.getfloat("dP")
+        _section.buiten_talud = ini_config.getfloat("Buitentalud")
+        _section.kruin_breedte = ini_config.getfloat("kruinbreedte")
         return _section
 
 

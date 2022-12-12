@@ -5,13 +5,13 @@ from koswat.calculations import (
     ReinforcementProfileBuilderFactory,
     ReinforcementProfileProtocol,
 )
+from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.cost_report.multi_location_profile import (
     MultiLocationProfileCostReportBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from koswat.koswat_scenario import KoswatScenario
 
 
 class KoswatSummaryBuilder(BuilderProtocol):

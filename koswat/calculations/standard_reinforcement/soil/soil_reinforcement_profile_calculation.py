@@ -4,9 +4,9 @@ from koswat.calculations.reinforcement_profile_calculation_protocol import (
 from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
     SoilInputProfile,
 )
+from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.koswat_scenario import KoswatScenario
 
 
 class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationProtocol):

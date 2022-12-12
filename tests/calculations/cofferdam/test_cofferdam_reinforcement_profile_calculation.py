@@ -10,9 +10,9 @@ from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinfor
 from koswat.calculations.reinforcement_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
+from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.koswat_scenario import KoswatScenario
 
 
 class TestCofferDamReinforcementProfileCalculation:

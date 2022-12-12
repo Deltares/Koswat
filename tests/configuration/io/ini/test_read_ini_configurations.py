@@ -13,6 +13,7 @@ from tests import test_data
 
 test_ini_reader_data = test_data / "ini_reader"
 
+
 class TestReadIniConfigurations:
     @pytest.mark.parametrize(
         "test_file, ini_fom_type",
@@ -316,15 +317,15 @@ class TestReadIniConfigurations:
         assert len(_ini_fom.scenario_sections) == 2
 
         # Scenario 0
-        assert _ini_fom.scenario_sections[0].dH == 0.5
-        assert _ini_fom.scenario_sections[0].dS == 10
-        assert _ini_fom.scenario_sections[0].dP == 50
-        assert _ini_fom.scenario_sections[0].buitentalud == None
-        assert _ini_fom.scenario_sections[0].kruinbreedte == None
+        assert _ini_fom.scenario_sections[0].d_h == 0.5
+        assert _ini_fom.scenario_sections[0].d_s == 10
+        assert _ini_fom.scenario_sections[0].d_p == 50
+        assert _ini_fom.scenario_sections[0].buiten_talud == None
+        assert _ini_fom.scenario_sections[0].kruin_breedte == None
 
         # Scenario 1
-        assert _ini_fom.scenario_sections[1].dH == 1
-        assert _ini_fom.scenario_sections[1].dS == 15
-        assert _ini_fom.scenario_sections[1].dP == 75
-        assert _ini_fom.scenario_sections[1].buitentalud == 4
-        assert _ini_fom.scenario_sections[1].kruinbreedte == 10
+        assert _ini_fom.scenario_sections[1].d_h == 1
+        assert _ini_fom.scenario_sections[1].d_s == 15
+        assert _ini_fom.scenario_sections[1].d_p == 75
+        assert _ini_fom.scenario_sections[1].buiten_talud == 4
+        assert _ini_fom.scenario_sections[1].kruin_breedte == 10

@@ -8,9 +8,9 @@ from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_in
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile_calculation import (
     StabilityWallReinforcementProfileCalculation,
 )
+from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.koswat_scenario import KoswatScenario
 
 
 class TestStabilityWallReinforcementProfileCalculation:

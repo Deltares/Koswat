@@ -3,6 +3,7 @@ from __future__ import annotations
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
+from koswat.configuration.koswat_scenario import KoswatScenario
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
@@ -24,7 +25,6 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
-from koswat.koswat_scenario import KoswatScenario
 from tests import get_testcase_results_dir, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 

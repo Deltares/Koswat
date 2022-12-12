@@ -4,6 +4,7 @@ import math
 
 
 class KoswatScenario:
+    scenario_name: str
     d_h: float
     d_s: float
     d_p: float
@@ -11,6 +12,7 @@ class KoswatScenario:
     buiten_talud: float
 
     def __init__(self) -> None:
+        self.scenario_name = ""
         self.d_h = math.nan
         self.d_s = math.nan
         self.d_p = math.nan
@@ -20,6 +22,7 @@ class KoswatScenario:
     @classmethod
     def from_dict(cls, scenario_data: dict) -> KoswatScenario:
         _scenario = cls()
+        _scenario.scenario_name = scenario_data.get("scenario_name", "")
         _scenario.d_h = scenario_data["d_h"]
         _scenario.d_s = scenario_data["d_s"]
         _scenario.d_p = scenario_data["d_p"]
