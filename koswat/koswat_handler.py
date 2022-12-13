@@ -25,13 +25,19 @@ class KoswatHandler:
         )
 
         # Define base profile:
-        KoswatProfileBuilder.with_data(
-            dict(
-                input_profile_data=input_profile_case,
-                layers_data=self._koswat_config.dike_profile_settings.get_material_thickness(),
-                profile_type=KoswatProfileBase,
+        _input_cases = []
+        for (
+            _input_case
+        ) in self._koswat_config.analysis_settings.dike_sections_input_profile:
+            _input_profile = KoswatProfileBuilder.with_data(
+                dict(
+                    input_profile_data=_input_case,
+                    layers_data=self._koswat_config.dike_profile_settings.get_material_thickness(),
+                    profile_type=KoswatProfileBase,
+                )
             )
-        )
+            _input_cases.append(_input_profile)
+        assert _input_cases
 
     def run_analysis(self, analysis_file: str) -> None:
         def _as_path(ini_file: str) -> Optional[Path]:
