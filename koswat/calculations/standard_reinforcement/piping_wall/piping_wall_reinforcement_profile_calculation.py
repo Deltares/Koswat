@@ -69,6 +69,7 @@ class PipingWallReinforcementProfileCalculation(
         self, base_data: KoswatInputProfileProtocol, scenario: KoswatScenario
     ) -> PipingWallInputProfile:
         _new_data = PipingWallInputProfile()
+        _new_data.dike_section = base_data.dike_section
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
         _new_data.buiten_talud = scenario.buiten_talud
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte

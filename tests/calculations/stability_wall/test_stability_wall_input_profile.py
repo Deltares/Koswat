@@ -15,6 +15,7 @@ class TestStabilityWallInputProfile:
     def test_from_dict(self):
         # 1. Define test data
         _test_data = dict(
+            dike_section="dumb_data",
             buiten_maaiveld=0.01,
             buiten_talud=0.02,
             buiten_berm_hoogte=0.03,

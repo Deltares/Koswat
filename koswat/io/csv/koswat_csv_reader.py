@@ -18,7 +18,7 @@ class KoswatCsvReader(KoswatReaderProtocol):
         if not self.supports_file(file_path):
             raise ValueError("Csv file should be provided")
 
-        if not self.koswat_csv_fom_type:
+        if not self.koswat_csv_fom_builder_type:
             raise ValueError("Csv FOM builder type needs to be specified")
 
         if not file_path.is_file():

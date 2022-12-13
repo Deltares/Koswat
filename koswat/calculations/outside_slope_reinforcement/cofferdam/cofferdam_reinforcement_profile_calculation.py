@@ -60,6 +60,7 @@ class CofferdamReinforcementProfileCalculation(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> CofferDamInputProfile:
         _new_data = CofferDamInputProfile()
+        _new_data.dike_section = base_data.dike_section
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
         _new_data.buiten_talud = self._calculate_new_buiten_talud(base_data, scenario)
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte

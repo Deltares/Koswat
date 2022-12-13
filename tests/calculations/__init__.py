@@ -101,7 +101,7 @@ def _compare_koswat_input_profile(
     return [
         f"Values differ for {key}, expected {value}, got: {_new_data_dict[key]}"
         for key, value in _exp_data_dict.items()
-        if not almost_equal(_new_data_dict[key], value)
+        if key != "dike_section" and not almost_equal(_new_data_dict[key], value)
     ]
 
 

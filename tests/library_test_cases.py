@@ -67,6 +67,7 @@ class LayersCases(CasesProtocol):
 
 class InputProfileCases(CasesProtocol):
     default = dict(
+        dike_section="test_data",
         buiten_maaiveld=0,
         buiten_talud=3,
         buiten_berm_hoogte=0,
@@ -80,6 +81,7 @@ class InputProfileCases(CasesProtocol):
     )
 
     profile_case_2 = dict(
+        dike_section="test_data",
         buiten_maaiveld=0,
         buiten_talud=4,
         buiten_berm_hoogte=0,
@@ -125,6 +127,7 @@ class InitialPointsLookup(CasesProtocol):
 class InputProfileScenarioLookup:
     reinforcement_soil_default_default_no_layers = dict(
         input_profile_data=dict(
+            dike_section="test_data",
             buiten_maaiveld=0,
             buiten_talud=3,
             buiten_berm_breedte=0,
@@ -141,6 +144,8 @@ class InputProfileScenarioLookup:
     )
     reinforcement_soil_default_scenario_2_no_layers = dict(
         input_profile_data=dict(
+                dike_section="test_data",
+
             buiten_maaiveld=0,
             buiten_talud=4,
             buiten_berm_breedte=0,
@@ -157,6 +162,8 @@ class InputProfileScenarioLookup:
     )
     reinforcement_piping_wall_default_scenario_3_no_layers = dict(
         input_profile_data=dict(
+                    dike_section="test_data",
+
             buiten_maaiveld=0,
             buiten_talud=3,
             buiten_berm_breedte=0,
@@ -174,6 +181,8 @@ class InputProfileScenarioLookup:
     )
     reinforcement_stability_wall_default_scenario_3_no_layers = dict(
         input_profile_data=dict(
+                    dike_section="test_data",
+
             buiten_maaiveld=0,
             buiten_talud=3,
             buiten_berm_breedte=0,
@@ -191,6 +200,8 @@ class InputProfileScenarioLookup:
     )
     reinforcement_coffer_dam_wall_default_scenario_3_no_layers = dict(
         input_profile_data=dict(
+                    dike_section="test_data",
+
             buiten_maaiveld=0,
             buiten_talud=2.25,
             buiten_berm_breedte=0,

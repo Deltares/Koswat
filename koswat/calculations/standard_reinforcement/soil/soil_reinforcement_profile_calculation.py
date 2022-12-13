@@ -76,6 +76,7 @@ class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationPr
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> KoswatInputProfileBase:
         _new_data = SoilInputProfile()
+        _new_data.dike_section = base_data.dike_section
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
         _new_data.buiten_talud = scenario.buiten_talud
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
