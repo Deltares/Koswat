@@ -10,7 +10,7 @@ from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapper,
     KoswatLayersWrapperBuilder,
 )
-from koswat.dike.material.koswat_material import KoswatMaterial
+from koswat.dike.material.koswat_material import KoswatMaterialType
 from tests.library_test_cases import InitialPointsLookup, LayersCases
 
 
@@ -40,14 +40,17 @@ class TestKoswatLayersWrapperBuilder:
         # 3. Verify expectations
         assert isinstance(_layers, KoswatLayersWrapper)
         assert isinstance(_layers.base_layer, KoswatBaseLayer)
-        assert isinstance(_layers.base_layer.material, KoswatMaterial)
-        assert _layers.base_layer.material.name == layers_case["base_layer"]["material"]
+        assert isinstance(_layers.base_layer.material_type, KoswatMaterialType)
+        assert (
+            _layers.base_layer.material_type.name
+            == layers_case["base_layer"]["material"]
+        )
         assert len(_layers.coating_layers) == len(layers_case["coating_layers"])
         for c_idx, c_layer in enumerate(_layers.coating_layers):
             assert isinstance(c_layer, KoswatCoatingLayer)
             assert c_layer.depth == layers_case["coating_layers"][c_idx]["depth"]
-            assert isinstance(c_layer.material, KoswatMaterial)
+            assert isinstance(c_layer.material_type, KoswatMaterialType)
             assert (
-                c_layer.material.name
+                c_layer.material_type.name
                 == layers_case["coating_layers"][c_idx]["material"]
             )

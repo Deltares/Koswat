@@ -4,12 +4,13 @@ import abc
 import enum
 import math
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.models.koswat_costs import KoswatCosts
 from koswat.configuration.models.koswat_dike_selection import KoswatDikeSelection
 from koswat.configuration.models.koswat_scenario import KoswatScenario
+from koswat.dike.material.koswat_material import KoswatMaterialType
 
 
 class StorageFactorEnum(enum.Enum):
@@ -61,6 +62,12 @@ class DikeProfileSettings(KoswatConfigProtocol):
         return not math.isnan(self.thickness_grass_layer) and not math.isnan(
             self.thickness_clay_layer
         )
+
+    def get_material_thickness(self) -> List[dict]:
+        return [
+            dict(material=KoswatMaterialType.GRASS, depth=self.thickness_grass_layer),
+            dict(material=KoswatMaterialType.CLAY, depth=self.thickness_clay_layer),
+        ]
 
 
 class ReinforcementProfileSettingsBase(KoswatConfigProtocol, abc.ABC):

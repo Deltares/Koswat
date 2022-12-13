@@ -3,6 +3,8 @@ from typing import List, Protocol
 import pytest
 from shapely.geometry.point import Point
 
+from koswat.dike.material.koswat_material import KoswatMaterialType
+
 
 class CasesProtocol(Protocol):
     cases: List[pytest.param]
@@ -40,20 +42,20 @@ class ScenarioCases(CasesProtocol):
 
 class LayersCases(CasesProtocol):
     without_layers = dict(
-        base_layer=dict(material="zand"),
+        base_layer=dict(material=KoswatMaterialType.SAND),
         coating_layers=[],
     )
     with_clay = dict(
-        base_layer=dict(material="zand"),
+        base_layer=dict(material=KoswatMaterialType.SAND),
         coating_layers=[
-            dict(material="klei", depth=0.75),
+            dict(material=KoswatMaterialType.CLAY, depth=0.75),
         ],
     )
     with_clay_and_grass = dict(
-        base_layer=dict(material="zand"),
+        base_layer=dict(material=KoswatMaterialType.SAND),
         coating_layers=[
-            dict(material="gras", depth=0.5),
-            dict(material="klei", depth=0.75),
+            dict(material=KoswatMaterialType.GRASS, depth=0.5),
+            dict(material=KoswatMaterialType.CLAY, depth=0.75),
         ],
     )
 

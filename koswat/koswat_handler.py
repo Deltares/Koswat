@@ -8,6 +8,8 @@ from koswat.configuration.io.koswat_configuration_importer import (
     KoswatConfigurationImporter,
 )
 from koswat.configuration.koswat_configuration import KoswatConfiguration
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.koswat_logger import KoswatLogger
 
 
@@ -22,6 +24,15 @@ class KoswatHandler:
             parents=True, exist_ok=True
         )
 
+        # Define base profile:
+        KoswatProfileBuilder.with_data(
+            dict(
+                input_profile_data=input_profile_case,
+                layers_data=self._koswat_config.dike_profile_settings.get_material_thickness(),
+                profile_type=KoswatProfileBase,
+            )
+        )
+
     def run_analysis(self, analysis_file: str) -> None:
         def _as_path(ini_file: str) -> Optional[Path]:
             _ini = Path(ini_file)
@@ -30,9 +41,15 @@ class KoswatHandler:
                 raise FileNotFoundError(_ini)
             return _ini
 
+        # Import data.
         _config_importer = KoswatConfigurationImporter()
         _config_importer.ini_configuration = _as_path(analysis_file)
         self._koswat_config = _config_importer.build()
+
+        # Generate scenarios
+        _scenarios = self._prepare_scenarios(self._koswat_config)
+
+        # Run analysis.
         logging.info("Running analysis")
         raise NotImplementedError()
 

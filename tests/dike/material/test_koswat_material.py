@@ -3,15 +3,10 @@ from typing import Callable
 
 import pytest
 
-from koswat.dike.material.koswat_material import KoswatMaterial, KoswatMaterialFactory
-
-
-class TestKoswatMaterial:
-    def test_initialize(self):
-        _material = KoswatMaterial()
-        assert isinstance(_material, KoswatMaterial)
-        assert not _material.name
-        assert math.isnan(_material.cost)
+from koswat.dike.material.koswat_material import (
+    KoswatMaterialFactory,
+    KoswatMaterialType,
+)
 
 
 class TestKoswatMaterialFactory:
@@ -46,6 +41,6 @@ class TestKoswatMaterialFactory:
         _material = KoswatMaterialFactory.get_material(_m_name)
 
         # 3. Verify expectations.
-        assert isinstance(_material, KoswatMaterial)
+        assert isinstance(_material, KoswatMaterialType)
         assert _material.name.lower() == material_name.lower().strip()
         assert not math.isnan(_material.cost)

@@ -120,7 +120,7 @@ def _compare_koswat_layers(
             Polygon(_c_layer.outer_geometry), _tolerance
         ):
             _layers_errors.append(
-                "Geometries differ for layer {}".format(_c_layer.material.name)
+                "Geometries differ for layer {}".format(_c_layer.material_type.name)
             )
 
     return _layers_errors

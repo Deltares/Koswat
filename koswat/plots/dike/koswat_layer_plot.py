@@ -20,15 +20,15 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         """
         _x_coords, y_coords = self.koswat_object.outer_geometry.boundary.coords.xy
         dict_values = dict(color=color, linewidth=2, zorder=1)
-        if self.koswat_object.material.name == "zand":
+        if self.koswat_object.material_type.name == "zand":
             dict_values["linestyle"] = "dashdot"
-        elif self.koswat_object.material.name == "klei":
+        elif self.koswat_object.material_type.name == "klei":
             dict_values["linestyle"] = "dashed"
-        elif self.koswat_object.material.name == "gras":
+        elif self.koswat_object.material_type.name == "gras":
             dict_values["linestyle"] = "solid"
         else:
             raise ValueError(
-                f"Material {self.koswat_object.material.name} not supported for plotting."
+                f"Material {self.koswat_object.material_type.name} not supported for plotting."
             )
         self.subplot.plot(_x_coords, y_coords, **dict_values)
         _x_points, _y_points = list(zip(*self.koswat_object.upper_points.coords))
