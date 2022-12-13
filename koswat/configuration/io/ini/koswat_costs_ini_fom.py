@@ -1,7 +1,7 @@
 import abc
 from configparser import ConfigParser
 
-from koswat.configuration.models.koswat_costs import *
+from koswat.configuration.settings.koswat_costs import *
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 

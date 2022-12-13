@@ -6,7 +6,7 @@ from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
-from koswat.configuration.models import KoswatScenario
+from koswat.configuration.settings import KoswatScenario
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
 

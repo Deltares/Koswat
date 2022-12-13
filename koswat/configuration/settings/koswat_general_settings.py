@@ -10,9 +10,11 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
-from koswat.configuration.models.koswat_costs import KoswatCosts
-from koswat.configuration.models.koswat_dike_selection import KoswatDikeSelection
-from koswat.configuration.models.koswat_scenario import KoswatScenario
+from koswat.configuration.settings import (
+    KoswatCosts,
+    KoswatDikeSelection,
+    KoswatScenario,
+)
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 

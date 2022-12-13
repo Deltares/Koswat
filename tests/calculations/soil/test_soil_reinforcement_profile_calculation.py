@@ -10,7 +10,7 @@ from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile 
 from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
-from koswat.configuration.models import KoswatScenario
+from koswat.configuration.settings import KoswatScenario
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 

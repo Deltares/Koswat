@@ -24,7 +24,7 @@ from koswat.calculations.standard_reinforcement import (
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
-from koswat.configuration.models import KoswatScenario
+from koswat.configuration.settings import KoswatScenario
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder

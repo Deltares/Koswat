@@ -1,6 +1,6 @@
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.koswat_settings_importer import KoswatConfigurationImporter
-from koswat.configuration.models.koswat_general_settings import *
+from koswat.configuration.settings.koswat_general_settings import *
 from tests import test_data
 
 

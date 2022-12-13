@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.configuration.models import KoswatScenario
+from koswat.configuration.settings import KoswatScenario
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,

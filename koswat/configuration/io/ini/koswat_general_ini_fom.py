@@ -22,7 +22,7 @@ from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
-from koswat.configuration.models.koswat_general_settings import (
+from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     StorageFactorEnum,
 )
@@ -53,7 +53,11 @@ class AnalysisSectionFom(KoswatIniFomProtocol):
         _section.dike_selection_txt_fom = AnalysisConverter.dike_selection_file_to_fom(
             Path(ini_config["dijksecties_selectie"])
         )
-        _section.dike_section_location_fom = AnalysisConverter.dike_sections_location_file_to_fom(Path(ini_config["dijksectie_ligging"]))
+        _section.dike_section_location_fom = (
+            AnalysisConverter.dike_sections_location_file_to_fom(
+                Path(ini_config["dijksectie_ligging"])
+            )
+        )
         _section.input_profiles_csv_fom = (
             AnalysisConverter.dike_input_profiles_file_to_fom(
                 Path(ini_config["dijksectie_invoer"])

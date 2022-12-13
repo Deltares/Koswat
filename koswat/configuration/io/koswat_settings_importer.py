@@ -4,7 +4,7 @@ from pathlib import Path
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
-from koswat.configuration.models.koswat_general_settings import (
+from koswat.configuration.settings.koswat_general_settings import (
     KoswatGeneralSettings,
     SurroundingsSettings,
 )

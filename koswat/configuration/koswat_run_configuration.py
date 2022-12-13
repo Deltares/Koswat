@@ -2,8 +2,8 @@ import logging
 from pathlib import Path
 from typing import List
 
-from koswat.configuration.models.koswat_general_settings import KoswatGeneralSettings
-from koswat.configuration.models.koswat_scenario import KoswatScenario
+from koswat.configuration.settings.koswat_general_settings import KoswatGeneralSettings
+from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 

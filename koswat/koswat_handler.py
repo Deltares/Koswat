@@ -6,7 +6,7 @@ from typing import Optional
 
 from koswat.configuration.io.koswat_settings_importer import KoswatConfigurationImporter
 from koswat.configuration.koswat_run_configuration import KoswatRunConfiguration
-from koswat.configuration.models.koswat_general_settings import KoswatGeneralSettings
+from koswat.configuration.settings.koswat_general_settings import KoswatGeneralSettings
 from koswat.koswat_logger import KoswatLogger
 
 

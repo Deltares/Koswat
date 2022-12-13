@@ -17,7 +17,11 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
-from koswat.configuration.models import KoswatCosts, KoswatDikeSelection, KoswatScenario
+from koswat.configuration.settings import (
+    KoswatCosts,
+    KoswatDikeSelection,
+    KoswatScenario,
+)
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
