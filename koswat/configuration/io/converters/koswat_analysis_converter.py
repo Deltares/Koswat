@@ -48,16 +48,8 @@ def dike_input_profiles_file_to_fom(csv_file: Path) -> List[KoswatInputProfileBa
     )
 
 
-def scenarios_dir_to_koswat_scenario_list(
-    scenario_dir: Path,
-) -> Iterator[KoswatScenario]:
-    _reader = KoswatIniReader()
-    _reader.koswat_ini_fom_type = KoswatSectionScenariosIniFom
-    for _ini_file in scenario_dir.glob("*.ini"):
-        _section_scenarios: KoswatSectionScenariosIniFom = _reader.read(_ini_file)
-        _section_scenarios.section_name = _ini_file.stem
-        for _s_scenario in _section_scenarios.section_scenarios:
-            yield _s_scenario
+def dike_sections_location_file_to_fom(shp_file: Path):
+    pass
 
 
 def dike_selection_file_to_fom(txt_file: Path) -> KoswatDikeSelection:
@@ -70,6 +62,18 @@ def dike_costs_file_to_fom(ini_file: Path) -> KoswatCosts:
     _reader = KoswatIniReader()
     _reader.koswat_ini_fom_type = KoswatCostsIniFom
     return _reader.read(ini_file)
+
+
+def scenarios_dir_to_koswat_scenario_list(
+    scenario_dir: Path,
+) -> Iterator[KoswatScenario]:
+    _reader = KoswatIniReader()
+    _reader.koswat_ini_fom_type = KoswatSectionScenariosIniFom
+    for _ini_file in scenario_dir.glob("*.ini"):
+        _section_scenarios: KoswatSectionScenariosIniFom = _reader.read(_ini_file)
+        _section_scenarios.section_name = _ini_file.stem
+        for _s_scenario in _section_scenarios.section_scenarios:
+            yield _s_scenario
 
 
 # def analysis_settings_fom_to_dom(analysis_fom: AnalysisSectionFom) -> AnalysisSettings:

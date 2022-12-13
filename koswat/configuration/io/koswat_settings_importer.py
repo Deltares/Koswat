@@ -43,15 +43,15 @@ class KoswatConfigurationImporter(BuilderProtocol):
         _settings = KoswatGeneralSettings()
 
         # Get FOMs
-        _ini_settings = self.get_general_ini()
-        _settings.analysis_settings = _ini_settings.analyse_section
-        _settings.dike_profile_settings = _ini_settings.dijkprofiel_section
-        _settings.soil_settings = _ini_settings.grondmaatregel_section
-        _settings.pipingwall_settings = _ini_settings.kwelscherm_section
-        _settings.stabilitywall_settings = _ini_settings.stabiliteitswand_section
-        _settings.cofferdam_settings = _ini_settings.kistdam_section
-        _settings.surroundings_settings = _ini_settings.surroundings_section
-        _settings.infrastructure_settings = _ini_settings.infrastructuur_section
+        _fom_settings = self.get_general_ini()
+        _settings.analysis_settings = _fom_settings.analyse_section
+        _settings.dike_profile_settings = _fom_settings.dijkprofiel_section
+        _settings.soil_settings = _fom_settings.grondmaatregel_section
+        _settings.pipingwall_settings = _fom_settings.kwelscherm_section
+        _settings.stabilitywall_settings = _fom_settings.stabiliteitswand_section
+        _settings.cofferdam_settings = _fom_settings.kistdam_section
+        _settings.surroundings_settings = _fom_settings.surroundings_section
+        _settings.infrastructure_settings = _fom_settings.infrastructuur_section
 
         logging.info("Importing INI configuration completed.")
         return _settings

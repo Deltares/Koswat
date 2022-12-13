@@ -1,4 +1,3 @@
-import re
 from typing import List
 
 from koswat.configuration.io.csv.koswat_input_profiles_csv_fom import (

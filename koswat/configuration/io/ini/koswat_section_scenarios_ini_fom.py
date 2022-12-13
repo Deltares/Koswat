@@ -3,11 +3,10 @@ from __future__ import annotations
 from configparser import ConfigParser
 from typing import List, Optional
 
-from koswat.configuration.models import KoswatScenario
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
-class SectionScenarioFom(KoswatScenario, KoswatIniFomProtocol):
+class SectionScenarioFom(KoswatIniFomProtocol):
     scenario_name: str
     scenario_section: str
     d_h: float

@@ -1,10 +1,11 @@
+import abc
 from configparser import ConfigParser
 
 from koswat.configuration.models.koswat_costs import *
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
-class EenheidsprijzenSectionFom(UnitPrices, KoswatIniFomProtocol):
+class UnitPricesSectionFom(KoswatIniFomProtocol):
     prijspeil: float
 
     @classmethod
@@ -14,7 +15,7 @@ class EenheidsprijzenSectionFom(UnitPrices, KoswatIniFomProtocol):
         return _section
 
 
-class KostenDijkprofielSectionFom(DikeProfileCosts, KoswatIniFomProtocol):
+class DikeProfileCostsSectionFom(KoswatIniFomProtocol):
     aanleg_graslaag_m3: float
     aanleg_kleilaag_m3: float
     aanleg_kern_m3: float
@@ -42,7 +43,7 @@ class KostenDijkprofielSectionFom(DikeProfileCosts, KoswatIniFomProtocol):
         return _section
 
 
-class KostenInfrastructuurSectionFom(InfrastructureCosts, KoswatIniFomProtocol):
+class InfrastructureCostsSectionFom(KoswatIniFomProtocol):
     wegen_klasse2_verwijderen: float
     wegen_klasse24_verwijderen: float
     wegen_klasse47_verwijderen: float
@@ -80,9 +81,7 @@ class KostenInfrastructuurSectionFom(InfrastructureCosts, KoswatIniFomProtocol):
         return _section
 
 
-class KostenOpslagfactorenInclBTWSectionFom(
-    StoringCostsIncludingTaxes, KoswatIniFomProtocol
-):
+class StoringCostsSectionFomBase(KoswatIniFomProtocol, abc.ABC):
     grond_makkelijk: float
     grond_normaal: float
     grond_moeilijk: float
@@ -114,66 +113,40 @@ class KostenOpslagfactorenInclBTWSectionFom(
         return _section
 
 
-class KostenOpslagfactorenExclBTWSectionFom(
-    StoringCostsExcludingTaxes, KoswatIniFomProtocol
-):
-    grond_makkelijk: float
-    grond_normaal: float
-    grond_moeilijk: float
-    constructief_makkelijk: float
-    constructief_normaal: float
-    constructief_moeilijk: float
-    wegen_makkelijk: float
-    wegen_normaal: float
-    wegen_moeilijk: float
-    grondaankoop_makkelijk: float
-    grondaankoop_normaal: float
-    grondaankoop_moeilijk: float
-
-    @classmethod
-    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
-        _section = cls()
-        _section.grond_makkelijk = ini_config.getfloat("grond_makkelijk")
-        _section.grond_normaal = ini_config.getfloat("grond_normaal")
-        _section.grond_moeilijk = ini_config.getfloat("grond_moeilijk")
-        _section.constructief_makkelijk = ini_config.getfloat("constructief_makkelijk")
-        _section.constructief_normaal = ini_config.getfloat("constructief_normaal")
-        _section.constructief_moeilijk = ini_config.getfloat("constructief_moeilijk")
-        _section.wegen_makkelijk = ini_config.getfloat("wegen_makkelijk")
-        _section.wegen_normaal = ini_config.getfloat("wegen_normaal")
-        _section.wegen_moeilijk = ini_config.getfloat("wegen_moeilijk")
-        _section.grondaankoop_makkelijk = ini_config.getfloat("grondaankoop_makkelijk")
-        _section.grondaankoop_normaal = ini_config.getfloat("grondaankoop_normaal")
-        _section.grondaankoop_moeilijk = ini_config.getfloat("grondaankoop_moeilijk")
-        return _section
+class StoringCostsIncludingTaxtesSectionFom(StoringCostsSectionFomBase):
+    pass
 
 
-class KoswatCostsIniFom(KoswatCosts, KoswatIniFomProtocol):
-    eenheidsprijzen_section: EenheidsprijzenSectionFom
-    kostendijkprofiel_section: KostenDijkprofielSectionFom
-    kosteninfrastructuur_section: KostenInfrastructuurSectionFom
-    kostenopslagfactoreninclbtw_section: KostenOpslagfactorenInclBTWSectionFom
-    kostenopslagfactorenexclbtw_section: KostenOpslagfactorenExclBTWSectionFom
+class StoringCostsExcludingTaxesSectionFom(StoringCostsSectionFomBase):
+    pass
+
+
+class KoswatCostsIniFom(KoswatIniFomProtocol):
+    eenheidsprijzen_section: UnitPricesSectionFom
+    kostendijkprofiel_section: DikeProfileCostsSectionFom
+    kosteninfrastructuur_section: InfrastructureCostsSectionFom
+    kostenopslagfactoreninclbtw_section: StoringCostsIncludingBtwSectionFom
+    kostenopslagfactorenexclbtw_section: StoringCostsExcludingTaxesSectionFom
 
     @classmethod
     def from_config(cls, ini_dict: ConfigParser) -> KoswatIniFomProtocol:
         _ini_fom = cls()
-        _ini_fom.eenheidsprijzen_section = EenheidsprijzenSectionFom.from_config(
+        _ini_fom.eenheidsprijzen_section = UnitPricesSectionFom.from_config(
             ini_dict["Eenheidsprijzen"]
         )
-        _ini_fom.kostendijkprofiel_section = KostenDijkprofielSectionFom.from_config(
+        _ini_fom.kostendijkprofiel_section = DikeProfileCostsSectionFom.from_config(
             ini_dict["KostenDijkprofiel"]
         )
         _ini_fom.kosteninfrastructuur_section = (
-            KostenInfrastructuurSectionFom.from_config(ini_dict["KostenInfrastructuur"])
+            InfrastructureCostsSectionFom.from_config(ini_dict["KostenInfrastructuur"])
         )
         _ini_fom.kostenopslagfactoreninclbtw_section = (
-            KostenOpslagfactorenInclBTWSectionFom.from_config(
+            StoringCostsIncludingBtwSectionFom.from_config(
                 ini_dict["KostenOpslagfactorenInclBTW"]
             )
         )
         _ini_fom.kostenopslagfactorenexclbtw_section = (
-            KostenOpslagfactorenExclBTWSectionFom.from_config(
+            StoringCostsExcludingTaxesSectionFom.from_config(
                 ini_dict["KostenOpslagfactorenExclBTW"]
             )
         )

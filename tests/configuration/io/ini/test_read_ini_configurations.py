@@ -54,19 +54,19 @@ class TestReadIniConfigurations:
 
         # Analysis section
         assert isinstance(_ini_fom.analyse_section, AnalysisSectionFom)
-        assert _ini_fom.analyse_section.dike_sections_selection_ini_file == Path(
+        assert _ini_fom.analyse_section.dike_selection_txt_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\DijksectieSelectie.txt"
         )
-        assert _ini_fom.analyse_section.dijksectie_ligging == Path(
+        assert _ini_fom.analyse_section.dike_section_location_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
-        assert _ini_fom.analyse_section.dike_sections_input_profiles_csv_file == Path(
+        assert _ini_fom.analyse_section.input_profiles_csv_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\InputPerDijkvak_WV21_KOSWAT_v2022_DR10.csv"
         )
-        assert _ini_fom.analyse_section.scenarios_dir == Path(
+        assert _ini_fom.analyse_section.scenarios_ini_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Scenarios"
         )
-        assert _ini_fom.analyse_section.costs_ini_file == Path(
+        assert _ini_fom.analyse_section.costs_ini_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
         )
         assert _ini_fom.analyse_section.analysis_output_dir == Path(
@@ -80,7 +80,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.dijkprofiel_section.thickness_clay_layer == 0.5
 
         # Grondmaatregel section
-        assert isinstance(_ini_fom.grondmaatregel_section, GrondmaatregelSectionFom)
+        assert isinstance(_ini_fom.grondmaatregel_section, SoilReinforcementSectionFom)
         assert (
             _ini_fom.grondmaatregel_section.soil_storage_factor
             == StorageFactorEnum.NORMAAL
@@ -97,7 +97,9 @@ class TestReadIniConfigurations:
         assert _ini_fom.grondmaatregel_section.max_bermhoogte_factor == 0.4
         assert _ini_fom.grondmaatregel_section.factor_toename_bermhoogte == 0.05
 
-        assert isinstance(_ini_fom.kwelscherm_section, KwelschermSectionFom)
+        assert isinstance(
+            _ini_fom.kwelscherm_section, PipingwallReinforcementSectionFom
+        )
         assert (
             _ini_fom.kwelscherm_section.soil_storage_factor == StorageFactorEnum.NORMAAL
         )
@@ -114,7 +116,9 @@ class TestReadIniConfigurations:
         assert _ini_fom.kwelscherm_section.max_lengte_kwelscherm == 25
 
         # Stabiliteitswand section
-        assert isinstance(_ini_fom.stabiliteitswand_section, StabiliteitswandSectionFom)
+        assert isinstance(
+            _ini_fom.stabiliteitswand_section, StabilitywallReinforcementSectionFom
+        )
         assert (
             _ini_fom.stabiliteitswand_section.soil_storage_factor
             == StorageFactorEnum.MOEILIJK
@@ -133,7 +137,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.stabiliteitswand_section.max_lengte_stabiliteitswand == 25
 
         # Kistdam section
-        assert isinstance(_ini_fom.kistdam_section, KistdamSectionFom)
+        assert isinstance(_ini_fom.kistdam_section, CofferdamReinforcementSectionFom)
         assert (
             _ini_fom.kistdam_section.soil_storage_factor == StorageFactorEnum.MOEILIJK
         )
@@ -161,7 +165,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.surroundings_section.water == False
 
         # Infrastructuur section
-        assert isinstance(_ini_fom.infrastructuur_section, InfrastructuurSectionFom)
+        assert isinstance(_ini_fom.infrastructuur_section, InfrastructureSectionFom)
         assert _ini_fom.infrastructuur_section.infrastructuur == False
         assert (
             _ini_fom.infrastructuur_section.opslagfactor_wegen
@@ -188,12 +192,12 @@ class TestReadIniConfigurations:
         assert isinstance(_ini_fom, KoswatCostsIniFom)
 
         # Eenheidsprijzen
-        assert isinstance(_ini_fom.eenheidsprijzen_section, EenheidsprijzenSectionFom)
+        assert isinstance(_ini_fom.eenheidsprijzen_section, UnitPricesSectionFom)
         assert _ini_fom.eenheidsprijzen_section.prijspeil == 2017
 
         # KostenDijkProfiel
         assert isinstance(
-            _ini_fom.kostendijkprofiel_section, KostenDijkprofielSectionFom
+            _ini_fom.kostendijkprofiel_section, DikeProfileCostsSectionFom
         )
         assert _ini_fom.kostendijkprofiel_section.aanleg_graslaag_m3 == 12.44
         assert _ini_fom.kostendijkprofiel_section.aanleg_kleilaag_m3 == 18.05
@@ -208,7 +212,7 @@ class TestReadIniConfigurations:
 
         # KostenInfrastructuur
         assert isinstance(
-            _ini_fom.kosteninfrastructuur_section, KostenInfrastructuurSectionFom
+            _ini_fom.kosteninfrastructuur_section, InfrastructureCostsSectionFom
         )
         assert _ini_fom.kosteninfrastructuur_section.wegen_klasse2_verwijderen == 7.40
         assert _ini_fom.kosteninfrastructuur_section.wegen_klasse24_verwijderen == 9.64
@@ -224,7 +228,7 @@ class TestReadIniConfigurations:
         # KostenOpslagFactorenInclBTW
         assert isinstance(
             _ini_fom.kostenopslagfactoreninclbtw_section,
-            KostenOpslagfactorenInclBTWSectionFom,
+            StoringCostsIncludingBtwSectionFom,
         )
         assert _ini_fom.kostenopslagfactoreninclbtw_section.grond_makkelijk == 1.714
         assert _ini_fom.kostenopslagfactoreninclbtw_section.grond_normaal == 1.953
@@ -254,7 +258,7 @@ class TestReadIniConfigurations:
         # KostenOpslagFactorenexclBTW
         assert isinstance(
             _ini_fom.kostenopslagfactorenexclbtw_section,
-            KostenOpslagfactorenExclBTWSectionFom,
+            StoringCostsExcludingTaxesSectionFom,
         )
         assert _ini_fom.kostenopslagfactorenexclbtw_section.grond_makkelijk == 1.421
         assert _ini_fom.kostenopslagfactorenexclbtw_section.grond_normaal == 1.621

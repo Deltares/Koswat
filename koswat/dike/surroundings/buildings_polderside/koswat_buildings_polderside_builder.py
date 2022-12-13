@@ -17,11 +17,11 @@ from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom_builder import 
     KoswatSurroundingsCsvFomBuilder,
 )
 from koswat.io.csv import KoswatCsvReader
-from koswat.io.shp import KoswatShpFom, KoswatShpReader
+from koswat.io.shp import KoswatDikeLocationsShpFom, KoswatDikeLocationsShpReader
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
-    koswat_shp_fom: KoswatShpFom
+    koswat_shp_fom: KoswatDikeLocationsShpFom
     koswat_csv_fom: KoswatSurroundingsCsvFom
 
     def __init__(self) -> None:
@@ -65,5 +65,5 @@ class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
         _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
             KoswatSurroundingsCsvFomBuilder
         ).read(csv_file)
-        _builder.koswat_shp_fom = KoswatShpReader().read(shp_file)
+        _builder.koswat_shp_fom = KoswatDikeLocationsShpReader().read(shp_file)
         return _builder

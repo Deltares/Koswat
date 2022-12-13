@@ -14,7 +14,7 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_b
 from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
-from koswat.io.shp.koswat_shp_reader import KoswatShpFom
+from koswat.io.shp.koswat_shp_reader import KoswatDikeLocationsShpFom
 from tests import test_data
 
 
@@ -122,7 +122,7 @@ class TestKoswatBuildingsPoldersideBuilder:
             self._as_surrounding_point(_end_point, [2.4]),
         ]
         assert _builder.koswat_csv_fom.is_valid()
-        _builder.koswat_shp_fom = KoswatShpFom()
+        _builder.koswat_shp_fom = KoswatDikeLocationsShpFom()
         _builder.koswat_shp_fom.end_point = _end_point
         _builder.koswat_shp_fom.initial_point = _start_point
         assert _builder.koswat_shp_fom.is_valid()
@@ -154,7 +154,7 @@ class TestKoswatBuildingsPoldersideBuilder:
         )
         assert isinstance(_builder, KoswatBuildingsPoldersideBuilder)
         assert isinstance(_builder.koswat_csv_fom, KoswatSurroundingsCsvFom)
-        assert isinstance(_builder.koswat_shp_fom, KoswatShpFom)
+        assert isinstance(_builder.koswat_shp_fom, KoswatDikeLocationsShpFom)
         _buildings = _builder.build()
 
         # 3. Verify expectations.
