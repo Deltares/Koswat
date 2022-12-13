@@ -84,7 +84,7 @@ def analysis_settings_fom_to_dom(analysis_fom: AnalysisSectionFom) -> AnalysisSe
     )
     _settings.costs = _dike_costs_file_to_dom(_ini_reader, analysis_fom.costs_ini_file)
     _settings.analysis_output = analysis_fom.analysis_output_dir
-    _settings.dijksectie_ligging = analysis_fom.dijksectie_ligging
+    _settings.dike_section_traject_shp_file = analysis_fom.dijksectie_ligging
     _settings.dike_sections_input_profile = _dike_input_profiles_file_to_dom(
         analysis_fom.dike_sections_input_profiles_csv_file
     )

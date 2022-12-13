@@ -31,7 +31,7 @@ class AnalysisSettings(KoswatConfigProtocol):
     scenarios: List[KoswatScenario]
     costs: KoswatCosts
     analysis_output: Path  # output folder
-    dijksectie_ligging: Path  # shp file
+    dike_section_traject_shp_file: Path  # shp file
     dike_sections_input_profile: List[KoswatInputProfileBase]
     include_taxes: bool
 
@@ -40,7 +40,7 @@ class AnalysisSettings(KoswatConfigProtocol):
         self.scenarios = None
         self.costs = None
         self.analysis_output = None
-        self.dijksectie_ligging = None
+        self.dike_section_traject_shp_file = None
         self.dike_sections_input_profile = None
         self.include_taxes = True  # Default value.
 
@@ -50,7 +50,7 @@ class AnalysisSettings(KoswatConfigProtocol):
             and all(_s.is_valid() for _s in self.scenarios)
             and self.costs.is_valid()
             and self.analysis_output is not None
-            and self.dijksectie_ligging.is_file()
+            and self.dike_section_traject_shp_file.is_file()
             and any(self.dike_sections_input_profile)
         )
 
@@ -107,9 +107,7 @@ class SoilSettings(ReinforcementProfileSettingsBase):
         self.factor_toename_bermhoogte = math.nan
 
     def is_valid(self) -> bool:
-        _reinforcent_base_validation = super(
-            ReinforcementProfileSettingsBase, self
-        ).is_valid()
+        _reinforcent_base_validation = super(SoilSettings, self).is_valid()
         return (
             _reinforcent_base_validation
             and not math.isnan(self.min_bermhoogte)
@@ -136,9 +134,7 @@ class PipingwallSettings(ReinforcementProfileSettingsBase):
         self.max_lengte_kwelscherm = math.nan
 
     def is_valid(self) -> bool:
-        _reinforcent_base_validation = super(
-            ReinforcementProfileSettingsBase, self
-        ).is_valid()
+        _reinforcent_base_validation = super(PipingwallSettings, self).is_valid()
         return (
             _reinforcent_base_validation
             and not math.isnan(self.min_lengte_kwelscherm)
@@ -167,9 +163,7 @@ class StabilitywallSettings(ReinforcementProfileSettingsBase):
         self.max_lengte_stabiliteitswand = math.nan
 
     def is_valid(self) -> bool:
-        _reinforcent_base_validation = super(
-            ReinforcementProfileSettingsBase, self
-        ).is_valid()
+        _reinforcent_base_validation = super(StabilitywallSettings, self).is_valid()
         return (
             _reinforcent_base_validation
             and not math.isnan(self.versteiling_binnentalud)
@@ -195,9 +189,7 @@ class CofferdamSettings(ReinforcementProfileSettingsBase):
         self.max_lengte_kistdam = math.nan
 
     def is_valid(self) -> bool:
-        _reinforcent_base_validation = super(
-            ReinforcementProfileSettingsBase, self
-        ).is_valid()
+        _reinforcent_base_validation = super(CofferdamSettings, self).is_valid()
         return (
             _reinforcent_base_validation
             and not math.isnan(self.min_lengte_kistdam)
@@ -224,7 +216,7 @@ class SurroundingsSettings(KoswatConfigProtocol):
         self.water = None
 
     def is_valid(self) -> bool:
-        assert (
+        return (
             self.surroundings_database is not None
             and not math.isnan(self.constructieafstand)
             and not math.isnan(self.constructieovergang)
@@ -269,3 +261,30 @@ class InfrastructuurSettings(KoswatConfigProtocol):
             and not math.isnan(self.wegen_klasse7_breedte)
             and not math.isnan(self.wegen_onbekend_breedte)
         )
+
+
+class KoswatGeneralSettings(KoswatConfigProtocol):
+    analysis_settings: AnalysisSettings
+    dike_profile_settings: DikeProfileSettings
+    soil_settings: SoilSettings
+    pipingwall_settings: PipingwallSettings
+    stabilitywall_settings: StabilitywallSettings
+    cofferdam_settings: CofferdamSettings
+    surroundings_settings: SurroundingsSettings
+    infrastructure_settings: InfrastructuurSettings
+
+    def __init__(self) -> None:
+        self.analysis_settings = None
+        self.dike_profile_settings = None
+        self.soil_settings = None
+        self.pipingwall_settings = None
+        self.stabilitywall_settings = None
+        self.cofferdam_settings = None
+        self.surroundings_settings = None
+        self.infrastructure_settings = None
+
+    def is_valid(self) -> bool:
+        def valid_prop_config(config_property: KoswatConfigProtocol) -> bool:
+            return config_property is not None and config_property.is_valid()
+
+        return all(valid_prop_config(_config) for _config in self.__dict__.values())

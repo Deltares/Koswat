@@ -150,7 +150,7 @@ class TestReadIniConfigurations:
 
         # Omgeving section
         assert isinstance(_ini_fom.surroundings_section, SurroundingsSectionFom)
-        assert _ini_fom.surroundings_section.omgevingsdatabases == Path(
+        assert _ini_fom.surroundings_section.surroundings_database == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Omgevingsanalyses"
         )
         assert _ini_fom.surroundings_section.constructieafstand == 50

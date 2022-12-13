@@ -144,8 +144,8 @@ class KistdamSectionFom(CofferdamSettings, ReinforcementProfileSectionFomBase):
         return _section
 
 
-class SurroundingsSectionFom(KoswatIniFomProtocol):
-    omgevingsdatabases: Path  # Directory
+class SurroundingsSectionFom(SurroundingsSettings, KoswatIniFomProtocol):
+    surroundings_database: Path  # Directory
     constructieafstand: float
     constructieovergang: float
     buitendijks: bool
@@ -156,7 +156,7 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
-        _section.omgevingsdatabases = Path(ini_config["omgevingsdatabases"])
+        _section.surroundings_database = Path(ini_config["omgevingsdatabases"])
         _section.constructieafstand = ini_config.getfloat("constructieafstand")
         _section.constructieovergang = ini_config.getfloat("constructieovergang")
         _section.buitendijks = ini_config.getboolean("buitendijks")

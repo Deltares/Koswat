@@ -1,9 +1,6 @@
 from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.io.koswat_configuration_importer import (
-    KoswatConfigurationImporter,
-)
-from koswat.configuration.koswat_configuration import KoswatConfiguration
-from koswat.configuration.models import KoswatCosts, KoswatDikeSelection, KoswatScenario
+from koswat.configuration.io.koswat_settings_importer import KoswatConfigurationImporter
+from koswat.configuration.models.koswat_general_settings import *
 from tests import test_data
 
 
@@ -25,5 +22,13 @@ class TestKoswatConfigurationImporter:
         _config = _builder.build()
 
         # 3. Verify final expectations.
-        assert isinstance(_config, KoswatConfiguration)
+        assert isinstance(_config, KoswatGeneralSettings)
+        assert isinstance(_config.analysis_settings, AnalysisSettings)
+        assert isinstance(_config.dike_profile_settings, DikeProfileSettings)
+        assert isinstance(_config.soil_settings, SoilSettings)
+        assert isinstance(_config.pipingwall_settings, PipingwallSettings)
+        assert isinstance(_config.stabilitywall_settings, StabilitywallSettings)
+        assert isinstance(_config.cofferdam_settings, CofferdamSettings)
+        assert isinstance(_config.infrastructure_settings, InfrastructuurSettings)
+        assert isinstance(_config.surroundings_settings, SurroundingsSettings)
         assert _config.is_valid()
