@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Iterator
+from typing import Iterator, List
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini import (
@@ -18,6 +18,7 @@ from koswat.configuration.models.koswat_general_settings import (
     AnalysisSettings,
     SurroundingsSettings,
 )
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
@@ -52,6 +53,9 @@ class KoswatConfigurationImporter(BuilderProtocol):
         reader.koswat_ini_fom_type = KoswatCostsIniFom
         return reader.read(ini_file)
 
+    def get_dike_input_profiles(self, csv_file: Path) -> List[KoswatInputProfileBase]:
+        pass
+
     def _get_analysis_settings(self, ini_fom: KoswatGeneralIniFom) -> AnalysisSettings:
         _ini_reader = KoswatIniReader()
         _settings = AnalysisSettings()
@@ -66,7 +70,9 @@ class KoswatConfigurationImporter(BuilderProtocol):
         )
         _settings.analysis_output = ini_fom.analyse_section.analysis_output_dir
         _settings.dijksectie_ligging = ini_fom.analyse_section.dijksectie_ligging
-        _settings.dijksectie_invoer = ini_fom.analyse_section.dijksectie_invoer
+        _settings.dike_section_input_profiles = (
+            ini_fom.analyse_section.dijksectie_invoer
+        )
         _settings.include_taxes = ini_fom.analyse_section.include_taxes
         return _settings
 

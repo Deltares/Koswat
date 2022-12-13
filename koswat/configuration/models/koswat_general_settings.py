@@ -11,6 +11,7 @@ from koswat.configuration.models.koswat_costs import KoswatCosts
 from koswat.configuration.models.koswat_dike_selection import KoswatDikeSelection
 from koswat.configuration.models.koswat_scenario import KoswatScenario
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class StorageFactorEnum(enum.Enum):
@@ -31,7 +32,7 @@ class AnalysisSettings(KoswatConfigProtocol):
     costs: KoswatCosts
     analysis_output: Path  # output folder
     dijksectie_ligging: Path  # shp file
-    dijksectie_invoer: Path  # csv file
+    dike_section_input_profiles: List[KoswatInputProfileBase]
     include_taxes: bool
 
     def __init__(self) -> None:
@@ -40,7 +41,7 @@ class AnalysisSettings(KoswatConfigProtocol):
         self.costs = None
         self.analysis_output = None
         self.dijksectie_ligging = None
-        self.dijksectie_invoer = None
+        self.dike_section_input_profiles = None
         self.include_taxes = True  # Default value.
 
     def is_valid(self) -> bool:
@@ -50,7 +51,7 @@ class AnalysisSettings(KoswatConfigProtocol):
             and self.costs.is_valid()
             and self.analysis_output is not None
             and self.dijksectie_ligging.is_file()
-            and self.dijksectie_invoer.is_file()
+            and self.dike_section_input_profiles.any()
         )
 
 
@@ -64,13 +65,15 @@ class DikeProfileSettings(KoswatConfigProtocol):
         )
 
     def get_material_thickness(self) -> List[dict]:
-        
+
         return dict(
             base_layer=dict(material=KoswatMaterialType.SAND),
             coating_layers=[
-                dict(material=KoswatMaterialType.GRASS, depth=self.thickness_grass_layer),
-            dict(material=KoswatMaterialType.CLAY, depth=self.thickness_clay_layer),
-            ]
+                dict(
+                    material=KoswatMaterialType.GRASS, depth=self.thickness_grass_layer
+                ),
+                dict(material=KoswatMaterialType.CLAY, depth=self.thickness_clay_layer),
+            ],
         )
 
 

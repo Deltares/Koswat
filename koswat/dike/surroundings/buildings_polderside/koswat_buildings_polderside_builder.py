@@ -10,13 +10,13 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
     KoswatBuildingsPolderside,
     PointSurroundings,
 )
-from koswat.io.csv import KoswatCsvFom, KoswatCsvReader
+from koswat.io.csv import KoswatCsvReader, KoswatSurroundingsCsvFom
 from koswat.io.shp import KoswatShpFom, KoswatShpReader
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
     koswat_shp_fom: KoswatShpFom
-    koswat_csv_fom: KoswatCsvFom
+    koswat_csv_fom: KoswatSurroundingsCsvFom
 
     def __init__(self) -> None:
         self.koswat_csv_fom = None

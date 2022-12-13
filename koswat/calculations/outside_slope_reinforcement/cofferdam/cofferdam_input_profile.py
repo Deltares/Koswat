@@ -12,6 +12,7 @@ class CofferDamInputProfile(KoswatInputProfileBase, ReinforcementProfileProtocol
     @classmethod
     def from_dict(cls, profile_data: dict) -> CofferDamInputProfile:
         _input_profile = cls()
+        _input_profile.dike_section = profile_data.get("dike_section", "")
         _input_profile.buiten_maaiveld = profile_data["buiten_maaiveld"]
         _input_profile.buiten_talud = profile_data["buiten_talud"]
         _input_profile.buiten_berm_hoogte = profile_data["buiten_berm_hoogte"]

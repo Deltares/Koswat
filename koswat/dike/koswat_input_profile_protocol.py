@@ -7,6 +7,7 @@ from typing_extensions import runtime_checkable
 
 @runtime_checkable
 class KoswatInputProfileProtocol(Protocol):
+    dike_section: str
     buiten_maaiveld: float
     buiten_talud: float
     buiten_berm_hoogte: float

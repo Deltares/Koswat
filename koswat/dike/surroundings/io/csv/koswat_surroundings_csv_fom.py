@@ -1,10 +1,10 @@
 from typing import List
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.io.koswat_reader_protocol import ImportFileObjectModelProtocol
+from koswat.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 
 
-class KoswatCsvFom(ImportFileObjectModelProtocol):
+class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
     points_surroundings_list: List[PointSurroundings]
     distances_list: List[float]
 

@@ -4,6 +4,7 @@ from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 
 class KoswatInputProfileBase(KoswatInputProfileProtocol):
+    dike_section: str
     buiten_maaiveld: float
     buiten_talud: float
     buiten_berm_hoogte: float
@@ -18,6 +19,7 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     @classmethod
     def from_dict(cls, profile_data: dict) -> KoswatInputProfileBase:
         _input_profile = cls()
+        _input_profile.dike_section = profile_data.get("dike_section", "")
         _input_profile.buiten_maaiveld = profile_data["buiten_maaiveld"]
         _input_profile.buiten_talud = profile_data["buiten_talud"]
         _input_profile.buiten_berm_hoogte = profile_data["buiten_berm_hoogte"]

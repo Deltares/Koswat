@@ -14,7 +14,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
-from koswat.io.csv import KoswatCsvFom
+from koswat.io.csv import KoswatSurroundingsCsvFom
 from koswat.io.shp.koswat_shp_reader import KoswatShpFom
 from tests import test_data
 
@@ -67,7 +67,7 @@ class TestSurroundingsWrapperBuilder:
             Point(2.4, 4.2),
             _end_point,
         ]
-        _buildings_foms.koswat_csv_fom = KoswatCsvFom()
+        _buildings_foms.koswat_csv_fom = KoswatSurroundingsCsvFom()
         _buildings_foms.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
             self._as_surrounding_point(_start_point, [2.4]),
