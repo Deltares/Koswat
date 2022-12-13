@@ -9,7 +9,7 @@ from koswat.koswat_handler import KoswatHandler
 @click.command()
 @click.option("--input_file", default=None, help="Full path to the ini input file.")
 def run_analysis(input_file: str):
-    with KoswatHandler("sth") as _handler:
+    with KoswatHandler() as _handler:
         _handler.run_analysis(input_file)
 
 

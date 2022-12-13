@@ -64,10 +64,14 @@ class DikeProfileSettings(KoswatConfigProtocol):
         )
 
     def get_material_thickness(self) -> List[dict]:
-        return [
-            dict(material=KoswatMaterialType.GRASS, depth=self.thickness_grass_layer),
+        
+        return dict(
+            base_layer=dict(material=KoswatMaterialType.SAND),
+            coating_layers=[
+                dict(material=KoswatMaterialType.GRASS, depth=self.thickness_grass_layer),
             dict(material=KoswatMaterialType.CLAY, depth=self.thickness_clay_layer),
-        ]
+            ]
+        )
 
 
 class ReinforcementProfileSettingsBase(KoswatConfigProtocol, abc.ABC):
