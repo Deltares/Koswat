@@ -87,6 +87,7 @@ class TestStabilityWallReinforcementProfileCalculation:
 
     def test_calculate_new_input_profile(self):
         class MockInputData(KoswatInputProfileProtocol):
+            dike_section: str
             kruin_hoogte: float
             binnen_maaiveld: float
             binnen_talud: float
@@ -96,6 +97,7 @@ class TestStabilityWallReinforcementProfileCalculation:
         # 1. Define test data.
         _calculator = StabilityWallReinforcementProfileCalculation()
         _input_data = MockInputData()
+        _input_data.dike_section = "mocked_section"
         _input_data.kruin_hoogte = 30
         _input_data.binnen_maaiveld = 2.3
         _input_data.binnen_talud = 4.5
