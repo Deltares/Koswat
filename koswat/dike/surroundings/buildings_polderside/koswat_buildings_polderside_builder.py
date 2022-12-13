@@ -16,8 +16,11 @@ from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
 from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom_builder import (
     KoswatSurroundingsCsvFomBuilder,
 )
+from koswat.dike.surroundings.io.shp import (
+    KoswatDikeLocationsShpFom,
+    KoswatDikeLocationsShpReader,
+)
 from koswat.io.csv import KoswatCsvReader
-from koswat.io.shp import KoswatDikeLocationsShpFom, KoswatDikeLocationsShpReader
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):

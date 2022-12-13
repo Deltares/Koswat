@@ -3,8 +3,8 @@ from pathlib import Path
 import shapefile
 from shapely.geometry import Point
 
+from koswat.dike.surroundings.io.shp import KoswatDikeLocationsShpFom
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
-from koswat.io.shp import KoswatDikeLocationsShpFom
 
 
 class KoswatDikeLocationsShpReader(KoswatReaderProtocol):

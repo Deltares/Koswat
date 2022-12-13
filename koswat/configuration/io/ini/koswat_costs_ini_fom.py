@@ -113,7 +113,7 @@ class StoringCostsSectionFomBase(KoswatIniFomProtocol, abc.ABC):
         return _section
 
 
-class StoringCostsIncludingTaxtesSectionFom(StoringCostsSectionFomBase):
+class StoringCostsIncludingTaxesSectionFom(StoringCostsSectionFomBase):
     pass
 
 
@@ -122,30 +122,30 @@ class StoringCostsExcludingTaxesSectionFom(StoringCostsSectionFomBase):
 
 
 class KoswatCostsIniFom(KoswatIniFomProtocol):
-    eenheidsprijzen_section: UnitPricesSectionFom
-    kostendijkprofiel_section: DikeProfileCostsSectionFom
-    kosteninfrastructuur_section: InfrastructureCostsSectionFom
-    kostenopslagfactoreninclbtw_section: StoringCostsIncludingBtwSectionFom
-    kostenopslagfactorenexclbtw_section: StoringCostsExcludingTaxesSectionFom
+    unit_prices_section: UnitPricesSectionFom
+    dike_profile_costs_section: DikeProfileCostsSectionFom
+    infrastructure_costs_section: InfrastructureCostsSectionFom
+    storing_costs_incl_tax_section: StoringCostsIncludingTaxesSectionFom
+    storing_costs_excl_tax_section: StoringCostsExcludingTaxesSectionFom
 
     @classmethod
     def from_config(cls, ini_dict: ConfigParser) -> KoswatIniFomProtocol:
         _ini_fom = cls()
-        _ini_fom.eenheidsprijzen_section = UnitPricesSectionFom.from_config(
+        _ini_fom.unit_prices_section = UnitPricesSectionFom.from_config(
             ini_dict["Eenheidsprijzen"]
         )
-        _ini_fom.kostendijkprofiel_section = DikeProfileCostsSectionFom.from_config(
+        _ini_fom.dike_profile_costs_section = DikeProfileCostsSectionFom.from_config(
             ini_dict["KostenDijkprofiel"]
         )
-        _ini_fom.kosteninfrastructuur_section = (
+        _ini_fom.infrastructure_costs_section = (
             InfrastructureCostsSectionFom.from_config(ini_dict["KostenInfrastructuur"])
         )
-        _ini_fom.kostenopslagfactoreninclbtw_section = (
-            StoringCostsIncludingBtwSectionFom.from_config(
+        _ini_fom.storing_costs_incl_tax_section = (
+            StoringCostsIncludingTaxesSectionFom.from_config(
                 ini_dict["KostenOpslagfactorenInclBTW"]
             )
         )
-        _ini_fom.kostenopslagfactorenexclbtw_section = (
+        _ini_fom.storing_costs_excl_tax_section = (
             StoringCostsExcludingTaxesSectionFom.from_config(
                 ini_dict["KostenOpslagfactorenExclBTW"]
             )

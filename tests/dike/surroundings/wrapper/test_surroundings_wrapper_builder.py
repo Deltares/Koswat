@@ -13,11 +13,11 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_b
 from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
+from koswat.dike.surroundings.io.shp import KoswatDikeLocationsShpFom
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
-from koswat.io.shp.koswat_shp_reader import KoswatDikeLocationsShpFom
 from tests import test_data
 
 
