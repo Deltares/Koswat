@@ -2,9 +2,6 @@ import logging
 from pathlib import Path
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.io.converters import (
-    koswat_analysis_converter as AnalysisConverter,
-)
 from koswat.configuration.io.ini import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.models.koswat_general_settings import (
@@ -47,9 +44,7 @@ class KoswatConfigurationImporter(BuilderProtocol):
 
         # Get FOMs
         _ini_settings = self.get_general_ini()
-        _settings.analysis_settings = AnalysisConverter.analysis_settings_fom_to_dom(
-            _ini_settings.analyse_section
-        )
+        _settings.analysis_settings = _ini_settings.analyse_section
         _settings.dike_profile_settings = _ini_settings.dijkprofiel_section
         _settings.soil_settings = _ini_settings.grondmaatregel_section
         _settings.pipingwall_settings = _ini_settings.kwelscherm_section

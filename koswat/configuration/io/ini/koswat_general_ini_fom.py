@@ -5,31 +5,55 @@ from configparser import ConfigParser
 from pathlib import Path
 from typing import Optional
 
+import koswat.configuration.io.converters.koswat_analysis_converter as AnalysisConverter
+from koswat.configuration.io.converters.koswat_surroundings_converter import (
+    from_surroundings_csv_dir_to_fom as as_surroundings_fom,
+)
+from koswat.configuration.io.csv.koswat_input_profiles_csv_fom import (
+    KoswatInputProfilesCsvFom,
+)
+from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
+from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
+    KoswatSectionScenariosIniFom,
+)
+from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
+    KoswatDikeSelectionTxtFom,
+)
 from koswat.configuration.models.koswat_general_settings import *
 from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
 class AnalysisSectionFom(KoswatIniFomProtocol):
-    dike_sections_selection_ini_file: Path  # Ini file
+    dike_sections_selection_ini_file: KoswatDikeSelectionTxtFom  # Ini file
     dijksectie_ligging: Path  # shp file
-    dike_sections_input_profiles_csv_file: Path  # csv file
-    scenarios_dir: Path  # folder with ini files
-    costs_ini_file: Path  # ini file
+    dike_sections_input_profiles_csv_file: KoswatInputProfilesCsvFom  # csv file
+    scenarios_dir: KoswatSectionScenariosIniFom  # folder with ini files
+    costs_ini_file: KoswatCostsIniFom  # ini file
     analysis_output_dir: Path  # output folder
     include_taxes: bool
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
-        _section.dike_sections_selection_ini_file = Path(
-            ini_config["dijksecties_selectie"]
+        _section.dike_sections_selection_ini_file = (
+            AnalysisConverter.dike_selection_file_to_fom(
+                Path(ini_config["dijksecties_selectie"])
+            )
         )
         _section.dijksectie_ligging = Path(ini_config["dijksectie_ligging"])
-        _section.dike_sections_input_profiles_csv_file = Path(
-            ini_config["dijksectie_invoer"]
+        _section.dike_sections_input_profiles_csv_file = (
+            AnalysisConverter.dike_input_profiles_file_to_fom(
+                Path(ini_config["dijksectie_invoer"])
+            )
         )
-        _section.scenarios_dir = Path(ini_config["scenario_invoer"])
-        _section.costs_ini_file = Path(ini_config["eenheidsprijzen"])
+        _section.scenarios_dir = (
+            AnalysisConverter.scenarios_dir_to_koswat_scenario_list(
+                Path(ini_config["scenario_invoer"])
+            )
+        )
+        _section.costs_ini_file = AnalysisConverter.dike_costs_file_to_fom(
+            Path(ini_config["eenheidsprijzen"])
+        )
         _section.analysis_output_dir = Path(ini_config["uitvoerfolder"])
         _section.include_taxes = ini_config.getboolean("btw")
         return _section
@@ -145,7 +169,7 @@ class KistdamSectionFom(CofferdamSettings, ReinforcementProfileSectionFomBase):
 
 
 class SurroundingsSectionFom(SurroundingsSettings, KoswatIniFomProtocol):
-    surroundings_database: Path  # Directory
+    surroundings_database: List[KoswatSurroundingsCsvFom]
     constructieafstand: float
     constructieovergang: float
     buitendijks: bool
@@ -156,7 +180,9 @@ class SurroundingsSectionFom(SurroundingsSettings, KoswatIniFomProtocol):
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
-        _section.surroundings_database = Path(ini_config["omgevingsdatabases"])
+        _section.surroundings_database = as_surroundings_fom(
+            Path(ini_config["omgevingsdatabases"])
+        )
         _section.constructieafstand = ini_config.getfloat("constructieafstand")
         _section.constructieovergang = ini_config.getfloat("constructieovergang")
         _section.buitendijks = ini_config.getboolean("buitendijks")

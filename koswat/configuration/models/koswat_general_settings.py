@@ -12,6 +12,9 @@ from koswat.configuration.models.koswat_dike_selection import KoswatDikeSelectio
 from koswat.configuration.models.koswat_scenario import KoswatScenario
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
+from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
+    KoswatSurroundingsCsvFom,
+)
 
 
 class StorageFactorEnum(enum.Enum):
@@ -198,7 +201,7 @@ class CofferdamSettings(ReinforcementProfileSettingsBase):
 
 
 class SurroundingsSettings(KoswatConfigProtocol):
-    surroundings_database: Path  # Directory
+    surroundings_database: Optional[List[KoswatSurroundingsCsvFom]]
     constructieafstand: float
     constructieovergang: float
     buitendijks: bool
@@ -207,7 +210,7 @@ class SurroundingsSettings(KoswatConfigProtocol):
     water: bool
 
     def __init__(self) -> None:
-        self.surroundings_database = None
+        self.surroundings_database = []
         self.constructieafstand = math.nan
         self.constructieovergang = math.nan
         self.buitendijks = None
@@ -217,8 +220,7 @@ class SurroundingsSettings(KoswatConfigProtocol):
 
     def is_valid(self) -> bool:
         return (
-            self.surroundings_database is not None
-            and not math.isnan(self.constructieafstand)
+            not math.isnan(self.constructieafstand)
             and not math.isnan(self.constructieovergang)
             and self.buitendijks is not None
             and self.bebouwing is not None

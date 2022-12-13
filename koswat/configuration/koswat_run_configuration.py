@@ -6,9 +6,6 @@ from koswat.configuration.models.koswat_general_settings import KoswatGeneralSet
 from koswat.configuration.models.koswat_scenario import KoswatScenario
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
-    SurroundingsWrapperBuilder,
-)
 
 
 class KoswatRunConfiguration:
@@ -46,28 +43,6 @@ class KoswatRunConfiguration:
         _run_config.surroundings = list(
             koswat_settings.surroundings_settings.surroundings_database.iterdir()
         )
-        _sections = set(map(lambda x: x.scenario_section, _run_config.scenarios))
-        _surroundings_dict = dict()
-        # This should be happening at the import time.
-        for _section_name in _sections:
-            _surroundings_csv = (
-                koswat_settings.surroundings_settings.surroundings_database
-                / _section_name
-                / f"T_{_section_name}_bebouwing_binnendijks.csv"
-            )
-            if not _surroundings_csv.is_file():
-                logging.error(
-                    "Surroundings database file not found for traject {}".format(
-                        _section_name
-                    )
-                )
-            _surroundings_dict[_section_name] = SurroundingsWrapperBuilder.from_files(
-                dict(
-                    csv_file=_surroundings_csv,
-                    shp_file=koswat_settings.analysis_settings.dike_section_traject_shp_file,
-                )
-            ).build()
-
 
     def run(self) -> None:
         logging.info("Initializing run for all cases.")
