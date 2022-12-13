@@ -10,7 +10,13 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
     KoswatBuildingsPolderside,
     PointSurroundings,
 )
-from koswat.io.csv import KoswatCsvReader, KoswatSurroundingsCsvFom
+from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
+    KoswatSurroundingsCsvFom,
+)
+from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom_builder import (
+    KoswatSurroundingsCsvFomBuilder,
+)
+from koswat.io.csv import KoswatCsvReader
 from koswat.io.shp import KoswatShpFom, KoswatShpReader
 
 
@@ -56,6 +62,8 @@ class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
         cls, csv_file: Path, shp_file: Path
     ) -> KoswatBuildingsPoldersideBuilder:
         _builder = cls()
-        _builder.koswat_csv_fom = KoswatCsvReader().read(csv_file)
+        _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
+            KoswatSurroundingsCsvFomBuilder
+        ).read(csv_file)
         _builder.koswat_shp_fom = KoswatShpReader().read(shp_file)
         return _builder
