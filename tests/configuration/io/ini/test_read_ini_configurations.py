@@ -60,7 +60,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.analyse_section.dijksectie_ligging == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
-        assert _ini_fom.analyse_section.dijksectie_invoer == Path(
+        assert _ini_fom.analyse_section.dike_sections_input_profiles_csv_file == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\InputPerDijkvak_WV21_KOSWAT_v2022_DR10.csv"
         )
         assert _ini_fom.analyse_section.scenarios_dir == Path(

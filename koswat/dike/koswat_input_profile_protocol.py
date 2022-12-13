@@ -21,6 +21,7 @@ class KoswatInputProfileProtocol(Protocol):
 
     @classmethod
     def from_dict(cls, profile_data: dict) -> KoswatInputProfileProtocol:
+        # TODO: REMOVE THIS WAS USEFUL DURING MVP
         """
         Generates a `KoswatInputProfileProtocol` with the given profile data.
 

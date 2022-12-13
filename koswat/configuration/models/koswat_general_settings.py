@@ -32,7 +32,7 @@ class AnalysisSettings(KoswatConfigProtocol):
     costs: KoswatCosts
     analysis_output: Path  # output folder
     dijksectie_ligging: Path  # shp file
-    dike_section_input_profiles: List[KoswatInputProfileBase]
+    dike_sections_input_profile: List[KoswatInputProfileBase]
     include_taxes: bool
 
     def __init__(self) -> None:
@@ -41,7 +41,7 @@ class AnalysisSettings(KoswatConfigProtocol):
         self.costs = None
         self.analysis_output = None
         self.dijksectie_ligging = None
-        self.dike_section_input_profiles = None
+        self.dike_sections_input_profile = None
         self.include_taxes = True  # Default value.
 
     def is_valid(self) -> bool:
@@ -51,7 +51,7 @@ class AnalysisSettings(KoswatConfigProtocol):
             and self.costs.is_valid()
             and self.analysis_output is not None
             and self.dijksectie_ligging.is_file()
-            and self.dike_section_input_profiles.any()
+            and any(self.dike_sections_input_profile)
         )
 
 

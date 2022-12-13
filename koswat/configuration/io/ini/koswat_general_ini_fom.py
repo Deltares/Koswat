@@ -12,7 +12,7 @@ from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 class AnalysisSectionFom(KoswatIniFomProtocol):
     dike_sections_selection_ini_file: Path  # Ini file
     dijksectie_ligging: Path  # shp file
-    dijksectie_invoer: Path  # csv file
+    dike_sections_input_profiles_csv_file: Path  # csv file
     scenarios_dir: Path  # folder with ini files
     costs_ini_file: Path  # ini file
     analysis_output_dir: Path  # output folder
@@ -25,7 +25,9 @@ class AnalysisSectionFom(KoswatIniFomProtocol):
             ini_config["dijksecties_selectie"]
         )
         _section.dijksectie_ligging = Path(ini_config["dijksectie_ligging"])
-        _section.dijksectie_invoer = Path(ini_config["dijksectie_invoer"])
+        _section.dike_sections_input_profiles_csv_file = Path(
+            ini_config["dijksectie_invoer"]
+        )
         _section.scenarios_dir = Path(ini_config["scenario_invoer"])
         _section.costs_ini_file = Path(ini_config["eenheidsprijzen"])
         _section.analysis_output_dir = Path(ini_config["uitvoerfolder"])
