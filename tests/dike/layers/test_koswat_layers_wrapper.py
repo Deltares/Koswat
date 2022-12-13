@@ -26,10 +26,10 @@ class TestKoswatLayersWrapper:
 
         # 3. Verify final expectations
         assert _dict == dict(
-            base_layer=dict(material=KoswatMaterialType.CLAY.name.lower(), geometry=[]),
+            base_layer=dict(material=KoswatMaterialType.CLAY, geometry=[]),
             coating_layers=[
                 dict(
-                    material=KoswatMaterialType.GRASS.name.lower(),
+                    material=KoswatMaterialType.GRASS,
                     depth=2.4,
                     geometry=[],
                 )

@@ -18,4 +18,4 @@ class TestKoswatBaseLayer:
         _dict = _layer.as_data_dict()
 
         assert isinstance(_dict, dict)
-        assert _dict["material"] == KoswatMaterialType.SAND.name.lower()
+        assert _dict["material"] == KoswatMaterialType.SAND

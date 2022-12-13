@@ -1,6 +1,7 @@
 from matplotlib import pyplot
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 
@@ -20,11 +21,11 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         """
         _x_coords, y_coords = self.koswat_object.outer_geometry.boundary.coords.xy
         dict_values = dict(color=color, linewidth=2, zorder=1)
-        if self.koswat_object.material_type.name == "zand":
+        if self.koswat_object.material_type == KoswatMaterialType.SAND:
             dict_values["linestyle"] = "dashdot"
-        elif self.koswat_object.material_type.name == "klei":
+        elif self.koswat_object.material_type == KoswatMaterialType.CLAY:
             dict_values["linestyle"] = "dashed"
-        elif self.koswat_object.material_type.name == "gras":
+        elif self.koswat_object.material_type == KoswatMaterialType.GRASS:
             dict_values["linestyle"] = "solid"
         else:
             raise ValueError(

@@ -2,6 +2,7 @@ from shapely import geometry
 
 from koswat.dike.layers.base_layer.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.geometries.calc_library import points_to_polygon
 
 

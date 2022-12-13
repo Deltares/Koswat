@@ -21,5 +21,5 @@ class TestKoswatCoatingLayer:
         _dict = _layer.as_data_dict()
 
         assert isinstance(_dict, dict)
-        assert _dict["material"] == KoswatMaterialType.CLAY.name.lower()
+        assert _dict["material"] == KoswatMaterialType.CLAY
         assert _dict["depth"] == 4.2

@@ -33,7 +33,7 @@ class KoswatCoatingLayer(KoswatLayerProtocol):
         if self.outer_geometry:
             _geometry = list(get_polygon_coordinates(self.outer_geometry).coords)
         return dict(
-            material=self.material_type.name,
+            material=self.material_type,
             depth=self.depth,
             geometry=_geometry,
         )
