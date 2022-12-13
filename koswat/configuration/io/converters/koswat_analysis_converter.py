@@ -66,9 +66,10 @@ def dike_selection_file_to_fom(txt_file: Path) -> KoswatDikeSelection:
     return _reader.read(txt_file)
 
 
-def dike_costs_file_to_fom(reader: KoswatIniReader, ini_file: Path) -> KoswatCosts:
-    reader.koswat_ini_fom_type = KoswatCostsIniFom
-    return reader.read(ini_file)
+def dike_costs_file_to_fom(ini_file: Path) -> KoswatCosts:
+    _reader = KoswatIniReader()
+    _reader.koswat_ini_fom_type = KoswatCostsIniFom
+    return _reader.read(ini_file)
 
 
 # def analysis_settings_fom_to_dom(analysis_fom: AnalysisSectionFom) -> AnalysisSettings:
