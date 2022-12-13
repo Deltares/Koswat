@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings

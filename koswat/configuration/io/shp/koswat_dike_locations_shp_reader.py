@@ -3,7 +3,9 @@ from pathlib import Path
 import shapefile
 from shapely.geometry import Point
 
-from koswat.dike.surroundings.io.shp import KoswatDikeLocationsShpFom
+from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
+    KoswatDikeLocationsShpFom,
+)
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
@@ -19,6 +21,9 @@ class KoswatDikeLocationsShpReader(KoswatReaderProtocol):
 
         _shp_model = KoswatDikeLocationsShpFom()
         with shapefile.Reader(file_path) as shp:
+            raise NotImplementedError(
+                "We should now also extract the trajects included in this shp file."
+            )
             _shp_points = shp.shapes()[0].points
             _shp_model.initial_point = Point(_shp_points[0])
             _shp_model.end_point = Point(_shp_points[-1])

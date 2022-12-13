@@ -11,6 +11,9 @@ from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
+from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
+    KoswatDikeLocationsShpReader,
+)
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
@@ -49,7 +52,7 @@ def dike_input_profiles_file_to_fom(csv_file: Path) -> List[KoswatInputProfileBa
 
 
 def dike_sections_location_file_to_fom(shp_file: Path):
-    pass
+    return KoswatDikeLocationsShpReader().read(shp_file)
 
 
 def dike_selection_file_to_fom(txt_file: Path) -> KoswatDikeSelection:

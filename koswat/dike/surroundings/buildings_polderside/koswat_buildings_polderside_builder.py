@@ -6,24 +6,25 @@ from typing import List
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
+    KoswatSurroundingsCsvFom,
+)
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
+    KoswatSurroundingsCsvFomBuilder,
+)
+from koswat.configuration.io.shp import (
+    KoswatDikeLocationsShpFom,
+    KoswatDikeLocationsShpReader,
+)
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
-)
-from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
-    KoswatSurroundingsCsvFom,
-)
-from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom_builder import (
-    KoswatSurroundingsCsvFomBuilder,
-)
-from koswat.dike.surroundings.io.shp import (
-    KoswatDikeLocationsShpFom,
-    KoswatDikeLocationsShpReader,
 )
 from koswat.io.csv import KoswatCsvReader
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
+    # TODO: this should probably be moved to configuration
     koswat_shp_fom: KoswatDikeLocationsShpFom
     koswat_csv_fom: KoswatSurroundingsCsvFom
 

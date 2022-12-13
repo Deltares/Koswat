@@ -2,10 +2,10 @@ import logging
 from pathlib import Path
 from typing import Iterator
 
-from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom import (
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
-from koswat.dike.surroundings.io.csv.koswat_surroundings_csv_fom_builder import (
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
     KoswatSurroundingsCsvFomBuilder,
 )
 from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
