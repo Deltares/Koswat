@@ -1,7 +1,7 @@
 from koswat.dike.layers.base_layer import KoswatBaseLayer
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
-from koswat.dike.material.koswat_material import KoswatMaterialType
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class TestKoswatLayersWrapper:

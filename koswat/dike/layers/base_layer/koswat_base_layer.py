@@ -1,7 +1,7 @@
 from shapely.geometry import LineString, Polygon
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
-from koswat.dike.material.koswat_material import KoswatMaterialType
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.geometries.calc_library import get_polygon_coordinates
 
 

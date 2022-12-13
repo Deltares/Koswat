@@ -2,7 +2,7 @@ import math
 
 from koswat.dike.layers import KoswatLayerProtocol
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
-from koswat.dike.material.koswat_material import KoswatMaterialType
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class TestKoswatCoatingLayer:

@@ -10,7 +10,7 @@ from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapper,
     KoswatLayersWrapperBuilder,
 )
-from koswat.dike.material.koswat_material import KoswatMaterialType
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from tests.library_test_cases import InitialPointsLookup, LayersCases
 
 

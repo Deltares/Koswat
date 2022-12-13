@@ -1,6 +1,6 @@
 from koswat.dike.layers import KoswatLayerProtocol
 from koswat.dike.layers.base_layer import KoswatBaseLayer
-from koswat.dike.material.koswat_material import KoswatMaterialType
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class TestKoswatBaseLayer:

@@ -10,7 +10,7 @@ from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.models.koswat_costs import KoswatCosts
 from koswat.configuration.models.koswat_dike_selection import KoswatDikeSelection
 from koswat.configuration.models.koswat_scenario import KoswatScenario
-from koswat.dike.material.koswat_material import KoswatMaterialType
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class StorageFactorEnum(enum.Enum):

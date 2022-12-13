@@ -9,6 +9,7 @@ from koswat.calculations.reinforcement_profile_protocol import (
 from koswat.cost_report.profile.volume_cost_parameters_calculator import (
     VolumeCostParametersCalculator,
 )
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class VolumeCostParameter:
@@ -49,24 +50,25 @@ class VolumeCostParameters:
         )
 
     def get_material_total_volume_parameters(
-        self, material_name: str
+        self, material_type: KoswatMaterialType
     ) -> Tuple[float, float]:
-        _material_name = material_name.lower()
-        if _material_name == "zand":
+        if material_type == KoswatMaterialType.SAND:
             if not self.aanleg_core_volume:
                 return math.nan, math.nan
             return self.aanleg_core_volume.volume, self.aanleg_core_volume.total_cost
-        elif _material_name == "klei":
+        elif material_type == KoswatMaterialType.CLAY:
             if not self.aanleg_clay_volume:
                 return math.nan, math.nan
             return self.aanleg_clay_volume.volume, self.aanleg_clay_volume.total_cost
-        elif _material_name == "gras":
+        elif material_type == KoswatMaterialType.GRASS:
             if not self.aanleg_grass_volume:
                 return math.nan, math.nan
             return self.aanleg_grass_volume.volume, self.aanleg_grass_volume.total_cost
         else:
             raise ValueError(
-                "Material {} currently not supported.".format(material_name)
+                "Material {} currently not supported.".format(
+                    material_type.name.capitalize()
+                )
             )
 
     @classmethod

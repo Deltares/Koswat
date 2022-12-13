@@ -3,7 +3,7 @@ from typing import List, Protocol
 import pytest
 from shapely.geometry.point import Point
 
-from koswat.dike.material.koswat_material import KoswatMaterialType
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class CasesProtocol(Protocol):
