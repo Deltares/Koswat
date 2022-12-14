@@ -1,3 +1,3 @@
-from koswat.configuration.settings.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_dike_selection import KoswatDikeSelection
 from koswat.configuration.settings.koswat_scenario import KoswatScenario

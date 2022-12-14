@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Optional
 
 from koswat.configuration.io.koswat_settings_importer import KoswatSettingsFomImporter
-from koswat.configuration.koswat_run_settings import KoswatRunSettings
 from koswat.koswat_logger import KoswatLogger
 
 
@@ -24,13 +23,6 @@ class KoswatHandler:
         self._koswat_config = _config_importer.build()
 
         # Generate scenarios
-        _run_configuration = KoswatRunSettings.from_settings(self._koswat_config)
-        self._koswat_settings.analysis_settings.analysis_output.mkdir(
-            parents=True, exist_ok=True
-        )
-
-        # Run analysis.
-        _run_configuration.run()
 
     def __enter__(self) -> KoswatHandler:
         self._logger = KoswatLogger.init_logger(Path("koswat.log"))
