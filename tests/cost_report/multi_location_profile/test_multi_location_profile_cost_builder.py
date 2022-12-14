@@ -33,7 +33,7 @@ class TestMultiLocationProfileCostReportBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = MultiLocationProfileCostReportBuilder()
-        _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
+        _builder.scenario = ScenarioCases.default
         _builder.surroundings = SurroundingsWrapper()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []

@@ -145,7 +145,7 @@ class TestReinforcementProfileBuilderFactory:
         self,
         profile_type: Type[ReinforcementProfileProtocol],
         profile_data: KoswatInputProfileProtocol,
-        scenario_data: dict,
+        scenario_data: KoswatScenario,
         expected_profile_data: dict,
         request: pytest.FixtureRequest,
     ):
@@ -159,19 +159,18 @@ class TestReinforcementProfileBuilderFactory:
                 p4_x_coordinate=0,
             )
         ).build()
-        _scenario = KoswatScenario.from_dict(dict(scenario_data))
         _expected_profile = get_reinforced_profile(profile_type, expected_profile_data)
         assert isinstance(_base_profile, KoswatProfileBase)
         assert isinstance(_expected_profile, profile_type)
         assert isinstance(_expected_profile, ReinforcementProfileProtocol)
-        assert isinstance(_scenario, KoswatScenario)
+        assert isinstance(scenario_data, KoswatScenario)
 
         # 2. Run test.
         _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
             profile_type
         )
         _reinforcement_builder.base_profile = _base_profile
-        _reinforcement_builder.scenario = _scenario
+        _reinforcement_builder.scenario = scenario_data
         _reinforcement_profile = _reinforcement_builder.build()
 
         # 3. Verify expectations.

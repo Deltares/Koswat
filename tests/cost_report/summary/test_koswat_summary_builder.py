@@ -47,7 +47,7 @@ class TestKoswatSummaryBuilder:
             CofferdamReinforcementProfile,
         ]
         _builder = KoswatSummaryBuilder()
-        _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
+        _builder.scenario = ScenarioCases.default
         _builder.base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
@@ -95,7 +95,7 @@ class TestKoswatSummaryBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
-        _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
+        _builder.scenario = ScenarioCases.default
         _builder.surroundings = SurroundingsWrapper()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []

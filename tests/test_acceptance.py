@@ -50,7 +50,7 @@ class TestAcceptance:
     def test_given_surrounding_files_run_calculations_for_all_included_profiles(
         self,
         input_profile_case,
-        scenario_case,
+        scenario_case: KoswatProfileBase,
         layers_case,
         request: pytest.FixtureRequest,
     ):
@@ -73,9 +73,7 @@ class TestAcceptance:
         ).build()
         assert isinstance(_surroundings, SurroundingsWrapper)
         assert isinstance(_surroundings.buldings_polderside, KoswatBuildingsPolderside)
-
-        _scenario = KoswatScenario.from_dict(scenario_case)
-        assert isinstance(_scenario, KoswatScenario)
+        assert isinstance(scenario_case, KoswatScenario)
 
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
@@ -89,7 +87,7 @@ class TestAcceptance:
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
         _multi_loc_multi_prof_cost_builder.surroundings = _surroundings
         _multi_loc_multi_prof_cost_builder.base_profile = _base_koswat_profile
-        _multi_loc_multi_prof_cost_builder.scenario = _scenario
+        _multi_loc_multi_prof_cost_builder.scenario = scenario_case
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
         _exporter = SummaryMatrixCsvExporter()

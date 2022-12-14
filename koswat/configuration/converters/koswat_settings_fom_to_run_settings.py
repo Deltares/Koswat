@@ -11,6 +11,7 @@ from koswat.configuration.io.ini.koswat_general_ini_fom import (
     DikeProfileSectionFom,
 )
 from koswat.configuration.settings.koswat_run_settings import KoswatRunSettings
+from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
@@ -95,17 +96,12 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
                 _fom_scenario.scenario_section
             )
             for _shp_dike_fom in _shp_dike_fom_list:
-                self.fom_settings.surroundings_section.surroundings_database.get_wrapper_by_traject(
+                _scenario = KoswatScenario()
+                _csv_db = self.fom_settings.surroundings_section.surroundings_database.get_wrapper_by_traject(
                     _shp_dike_fom.record.Traject
                 )
 
         # Define surroundings
-        _dike_locations = (
-            self.fom_settings.analyse_section_fom.dike_section_location_fom
-        )
-        _surroundings_dirs = list(
-            self.fom_settings.surroundings_section.surroundings_database
-        )
         self._get_surroundings_wrapper()
 
         return _settings

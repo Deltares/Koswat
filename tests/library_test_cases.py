@@ -9,6 +9,7 @@ from koswat.calculations.standard_reinforcement import (
     SoilInputProfile,
     StabilityWallInputProfile,
 )
+from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
@@ -18,27 +19,45 @@ class CasesProtocol(Protocol):
     cases: List[pytest.param]
 
 
+def _scenario_data_to_koswat_scenario(scenario_data: dict) -> KoswatScenario:
+    _scenario = KoswatScenario()
+    _scenario.scenario_name = scenario_data.get("scenario_name", "")
+    _scenario.scenario_section = scenario_data.get("scenario_section", "")
+    _scenario.d_h = scenario_data["d_h"]
+    _scenario.d_s = scenario_data["d_s"]
+    _scenario.d_p = scenario_data["d_p"]
+    _scenario.kruin_breedte = scenario_data["kruin_breedte"]
+    _scenario.buiten_talud = scenario_data["buiten_talud"]
+    return _scenario
+
+
 class ScenarioCases(CasesProtocol):
-    default = dict(
-        d_h=1,
-        d_s=10,
-        d_p=30,
-        kruin_breedte=5,
-        buiten_talud=3,
+    default = _scenario_data_to_koswat_scenario(
+        dict(
+            d_h=1,
+            d_s=10,
+            d_p=30,
+            kruin_breedte=5,
+            buiten_talud=3,
+        )
     )
-    scenario_2 = dict(
-        d_h=0.5,
-        d_s=20,
-        d_p=80,
-        kruin_breedte=5,
-        buiten_talud=4,
+    scenario_2 = _scenario_data_to_koswat_scenario(
+        dict(
+            d_h=0.5,
+            d_s=20,
+            d_p=80,
+            kruin_breedte=5,
+            buiten_talud=4,
+        )
     )
-    scenario_3 = dict(
-        d_h=2,
-        d_s=10,
-        d_p=30,
-        kruin_breedte=5,
-        buiten_talud=3,
+    scenario_3 = _scenario_data_to_koswat_scenario(
+        dict(
+            d_h=2,
+            d_s=10,
+            d_p=30,
+            kruin_breedte=5,
+            buiten_talud=3,
+        )
     )
 
     cases = [
