@@ -21,9 +21,7 @@ class KoswatDikeLocationsShpReader(KoswatReaderProtocol):
 
         _shp_model = KoswatDikeLocationsShpFom()
         with shapefile.Reader(file_path) as shp:
-            raise NotImplementedError(
-                "We should now also extract the trajects included in this shp file."
-            )
+            _shp_model.records = shp.records()
             _shp_points = shp.shapes()[0].points
             _shp_model.initial_point = Point(_shp_points[0])
             _shp_model.end_point = Point(_shp_points[-1])
