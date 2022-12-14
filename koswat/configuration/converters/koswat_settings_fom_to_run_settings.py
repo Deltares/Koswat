@@ -69,28 +69,35 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
         return _cases
 
     def _get_surroundings_wrapper(self):
-        pass
+        raise NotImplementedError("To do: map surroundings wrapper")
 
     def convert_settings(self) -> KoswatRunSettings:
         _settings = KoswatRunSettings()
 
         # Direct mappings.
-        _settings.output_dir = self.fom_settings.analyse_section_fom.analysis_output_dir
-        _settings.dike_sections = (
+        _output_dir = self.fom_settings.analyse_section_fom.analysis_output_dir
+        _dike_selected_sections = (
             self.fom_settings.analyse_section_fom.dike_selection_txt_fom.dike_sections
+        )
+        _costs = KoswatSettingsFomToCostsSettings.with_settings_fom(
+            self.fom_settings
+        ).build()
+
+        # Input profiles
+        _input_profiles = self._get_input_profile_cases(
+            self.fom_settings.analyse_section_fom,
+            self._get_layers_info(self.fom_settings.dike_profile_section_fom),
         )
 
         # Define scenarios
-        _settings.scenarios = self.fom_settings.analyse_section_fom.scenarios_ini_fom
-
-        # Indirect mappings
-        _settings.costs = KoswatSettingsFomToCostsSettings.with_settings_fom(
-            self.fom_settings
-        ).build()
-        _layers_data = self._get_layers_info(self.fom_settings.dike_profile_section_fom)
-        _settings.input_profiles = self._get_input_profile_cases(
-            self.fom_settings.analyse_section_fom, _layers_data
-        )
+        for _fom_scenario in self.fom_settings.analyse_section_fom.scenarios_ini_fom:
+            _shp_dike_fom_list = self.fom_settings.analyse_section_fom.dike_section_location_fom.get_by_section(
+                _fom_scenario.scenario_section
+            )
+            for _shp_dike_fom in _shp_dike_fom_list:
+                self.fom_settings.surroundings_section.surroundings_database.get_wrapper_by_traject(
+                    _shp_dike_fom.record.Traject
+                )
 
         # Define surroundings
         _dike_locations = (
@@ -99,5 +106,6 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
         _surroundings_dirs = list(
             self.fom_settings.surroundings_section.surroundings_database
         )
+        self._get_surroundings_wrapper()
 
         return _settings

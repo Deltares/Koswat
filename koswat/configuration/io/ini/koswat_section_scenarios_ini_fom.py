@@ -8,7 +8,6 @@ from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 class SectionScenarioFom(KoswatIniFomProtocol):
     scenario_name: str
-    scenario_section: str
     d_h: float
     d_s: float
     d_p: float
@@ -30,24 +29,13 @@ class SectionScenarioFom(KoswatIniFomProtocol):
 
 class KoswatSectionScenariosIniFom(KoswatIniFomProtocol):
     section_scenarios: List[SectionScenarioFom]
-
-    def __init__(self) -> None:
-        self._section_name = ""
-
-    @property
-    def section_name(self) -> str:
-        return self._section_name
-
-    @section_name.setter
-    def section_name(self, value: str) -> None:
-        self._section_name = value
-        for _scenario in self.section_scenarios:
-            _scenario.scenario_section = self._section_name
+    scenario_section: str
 
     @classmethod
-    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+    def from_config(cls, ini_config: ConfigParser) -> KoswatSectionScenariosIniFom:
         _ini_fom = cls()
         _ini_fom.section_scenarios = []
+        _ini_fom.scenario_section = ""
         for _section_name in ini_config.sections():
             _new_section = SectionScenarioFom.from_config(ini_config[_section_name])
             _new_section.scenario_name = _section_name

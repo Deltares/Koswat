@@ -21,7 +21,7 @@ from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
 
-# TODO: Rename to importers / factory.
+# TODO: Rename to koswat_analysis_section_importer
 def dike_input_profiles_file_to_fom(csv_file: Path) -> List[KoswatInputProfileBase]:
     if not csv_file.is_file():
         logging.error("Dike input profiles csv file not found at {}".format(csv_file))
@@ -31,11 +31,13 @@ def dike_input_profiles_file_to_fom(csv_file: Path) -> List[KoswatInputProfileBa
     )
 
 
-def dike_sections_location_file_to_fom(shp_file: Path):
+def dike_sections_location_file_to_fom(shp_file: Path, dike_selections: List[str]):
     if not shp_file.is_file():
         logging.error("Dike sections shp file not found at {}".format(shp_file))
         return None
-    return KoswatDikeLocationsShpReader().read(shp_file)
+    _reader = KoswatDikeLocationsShpReader()
+    _reader.selected_locations = dike_selections
+    return _reader.read(shp_file)
 
 
 def dike_selection_file_to_fom(txt_file: Path) -> KoswatDikeSelectionTxtFom:
@@ -67,7 +69,6 @@ def scenarios_dir_to_koswat_scenario_list(
     _scenarios = []
     for _ini_file in scenario_dir.glob("*.ini"):
         _section_scenarios: KoswatSectionScenariosIniFom = _reader.read(_ini_file)
-        _section_scenarios.section_name = _ini_file.stem
-        for _s_scenario in _section_scenarios.section_scenarios:
-            _scenarios.append(_s_scenario)
+        _section_scenarios.scenario_section = _ini_file.stem
+        _scenarios.append(_section_scenarios)
     return _scenarios

@@ -4,6 +4,7 @@ from typing import List
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
+    KoswatTrajectSurroundingsWrapperCollectionCsvFom,
     KoswatTrajectSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
@@ -14,15 +15,17 @@ from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 
 def from_surroundings_csv_dir_to_fom(
     csv_dir: Path,
-) -> KoswatTrajectSurroundingsWrapperCsvFom:
+) -> KoswatTrajectSurroundingsWrapperCollectionCsvFom:
     if not csv_dir.is_dir():
         logging.error("Surroundings directory not found at {}".format(csv_dir))
         return []
-    _wrapper_fom_list = []
+    _collection = KoswatTrajectSurroundingsWrapperCollectionCsvFom()
     for _traject_surrounding in csv_dir.iterdir():
         _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
         _surroundings_wrapper.traject = _traject_surrounding.stem
-        _wrapper_fom_list.append(_surroundings_wrapper)
+        _collection.wrapper_collection[
+            _traject_surrounding.stem
+        ] = _surroundings_wrapper
         for _csv_file in _traject_surrounding.glob("*.csv"):
             _surrounding_type = (
                 _csv_file.stem.replace(f"T_{_traject_surrounding.stem}_", "")
@@ -34,7 +37,7 @@ def from_surroundings_csv_dir_to_fom(
             ).read(_csv_file)
             _surrounding_fom.traject = _traject_surrounding.stem
             _surroundings_wrapper.surroundings[_surrounding_type] = _surrounding_fom
-    return _wrapper_fom_list
+    return _collection
 
 
 def from_surroundings_csv_file_to_fom(

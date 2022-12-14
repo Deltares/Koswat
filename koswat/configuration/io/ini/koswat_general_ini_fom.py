@@ -13,14 +13,14 @@ from koswat.configuration.io.csv.koswat_input_profiles_csv_fom import (
     KoswatInputProfilesCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsWrapperCsvFom,
+    KoswatTrajectSurroundingsWrapperCollectionCsvFom,
 )
 from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
-    KoswatDikeLocationsShpFom,
+    KoswatDikeLocationsWrapperShpFom,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
@@ -34,9 +34,9 @@ from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 class AnalysisSectionFom(KoswatIniFomProtocol):
     dike_selection_txt_fom: KoswatDikeSelectionTxtFom
-    dike_section_location_fom: KoswatDikeLocationsShpFom  # shp file
+    dike_section_location_fom: KoswatDikeLocationsWrapperShpFom
     input_profiles_csv_fom: KoswatInputProfilesCsvFom
-    scenarios_ini_fom: KoswatSectionScenariosIniFom
+    scenarios_ini_fom: List[KoswatSectionScenariosIniFom]
     costs_ini_fom: KoswatCostsIniFom
     analysis_output_dir: Path  # output folder
     include_taxes: bool
@@ -58,7 +58,8 @@ class AnalysisSectionFom(KoswatIniFomProtocol):
         )
         _section.dike_section_location_fom = (
             AnalysisConverter.dike_sections_location_file_to_fom(
-                Path(ini_config["dijksectie_ligging"])
+                Path(ini_config["dijksectie_ligging"]),
+                _section.dike_selection_txt_fom.dike_sections,
             )
         )
         _section.input_profiles_csv_fom = (
@@ -185,7 +186,7 @@ class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 
 
 class SurroundingsSectionFom(KoswatIniFomProtocol):
-    surroundings_database: KoswatTrajectSurroundingsWrapperCsvFom
+    surroundings_database: KoswatTrajectSurroundingsWrapperCollectionCsvFom
     constructieafstand: float
     constructieovergang: float
     buitendijks: bool
