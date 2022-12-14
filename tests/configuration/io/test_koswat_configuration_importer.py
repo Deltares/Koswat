@@ -30,8 +30,9 @@ class TestKoswatRunSettingsImporter:
         assert isinstance(_config.costs, KoswatCostsSettings)
         assert any(_config.input_profiles)
         assert all((isinstance(_case, KoswatProfileBase) for _case in _config.input_profiles))
+        assert _config.output_dir.is_dir()
+        assert any(_config.dike_sections)
+
         assert any(_config.scenarios)
         assert all((isinstance(_case, KoswatScenario) for _case in _config.scenarios))
-        assert any(_config.dike_sections)
         assert any(_config.surroundings)
-        assert _config.output_dir.is_dir()

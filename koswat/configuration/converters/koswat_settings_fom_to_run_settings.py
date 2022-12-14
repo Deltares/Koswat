@@ -12,6 +12,7 @@ from koswat.configuration.io.ini.koswat_general_ini_fom import (
 )
 from koswat.configuration.settings.koswat_run_settings import KoswatRunSettings
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 
@@ -32,18 +33,33 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
             ],
         )
 
+    def _get_koswat_input_profile_base(self, fom_dict: dict) -> KoswatInputProfileBase:
+        _input_profile = KoswatInputProfileBase()
+        _input_profile.dike_section = fom_dict.get("dikesection", "")
+        _input_profile.buiten_maaiveld = float(fom_dict["buiten_maaiveld"])
+        _input_profile.buiten_talud = float(fom_dict["buiten_talud"])
+        _input_profile.buiten_berm_hoogte = float(fom_dict["buiten_berm_hoogte"])
+        _input_profile.buiten_berm_breedte = float(fom_dict["buiten_berm_lengte"])
+        _input_profile.kruin_hoogte = float(fom_dict["kruin_hoogte"])
+        _input_profile.kruin_breedte = float(fom_dict["kruin_breedte"])
+        _input_profile.binnen_talud = float(fom_dict["binnen_talud"])
+        _input_profile.binnen_berm_hoogte = float(fom_dict["binnen_berm_hoogte"])
+        _input_profile.binnen_berm_breedte = float(fom_dict["binnen_berm_lengte"])
+        _input_profile.binnen_maaiveld = float(fom_dict["binnen_maaiveld"])
+        return _input_profile
+
     def _get_input_profile_cases(
         self, section_fom: AnalysisSectionFom, layers_info: dict
     ) -> List[KoswatProfileBase]:
         _cases = []
-        for _input_case in section_fom.input_profiles_csv_fom:
+        for _input_case in section_fom.input_profiles_csv_fom.input_profile_fom_list:
             _input_profile = KoswatProfileBuilder.with_data(
                 dict(
-                    input_profile_data=_input_case,
+                    input_profile_data=self._get_koswat_input_profile_base(_input_case),
                     layers_data=layers_info,
                     profile_type=KoswatProfileBase,
                 )
-            )
+            ).build()
             _cases.append(_input_profile)
         return _cases
 
@@ -57,7 +73,7 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
         )
 
         # Define scenarios
-        _settings.scenarios = self.fom_settings.analysis_settings.scenarios
+        _settings.scenarios = self.fom_settings.analyse_section_fom.scenarios_ini_fom
 
         # Indirect mappings
         _settings.costs = KoswatSettingsFomToCostsSettings.with_settings_fom(
@@ -73,7 +89,7 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
             self.fom_settings.analyse_section_fom.dike_section_location_fom
         )
         _surroundings_dirs = list(
-            self.fom_settings.surroundings_settings.surroundings_database.iterdir()
+            self.fom_settings.surroundings_section.surroundings_database
         )
 
         return _settings

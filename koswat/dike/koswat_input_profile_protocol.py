@@ -18,14 +18,3 @@ class KoswatInputProfileProtocol(Protocol):
     binnen_berm_hoogte: float
     binnen_berm_breedte: float
     binnen_maaiveld: float
-
-    @classmethod
-    def from_dict(cls, profile_data: dict) -> KoswatInputProfileProtocol:
-        # TODO: REMOVE THIS WAS USEFUL DURING MVP
-        """
-        Generates a `KoswatInputProfileProtocol` with the given profile data.
-
-        Returns:
-            KoswatInputProfileProtocol: Initialized instance of `KoswatInputProfileProtocol`.
-        """
-        pass

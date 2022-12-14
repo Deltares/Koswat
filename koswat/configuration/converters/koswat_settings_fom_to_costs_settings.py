@@ -13,9 +13,9 @@ from koswat.configuration.settings.costs.koswat_costs import (
 
 
 class KoswatSettingsFomToCostsSettings(KoswatSettingsFomConverterBase):
-    def with_settings_fom(self) -> KoswatCostsSettings:
+    def convert_settings(self) -> KoswatCostsSettings:
         _costs_settings = KoswatCostsSettings()
-        _costs_settings.price_year = (
+        _costs_settings.price_year = int(
             self.fom_settings.analyse_section_fom.costs_ini_fom.unit_prices_section.prijspeil
         )
         _costs_settings.dike_profile_costs = self._get_dike_profile_costs_settings(
