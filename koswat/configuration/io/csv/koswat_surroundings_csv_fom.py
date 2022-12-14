@@ -20,14 +20,51 @@ class KoswatTrajectSurroundingsCsvFom(KoswatCsvFomProtocol):
 
 class KoswatTrajectSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
     traject: str
-    surroundings: Dict[str, KoswatTrajectSurroundingsCsvFom]
+    buldings_polderside: KoswatTrajectSurroundingsCsvFom
+    buildings_dikeside: KoswatTrajectSurroundingsCsvFom
+
+    platform_polderside: KoswatTrajectSurroundingsCsvFom
+    platform_dikeside: KoswatTrajectSurroundingsCsvFom
+
+    water_polderside: KoswatTrajectSurroundingsCsvFom
+    water_dikeside: KoswatTrajectSurroundingsCsvFom
+
+    roads_class_2_polderside: KoswatTrajectSurroundingsCsvFom
+    roads_class_7_polderside: KoswatTrajectSurroundingsCsvFom
+    roads_class_24_polderside: KoswatTrajectSurroundingsCsvFom
+    roads_class_47_polderside: KoswatTrajectSurroundingsCsvFom
+    roads_class_unknown_polderside: KoswatTrajectSurroundingsCsvFom
+
+    roads_class_2_dikeside: KoswatTrajectSurroundingsCsvFom
+    roads_class_7_dikeside: KoswatTrajectSurroundingsCsvFom
+    roads_class_24_dikeside: KoswatTrajectSurroundingsCsvFom
+    roads_class_47_dikeside: KoswatTrajectSurroundingsCsvFom
+    roads_class_unknown_dikeside: KoswatTrajectSurroundingsCsvFom
 
     def __init__(self) -> None:
         self.traject = ""
-        self.surroundings = {}
+        self.buldings_polderside = None
+        self.buildings_dikeside = None
+        self.platform_polderside = None
+        self.platform_dikeside = None
+        self.water_polderside = None
+        self.water_dikeside = None
+        self.roads_class_2_polderside = None
+        self.roads_class_7_polderside = None
+        self.roads_class_24_polderside = None
+        self.roads_class_47_polderside = None
+        self.roads_class_unknown_polderside = None
+        self.roads_class_2_dikeside = None
+        self.roads_class_7_dikeside = None
+        self.roads_class_24_dikeside = None
+        self.roads_class_47_dikeside = None
+        self.roads_class_unknown_dikeside = None
 
     def is_valid(self) -> bool:
-        return any(self.surroundings) and all(_s.is_valid() for _s in self.surroundings)
+        _surroundings = [
+            _prop for _name, _prop in self.__dict__.items() if _name != "traject"
+        ]
+        return any(_surroundings) and all(_s.is_valid() for _s in _surroundings)
 
 
 class KoswatTrajectSurroundingsWrapperCollectionCsvFom(KoswatCsvFomProtocol):

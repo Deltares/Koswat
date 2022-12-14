@@ -13,6 +13,34 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
 from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 
 
+def translate_surrounding_type(surrounding_type: str) -> str:
+    _normalized = surrounding_type.lower().strip()
+    _translations = dict(
+        bebouwing_binnendijks="buldings_polderside",
+        bebouwing_buitendijks="buildings_dikeside",
+        spoor_binnendijks="platform_polderside",
+        spoor_buitendijks="platform_dikeside",
+        water_binnendijks="water_polderside",
+        water_buitendijks="water_dikeside",
+        wegen_binnendijks_klasse2="roads_class_2_polderside",
+        wegen_binnendijks_klasse7="roads_class_7_polderside",
+        wegen_binnendijks_klasse24="roads_class_24_polderside",
+        wegen_binnendijks_klasse47="roads_class_47_polderside",
+        wegen_binnendijks_klasse2onbekende="roads_class_unknown_polderside",
+        wegen_buitendijks_klasse2="roads_class_2_dikeside",
+        wegen_buitendijks_klasse7="roads_class_7_dikeside",
+        wegen_buitendijks_klasse24="roads_class_24_dikeside",
+        wegen_buitendijks_klasse47="roads_class_47_dikeside",
+        wegen_buitendijks_klasse2onbekende="roads_class_unknown_dikeside",
+    )
+    _translation = _translations.get(_normalized, None)
+    if not _translations:
+        logging.error("No mapping found for {}".format(surrounding_type))
+        return None
+    return _translation
+
+
+# Move this into a koswat_surroundings_importer class
 def from_surroundings_csv_dir_to_fom(
     csv_dir: Path,
 ) -> KoswatTrajectSurroundingsWrapperCollectionCsvFom:
@@ -27,16 +55,14 @@ def from_surroundings_csv_dir_to_fom(
             _traject_surrounding.stem
         ] = _surroundings_wrapper
         for _csv_file in _traject_surrounding.glob("*.csv"):
-            _surrounding_type = (
+            _surrounding_type = translate_surrounding_type(
                 _csv_file.stem.replace(f"T_{_traject_surrounding.stem}_", "")
-                .lower()
-                .strip()
             )
             _surrounding_fom = KoswatCsvReader.with_builder_type(
                 KoswatSurroundingsCsvFomBuilder
             ).read(_csv_file)
             _surrounding_fom.traject = _traject_surrounding.stem
-            _surroundings_wrapper.surroundings[_surrounding_type] = _surrounding_fom
+            setattr(_surroundings_wrapper, _surrounding_type, _surrounding_fom)
     return _collection
 
 
