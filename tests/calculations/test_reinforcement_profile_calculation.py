@@ -25,6 +25,7 @@ from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_b
     StandardReinforcementProfileBuilder,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
@@ -143,7 +144,7 @@ class TestReinforcementProfileBuilderFactory:
     def test_given_profile_and_scenario_calculate_new_geometry(
         self,
         profile_type: Type[ReinforcementProfileProtocol],
-        profile_data: dict,
+        profile_data: KoswatInputProfileProtocol,
         scenario_data: dict,
         expected_profile_data: dict,
         request: pytest.FixtureRequest,

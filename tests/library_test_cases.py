@@ -4,6 +4,7 @@ import pytest
 from shapely.geometry.point import Point
 
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class CasesProtocol(Protocol):
@@ -65,8 +66,13 @@ class LayersCases(CasesProtocol):
     ]
 
 
+def _input_profile_data_to_instance(data: dict) -> KoswatInputProfileBase:
+    _profile = KoswatInputProfileBase()
+    _profile.__dict__ = data
+    return _profile
+
 class InputProfileCases(CasesProtocol):
-    default = dict(
+    default = _input_profile_data_to_instance(dict(
         dike_section="test_data",
         buiten_maaiveld=0,
         buiten_talud=3,
@@ -78,9 +84,9 @@ class InputProfileCases(CasesProtocol):
         binnen_berm_hoogte=0,
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
-    )
+    ))
 
-    profile_case_2 = dict(
+    profile_case_2 = _input_profile_data_to_instance(dict(
         dike_section="test_data",
         buiten_maaiveld=0,
         buiten_talud=4,
@@ -92,7 +98,7 @@ class InputProfileCases(CasesProtocol):
         binnen_berm_hoogte=2.6,
         binnen_berm_breedte=54,
         binnen_maaiveld=0,
-    )
+    ))
 
     cases = [pytest.param(default, id="Default Input Profile")]
 
