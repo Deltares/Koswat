@@ -1,8 +1,15 @@
-from typing import List, Protocol
+from typing import List, Protocol, Type
 
 import pytest
 from shapely.geometry.point import Point
 
+from koswat.calculations.outside_slope_reinforcement import CofferDamInputProfile
+from koswat.calculations.standard_reinforcement import (
+    PipingWallInputProfile,
+    SoilInputProfile,
+    StabilityWallInputProfile,
+)
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
@@ -66,39 +73,48 @@ class LayersCases(CasesProtocol):
     ]
 
 
-def _input_profile_data_to_instance(data: dict) -> KoswatInputProfileBase:
-    _profile = KoswatInputProfileBase()
+def _input_profile_data_to_instance(
+    profile_type: Type[KoswatInputProfileProtocol], data: dict
+) -> KoswatInputProfileProtocol:
+    _profile = profile_type()
     _profile.__dict__ = data
     return _profile
 
-class InputProfileCases(CasesProtocol):
-    default = _input_profile_data_to_instance(dict(
-        dike_section="test_data",
-        buiten_maaiveld=0,
-        buiten_talud=3,
-        buiten_berm_hoogte=0,
-        buiten_berm_breedte=0,
-        kruin_hoogte=6,
-        kruin_breedte=5,
-        binnen_talud=3,
-        binnen_berm_hoogte=0,
-        binnen_berm_breedte=0,
-        binnen_maaiveld=0,
-    ))
 
-    profile_case_2 = _input_profile_data_to_instance(dict(
-        dike_section="test_data",
-        buiten_maaiveld=0,
-        buiten_talud=4,
-        buiten_berm_hoogte=0,
-        buiten_berm_breedte=0,
-        kruin_hoogte=6.5,
-        kruin_breedte=5,
-        binnen_talud=5.54,
-        binnen_berm_hoogte=2.6,
-        binnen_berm_breedte=54,
-        binnen_maaiveld=0,
-    ))
+class InputProfileCases(CasesProtocol):
+    default = _input_profile_data_to_instance(
+        KoswatInputProfileBase,
+        dict(
+            dike_section="test_data",
+            buiten_maaiveld=0,
+            buiten_talud=3,
+            buiten_berm_hoogte=0,
+            buiten_berm_breedte=0,
+            kruin_hoogte=6,
+            kruin_breedte=5,
+            binnen_talud=3,
+            binnen_berm_hoogte=0,
+            binnen_berm_breedte=0,
+            binnen_maaiveld=0,
+        ),
+    )
+
+    profile_case_2 = _input_profile_data_to_instance(
+        KoswatInputProfileBase,
+        dict(
+            dike_section="test_data",
+            buiten_maaiveld=0,
+            buiten_talud=4,
+            buiten_berm_hoogte=0,
+            buiten_berm_breedte=0,
+            kruin_hoogte=6.5,
+            kruin_breedte=5,
+            binnen_talud=5.54,
+            binnen_berm_hoogte=2.6,
+            binnen_berm_breedte=54,
+            binnen_maaiveld=0,
+        ),
+    )
 
     cases = [pytest.param(default, id="Default Input Profile")]
 
@@ -132,93 +148,104 @@ class InitialPointsLookup(CasesProtocol):
 
 class InputProfileScenarioLookup:
     reinforcement_soil_default_default_no_layers = dict(
-        input_profile_data=dict(
-            dike_section="test_data",
-            buiten_maaiveld=0,
-            buiten_talud=3,
-            buiten_berm_breedte=0,
-            buiten_berm_hoogte=0,
-            kruin_hoogte=7,
-            kruin_breedte=5,
-            binnen_talud=3.57,
-            binnen_berm_hoogte=1,
-            binnen_berm_breedte=20,
-            binnen_maaiveld=0,
+        input_profile_data=_input_profile_data_to_instance(
+            SoilInputProfile,
+            dict(
+                dike_section="test_data",
+                buiten_maaiveld=0,
+                buiten_talud=3,
+                buiten_berm_breedte=0,
+                buiten_berm_hoogte=0,
+                kruin_hoogte=7,
+                kruin_breedte=5,
+                binnen_talud=3.57,
+                binnen_berm_hoogte=1,
+                binnen_berm_breedte=20,
+                binnen_maaiveld=0,
+            ),
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=3,
     )
     reinforcement_soil_default_scenario_2_no_layers = dict(
-        input_profile_data=dict(
+        input_profile_data=_input_profile_data_to_instance(
+            SoilInputProfile,
+            dict(
                 dike_section="test_data",
-
-            buiten_maaiveld=0,
-            buiten_talud=4,
-            buiten_berm_breedte=0,
-            buiten_berm_hoogte=0,
-            kruin_hoogte=6.5,
-            kruin_breedte=5,
-            binnen_talud=5.54,
-            binnen_berm_hoogte=2.6,
-            binnen_berm_breedte=54,
-            binnen_maaiveld=0,
+                buiten_maaiveld=0,
+                buiten_talud=4,
+                buiten_berm_breedte=0,
+                buiten_berm_hoogte=0,
+                kruin_hoogte=6.5,
+                kruin_breedte=5,
+                binnen_talud=5.54,
+                binnen_berm_hoogte=2.6,
+                binnen_berm_breedte=54,
+                binnen_maaiveld=0,
+            ),
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=2,
     )
     reinforcement_piping_wall_default_scenario_3_no_layers = dict(
-        input_profile_data=dict(
-                    dike_section="test_data",
-
-            buiten_maaiveld=0,
-            buiten_talud=3,
-            buiten_berm_breedte=0,
-            buiten_berm_hoogte=0,
-            kruin_hoogte=8,
-            kruin_breedte=5,
-            binnen_talud=3,
-            binnen_berm_hoogte=0,
-            binnen_berm_breedte=0,
-            binnen_maaiveld=0,
-            length_piping_wall=4.5,
+        input_profile_data=_input_profile_data_to_instance(
+            PipingWallInputProfile,
+            dict(
+                dike_section="test_data",
+                buiten_maaiveld=0,
+                buiten_talud=3,
+                buiten_berm_breedte=0,
+                buiten_berm_hoogte=0,
+                kruin_hoogte=8,
+                kruin_breedte=5,
+                binnen_talud=3,
+                binnen_berm_hoogte=0,
+                binnen_berm_breedte=0,
+                binnen_maaiveld=0,
+                length_piping_wall=4.5,
+            ),
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=6,
     )
     reinforcement_stability_wall_default_scenario_3_no_layers = dict(
-        input_profile_data=dict(
-                    dike_section="test_data",
-
-            buiten_maaiveld=0,
-            buiten_talud=3,
-            buiten_berm_breedte=0,
-            buiten_berm_hoogte=0,
-            kruin_hoogte=8,
-            kruin_breedte=5,
-            binnen_talud=2.00,
-            binnen_berm_hoogte=0,
-            binnen_berm_breedte=0,
-            binnen_maaiveld=0,
-            length_stability_wall=17,
+        input_profile_data=_input_profile_data_to_instance(
+            StabilityWallInputProfile,
+            dict(
+                dike_section="test_data",
+                buiten_maaiveld=0,
+                buiten_talud=3,
+                buiten_berm_breedte=0,
+                buiten_berm_hoogte=0,
+                kruin_hoogte=8,
+                kruin_breedte=5,
+                binnen_talud=2.00,
+                binnen_berm_hoogte=0,
+                binnen_berm_breedte=0,
+                binnen_maaiveld=0,
+                length_stability_wall=17,
+            ),
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=6,
     )
     reinforcement_coffer_dam_wall_default_scenario_3_no_layers = dict(
-        input_profile_data=dict(
-                    dike_section="test_data",
-
-            buiten_maaiveld=0,
-            buiten_talud=2.25,
-            buiten_berm_breedte=0,
-            buiten_berm_hoogte=0,
-            kruin_hoogte=8,
-            kruin_breedte=5,
-            binnen_talud=2.25,
-            binnen_berm_hoogte=0,
-            binnen_berm_breedte=0,
-            binnen_maaiveld=0,
-            length_coffer_dam=17,
+        input_profile_data=_input_profile_data_to_instance(
+            CofferDamInputProfile,
+            dict(
+                dike_section="test_data",
+                buiten_maaiveld=0,
+                buiten_talud=2.25,
+                buiten_berm_breedte=0,
+                buiten_berm_hoogte=0,
+                kruin_hoogte=8,
+                kruin_breedte=5,
+                binnen_talud=2.25,
+                binnen_berm_hoogte=0,
+                binnen_berm_breedte=0,
+                binnen_maaiveld=0,
+                length_coffer_dam=17,
+            ),
         ),
         layers_data=LayersCases.without_layers,
         p4_x_coordinate=0,

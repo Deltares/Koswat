@@ -36,11 +36,7 @@ def get_reinforced_profile(
 ) -> ReinforcementProfileProtocol:
     _reinforcement = type_reinforcement()
     # Input profile data.
-    _reinforcement.input_data = (
-        ReinforcementProfileBuilderFactory.get_reinforcement_input_profile(
-            type_reinforcement
-        ).from_dict(reinforced_data["input_profile_data"])
-    )
+    _reinforcement.input_data = reinforced_data["input_profile_data"]
     # Char points
     _char_points_builder = CharacteristicPointsBuilder()
     _char_points_builder.input_profile = _reinforcement.input_data
