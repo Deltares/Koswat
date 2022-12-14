@@ -7,7 +7,7 @@ from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatSurroundingsCsvFom,
+    KoswatTrajectSurroundingsCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
     KoswatSurroundingsCsvFomBuilder,
@@ -26,7 +26,7 @@ from koswat.io.csv import KoswatCsvReader
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
     # TODO: this should probably be moved to configuration
     koswat_shp_fom: KoswatDikeLocationsShpFom
-    koswat_csv_fom: KoswatSurroundingsCsvFom
+    koswat_csv_fom: KoswatTrajectSurroundingsCsvFom
 
     def __init__(self) -> None:
         self.koswat_csv_fom = None

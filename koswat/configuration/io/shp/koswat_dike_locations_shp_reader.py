@@ -21,7 +21,11 @@ class KoswatDikeLocationsShpReader(KoswatReaderProtocol):
 
         _shp_model = KoswatDikeLocationsShpFom()
         with shapefile.Reader(file_path) as shp:
+            # Records contains Dikesection - Traject - Subtraject            
             _shp_model.records = shp.records()
+            # For each record get its shape
+            # shp.records()[0] -> shp.shapes()[0]
+            # Only getting the first shape
             _shp_points = shp.shapes()[0].points
             _shp_model.initial_point = Point(_shp_points[0])
             _shp_model.end_point = Point(_shp_points[-1])

@@ -28,7 +28,7 @@ class TestKoswatRunSettingsImporter:
 
         # 3. Verify final expectations.
         assert isinstance(_config.costs, KoswatCostsSettings)
-        assert any(_config.input_profiles)
+        assert len(_config.input_profiles) == 3
         assert all((isinstance(_case, KoswatProfileBase) for _case in _config.input_profiles))
         assert _config.output_dir.is_dir()
         assert any(_config.dike_sections)

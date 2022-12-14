@@ -4,7 +4,7 @@ from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatSurroundingsCsvFom,
+    KoswatTrajectSurroundingsCsvFom,
 )
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
@@ -69,7 +69,7 @@ class TestSurroundingsWrapperBuilder:
             Point(2.4, 4.2),
             _end_point,
         ]
-        _buildings_foms.koswat_csv_fom = KoswatSurroundingsCsvFom()
+        _buildings_foms.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _buildings_foms.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
             self._as_surrounding_point(_start_point, [2.4]),

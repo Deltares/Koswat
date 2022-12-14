@@ -2,7 +2,7 @@ import re
 from typing import List
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatSurroundingsCsvFom,
+    KoswatTrajectSurroundingsCsvFom,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.point.point_surroundings_builder import (
@@ -63,11 +63,11 @@ class KoswatSurroundingsCsvFomBuilder(KoswatCsvFomBuilderProtocol):
             _point_list.append(_ps)
         return _point_list
 
-    def build(self) -> KoswatSurroundingsCsvFom:
+    def build(self) -> KoswatTrajectSurroundingsCsvFom:
         if not self._is_valid():
             raise ValueError("Not valid headers and entries combination.")
         # First three columns are section x and y coordinate.
-        _koswat_fom = KoswatSurroundingsCsvFom()
+        _koswat_fom = KoswatTrajectSurroundingsCsvFom()
         _koswat_fom.distances_list = self._get_surroundings_distances(self.headers[3:])
         _koswat_fom.points_surroundings_list = self._build_points_surroundings_list(
             _koswat_fom.distances_list

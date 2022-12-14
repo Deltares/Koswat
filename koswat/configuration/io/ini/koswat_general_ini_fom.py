@@ -13,7 +13,7 @@ from koswat.configuration.io.csv.koswat_input_profiles_csv_fom import (
     KoswatInputProfilesCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatSurroundingsCsvFom,
+    KoswatTrajectSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
@@ -185,7 +185,7 @@ class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 
 
 class SurroundingsSectionFom(KoswatIniFomProtocol):
-    surroundings_database: List[KoswatSurroundingsCsvFom]
+    surroundings_database: KoswatTrajectSurroundingsWrapperCsvFom
     constructieafstand: float
     constructieovergang: float
     buitendijks: bool

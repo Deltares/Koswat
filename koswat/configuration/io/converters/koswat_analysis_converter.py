@@ -1,10 +1,7 @@
 import logging
 from pathlib import Path
-from typing import Iterator, List
+from typing import List
 
-from koswat.configuration.io.csv.koswat_input_profiles_csv_fom import (
-    KoswatInputProfilesCsvFom,
-)
 from koswat.configuration.io.csv.koswat_input_profiles_csv_fom_builder import (
     KoswatProfileInputCsvFomBuilder,
 )
@@ -24,6 +21,7 @@ from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
 
+# TODO: Rename to importers / factory.
 def dike_input_profiles_file_to_fom(csv_file: Path) -> List[KoswatInputProfileBase]:
     if not csv_file.is_file():
         logging.error("Dike input profiles csv file not found at {}".format(csv_file))
