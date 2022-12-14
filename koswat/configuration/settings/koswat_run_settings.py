@@ -8,7 +8,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 
 
-class KoswatRunConfiguration:
+class KoswatRunSettingsBck:
     input_cases: List[KoswatProfileBase]
     scenarios: List[KoswatScenario]
     surroundings: List[Path]
@@ -48,3 +48,7 @@ class KoswatRunConfiguration:
         logging.info("Initializing run for all cases.")
 
         logging.info("Finalized run for all cases.")
+
+
+class KoswatRunSettings:
+    pass

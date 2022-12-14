@@ -18,7 +18,7 @@ from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
 from koswat.configuration.settings import (
-    KoswatCosts,
+    KoswatCostsSettings,
     KoswatDikeSelection,
     KoswatScenario,
 )
@@ -65,7 +65,7 @@ def dike_selection_file_to_fom(txt_file: Path) -> KoswatDikeSelection:
     return _reader.read(txt_file)
 
 
-def dike_costs_file_to_fom(ini_file: Path) -> KoswatCosts:
+def dike_costs_file_to_fom(ini_file: Path) -> KoswatCostsSettings:
     _reader = KoswatIniReader()
     _reader.koswat_ini_fom_type = KoswatCostsIniFom
     return _reader.read(ini_file)

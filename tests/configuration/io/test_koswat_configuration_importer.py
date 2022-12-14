@@ -1,13 +1,13 @@
 from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.io.koswat_settings_importer import KoswatConfigurationImporter
+from koswat.configuration.io.koswat_settings_importer import KoswatSettingsFomImporter
 from koswat.configuration.settings.koswat_general_settings import *
 from tests import test_data
 
 
 class TestKoswatConfigurationImporter:
     def test_koswat_configuration_importer_init(self):
-        _builder = KoswatConfigurationImporter()
-        assert isinstance(_builder, KoswatConfigurationImporter)
+        _builder = KoswatSettingsFomImporter()
+        assert isinstance(_builder, KoswatSettingsFomImporter)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.ini_configuration
 
@@ -15,7 +15,7 @@ class TestKoswatConfigurationImporter:
         # 1. Define test data.
         _ini_file = test_data / "acceptance" / "koswat_general.ini"
         assert _ini_file.is_file()
-        _builder = KoswatConfigurationImporter()
+        _builder = KoswatSettingsFomImporter()
         _builder.ini_configuration = _ini_file
 
         # 2. Run test.

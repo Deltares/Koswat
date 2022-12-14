@@ -11,7 +11,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings import (
-    KoswatCosts,
+    KoswatCostsSettings,
     KoswatDikeSelection,
     KoswatScenario,
 )
@@ -34,7 +34,7 @@ class InfraCostsEnum(enum.Enum):
 class AnalysisSettings(KoswatConfigProtocol):
     dike_selection: KoswatDikeSelection
     scenarios: List[KoswatScenario]
-    costs: KoswatCosts
+    costs: KoswatCostsSettings
     analysis_output: Path  # output folder
     dike_section_traject_shp_file: Path  # shp file
     dike_sections_input_profile: List[KoswatInputProfileBase]

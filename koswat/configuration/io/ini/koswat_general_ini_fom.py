@@ -233,7 +233,7 @@ class InfrastructureSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class KoswatGeneralIniFom(KoswatIniFomProtocol):
+class KoswatSettingsIniFom(KoswatIniFomProtocol):
     analyse_section: AnalysisSectionFom
     dijkprofiel_section: DikeProfileSectionFom
     grondmaatregel_section: SoilReinforcementSectionFom
