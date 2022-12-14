@@ -15,7 +15,6 @@ from koswat.configuration.settings import (
     KoswatDikeSelection,
     KoswatScenario,
 )
-from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
@@ -57,28 +56,6 @@ class AnalysisSettings(KoswatConfigProtocol):
             and self.analysis_output is not None
             and self.dike_section_traject_shp_file.is_file()
             and any(self.dike_sections_input_profile)
-        )
-
-
-class DikeProfileSettings(KoswatConfigProtocol):
-    thickness_grass_layer: float
-    thickness_clay_layer: float
-
-    def is_valid(self) -> bool:
-        return not math.isnan(self.thickness_grass_layer) and not math.isnan(
-            self.thickness_clay_layer
-        )
-
-    def get_material_thickness(self) -> List[dict]:
-
-        return dict(
-            base_layer=dict(material=KoswatMaterialType.SAND),
-            coating_layers=[
-                dict(
-                    material=KoswatMaterialType.GRASS, depth=self.thickness_grass_layer
-                ),
-                dict(material=KoswatMaterialType.CLAY, depth=self.thickness_clay_layer),
-            ],
         )
 
 
@@ -269,7 +246,6 @@ class InfrastructuurSettings(KoswatConfigProtocol):
 
 class KoswatGeneralSettings(KoswatConfigProtocol):
     analysis_settings: AnalysisSettings
-    dike_profile_settings: DikeProfileSettings
     soil_settings: SoilSettings
     pipingwall_settings: PipingwallSettings
     stabilitywall_settings: StabilitywallSettings

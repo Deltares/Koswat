@@ -24,7 +24,6 @@ class TestKoswatConfigurationImporter:
         # 3. Verify final expectations.
         assert isinstance(_config, KoswatGeneralSettings)
         assert isinstance(_config.analysis_settings, AnalysisSettings)
-        assert isinstance(_config.dike_profile_settings, DikeProfileSettings)
         assert isinstance(_config.soil_settings, SoilSettings)
         assert isinstance(_config.pipingwall_settings, PipingwallSettings)
         assert isinstance(_config.stabilitywall_settings, StabilitywallSettings)

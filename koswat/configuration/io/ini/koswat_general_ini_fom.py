@@ -19,6 +19,9 @@ from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
+from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
+    KoswatDikeLocationsShpFom,
+)
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
@@ -31,7 +34,7 @@ from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 class AnalysisSectionFom(KoswatIniFomProtocol):
     dike_selection_txt_fom: KoswatDikeSelectionTxtFom
-    dike_section_location_fom: Path  # shp file
+    dike_section_location_fom: KoswatDikeLocationsShpFom  # shp file
     input_profiles_csv_fom: KoswatInputProfilesCsvFom
     scenarios_ini_fom: KoswatSectionScenariosIniFom
     costs_ini_fom: KoswatCostsIniFom
@@ -234,8 +237,8 @@ class InfrastructureSectionFom(KoswatIniFomProtocol):
 
 
 class KoswatSettingsIniFom(KoswatIniFomProtocol):
-    analyse_section: AnalysisSectionFom
-    dijkprofiel_section: DikeProfileSectionFom
+    analyse_section_fom: AnalysisSectionFom
+    dike_profile_section_fom: DikeProfileSectionFom
     grondmaatregel_section: SoilReinforcementSectionFom
     kwelscherm_section: PipingwallReinforcementSectionFom
     stabiliteitswand_section: StabilitywallReinforcementSectionFom
@@ -247,10 +250,10 @@ class KoswatSettingsIniFom(KoswatIniFomProtocol):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _general_ini = cls()
 
-        _general_ini.analyse_section = AnalysisSectionFom.from_config(
+        _general_ini.analyse_section_fom = AnalysisSectionFom.from_config(
             ini_config["Analyse"]
         )
-        _general_ini.dijkprofiel_section = DikeProfileSectionFom.from_config(
+        _general_ini.dike_profile_section_fom = DikeProfileSectionFom.from_config(
             ini_config["Dijkprofiel"]
         )
         _general_ini.grondmaatregel_section = SoilReinforcementSectionFom.from_config(

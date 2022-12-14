@@ -53,31 +53,31 @@ class TestReadIniConfigurations:
         assert isinstance(_ini_fom, KoswatSettingsIniFom)
 
         # Analysis section
-        assert isinstance(_ini_fom.analyse_section, AnalysisSectionFom)
-        assert _ini_fom.analyse_section.dike_selection_txt_fom == Path(
+        assert isinstance(_ini_fom.analyse_section_fom, AnalysisSectionFom)
+        assert _ini_fom.analyse_section_fom.dike_selection_txt_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\DijksectieSelectie.txt"
         )
-        assert _ini_fom.analyse_section.dike_section_location_fom == Path(
+        assert _ini_fom.analyse_section_fom.dike_section_location_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
-        assert _ini_fom.analyse_section.input_profiles_csv_fom == Path(
+        assert _ini_fom.analyse_section_fom.input_profiles_csv_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\InputPerDijkvak_WV21_KOSWAT_v2022_DR10.csv"
         )
-        assert _ini_fom.analyse_section.scenarios_ini_fom == Path(
+        assert _ini_fom.analyse_section_fom.scenarios_ini_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\Scenarios"
         )
-        assert _ini_fom.analyse_section.costs_ini_fom == Path(
+        assert _ini_fom.analyse_section_fom.costs_ini_fom == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
         )
-        assert _ini_fom.analyse_section.analysis_output_dir == Path(
+        assert _ini_fom.analyse_section_fom.analysis_output_dir == Path(
             "p:\\frm-koswat\\KOSWAT v2022\\Uitvoer"
         )
-        assert _ini_fom.analyse_section.include_taxes == True
+        assert _ini_fom.analyse_section_fom.include_taxes == True
 
         # Dijkprofiel section
-        assert isinstance(_ini_fom.dijkprofiel_section, DikeProfileSectionFom)
-        assert _ini_fom.dijkprofiel_section.thickness_grass_layer == 0.3
-        assert _ini_fom.dijkprofiel_section.thickness_clay_layer == 0.5
+        assert isinstance(_ini_fom.dike_profile_section_fom, DikeProfileSectionFom)
+        assert _ini_fom.dike_profile_section_fom.thickness_grass_layer == 0.3
+        assert _ini_fom.dike_profile_section_fom.thickness_clay_layer == 0.5
 
         # Grondmaatregel section
         assert isinstance(_ini_fom.grondmaatregel_section, SoilReinforcementSectionFom)
