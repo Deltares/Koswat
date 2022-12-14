@@ -99,7 +99,7 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
         _run_settings = KoswatRunSettings()
 
         # Direct mappings.
-        _output_dir = self.fom_settings.analyse_section_fom.analysis_output_dir
+        _run_settings.output_dir = self.fom_settings.analyse_section_fom.analysis_output_dir
         _dike_selected_sections = (
             self.fom_settings.analyse_section_fom.dike_selection_txt_fom.dike_sections
         )
@@ -122,7 +122,7 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
                     )
                 )
                 continue
-            _scenario_output = _output_dir / _fom_scenario.scenario_section
+            _scenario_output = _run_settings.output_dir / _fom_scenario.scenario_section
             for (
                 _shp_dike_fom
             ) in self.fom_settings.analyse_section_fom.dike_section_location_fom.get_by_section(

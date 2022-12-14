@@ -20,10 +20,12 @@ class KoswatRunScenarioSettings:
 class KoswatRunSettings:
     run_scenarios: List[KoswatRunScenarioSettings]
     input_profile_cases: List[KoswatProfileBase]
+    output_dir: Path
 
     def __init__(self) -> None:
         self.run_scenarios = []
         self.input_profile_cases = []
+        self.output_dir = None
 
     def run(self) -> None:
         logging.info("Initializing run for all cases.")

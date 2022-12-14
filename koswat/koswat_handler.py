@@ -14,9 +14,6 @@ from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter
     MultiLocationProfileComparisonPlotExporter,
 )
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
-from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
-    SurroundingsWrapperBuilder,
-)
 from koswat.koswat_logger import KoswatLogger
 
 
@@ -30,40 +27,55 @@ class KoswatHandler:
             return _ini
 
         # Import data.
-        _config_importer = KoswatRunSettingsImporter()
-        _config_importer.ini_configuration = _as_path(analysis_file)
-        self._koswat_config = _config_importer.build()
-
-        # Generate an output dir.
-        self._koswat_config.output_dir.mkdir(exist_ok=True, parents=True)
+        _run_settings_importer = KoswatRunSettingsImporter()
+        _run_settings_importer.ini_configuration = _as_path(analysis_file)
+        self._run_settings = _run_settings_importer.build()
 
         # Run data
-        for _input_profile in self._koswat_config.input_profiles:
+        for _input_profile in self._run_settings.input_profile_cases:
             _profile_output_dir = (
-                self._koswat_config.output_dir / _input_profile.input_data.dike_section
+                self._run_settings.output_dir / _input_profile.input_data.dike_section
             )
             _profile_output_dir.mkdir(exist_ok=True, parents=True)
 
-            for _scenario in self._koswat_config.scenarios:
-                _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
-                # _multi_loc_multi_prof_cost_builder.surroundings = _surroundings
-                # _surroundings = SurroundingsWrapperBuilder.from_files(
-                #     dict(csv_file=_csv_surroundings_file, shp_file=_shp_trajects_file)
-                # ).build()
-                _multi_loc_multi_prof_cost_builder.base_profile = _input_profile
-                _multi_loc_multi_prof_cost_builder.scenario = _scenario
-                _summary = _multi_loc_multi_prof_cost_builder.build()
-
+            for _run_scenario in self._run_settings.run_scenarios:
+                # Generate Analysis
+                _summary_builder = KoswatSummaryBuilder()
+                _summary_builder.base_profile = _input_profile
+                _summary_builder.scenario = _run_scenario.scenario
+                _summary_builder.surroundings = _run_scenario.surroundings
+                logging.info(
+                    "Creating analysis for {} - scenario {} - {}".format(
+                        _input_profile.input_data.dike_section,
+                        _run_scenario.scenario.scenario_section,
+                        _run_scenario.scenario.scenario_name,
+                    )
+                )
+                _summary = _summary_builder.build()
+                logging.info("Analysis created.")
+                # Export analysis results (csv and plots)
+                _run_scenario_output = _profile_output_dir / _run_scenario.output_dir
+                _run_scenario_output.mkdir(parents=True, exist_ok=True)
+                logging.info(
+                    "Exporting csv results to {}.".format(_run_scenario_output)
+                )
+                # Export analysis csv.
                 _exporter = SummaryMatrixCsvExporter()
                 _exporter.data_object_model = _summary
-                _exporter.export_filepath = _profile_output_dir / "matrix_results.csv"
+                _exporter.export_filepath = _run_scenario_output / "matrix_results.csv"
                 _exporter.export(_exporter.build())
-
+                logging.info(
+                    "Exported matrix results to: {}".format(_exporter.export_filepath)
+                )
+                # Export analysis plots
                 for _multi_report in _summary.locations_profile_report_list:
                     _mlp_plot = MultiLocationProfileComparisonPlotExporter()
                     _mlp_plot.cost_report = _multi_report
-                    _mlp_plot.export_dir = _profile_output_dir
+                    _mlp_plot.export_dir = _run_scenario_output
                     _mlp_plot.export()
+                    logging.info(
+                        "Exported comparison plots to: {}".format(_run_scenario_output)
+                    )
 
     def __enter__(self) -> KoswatHandler:
         self._logger = KoswatLogger.init_logger(Path("koswat.log"))
@@ -71,7 +83,7 @@ class KoswatHandler:
 
     def __exit__(self, *args, **kwargs) -> None:
         try:
-            _analysis_log = self._koswat_config.output_dir / _analysis_log
+            _analysis_log = self._run_settings.output_dir / _analysis_log
             self._logger.log_file.rename(_analysis_log)
         except Exception as e_err:
             logging.error("Log file could not be moved.")
