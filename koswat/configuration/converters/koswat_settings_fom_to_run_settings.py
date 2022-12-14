@@ -1,4 +1,5 @@
 import logging
+import math
 from typing import List
 
 from koswat.configuration.converters.koswat_settings_fom_converter_base import (
@@ -15,6 +16,9 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
     AnalysisSectionFom,
     DikeProfileSectionFom,
+)
+from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
+    SectionScenarioFom,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -95,11 +99,33 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
         _builder.trajects_fom = trajects_fom
         return _builder.build()
 
+    def _get_koswat_scenario(
+        self, fom_scenario: SectionScenarioFom, base_profile: KoswatProfileBase
+    ) -> KoswatScenario:
+        _scenario = KoswatScenario()
+        # _scenario.scenario_section = fom_scenario.scenario_section
+        _scenario.scenario_name = fom_scenario.scenario_name
+        _scenario.d_h = fom_scenario.d_h
+        _scenario.d_s = fom_scenario.d_s
+        _scenario.d_p = fom_scenario.d_p
+
+        def get_valid_value(prop_name: str) -> float:
+            _value = getattr(fom_scenario, prop_name)
+            if not _value or math.isnan(_value):
+                return getattr(base_profile.input_data, prop_name)
+            return _value
+
+        _scenario.kruin_breedte = get_valid_value("kruin_breedte")
+        _scenario.buiten_talud = get_valid_value("buiten_talud")
+        return _scenario
+
     def convert_settings(self) -> KoswatRunSettings:
         _run_settings = KoswatRunSettings()
 
         # Direct mappings.
-        _run_settings.output_dir = self.fom_settings.analyse_section_fom.analysis_output_dir
+        _run_settings.output_dir = (
+            self.fom_settings.analyse_section_fom.analysis_output_dir
+        )
         _dike_selected_sections = (
             self.fom_settings.analyse_section_fom.dike_selection_txt_fom.dike_sections
         )
@@ -108,12 +134,13 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
         ).build()
 
         # Input profiles
-        _run_settings.input_profile_cases = self._get_input_profile_cases(
+        _input_profile_cases = self._get_input_profile_cases(
             self.fom_settings.analyse_section_fom,
             self._get_layers_info(self.fom_settings.dike_profile_section_fom),
         )
 
         # Define scenarios
+        # TODO: Reduce complexity.
         for _fom_scenario in self.fom_settings.analyse_section_fom.scenarios_ini_fom:
             if _fom_scenario.scenario_section not in _dike_selected_sections:
                 logging.error(
@@ -143,17 +170,18 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
                     continue
                 _surroundings = self._get_surroundings_wrapper(_shp_dike_fom, _csv_db)
                 for _sub_scenario in _fom_scenario.section_scenarios:
-                    _run_scenario = KoswatRunScenarioSettings()
-                    _run_scenario.scenario = KoswatScenario()
-                    _run_scenario.scenario.__dict__ = _sub_scenario.__dict__
-                    _run_scenario.scenario.scenario_section = (
-                        _fom_scenario.scenario_section
-                    )
-                    _run_scenario.surroundings = _surroundings
-                    _run_scenario.costs = _costs
-                    _run_scenario.output_dir = (
-                        _scenario_output / _sub_scenario.scenario_name
-                    )
-                    _run_settings.run_scenarios.append(_run_scenario)
+                    _sub_output = _scenario_output / _sub_scenario.scenario_name
+                    for _input_profile in _input_profile_cases:
+                        _run_scenario = KoswatRunScenarioSettings()
+                        _run_scenario.input_profile_case = _input_profile
+                        _run_scenario.scenario = self._get_koswat_scenario(
+                            _sub_scenario, _input_profile
+                        )
+                        _run_scenario.surroundings = _surroundings
+                        _run_scenario.costs = _costs
+                        _run_scenario.output_dir = (
+                            _sub_output / _input_profile.input_data.dike_section
+                        )
+                        _run_settings.run_scenarios.append(_run_scenario)
 
         return _run_settings
