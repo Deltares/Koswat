@@ -11,7 +11,9 @@ class KoswatRunSettings:
     costs: KoswatCostsSettings
     input_profiles: List[KoswatProfileBase]
     scenarios: List[KoswatScenario]
+    dike_sections: List[str]
     surroundings: List[Path]
+    output_dir: Path
 
     def run(self) -> None:
         logging.info("Initializing run for all cases.")

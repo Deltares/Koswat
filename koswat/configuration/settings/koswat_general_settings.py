@@ -30,35 +30,6 @@ class InfraCostsEnum(enum.Enum):
     VERVANG = 2
 
 
-class AnalysisSettings(KoswatConfigProtocol):
-    dike_selection: KoswatDikeSelection
-    scenarios: List[KoswatScenario]
-    costs: KoswatCostsSettings
-    analysis_output: Path  # output folder
-    dike_section_traject_shp_file: Path  # shp file
-    dike_sections_input_profile: List[KoswatInputProfileBase]
-    include_taxes: bool
-
-    def __init__(self) -> None:
-        self.dike_selection = None
-        self.scenarios = None
-        self.costs = None
-        self.analysis_output = None
-        self.dike_section_traject_shp_file = None
-        self.dike_sections_input_profile = None
-        self.include_taxes = True  # Default value.
-
-    def is_valid(self) -> bool:
-        return (
-            self.dike_selection.is_valid()
-            and all(_s.is_valid() for _s in self.scenarios)
-            and self.costs.is_valid()
-            and self.analysis_output is not None
-            and self.dike_section_traject_shp_file.is_file()
-            and any(self.dike_sections_input_profile)
-        )
-
-
 class ReinforcementProfileSettingsBase(KoswatConfigProtocol, abc.ABC):
     soil_storage_factor: StorageFactorEnum
     constructive_storage_factor: StorageFactorEnum
@@ -242,29 +213,3 @@ class InfrastructuurSettings(KoswatConfigProtocol):
             and not math.isnan(self.wegen_klasse7_breedte)
             and not math.isnan(self.wegen_onbekend_breedte)
         )
-
-
-class KoswatGeneralSettings(KoswatConfigProtocol):
-    analysis_settings: AnalysisSettings
-    soil_settings: SoilSettings
-    pipingwall_settings: PipingwallSettings
-    stabilitywall_settings: StabilitywallSettings
-    cofferdam_settings: CofferdamSettings
-    surroundings_settings: SurroundingsSettings
-    infrastructure_settings: InfrastructuurSettings
-
-    def __init__(self) -> None:
-        self.analysis_settings = None
-        self.dike_profile_settings = None
-        self.soil_settings = None
-        self.pipingwall_settings = None
-        self.stabilitywall_settings = None
-        self.cofferdam_settings = None
-        self.surroundings_settings = None
-        self.infrastructure_settings = None
-
-    def is_valid(self) -> bool:
-        def valid_prop_config(config_property: KoswatConfigProtocol) -> bool:
-            return config_property is not None and config_property.is_valid()
-
-        return all(valid_prop_config(_config) for _config in self.__dict__.values())

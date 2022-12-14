@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from koswat.configuration.io.koswat_settings_importer import KoswatSettingsFomImporter
+from koswat.configuration.io.koswat_settings_importer import KoswatRunSettingsImporter
 from koswat.koswat_logger import KoswatLogger
 
 
@@ -18,7 +18,7 @@ class KoswatHandler:
             return _ini
 
         # Import data.
-        _config_importer = KoswatSettingsFomImporter()
+        _config_importer = KoswatRunSettingsImporter()
         _config_importer.ini_configuration = _as_path(analysis_file)
         self._koswat_config = _config_importer.build()
 

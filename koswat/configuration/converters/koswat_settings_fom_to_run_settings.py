@@ -9,7 +9,6 @@ from koswat.configuration.converters.koswat_settings_fom_to_costs_settings impor
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
     AnalysisSectionFom,
     DikeProfileSectionFom,
-    KoswatSettingsIniFom,
 )
 from koswat.configuration.settings.koswat_run_settings import KoswatRunSettings
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
@@ -50,6 +49,17 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
 
     def convert_settings(self) -> KoswatRunSettings:
         _settings = KoswatRunSettings()
+
+        # Direct mappings.
+        _settings.output_dir = self.fom_settings.analyse_section_fom.analysis_output_dir
+        _settings.dike_sections = (
+            self.fom_settings.analyse_section_fom.dike_selection_txt_fom.dike_sections
+        )
+
+        # Define scenarios
+        _settings.scenarios = self.fom_settings.analysis_settings.scenarios
+
+        # Indirect mappings
         _settings.costs = KoswatSettingsFomToCostsSettings.with_settings_fom(
             self.fom_settings
         ).build()
@@ -58,11 +68,11 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
             self.fom_settings.analyse_section_fom, _layers_data
         )
 
-        # Define scenarios
-        _settings.scenarios = self.fom_settings.analysis_settings.scenarios
-
         # Define surroundings
-        _settings.surroundings = list(
+        _dike_locations = (
+            self.fom_settings.analyse_section_fom.dike_section_location_fom
+        )
+        _surroundings_dirs = list(
             self.fom_settings.surroundings_settings.surroundings_database.iterdir()
         )
 

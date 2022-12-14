@@ -17,11 +17,6 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
-from koswat.configuration.settings import (
-    KoswatCostsSettings,
-    KoswatDikeSelection,
-    KoswatScenario,
-)
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
@@ -59,13 +54,13 @@ def dike_sections_location_file_to_fom(shp_file: Path):
     return KoswatDikeLocationsShpReader().read(shp_file)
 
 
-def dike_selection_file_to_fom(txt_file: Path) -> KoswatDikeSelection:
+def dike_selection_file_to_fom(txt_file: Path) -> KoswatDikeSelectionTxtFom:
     _reader = KoswatTxtReader()
     _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
     return _reader.read(txt_file)
 
 
-def dike_costs_file_to_fom(ini_file: Path) -> KoswatCostsSettings:
+def dike_costs_file_to_fom(ini_file: Path) -> KoswatCostsIniFom:
     _reader = KoswatIniReader()
     _reader.koswat_ini_fom_type = KoswatCostsIniFom
     return _reader.read(ini_file)
@@ -73,7 +68,7 @@ def dike_costs_file_to_fom(ini_file: Path) -> KoswatCostsSettings:
 
 def scenarios_dir_to_koswat_scenario_list(
     scenario_dir: Path,
-) -> Iterator[KoswatScenario]:
+) -> Iterator[KoswatSectionScenariosIniFom]:
     _reader = KoswatIniReader()
     _reader.koswat_ini_fom_type = KoswatSectionScenariosIniFom
     for _ini_file in scenario_dir.glob("*.ini"):
@@ -81,31 +76,3 @@ def scenarios_dir_to_koswat_scenario_list(
         _section_scenarios.section_name = _ini_file.stem
         for _s_scenario in _section_scenarios.section_scenarios:
             yield _s_scenario
-
-
-# def analysis_settings_fom_to_dom(analysis_fom: AnalysisSectionFom) -> AnalysisSettings:
-#     """
-#     Converts an analysis `AnalysisSectionFom` into a section, parsing its values into corresponding `DataObjectModel`s when possible.
-
-#     Args:
-#         analysis_fom (AnalysisSectionFom): Instance `FileObjectModel` to convert into a `DataObjectModel`.
-
-#     Returns:
-#         AnalysisSettings: Instance of a `DataObjectModel`.
-#     """
-#     _ini_reader = KoswatIniReader()
-#     _settings = AnalysisSettings()
-#     _settings.dike_selection = dike_selection_file_to_fom(
-#         analysis_fom.dike_sections_selection_ini_file
-#     )
-#     _settings.scenarios = list(
-#         scenarios_dir_to_koswat_scenario_list(_ini_reader, analysis_fom.scenarios_dir)
-#     )
-#     _settings.costs = dike_costs_file_to_fom(_ini_reader, analysis_fom.costs_ini_file)
-#     _settings.analysis_output = analysis_fom.analysis_output_dir
-#     _settings.dike_section_traject_shp_file = analysis_fom.dijksectie_ligging
-#     _settings.dike_sections_input_profile = _dike_input_profiles_file_to_dom(
-#         analysis_fom.dike_sections_input_profiles_csv_file
-#     )
-#     _settings.include_taxes = analysis_fom.include_taxes
-#     return _settings
