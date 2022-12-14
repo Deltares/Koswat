@@ -17,7 +17,7 @@ def from_surroundings_csv_dir_to_fom(
     if not csv_dir.is_dir():
         logging.error("Surroundings directory not found at {}".format(csv_dir))
         return []
-    _surroundings_fom = []
+    _csv_fom_list = []
     for _traject_surrounding in csv_dir.iterdir():
         _surroundings_csv = (
             _traject_surrounding
@@ -33,5 +33,5 @@ def from_surroundings_csv_dir_to_fom(
             KoswatSurroundingsCsvFomBuilder
         ).read(_surroundings_csv)
         _surrounding_fom.name = _traject_surrounding.stem
-        _surroundings_fom.append(_surrounding_fom)
-    return _surrounding_fom
+        _csv_fom_list.append(_surrounding_fom)
+    return _csv_fom_list

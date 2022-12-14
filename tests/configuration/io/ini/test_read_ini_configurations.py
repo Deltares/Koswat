@@ -58,6 +58,7 @@ class TestReadIniConfigurations:
         assert not _ini_fom.analyse_section_fom.dike_selection_txt_fom
         assert not _ini_fom.analyse_section_fom.dike_section_location_fom
         assert not _ini_fom.analyse_section_fom.input_profiles_csv_fom
+        assert isinstance(_ini_fom.analyse_section_fom.scenarios_ini_fom, List)
         assert not any(_ini_fom.analyse_section_fom.scenarios_ini_fom)
         assert not _ini_fom.analyse_section_fom.costs_ini_fom
         assert _ini_fom.analyse_section_fom.analysis_output_dir == Path(
@@ -146,6 +147,7 @@ class TestReadIniConfigurations:
         # Omgeving section
         assert isinstance(_ini_fom.surroundings_section, SurroundingsSectionFom)
         # No databaes loaded because the path is not included in the test data.
+        assert isinstance(_ini_fom.surroundings_section.surroundings_database, List)
         assert not any(_ini_fom.surroundings_section.surroundings_database)
         assert _ini_fom.surroundings_section.constructieafstand == 50
         assert _ini_fom.surroundings_section.constructieovergang == 10
