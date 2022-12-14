@@ -4,7 +4,9 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from koswat.configuration.io.koswat_settings_importer import KoswatRunSettingsImporter
+from koswat.configuration.io.koswat_run_settings_importer import (
+    KoswatRunSettingsImporter,
+)
 from koswat.koswat_logger import KoswatLogger
 
 
@@ -30,8 +32,7 @@ class KoswatHandler:
 
     def __exit__(self, *args, **kwargs) -> None:
         try:
-            _output_dir = self._koswat_config.analysis_settings.analysis_output
-            _analysis_log = _output_dir / _analysis_log
+            _analysis_log = self._koswat_config.output_dir / _analysis_log
             self._logger.log_file.rename(_analysis_log)
         except Exception as e_err:
             logging.error("Log file could not be moved.")

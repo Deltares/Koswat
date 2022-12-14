@@ -1,17 +1,22 @@
 from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.io.koswat_settings_importer import KoswatRunSettingsImporter
+from koswat.configuration.io.koswat_run_settings_importer import (
+    KoswatRunSettingsImporter,
+)
+from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_general_settings import *
+from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from tests import test_data
 
 
-class TestKoswatConfigurationImporter:
-    def test_koswat_configuration_importer_init(self):
+class TestKoswatRunSettingsImporter:
+    def test_koswat_run_settings_importer_init(self):
         _builder = KoswatRunSettingsImporter()
         assert isinstance(_builder, KoswatRunSettingsImporter)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.ini_configuration
 
-    def test_koswat_configuration_importer_build_from_valid_ini(self):
+    def test_koswat_run_settings_importer_build_from_valid_ini(self):
         # 1. Define test data.
         _ini_file = test_data / "acceptance" / "koswat_general.ini"
         assert _ini_file.is_file()
@@ -22,12 +27,11 @@ class TestKoswatConfigurationImporter:
         _config = _builder.build()
 
         # 3. Verify final expectations.
-        assert isinstance(_config, KoswatGeneralSettings)
-        assert isinstance(_config.analysis_settings, AnalysisSettings)
-        assert isinstance(_config.soil_settings, SoilSettings)
-        assert isinstance(_config.pipingwall_settings, PipingwallSettings)
-        assert isinstance(_config.stabilitywall_settings, StabilitywallSettings)
-        assert isinstance(_config.cofferdam_settings, CofferdamSettings)
-        assert isinstance(_config.infrastructure_settings, InfrastructuurSettings)
-        assert isinstance(_config.surroundings_settings, SurroundingsSettings)
-        assert _config.is_valid()
+        assert isinstance(_config.costs, KoswatCostsSettings)
+        assert any(_config.input_profiles)
+        assert all((isinstance(_case, KoswatProfileBase) for _case in _config.input_profiles))
+        assert any(_config.scenarios)
+        assert all((isinstance(_case, KoswatScenario) for _case in _config.scenarios))
+        assert any(_config.dike_sections)
+        assert any(_config.surroundings)
+        assert _config.output_dir.is_dir()
