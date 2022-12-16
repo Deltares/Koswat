@@ -56,10 +56,16 @@ class AnalysisSectionFom(KoswatIniFomProtocol):
         _section.dike_selection_txt_fom = AnalysisConverter.dike_selection_file_to_fom(
             Path(ini_config["dijksecties_selectie"])
         )
+        _dike_selection = (
+            _section.dike_selection_txt_fom.dike_sections
+            if _section.dike_selection_txt_fom
+            else None
+        )
+
         _section.dike_section_location_fom = (
             AnalysisConverter.dike_sections_location_file_to_fom(
                 Path(ini_config["dijksectie_ligging"]),
-                _section.dike_selection_txt_fom.dike_sections,
+                _dike_selection,
             )
         )
         _section.input_profiles_csv_fom = (

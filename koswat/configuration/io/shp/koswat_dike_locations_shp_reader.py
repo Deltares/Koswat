@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Any, Iterator, List
 
@@ -17,10 +18,15 @@ class KoswatDikeLocationsShpReader(KoswatReaderProtocol):
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix.lower() == ".shp"
 
-    def _get_selected_records_idx(self, shp_records) -> Iterator[int]:
+    def _get_selected_records_idx(self, shp_records) -> List[int]:
+        if not self.selected_locations:
+            return list(range(0, len(shp_records)))
+        _idx_list = []
         for idx, _record in enumerate(shp_records):
             if _record.Dijksectie in self.selected_locations:
-                yield idx
+                _idx_list.append(idx)
+        return _idx_list
+        
 
     def read(self, file_path: Path) -> KoswatDikeLocationsWrapperShpFom:
         if not self.supports_file(file_path):
@@ -28,7 +34,7 @@ class KoswatDikeLocationsShpReader(KoswatReaderProtocol):
         if not file_path.is_file():
             raise FileNotFoundError(file_path)
         if not self.selected_locations:
-            raise ValueError("No selected locations.")
+            logging.warning("No selected locations.")
 
         _shp_wrapper = KoswatDikeLocationsWrapperShpFom()
         with shapefile.Reader(file_path) as shp:

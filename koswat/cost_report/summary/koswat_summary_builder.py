@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from koswat.builder_protocol import BuilderProtocol
@@ -30,13 +31,19 @@ class KoswatSummaryBuilder(BuilderProtocol):
         )
         _calculated_profiles = []
         for _reinforcement_type in _available_reinforcements:
-            _builder = ReinforcementProfileBuilderFactory.get_builder(
-                _reinforcement_type
-            )
-            _builder.base_profile = self.base_profile
-            _builder.scenario = self.scenario
-            _calc_profile = _builder.build()
-            _calculated_profiles.append(_calc_profile)
+            try:
+                _builder = ReinforcementProfileBuilderFactory.get_builder(
+                    _reinforcement_type
+                )
+                _builder.base_profile = self.base_profile
+                _builder.scenario = self.scenario
+                _calc_profile = _builder.build()
+                _calculated_profiles.append(_calc_profile)
+            except Exception as e_info:
+                logging.error(
+                    "Error calculating reinforcement: {}".format(_reinforcement_type())
+                )
+                logging.error(e_info)
         return _calculated_profiles
 
     def _get_multi_location_profile_cost_builder(

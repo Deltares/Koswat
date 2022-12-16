@@ -29,7 +29,6 @@ class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
         _geometry_points = []
         _geometry_points.extend(self.profile_points)
         if self.profile_points[0].y != self.profile_points[-1].y:
-            # When start and end are not aligned then we need to align it to the x=0 vertical.
             _geometry_points.append(geometry.Point(0, self.profile_points[-1].y))
             _geometry_points.append(geometry.Point(0, self.profile_points[0].y))
         _geometry_points.append(self.profile_points[0])
