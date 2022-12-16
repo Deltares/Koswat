@@ -74,6 +74,7 @@ class KoswatHandler:
                             _run_scenario.output_dir
                         )
                     )
+
             except Exception as e_info:
                 logging.error(
                     "Error while running scenario {}, more details: {}".format(

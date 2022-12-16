@@ -4,6 +4,7 @@ from koswat.configuration.io.koswat_run_settings_importer import (
 )
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_general_settings import *
+from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from tests import test_data
@@ -27,12 +28,12 @@ class TestKoswatRunSettingsImporter:
         _config = _builder.build()
 
         # 3. Verify final expectations.
-        assert isinstance(_config.costs, KoswatCostsSettings)
-        assert len(_config.input_profiles) == 3
-        assert all((isinstance(_case, KoswatProfileBase) for _case in _config.input_profiles))
+        assert isinstance(_config.run_scenarios, list)
+        assert all(
+            isinstance(_rs, KoswatRunScenarioSettings) for _rs in _config.run_scenarios
+        )
+        assert isinstance(_config.input_profile_cases, list)
+        assert all(
+            isinstance(_pc, KoswatProfileBase) for _pc in _config.input_profile_cases
+        )
         assert _config.output_dir.is_dir()
-        assert any(_config.dike_sections)
-        # TODO: Work in progress.
-        # assert any(_config.scenarios)
-        # assert all((isinstance(_case, KoswatScenario) for _case in _config.scenarios))
-        # assert any(_config.surroundings)
