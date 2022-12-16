@@ -92,9 +92,12 @@ def get_polygon_surface_points(
     return _get_single_polygon_surface_points(base_geometry)
 
 
-def points_to_polygon(points_list: List[geometry.Point]) -> geometry.Polygon:
+def profile_points_to_polygon(points_list: List[geometry.Point]) -> geometry.Polygon:
     _geometry_points = []
     _geometry_points.extend(points_list)
+    if points_list[0].y != points_list[-1].y:
+        _geometry_points.append(geometry.Point(0, points_list[-1].y))
+        _geometry_points.append(geometry.Point(0, points_list[0].y))
     _geometry_points.append(points_list[0])
     return geometry.Polygon(_geometry_points)
 

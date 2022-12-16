@@ -13,6 +13,7 @@ from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper import KoswatLayers
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol import (
     KoswatLayersWrapperBuilderProtocol,
 )
+from koswat.geometries.calc_library import profile_points_to_polygon
 
 
 class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
@@ -25,22 +26,13 @@ class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
         self.profile_points = []
         self.profile_geometry = None
 
-    def _get_profile_geometry(self) -> geometry.Polygon:
-        _geometry_points = []
-        _geometry_points.extend(self.profile_points)
-        if self.profile_points[0].y != self.profile_points[-1].y:
-            _geometry_points.append(geometry.Point(0, self.profile_points[-1].y))
-            _geometry_points.append(geometry.Point(0, self.profile_points[0].y))
-        _geometry_points.append(self.profile_points[0])
-        return geometry.Polygon(_geometry_points)
-
     def _get_coating_layers(self) -> List[KoswatCoatingLayer]:
         _c_layers_data = self.layers_data.get("coating_layers", [])
         if not _c_layers_data:
             return []
         _builder = KoswatCoatingLayerBuilder()
         _builder.upper_linestring = geometry.LineString(self.profile_points)
-        _builder.base_geometry = self._get_profile_geometry()
+        _builder.base_geometry = profile_points_to_polygon(self.profile_points)
         _layers = []
         for c_layer_data in _c_layers_data:
             _builder.layer_data = c_layer_data

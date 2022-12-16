@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from typing import Type
 
 from koswat.calculations.reinforcement_input_profile_protocol import (
@@ -77,6 +78,8 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
 
     def build(self) -> StandardReinforcementProfile:
         _profile = self.reinforcement_profile_type()
+        logging.info("Building reinforcement {}".format(_profile))
+
         _profile.old_profile = self.base_profile
         _profile.input_data = self._get_reinforcement_profile_input()
         _profile.characteristic_points = self._get_characteristic_points(
@@ -85,4 +88,6 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         _profile.layers_wrapper = self._get_reinforcement_layers_wrapper(
             _profile.characteristic_points
         )
+        logging.info("Generated reinforcement {}".format(_profile))
+
         return _profile
