@@ -14,6 +14,12 @@ class KoswatRunScenarioSettings:
     costs: KoswatCostsSettings
     output_dir: Path
     input_profile_case: KoswatProfileBase
+
+    @property
+    def name(self) -> str:
+        if not self.scenario:
+            return ""
+        return self.scenario.scenario_name + "_" + self.scenario.scenario_section + "_" + self.input_profile_case.input_data.dike_section
     
 
 

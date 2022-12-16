@@ -14,8 +14,9 @@ class KoswatLogger:
         if log_file.suffix != ".log":
             log_file = log_file.with_suffix(".log")
 
-        if not log_file.is_file():
-            log_file.touch()
+        if log_file.is_file():
+            log_file.unlink()
+        log_file.touch()
 
         _logger.log_file = log_file
         _logger._set_console_handler()
