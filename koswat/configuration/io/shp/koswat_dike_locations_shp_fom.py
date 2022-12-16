@@ -27,7 +27,11 @@ class KoswatDikeLocationsWrapperShpFom(KoswatShpFomProtocol):
 
     def __init__(self) -> None:
         self.dike_locations_shp_fom = []
-    
-    def get_by_section(self, section: str) ->List[KoswatDikeLocationsShpFom]:
-        return list(filter(lambda x: x.record.Dijksectie.lower() == section.lower(), self.dike_locations_shp_fom))
 
+    def get_by_section(self, section: str) -> List[KoswatDikeLocationsShpFom]:
+        return list(
+            filter(
+                lambda x: x.record.Dijksectie.lower() == section.lower(),
+                self.dike_locations_shp_fom,
+            )
+        )

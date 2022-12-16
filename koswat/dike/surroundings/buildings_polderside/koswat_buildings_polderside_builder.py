@@ -14,7 +14,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
 )
 from koswat.configuration.io.shp import (
     KoswatDikeLocationsShpFom,
-    KoswatDikeLocationsShpReader,
+    KoswatDikeLocationsWrapperShpReader,
 )
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
@@ -60,14 +60,3 @@ class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
         _kbp.points = self._get_polderside_points(start_idx, end_idx)
 
         return _kbp
-
-    @classmethod
-    def from_files(
-        cls, csv_file: Path, shp_file: Path
-    ) -> KoswatBuildingsPoldersideBuilder:
-        _builder = cls()
-        _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
-            KoswatSurroundingsCsvFomBuilder
-        ).read(csv_file)
-        _builder.koswat_shp_fom = KoswatDikeLocationsShpReader().read(shp_file)
-        return _builder

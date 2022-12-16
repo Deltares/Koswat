@@ -7,8 +7,15 @@ from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
+    KoswatSurroundingsCsvFomBuilder,
+)
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
+    KoswatDikeLocationsWrapperShpFom,
+)
+from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
+    KoswatDikeLocationsWrapperShpReader,
 )
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
@@ -17,6 +24,7 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
+from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 from tests import test_data
 
 
@@ -150,13 +158,16 @@ class TestKoswatBuildingsPoldersideBuilder:
         assert _csv_test_file.is_file()
         assert _shp_test_file.is_file()
 
+        _shp_fom_builder = KoswatDikeLocationsWrapperShpReader()
+        _shp_fom_builder.selected_locations = []
+        _koswat_wrapper_shp_fom = _shp_fom_builder.read(_shp_test_file)
+
         # 2. Run test
-        _builder = KoswatBuildingsPoldersideBuilder.from_files(
-            _csv_test_file, _shp_test_file
-        )
-        assert isinstance(_builder, KoswatBuildingsPoldersideBuilder)
-        assert isinstance(_builder.koswat_csv_fom, KoswatTrajectSurroundingsCsvFom)
-        assert isinstance(_builder.koswat_shp_fom, KoswatDikeLocationsShpFom)
+        _builder = KoswatBuildingsPoldersideBuilder()
+        _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
+            KoswatSurroundingsCsvFomBuilder
+        ).read(_csv_test_file)
+        _builder.koswat_shp_fom = _koswat_wrapper_shp_fom.dike_locations_shp_fom[0]
         _buildings = _builder.build()
 
         # 3. Verify expectations.

@@ -12,7 +12,7 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
-class KoswatDikeLocationsShpReader(KoswatReaderProtocol):
+class KoswatDikeLocationsWrapperShpReader(KoswatReaderProtocol):
     selected_locations: List[str]
 
     def supports_file(self, file_path: Path) -> bool:
@@ -26,7 +26,6 @@ class KoswatDikeLocationsShpReader(KoswatReaderProtocol):
             if _record.Dijksectie in self.selected_locations:
                 _idx_list.append(idx)
         return _idx_list
-        
 
     def read(self, file_path: Path) -> KoswatDikeLocationsWrapperShpFom:
         if not self.supports_file(file_path):

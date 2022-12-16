@@ -10,7 +10,7 @@ from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
-    KoswatDikeLocationsShpReader,
+    KoswatDikeLocationsWrapperShpReader,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
@@ -35,7 +35,7 @@ def dike_sections_location_file_to_fom(shp_file: Path, dike_selections: List[str
     if not shp_file.is_file():
         logging.error("Dike sections shp file not found at {}".format(shp_file))
         return None
-    _reader = KoswatDikeLocationsShpReader()
+    _reader = KoswatDikeLocationsWrapperShpReader()
     _reader.selected_locations = dike_selections
     return _reader.read(shp_file)
 
