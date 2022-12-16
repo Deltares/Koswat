@@ -149,7 +149,9 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
                     )
                 )
                 continue
-            _scenario_output = _run_settings.output_dir / _fom_scenario.scenario_section
+            _scenario_output = (
+                _run_settings.output_dir / ("scenario_" + _fom_scenario.scenario_section)
+            )
             for (
                 _shp_dike_fom
             ) in self.fom_settings.analyse_section_fom.dike_section_location_fom.get_by_section(
