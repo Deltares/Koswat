@@ -62,7 +62,7 @@ class TestReadIniConfigurations:
         assert not any(_ini_fom.analyse_section_fom.scenarios_ini_fom)
         assert not _ini_fom.analyse_section_fom.costs_ini_fom
         assert _ini_fom.analyse_section_fom.analysis_output_dir == Path(
-            "p:\\frm-koswat\\KOSWAT v2022\\Uitvoer"
+            "c:\\fake_drive\\Uitvoer"
         )
         assert _ini_fom.analyse_section_fom.include_taxes == True
 

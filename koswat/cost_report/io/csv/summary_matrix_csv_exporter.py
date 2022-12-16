@@ -1,3 +1,4 @@
+import logging
 import math
 from collections import defaultdict
 from pathlib import Path
@@ -81,6 +82,10 @@ class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):
                 _dict_of_entries,
             )
             _dict_of_entries[_locations_key].append(_loc_prof_report.locations)
+
+        if not _dict_of_entries:
+            logging.error("No entries generated for the CSV Matrix.")
+            return
 
         def dict_to_csv_row(key, placeholders: int) -> List[str]:
             row = _dict_of_entries[key]

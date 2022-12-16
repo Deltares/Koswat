@@ -1,11 +1,11 @@
+from pathlib import Path
+
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_general_settings import *
 from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
-from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from tests import test_data
 
@@ -36,4 +36,4 @@ class TestKoswatRunSettingsImporter:
         assert all(
             isinstance(_pc, KoswatProfileBase) for _pc in _config.input_profile_cases
         )
-        assert _config.output_dir.is_dir()
+        assert isinstance(_config.output_dir, Path)

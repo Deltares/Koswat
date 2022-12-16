@@ -26,12 +26,12 @@ def translate_surrounding_type(surrounding_type: str) -> str:
         wegen_binnendijks_klasse7="roads_class_7_polderside",
         wegen_binnendijks_klasse24="roads_class_24_polderside",
         wegen_binnendijks_klasse47="roads_class_47_polderside",
-        wegen_binnendijks_klasse2onbekende="roads_class_unknown_polderside",
+        wegen_binnendijks_klasseonbekend="roads_class_unknown_polderside",
         wegen_buitendijks_klasse2="roads_class_2_dikeside",
         wegen_buitendijks_klasse7="roads_class_7_dikeside",
         wegen_buitendijks_klasse24="roads_class_24_dikeside",
         wegen_buitendijks_klasse47="roads_class_47_dikeside",
-        wegen_buitendijks_klasse2onbekende="roads_class_unknown_dikeside",
+        wegen_buitendijks_klasseonbekend="roads_class_unknown_dikeside",
     )
     _translation = _translations.get(_normalized, None)
     if not _translations:

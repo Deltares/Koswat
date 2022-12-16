@@ -44,6 +44,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
                     "Error calculating reinforcement: {}".format(_reinforcement_type())
                 )
                 logging.error(e_info)
+                raise
         return _calculated_profiles
 
     def _get_multi_location_profile_cost_builder(

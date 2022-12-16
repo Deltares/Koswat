@@ -36,6 +36,9 @@ class KoswatHandler:
         # Export analysis results (csv and plots)
         _run_scenario.output_dir.mkdir(parents=True, exist_ok=True)
         logging.info("Exporting csv results to {}.".format(_run_scenario.output_dir))
+        if not _summary.locations_profile_report_list:
+            logging.error("No summary was genarted for {}".format(_run_scenario.name))
+            return
         # Export analysis csv.
         _exporter = SummaryMatrixCsvExporter()
         _exporter.data_object_model = _summary
@@ -44,13 +47,21 @@ class KoswatHandler:
         logging.info("Exported matrix results to: {}".format(_exporter.export_filepath))
         # Export analysis plots
         for _multi_report in _summary.locations_profile_report_list:
-            _mlp_plot = MultiLocationProfileComparisonPlotExporter()
-            _mlp_plot.cost_report = _multi_report
-            _mlp_plot.export_dir = _run_scenario.output_dir
-            _mlp_plot.export()
-            logging.info(
-                "Exported comparison plots to: {}".format(_run_scenario.output_dir)
-            )
+            try:
+                _mlp_plot = MultiLocationProfileComparisonPlotExporter()
+                _mlp_plot.cost_report = _multi_report
+                _mlp_plot.export_dir = _run_scenario.output_dir
+                _mlp_plot.export()
+                logging.info(
+                    "Exported comparison plots to: {}".format(_run_scenario.output_dir)
+                )
+            except Exception as e_info:
+                logging.error(
+                    "Failed to export report comparison plots for {}.".format(
+                        _multi_report.profile_type
+                    )
+                )
+                logging.error(e_info)
 
     def run_analysis(self, analysis_file: str) -> None:
         def _as_path(ini_file: str) -> Optional[Path]:
@@ -75,6 +86,7 @@ class KoswatHandler:
                         _run_scenario.name, e_info
                     )
                 )
+                raise
 
     def __enter__(self) -> KoswatHandler:
         self._logger = KoswatLogger.init_logger(Path("koswat.log"))
