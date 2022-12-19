@@ -1,3 +1,27 @@
+## v0.9.0 (2022-12-12)
+
+### Feat
+
+- **KoswatGeneralSettings**: Created DOM for koswat general settings configuration
+- **KoswatConfigurationIniImporter**: We can now map all different ini fom classes to the config class
+- **koswat/configuration**: Created koswat configuration module and related class KoswatConfiguration to encapsulate all require information for a koswat analysis
+- **KoswatScenarioIniFom**: It is now possible to read a KoswatScenarioIniFom from file
+- **KoswatDikeSelectionIniFom**: It is now possible to read a Dike Selection INI file into its corresponding FOM
+- **KoswatCostsIniFom**: Added logic to fully implement reading of a KoswatCostsIniFom file
+- **KoswatCostsIniFom**: Added koswat costs ini file
+- **KoswatIniReader**: Created koswat ini reader and initial approach to reading the general Koswat INI file
+
+### Fix
+
+- **KoswatCosts**: Added class conversion to dictionary
+
+### Refactor
+
+- **koswat/configuration/models**: Moved configuration data object models into their own module. Fixed / grouped imports
+- **KoswatDikeSelection**: Koswat dike selection now implements a new type KoswatDikeSelectionTxtFom with related reader
+- **koswat_scenario**: Moved koswat scenario into koswat/configuration
+- **koswat/io**: Adapted export / import fom protocol
+
 ## v0.8.2 (2022-12-09)
 
 ### Fix
