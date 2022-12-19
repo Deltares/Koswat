@@ -55,12 +55,21 @@ class TestReadIniConfigurations:
         # Analysis section
         assert isinstance(_ini_fom.analyse_section_fom, AnalysisSectionFom)
         # These paths are not included in the test dir so None will be mapped in the FOM.
-        assert not _ini_fom.analyse_section_fom.dike_selection_txt_fom
-        assert not _ini_fom.analyse_section_fom.dike_section_location_fom
-        assert not _ini_fom.analyse_section_fom.input_profiles_csv_fom
-        assert isinstance(_ini_fom.analyse_section_fom.scenarios_ini_fom, List)
-        assert not any(_ini_fom.analyse_section_fom.scenarios_ini_fom)
-        assert not _ini_fom.analyse_section_fom.costs_ini_fom
+        assert _ini_fom.analyse_section_fom.dike_selection_txt_file == Path(
+            "c:\\fake_drive\\Invoer\\ini files\\DijksectieSelectie.txt"
+        )
+        assert _ini_fom.analyse_section_fom.dike_section_location_file == Path(
+            "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
+        )
+        assert _ini_fom.analyse_section_fom.input_profiles_csv_file == Path(
+            "c:\\fake_drive\\Invoer\\InputPerDijkvak_WV21_KOSWAT_v2022_DR10.csv"
+        )
+        assert _ini_fom.analyse_section_fom.scenarios_ini_file == Path(
+            "c:\\fake_drive\\Invoer\\Scenarios"
+        )
+        assert _ini_fom.analyse_section_fom.costs_ini_file == Path(
+            "c:\\fake_drive\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
+        )
         assert _ini_fom.analyse_section_fom.analysis_output_dir == Path(
             "c:\\fake_drive\\Uitvoer"
         )
@@ -147,8 +156,9 @@ class TestReadIniConfigurations:
         # Omgeving section
         assert isinstance(_ini_fom.surroundings_section, SurroundingsSectionFom)
         # No databaes loaded because the path is not included in the test data.
-        assert isinstance(_ini_fom.surroundings_section.surroundings_database, List)
-        assert not any(_ini_fom.surroundings_section.surroundings_database)
+        assert _ini_fom.surroundings_section.surroundings_database == Path(
+            "c:\\fake_drive\\Invoer\\Omgevingsanalyses"
+        )
         assert _ini_fom.surroundings_section.constructieafstand == 50
         assert _ini_fom.surroundings_section.constructieovergang == 10
         assert _ini_fom.surroundings_section.buitendijks == False

@@ -16,16 +16,16 @@ class KoswatSettingsFomToCostsSettings(KoswatSettingsFomConverterBase):
     def convert_settings(self) -> KoswatCostsSettings:
         _costs_settings = KoswatCostsSettings()
         _costs_settings.price_year = int(
-            self.fom_settings.analyse_section_fom.costs_ini_fom.unit_prices_section.prijspeil
+            self.fom_settings.analyse_section_fom.costs_ini_file.unit_prices_section.prijspeil
         )
         _costs_settings.dike_profile_costs = self._get_dike_profile_costs_settings(
-            self.fom_settings.analyse_section_fom.costs_ini_fom
+            self.fom_settings.analyse_section_fom.costs_ini_file
         )
         _costs_settings.infrastructure_costs = self._get_infrastructure_costs_settings(
-            self.fom_settings.analyse_section_fom.costs_ini_fom
+            self.fom_settings.analyse_section_fom.costs_ini_file
         )
         _costs_settings.storage_costs = self._get_storage_costs(
-            self.fom_settings.analyse_section_fom.costs_ini_fom,
+            self.fom_settings.analyse_section_fom.costs_ini_file,
             self.fom_settings.analyse_section_fom.include_taxes,
         )
         return _costs_settings

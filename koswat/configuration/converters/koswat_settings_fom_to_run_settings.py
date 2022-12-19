@@ -73,10 +73,10 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
         self, section_fom: AnalysisSectionFom, layers_info: dict
     ) -> List[KoswatProfileBase]:
         _cases = []
-        for _input_case in section_fom.input_profiles_csv_fom.input_profile_fom_list:
+        for _input_case in section_fom.input_profiles_csv_file.input_profile_fom_list:
             if (
                 not _input_case["dijksectie"]
-                in section_fom.dike_selection_txt_fom.dike_sections
+                in section_fom.dike_selection_txt_file.dike_sections
             ):
                 continue
             _input_profile = KoswatProfileBuilder.with_data(
@@ -127,7 +127,7 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
             self.fom_settings.analyse_section_fom.analysis_output_dir
         )
         _dike_selected_sections = (
-            self.fom_settings.analyse_section_fom.dike_selection_txt_fom.dike_sections
+            self.fom_settings.analyse_section_fom.dike_selection_txt_file.dike_sections
         )
         _costs = KoswatSettingsFomToCostsSettings.with_settings_fom(
             self.fom_settings
@@ -141,7 +141,7 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
 
         # Define scenarios
         # TODO: Reduce complexity.
-        for _fom_scenario in self.fom_settings.analyse_section_fom.scenarios_ini_fom:
+        for _fom_scenario in self.fom_settings.analyse_section_fom.scenarios_ini_file:
             if _fom_scenario.scenario_section not in _dike_selected_sections:
                 logging.error(
                     "Scenario {} won't be run because section was not selected.".format(
@@ -149,12 +149,12 @@ class KoswatSettingsFomToRunSettings(KoswatSettingsFomConverterBase):
                     )
                 )
                 continue
-            _scenario_output = (
-                _run_settings.output_dir / ("scenario_" + _fom_scenario.scenario_section)
+            _scenario_output = _run_settings.output_dir / (
+                "scenario_" + _fom_scenario.scenario_section
             )
             for (
                 _shp_dike_fom
-            ) in self.fom_settings.analyse_section_fom.dike_section_location_fom.get_by_section(
+            ) in self.fom_settings.analyse_section_fom.dike_section_location_file.get_by_section(
                 _fom_scenario.scenario_section
             ):
                 _csv_db = self.fom_settings.surroundings_section.surroundings_database.get_wrapper_by_traject(
