@@ -14,20 +14,26 @@ class KoswatDikeLocationsShpFom(KoswatShpFomProtocol):
     @property
     def dike_section(self) -> str:
         if not self.record:
-            return None
-        return self.record.Dijksectie
+            return ""
+        try:
+            return self.record.Dijksectie
+        except Exception:
+            return self.record.Sectie
 
     @property
     def dike_traject(self) -> str:
         if not self.record:
-            return None
+            return ""
         return self.record.Traject
 
     @property
     def dike_subtraject(self) -> str:
         if not self.record:
-            return None
-        return self.record.Subtraject
+            return ""
+        try:
+            return self.record.Subtraject
+        except Exception:
+            return self.record.VAK
 
     def __init__(self) -> None:
         self.initial_point = None
