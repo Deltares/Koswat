@@ -84,7 +84,6 @@ class KoswatHandler:
                         _run_scenario.name, e_info
                     )
                 )
-                raise
 
     def __enter__(self) -> KoswatHandler:
         self._logger = KoswatLogger.init_logger(Path("koswat.log"))
