@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import shutil
+
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsWrapperCsvFom,
+from koswat.configuration.converters.koswat_surroundings_importer import (
+    KoswatSurroundingsImporter,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
     KoswatSurroundingsCsvFomBuilder,
@@ -28,9 +30,6 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
-)
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
@@ -96,6 +95,14 @@ class TestAcceptance:
 
         _surroundings = SurroundingsWrapper()
         _surroundings.buldings_polderside = _builder_buildings_polderside.build()
+
+        _surroundings_importer = KoswatSurroundingsImporter()
+        _new_csv_path = _test_dir / "10_3" / _csv_surroundings_file.name
+        _new_csv_path.parent.mkdir(parents=True)
+        _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
+        _surroundings_importer.surroundings_csv_dir = _test_dir
+        _surroundings_importer.traject_loc_shp_file = _shp_trajects_file
+        _surroundings = _surroundings_importer.build()[0]
 
         assert isinstance(scenario_case, KoswatScenario)
         _base_koswat_profile = KoswatProfileBuilder.with_data(
