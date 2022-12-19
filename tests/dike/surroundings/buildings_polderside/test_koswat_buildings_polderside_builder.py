@@ -166,7 +166,7 @@ class TestKoswatBuildingsPoldersideBuilder:
         _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
             KoswatSurroundingsCsvFomBuilder
         ).read(_csv_test_file)
-        _builder.koswat_shp_fom = _koswat_wrapper_shp_fom.dike_locations_shp_fom[0]
+        _builder.koswat_shp_fom = _koswat_wrapper_shp_fom[0]
         _buildings = _builder.build()
 
         # 3. Verify expectations.
