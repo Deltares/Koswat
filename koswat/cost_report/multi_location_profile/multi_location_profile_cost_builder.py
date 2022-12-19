@@ -22,7 +22,7 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
     def build(self) -> MultiLocationProfileCostReport:
         _multiple_location_cost_report = MultiLocationProfileCostReport()
         _multiple_location_cost_report.locations = (
-            self.surroundings.buldings_polderside.get_locations_after_distance(
+            self.surroundings.get_locations_after_distance(
                 self.reinforced_profile.profile_width
             )
         )

@@ -8,6 +8,7 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class SurroundingsWrapper:
@@ -69,3 +70,11 @@ class SurroundingsWrapper:
         if not self.buldings_polderside:
             return []
         return [p.location for p in self.buldings_polderside.points]
+
+    def get_locations_after_distance(self, distance: float) -> List[Point]:
+        def is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
+            if not point_surroundings.distance_to_buildings:
+                return True
+            return distance < point_surroundings.distance_to_buildings[0]
+
+        return list(filter(is_at_safe_distance, self.locations))
