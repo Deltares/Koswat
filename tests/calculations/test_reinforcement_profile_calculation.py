@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+import math
 from pathlib import Path
 from typing import List, Type
 
@@ -24,9 +27,19 @@ from koswat.calculations.standard_reinforcement import (
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
+from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
+    KoswatSectionScenariosIniFom,
+)
+from koswat.configuration.io.koswat_input_profile_list_importer import (
+    KoswatInputProfileListImporter,
+)
+from koswat.configuration.io.koswat_scenario_list_importer import (
+    KoswatScenarioListImporter,
+)
 from koswat.configuration.settings import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
@@ -45,6 +58,55 @@ class TestReinforcementProfileCalculationProtocol:
     def test_initialize(self):
         with pytest.raises(TypeError):
             ReinforcementInputProfileCalculationProtocol()
+
+
+def scenario_ini_file() -> List[pytest.param]:
+    scenarios_dir = test_data / "acceptance" / "scenarios"
+
+    def _to_koswat_scenario(
+        scenario_data: KoswatSectionScenariosIniFom,
+    ) -> KoswatScenario:
+        for _section_scenario in scenario_data.section_scenarios:
+            _scenario = KoswatScenario()
+            _scenario.scenario_section = scenario_data.scenario_section
+            _scenario.scenario_name = _section_scenario.scenario_name
+            _scenario.d_h = _section_scenario.d_h
+            _scenario.d_s = _section_scenario.d_s
+            _scenario.d_p = _section_scenario.d_p
+            _scenario.kruin_breedte = _section_scenario.kruin_breedte
+            _scenario.buiten_talud = _section_scenario.buiten_talud
+            yield _scenario
+
+    def _to_pytest_param(scenario: KoswatScenario) -> pytest.param:
+        return pytest.param(
+            scenario,
+            id="{} - {}".format(scenario.scenario_name, scenario.scenario_section),
+        )
+
+    _importer = KoswatScenarioListImporter()
+    _importer.scenario_dir = scenarios_dir
+    _scenarios = []
+    for _fom_scenario_wrapper in _importer.build():
+        _scenarios = _scenarios + list(_to_koswat_scenario(_fom_scenario_wrapper))
+
+    return list(map(_to_pytest_param, _scenarios))
+
+
+def input_profile_data_csv_file() -> List[pytest.param]:
+    _csv_file = test_data / "acceptance" / "csv" / "dike_input_profiles.csv"
+    _importer = KoswatInputProfileListImporter()
+    _importer.ini_configuration = _csv_file
+
+    def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
+        return pytest.param(
+            input_profile, id="Input {}".format(input_profile.dike_section)
+        )
+
+    return list(map(_to_pytest_param, _importer.build()))[:2]
+
+
+_scenarios = scenario_ini_file()
+_input_profiles = input_profile_data_csv_file()
 
 
 class TestReinforcementProfileBuilderFactory:
@@ -183,14 +245,6 @@ class TestReinforcementProfileBuilderFactory:
         validated_reinforced_profile(_reinforcement_profile, _expected_profile)
         self._plot_profiles(_base_profile, _reinforcement_profile, _plot_dir)
 
-    @pytest.fixture
-    def input_profile_data_csv_file(self) -> List[KoswatInputProfileProtocol]:
-        pass
-
-    @pytest.fixture
-    def scenario_ini_file(self) -> List[KoswatScenario]:
-        scenarios_dir = test_data / "acceptance" / "scenarios"
-
     @pytest.mark.parametrize(
         "profile_type",
         [
@@ -200,8 +254,8 @@ class TestReinforcementProfileBuilderFactory:
             pytest.param(CofferdamReinforcementProfile, id="Kistdam"),
         ],
     )
-    @pytest.mark.parametrize("input_profile", [None])
-    @pytest.mark.parametrize("scenario", [None])
+    @pytest.mark.parametrize("input_profile", _input_profiles)
+    @pytest.mark.parametrize("scenario", _scenarios)
     def test_given_csv_and_scenarios_calculate_new_geometry_and_plot(
         self,
         profile_type: Type[ReinforcementProfileProtocol],
@@ -220,6 +274,12 @@ class TestReinforcementProfileBuilderFactory:
             )
         ).build()
         assert isinstance(_base_profile, KoswatProfileBase)
+
+        # Correct scenario.
+        if not scenario.buiten_talud or math.isnan(scenario.buiten_talud):
+            scenario.buiten_talud = input_profile.buiten_talud
+        if not scenario.kruin_breedte or math.isnan(scenario.kruin_breedte):
+            scenario.kruin_breedte = input_profile.kruin_breedte
 
         # 2. Run test.
         _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(

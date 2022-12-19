@@ -14,6 +14,9 @@ from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
+from koswat.configuration.io.koswat_scenario_list_importer import (
+    KoswatScenarioListImporter,
+)
 from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
 )
@@ -116,32 +119,10 @@ class KoswatRunSettingsImporter(BuilderProtocol):
     def _import_scenario_fom_list(
         self, scenario_dir: Path, dike_selections: List[str]
     ) -> List[KoswatSectionScenariosIniFom]:
-        if not scenario_dir.is_dir():
-            logging.error("Scenarios directory not found at {}".format(scenario_dir))
-            return []
-
-        def selected_scenario(scenario_file: Path) -> bool:
-            if scenario_file.stem not in dike_selections:
-                logging.error(
-                    "Scenario {} skipped because section was not selected.".format(
-                        scenario_file.stem
-                    )
-                )
-                return False
-            return True
-
-        def get_scenario(scenario_file: Path) -> KoswatSectionScenariosIniFom:
-            _reader = KoswatIniReader()
-            _reader.koswat_ini_fom_type = KoswatSectionScenariosIniFom
-            _section_scenarios: KoswatSectionScenariosIniFom = _reader.read(
-                scenario_file
-            )
-            _section_scenarios.scenario_section = scenario_file.stem
-            return _section_scenarios
-
-        return list(
-            map(get_scenario, filter(selected_scenario, scenario_dir.glob("*.ini")))
-        )
+        _importer = KoswatScenarioListImporter()
+        _importer.scenario_dir = scenario_dir
+        _importer.dike_selection = dike_selections
+        return _importer.build()
 
     def _import_surroundings(
         self, surroundings_dir: Path, traject_shp_file: Path, dike_selections: List[str]
