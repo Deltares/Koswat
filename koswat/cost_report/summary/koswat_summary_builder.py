@@ -6,24 +6,18 @@ from koswat.calculations import (
     ReinforcementProfileBuilderFactory,
     ReinforcementProfileProtocol,
 )
-from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
 from koswat.cost_report.multi_location_profile import (
     MultiLocationProfileCostReportBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
 class KoswatSummaryBuilder(BuilderProtocol):
-    surroundings: SurroundingsWrapper
-    base_profile: KoswatProfileBase
-    scenario: KoswatScenario
+    run_scenario_settings: KoswatRunScenarioSettings
 
     def __init__(self) -> None:
-        self.surroundings = None
-        self.base_profile = None
-        self.scenario = None
+        self.run_scenario_settings = None
 
     def _get_calculated_profile_list(self) -> List[ReinforcementProfileProtocol]:
         _available_reinforcements = (
@@ -35,8 +29,8 @@ class KoswatSummaryBuilder(BuilderProtocol):
                 _builder = ReinforcementProfileBuilderFactory.get_builder(
                     _reinforcement_type
                 )
-                _builder.base_profile = self.base_profile
-                _builder.scenario = self.scenario
+                _builder.base_profile = self.run_scenario_settings.input_profile_case
+                _builder.scenario = self.run_scenario_settings.scenario
                 _calc_profile = _builder.build()
                 _calculated_profiles.append(_calc_profile)
             except Exception as e_info:
@@ -51,7 +45,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self,
     ) -> MultiLocationProfileCostReportBuilder:
         _builder = MultiLocationProfileCostReportBuilder()
-        _builder.surroundings = self.surroundings
+        _builder.surroundings = self.run_scenario_settings.surroundings
         return _builder
 
     def build(self) -> KoswatSummary:

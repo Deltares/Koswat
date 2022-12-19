@@ -15,6 +15,9 @@ from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 class KoswatDikeLocationsWrapperShpReader(KoswatReaderProtocol):
     selected_locations: List[str]
 
+    def __init__(self) -> None:
+        self.selected_locations = []
+
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix.lower() == ".shp"
 

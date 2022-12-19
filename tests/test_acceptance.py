@@ -3,7 +3,17 @@ from __future__ import annotations
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
+    KoswatTrajectSurroundingsWrapperCsvFom,
+)
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
+    KoswatSurroundingsCsvFomBuilder,
+)
+from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
+    KoswatDikeLocationsWrapperShpReader,
+)
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
@@ -21,10 +31,14 @@ from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
 )
+from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
+    KoswatBuildingsPoldersideBuilder,
+)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
+from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 from tests import get_testcase_results_dir, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
@@ -68,13 +82,22 @@ class TestAcceptance:
         assert _csv_surroundings_file.is_file()
         assert _shp_trajects_file.is_file()
 
-        _surroundings = SurroundingsWrapperBuilder.from_files(
-            dict(csv_file=_csv_surroundings_file, shp_file=_shp_trajects_file)
-        ).build()
-        assert isinstance(_surroundings, SurroundingsWrapper)
-        assert isinstance(_surroundings.buldings_polderside, KoswatBuildingsPolderside)
-        assert isinstance(scenario_case, KoswatScenario)
+        _surroundings = KoswatTrajectSurroundingsWrapperCsvFom()
+        _builder_buildings_polderside = KoswatBuildingsPoldersideBuilder()
+        _builder_buildings_polderside.koswat_csv_fom = (
+            KoswatCsvReader.with_builder_type(KoswatSurroundingsCsvFomBuilder).read(
+                _csv_surroundings_file
+            )
+        )
+        _builder_buildings_polderside.koswat_shp_fom = None
 
+        _shp_wrapper_reader = KoswatDikeLocationsWrapperShpReader()
+        _shp_wrapper = _shp_wrapper_reader.read(_shp_trajects_file)
+        _builder_buildings_polderside.koswat_shp_fom = (
+            _shp_wrapper.dike_locations_shp_fom[0]
+        )
+        _surroundings.buldings_polderside = _builder_buildings_polderside.build()
+        assert isinstance(scenario_case, KoswatScenario)
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile_case,
@@ -83,11 +106,14 @@ class TestAcceptance:
             )
         ).build()
 
+        _run_settings = KoswatRunScenarioSettings()
+        _run_settings.scenario = scenario_case
+        _run_settings.surroundings = _surroundings
+        _run_settings.input_profile_case = _base_koswat_profile
+
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
-        _multi_loc_multi_prof_cost_builder.surroundings = _surroundings
-        _multi_loc_multi_prof_cost_builder.base_profile = _base_koswat_profile
-        _multi_loc_multi_prof_cost_builder.scenario = scenario_case
+        _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
         _exporter = SummaryMatrixCsvExporter()

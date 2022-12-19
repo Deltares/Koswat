@@ -21,9 +21,7 @@ from koswat.koswat_logger import KoswatLogger
 class KoswatHandler:
     def _generate_summary(self, _run_scenario: KoswatRunScenarioSettings) -> None:
         _summary_builder = KoswatSummaryBuilder()
-        _summary_builder.base_profile = _run_scenario.input_profile_case
-        _summary_builder.scenario = _run_scenario.scenario
-        _summary_builder.surroundings = _run_scenario.surroundings
+        _summary_builder.run_scenario_settings = _run_scenario
         logging.info(
             "Creating analysis for {} - scenario {} - {}".format(
                 _run_scenario.input_profile_case.input_data.dike_section,

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
 from typing import List
 
 from shapely.geometry import Point
@@ -9,18 +8,11 @@ from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
-from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
-    KoswatSurroundingsCsvFomBuilder,
-)
-from koswat.configuration.io.shp import (
-    KoswatDikeLocationsShpFom,
-    KoswatDikeLocationsWrapperShpReader,
-)
+from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
 )
-from koswat.io.csv import KoswatCsvReader
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
