@@ -4,18 +4,18 @@ from pathlib import Path
 from typing import Any, List
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.converters.koswat_costs_importer import KoswatCostsImporter
-from koswat.configuration.converters.koswat_input_profile_list_importer import (
-    KoswatInputProfileListImporter,
-)
-from koswat.configuration.converters.koswat_surroundings_importer import (
-    KoswatSurroundingsImporter,
-)
 from koswat.configuration.io.ini import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import DikeProfileSectionFom
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
     SectionScenarioFom,
+)
+from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
+from koswat.configuration.io.koswat_input_profile_list_importer import (
+    KoswatInputProfileListImporter,
+)
+from koswat.configuration.io.koswat_surroundings_importer import (
+    KoswatSurroundingsImporter,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
