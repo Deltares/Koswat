@@ -77,4 +77,4 @@ class SurroundingsWrapper:
                 return True
             return distance < point_surroundings.distance_to_buildings[0]
 
-        return list(filter(is_at_safe_distance, self.locations))
+        return list(filter(is_at_safe_distance, self.buldings_polderside.points))

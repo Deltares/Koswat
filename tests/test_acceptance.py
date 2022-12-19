@@ -93,8 +93,10 @@ class TestAcceptance:
         _shp_wrapper_reader = KoswatDikeLocationsListShpReader()
         _locations_shp_fom = _shp_wrapper_reader.read(_shp_trajects_file)
         _builder_buildings_polderside.koswat_shp_fom = _locations_shp_fom[0]
+
         _surroundings = SurroundingsWrapper()
         _surroundings.buldings_polderside = _builder_buildings_polderside.build()
+
         assert isinstance(scenario_case, KoswatScenario)
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
