@@ -28,11 +28,13 @@ class TestCofferDamReinforcementProfileCalculation:
     def test_calculate_length_coffer_dam(self):
         class MockInputData(KoswatInputProfileProtocol):
             kruin_hoogte: float
+            binnen_maaiveld: float
 
         # 1. Define test data.
         _calculator = CofferdamReinforcementProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 6
+        _input_data.kruin_hoogte = 8
+        _input_data.binnen_maaiveld = 2
         _scenario = KoswatScenario()
         _scenario.d_h = 2
         _expected_result = 17
@@ -65,11 +67,13 @@ class TestCofferDamReinforcementProfileCalculation:
         class MockInputData(KoswatInputProfileProtocol):
             kruin_hoogte: float
             buiten_talud: float
+            buiten_maaiveld: float
 
         # 1. Define test data.
         _calculator = CofferdamReinforcementProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 6
+        _input_data.kruin_hoogte = 8
+        _input_data.buiten_maaiveld = 2
         _input_data.buiten_talud = 3
         _scenario = KoswatScenario()
         _scenario.d_h = 2

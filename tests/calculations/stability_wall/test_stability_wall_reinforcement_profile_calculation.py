@@ -26,11 +26,13 @@ class TestStabilityWallReinforcementProfileCalculation:
     def test_calculate_length_stability_wall(self):
         class MockInputData(KoswatInputProfileProtocol):
             kruin_hoogte: float
+            binnen_maaiveld: float
 
         # 1. Define test data.
         _calculator = StabilityWallReinforcementProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 17
+        _input_data.kruin_hoogte = 19
+        _input_data.binnen_maaiveld = 2
         _scenario = KoswatScenario()
         _scenario.d_h = 16
         _expected_result = 42

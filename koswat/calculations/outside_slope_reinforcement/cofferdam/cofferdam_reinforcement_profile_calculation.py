@@ -37,7 +37,7 @@ class CofferdamReinforcementProfileCalculation(
             base_data.kruin_hoogte - base_data.binnen_maaiveld
         )
         _operand = base_data.kruin_breedte + _mid_operand - scenario.kruin_breedte
-        _dividend = base_data.kruin_hoogte + scenario.d_h
+        _dividend = base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h
         return _operand / _dividend
 
     def _calculate_new_buiten_talud(
@@ -47,14 +47,18 @@ class CofferdamReinforcementProfileCalculation(
         Kruin_Hoogte_Oud*Buiten_Talud_Oud
         /(Kruin_Hoogte_Oud+dH)
         """
-        _operand = base_data.kruin_hoogte * base_data.buiten_talud
-        _dividend = base_data.kruin_hoogte + scenario.d_h
+        _operand = (
+            base_data.kruin_hoogte - base_data.buiten_maaiveld
+        ) * base_data.buiten_talud
+        _dividend = base_data.kruin_hoogte - base_data.buiten_maaiveld + scenario.d_h
         return _operand / _dividend
 
     def _calculate_new_length_coffer_dam(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
-        return (base_data.kruin_hoogte + scenario.d_h) - 1 + 10
+        return (
+            (base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h) - 1 + 10
+        )
 
     def _calculate_new_input_profile(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
@@ -69,7 +73,7 @@ class CofferdamReinforcementProfileCalculation(
         _new_data.kruin_breedte = scenario.kruin_breedte
         _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
         _new_data.binnen_berm_breedte = 0
-        _new_data.binnen_berm_hoogte = 0
+        _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         _new_data.length_coffer_dam = self._calculate_new_length_coffer_dam(
             base_data, scenario

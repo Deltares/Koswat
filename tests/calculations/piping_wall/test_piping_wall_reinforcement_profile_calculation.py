@@ -63,6 +63,7 @@ class TestPipingWallReinforcementProfileCalculation:
             kruin_hoogte: float
             kruin_breedte: float
             binnen_talud: float
+            binnen_maaiveld: float
 
         # 1. Define test data.
         _expected_value = 3.57
@@ -74,8 +75,9 @@ class TestPipingWallReinforcementProfileCalculation:
         _scenario.buiten_talud = 3
         _input_profile = MockProfile()
         _input_profile.kruin_breedte = 5
-        _input_profile.kruin_hoogte = 6
+        _input_profile.kruin_hoogte = 8
         _input_profile.binnen_talud = 3
+        _input_profile.binnen_maaiveld = 2
 
         # 2. Run test
         _new_binnen_talud = (

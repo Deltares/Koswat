@@ -27,13 +27,15 @@ class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationPr
                 dS
                 -dH*Buiten_Talud_Nieuw
                 -(Kruin_Breedte_Nieuw-Kruin_Breedte_Oud)
-                +Kruin_Hoogte_Oud*Binnen_Talud_Oud)
-                /(Kruin_Hoogte_Oud+dH))
+                +(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud)*Binnen_Talud_Oud)
+                /(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud+dH))
         """
         _first_part = scenario.d_h * scenario.buiten_talud
         _second_part = scenario.kruin_breedte - base_data.kruin_breedte
-        _third_parth = base_data.kruin_hoogte * base_data.binnen_talud
-        _dividend = base_data.kruin_hoogte + scenario.d_h
+        _third_parth = (
+            base_data.kruin_hoogte - base_data.binnen_maaiveld
+        ) * base_data.binnen_talud
+        _dividend = base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h
         _right_side = (
             scenario.d_s - _first_part - _second_part + _third_parth
         ) / _dividend
@@ -47,10 +49,22 @@ class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationPr
     ) -> float:
         if new_data.binnen_berm_breedte > 0:
             _max = max(
-                0.5, old_data.binnen_berm_hoogte, new_data.binnen_berm_breedte * 0.05
+                0.5,
+                (old_data.binnen_berm_hoogte - old_data.binnen_maaiveld),
+                new_data.binnen_berm_breedte * 0.05,
             )
-            return min(_max, 0.4 * (old_data.kruin_hoogte + scenario.d_h))
-        return 0
+            return (
+                min(
+                    _max,
+                    0.4
+                    * (
+                        (old_data.kruin_hoogte - old_data.binnen_maaiveld)
+                        + scenario.d_h
+                    ),
+                )
+                + old_data.binnen_maaiveld
+            )
+        return old_data.binnen_maaiveld
 
     def _calculate_new_binnen_berm_breedte(
         self,
@@ -59,10 +73,14 @@ class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationPr
         scenario: KoswatScenario,
     ) -> float:
         _c1 = scenario.buiten_talud + new_data.binnen_talud
-        _c2 = old_data.kruin_hoogte + scenario.d_h
+        _c2 = old_data.kruin_hoogte - old_data.binnen_maaiveld + scenario.d_h
         _c3 = old_data.buiten_talud + old_data.binnen_talud
         _c4 = new_data.buiten_berm_breedte - old_data.buiten_berm_breedte
-        _c5 = _c3 * old_data.kruin_hoogte + old_data.kruin_breedte - _c4
+        _c5 = (
+            _c3 * (old_data.kruin_hoogte - old_data.binnen_maaiveld)
+            + old_data.kruin_breedte
+            - _c4
+        )
         _c6 = _c1 * _c2 + new_data.kruin_breedte - _c5
         _c7 = old_data.binnen_berm_breedte + scenario.d_p - _c6
         return max(_c7, 0)
