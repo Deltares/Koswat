@@ -265,11 +265,10 @@ class TestReinforcementProfileBuilderFactory:
     ):
         # 1. Define test data.
         _plot_dir = get_testcase_results_dir(request)
-        _dummy_layers = LayersCases.without_layers
         _base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile,
-                layers_data=_dummy_layers,
+                layers_data=LayersCases.with_clay_and_grass,
                 p4_x_coordinate=0,
             )
         ).build()
