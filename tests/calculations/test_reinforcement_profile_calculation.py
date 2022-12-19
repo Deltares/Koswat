@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Type
+from typing import List, Type
 
 import pytest
 
@@ -31,7 +31,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
-from tests import get_testcase_results_dir
+from tests import get_testcase_results_dir, test_data
 from tests.calculations import get_reinforced_profile, validated_reinforced_profile
 from tests.library_test_cases import (
     InputProfileCases,
@@ -181,6 +181,61 @@ class TestReinforcementProfileBuilderFactory:
             _reinforcement_profile.input_data, ReinforcementInputProfileProtocol
         )
         validated_reinforced_profile(_reinforcement_profile, _expected_profile)
+        self._plot_profiles(_base_profile, _reinforcement_profile, _plot_dir)
+
+    @pytest.fixture
+    def input_profile_data_csv_file(self) -> List[KoswatInputProfileProtocol]:
+        pass
+
+    @pytest.fixture
+    def scenario_ini_file(self) -> List[KoswatScenario]:
+        scenarios_dir = test_data / "acceptance" / "scenarios"
+
+    @pytest.mark.parametrize(
+        "profile_type",
+        [
+            pytest.param(SoilReinforcementProfile, "Groundmaatregel"),
+            pytest.param(PipingWallReinforcementProfile, "Pipingwand"),
+            pytest.param(StabilityWallReinforcementProfile, "Stabiliteitswand"),
+            pytest.param(CofferdamReinforcementProfile, "Kistdam"),
+        ],
+    )
+    @pytest.mark.parametrize("input_profile", input_profile_data_csv_file)
+    @pytest.mark.parametrize("scenario", input_profile_data_csv_file)
+    def test_given_csv_and_scenarios_calculate_new_geometry_and_plot(
+        self,
+        profile_type: Type[ReinforcementProfileProtocol],
+        input_profile: KoswatInputProfileProtocol,
+        scenario: KoswatScenario,
+        request: pytest.FixtureRequest,
+    ):
+        # 1. Define test data.
+        _plot_dir = get_testcase_results_dir(request)
+        _dummy_layers = LayersCases.without_layers
+        _base_profile = KoswatProfileBuilder.with_data(
+            dict(
+                input_profile_data=input_profile,
+                layers_data=_dummy_layers,
+                p4_x_coordinate=0,
+            )
+        ).build()
+        assert isinstance(_base_profile, KoswatProfileBase)
+
+        # 2. Run test.
+        _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
+            profile_type
+        )
+        _reinforcement_builder.base_profile = _base_profile
+        _reinforcement_builder.scenario = scenario
+        _reinforcement_profile = _reinforcement_builder.build()
+
+        # 3. Verify expectations.
+        assert isinstance(_reinforcement_profile, profile_type)
+        assert isinstance(_reinforcement_profile, ReinforcementProfileProtocol)
+        assert isinstance(_reinforcement_profile, KoswatProfileProtocol)
+        assert isinstance(
+            _reinforcement_profile.input_data, ReinforcementInputProfileProtocol
+        )
         self._plot_profiles(_base_profile, _reinforcement_profile, _plot_dir)
 
     def _plot_profiles(

@@ -1,6 +1,5 @@
 import logging
 import math
-from itertools import groupby
 from pathlib import Path
 from typing import Any, List
 
