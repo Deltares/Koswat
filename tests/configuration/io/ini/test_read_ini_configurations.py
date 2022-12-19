@@ -17,7 +17,7 @@ class TestReadIniConfigurations:
     @pytest.mark.parametrize(
         "test_file, ini_fom_type",
         [
-            pytest.param("koswat_general.ini", KoswatSettingsIniFom, id="General INI"),
+            pytest.param("koswat_general.ini", KoswatGeneralIniFom, id="General INI"),
             pytest.param("koswat_costs.ini", KoswatCostsIniFom, id="Costs INI"),
             pytest.param(
                 "koswat_scenario.ini", KoswatSectionScenariosIniFom, id="Scenario INI"
@@ -44,13 +44,13 @@ class TestReadIniConfigurations:
         # 1. Define test data.
         _test_file_path = test_ini_reader_data / "koswat_general.ini"
         _ini_reader = KoswatIniReader()
-        _ini_reader.koswat_ini_fom_type = KoswatSettingsIniFom
+        _ini_reader.koswat_ini_fom_type = KoswatGeneralIniFom
 
         # 2. Run test
         _ini_fom = _ini_reader.read(_test_file_path)
 
         # 3. Validate expectations.
-        assert isinstance(_ini_fom, KoswatSettingsIniFom)
+        assert isinstance(_ini_fom, KoswatGeneralIniFom)
 
         # Analysis section
         assert isinstance(_ini_fom.analyse_section_fom, AnalysisSectionFom)

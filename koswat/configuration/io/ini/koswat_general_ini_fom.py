@@ -35,7 +35,7 @@ class AnalysisSectionFom(KoswatIniFomProtocol):
         _section = cls()
         _section.dike_selection_txt_file = Path(
             ini_config["dijksecties_selectie"]
-        )  # AnalysisConverter.dike_selection_file_to_fom()
+        )
         _section.dike_section_location_file = Path(ini_config["dijksectie_ligging"])
         _section.input_profiles_csv_file = Path(ini_config["dijksectie_invoer"])
         _section.scenarios_ini_file = Path(ini_config["scenario_invoer"])
@@ -200,7 +200,7 @@ class InfrastructureSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class KoswatSettingsIniFom(KoswatIniFomProtocol):
+class KoswatGeneralIniFom(KoswatIniFomProtocol):
     analyse_section_fom: AnalysisSectionFom
     dike_profile_section_fom: DikeProfileSectionFom
     grondmaatregel_section: SoilReinforcementSectionFom

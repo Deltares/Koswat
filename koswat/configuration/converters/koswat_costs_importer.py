@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import logging
+from pathlib import Path
+
 from koswat.configuration.converters.koswat_settings_fom_converter_base import (
     KoswatSettingsFomConverterBase,
 )
@@ -10,33 +13,53 @@ from koswat.configuration.settings.costs.koswat_costs import (
     KoswatCostsSettings,
     StorageCostsSettings,
 )
+from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 
 
-class KoswatSettingsFomToCostsSettings(KoswatSettingsFomConverterBase):
-    def convert_settings(self) -> KoswatCostsSettings:
+class KoswatCostsImporter(KoswatSettingsFomConverterBase):
+    ini_configuration: Path
+    include_taxes: bool
+
+    def __init__(self) -> None:
+        self.ini_configuration = None
+        self.include_taxes = None
+
+    def _get_costs_fom(self) -> KoswatCostsIniFom:
+        reader = KoswatIniReader()
+        reader.koswat_ini_fom_type = KoswatCostsIniFom
+        return reader.read(self.ini_configuration)
+
+    def build(self) -> KoswatCostsSettings:
+        if not self.ini_configuration.is_file():
+            _error = "Costs ini file not found at {}.".format(self.ini_configuration)
+            raise NotImplementedError(_error)
+        if self.include_taxes is None:
+            raise ValueError("A boolean value is expected for `include_taxes`.")
+        logging.info("Importing costs from {}.".format(self.ini_configuration))
+        _costs_fom = self._get_costs_fom()
+
         _costs_settings = KoswatCostsSettings()
         _costs_settings.price_year = int(
-            self.fom_settings.analyse_section_fom.costs_ini_file.unit_prices_section.prijspeil
+            _costs_fom.unit_prices_section.prijspeil
         )
         _costs_settings.dike_profile_costs = self._get_dike_profile_costs_settings(
-            self.fom_settings.analyse_section_fom.costs_ini_file
+            _costs_fom
         )
         _costs_settings.infrastructure_costs = self._get_infrastructure_costs_settings(
-            self.fom_settings.analyse_section_fom.costs_ini_file
+            _costs_fom
         )
         _costs_settings.storage_costs = self._get_storage_costs(
-            self.fom_settings.analyse_section_fom.costs_ini_file,
-            self.fom_settings.analyse_section_fom.include_taxes,
+            _costs_fom,
         )
         return _costs_settings
 
     def _get_storage_costs(
-        self, fom_costs: KoswatCostsIniFom, include_taxes: bool
+        self, fom_costs: KoswatCostsIniFom
     ) -> StorageCostsSettings:
         _settings = StorageCostsSettings()
         _fom_settings = (
             fom_costs.storing_costs_incl_tax_section
-            if include_taxes
+            if self.include_taxes
             else fom_costs.storing_costs_excl_tax_section
         )
         _settings.ground_easy = _fom_settings.grond_makkelijk

@@ -4,16 +4,16 @@ import abc
 import logging
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.io.ini.koswat_general_ini_fom import KoswatSettingsIniFom
+from koswat.configuration.io.ini.koswat_general_ini_fom import KoswatGeneralIniFom
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 
 
 class KoswatSettingsFomConverterBase(BuilderProtocol, abc.ABC):
-    fom_settings: KoswatSettingsIniFom
+    fom_settings: KoswatGeneralIniFom
 
     def build(self) -> KoswatCostsSettings:
-        if not isinstance(self.fom_settings, KoswatSettingsIniFom):
+        if not isinstance(self.fom_settings, KoswatGeneralIniFom):
             logging.error("Ini settings required for conversion.")
 
         return self.convert_settings()
@@ -24,7 +24,7 @@ class KoswatSettingsFomConverterBase(BuilderProtocol, abc.ABC):
 
     @classmethod
     def with_settings_fom(
-        cls, fom_settings: KoswatSettingsIniFom
+        cls, fom_settings: KoswatGeneralIniFom
     ) -> KoswatSettingsFomConverterBase:
         _builder = cls()
         _builder.fom_settings = fom_settings
