@@ -39,31 +39,24 @@ class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
             _shp_fom.record = _record
             return _shp_fom
 
-        def is_selected_record(record: shapefile._Record) -> bool:
-            """
-            Verifies the record 'Dijksectie' property is a value from the list of selected dikes (provided by the user).
-            Usual formats are as:
-            Dijksectie: `10-1-3-C-1-D-1`.
-            Traject: `10-1`
-            Subtraject: `10-1-A
-
-            Returns:
-                bool: True when the record has been selected.
-            """
-            if not self.selected_locations:
-                # Get all.
-                return True
-            return record.Dijksectie in self.selected_locations
-
         _shp_locations = []
         with shapefile.Reader(file_path) as shp:
             # Records contains Dikesection - Traject - Subtraject
             # For each record get its shape
             # shp.records()[idx] -> shp.shapes()[idx]
+            """
+            Usual formats are as:
+            Dijksectie: `10-1-3-C-1-D-1`.
+            Traject: `10-1`
+            Subtraject: `10-1-A`
+            """
             _shp_locations = list(
                 map(
                     record_to_shp_fom,
-                    enumerate(filter(is_selected_record, shp.records())),
+                    filter(
+                        lambda xy: xy[1].Dijksectie in self.selected_locations,
+                        enumerate(shp.records()),
+                    ),
                 )
             )
         return _shp_locations
