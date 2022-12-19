@@ -72,7 +72,7 @@ class KoswatRunSettingsImporter(BuilderProtocol):
             return None
 
         def profile_is_selected(profile_data: KoswatInputProfileBase) -> bool:
-            return profile_data in dike_selection
+            return profile_data.dike_section in dike_selection
 
         def to_koswat_profile(
             profile_data: KoswatInputProfileBase,
@@ -227,19 +227,17 @@ class KoswatRunSettingsImporter(BuilderProtocol):
         costs_settings: KoswatCostsSettings,
         surroundings_fom: List[SurroundingsWrapper],
     ) -> None:
-        # TODO: Reduce complexity.
-        _surroundings_dict = (
-            dict(groupby(surroundings_fom, lambda x: x.traject))
-            if surroundings_fom
-            else {}
-        )
         for _fom_scenario in fom_scenario:
             _scenario_output = run_settings.output_dir / (
                 "scenario_" + _fom_scenario.scenario_section
             )
-            _surrounding = _surroundings_dict.get(
-                _fom_scenario.scenario_section, [None]
-            )[0]
+            _surrounding = next(
+                filter(
+                    lambda x: x.dike_section == _fom_scenario.scenario_section,
+                    surroundings_fom,
+                ),
+                None,
+            )
             for _sub_scenario in _fom_scenario.section_scenarios:
                 _sub_output = _scenario_output / _sub_scenario.scenario_name
                 for _input_profile in run_settings.input_profile_cases:
