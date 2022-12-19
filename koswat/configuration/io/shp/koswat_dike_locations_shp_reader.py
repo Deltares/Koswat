@@ -39,6 +39,14 @@ class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
             _shp_fom.record = _record
             return _shp_fom
 
+        def is_selected(idx_record: Tuple[int, shapefile._Record]) -> bool:
+            _, _record = idx_record
+            try:
+                # TODO: Normalize expected input file to avoid this here and in `KoswatDikeLocationsShpFom`
+                return _record.Dijksectie in self.selected_locations
+            except Exception:
+                return _record.Sectie
+
         _shp_locations = []
         with shapefile.Reader(file_path) as shp:
             # Records contains Dikesection - Traject - Subtraject
@@ -54,7 +62,7 @@ class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
                 map(
                     record_to_shp_fom,
                     filter(
-                        lambda xy: xy[1].Dijksectie in self.selected_locations,
+                        is_selected,
                         enumerate(shp.records()),
                     ),
                 )
