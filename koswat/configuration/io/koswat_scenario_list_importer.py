@@ -21,7 +21,7 @@ class KoswatScenarioListImporter(BuilderProtocol):
         if not self.dike_selection:
             # All dikes selected.
             return True
-        if scenario_file.stem not in self.dike_selections:
+        if scenario_file.stem not in self.dike_selection:
             logging.error(
                 "Scenario {} skipped because section was not selected.".format(
                     scenario_file.stem
