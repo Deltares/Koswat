@@ -58,7 +58,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.analyse_section_fom.dike_selection_txt_file == Path(
             "c:\\fake_drive\\Invoer\\ini files\\DijksectieSelectie.txt"
         )
-        assert _ini_fom.analyse_section_fom.dike_section_location_file == Path(
+        assert _ini_fom.analyse_section_fom.dike_section_location_shp_file == Path(
             "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
         assert _ini_fom.analyse_section_fom.input_profiles_csv_file == Path(
@@ -156,7 +156,7 @@ class TestReadIniConfigurations:
         # Omgeving section
         assert isinstance(_ini_fom.surroundings_section, SurroundingsSectionFom)
         # No databaes loaded because the path is not included in the test data.
-        assert _ini_fom.surroundings_section.surroundings_database == Path(
+        assert _ini_fom.surroundings_section.surroundings_database_dir == Path(
             "c:\\fake_drive\\Invoer\\Omgevingsanalyses"
         )
         assert _ini_fom.surroundings_section.constructieafstand == 50

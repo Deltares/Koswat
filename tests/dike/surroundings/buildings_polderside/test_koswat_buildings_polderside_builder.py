@@ -12,10 +12,9 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
-    KoswatDikeLocationsWrapperShpFom,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
-    KoswatDikeLocationsWrapperShpReader,
+    KoswatDikeLocationsListShpReader,
 )
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
@@ -158,7 +157,7 @@ class TestKoswatBuildingsPoldersideBuilder:
         assert _csv_test_file.is_file()
         assert _shp_test_file.is_file()
 
-        _shp_fom_builder = KoswatDikeLocationsWrapperShpReader()
+        _shp_fom_builder = KoswatDikeLocationsListShpReader()
         _shp_fom_builder.selected_locations = []
         _koswat_wrapper_shp_fom = _shp_fom_builder.read(_shp_test_file)
 

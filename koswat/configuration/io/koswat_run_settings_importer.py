@@ -1,27 +1,30 @@
 import logging
 import math
 from pathlib import Path
-from typing import List
+from typing import Any, List
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.converters.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.converters.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
+from koswat.configuration.converters.koswat_surroundings_importer import (
+    KoswatSurroundingsImporter,
+)
 from koswat.configuration.io.ini import KoswatGeneralIniFom
-from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import DikeProfileSectionFom
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
     SectionScenarioFom,
 )
-from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
-    KoswatDikeLocationsWrapperShpReader,
-)
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
-from koswat.configuration.settings.koswat_run_settings import KoswatRunSettings
+from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.koswat_run_settings import (
+    KoswatRunScenarioSettings,
+    KoswatRunSettings,
+)
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
@@ -90,7 +93,7 @@ class KoswatRunSettingsImporter(BuilderProtocol):
         )
         return _profile_list
 
-    def _import_selected_dike_section_names(txt_file: Path) -> List[str]:
+    def _import_selected_dike_section_names(self, txt_file: Path) -> List[str]:
         if not txt_file.is_file():
             logging.error("Dike selection txt file not found at {}".format(txt_file))
             return None
@@ -98,7 +101,9 @@ class KoswatRunSettingsImporter(BuilderProtocol):
         _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
         return _reader.read(txt_file).dike_sections
 
-    def _import_dike_costs(ini_file: Path, include_taxes: bool) -> KoswatCostsIniFom:
+    def _import_dike_costs(
+        self, ini_file: Path, include_taxes: bool
+    ) -> KoswatCostsSettings:
         if not ini_file.is_file():
             logging.error("Dike costs ini file not found at {}".format(ini_file))
             return None
@@ -108,7 +113,7 @@ class KoswatRunSettingsImporter(BuilderProtocol):
         return _importer.build()
 
     def _import_scenario_fom_list(
-        scenario_dir: Path, dike_selections: List[str]
+        self, scenario_dir: Path, dike_selections: List[str]
     ) -> List[KoswatSectionScenariosIniFom]:
         if not scenario_dir.is_dir():
             logging.error("Scenarios directory not found at {}".format(scenario_dir))
@@ -137,13 +142,14 @@ class KoswatRunSettingsImporter(BuilderProtocol):
             map(get_scenario, filter(selected_scenario, scenario_dir.glob("*.ini")))
         )
 
-    def dike_sections_location_file_to_fom(shp_file: Path, dike_selections: List[str]):
-        if not shp_file.is_file():
-            logging.error("Dike sections shp file not found at {}".format(shp_file))
-            return None
-        _reader = KoswatDikeLocationsWrapperShpReader()
-        _reader.selected_locations = dike_selections
-        return _reader.read(shp_file)
+    def _import_surroundings(
+        self, surroundings_dir: Path, traject_shp_file: Path, dike_selections: List[str]
+    ) -> Any:
+        _importer = KoswatSurroundingsImporter()
+        _importer.surroundings_csv_dir = surroundings_dir
+        _importer.traject_loc_shp_file = traject_shp_file
+        _importer.selected_locations = dike_selections
+        return _importer.build()
 
     def _get_koswat_scenario(
         self, fom_scenario: SectionScenarioFom, base_profile: KoswatProfileBase
@@ -186,9 +192,18 @@ class KoswatRunSettingsImporter(BuilderProtocol):
                 _general_settings.dike_profile_section_fom
             ),
         )
-        _dike_costs = self._import_dike_costs()
+        _dike_costs = self._import_dike_costs(
+            ini_file=_general_settings.analyse_section_fom.costs_ini_file,
+            include_taxes=_general_settings.analyse_section_fom.include_taxes,
+        )
         _scenario_fom_list = self._import_scenario_fom_list(
             _general_settings.analyse_section_fom.scenarios_ini_file,
+            _dike_selected_sections,
+        )
+
+        _surroundings_fom = self._import_surroundings(
+            _general_settings.surroundings_section.surroundings_database_dir,
+            _general_settings.analyse_section_fom.dike_section_location_shp_file,
             _dike_selected_sections,
         )
 
@@ -196,54 +211,52 @@ class KoswatRunSettingsImporter(BuilderProtocol):
 
         # Then convert to DOM
         logging.info("Mapping data to Koswat Settings")
-
+        self.get_scenarios(_run_settings, _scenario_fom_list)
         logging.info("Settings import completed.")
 
         return _run_settings
 
-        # Define scenarios
+    def get_scenarios(
+        self,
+        run_settings: KoswatRunSettings,
+        fom_scenario,
+        costs_settings: KoswatCostsSettings,
+    ) -> None:
         # TODO: Reduce complexity.
-        # for _fom_scenario in self.fom_settings.analyse_section_fom.scenarios_ini_file:
-        #     if _fom_scenario.scenario_section not in _dike_selected_sections:
-        #         logging.error(
-        #             "Scenario {} won't be run because section was not selected.".format(
-        #                 _fom_scenario.scenario_section
-        #             )
-        #         )
-        #         continue
-        #     _scenario_output = _run_settings.output_dir / (
-        #         "scenario_" + _fom_scenario.scenario_section
-        #     )
-        #     for (
-        #         _shp_dike_fom
-        #     ) in self.fom_settings.analyse_section_fom.dike_section_location_file.get_by_section(
-        #         _fom_scenario.scenario_section
-        #     ):
-        #         _csv_db = self.fom_settings.surroundings_section.surroundings_database.get_wrapper_by_traject(
-        #             _shp_dike_fom.record.Traject.replace(
-        #                 "-", "_"
-        #             )  # We know the csv files are with '-' whilst the shp values are '_'
-        #         )
-        #         if not _csv_db:
-        #             logging.warning(
-        #                 "No surroundings found for {}".format(
-        #                     _shp_dike_fom.record.Traject
-        #                 )
-        #             )
-        #             # TODO: For now we will skip until clarity on what to do in this case.
-        #             continue
-        #         _surroundings = self._get_surroundings_wrapper(_shp_dike_fom, _csv_db)
-        #         for _sub_scenario in _fom_scenario.section_scenarios:
-        #             _sub_output = _scenario_output / _sub_scenario.scenario_name
-        #             for _input_profile in _input_profile_cases:
-        #                 _run_scenario = KoswatRunScenarioSettings()
-        #                 _run_scenario.input_profile_case = _input_profile
-        #                 _run_scenario.scenario = self._get_koswat_scenario(
-        #                     _sub_scenario, _input_profile
-        #                 )
-        #                 _run_scenario.surroundings = _surroundings
-        #                 _run_scenario.costs = _costs
-        #                 _run_scenario.output_dir = (
-        #                     _sub_output / _input_profile.input_data.dike_section
-        #                 )
-        #                 _run_settings.run_scenarios.append(_run_scenario)
+        for _fom_scenario in fom_scenario:
+            _scenario_output = run_settings.output_dir / (
+                "scenario_" + _fom_scenario.scenario_section
+            )
+            for (
+                _shp_dike_fom
+            ) in self.fom_settings.analyse_section_fom.dike_section_location_file.get_by_section(
+                _fom_scenario.scenario_section
+            ):
+                _csv_db = self.fom_settings.surroundings_section.surroundings_database.get_wrapper_by_traject(
+                    _shp_dike_fom.record.Traject.replace(
+                        "-", "_"
+                    )  # We know the csv files are with '-' whilst the shp values are '_'
+                )
+                if not _csv_db:
+                    logging.warning(
+                        "No surroundings found for {}".format(
+                            _shp_dike_fom.record.Traject
+                        )
+                    )
+                    # TODO: For now we will skip until clarity on what to do in this case.
+                    continue
+                _surroundings = self._get_surroundings_wrapper(_shp_dike_fom, _csv_db)
+                for _sub_scenario in _fom_scenario.section_scenarios:
+                    _sub_output = _scenario_output / _sub_scenario.scenario_name
+                    for _input_profile in run_settings.input_profile_cases:
+                        _run_scenario = KoswatRunScenarioSettings()
+                        _run_scenario.input_profile_case = _input_profile
+                        _run_scenario.scenario = self._get_koswat_scenario(
+                            _sub_scenario, _input_profile
+                        )
+                        _run_scenario.surroundings = _surroundings
+                        _run_scenario.costs = costs_settings
+                        _run_scenario.output_dir = (
+                            _sub_output / _input_profile.input_data.dike_section
+                        )
+                        run_settings.run_scenarios.append(_run_scenario)

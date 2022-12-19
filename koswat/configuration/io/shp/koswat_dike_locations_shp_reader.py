@@ -1,18 +1,17 @@
 import logging
 from pathlib import Path
-from typing import Any, Iterator, List
+from typing import List, Tuple
 
 import shapefile
 from shapely.geometry import Point
 
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
-    KoswatDikeLocationsWrapperShpFom,
 )
 from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
-class KoswatDikeLocationsWrapperShpReader(KoswatReaderProtocol):
+class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
     selected_locations: List[str]
 
     def __init__(self) -> None:
@@ -21,16 +20,7 @@ class KoswatDikeLocationsWrapperShpReader(KoswatReaderProtocol):
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix.lower() == ".shp"
 
-    def _get_selected_records_idx(self, shp_records) -> List[int]:
-        if not self.selected_locations:
-            return list(range(0, len(shp_records)))
-        _idx_list = []
-        for idx, _record in enumerate(shp_records):
-            if _record.Dijksectie in self.selected_locations:
-                _idx_list.append(idx)
-        return _idx_list
-
-    def read(self, file_path: Path) -> KoswatDikeLocationsWrapperShpFom:
+    def read(self, file_path: Path) -> List[KoswatDikeLocationsShpFom]:
         if not self.supports_file(file_path):
             raise ValueError("Shp file should be provided")
         if not file_path.is_file():
@@ -38,17 +28,39 @@ class KoswatDikeLocationsWrapperShpReader(KoswatReaderProtocol):
         if not self.selected_locations:
             logging.warning("No selected locations.")
 
-        _shp_wrapper = KoswatDikeLocationsWrapperShpFom()
+        def record_to_shp_fom(
+            idx_record: Tuple[int, shapefile._Record]
+        ) -> KoswatDikeLocationsShpFom:
+            _idx, _record = idx_record
+            _shp_fom = KoswatDikeLocationsShpFom()
+            _shp_points = shp.shape(_idx).points
+            _shp_fom.initial_point = Point(_shp_points[0])
+            _shp_fom.end_point = Point(_shp_points[-1])
+            _shp_fom.record = _record
+            return _shp_fom
+
+        def is_selected_record(record: shapefile._Record) -> bool:
+            """
+            Verifies the record 'Dijksectie' property is a value from the list of selected dikes (provided by the user).
+            Usual formats are as:
+            Dijksectie: `10-1-3-C-1-D-1`.
+            Traject: `10-1`
+            Subtraject: `10-1-A
+
+            Returns:
+                bool: True when the record has been selected.
+            """
+            return record.Dijksectie in self.selected_locations
+
+        _shp_locations = []
         with shapefile.Reader(file_path) as shp:
             # Records contains Dikesection - Traject - Subtraject
             # For each record get its shape
-            # shp.records()[0] -> shp.shapes()[0]
-            # Only getting the first shape
-            for _idx in self._get_selected_records_idx(shp.records()):
-                _shp_fom = KoswatDikeLocationsShpFom()
-                _shp_points = shp.shape(_idx).points
-                _shp_fom.initial_point = Point(_shp_points[0])
-                _shp_fom.end_point = Point(_shp_points[-1])
-                _shp_fom.record = shp.record(_idx)
-                _shp_wrapper.dike_locations_shp_fom.append(_shp_fom)
-        return _shp_wrapper
+            # shp.records()[idx] -> shp.shapes()[idx]
+            _shp_locations = list(
+                map(
+                    record_to_shp_fom,
+                    enumerate(filter(is_selected_record, shp.records())),
+                )
+            )
+        return _shp_locations

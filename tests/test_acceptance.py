@@ -10,7 +10,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
     KoswatSurroundingsCsvFomBuilder,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
-    KoswatDikeLocationsWrapperShpReader,
+    KoswatDikeLocationsListShpReader,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
@@ -91,7 +91,7 @@ class TestAcceptance:
         )
         _builder_buildings_polderside.koswat_shp_fom = None
 
-        _shp_wrapper_reader = KoswatDikeLocationsWrapperShpReader()
+        _shp_wrapper_reader = KoswatDikeLocationsListShpReader()
         _shp_wrapper = _shp_wrapper_reader.read(_shp_trajects_file)
         _builder_buildings_polderside.koswat_shp_fom = (
             _shp_wrapper.dike_locations_shp_fom[0]

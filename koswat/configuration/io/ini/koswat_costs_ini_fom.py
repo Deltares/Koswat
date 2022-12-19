@@ -10,7 +10,7 @@ class UnitPricesSectionFom(KoswatIniFomProtocol):
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
-        _section.prijspeil = ini_config.getfloat("prijspeil")
+        _section.prijspeil = ini_config.getint("prijspeil")
         return _section
 
 

@@ -65,15 +65,3 @@ class KoswatTrajectSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
             _prop for _name, _prop in self.__dict__.items() if _name != "traject"
         ]
         return any(_surroundings) and all(_s.is_valid() for _s in _surroundings)
-
-
-class KoswatTrajectSurroundingsWrapperCollectionCsvFom(KoswatCsvFomProtocol):
-    wrapper_collection: Dict[str, KoswatTrajectSurroundingsWrapperCsvFom]
-
-    def __init__(self) -> None:
-        self.wrapper_collection = {}
-
-    def get_wrapper_by_traject(
-        self, traject: str
-    ) -> Optional[KoswatTrajectSurroundingsWrapperCsvFom]:
-        return self.wrapper_collection.get(traject, None)

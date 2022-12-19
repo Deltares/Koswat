@@ -41,6 +41,10 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             )
 
         _surroundings = SurroundingsWrapper()
+        _surroundings.dike_section = self.trajects_fom.dike_section
+        _surroundings.traject = self.trajects_fom.dike_traject
+        _surroundings.subtraject = self.trajects_fom.dike_subtraject
+
         # For now we only include buildings_polderside
         _surroundings.buldings_polderside = self._get_buildings_polder_side()
 

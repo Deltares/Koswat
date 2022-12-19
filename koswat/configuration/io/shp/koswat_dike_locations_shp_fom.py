@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 from shapefile import _Record
 from shapely.geometry import Point
@@ -11,6 +11,24 @@ class KoswatDikeLocationsShpFom(KoswatShpFomProtocol):
     end_point: Point
     record: _Record
 
+    @property
+    def dike_section(self) -> str:
+        if not self.record:
+            return None
+        return self.record.Dijksectie
+
+    @property
+    def dike_traject(self) -> str:
+        if not self.record:
+            return None
+        return self.record.Traject
+
+    @property
+    def dike_subtraject(self) -> str:
+        if not self.record:
+            return None
+        return self.record.Subtraject
+
     def __init__(self) -> None:
         self.initial_point = None
         self.end_point = None
@@ -20,18 +38,3 @@ class KoswatDikeLocationsShpFom(KoswatShpFomProtocol):
         if not self.initial_point or not self.end_point:
             return False
         return self.initial_point.is_valid and self.end_point.is_valid
-
-
-class KoswatDikeLocationsWrapperShpFom(KoswatShpFomProtocol):
-    dike_locations_shp_fom: List[KoswatDikeLocationsShpFom]
-
-    def __init__(self) -> None:
-        self.dike_locations_shp_fom = []
-
-    def get_by_section(self, section: str) -> List[KoswatDikeLocationsShpFom]:
-        return list(
-            filter(
-                lambda x: x.record.Dijksectie.lower() == section.lower(),
-                self.dike_locations_shp_fom,
-            )
-        )

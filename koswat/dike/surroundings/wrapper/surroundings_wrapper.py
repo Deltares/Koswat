@@ -11,7 +11,10 @@ from koswat.dike.surroundings.koswat_surroundings_protocol import (
 
 
 class SurroundingsWrapper:
+    dike_section: str
     traject: str
+    subtraject: str
+
     buldings_polderside: KoswatBuildingsPolderside
     buildings_dikeside: KoswatSurroundingsProtocol
 
@@ -34,6 +37,10 @@ class SurroundingsWrapper:
     roads_class_unknown_dikeside: KoswatSurroundingsProtocol
 
     def __init__(self) -> None:
+        self.dike_section = ""
+        self.traject = ""
+        self.subtraject = ""
+
         self.buldings_polderside = None
         self.buildings_dikeside = None
         self.platform_polderside = None

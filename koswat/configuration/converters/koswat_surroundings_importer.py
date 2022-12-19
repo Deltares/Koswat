@@ -1,24 +1,38 @@
 import logging
+from itertools import groupby
 from pathlib import Path
 from typing import Any, List, Tuple
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
-    KoswatTrajectSurroundingsWrapperCollectionCsvFom,
     KoswatTrajectSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
     KoswatSurroundingsCsvFomBuilder,
+)
+from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
+    KoswatDikeLocationsShpFom,
+)
+from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
+    KoswatDikeLocationsListShpReader,
+)
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
+    SurroundingsWrapperBuilder,
 )
 from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 
 
 class KoswatSurroundingsImporter(BuilderProtocol):
     surroundings_csv_dir: Path
+    traject_loc_shp_file: Path
+    selected_locations: List[str]
 
     def __init__(self) -> None:
         self.surroundings_csv_dir = None
+        self.traject_loc_shp_file = None
+        self.selected_locations = []
 
     def _map_surrounding_type(self, surrounding_type: str) -> str:
         _normalized = surrounding_type.lower().strip()
@@ -54,27 +68,48 @@ class KoswatSurroundingsImporter(BuilderProtocol):
         ).read(csv_file)
         _surrounding_csv_fom.traject = traject_name
         _surrounding_type = self._map_surrounding_type(
-            _surrounding_csv_fom.stem.replace(f"T_{traject_name}_", "")
+            csv_file.stem.replace(f"T_{traject_name}_", "")
         )
         return _surrounding_type, _surrounding_csv_fom
 
     def _csv_dir_to_fom(
         self,
         csv_dir: Path,
-    ) -> Tuple[str, KoswatTrajectSurroundingsWrapperCsvFom]:
+    ) -> KoswatTrajectSurroundingsWrapperCsvFom:
         _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
         _surroundings_wrapper.traject = csv_dir.stem
         for _csv_file in csv_dir.glob("*.csv"):
             _type, _csv_fom = self._csv_file_to_fom(_csv_file, csv_dir.stem)
             setattr(_surroundings_wrapper, _type, _csv_fom)
-        return (csv_dir.stem, _surroundings_wrapper)
+        return _surroundings_wrapper
 
-    def build(self) -> Any:
+    def _get_dike_locations_shp_fom(self) -> List[KoswatDikeLocationsShpFom]:
+        _reader = KoswatDikeLocationsListShpReader()
+        _reader.selected_locations = self.selected_locations
+        return _reader.read(self.traject_loc_shp_file)
+
+    def build(self) -> List[SurroundingsWrapper]:
         if not isinstance(self.surroundings_csv_dir, Path):
             raise ValueError("No surroundings csv directory path given.")
-        _collection = KoswatTrajectSurroundingsWrapperCollectionCsvFom()
-        _collection.wrapper_collection = dict(
-            map(self._csv_dir_to_fom, self.surroundings_csv_dir.iterdir())
-        )
+        if not isinstance(self.traject_loc_shp_file, Path):
+            raise ValueError("No traject shp file path given.")
 
-        return _collection
+        _dike_location_shp = self._get_dike_locations_shp_fom()
+
+        # SHP files currently contain their trajects with a dash '-', whilst the CSV directories have their names with underscore '_'.
+        _surroundings_wrappers = []
+        for _shp_traject, _location_list in groupby(_dike_location_shp, lambda x: x.dike_traject):
+            _csv_traject = _shp_traject.replace("-", "_").strip()
+            _csv_dir = self.surroundings_csv_dir / _csv_traject
+            if not _csv_dir.is_dir():
+                logging.warning("No surroundings files found for traject {}".format(_shp_traject))
+                continue
+
+            _surroudings_fom = self._csv_dir_to_fom(_csv_dir)
+            for _location in _location_list:
+                _builder = SurroundingsWrapperBuilder()
+                _builder.trajects_fom = _location
+                _builder.surroundings_fom = _surroudings_fom
+                _surroundings_wrappers.append(_builder.build())
+
+        return _surroundings_wrappers

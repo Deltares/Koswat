@@ -3,9 +3,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from koswat.configuration.converters.koswat_settings_fom_converter_base import (
-    KoswatSettingsFomConverterBase,
-)
+from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.settings.costs.koswat_costs import (
     DikeProfileCostsSettings,
@@ -16,7 +14,7 @@ from koswat.configuration.settings.costs.koswat_costs import (
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 
 
-class KoswatCostsImporter(KoswatSettingsFomConverterBase):
+class KoswatCostsImporter(BuilderProtocol):
     ini_configuration: Path
     include_taxes: bool
 
@@ -39,9 +37,7 @@ class KoswatCostsImporter(KoswatSettingsFomConverterBase):
         _costs_fom = self._get_costs_fom()
 
         _costs_settings = KoswatCostsSettings()
-        _costs_settings.price_year = int(
-            _costs_fom.unit_prices_section.prijspeil
-        )
+        _costs_settings.price_year = int(_costs_fom.unit_prices_section.prijspeil)
         _costs_settings.dike_profile_costs = self._get_dike_profile_costs_settings(
             _costs_fom
         )
@@ -53,9 +49,7 @@ class KoswatCostsImporter(KoswatSettingsFomConverterBase):
         )
         return _costs_settings
 
-    def _get_storage_costs(
-        self, fom_costs: KoswatCostsIniFom
-    ) -> StorageCostsSettings:
+    def _get_storage_costs(self, fom_costs: KoswatCostsIniFom) -> StorageCostsSettings:
         _settings = StorageCostsSettings()
         _fom_settings = (
             fom_costs.storing_costs_incl_tax_section
