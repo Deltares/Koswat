@@ -1,5 +1,6 @@
 import logging
 import math
+from itertools import groupby
 from pathlib import Path
 from typing import Any, List
 
@@ -30,6 +31,7 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
@@ -204,14 +206,16 @@ class KoswatRunSettingsImporter(BuilderProtocol):
         _surroundings_fom = self._import_surroundings(
             _general_settings.surroundings_section.surroundings_database_dir,
             _general_settings.analyse_section_fom.dike_section_location_shp_file,
-            _dike_selected_sections,
+            [_s.scenario_section for _s in _scenario_fom_list],
         )
 
         logging.info("Importing INI configuration completed.")
 
         # Then convert to DOM
         logging.info("Mapping data to Koswat Settings")
-        self.get_scenarios(_run_settings, _scenario_fom_list)
+        self.get_scenarios(
+            _run_settings, _scenario_fom_list, _dike_costs, _surroundings_fom
+        )
         logging.info("Settings import completed.")
 
         return _run_settings
@@ -219,44 +223,34 @@ class KoswatRunSettingsImporter(BuilderProtocol):
     def get_scenarios(
         self,
         run_settings: KoswatRunSettings,
-        fom_scenario,
+        fom_scenario: List[KoswatSectionScenariosIniFom],
         costs_settings: KoswatCostsSettings,
+        surroundings_fom: List[SurroundingsWrapper],
     ) -> None:
         # TODO: Reduce complexity.
+        _surroundings_dict = (
+            dict(groupby(surroundings_fom, lambda x: x.traject))
+            if surroundings_fom
+            else {}
+        )
         for _fom_scenario in fom_scenario:
             _scenario_output = run_settings.output_dir / (
                 "scenario_" + _fom_scenario.scenario_section
             )
-            for (
-                _shp_dike_fom
-            ) in self.fom_settings.analyse_section_fom.dike_section_location_file.get_by_section(
-                _fom_scenario.scenario_section
-            ):
-                _csv_db = self.fom_settings.surroundings_section.surroundings_database.get_wrapper_by_traject(
-                    _shp_dike_fom.record.Traject.replace(
-                        "-", "_"
-                    )  # We know the csv files are with '-' whilst the shp values are '_'
-                )
-                if not _csv_db:
-                    logging.warning(
-                        "No surroundings found for {}".format(
-                            _shp_dike_fom.record.Traject
-                        )
+            _surrounding = _surroundings_dict.get(
+                _fom_scenario.scenario_section, [None]
+            )[0]
+            for _sub_scenario in _fom_scenario.section_scenarios:
+                _sub_output = _scenario_output / _sub_scenario.scenario_name
+                for _input_profile in run_settings.input_profile_cases:
+                    _run_scenario = KoswatRunScenarioSettings()
+                    _run_scenario.input_profile_case = _input_profile
+                    _run_scenario.scenario = self._get_koswat_scenario(
+                        _sub_scenario, _input_profile
                     )
-                    # TODO: For now we will skip until clarity on what to do in this case.
-                    continue
-                _surroundings = self._get_surroundings_wrapper(_shp_dike_fom, _csv_db)
-                for _sub_scenario in _fom_scenario.section_scenarios:
-                    _sub_output = _scenario_output / _sub_scenario.scenario_name
-                    for _input_profile in run_settings.input_profile_cases:
-                        _run_scenario = KoswatRunScenarioSettings()
-                        _run_scenario.input_profile_case = _input_profile
-                        _run_scenario.scenario = self._get_koswat_scenario(
-                            _sub_scenario, _input_profile
-                        )
-                        _run_scenario.surroundings = _surroundings
-                        _run_scenario.costs = costs_settings
-                        _run_scenario.output_dir = (
-                            _sub_output / _input_profile.input_data.dike_section
-                        )
-                        run_settings.run_scenarios.append(_run_scenario)
+                    _run_scenario.surroundings = _surrounding
+                    _run_scenario.costs = costs_settings
+                    _run_scenario.output_dir = (
+                        _sub_output / _input_profile.input_data.dike_section
+                    )
+                    run_settings.run_scenarios.append(_run_scenario)

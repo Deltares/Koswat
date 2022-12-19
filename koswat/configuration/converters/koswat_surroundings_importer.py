@@ -98,11 +98,15 @@ class KoswatSurroundingsImporter(BuilderProtocol):
 
         # SHP files currently contain their trajects with a dash '-', whilst the CSV directories have their names with underscore '_'.
         _surroundings_wrappers = []
-        for _shp_traject, _location_list in groupby(_dike_location_shp, lambda x: x.dike_traject):
+        for _shp_traject, _location_list in groupby(
+            _dike_location_shp, lambda x: x.dike_traject
+        ):
             _csv_traject = _shp_traject.replace("-", "_").strip()
             _csv_dir = self.surroundings_csv_dir / _csv_traject
             if not _csv_dir.is_dir():
-                logging.warning("No surroundings files found for traject {}".format(_shp_traject))
+                logging.warning(
+                    "No surroundings files found for traject {}".format(_shp_traject)
+                )
                 continue
 
             _surroudings_fom = self._csv_dir_to_fom(_csv_dir)
@@ -110,6 +114,13 @@ class KoswatSurroundingsImporter(BuilderProtocol):
                 _builder = SurroundingsWrapperBuilder()
                 _builder.trajects_fom = _location
                 _builder.surroundings_fom = _surroudings_fom
-                _surroundings_wrappers.append(_builder.build())
+                try:
+                    _surroundings_wrappers.append(_builder.build())
+                except Exception as e_info:
+                    logging.error(
+                        "Could not load surroundings for dike section {}. Detailed error: {}".format(
+                            _location.dike_section, e_info
+                        )
+                    )
 
         return _surroundings_wrappers
