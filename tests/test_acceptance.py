@@ -5,11 +5,11 @@ import shutil
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.configuration.converters.koswat_surroundings_importer import (
-    KoswatSurroundingsImporter,
-)
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
     KoswatSurroundingsCsvFomBuilder,
+)
+from koswat.configuration.io.koswat_surroundings_importer import (
+    KoswatSurroundingsImporter,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,

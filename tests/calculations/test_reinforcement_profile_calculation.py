@@ -194,14 +194,14 @@ class TestReinforcementProfileBuilderFactory:
     @pytest.mark.parametrize(
         "profile_type",
         [
-            pytest.param(SoilReinforcementProfile, "Groundmaatregel"),
-            pytest.param(PipingWallReinforcementProfile, "Pipingwand"),
-            pytest.param(StabilityWallReinforcementProfile, "Stabiliteitswand"),
-            pytest.param(CofferdamReinforcementProfile, "Kistdam"),
+            pytest.param(SoilReinforcementProfile, id="Groundmaatregel"),
+            pytest.param(PipingWallReinforcementProfile, id="Pipingwand"),
+            pytest.param(StabilityWallReinforcementProfile, id="Stabiliteitswand"),
+            pytest.param(CofferdamReinforcementProfile, id="Kistdam"),
         ],
     )
-    @pytest.mark.parametrize("input_profile", input_profile_data_csv_file)
-    @pytest.mark.parametrize("scenario", input_profile_data_csv_file)
+    @pytest.mark.parametrize("input_profile", [None])
+    @pytest.mark.parametrize("scenario", [None])
     def test_given_csv_and_scenarios_calculate_new_geometry_and_plot(
         self,
         profile_type: Type[ReinforcementProfileProtocol],
