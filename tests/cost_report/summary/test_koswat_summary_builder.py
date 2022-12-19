@@ -12,6 +12,7 @@ from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_re
     StabilityWallReinforcementProfile,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -34,9 +35,7 @@ class TestKoswatSummaryBuilder:
     def test_initialize(self):
         _builder = KoswatSummaryBuilder()
         assert isinstance(_builder, KoswatSummaryBuilder)
-        assert not _builder.surroundings
-        assert not _builder.base_profile
-        assert not _builder.scenario
+        assert not _builder.run_scenario_settings
 
     def test_get_calculated_profile_list(self):
         # 1. Define test data.
@@ -47,8 +46,9 @@ class TestKoswatSummaryBuilder:
             CofferdamReinforcementProfile,
         ]
         _builder = KoswatSummaryBuilder()
-        _builder.scenario = ScenarioCases.default
-        _builder.base_profile = KoswatProfileBuilder.with_data(
+        _settings = KoswatRunScenarioSettings()
+        _settings.scenario = ScenarioCases.default
+        _settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
@@ -56,6 +56,7 @@ class TestKoswatSummaryBuilder:
                 profile_type=KoswatProfileBase,
             )
         ).build()
+        _builder.run_scenario_settings = _settings
 
         # 2. Run test.
         _calc_profiles = _builder._get_calculated_profile_list()
@@ -76,7 +77,9 @@ class TestKoswatSummaryBuilder:
     def test_get_multi_location_profile_cost_builder(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
-        _builder.surroundings = SurroundingsWrapper()
+        _settings = KoswatRunScenarioSettings()
+        _settings.surroundings = SurroundingsWrapper()
+        _builder.run_scenario_settings = _settings
 
         # 2. Run test.
         _multi_location_profile_cost_builder = (
@@ -88,21 +91,22 @@ class TestKoswatSummaryBuilder:
             _multi_location_profile_cost_builder, MultiLocationProfileCostReportBuilder
         )
         assert (
-            _multi_location_profile_cost_builder.surroundings == _builder.surroundings
+            _multi_location_profile_cost_builder.surroundings == _settings.surroundings
         )
         assert not _multi_location_profile_cost_builder.reinforced_profile
 
     def test_build(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
-        _builder.scenario = ScenarioCases.default
-        _builder.surroundings = SurroundingsWrapper()
+        _run_settings = KoswatRunScenarioSettings()
+        _run_settings.scenario = ScenarioCases.default
+        _run_settings.surroundings = SurroundingsWrapper()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []
         _p_surrounding.location = Point(2.4, 4.2)
-        _builder.surroundings.buldings_polderside = KoswatBuildingsPolderside()
-        _builder.surroundings.buldings_polderside.points = [_p_surrounding]
-        _builder.base_profile = KoswatProfileBuilder.with_data(
+        _run_settings.surroundings.buldings_polderside = KoswatBuildingsPolderside()
+        _run_settings.surroundings.buldings_polderside.points = [_p_surrounding]
+        _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
                 layers_data=LayersCases.without_layers,
@@ -110,6 +114,7 @@ class TestKoswatSummaryBuilder:
                 profile_type=KoswatProfileBase,
             )
         ).build()
+        _builder.run_scenario_settings = _run_settings
 
         # 2. Run test.
         _summary = _builder.build()

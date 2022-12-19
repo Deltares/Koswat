@@ -50,6 +50,9 @@ class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
             Returns:
                 bool: True when the record has been selected.
             """
+            if not self.selected_locations:
+                # Get all.
+                return True
             return record.Dijksectie in self.selected_locations
 
         _shp_locations = []

@@ -82,7 +82,6 @@ class TestAcceptance:
         assert _csv_surroundings_file.is_file()
         assert _shp_trajects_file.is_file()
 
-        _surroundings = KoswatTrajectSurroundingsWrapperCsvFom()
         _builder_buildings_polderside = KoswatBuildingsPoldersideBuilder()
         _builder_buildings_polderside.koswat_csv_fom = (
             KoswatCsvReader.with_builder_type(KoswatSurroundingsCsvFomBuilder).read(
@@ -92,10 +91,9 @@ class TestAcceptance:
         _builder_buildings_polderside.koswat_shp_fom = None
 
         _shp_wrapper_reader = KoswatDikeLocationsListShpReader()
-        _shp_wrapper = _shp_wrapper_reader.read(_shp_trajects_file)
-        _builder_buildings_polderside.koswat_shp_fom = (
-            _shp_wrapper.dike_locations_shp_fom[0]
-        )
+        _locations_shp_fom = _shp_wrapper_reader.read(_shp_trajects_file)
+        _builder_buildings_polderside.koswat_shp_fom = _locations_shp_fom[0]
+        _surroundings = SurroundingsWrapper()
         _surroundings.buldings_polderside = _builder_buildings_polderside.build()
         assert isinstance(scenario_case, KoswatScenario)
         _base_koswat_profile = KoswatProfileBuilder.with_data(
