@@ -50,7 +50,7 @@ class TestAcceptance:
 
         try:
             import koswat
-            import koswat.main
+            import koswat.__main__
         except ImportError as exc_err:
             pytest.fail(f"It was not possible to import required packages {exc_err}")
 

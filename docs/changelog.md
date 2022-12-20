@@ -1,3 +1,9 @@
+## v0.11.1 (2022-12-20)
+
+### Fix
+
+- **koswat/__main__.py**: Renamed main file to fit to python main expected module
+
 ## v0.11.0 (2022-12-20)
 
 ### Feat
