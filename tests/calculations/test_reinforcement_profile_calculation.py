@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from pathlib import Path
-from typing import List, Type
+from typing import Iterable, List, Type
 
 import pytest
 
@@ -65,7 +65,7 @@ def scenario_ini_file() -> List[pytest.param]:
 
     def _to_koswat_scenario(
         scenario_data: KoswatSectionScenariosIniFom,
-    ) -> KoswatScenario:
+    ) -> Iterable[KoswatScenario]:
         for _section_scenario in scenario_data.section_scenarios:
             _scenario = KoswatScenario()
             _scenario.scenario_section = scenario_data.scenario_section

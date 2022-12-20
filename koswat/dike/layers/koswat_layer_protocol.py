@@ -15,4 +15,10 @@ class KoswatLayerProtocol(Protocol):
     material_geometry: geometry.Polygon
 
     def as_data_dict(self) -> dict:
+        """
+        Returns the information related to an instance of the `KoswatLayerProtocol`.
+
+        Returns:
+            dict: custom dictionary with the relevant data.
+        """
         pass

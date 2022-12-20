@@ -1,7 +1,7 @@
 import logging
 from itertools import groupby
 from pathlib import Path
-from typing import Any, List, Tuple
+from typing import List, Tuple
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
@@ -56,8 +56,9 @@ class KoswatSurroundingsImporter(BuilderProtocol):
         )
         _translation = _translations.get(_normalized, None)
         if not _translations:
-            logging.error("No mapping found for {}".format(surrounding_type))
-            return None
+            _error = "No mapping found for {}".format(surrounding_type)
+            logging.error(_error)
+            raise ValueError(_error)
         return _translation
 
     def _csv_file_to_fom(

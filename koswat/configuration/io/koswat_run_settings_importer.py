@@ -71,7 +71,7 @@ class KoswatRunSettingsImporter(BuilderProtocol):
             logging.error(
                 "Dike input profiles csv file not found at {}".format(csv_file)
             )
-            return None
+            return []
 
         def profile_is_selected(profile_data: KoswatInputProfileBase) -> bool:
             return profile_data.dike_section in dike_selection
@@ -100,7 +100,7 @@ class KoswatRunSettingsImporter(BuilderProtocol):
     def _import_selected_dike_section_names(self, txt_file: Path) -> List[str]:
         if not txt_file.is_file():
             logging.error("Dike selection txt file not found at {}".format(txt_file))
-            return None
+            return []
         _reader = KoswatTxtReader()
         _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
         return _reader.read(txt_file).dike_sections
@@ -137,7 +137,6 @@ class KoswatRunSettingsImporter(BuilderProtocol):
         self, fom_scenario: SectionScenarioFom, base_profile: KoswatProfileBase
     ) -> KoswatScenario:
         _scenario = KoswatScenario()
-        # _scenario.scenario_section = fom_scenario.scenario_section
         _scenario.scenario_name = fom_scenario.scenario_name
         _scenario.d_h = fom_scenario.d_h
         _scenario.d_s = fom_scenario.d_s

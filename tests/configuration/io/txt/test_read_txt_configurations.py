@@ -1,4 +1,6 @@
-from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import *
+from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
+    KoswatDikeSelectionTxtFom,
+)
 from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 from tests import test_data
 
