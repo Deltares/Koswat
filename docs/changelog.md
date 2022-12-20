@@ -1,3 +1,9 @@
+## v0.11.0 (2022-12-20)
+
+### Feat
+
+- **koswat/koswat_handler.py**: We now accept a log_output argument to specify the directory where to save the koswat run log.
+
 ## v0.10.0 (2022-12-20)
 
 ### Feat
