@@ -8,8 +8,13 @@ from koswat.koswat_handler import KoswatHandler
 ### Below is the documentation for the commandline interface, see the CLICK-package.
 @click.command()
 @click.option("--input_file", default=None, help="Full path to the ini input file.")
-def run_analysis(input_file: str):
-    with KoswatHandler() as _handler:
+@click.option(
+    "--log_output",
+    default=None,
+    help="Directory location where to generate the Koswat log file.",
+)
+def run_analysis(input_file: str, log_output: str):
+    with KoswatHandler(log_output) as _handler:
         _handler.run_analysis(input_file)
 
 
