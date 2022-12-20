@@ -28,6 +28,7 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
     _points = [geometry.Point(new_x[idx], new_y[idx]) for idx in range(0, len(new_x))]
     return geometry.Polygon(_points)
 
+
 def as_unified_geometry(
     source_geom: Union[geometry.Polygon, geometry.MultiPolygon]
 ) -> geometry.Polygon:

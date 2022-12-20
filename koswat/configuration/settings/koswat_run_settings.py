@@ -19,8 +19,13 @@ class KoswatRunScenarioSettings:
     def name(self) -> str:
         if not self.scenario:
             return ""
-        return self.scenario.scenario_name + "_" + self.scenario.scenario_section + "_" + self.input_profile_case.input_data.dike_section
-    
+        return (
+            self.scenario.scenario_name
+            + "_"
+            + self.scenario.scenario_section
+            + "_"
+            + self.input_profile_case.input_data.dike_section
+        )
 
 
 class KoswatRunSettings:

@@ -54,7 +54,7 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
             raise ValueError("All coating layer builder fields are required.")
 
         _depth = self.layer_data.get("depth", math.nan)
-        _material_type =self.layer_data["material"]
+        _material_type = self.layer_data["material"]
         if math.isnan(_depth):
             # Usually only for the base layer (sand)
             raise ValueError(

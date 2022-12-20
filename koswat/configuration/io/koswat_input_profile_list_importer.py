@@ -30,9 +30,13 @@ class KoswatInputProfileListImporter(BuilderProtocol):
         _input_profile.binnen_maaiveld = float(fom_dict["binnen_maaiveld"])
         return _input_profile
 
-
     def build(self) -> List[KoswatInputProfileBase]:
         _profile_input_list = KoswatCsvReader.with_builder_type(
             KoswatProfileInputCsvFomBuilder
         ).read(self.ini_configuration)
-        return list(map(self._get_koswat_input_profile_base, _profile_input_list.input_profile_fom_list))
+        return list(
+            map(
+                self._get_koswat_input_profile_base,
+                _profile_input_list.input_profile_fom_list,
+            )
+        )

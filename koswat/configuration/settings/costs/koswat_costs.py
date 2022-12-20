@@ -13,7 +13,7 @@ from koswat.configuration.settings.costs.storage_costs_settings import (
 
 
 class KoswatCostsSettings(KoswatConfigProtocol):
-    price_year: int 
+    price_year: int
     dike_profile_costs: DikeProfileCostsSettings
     infrastructure_costs: InfrastructureCostsSettings
     storage_costs: StorageCostsSettings

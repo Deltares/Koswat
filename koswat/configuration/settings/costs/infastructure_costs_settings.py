@@ -6,6 +6,7 @@ from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 def _valid_float_prop(config_property: float) -> bool:
     return config_property is not None and not math.isnan(config_property)
 
+
 class InfrastructureCostsSettings(KoswatConfigProtocol):
     removing_roads_klasse2: float
     removing_roads_klasse24: float
@@ -32,4 +33,3 @@ class InfrastructureCostsSettings(KoswatConfigProtocol):
 
     def is_valid(self) -> bool:
         return all(_valid_float_prop(_prop) for _prop in self.__dict__.values())
-

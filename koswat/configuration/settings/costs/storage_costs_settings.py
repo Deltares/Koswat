@@ -37,4 +37,3 @@ class StorageCostsSettings(KoswatConfigProtocol):
 
     def is_valid(self) -> bool:
         return all(_valid_float_prop(_prop) for _prop in self.__dict__.values())
-

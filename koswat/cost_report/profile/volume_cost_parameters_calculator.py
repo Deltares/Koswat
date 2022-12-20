@@ -26,8 +26,12 @@ class VolumeCostParametersCalculator:
         _vcp = cls()
         if len(reinforced_profile.layers_wrapper.layers) != 3:
             return None
-        _grass_layer = reinforced_profile.layers_wrapper.get_layer(KoswatMaterialType.GRASS)
-        _clay_layer = reinforced_profile.layers_wrapper.get_layer(KoswatMaterialType.CLAY)
+        _grass_layer = reinforced_profile.layers_wrapper.get_layer(
+            KoswatMaterialType.GRASS
+        )
+        _clay_layer = reinforced_profile.layers_wrapper.get_layer(
+            KoswatMaterialType.CLAY
+        )
         _core_layer = reinforced_profile.layers_wrapper.base_layer
         _vcp.grass_layer_removal_volume = _grass_layer.removal_layer_geometry.area
         _vcp.clay_layer_removal_volume = _clay_layer.removal_layer_geometry.area
