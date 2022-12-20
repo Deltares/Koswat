@@ -1,3 +1,34 @@
+## v0.10.0 (2022-12-20)
+
+### Feat
+
+- **koswat/configuration/converters**: Created converters fom to dom
+- **koswat/configuration/io/converters/**: Added configuration converters for the analysis section. We can now generate input profiles from the ini files
+- **koswat/configuration/io/csv**: Added import of KoswatInputProfiles
+- **KoswatHandler;KoswatLogger**: Added handler and logger for koswat runs from CLI
+
+### Fix
+
+- **koswat/geometries/calc_library.py**: We now order the points of the geometries so that calculations can be done correctly
+- **koswat/calculations**: Corrected profile calculation for all types and their tests. These changes come directly from Peter de Grave
+- **koswat/configuration/io/koswat_run_settings_importer.py**: corrected filtering of selected input profiles
+- **koswat_dike_locations_shp_reader.py**: Fixed enumerating a filtered list instead of filtering after enumerating
+- **KoswatSurroundingsConverter**: Fixed return as it was only giving the latest mapped FOM
+- **configuration/io/converters**: Fixed return of data and adapted tests
+- **koswat_analysis_converter.py**: Small fix to converter
+- **koswat_General_settings.py**: Fix validation for surroundings
+- **koswat/calculations**: Fixed calculations due to new profile input property
+- **KoswatMaterialType**: Minor fix regarding usage of new KoswatMaterialType
+- **KoswatMaterialType**: Adapted code to use the enum instead of strings
+
+### Refactor
+
+- **koswat/configuration/io**: Moved converters into io
+- **koswat/dike/surroundings/io/shp**: Moved shp reader and fom to surroundings module
+- **koswat/configuration**: Integrating mapping of files to fom's during settings import
+- **koswat/dike/surroundings/io**: Moved previous CSV reader into a concrete module within dike/surroundings. Created protocols for csv reading so it can be repurposed
+- **KoswatMaterialType**: Made koswat material into an enum. Adapted code overall in the source
+
 ## v0.9.0 (2022-12-12)
 
 ### Feat
