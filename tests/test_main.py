@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from click.testing import CliRunner
 
-from koswat import main
+from koswat import __main__
 from tests import get_test_results_dir, test_data
 
 
@@ -12,7 +12,7 @@ class TestMain:
         _invalid_path = "not\\a\\path"
         _cli_arg = f'--input_file "{_invalid_path}"'
         _run_result = CliRunner().invoke(
-            main.run_analysis,
+            __main__.run_analysis,
             _cli_arg,
         )
         assert _run_result.exit_code == 1
@@ -32,7 +32,7 @@ class TestMain:
 
         # 2. Run test.
         _run_result = CliRunner().invoke(
-            main.run_analysis,
+            __main__.run_analysis,
             _cli_arg,
         )
 
