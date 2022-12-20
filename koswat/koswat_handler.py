@@ -20,6 +20,12 @@ from koswat.koswat_logger import KoswatLogger
 
 
 class KoswatHandler:
+    def __init__(self, log_output: Optional[str]) -> None:
+        _log_path = Path("koswat.log")
+        if log_output:
+            _log_path = Path(log_output) / "koswat.log"
+        self._log_path = _log_path
+
     def _generate_summary(
         self, run_scenario: KoswatRunScenarioSettings
     ) -> KoswatSummary:
@@ -95,7 +101,7 @@ class KoswatHandler:
                     raise
 
     def __enter__(self) -> KoswatHandler:
-        self._logger = KoswatLogger.init_logger(Path("koswat.log"))
+        self._logger = KoswatLogger.init_logger(self._log_path)
         logging.info("Initialized Koswat.")
         return self
 

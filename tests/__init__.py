@@ -1,6 +1,5 @@
 import shutil
 from pathlib import Path
-from typing import List
 
 from pytest import FixtureRequest
 
@@ -11,7 +10,15 @@ if not test_results.is_dir():
     test_results.mkdir(parents=True)
 
 
-def get_fixturerequest_case_name(request: FixtureRequest):
+def get_test_results_dir(request: FixtureRequest) -> Path:
+    _test_dir: Path = test_results / request.node.originalname
+    if _test_dir.is_dir():
+        shutil.rmtree(_test_dir)
+    _test_dir.mkdir(parents=True)
+    return _test_dir
+
+
+def get_fixturerequest_case_name(request: FixtureRequest) -> str:
     _case_name_idx = request.node.name.index("[") + 1
     _case_name = (
         request.node.name[_case_name_idx:-1].lower().replace(" ", "_").replace("-", "_")
