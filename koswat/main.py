@@ -16,3 +16,10 @@ from koswat.koswat_handler import KoswatHandler
 def run_analysis(input_file: str, log_output: str):
     with KoswatHandler(log_output) as _handler:
         _handler.run_analysis(input_file)
+
+
+if __name__ == "__main__":
+    try:
+        run_analysis()
+    except Exception as e_info:
+        logging.error(str(e_info))

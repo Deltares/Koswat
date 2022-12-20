@@ -1,7 +1,5 @@
 from pathlib import Path
-from typing import Protocol
-
-from typing_extensions import runtime_checkable
+from typing import Protocol, runtime_checkable
 
 from koswat.io.koswat_exporter_protocol import KoswatExporterProtocol
 

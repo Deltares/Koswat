@@ -1,6 +1,4 @@
-from typing import Any, List, Protocol
-
-from typing_extensions import runtime_checkable
+from typing import Any, List, Protocol, runtime_checkable
 
 
 @runtime_checkable

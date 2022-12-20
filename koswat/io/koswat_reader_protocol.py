@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Protocol, Type
-
-from typing_extensions import runtime_checkable
+from typing import Protocol, Type, runtime_checkable
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol

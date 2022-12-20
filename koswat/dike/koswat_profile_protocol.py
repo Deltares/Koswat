@@ -1,7 +1,6 @@
-from typing import List, Optional, Protocol
+from typing import List, Optional, Protocol, runtime_checkable
 
 from shapely.geometry.point import Point
-from typing_extensions import runtime_checkable
 
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol

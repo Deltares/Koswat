@@ -1,7 +1,5 @@
 from pathlib import Path
-from typing import Any, Protocol
-
-from typing_extensions import runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.io.file_object_model_protocol import ExportFileObjectModelProtocol

@@ -1,6 +1,4 @@
-from typing import Protocol, Type
-
-from typing_extensions import runtime_checkable
+from typing import Protocol, Type, runtime_checkable
 
 from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.reinforcement_profile_protocol import (
