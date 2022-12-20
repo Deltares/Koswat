@@ -6,7 +6,7 @@ from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinfor
 from koswat.calculations.reinforcement_profile_builder_factory import (
     ReinforcementProfileBuilderFactory,
 )
-from koswat.configuration.models import KoswatScenario
+from koswat.configuration.settings import KoswatScenario
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -33,7 +33,7 @@ class TestMultiLocationProfileCostReportBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = MultiLocationProfileCostReportBuilder()
-        _builder.scenario = KoswatScenario.from_dict(ScenarioCases.default)
+        _builder.scenario = ScenarioCases.default
         _builder.surroundings = SurroundingsWrapper()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []

@@ -8,7 +8,7 @@ from koswat.dike.layers import KoswatLayerProtocol
 from koswat.dike.layers.base_layer import KoswatBaseLayer
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.layers_wrapper import KoswatLayersWrapperProtocol
-from koswat.dike.material.koswat_material import KoswatMaterial
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.geometries.calc_library import get_polygon_coordinates
 
 
@@ -19,7 +19,7 @@ class ReinforcementLayerProtocol(KoswatLayerProtocol, Protocol):
 
 
 class ReinforcementCoatingLayer(KoswatLayerProtocol):
-    material: KoswatMaterial
+    material_type: KoswatMaterialType
     outer_geometry: Polygon
     material_geometry: Polygon
     upper_points: LineString
@@ -29,7 +29,7 @@ class ReinforcementCoatingLayer(KoswatLayerProtocol):
     removal_layer_geometry: Polygon
 
     def __init__(self) -> None:
-        self.material = None
+        self.material_type = None
         self.outer_geometry = None
         self.material_geometry = None
         self.upper_points = None
@@ -41,7 +41,7 @@ class ReinforcementCoatingLayer(KoswatLayerProtocol):
         if self.outer_geometry:
             _geometry = list(get_polygon_coordinates(self.outer_geometry).coords)
         return dict(
-            material=self.material.name,
+            material=self.material_type.name,
             depth=self.depth,
             geometry=_geometry,
         )
@@ -56,7 +56,7 @@ class ReinforcementCoatingLayer(KoswatLayerProtocol):
 
 
 class ReinforcementBaseLayer(ReinforcementLayerProtocol):
-    material: KoswatMaterial
+    material_type: KoswatMaterialType
     outer_geometry: Polygon
     material_geometry: Polygon
     upper_points: LineString
@@ -65,7 +65,7 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
     old_layer_geometry: Polygon
 
     def __init__(self) -> None:
-        self.material = None
+        self.material_type = None
         self.outer_geometry = None
         self.material_geometry = None
         self.upper_points = None
@@ -86,7 +86,7 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
         if self.outer_geometry:
             _geometry = list(get_polygon_coordinates(self.outer_geometry).coords)
         return dict(
-            material=self.material.name,
+            material=self.material_type.name,
             geometry=_geometry,
         )
 
@@ -113,17 +113,19 @@ class ReinforcementLayersWrapper(KoswatLayersWrapperProtocol):
             coating_layers=[c_l.as_data_dict() for c_l in self.coating_layers],
         )
 
-    def get_layer(self, material: str) -> ReinforcementCoatingLayer:
+    def get_layer(self, material_type: KoswatMaterialType) -> ReinforcementCoatingLayer:
         _found_layer = next(
             (
                 _layer
                 for _layer in self.coating_layers
-                if _layer.material.name.lower() == material.lower()
+                if _layer.material_type == material_type
             ),
             None,
         )
         if not _found_layer:
-            raise ValueError("Material {} not present in the layers.".format(material))
+            raise ValueError(
+                "Material {} not present in the layers.".format(material_type.name)
+            )
         return _found_layer
 
     @property

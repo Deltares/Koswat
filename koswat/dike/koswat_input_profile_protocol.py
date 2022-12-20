@@ -7,6 +7,7 @@ from typing_extensions import runtime_checkable
 
 @runtime_checkable
 class KoswatInputProfileProtocol(Protocol):
+    dike_section: str
     buiten_maaiveld: float
     buiten_talud: float
     buiten_berm_hoogte: float
@@ -17,13 +18,3 @@ class KoswatInputProfileProtocol(Protocol):
     binnen_berm_hoogte: float
     binnen_berm_breedte: float
     binnen_maaiveld: float
-
-    @classmethod
-    def from_dict(cls, profile_data: dict) -> KoswatInputProfileProtocol:
-        """
-        Generates a `KoswatInputProfileProtocol` with the given profile data.
-
-        Returns:
-            KoswatInputProfileProtocol: Initialized instance of `KoswatInputProfileProtocol`.
-        """
-        pass

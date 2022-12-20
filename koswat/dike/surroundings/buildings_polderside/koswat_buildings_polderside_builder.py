@@ -1,22 +1,24 @@
 from __future__ import annotations
 
-from pathlib import Path
 from typing import List
 
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
+    KoswatTrajectSurroundingsCsvFom,
+)
+from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
 )
-from koswat.io.csv import KoswatCsvFom, KoswatCsvReader
-from koswat.io.shp import KoswatShpFom, KoswatShpReader
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
-    koswat_shp_fom: KoswatShpFom
-    koswat_csv_fom: KoswatCsvFom
+    # TODO: this should probably be moved to configuration
+    koswat_shp_fom: KoswatDikeLocationsShpFom
+    koswat_csv_fom: KoswatTrajectSurroundingsCsvFom
 
     def __init__(self) -> None:
         self.koswat_csv_fom = None
@@ -50,12 +52,3 @@ class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
         _kbp.points = self._get_polderside_points(start_idx, end_idx)
 
         return _kbp
-
-    @classmethod
-    def from_files(
-        cls, csv_file: Path, shp_file: Path
-    ) -> KoswatBuildingsPoldersideBuilder:
-        _builder = cls()
-        _builder.koswat_csv_fom = KoswatCsvReader().read(csv_file)
-        _builder.koswat_shp_fom = KoswatShpReader().read(shp_file)
-        return _builder

@@ -1,8 +1,14 @@
 from typing import List
 
+import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
+    KoswatTrajectSurroundingsCsvFom,
+    KoswatTrajectSurroundingsWrapperCsvFom,
+)
+from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
@@ -14,8 +20,6 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
-from koswat.io.csv import KoswatCsvFom
-from koswat.io.shp.koswat_shp_reader import KoswatShpFom
 from tests import test_data
 
 
@@ -24,30 +28,8 @@ class TestSurroundingsWrapperBuilder:
         _builder = SurroundingsWrapperBuilder()
         assert isinstance(_builder, SurroundingsWrapperBuilder)
         assert isinstance(_builder, BuilderProtocol)
-        assert not _builder.buildings_foms
-
-    def test_initialize_with_files(self):
-        # 1. Define test data.
-        _csv_test_file = (
-            test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
-        )
-        _shp_test_file = (
-            test_data
-            / "shp_reader"
-            / "Dijkvak"
-            / "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp"
-        )
-        assert _csv_test_file.is_file()
-        assert _shp_test_file.is_file()
-
-        # 2. Run test
-        _builder = SurroundingsWrapperBuilder.from_files(
-            dict(csv_file=_csv_test_file, shp_file=_shp_test_file)
-        )
-
-        # 3. Verify expectations.
-        assert isinstance(_builder, SurroundingsWrapperBuilder)
-        assert isinstance(_builder.buildings_foms, KoswatBuildingsPoldersideBuilder)
+        assert not _builder.trajects_fom
+        assert not _builder.surroundings_fom
 
     def _as_surrounding_point(
         self, location: Point, distances: List[float]
@@ -67,24 +49,25 @@ class TestSurroundingsWrapperBuilder:
             Point(2.4, 4.2),
             _end_point,
         ]
-        _buildings_foms.koswat_csv_fom = KoswatCsvFom()
-        _buildings_foms.koswat_csv_fom.points_surroundings_list = [
+        # Surroundings wrapper
+        _surroundings_csv_fom = KoswatTrajectSurroundingsCsvFom()
+        _surroundings_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
             self._as_surrounding_point(_start_point, [2.4]),
             self._as_surrounding_point(Point(2.4, 4.2), [2.4]),
             self._as_surrounding_point(_end_point, [2.4]),
         ]
-        _buildings_foms.koswat_shp_fom = KoswatShpFom()
-        _buildings_foms.koswat_shp_fom.end_point = _end_point
-        _buildings_foms.koswat_shp_fom.initial_point = _start_point
-        assert _buildings_foms.koswat_csv_fom.is_valid()
-        assert _buildings_foms.koswat_shp_fom.is_valid()
+        _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
+        _surroundings_wrapper.buildings_polderside = _surroundings_csv_fom
+
+        # Traject wrapper
+        _koswat_shp_fom = KoswatDikeLocationsShpFom()
+        _koswat_shp_fom.initial_point = _start_point
+        _koswat_shp_fom.end_point = _end_point
 
         # 2. Run test.
-        _builder = SurroundingsWrapperBuilder()
-        _builder.buildings_foms = _buildings_foms
-        _surroundings = _builder.build()
-        # 3. Verify expectations.
-        assert isinstance(_surroundings, SurroundingsWrapper)
-        assert isinstance(_surroundings.buldings_polderside, KoswatBuildingsPolderside)
-        assert _surroundings.locations == _expected_points
+        with pytest.raises(ValueError) as _err_info:
+            _builder = SurroundingsWrapperBuilder()
+            _builder.trajects_fom = _koswat_shp_fom
+            _builder.surroundings_fom = _surroundings_wrapper
+            _surroundings = _builder.build()

@@ -18,12 +18,12 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class KoswatProfileBuilder(BuilderProtocol):
-    input_profile_data: dict
+    input_profile_data: KoswatInputProfileBase
     layers_data: dict
     p4_x_coordinate: Optional[float]
 
     def __init__(self) -> None:
-        self.input_profile_data = {}
+        self.input_profile_data = None
         self.layers_data = {}
         self.p4_x_coordinate = math.nan
 
@@ -46,13 +46,13 @@ class KoswatProfileBuilder(BuilderProtocol):
         return _layers_builder.build()
 
     def build(self) -> KoswatProfileProtocol:
-        if not isinstance(self.input_profile_data, dict):
-            raise ValueError("Koswat Input Profile data dictionary required.")
+        if not isinstance(self.input_profile_data, KoswatInputProfileBase):
+            raise ValueError("Koswat Input Profile data instance required.")
         if not isinstance(self.layers_data, dict):
             raise ValueError("Koswat Layers data dictionary required.")
 
         _profile = KoswatProfileBase()
-        _profile.input_data = KoswatInputProfileBase.from_dict(self.input_profile_data)
+        _profile.input_data = self.input_profile_data
         _profile.characteristic_points = self._build_characteristic_points(
             _profile.input_data
         )

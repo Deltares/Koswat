@@ -18,6 +18,6 @@ class LayerCostReport(CostReportProtocol):
 
     @property
     def material(self) -> str:
-        if not self.layer or not self.layer.material:
+        if not self.layer or not self.layer.material_type:
             return ""
-        return self.layer.material.name
+        return self.layer.material_type.name

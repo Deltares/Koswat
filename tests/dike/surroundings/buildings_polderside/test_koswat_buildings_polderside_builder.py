@@ -4,6 +4,18 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
+    KoswatTrajectSurroundingsCsvFom,
+)
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
+    KoswatSurroundingsCsvFomBuilder,
+)
+from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
+    KoswatDikeLocationsShpFom,
+)
+from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
+    KoswatDikeLocationsListShpReader,
+)
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
@@ -11,8 +23,7 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
-from koswat.io.csv import KoswatCsvFom
-from koswat.io.shp.koswat_shp_reader import KoswatShpFom
+from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 from tests import test_data
 
 
@@ -35,7 +46,7 @@ class TestKoswatBuildingsPoldersideBuilder:
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):
         # 1. Define test data.
         _builder = KoswatBuildingsPoldersideBuilder()
-        _builder.koswat_csv_fom = KoswatCsvFom()
+        _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = []
 
         # 2. Run test
@@ -58,7 +69,7 @@ class TestKoswatBuildingsPoldersideBuilder:
     def test_find_conflicting_point_idx_returns_value(self, limit_point: Point):
         # 1. Define test data.
         _builder = KoswatBuildingsPoldersideBuilder()
-        _builder.koswat_csv_fom = KoswatCsvFom()
+        _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), []),
             self._as_surrounding_point(Point(4.2, 2.4), []),
@@ -83,7 +94,7 @@ class TestKoswatBuildingsPoldersideBuilder:
         self, start_idx: int, end_idx: int
     ):
         _builder = KoswatBuildingsPoldersideBuilder()
-        _builder.koswat_csv_fom = KoswatCsvFom()
+        _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             Point(2.4, 2.4),
             Point(4.2, 2.4),
@@ -112,7 +123,7 @@ class TestKoswatBuildingsPoldersideBuilder:
             _end_point,
         ]
         _builder = KoswatBuildingsPoldersideBuilder()
-        _builder.koswat_csv_fom = KoswatCsvFom()
+        _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
             self._as_surrounding_point(_start_point, [2.4]),
@@ -120,7 +131,7 @@ class TestKoswatBuildingsPoldersideBuilder:
             self._as_surrounding_point(_end_point, [2.4]),
         ]
         assert _builder.koswat_csv_fom.is_valid()
-        _builder.koswat_shp_fom = KoswatShpFom()
+        _builder.koswat_shp_fom = KoswatDikeLocationsShpFom()
         _builder.koswat_shp_fom.end_point = _end_point
         _builder.koswat_shp_fom.initial_point = _start_point
         assert _builder.koswat_shp_fom.is_valid()
@@ -146,13 +157,16 @@ class TestKoswatBuildingsPoldersideBuilder:
         assert _csv_test_file.is_file()
         assert _shp_test_file.is_file()
 
+        _shp_fom_builder = KoswatDikeLocationsListShpReader()
+        _shp_fom_builder.selected_locations = []
+        _koswat_wrapper_shp_fom = _shp_fom_builder.read(_shp_test_file)
+
         # 2. Run test
-        _builder = KoswatBuildingsPoldersideBuilder.from_files(
-            _csv_test_file, _shp_test_file
-        )
-        assert isinstance(_builder, KoswatBuildingsPoldersideBuilder)
-        assert isinstance(_builder.koswat_csv_fom, KoswatCsvFom)
-        assert isinstance(_builder.koswat_shp_fom, KoswatShpFom)
+        _builder = KoswatBuildingsPoldersideBuilder()
+        _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
+            KoswatSurroundingsCsvFomBuilder
+        ).read(_csv_test_file)
+        _builder.koswat_shp_fom = _koswat_wrapper_shp_fom[0]
         _buildings = _builder.build()
 
         # 3. Verify expectations.

@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Protocol
+from typing import Protocol, Type
 
 from typing_extensions import runtime_checkable
 
+from koswat.builder_protocol import BuilderProtocol
 from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
 
 
@@ -29,5 +32,20 @@ class KoswatReaderProtocol(Protocol):
 
         Returns:
             ImportFileObjectModelProtocol: Model representing the data in the file.
+        """
+        pass
+
+    @classmethod
+    def with_builder_type(
+        cls, builder_type: Type[BuilderProtocol]
+    ) -> KoswatReaderProtocol:
+        """
+        Returns an instance of a `KoswatReaderProtocol` with an attached `BuilderProtocol` type that generates a `ImportFileObjectModelProtocol`.
+
+        Args:
+            builder_type (BuilderProtocol): Builder type to use to generate an instance of a `ImportFileObjectModelprotocol`.
+
+        Returns:
+            KoswatReaderProtocol: Valid instance of a `KoswatReaderProtocol`.
         """
         pass

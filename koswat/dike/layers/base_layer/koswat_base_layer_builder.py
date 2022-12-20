@@ -2,8 +2,8 @@ from shapely import geometry
 
 from koswat.dike.layers.base_layer.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
-from koswat.dike.material.koswat_material import KoswatMaterialFactory
-from koswat.geometries.calc_library import points_to_polygon
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.geometries.calc_library import profile_points_to_polygon
 
 
 class KoswatBaseLayerBuilder(KoswatLayerBuilderProtocol):
@@ -17,12 +17,14 @@ class KoswatBaseLayerBuilder(KoswatLayerBuilderProtocol):
     def build(self) -> KoswatBaseLayer:
         if not self.upper_linestring:
             raise ValueError("Profile line geometry needs to be provided.")
-        _material_data = self.layer_data.get("material", None)
-        if not _material_data:
+        _material_type = self.layer_data.get("material", None)
+        if not _material_type:
             raise ValueError("Material data needs to be provided.")
 
         _layer = KoswatBaseLayer()
-        _layer.outer_geometry = points_to_polygon(list(self.upper_linestring.coords))
-        _layer.material = KoswatMaterialFactory.get_material(_material_data)
+        _layer.outer_geometry = profile_points_to_polygon(
+            list(map(geometry.Point, self.upper_linestring.coords))
+        )
+        _layer.material_type = _material_type
         _layer.upper_points = self.upper_linestring
         return _layer

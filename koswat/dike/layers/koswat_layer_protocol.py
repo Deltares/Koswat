@@ -3,12 +3,12 @@ from typing import Protocol
 from shapely import geometry
 from typing_extensions import runtime_checkable
 
-from koswat.dike.material.koswat_material import KoswatMaterial
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 @runtime_checkable
 class KoswatLayerProtocol(Protocol):
-    material: KoswatMaterial
+    material_type: KoswatMaterialType
     layer_points: geometry.LineString
     upper_points: geometry.LineString
     outer_geometry: geometry.Polygon

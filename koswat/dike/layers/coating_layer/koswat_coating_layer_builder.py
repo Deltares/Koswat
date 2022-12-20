@@ -5,7 +5,6 @@ from shapely import geometry
 
 from koswat.dike.layers.coating_layer.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
-from koswat.dike.material.koswat_material import KoswatMaterialFactory
 from koswat.geometries.calc_library import remove_layer_from_polygon
 
 
@@ -55,11 +54,11 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
             raise ValueError("All coating layer builder fields are required.")
 
         _depth = self.layer_data.get("depth", math.nan)
-        _material = KoswatMaterialFactory.get_material(self.layer_data["material"])
+        _material_type = self.layer_data["material"]
         if math.isnan(_depth):
             # Usually only for the base layer (sand)
             raise ValueError(
-                f"Depth cannot be negative in a coating layer. Layer: {_material.name}"
+                f"Depth cannot be negative in a coating layer. Layer: {_material_type.name.capitalize()}"
             )
 
         _offset_geom_coords = self._get_offset_coordinates(_depth)
@@ -70,6 +69,6 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
         _layer.outer_geometry = self.base_geometry
         _layer.material_geometry = remove_layer_from_polygon(self.base_geometry, _depth)
         _layer.lower_linestring = self._get_offset_geometry(_offset_geom_coords)
-        _layer.material = _material
+        _layer.material_type = _material_type
         _layer.depth = _depth
         return _layer

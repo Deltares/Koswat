@@ -21,9 +21,8 @@ class TestCharacteristicPointsBuilder:
 
     def test_build_without_p4_x_coordinate(self):
         # 1. Define data.
-        _input_data = KoswatInputProfileBase.from_dict(InputProfileCases.default)
         _builder = CharacteristicPointsBuilder()
-        _builder.input_profile = _input_data
+        _builder.input_profile = InputProfileCases.default
         _expected_points = InitialPointsLookup.default
 
         # 2. Run test.
@@ -39,9 +38,7 @@ class TestCharacteristicPointsBuilder:
         _tolerance = 0.001
         _p4_x_coord = 2
         _builder = CharacteristicPointsBuilder()
-        _builder.input_profile = KoswatInputProfileBase.from_dict(
-            InputProfileCases.profile_case_2
-        )
+        _builder.input_profile = InputProfileCases.profile_case_2
         _expected_points = InitialPointsLookup.calc_profile_scenario_2[:4]
 
         # 2. Run test.
@@ -57,9 +54,7 @@ class TestCharacteristicPointsBuilder:
         _p4_x_coord = 2
         _tolerance = 0.001
         _builder = CharacteristicPointsBuilder()
-        _builder.input_profile = KoswatInputProfileBase.from_dict(
-            InputProfileCases.profile_case_2
-        )
+        _builder.input_profile = InputProfileCases.profile_case_2
         _expected_points = InitialPointsLookup.calc_profile_scenario_2[4:]
 
         # 2. Run test.

@@ -5,6 +5,7 @@ import pytest
 from shapely.geometry.point import Point
 
 from koswat.builder_protocol import BuilderProtocol
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
@@ -65,7 +66,9 @@ class TestKoswatProfileBuilder:
 
         # 3. Verify final expectations.
         assert isinstance(_profile_builder, KoswatProfileBuilder)
-        assert isinstance(_profile_builder.input_profile_data, dict)
+        assert isinstance(
+            _profile_builder.input_profile_data, KoswatInputProfileProtocol
+        )
         assert isinstance(_profile_builder.layers_data, dict)
         assert _profile_builder.input_profile_data == input_dict["input_profile_data"]
         assert _profile_builder.layers_data == input_dict["layers_data"]
@@ -77,7 +80,7 @@ class TestKoswatProfileBuilder:
         _builder.profile_type = None
         with pytest.raises(ValueError) as exc_err:
             _builder.build()
-        assert str(exc_err.value) == "Koswat Input Profile data dictionary required."
+        assert str(exc_err.value) == "Koswat Input Profile data instance required."
 
     def test_build_given_no_layers_data_then_raises(self):
         _builder = KoswatProfileBuilder()

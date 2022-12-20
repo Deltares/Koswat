@@ -29,7 +29,7 @@ class ReinforcedProfilePlotExporter(PlotExporterProtocol):
         _layers_to_plot.extend(reinforced_profile.old_profile.layers_wrapper.layers)
 
         for _reinf_layer in reinforced_profile.layers_wrapper.layers:
-            _base_name = f"{reinforced_profile}_{_reinf_layer.material.name}"
+            _base_name = f"{reinforced_profile}_{_reinf_layer.material_type.name}"
             self._export_layers(
                 export_path / f"added_{_base_name}",
                 _reinf_layer.new_layer_geometry,

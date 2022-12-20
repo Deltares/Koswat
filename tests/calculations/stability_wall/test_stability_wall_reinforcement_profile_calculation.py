@@ -8,7 +8,7 @@ from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_in
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile_calculation import (
     StabilityWallReinforcementProfileCalculation,
 )
-from koswat.configuration.models import KoswatScenario
+from koswat.configuration.settings import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
@@ -26,11 +26,13 @@ class TestStabilityWallReinforcementProfileCalculation:
     def test_calculate_length_stability_wall(self):
         class MockInputData(KoswatInputProfileProtocol):
             kruin_hoogte: float
+            binnen_maaiveld: float
 
         # 1. Define test data.
         _calculator = StabilityWallReinforcementProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 17
+        _input_data.kruin_hoogte = 19
+        _input_data.binnen_maaiveld = 2
         _scenario = KoswatScenario()
         _scenario.d_h = 16
         _expected_result = 42
@@ -87,6 +89,7 @@ class TestStabilityWallReinforcementProfileCalculation:
 
     def test_calculate_new_input_profile(self):
         class MockInputData(KoswatInputProfileProtocol):
+            dike_section: str
             kruin_hoogte: float
             binnen_maaiveld: float
             binnen_talud: float
@@ -96,6 +99,7 @@ class TestStabilityWallReinforcementProfileCalculation:
         # 1. Define test data.
         _calculator = StabilityWallReinforcementProfileCalculation()
         _input_data = MockInputData()
+        _input_data.dike_section = "mocked_section"
         _input_data.kruin_hoogte = 30
         _input_data.binnen_maaiveld = 2.3
         _input_data.binnen_talud = 4.5

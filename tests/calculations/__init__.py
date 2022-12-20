@@ -36,11 +36,7 @@ def get_reinforced_profile(
 ) -> ReinforcementProfileProtocol:
     _reinforcement = type_reinforcement()
     # Input profile data.
-    _reinforcement.input_data = (
-        ReinforcementProfileBuilderFactory.get_reinforcement_input_profile(
-            type_reinforcement
-        ).from_dict(reinforced_data["input_profile_data"])
-    )
+    _reinforcement.input_data = reinforced_data["input_profile_data"]
     # Char points
     _char_points_builder = CharacteristicPointsBuilder()
     _char_points_builder.input_profile = _reinforcement.input_data
@@ -101,7 +97,7 @@ def _compare_koswat_input_profile(
     return [
         f"Values differ for {key}, expected {value}, got: {_new_data_dict[key]}"
         for key, value in _exp_data_dict.items()
-        if not almost_equal(_new_data_dict[key], value)
+        if key != "dike_section" and not almost_equal(_new_data_dict[key], value)
     ]
 
 
@@ -120,7 +116,7 @@ def _compare_koswat_layers(
             Polygon(_c_layer.outer_geometry), _tolerance
         ):
             _layers_errors.append(
-                "Geometries differ for layer {}".format(_c_layer.material.name)
+                "Geometries differ for layer {}".format(_c_layer.material_type.name)
             )
 
     return _layers_errors

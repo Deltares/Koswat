@@ -11,3 +11,5 @@ At the root of this module we define the generic protocols:
 - `ReinforcementProfileBuilderProtocol`: Extension of the `BuilderProtocol` to specify the required data needed to generate a `ReinforcementProfileProtocol`.
 - `ReinforcementProfileBuilderFactory`: Factory to retrieve the correct instances of a `ReinforcementProfileBuilderProtocol`.
 
+## Design decisions.
+It could be argued that some of the code could be reduced by using abstractions or simple inheritance. However I opted for 'duplicating' methods logic in order to reduce the dependency between classes thus making them totally independent. Alas the usage of protocols over abstractions.
