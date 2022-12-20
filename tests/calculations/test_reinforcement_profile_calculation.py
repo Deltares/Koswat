@@ -305,7 +305,7 @@ class TestReinforcementProfileBuilderFactory:
     ):
         _plot_filename = output_dir / str(reinforced_profile)
         with KoswatFigureContextHandler(
-            _plot_filename.with_suffix(".png"), 180
+            _plot_filename.with_suffix(".png"), 250
         ) as _koswat_figure:
             _subplot = _koswat_figure.add_subplot()
             _list_profile_plot = ListKoswatProfilePlot()

@@ -3,6 +3,31 @@ from typing import List, Union
 from shapely import affinity, geometry, ops
 
 
+def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
+    """
+    In koswat we handle polygon operations expecting the lowest 'x' coordinate to be the initial and last point of a geometry.
+    For this reason we need to ensure all geometries are 'normalized' based on this criteria.
+
+    Args:
+        dike_polygon (geometry.Polygon): Polygon to normalized.
+
+    Returns:
+        geometry.Polygon: Normalized polygon.
+    """
+    _x, _y = tuple(map(list, dike_polygon.boundary.coords.xy))
+    # remove last point as it's repeated.
+    _x.pop(-1)
+    _y.pop(-1)
+    _lowest_x = _x.index(min(_x))
+    if _lowest_x == 0:
+        # It's already in ordered.
+        return dike_polygon
+    # We can assume that there won't be two 'lowest' x points with different y position (so a 'cliff')
+    new_x = _x[_lowest_x:] + _x[0:_lowest_x] + [_x[_lowest_x]]
+    new_y = _y[_lowest_x:] + _y[0:_lowest_x] + [_y[_lowest_x]]
+    _points = [geometry.Point(new_x[idx], new_y[idx]) for idx in range(0, len(new_x))]
+    return geometry.Polygon(_points)
+
 def as_unified_geometry(
     source_geom: Union[geometry.Polygon, geometry.MultiPolygon]
 ) -> geometry.Polygon:
@@ -38,17 +63,6 @@ def get_relative_core_layer(
         ]
     )
     _wrapper_polygon = geometry.Polygon(_wrapper_points)
-    if __debug__:
-        # TODO: work in progress"
-        from matplotlib import pyplot
-
-        _fig = pyplot.figure(dpi=180)
-        _sp = _fig.add_subplot()
-        _sp.plot(*core_geometry.boundary.coords.xy)
-        _sp.plot(*coating_geometry.boundary.coords.xy)
-        _sp.scatter(*_wrapper_points.coords.xy)
-        _sp.plot(*_wrapper_polygon.boundary.coords.xy)
-        _fig.show()
     _fixed_layer_geom = _wrapper_polygon.intersection(coating_geometry)
     return as_unified_geometry(_fixed_layer_geom.union(core_geometry))
 
@@ -104,6 +118,15 @@ def get_polygon_surface_points(
 
 
 def profile_points_to_polygon(points_list: List[geometry.Point]) -> geometry.Polygon:
+    """
+    Transforms a list of points into a valid 'dike' polygon. When there is a difference in height between left and right side then we correct it in the x = 0 coordinate.
+
+    Args:
+        points_list (List[geometry.Point]): List of points representing a dike profile.
+
+    Returns:
+        geometry.Polygon: Validated enclosed geometry simple polygon.
+    """
     _geometry_points = []
     _geometry_points.extend(points_list)
     if points_list[0].y != points_list[-1].y:
