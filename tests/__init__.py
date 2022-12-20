@@ -39,6 +39,7 @@ def get_custom_testcase_results_dir(request: FixtureRequest, exclude_part: int) 
     )
 
     _test_dir: Path = test_results / request.node.originalname
-    _test_dir.mkdir(exist_ok=True, parents=True)
     _test_dir = _test_dir / _case_name
+    _test_dir.mkdir(exist_ok=True, parents=True)
+
     return _test_dir
