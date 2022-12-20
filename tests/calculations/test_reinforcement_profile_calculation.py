@@ -44,7 +44,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
-from tests import get_testcase_results_dir, test_data
+from tests import get_custom_testcase_results_dir, get_testcase_results_dir, test_data
 from tests.calculations import get_reinforced_profile, validated_reinforced_profile
 from tests.library_test_cases import (
     InputProfileCases,
@@ -80,7 +80,7 @@ def scenario_ini_file() -> List[pytest.param]:
     def _to_pytest_param(scenario: KoswatScenario) -> pytest.param:
         return pytest.param(
             scenario,
-            id="{} - {}".format(scenario.scenario_name, scenario.scenario_section),
+            id="{}_{}".format(scenario.scenario_name, scenario.scenario_section),
         )
 
     _importer = KoswatScenarioListImporter()
@@ -99,7 +99,7 @@ def input_profile_data_csv_file() -> List[pytest.param]:
 
     def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
         return pytest.param(
-            input_profile, id="Input {}".format(input_profile.dike_section)
+            input_profile, id="Input_{}".format(input_profile.dike_section)
         )
 
     return list(map(_to_pytest_param, _importer.build()))[:2]
@@ -203,7 +203,7 @@ class TestReinforcementProfileBuilderFactory:
             ),
         ],
     )
-    def test_given_profile_and_scenario_calculate_new_geometry(
+    def test_given_profile_and_scenario_calculate_new_geometry_without_layers(
         self,
         profile_type: Type[ReinforcementProfileProtocol],
         profile_data: KoswatInputProfileProtocol,
@@ -211,13 +211,13 @@ class TestReinforcementProfileBuilderFactory:
         expected_profile_data: dict,
         request: pytest.FixtureRequest,
     ):
+        # TO-DO, potentially remove as the test below covers better this test case.
         # 1. Define test data.
         _plot_dir = get_testcase_results_dir(request)
-        _dummy_layers = LayersCases.without_layers
         _base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=profile_data,
-                layers_data=_dummy_layers,
+                layers_data=LayersCases.without_layers,
                 p4_x_coordinate=0,
             )
         ).build()
@@ -256,7 +256,7 @@ class TestReinforcementProfileBuilderFactory:
     )
     @pytest.mark.parametrize("input_profile", _input_profiles)
     @pytest.mark.parametrize("scenario", _scenarios)
-    def test_given_csv_and_scenarios_calculate_new_geometry_and_plot(
+    def test_generate_reinforcement_profiles_from_acceptance_data(
         self,
         profile_type: Type[ReinforcementProfileProtocol],
         input_profile: KoswatInputProfileProtocol,
@@ -264,11 +264,11 @@ class TestReinforcementProfileBuilderFactory:
         request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
-        _plot_dir = get_testcase_results_dir(request)
+        _plot_dir = get_custom_testcase_results_dir(request, -1)
         _base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile,
-                layers_data=LayersCases.with_clay_and_grass,
+                layers_data=LayersCases.with_acceptance_criteria,
                 p4_x_coordinate=0,
             )
         ).build()

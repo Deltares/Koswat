@@ -38,6 +38,17 @@ def get_relative_core_layer(
         ]
     )
     _wrapper_polygon = geometry.Polygon(_wrapper_points)
+    if __debug__:
+        # TODO: work in progress"
+        from matplotlib import pyplot
+
+        _fig = pyplot.figure(dpi=180)
+        _sp = _fig.add_subplot()
+        _sp.plot(*core_geometry.boundary.coords.xy)
+        _sp.plot(*coating_geometry.boundary.coords.xy)
+        _sp.scatter(*_wrapper_points.coords.xy)
+        _sp.plot(*_wrapper_polygon.boundary.coords.xy)
+        _fig.show()
     _fixed_layer_geom = _wrapper_polygon.intersection(coating_geometry)
     return as_unified_geometry(_fixed_layer_geom.union(core_geometry))
 

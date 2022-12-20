@@ -85,6 +85,13 @@ class LayersCases(CasesProtocol):
             dict(material=KoswatMaterialType.CLAY, depth=0.75),
         ],
     )
+    with_acceptance_criteria = dict(
+        base_layer=dict(material=KoswatMaterialType.SAND),
+        coating_layers=[
+            dict(material=KoswatMaterialType.GRASS, depth=0.3),
+            dict(material=KoswatMaterialType.CLAY, depth=0.5),
+        ],
+    )
 
     # Only cases that should be 'realistic'.
     cases = [
