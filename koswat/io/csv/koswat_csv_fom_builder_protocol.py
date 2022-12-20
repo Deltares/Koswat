@@ -12,6 +12,12 @@ class KoswatCsvFomBuilderProtocol(BuilderProtocol, Protocol):
     entries: List[List[str]]
 
     def build(self) -> KoswatCsvFomProtocol:
+        """
+        Builds a valid instance of a `KoswatCsvFomProtocol` with the provided `headers` and `entries`.
+
+        Returns:
+            KoswatCsvFomProtocol: Valid instance representing a Koswat csv file.
+        """
         pass
 
     @classmethod
