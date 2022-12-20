@@ -16,7 +16,6 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 
 
 class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
-    # TODO: this should probably be moved to configuration
     koswat_shp_fom: KoswatDikeLocationsShpFom
     koswat_csv_fom: KoswatTrajectSurroundingsCsvFom
 

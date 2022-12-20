@@ -75,7 +75,7 @@ def scenario_ini_file() -> List[pytest.param]:
             _scenario.d_p = _section_scenario.d_p
             _scenario.kruin_breedte = _section_scenario.kruin_breedte
             _scenario.buiten_talud = _section_scenario.buiten_talud
-            yield _scenario
+            return _scenario
 
     def _to_pytest_param(scenario: KoswatScenario) -> pytest.param:
         return pytest.param(
