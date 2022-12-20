@@ -7,6 +7,9 @@ license = "GPL-3.0-or-later"
 readme = "README.md"
 repository = "https://github.com/Deltares/koswat"
 documentation = ""
+packages = [
+  {include="koswat"},
+]
 classifiers = [
   'Development Status :: 2 - Pre-Alpha',
   'Intended Audience :: Developers',
