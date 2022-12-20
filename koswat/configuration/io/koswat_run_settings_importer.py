@@ -210,10 +210,9 @@ class KoswatRunSettingsImporter(BuilderProtocol):
             _scenario_output = run_settings.output_dir / (
                 "scenario_" + _fom_scenario.scenario_section
             )
-            _scenario_section = _fom_scenario.scenario_section
             _surrounding = next(
                 filter(
-                    lambda x: x.dike_section == _scenario_section,
+                    lambda x: x.dike_section == _fom_scenario.scenario_section,
                     surroundings_fom,
                 ),
                 None,
