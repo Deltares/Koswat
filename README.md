@@ -10,6 +10,15 @@
 
 ## Installation
 
+### Using pypi.
+
+When you only require the koswat package to be used as a whole, and not for developments, we advise to directly use the latest greatest release, or directly the latest available version from `Master` as follows:
+
+`pip install git+https://github.com/Deltares/Koswat.git`
+
+
+### Development environment.
+Checkout the code from github in a directory of your choice. Navigate to it and then install both the environment and the koswat package as follows:
 ```bash
 conda env create -f "environment.yml"
 conda activate koswat_env
