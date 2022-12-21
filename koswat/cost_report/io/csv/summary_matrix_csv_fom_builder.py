@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Tuple
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -16,28 +15,17 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
     # Internal readonly properties.
     _volume_surface_key_column = "(volume / surface)"
     _cost_key_column = "(cost)"
-    
+
     def __init__(self) -> None:
         self.koswat_summary = None
 
     def build(self) -> KoswatCsvFom:
-        _matrix_csv_fom = self._get_summary_matrix_csv_fom(self.koswat_summary)
-        _csv_fom = KoswatCsvFom()
-        _csv_fom.headers = _matrix_csv_fom.headers
-        _csv_fom.entries.extend(_matrix_csv_fom.cost_rows)
-        _csv_fom.entries.extend(_matrix_csv_fom.location_rows)
-        return _csv_fom
-
-    def _get_summary_matrix_csv_fom(
-        self, koswat_summary: KoswatSummary
-    ) -> SummaryMatrixCsvFom:
-        _fom = SummaryMatrixCsvFom()
         _profile_type_key = "Profile type"
         _cost_per_km_key = "Cost per km (€)"
         _locations_key = "locations"
 
         _dict_of_entries = defaultdict(list)
-        for _loc_prof_report in koswat_summary.locations_profile_report_list:
+        for _loc_prof_report in self.koswat_summary.locations_profile_report_list:
             _dict_of_entries[_profile_type_key].append(_loc_prof_report.profile_type)
             _dict_of_entries[_cost_per_km_key].append(_loc_prof_report.cost_per_km)
             self._get_volume_cost_parameters(
@@ -57,25 +45,24 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
                 row.insert(n, "")
             return row
 
-        _fom.location_rows = self._get_locations_matrix(
-            _dict_of_entries[_locations_key]
-        )
+        _location_rows = self._get_locations_matrix(_dict_of_entries[_locations_key])
         _required_placeholders = (
-            len(_fom.location_rows[0])
-            - len(koswat_summary.locations_profile_report_list)
+            len(_location_rows[0])
+            - len(self.koswat_summary.locations_profile_report_list)
             - 1
         )
-        _fom.headers = dict_to_csv_row(_profile_type_key, _required_placeholders)
-        _fom.cost_rows = [
+        _headers = dict_to_csv_row(_profile_type_key, _required_placeholders)
+        _cost_rows = [
             dict_to_csv_row(_parameter_key, _required_placeholders)
             for _parameter_key in _dict_of_entries.keys()
             if self._volume_surface_key_column in _parameter_key
             or self._cost_key_column in _parameter_key
         ]
-        _fom.cost_rows.insert(
-            0, dict_to_csv_row(_cost_per_km_key, _required_placeholders)
-        )
-        return _fom
+        _cost_rows.insert(0, dict_to_csv_row(_cost_per_km_key, _required_placeholders))
+        _csv_fom = KoswatCsvFom()
+        _csv_fom.headers = _headers
+        _csv_fom.entries = _location_rows + _cost_rows
+        return _csv_fom
 
     def _get_locations_matrix(
         self, locations_lists: List[List[PointSurroundings]]

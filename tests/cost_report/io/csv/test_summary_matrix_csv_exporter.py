@@ -25,9 +25,6 @@ class TestSummaryMatrixCsvExporter:
             shutil.rmtree(_test_dir)
 
         _fom_summary = get_valid_test_summary()
-        _expected_result = (
-            """a;header\ntwo;entries\nother;more\na;location\nanother;one"""
-        )
 
         # 2. Run test
         SummaryMatrixCsvExporter().export(_fom_summary, _export_path)

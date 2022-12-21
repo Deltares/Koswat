@@ -23,7 +23,6 @@ from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
-from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
 )
@@ -37,9 +36,6 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_b
     KoswatBuildingsPoldersideBuilder,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
-    SurroundingsWrapperBuilder,
-)
 from tests import get_testcase_results_dir, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
