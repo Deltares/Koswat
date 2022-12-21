@@ -3,7 +3,9 @@ from pathlib import Path
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
-from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
+from koswat.configuration.settings.koswat_run_scenario_settings import (
+    KoswatRunScenarioSettings,
+)
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from tests import test_data

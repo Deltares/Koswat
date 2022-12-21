@@ -7,7 +7,9 @@ from typing import Optional
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
-from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
+from koswat.configuration.settings.koswat_run_scenario_settings import (
+    KoswatRunScenarioSettings,
+)
 from koswat.core.koswat_logger import KoswatLogger
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,

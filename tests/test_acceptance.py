@@ -15,7 +15,9 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
 from koswat.configuration.settings import KoswatScenario
-from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
+from koswat.configuration.settings.koswat_run_scenario_settings import (
+    KoswatRunScenarioSettings,
+)
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
