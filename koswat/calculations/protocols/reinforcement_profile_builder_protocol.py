@@ -1,7 +1,7 @@
 from typing import Protocol, Type, runtime_checkable
 
 from koswat.builder_protocol import BuilderProtocol
-from koswat.calculations.reinforcement_profile_protocol import (
+from koswat.calculations.protocols.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.configuration.settings import KoswatScenario

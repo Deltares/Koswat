@@ -1,10 +1,8 @@
 from pathlib import Path
 from typing import List
 
+from koswat.calculations.protocols import ReinforcementProfileProtocol
 from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.plots.dike.koswat_layers_wrapper_plot import KoswatLayersWrapperPlot
 from koswat.plots.geometries.highlight_geometry_plot import HighlightGeometryPlot

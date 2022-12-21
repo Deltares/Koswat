@@ -6,13 +6,9 @@ from koswat.calculations.outside_slope_reinforcement import (
     OutsideSlopeReinforcementProfile,
     OutsideSlopeReinforcementProfileBuilder,
 )
-from koswat.calculations.reinforcement_input_profile_protocol import (
+from koswat.calculations.protocols import (
     ReinforcementInputProfileProtocol,
-)
-from koswat.calculations.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
-)
-from koswat.calculations.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.calculations.standard_reinforcement import (

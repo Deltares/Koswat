@@ -1,6 +1,4 @@
-from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementInputProfileCalculationProtocol,
-)
+from koswat.calculations.protocols import ReinforcementInputProfileCalculationProtocol
 from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
 )

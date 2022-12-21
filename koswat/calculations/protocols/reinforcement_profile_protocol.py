@@ -1,6 +1,6 @@
 from typing import Protocol, runtime_checkable
 
-from koswat.calculations.reinforcement_input_profile_protocol import (
+from koswat.calculations.protocols.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
 from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper

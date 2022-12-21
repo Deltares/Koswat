@@ -6,18 +6,18 @@ from typing import Iterable, List, Type
 
 import pytest
 
-from koswat.calculations import (
-    ReinforcementInputProfileCalculationProtocol,
-    ReinforcementInputProfileProtocol,
-    ReinforcementProfileBuilderFactory,
-    ReinforcementProfileBuilderProtocol,
-    ReinforcementProfileProtocol,
-)
+from koswat.calculations import ReinforcementProfileBuilderFactory
 from koswat.calculations.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
 )
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
+)
+from koswat.calculations.protocols import (
+    ReinforcementInputProfileCalculationProtocol,
+    ReinforcementInputProfileProtocol,
+    ReinforcementProfileBuilderProtocol,
+    ReinforcementProfileProtocol,
 )
 from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,

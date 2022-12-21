@@ -2,9 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
+from koswat.calculations.protocols import ReinforcementProfileProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 

@@ -10,16 +10,12 @@ from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
-from koswat.calculations.reinforcement_input_profile_protocol import (
+from koswat.calculations.protocols import (
+    ReinforcementInputProfileCalculationProtocol,
     ReinforcementInputProfileProtocol,
-)
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
-from koswat.calculations.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
 )
-from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementInputProfileCalculationProtocol,
-)
+from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
 from koswat.configuration.settings import KoswatScenario
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.characteristic_points.characteristic_points_builder import (
