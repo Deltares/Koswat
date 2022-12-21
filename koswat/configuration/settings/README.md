@@ -1,5 +1,7 @@
-## Koswat configuration settings.
+## Koswat settings.
 
-Contains the Data Object Models used by a `KoswatConfiguration` to understand how a Koswat run will happen.
+Contains the `DataObjectModelProtocol` instances representing a `Koswat`settings configuration.
 
-Ideally we would like both the `FileObjectModel`s and the `DataObjectModel`s to have different definitions and then create a mapper to convert from one to the other. Unfortunately due to time constraints this is at the moment not possible. Therefore the `FileObjectModel`s are also instnaces of the `DataObjectModel`s.
+All settings classes should implement the `KoswatConfigProtocol` contract.
+
+__Note__: `KoswatCostsSettings` has been placed in its own module (`koswat.configuration.settings.costs`) because of all its related subsettings.

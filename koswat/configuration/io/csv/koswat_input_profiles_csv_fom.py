@@ -1,9 +1,9 @@
 from typing import List
 
-from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
+from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
-class KoswatInputProfilesCsvFom(KoswatCsvFomProtocol):
+class KoswatInputProfilesCsvFom(FileObjectModelProtocol):
     input_profile_fom_list: List[dict]
 
     def __init__(self) -> None:

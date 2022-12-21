@@ -1,7 +1,9 @@
-## Koswat Ini Reader module.
+# Koswat Ini Reader module.
 
-This module contains the general reading of an INI file and its transformation into a FOM.
-The ini reading is done using de python default library `configparser`. 
+This module contains the general reading of an INI file and its transformation into an instance of a `FileObjectModelProtocol`.
+The ini reading is done using de python default library [configparser.ConfigParser](https://docs.python.org/3/library/configparser.html). This allows us to simply delegate the mapping responsibility to the instance of a `KoswatIniFomProtocol`, easily achieved by using the class method `from_config`.
+
+## INI file format:
 The following is accepted:
 ```ini
 [section]
