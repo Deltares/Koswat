@@ -1,31 +1,31 @@
 import re
+from pathlib import Path
 from typing import List
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
-from koswat.core.io.csv.koswat_csv_fom_builder_protocol import (
-    KoswatCsvFomBuilderProtocol,
-)
+from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
+from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.point.point_surroundings_builder import (
     PointSurroundingsBuilder,
 )
 
 
-class KoswatSurroundingsCsvFomBuilder(KoswatCsvFomBuilderProtocol):
-    headers: List[str]
-    entries: List[List[str]]
+class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
-    def __init__(self) -> None:
-        self.headers = []
-        self.entries = []
+    def read(self, file_path: Path) -> KoswatTrajectSurroundingsCsvFom:
+        _csv_fom = KoswatCsvReader().read(file_path)
 
-    def _is_valid(self) -> bool:
-        if not self.headers or not self.entries:
-            return False
-        _l_header = len(self.headers)
-        return all(map(lambda x: len(x) == _l_header, self.entries))
+        # First three columns are section x and y coordinate.
+        _koswat_fom = KoswatTrajectSurroundingsCsvFom()
+        _koswat_fom.distances_list = self._get_surroundings_distances(_csv_fom.headers[3:])
+        _koswat_fom.points_surroundings_list = self._build_points_surroundings_list(
+            _koswat_fom.distances_list,
+            _csv_fom.entries
+        )
+        return _koswat_fom
 
     def _get_surroundings_distances(self, distance_list: List[str]) -> List[float]:
         def to_distance_float(header_value: str) -> float:
@@ -56,29 +56,11 @@ class KoswatSurroundingsCsvFomBuilder(KoswatCsvFomBuilderProtocol):
         return _builder.build()
 
     def _build_points_surroundings_list(
-        self, distances_list: List[float]
+        self, distances_list: List[float], entries: List[List[str]]
     ) -> List[PointSurroundings]:
         _point_list = []
-        for idx, _point_entry in enumerate(self.entries):
+        for idx, _point_entry in enumerate(entries):
             _point_entry.insert(0, idx)
             _ps = self._build_point_surroundings(_point_entry, distances_list)
             _point_list.append(_ps)
         return _point_list
-
-    def build(self) -> KoswatTrajectSurroundingsCsvFom:
-        if not self._is_valid():
-            raise ValueError("Not valid headers and entries combination.")
-        # First three columns are section x and y coordinate.
-        _koswat_fom = KoswatTrajectSurroundingsCsvFom()
-        _koswat_fom.distances_list = self._get_surroundings_distances(self.headers[3:])
-        _koswat_fom.points_surroundings_list = self._build_points_surroundings_list(
-            _koswat_fom.distances_list
-        )
-        return _koswat_fom
-
-    @classmethod
-    def from_text(cls, csv_entries: List[List[str]]) -> KoswatCsvFomBuilderProtocol:
-        _builder = cls()
-        _builder.headers = csv_entries.pop(0)
-        _builder.entries = csv_entries
-        return _builder

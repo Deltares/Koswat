@@ -5,8 +5,8 @@ import shutil
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
-    KoswatSurroundingsCsvFomBuilder,
+from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
+    KoswatSurroundingsCsvReader,
 )
 from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
@@ -85,9 +85,7 @@ class TestAcceptance:
 
         _builder_buildings_polderside = KoswatBuildingsPoldersideBuilder()
         _builder_buildings_polderside.koswat_csv_fom = (
-            KoswatCsvReader.with_builder_type(KoswatSurroundingsCsvFomBuilder).read(
-                _csv_surroundings_file
-            )
+            KoswatSurroundingsCsvReader().read(_csv_surroundings_file)
         )
         _builder_buildings_polderside.koswat_shp_fom = None
 

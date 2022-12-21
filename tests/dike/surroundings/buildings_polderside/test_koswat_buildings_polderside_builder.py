@@ -6,8 +6,8 @@ from shapely.geometry import Point
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
-from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
-    KoswatSurroundingsCsvFomBuilder,
+from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
+    KoswatSurroundingsCsvReader,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -163,9 +163,7 @@ class TestKoswatBuildingsPoldersideBuilder:
 
         # 2. Run test
         _builder = KoswatBuildingsPoldersideBuilder()
-        _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
-            KoswatSurroundingsCsvFomBuilder
-        ).read(_csv_test_file)
+        _builder.koswat_csv_fom = KoswatSurroundingsCsvReader().read(_csv_test_file)
         _builder.koswat_shp_fom = _koswat_wrapper_shp_fom[0]
         _buildings = _builder.build()
 

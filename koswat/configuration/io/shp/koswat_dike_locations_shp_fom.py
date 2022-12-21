@@ -1,12 +1,10 @@
-from typing import Dict, List
-
 from shapefile import _Record
 from shapely.geometry import Point
 
-from koswat.core.io.shp.koswat_shp_fom_protocol import KoswatShpFomProtocol
+from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
-class KoswatDikeLocationsShpFom(KoswatShpFomProtocol):
+class KoswatDikeLocationsShpFom(FileObjectModelProtocol):
     initial_point: Point
     end_point: Point
     record: _Record
