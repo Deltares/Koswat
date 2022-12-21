@@ -2,13 +2,14 @@ import logging
 from pathlib import Path
 from typing import List
 
+from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
-class KoswatRunScenarioSettings:
+class KoswatRunScenarioSettings(KoswatConfigProtocol):
     scenario: KoswatScenario
     surroundings: SurroundingsWrapper
     costs: KoswatCostsSettings
@@ -28,7 +29,7 @@ class KoswatRunScenarioSettings:
         )
 
 
-class KoswatRunSettings:
+class KoswatRunSettings(KoswatConfigProtocol):
     run_scenarios: List[KoswatRunScenarioSettings]
     input_profile_cases: List[KoswatProfileBase]
     output_dir: Path

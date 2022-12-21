@@ -1,7 +1,9 @@
 from typing import Protocol
 
+from koswat.core.protocols.data_object_model_protocol import DataObjectModelProtocol
 
-class KoswatConfigProtocol(Protocol):
+
+class KoswatConfigProtocol(DataObjectModelProtocol, Protocol):
     def is_valid(self) -> bool:
         """
         Validates the current `KoswatConfigProtocol` instance.

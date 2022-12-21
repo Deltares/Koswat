@@ -11,10 +11,10 @@ from koswat.configuration.settings.costs.koswat_costs import (
     StorageCostsSettings,
 )
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
-from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
+from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 
 
-class KoswatCostsImporter(KoswatReaderProtocol):
+class KoswatCostsImporter(KoswatImporterProtocol):
     include_taxes: bool
 
     def __init__(self) -> None:
@@ -25,14 +25,14 @@ class KoswatCostsImporter(KoswatReaderProtocol):
         reader.koswat_ini_fom_type = KoswatCostsIniFom
         return reader.read(ini_file)
 
-    def read(self, file_path: Path) -> KoswatCostsSettings:
-        if not file_path.is_file():
-            _error = "Costs ini file not found at {}.".format(file_path)
+    def import_from(self, from_path: Path) -> KoswatCostsSettings:
+        if not from_path.is_file():
+            _error = "Costs ini file not found at {}.".format(from_path)
             raise NotImplementedError(_error)
         if self.include_taxes is None:
             raise ValueError("A boolean value is expected for `include_taxes`.")
-        logging.info("Importing costs from {}.".format(file_path))
-        _costs_fom = self._get_costs_fom(file_path)
+        logging.info("Importing costs from {}.".format(from_path))
+        _costs_fom = self._get_costs_fom(from_path)
 
         _costs_settings = KoswatCostsSettings()
         _costs_settings.price_year = int(_costs_fom.unit_prices_section.prijspeil)
