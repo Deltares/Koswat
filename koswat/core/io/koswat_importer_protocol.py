@@ -6,7 +6,9 @@ from koswat.core.protocols.data_object_model_protocol import DataObjectModelProt
 
 @runtime_checkable
 class KoswatImporterProtocol(Protocol):
-    def import_from(self, from_path: Path) -> Union[DataObjectModelProtocol, List[DataObjectModelProtocol]]:
+    def import_from(
+        self, from_path: Path
+    ) -> Union[DataObjectModelProtocol, List[DataObjectModelProtocol]]:
         """
         Generates a valid instance of a `DataObjectModelProtocol` based on the contents from the provided path.
 
