@@ -29,7 +29,7 @@ from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     StorageFactorEnum,
 )
-from koswat.core.io.file_object_model_protocol import ImportFileObjectModelProtocol
+from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from tests import test_data
@@ -62,7 +62,7 @@ class TestReadIniConfigurations:
 
         # 3. Verify expectations.
         assert isinstance(_ini_fom, ini_fom_type)
-        assert isinstance(_ini_fom, ImportFileObjectModelProtocol)
+        assert isinstance(_ini_fom, FileObjectModelProtocol)
 
     def test_koswat_ini_read_general_ini(self):
         # 1. Define test data.

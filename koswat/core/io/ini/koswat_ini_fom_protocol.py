@@ -3,10 +3,10 @@ from __future__ import annotations
 from configparser import ConfigParser
 from typing import Protocol
 
-from koswat.core.io.file_object_model_protocol import ImportFileObjectModelProtocol
+from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
-class KoswatIniFomProtocol(ImportFileObjectModelProtocol, Protocol):
+class KoswatIniFomProtocol(FileObjectModelProtocol, Protocol):
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         """

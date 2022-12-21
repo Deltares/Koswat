@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from koswat.core.io.file_object_model_protocol import ImportFileObjectModelProtocol
+from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
-class KoswatTxtFomProtocol(ImportFileObjectModelProtocol, Protocol):
+class KoswatTxtFomProtocol(FileObjectModelProtocol, Protocol):
     @classmethod
     def from_text(cls, file_text: str) -> KoswatTxtFomProtocol:
         """

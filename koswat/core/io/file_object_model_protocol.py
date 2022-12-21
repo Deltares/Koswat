@@ -11,8 +11,3 @@ class FileObjectModelProtocol(Protocol):
             bool: Result of the validation.
         """
         pass
-
-
-@runtime_checkable
-class ImportFileObjectModelProtocol(FileObjectModelProtocol, Protocol):
-    pass

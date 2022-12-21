@@ -22,7 +22,7 @@ class KoswatReaderProtocol(Protocol):
 
     def read(self, file_path: Path) -> FileObjectModelProtocol:
         """
-        Imports the data from the `file_path` into a concrete implementation of a `ImportFileObjectModelProtocol`.
+        Imports the data from the `file_path` into a concrete implementation of a `FileObjectModelProtocol`.
 
         Args:
             file_path (Path): Path to a file that should be imported.
