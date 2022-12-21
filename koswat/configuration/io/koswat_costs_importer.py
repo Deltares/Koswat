@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
 from koswat.configuration.settings.costs.koswat_costs import (
     DikeProfileCostsSettings,
@@ -11,30 +10,29 @@ from koswat.configuration.settings.costs.koswat_costs import (
     KoswatCostsSettings,
     StorageCostsSettings,
 )
-from koswat.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 
 
-class KoswatCostsImporter(BuilderProtocol):
-    ini_configuration: Path
+class KoswatCostsImporter(KoswatImporterProtocol):
     include_taxes: bool
 
     def __init__(self) -> None:
-        self.ini_configuration = None
         self.include_taxes = None
 
-    def _get_costs_fom(self) -> KoswatCostsIniFom:
+    def _get_costs_fom(self, ini_file: Path) -> KoswatCostsIniFom:
         reader = KoswatIniReader()
         reader.koswat_ini_fom_type = KoswatCostsIniFom
-        return reader.read(self.ini_configuration)
+        return reader.read(ini_file)
 
-    def build(self) -> KoswatCostsSettings:
-        if not self.ini_configuration.is_file():
-            _error = "Costs ini file not found at {}.".format(self.ini_configuration)
+    def import_from(self, from_path: Path) -> KoswatCostsSettings:
+        if not from_path.is_file():
+            _error = "Costs ini file not found at {}.".format(from_path)
             raise NotImplementedError(_error)
         if self.include_taxes is None:
             raise ValueError("A boolean value is expected for `include_taxes`.")
-        logging.info("Importing costs from {}.".format(self.ini_configuration))
-        _costs_fom = self._get_costs_fom()
+        logging.info("Importing costs from {}.".format(from_path))
+        _costs_fom = self._get_costs_fom(from_path)
 
         _costs_settings = KoswatCostsSettings()
         _costs_settings.price_year = int(_costs_fom.unit_prices_section.prijspeil)

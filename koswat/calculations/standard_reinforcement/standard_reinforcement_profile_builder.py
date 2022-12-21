@@ -3,13 +3,11 @@ from __future__ import annotations
 import logging
 from typing import Type
 
-from koswat.calculations.reinforcement_input_profile_protocol import (
+from koswat.calculations.protocols import (
     ReinforcementInputProfileProtocol,
-)
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
-from koswat.calculations.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
 )
+from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
 from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
     PipingWallReinforcementProfileCalculation,

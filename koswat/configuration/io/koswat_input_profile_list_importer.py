@@ -1,20 +1,14 @@
 from pathlib import Path
 from typing import List
 
-from koswat.builder_protocol import BuilderProtocol
-from koswat.configuration.io.csv.koswat_input_profiles_csv_fom_builder import (
-    KoswatProfileInputCsvFomBuilder,
+from koswat.configuration.io.csv.koswat_input_profiles_csv_reader import (
+    KoswatInputProfilesCsvReader,
 )
+from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 
 
-class KoswatInputProfileListImporter(BuilderProtocol):
-    ini_configuration: Path
-
-    def __init__(self) -> None:
-        self.ini_configuration = None
-
+class KoswatInputProfileListImporter(KoswatImporterProtocol):
     def _get_koswat_input_profile_base(self, fom_dict: dict) -> KoswatInputProfileBase:
         _input_profile = KoswatInputProfileBase()
         _input_profile.dike_section = fom_dict["dijksectie"]
@@ -30,10 +24,8 @@ class KoswatInputProfileListImporter(BuilderProtocol):
         _input_profile.binnen_maaiveld = float(fom_dict["binnen_maaiveld"])
         return _input_profile
 
-    def build(self) -> List[KoswatInputProfileBase]:
-        _profile_input_list = KoswatCsvReader.with_builder_type(
-            KoswatProfileInputCsvFomBuilder
-        ).read(self.ini_configuration)
+    def import_from(self, from_path: Path) -> List[KoswatInputProfileBase]:
+        _profile_input_list = KoswatInputProfilesCsvReader().read(from_path)
         return list(
             map(
                 self._get_koswat_input_profile_base,

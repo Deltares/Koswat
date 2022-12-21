@@ -1,30 +1,29 @@
 from pathlib import Path
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
-from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
+from koswat.configuration.settings.koswat_run_scenario_settings import (
+    KoswatRunScenarioSettings,
+)
+from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from tests import test_data
 
 
 class TestKoswatRunSettingsImporter:
     def test_koswat_run_settings_importer_init(self):
-        _builder = KoswatRunSettingsImporter()
-        assert isinstance(_builder, KoswatRunSettingsImporter)
-        assert isinstance(_builder, BuilderProtocol)
-        assert not _builder.ini_configuration
+        _importer = KoswatRunSettingsImporter()
+        assert isinstance(_importer, KoswatRunSettingsImporter)
+        assert isinstance(_importer, KoswatImporterProtocol)
 
     def test_koswat_run_settings_importer_build_from_valid_ini(self):
         # 1. Define test data.
         _ini_file = test_data / "acceptance" / "koswat_general.ini"
         assert _ini_file.is_file()
-        _builder = KoswatRunSettingsImporter()
-        _builder.ini_configuration = _ini_file
 
         # 2. Run test.
-        _config = _builder.build()
+        _config = KoswatRunSettingsImporter().import_from(_ini_file)
 
         # 3. Verify final expectations.
         assert isinstance(_config.run_scenarios, list)

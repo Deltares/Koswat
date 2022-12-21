@@ -7,7 +7,10 @@ from typing import Optional
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
-from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
+from koswat.configuration.settings.koswat_run_scenario_settings import (
+    KoswatRunScenarioSettings,
+)
+from koswat.core.koswat_logger import KoswatLogger
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
@@ -16,7 +19,6 @@ from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
-from koswat.koswat_logger import KoswatLogger
 
 
 class KoswatHandler:
@@ -45,11 +47,9 @@ class KoswatHandler:
             logging.error("No summary was genarted for {}".format(settings.name))
             return
         # Export analysis csv.
-        _exporter = SummaryMatrixCsvExporter()
-        _exporter.data_object_model = summary
-        _exporter.export_filepath = settings.output_dir / "matrix_results.csv"
-        _exporter.export(_exporter.build())
-        logging.info("Exported matrix results to: {}".format(_exporter.export_filepath))
+        _export_path = settings.output_dir / "matrix_results.csv"
+        SummaryMatrixCsvExporter().export(summary, _export_path)
+        logging.info("Exported matrix results to: {}".format(_export_path))
 
     def _generate_plots(
         self, settings: KoswatRunScenarioSettings, summary: KoswatSummary
@@ -81,9 +81,9 @@ class KoswatHandler:
             return _ini
 
         # Import data.
-        _run_settings_importer = KoswatRunSettingsImporter()
-        _run_settings_importer.ini_configuration = _as_path(analysis_file)
-        self._run_settings = _run_settings_importer.build()
+        self._run_settings = KoswatRunSettingsImporter().import_from(
+            _as_path(analysis_file)
+        )
 
         # Run data
         for _run_scenario in self._run_settings.run_scenarios:

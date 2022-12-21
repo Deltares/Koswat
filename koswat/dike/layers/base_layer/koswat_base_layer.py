@@ -1,8 +1,8 @@
 from shapely.geometry import LineString, Polygon
 
+from koswat.core.geometries.calc_library import get_polygon_coordinates
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
-from koswat.geometries.calc_library import get_polygon_coordinates
 
 
 class KoswatBaseLayer(KoswatLayerProtocol):

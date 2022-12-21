@@ -3,12 +3,11 @@ from typing import List
 import pytest
 from shapely.geometry import Point
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
-from koswat.configuration.io.csv.koswat_surroundings_csv_fom_builder import (
-    KoswatSurroundingsCsvFomBuilder,
+from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
+    KoswatSurroundingsCsvReader,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -16,6 +15,8 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
+from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,
@@ -23,7 +24,6 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
-from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 from tests import test_data
 
 
@@ -163,9 +163,7 @@ class TestKoswatBuildingsPoldersideBuilder:
 
         # 2. Run test
         _builder = KoswatBuildingsPoldersideBuilder()
-        _builder.koswat_csv_fom = KoswatCsvReader.with_builder_type(
-            KoswatSurroundingsCsvFomBuilder
-        ).read(_csv_test_file)
+        _builder.koswat_csv_fom = KoswatSurroundingsCsvReader().read(_csv_test_file)
         _builder.koswat_shp_fom = _koswat_wrapper_shp_fom[0]
         _buildings = _builder.build()
 

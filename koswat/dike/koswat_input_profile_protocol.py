@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
+from koswat.core.protocols.data_object_model_protocol import DataObjectModelProtocol
+
 
 @runtime_checkable
-class KoswatInputProfileProtocol(Protocol):
+class KoswatInputProfileProtocol(DataObjectModelProtocol, Protocol):
     dike_section: str
     buiten_maaiveld: float
     buiten_talud: float

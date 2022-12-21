@@ -1,6 +1,4 @@
-from koswat.calculations.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
+from koswat.calculations.protocols import ReinforcementProfileProtocol
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )

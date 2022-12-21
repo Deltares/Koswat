@@ -4,7 +4,7 @@ from typing import List
 import pytest
 from shapely.geometry.point import Point
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase

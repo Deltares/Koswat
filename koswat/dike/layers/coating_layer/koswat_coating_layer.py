@@ -2,12 +2,12 @@ import math
 
 from shapely.geometry import LineString, Polygon
 
-from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
-from koswat.dike.material.koswat_material_type import KoswatMaterialType
-from koswat.geometries.calc_library import (
+from koswat.core.geometries.calc_library import (
     get_polygon_coordinates,
     order_geometry_points,
 )
+from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class KoswatCoatingLayer(KoswatLayerProtocol):

@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 from typing import Optional
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,

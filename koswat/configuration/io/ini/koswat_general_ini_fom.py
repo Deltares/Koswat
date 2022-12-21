@@ -9,7 +9,7 @@ from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     StorageFactorEnum,
 )
-from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
+from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
 class AnalysisSectionFom(KoswatIniFomProtocol):

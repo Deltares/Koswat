@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,

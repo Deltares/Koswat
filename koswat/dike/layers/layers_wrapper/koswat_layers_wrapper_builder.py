@@ -4,6 +4,7 @@ from typing import List
 
 from shapely import geometry
 
+from koswat.core.geometries.calc_library import profile_points_to_polygon
 from koswat.dike.layers.base_layer import KoswatBaseLayer, KoswatBaseLayerBuilder
 from koswat.dike.layers.coating_layer import (
     KoswatCoatingLayer,
@@ -13,7 +14,6 @@ from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper import KoswatLayers
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol import (
     KoswatLayersWrapperBuilderProtocol,
 )
-from koswat.geometries.calc_library import profile_points_to_polygon
 
 
 class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):

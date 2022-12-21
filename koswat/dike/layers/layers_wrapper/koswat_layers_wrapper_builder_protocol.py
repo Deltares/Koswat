@@ -4,7 +4,7 @@ from typing import List, Protocol
 
 from shapely import geometry
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper import (
     KoswatLayersWrapperProtocol,
 )

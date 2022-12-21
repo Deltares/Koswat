@@ -6,18 +6,18 @@ from typing import Iterable, List, Type
 
 import pytest
 
-from koswat.calculations import (
-    ReinforcementInputProfileCalculationProtocol,
-    ReinforcementInputProfileProtocol,
-    ReinforcementProfileBuilderFactory,
-    ReinforcementProfileBuilderProtocol,
-    ReinforcementProfileProtocol,
-)
+from koswat.calculations import ReinforcementProfileBuilderFactory
 from koswat.calculations.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
 )
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
+)
+from koswat.calculations.protocols import (
+    ReinforcementInputProfileCalculationProtocol,
+    ReinforcementInputProfileProtocol,
+    ReinforcementProfileBuilderProtocol,
+    ReinforcementProfileProtocol,
 )
 from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
@@ -27,14 +27,14 @@ from koswat.calculations.standard_reinforcement import (
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
+from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
+    KoswatSectionScenarioListIniDirReader,
+)
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
 from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
-)
-from koswat.configuration.io.koswat_scenario_list_importer import (
-    KoswatScenarioListImporter,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
@@ -83,10 +83,10 @@ def scenario_ini_file() -> List[pytest.param]:
             id="{}_{}".format(scenario.scenario_name, scenario.scenario_section),
         )
 
-    _importer = KoswatScenarioListImporter()
-    _importer.scenario_dir = scenarios_dir
     _scenarios = []
-    for _fom_scenario_wrapper in _importer.build():
+    for _fom_scenario_wrapper in KoswatSectionScenarioListIniDirReader().read(
+        scenarios_dir
+    ):
         _scenarios = _scenarios + list(_to_koswat_scenario(_fom_scenario_wrapper))
 
     return list(map(_to_pytest_param, _scenarios))
@@ -94,15 +94,15 @@ def scenario_ini_file() -> List[pytest.param]:
 
 def input_profile_data_csv_file() -> List[pytest.param]:
     _csv_file = test_data / "acceptance" / "csv" / "dike_input_profiles.csv"
-    _importer = KoswatInputProfileListImporter()
-    _importer.ini_configuration = _csv_file
 
     def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
         return pytest.param(
             input_profile, id="Input_{}".format(input_profile.dike_section)
         )
 
-    return list(map(_to_pytest_param, _importer.build()))[:2]
+    return list(
+        map(_to_pytest_param, KoswatInputProfileListImporter().import_from(_csv_file))
+    )[:2]
 
 
 _scenarios = scenario_ini_file()

@@ -1,7 +1,7 @@
 import abc
 from configparser import ConfigParser
 
-from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
+from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
 class UnitPricesSectionFom(KoswatIniFomProtocol):

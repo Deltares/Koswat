@@ -1,6 +1,4 @@
-from koswat.calculations.reinforcement_profile_calculation_protocol import (
-    ReinforcementInputProfileCalculationProtocol,
-)
+from koswat.calculations.protocols import ReinforcementInputProfileCalculationProtocol
 from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
     SoilInputProfile,
 )

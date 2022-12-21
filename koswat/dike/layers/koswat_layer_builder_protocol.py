@@ -2,7 +2,7 @@ from typing import Protocol, runtime_checkable
 
 from shapely import geometry
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 
 
