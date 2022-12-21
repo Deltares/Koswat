@@ -1,6 +1,4 @@
-from koswat.core.io.export_file_object_model_protocol import (
-    ExportFileObjectModelProtocol,
-)
+from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
 
 
@@ -8,7 +6,7 @@ class TestSummaryMatrixCsvFom:
     def test_initialize(self):
         _fom = SummaryMatrixCsvFom()
         assert isinstance(_fom, SummaryMatrixCsvFom)
-        assert isinstance(_fom, ExportFileObjectModelProtocol)
+        assert isinstance(_fom, KoswatCsvFomProtocol)
         assert not _fom.headers
         assert not _fom.cost_rows
         assert not _fom.location_rows

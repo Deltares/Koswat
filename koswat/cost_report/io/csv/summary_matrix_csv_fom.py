@@ -1,11 +1,9 @@
 from typing import List
 
-from koswat.core.io.export_file_object_model_protocol import (
-    ExportFileObjectModelProtocol,
-)
+from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 
 
-class SummaryMatrixCsvFom(ExportFileObjectModelProtocol):
+class SummaryMatrixCsvFom(KoswatCsvFomProtocol):
 
     headers: List[str]
     cost_rows: List[List[str]]
