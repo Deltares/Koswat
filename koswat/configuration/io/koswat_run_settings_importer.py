@@ -112,9 +112,8 @@ class KoswatRunSettingsImporter(BuilderProtocol):
             logging.error("Dike costs ini file not found at {}".format(ini_file))
             return None
         _importer = KoswatCostsImporter()
-        _importer.ini_configuration = ini_file
         _importer.include_taxes = include_taxes
-        return _importer.build()
+        return _importer.read(ini_file)
 
     def _import_scenario_fom_list(
         self, scenario_dir: Path, dike_selections: List[str]
