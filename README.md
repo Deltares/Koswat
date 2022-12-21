@@ -1,15 +1,25 @@
 # KOSWAT
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_Koswat&metric=alert_status&token=87fdd0648c19800b4b5fc11334461a7fb602bf20)](https://sonarcloud.io/summary/new_code?id=Deltares_Koswat)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <!--  These tags won't work while being private.
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Deltares/Koswat)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Deltares/Koswat) -->
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Description
 
+
+### Intended audience
+Koswat targets two types of users:
+- Sandbox users. This target group are users acquianted with `Python` scripting. For them we envision two main interests when using the tool as a sandbox:
+    - Extending its functionality, or _correcting_ the existing one via pull-requests. This requires them to adhere to our __Development Guidelines__ (not yet present) and to use the Koswat repository in [Development mode](#development-mode).
+    - Creating their own scripts. It is possible to use the full extent of Koswat features on custom scripts, of course under your own responsibility. In this case the user only requires to install the most convinient version of the package as a [sandbox / endpoint](#sandbox--endpoint).
+- Single endpoint users. These users are only interested in running the tool via command line or other User Interfaces. For them, it is advised to install the tool as a [sandbox / endpoint](#sandbox--endpoint) and to check the tool's [endpoint usage](#endpoint-usage).
+
 ## Installation
 
-### With pypi
+__Important!__ The following installation steps are written based on a Windows environment. When using other systems (which should be possible) it might be required to use different commands. However, the fundamental of the installation steps should remain the same. This meaning, no additional packages or libraries should be required. If problems would arose during your installation, please contact the maintainers of the tool.
+
+### Sandbox / Endpoint
 
 When you only require the koswat package to be used as a whole, and not for developments, we advise to directly use the latest greatest release, or directly the latest available version from `Master` as follows:
 
@@ -18,15 +28,30 @@ pip install git+https://github.com/Deltares/Koswat.git
 ```
 
 
-### With development environment
-Checkout the code from github in a directory of your choice. Navigate to it and then install both the environment and the koswat package as follows:
-```bash
-conda env create -f "environment.yml"
-conda activate koswat_env
-poetry install
-```
+### Development mode
+1. Checkout the code from github in a directory of your choice. You can either do this by downloading the source zip or (better) using git, for instance:
+    ```git
+    mkdir C:\repos\koswat
+    cd C:\repos\koswat
+    git clone https://github.com/Deltares/Koswat.git
+    ```
+    | Note, the above steps are based on a Windows setup. If you are not familiar with Git we recommend using the [GitHub desktop tool](https://desktop.github.com/).
 
-## Usage
+2. Navigate to it and then install the koswat package:
+
+    1. With [Anaconda](https://www.anaconda.com/) (our recommendation):    
+        ```bash
+        conda env create -f "environment.yml"
+        conda activate koswat_env
+        poetry install
+        ```
+    2. With `pypi`:
+        ```bash
+        pip install .
+        ```
+        | Note, this will not install `Poetry`, which is required to properly maintain the interdependencies of `Koswat` tool.
+
+## Endpoint usage
  
 When using `Koswat` as a package you can run it directly from the command line as follows:
 
@@ -36,3 +61,8 @@ python -m koswat --input_file path\\to\\your\\koswat.ini --log_output path\\to\\
 The arguments are:
 - `--input_file` (required): Absolute path to the location of your general `koswat.ini` file.
 - `--log_output` (optional): Absolute path to the location of where the `koswat.log` will be written. If not specified it will be written at the root of the execution directory.
+
+It is also possible to check all the above possibilities via the `--help` argument in the command line:
+```cli
+python -m koswat --help
+```
