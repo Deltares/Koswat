@@ -1,4 +1,4 @@
-## Koswat.Configuration.Models.
+## Koswat configuration settings.
 
 Contains the Data Object Models used by a `KoswatConfiguration` to understand how a Koswat run will happen.
 

@@ -2,19 +2,17 @@ import logging
 from pathlib import Path
 from typing import List
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
 from koswat.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
-class KoswatScenarioListImporter(BuilderProtocol):
-    scenario_dir: Path
+class KoswatSectionScenarioListIniDirReader(KoswatReaderProtocol):
     dike_selection: List[str]
 
     def __init__(self) -> None:
-        self.scenario_dir = None
         self.dike_selection = []
 
     def _selected_scenario(self, scenario_file: Path) -> bool:
@@ -37,16 +35,16 @@ class KoswatScenarioListImporter(BuilderProtocol):
         _section_scenarios.scenario_section = scenario_file.stem
         return _section_scenarios
 
-    def build(self) -> List[KoswatSectionScenariosIniFom]:
-        if not self.scenario_dir.is_dir():
+    def read(self, dir_path: Path) -> List[KoswatSectionScenariosIniFom]:
+        if not dir_path.is_dir():
             logging.error(
-                "Scenarios directory not found at {}".format(self.scenario_dir)
+                "Scenarios directory not found at {}".format(dir_path)
             )
             return []
 
         return list(
             map(
                 self._get_scenario,
-                filter(self._selected_scenario, self.scenario_dir.glob("*.ini")),
+                filter(self._selected_scenario, dir_path.glob("*.ini")),
             )
         )

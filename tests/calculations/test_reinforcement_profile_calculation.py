@@ -27,14 +27,14 @@ from koswat.calculations.standard_reinforcement import (
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
+from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
+    KoswatSectionScenarioListIniDirReader,
+)
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
 from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
-)
-from koswat.configuration.io.koswat_scenario_list_importer import (
-    KoswatScenarioListImporter,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
@@ -83,10 +83,10 @@ def scenario_ini_file() -> List[pytest.param]:
             id="{}_{}".format(scenario.scenario_name, scenario.scenario_section),
         )
 
-    _importer = KoswatScenarioListImporter()
-    _importer.scenario_dir = scenarios_dir
     _scenarios = []
-    for _fom_scenario_wrapper in _importer.build():
+    for _fom_scenario_wrapper in KoswatSectionScenarioListIniDirReader().read(
+        scenarios_dir
+    ):
         _scenarios = _scenarios + list(_to_koswat_scenario(_fom_scenario_wrapper))
 
     return list(map(_to_pytest_param, _scenarios))
