@@ -9,15 +9,15 @@ class KoswatCsvWriter(KoswatWriterProtocol):
     separator: str = ";"
 
     def write(self, fom_instance: KoswatCsvFomProtocol, to_path: Path) -> None:
-        if not isinstance(fom_instance, KoswatCsvFomProtocol): 
+        if not isinstance(fom_instance, KoswatCsvFomProtocol):
             raise ValueError("Expected instance of type 'KoswatCsvFomProtocol'.")
         if not isinstance(to_path, Path):
             raise ValueError("No write path location provided.")
-        
+
         def format_line(line: List[str]) -> str:
             return ";".join(map(str, line))
 
-        _lines = list(map(format_line, fom_instance.headers + fom_instance.entries))
+        _lines = list(map(format_line, [fom_instance.headers] + fom_instance.entries))
         _text = "\n".join(_lines)
 
         to_path.write_text(_text)
