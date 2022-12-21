@@ -22,19 +22,3 @@ class TestSummaryMatrixCsvFom:
 
         # 2. Run test
         assert _fom.is_valid()
-
-    def test_get_lines(self):
-        # 1. Define test data.
-        _fom = SummaryMatrixCsvFom()
-        _header = "Amet nisi ad duis nostrud irure proident dolore nisi culpa."
-        _fom.headers = [_header]
-        _fom.cost_rows = [["a", "b"], ["c", "d"]]
-        _fom.location_rows = [["1", "2"], ["3", "4"]]
-        _expected_result = [_header, "a;b", "c;d", "1;2", "3;4"]
-
-        # 2. Run test
-        _lines = _fom.get_lines()
-
-        # 3. Verify expectations.
-        assert len(_lines) == 5
-        assert _lines == _expected_result

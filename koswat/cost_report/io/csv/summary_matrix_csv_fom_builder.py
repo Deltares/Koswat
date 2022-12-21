@@ -24,9 +24,8 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         _matrix_csv_fom = self._get_summary_matrix_csv_fom(self.koswat_summary)
         _csv_fom = KoswatCsvFom()
         _csv_fom.headers = _matrix_csv_fom.headers
-        _csv_fom.headers = self.headers
-        _csv_fom.entries.extend(self.cost_rows)
-        _csv_fom.entries.extend(self.location_rows)
+        _csv_fom.entries.extend(_matrix_csv_fom.cost_rows)
+        _csv_fom.entries.extend(_matrix_csv_fom.location_rows)
         return _csv_fom
 
     def _get_summary_matrix_csv_fom(

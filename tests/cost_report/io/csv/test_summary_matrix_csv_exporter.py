@@ -2,15 +2,13 @@ import shutil
 
 import pytest
 
+from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
-from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
-from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
-    MultiLocationProfileCostReport,
-)
 from tests import test_results
+from tests.cost_report.io.csv import get_valid_test_summary
 
 
 class TestSummaryMatrixCsvExporter:
@@ -22,24 +20,19 @@ class TestSummaryMatrixCsvExporter:
     def test_export(self, request: pytest.FixtureRequest):
         # 1. Define test data.
         _test_dir = test_results / request.node.name
+        _export_path = _test_dir / "matrix_results.csv"
         if _test_dir.is_dir():
             shutil.rmtree(_test_dir)
 
-        _exporter = SummaryMatrixCsvExporter()
-        _exporter.export_filepath = _test_dir / "matrix_results.csv"
-        _fom_summary = SummaryMatrixCsvFom()
-        _fom_summary.headers = ["a", "header"]
-        _fom_summary.cost_rows = [["two", "entries"], ["other", "more"]]
-        _fom_summary.location_rows = [["a", "location"], ["another", "one"]]
-
+        _fom_summary = get_valid_test_summary()
         _expected_result = (
             """a;header\ntwo;entries\nother;more\na;location\nanother;one"""
         )
 
         # 2. Run test
-        _exporter.export(_fom_summary)
+        SummaryMatrixCsvExporter().export(_fom_summary, _export_path)
 
         # 3. Validate results
-        assert _exporter.export_filepath.exists()
-        _written_text = _exporter.export_filepath.read_text()
-        assert _written_text == _expected_result
+        assert _export_path.exists()
+        _written_lines = _export_path.read_text().splitlines(keepends=False)
+        assert any(_written_lines)
