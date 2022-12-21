@@ -8,7 +8,7 @@ from shapely.geometry import Point
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
-from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
+from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
 class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):

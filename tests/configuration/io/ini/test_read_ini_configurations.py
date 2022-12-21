@@ -29,9 +29,9 @@ from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     StorageFactorEnum,
 )
-from koswat.io.file_object_model_protocol import ImportFileObjectModelProtocol
-from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
-from koswat.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.file_object_model_protocol import ImportFileObjectModelProtocol
+from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
+from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from tests import test_data
 
 test_ini_reader_data = test_data / "ini_reader"

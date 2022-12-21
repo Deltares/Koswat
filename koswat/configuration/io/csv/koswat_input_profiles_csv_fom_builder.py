@@ -3,7 +3,9 @@ from typing import List
 from koswat.configuration.io.csv.koswat_input_profiles_csv_fom import (
     KoswatInputProfilesCsvFom,
 )
-from koswat.io.csv.koswat_csv_fom_builder_protocol import KoswatCsvFomBuilderProtocol
+from koswat.core.io.csv.koswat_csv_fom_builder_protocol import (
+    KoswatCsvFomBuilderProtocol,
+)
 
 
 class KoswatProfileInputCsvFomBuilder(KoswatCsvFomBuilderProtocol):

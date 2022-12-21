@@ -1,7 +1,7 @@
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
-from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
+from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
 from tests import test_data
 
 test_ini_reader_data = test_data / "txt_reader"

@@ -1,6 +1,5 @@
 import pytest
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations.protocols import ReinforcementInputProfileCalculationProtocol
 from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile import (
     SoilReinforcementProfile,
@@ -9,6 +8,7 @@ from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile_
     SoilReinforcementProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 

@@ -3,7 +3,7 @@ from typing import Dict, List
 from shapefile import _Record
 from shapely.geometry import Point
 
-from koswat.io.shp.koswat_shp_fom_protocol import KoswatShpFomProtocol
+from koswat.core.io.shp.koswat_shp_fom_protocol import KoswatShpFomProtocol
 
 
 class KoswatDikeLocationsShpFom(KoswatShpFomProtocol):

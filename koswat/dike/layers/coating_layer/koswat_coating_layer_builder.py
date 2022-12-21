@@ -3,9 +3,9 @@ from typing import List
 
 from shapely import geometry
 
+from koswat.core.geometries.calc_library import remove_layer_from_polygon
 from koswat.dike.layers.coating_layer.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
-from koswat.geometries.calc_library import remove_layer_from_polygon
 
 
 class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):

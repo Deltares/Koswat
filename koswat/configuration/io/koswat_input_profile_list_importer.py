@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import List
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_input_profiles_csv_fom_builder import (
     KoswatProfileInputCsvFomBuilder,
 )
+from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 
 
 class KoswatInputProfileListImporter(BuilderProtocol):

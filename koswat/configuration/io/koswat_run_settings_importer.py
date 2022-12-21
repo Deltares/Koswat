@@ -3,7 +3,6 @@ import math
 from pathlib import Path
 from typing import Any, List
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.ini import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import DikeProfileSectionFom
 from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
@@ -29,13 +28,14 @@ from koswat.configuration.settings.koswat_run_settings import (
     KoswatRunSettings,
 )
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from koswat.io.ini.koswat_ini_reader import KoswatIniReader
-from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
 
 
 class KoswatRunSettingsImporter(BuilderProtocol):

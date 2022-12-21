@@ -1,10 +1,10 @@
 import logging
 from typing import List
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.calculations import ReinforcementProfileBuilderFactory
 from koswat.calculations.protocols import ReinforcementProfileProtocol
 from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
+from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.multi_location_profile import (
     MultiLocationProfileCostReportBuilder,
 )

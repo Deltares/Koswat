@@ -4,11 +4,13 @@ from typing import List
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
+from koswat.core.io.csv.koswat_csv_fom_builder_protocol import (
+    KoswatCsvFomBuilderProtocol,
+)
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.point.point_surroundings_builder import (
     PointSurroundingsBuilder,
 )
-from koswat.io.csv.koswat_csv_fom_builder_protocol import KoswatCsvFomBuilderProtocol
 
 
 class KoswatSurroundingsCsvFomBuilder(KoswatCsvFomBuilderProtocol):

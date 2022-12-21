@@ -1,6 +1,6 @@
 from typing import List
 
-from koswat.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
+from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 
 
 class KoswatInputProfilesCsvFom(KoswatCsvFomProtocol):

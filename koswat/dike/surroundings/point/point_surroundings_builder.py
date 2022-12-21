@@ -1,6 +1,6 @@
 from shapely.geometry import Point
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 

@@ -3,7 +3,6 @@ from itertools import groupby
 from pathlib import Path
 from typing import List, Tuple
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
     KoswatTrajectSurroundingsWrapperCsvFom,
@@ -17,11 +16,12 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
+from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
-from koswat.io.csv.koswat_csv_reader import KoswatCsvReader
 
 
 class KoswatSurroundingsImporter(BuilderProtocol):

@@ -10,8 +10,8 @@ from koswat.configuration.settings.costs.koswat_costs import (
     KoswatCostsSettings,
     StorageCostsSettings,
 )
-from koswat.io.ini.koswat_ini_reader import KoswatIniReader
-from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
+from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
 class KoswatCostsImporter(KoswatReaderProtocol):

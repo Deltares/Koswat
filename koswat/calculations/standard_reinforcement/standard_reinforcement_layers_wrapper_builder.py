@@ -7,16 +7,16 @@ from koswat.calculations.reinforcement_layers_wrapper import (
     ReinforcementCoatingLayer,
     ReinforcementLayersWrapper,
 )
+from koswat.core.geometries.calc_library import (
+    as_unified_geometry,
+    get_polygon_surface_points,
+    get_relative_core_layer,
+)
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperBuilder,
     KoswatLayersWrapperBuilderProtocol,
     KoswatLayersWrapperProtocol,
-)
-from koswat.geometries.calc_library import (
-    as_unified_geometry,
-    get_polygon_surface_points,
-    get_relative_core_layer,
 )
 
 

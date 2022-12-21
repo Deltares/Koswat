@@ -8,6 +8,7 @@ from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
 from koswat.configuration.settings.koswat_run_settings import KoswatRunScenarioSettings
+from koswat.core.koswat_logger import KoswatLogger
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
@@ -16,7 +17,6 @@ from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
-from koswat.koswat_logger import KoswatLogger
 
 
 class KoswatHandler:

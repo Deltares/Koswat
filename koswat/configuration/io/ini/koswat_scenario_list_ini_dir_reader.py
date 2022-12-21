@@ -5,8 +5,8 @@ from typing import List
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
-from koswat.io.ini.koswat_ini_reader import KoswatIniReader
-from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
+from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
 class KoswatSectionScenarioListIniDirReader(KoswatReaderProtocol):
@@ -37,9 +37,7 @@ class KoswatSectionScenarioListIniDirReader(KoswatReaderProtocol):
 
     def read(self, dir_path: Path) -> List[KoswatSectionScenariosIniFom]:
         if not dir_path.is_dir():
-            logging.error(
-                "Scenarios directory not found at {}".format(dir_path)
-            )
+            logging.error("Scenarios directory not found at {}".format(dir_path))
             return []
 
         return list(

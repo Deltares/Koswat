@@ -14,6 +14,7 @@ from koswat.calculations.standard_reinforcement import (
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
 )
+from koswat.core.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
@@ -24,7 +25,6 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
 from tests import test_results
 
 

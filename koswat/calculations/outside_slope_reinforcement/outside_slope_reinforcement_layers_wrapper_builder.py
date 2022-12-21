@@ -8,6 +8,7 @@ from koswat.calculations.reinforcement_layers_wrapper import (
     ReinforcementLayerProtocol,
     ReinforcementLayersWrapper,
 )
+from koswat.core.geometries.calc_library import get_polygon_surface_points
 from koswat.dike.layers import KoswatLayerProtocol
 from koswat.dike.layers.base_layer import KoswatBaseLayer
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
@@ -16,7 +17,6 @@ from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperBuilderProtocol,
     KoswatLayersWrapperProtocol,
 )
-from koswat.geometries.calc_library import get_polygon_surface_points
 
 
 class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):

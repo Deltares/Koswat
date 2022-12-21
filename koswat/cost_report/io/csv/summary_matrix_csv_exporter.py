@@ -4,11 +4,11 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
+from koswat.core.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.io.koswat_file_exporter_protocol import KoswatFileExporterProtocol
 
 
 class SummaryMatrixCsvExporter(KoswatFileExporterProtocol):

@@ -1,5 +1,5 @@
-from koswat.io.koswat_reader_protocol import KoswatReaderProtocol
-from koswat.io.txt.koswat_txt_reader import KoswatTxtReader
+from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
+from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
 
 
 class TestKoswatTxtReader:

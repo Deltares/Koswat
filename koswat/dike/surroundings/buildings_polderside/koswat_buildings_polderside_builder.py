@@ -4,11 +4,11 @@ from typing import List
 
 from shapely.geometry import Point
 
-from koswat.builder_protocol import BuilderProtocol
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
     PointSurroundings,

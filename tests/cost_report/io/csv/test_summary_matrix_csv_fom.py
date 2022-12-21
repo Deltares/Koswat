@@ -1,5 +1,5 @@
+from koswat.core.io.file_object_model_protocol import ExportFileObjectModelProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
-from koswat.io.file_object_model_protocol import ExportFileObjectModelProtocol
 
 
 class TestSummaryMatrixCsvFom:

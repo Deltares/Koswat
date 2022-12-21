@@ -1,7 +1,7 @@
 import pytest
 from shapely.geometry import LineString
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.layers.base_layer import KoswatBaseLayer, KoswatBaseLayerBuilder
 from koswat.dike.layers.koswat_layer_builder_protocol import KoswatLayerBuilderProtocol
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol

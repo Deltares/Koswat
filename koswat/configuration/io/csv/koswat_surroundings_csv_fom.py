@@ -1,7 +1,7 @@
 from typing import Dict, List, Optional
 
+from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 
 
 class KoswatTrajectSurroundingsCsvFom(KoswatCsvFomProtocol):

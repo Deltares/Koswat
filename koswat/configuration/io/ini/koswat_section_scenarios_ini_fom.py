@@ -3,7 +3,7 @@ from __future__ import annotations
 from configparser import ConfigParser
 from typing import List, Optional
 
-from koswat.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
+from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
 class SectionScenarioFom(KoswatIniFomProtocol):

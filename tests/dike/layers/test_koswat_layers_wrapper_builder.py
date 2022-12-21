@@ -3,7 +3,7 @@ from typing import List
 import pytest
 from shapely.geometry import Point
 
-from koswat.builder_protocol import BuilderProtocol
+from koswat.core.protocols import BuilderProtocol
 from koswat.dike.layers.base_layer import KoswatBaseLayer
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.layers_wrapper import (
