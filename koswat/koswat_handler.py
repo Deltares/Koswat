@@ -81,7 +81,7 @@ class KoswatHandler:
             return _ini
 
         # Import data.
-        self._run_settings = KoswatRunSettingsImporter().import_from(analysis_file)
+        self._run_settings = KoswatRunSettingsImporter().import_from(_as_path(analysis_file))
 
         # Run data
         for _run_scenario in self._run_settings.run_scenarios:
