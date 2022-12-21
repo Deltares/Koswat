@@ -1,4 +1,6 @@
-from koswat.core.io.file_object_model_protocol import ExportFileObjectModelProtocol
+from koswat.core.io.export_file_object_model_protocol import (
+    ExportFileObjectModelProtocol,
+)
 from koswat.cost_report.io.csv.summary_matrix_csv_fom import SummaryMatrixCsvFom
 
 

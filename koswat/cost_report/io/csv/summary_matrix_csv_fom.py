@@ -1,6 +1,8 @@
 from typing import List
 
-from koswat.core.io.file_object_model_protocol import ExportFileObjectModelProtocol
+from koswat.core.io.export_file_object_model_protocol import (
+    ExportFileObjectModelProtocol,
+)
 
 
 class SummaryMatrixCsvFom(ExportFileObjectModelProtocol):
