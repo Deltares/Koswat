@@ -32,6 +32,15 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
 def as_unified_geometry(
     source_geom: Union[geometry.Polygon, geometry.MultiPolygon]
 ) -> geometry.Polygon:
+    """
+    Ensures the calculated geometry is returned as a single polygon.
+
+    Args:
+        source_geom (Union[geometry.Polygon, geometry.MultiPolygon]): Calculated source geometry.
+
+    Returns:
+        geometry.Polygon: Unified resulting geometry.
+    """
     if isinstance(source_geom, geometry.MultiPolygon):
         return source_geom.union(source_geom.convex_hull)
     return source_geom
@@ -70,16 +79,39 @@ def get_relative_core_layer(
 
 def get_polygon_coordinates(
     pol_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
-) -> Union[geometry.LineString, geometry.MultiLineString]:
+) -> geometry.LineString:
+    """
+    Given a single or multi geometry returns the coordinates composing its outer layout.
+
+    Args:
+        pol_geometry (Union[geometry.Polygon, geometry.MultiPolygon]): Source geometry.
+
+    Raises:
+        NotImplementedError: When the provided geometry is not yet supported.
+
+    Returns:
+        geometry.LineString: Set of points composing the outer layout of the geometry.
+    """
     if isinstance(pol_geometry, geometry.Polygon):
         return geometry.LineString(pol_geometry.exterior.coords)
     elif isinstance(pol_geometry, geometry.MultiPolygon):
+        # TODO: Check if this can be removed, in theory it should never happen.
         _geoms_coords = [_geom.exterior.coords for _geom in pol_geometry.geoms]
         return ops.linemerge(_geoms_coords)
     raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
 
 
 def get_groundlevel_surface(pol_geometry: geometry.Polygon) -> geometry.LineString:
+    """
+    Returns all the points which are at 'groundlevel' values (y = 0)
+
+    Args:
+        pol_geometry (geometry.Polygon): Source geometry.
+
+    Returns:
+        geometry.LineString: Line with points at y = 0.
+    """
+
     def _in_groundlevel(geom_coord: geometry.Point) -> bool:
         return geom_coord.y == 0
 
@@ -111,6 +143,15 @@ def _get_single_polygon_surface_points(
 def get_polygon_surface_points(
     base_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
 ) -> geometry.LineString:
+    """
+    Gets all the points composing the upper surface of a 'dike' geometry.
+
+    Args:
+        base_geometry (Union[geometry.Polygon, geometry.MultiPolygon]): Source geometry.
+
+    Returns:
+        geometry.LineString: Resulting line with points from the outer geometry.
+    """
     if isinstance(base_geometry, geometry.MultiPolygon):
         return ops.linemerge(
             list(map(_get_single_polygon_surface_points, base_geometry.geoms))
@@ -140,5 +181,15 @@ def profile_points_to_polygon(points_list: List[geometry.Point]) -> geometry.Pol
 def remove_layer_from_polygon(
     dike_polygon: geometry.Polygon, layer_depth: float
 ) -> geometry.Polygon:
+    """
+    Gets the dike profile without a layer of provided `layer_depth` depth.
+
+    Args:
+        dike_polygon (geometry.Polygon): Source geometry.
+        layer_depth (float): Depth of a layer from the outer `dike_polygon` geometry inwards.
+
+    Returns:
+        geometry.Polygon: Resulting geometry when removing the layer.
+    """
     _shift_y_geom = affinity.translate(dike_polygon, yoff=-layer_depth)
     return dike_polygon.difference(_shift_y_geom)
