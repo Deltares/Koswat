@@ -32,9 +32,6 @@ class TestSummaryMatrixCsvExporter:
         # 3. Validate results
         assert _export_path.exists()
         _lines = _export_path.read_text().strip().splitlines()
-        assert len(_lines) == 25, "First line: {}\nLast line was {}".format(
-            _lines[0], _lines[-1]
-        )
         assert (
             _lines[0]
             == ";;Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand"
