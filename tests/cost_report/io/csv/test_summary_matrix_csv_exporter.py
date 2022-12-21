@@ -17,7 +17,7 @@ class TestSummaryMatrixCsvExporter:
         assert isinstance(_exporter, SummaryMatrixCsvExporter)
         assert isinstance(_exporter, KoswatExporterProtocol)
 
-    def test_export(self, request: pytest.FixtureRequest):
+    def test_summary_matrix_csv_exporter_export(self, request: pytest.FixtureRequest):
         # 1. Define test data.
         _test_dir = test_results / request.node.name
         _export_path = _test_dir / "matrix_results.csv"
@@ -31,5 +31,10 @@ class TestSummaryMatrixCsvExporter:
 
         # 3. Validate results
         assert _export_path.exists()
-        _written_lines = _export_path.read_text().splitlines(keepends=False)
-        assert any(_written_lines)
+        _lines = _export_path.read_text().splitlines()
+        assert len(_lines) == 25
+        assert (
+            _lines[0]
+            == ";;Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand"
+        )
+        assert _lines[-1] == ";;New maaiveld surface (cost):;nan;nan;nan;nan"

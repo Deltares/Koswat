@@ -13,7 +13,7 @@ class TestKoswatCsvWriter:
         assert isinstance(_csv_writer, KoswatWriterProtocol)
         assert _csv_writer.separator == ";"
 
-    def test_write(self, request: pytest.FixtureRequest):
+    def test_koswat_csv_writer_write(self, request: pytest.FixtureRequest):
         # 1. Define test data.
         _test_file = get_test_results_dir(request) / "test_data.csv"
         _csv_fom = KoswatCsvFom()
