@@ -96,9 +96,8 @@ class TestAcceptance:
         _new_csv_path = _test_dir / "10_3" / _csv_surroundings_file.name
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
-        _surroundings_importer.surroundings_csv_dir = _test_dir
         _surroundings_importer.traject_loc_shp_file = _shp_trajects_file
-        _surroundings = _surroundings_importer.build()[0]
+        _surroundings = _surroundings_importer.import_from(_test_dir)[0]
 
         assert isinstance(scenario_case, KoswatScenario)
         _base_koswat_profile = KoswatProfileBuilder.with_data(
