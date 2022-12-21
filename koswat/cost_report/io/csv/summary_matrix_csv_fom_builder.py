@@ -12,8 +12,13 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class SummaryMatrixCsvFomBuilder(BuilderProtocol):
+    koswat_summary: KoswatSummary
+    # Internal readonly properties.
     _volume_surface_key_column = "(volume / surface)"
     _cost_key_column = "(cost)"
+    
+    def __init__(self) -> None:
+        self.koswat_summary = None
 
     def build(self) -> KoswatCsvFom:
         _matrix_csv_fom = self._get_summary_matrix_csv_fom(self.koswat_summary)

@@ -123,12 +123,7 @@ class TestAcceptance:
         _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
-        _exporter = SummaryMatrixCsvExporter()
-        _exporter.data_object_model = _summary
-        _exporter.export_filepath = _test_dir / "matrix_results.csv"
-        _fom = _exporter.build()
-        assert isinstance(_fom, SummaryMatrixCsvFom)
-        _exporter.export(_fom)
+        SummaryMatrixCsvExporter().export(_summary, _test_dir / "matrix_results.csv")
 
         # 3. Verify expectations.
         assert isinstance(_summary, KoswatSummary)

@@ -47,11 +47,9 @@ class KoswatHandler:
             logging.error("No summary was genarted for {}".format(settings.name))
             return
         # Export analysis csv.
-        _exporter = SummaryMatrixCsvExporter()
-        _exporter.data_object_model = summary
-        _exporter.export_filepath = settings.output_dir / "matrix_results.csv"
-        _exporter.export(_exporter.build())
-        logging.info("Exported matrix results to: {}".format(_exporter.export_filepath))
+        _export_path = settings.output_dir / "matrix_results.csv"
+        SummaryMatrixCsvExporter().export(summary, _export_path)
+        logging.info("Exported matrix results to: {}".format(_export_path))
 
     def _generate_plots(
         self, settings: KoswatRunScenarioSettings, summary: KoswatSummary
