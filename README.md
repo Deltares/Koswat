@@ -1,6 +1,7 @@
 # KOSWAT
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_Koswat&metric=alert_status&token=87fdd0648c19800b4b5fc11334461a7fb602bf20)](https://sonarcloud.io/summary/new_code?id=Deltares_Koswat)
+[![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3106/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_Koswat&metric=alert_status&token=87fdd0648c19800b4b5fc11334461a7fb602bf20)](https://sonarcloud.io/summary/new_code?id=Deltares_Koswat)
 <!--  These tags won't work while being private.
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Deltares/Koswat)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Deltares/Koswat) -->
@@ -23,30 +24,39 @@ __Important!__ The following installation steps are written based on a Windows e
 
 When you only require the koswat package to be used as a whole, and not for developments, we advise to directly use the latest greatest release, or directly the latest available version from `Master` as follows:
 
-```
+1. Latest available `Master`:
+```bash
 pip install git+https://github.com/Deltares/Koswat.git
 ```
+
+2. Specific Koswat version, add `@version-tag` to the previous command, for instance install tag `v0.11.0` (__MVP__ pre-release):
+```bash
+pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
+```
+| You can also do the above with a commit-hash for development branches (e.g.:`@0504c06`)
+
 
 
 ### Development mode
 1. Checkout the code from github in a directory of your choice. You can either do this by downloading the source zip or (better) using git, for instance:
-    ```git
-    mkdir C:\repos\koswat
-    cd C:\repos\koswat
-    git clone https://github.com/Deltares/Koswat.git
+    ```bash
+    cd C:\repos
+    git clone https://github.com/Deltares/Koswat.git koswat
     ```
     | Note, the above steps are based on a Windows setup. If you are not familiar with Git we recommend using the [GitHub desktop tool](https://desktop.github.com/).
 
-2. Navigate to it and then install the koswat package:
+2. Navigate to your Koswat repository and then install the koswat package with your preferred step:
 
     1. With [Anaconda](https://www.anaconda.com/) (our recommendation):    
         ```bash
+        cd C:\repos\koswat
         conda env create -f "environment.yml"
         conda activate koswat_env
         poetry install
         ```
     2. With `pypi`:
         ```bash
+        cd C:\repos\koswat
         pip install .
         ```
         | Note, this will not install `Poetry`, which is required to properly maintain the interdependencies of `Koswat` tool.
