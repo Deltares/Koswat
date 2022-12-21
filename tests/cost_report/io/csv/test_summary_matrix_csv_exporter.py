@@ -31,7 +31,7 @@ class TestSummaryMatrixCsvExporter:
 
         # 3. Validate results
         assert _export_path.exists()
-        _lines = _export_path.read_text().splitlines()
+        _lines = _export_path.read_text().strip().splitlines()
         assert len(_lines) == 25
         assert (
             _lines[0]
