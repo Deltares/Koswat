@@ -20,11 +20,9 @@ class TestKoswatRunSettingsImporter:
         # 1. Define test data.
         _ini_file = test_data / "acceptance" / "koswat_general.ini"
         assert _ini_file.is_file()
-        _builder = KoswatRunSettingsImporter()
-        _builder.ini_configuration = _ini_file
 
         # 2. Run test.
-        _config = _builder.build()
+        _config = KoswatRunSettingsImporter().import_from(_ini_file)
 
         # 3. Verify final expectations.
         assert isinstance(_config.run_scenarios, list)

@@ -94,15 +94,15 @@ def scenario_ini_file() -> List[pytest.param]:
 
 def input_profile_data_csv_file() -> List[pytest.param]:
     _csv_file = test_data / "acceptance" / "csv" / "dike_input_profiles.csv"
-    _importer = KoswatInputProfileListImporter()
-    _importer.ini_configuration = _csv_file
 
     def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
         return pytest.param(
             input_profile, id="Input_{}".format(input_profile.dike_section)
         )
 
-    return list(map(_to_pytest_param, _importer.build()))[:2]
+    return list(
+        map(_to_pytest_param, KoswatInputProfileListImporter().import_from(_csv_file))
+    )[:2]
 
 
 _scenarios = scenario_ini_file()

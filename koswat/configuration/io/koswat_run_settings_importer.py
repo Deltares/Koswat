@@ -160,12 +160,13 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 )
             ).build()
 
-        _input_profile_importer = KoswatInputProfileListImporter()
-        _input_profile_importer.ini_configuration = csv_file
         _profile_list = list(
             map(
                 to_koswat_profile,
-                filter(profile_is_selected, _input_profile_importer.build()),
+                filter(
+                    profile_is_selected,
+                    KoswatInputProfileListImporter().import_from(csv_file),
+                ),
             )
         )
         return _profile_list
@@ -186,7 +187,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             return None
         _importer = KoswatCostsImporter()
         _importer.include_taxes = include_taxes
-        return _importer.read(ini_file)
+        return _importer.import_from(ini_file)
 
     def _import_scenario_fom_list(
         self, scenario_dir: Path, dike_selections: List[str]
@@ -199,10 +200,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         self, surroundings_dir: Path, traject_shp_file: Path, dike_selections: List[str]
     ) -> Any:
         _importer = KoswatSurroundingsImporter()
-        _importer.surroundings_csv_dir = surroundings_dir
         _importer.traject_loc_shp_file = traject_shp_file
         _importer.selected_locations = dike_selections
-        return _importer.build()
+        return _importer.import_from(surroundings_dir)
 
     def _get_koswat_scenario(
         self, fom_scenario: SectionScenarioFom, base_profile: KoswatProfileBase

@@ -17,20 +17,18 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
-from koswat.core.protocols import BuilderProtocol
+from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 
 
-class KoswatSurroundingsImporter(BuilderProtocol):
-    surroundings_csv_dir: Path
+class KoswatSurroundingsImporter(KoswatImporterProtocol):
     traject_loc_shp_file: Path
     selected_locations: List[str]
 
     def __init__(self) -> None:
-        self.surroundings_csv_dir = None
         self.traject_loc_shp_file = None
         self.selected_locations = []
 
@@ -89,8 +87,8 @@ class KoswatSurroundingsImporter(BuilderProtocol):
         _reader.selected_locations = self.selected_locations
         return _reader.read(self.traject_loc_shp_file)
 
-    def build(self) -> List[SurroundingsWrapper]:
-        if not isinstance(self.surroundings_csv_dir, Path):
+    def import_from(self, from_path: Path) -> List[SurroundingsWrapper]:
+        if not isinstance(from_path, Path):
             raise ValueError("No surroundings csv directory path given.")
         if not isinstance(self.traject_loc_shp_file, Path):
             raise ValueError("No traject shp file path given.")
@@ -103,7 +101,7 @@ class KoswatSurroundingsImporter(BuilderProtocol):
             _dike_location_shp, lambda x: x.dike_traject
         ):
             _csv_traject = _shp_traject.replace("-", "_").strip()
-            _csv_dir = self.surroundings_csv_dir / _csv_traject
+            _csv_dir = from_path / _csv_traject
             if not _csv_dir.is_dir():
                 logging.warning(
                     "No surroundings files found for traject {}".format(_shp_traject)
