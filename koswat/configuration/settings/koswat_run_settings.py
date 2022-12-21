@@ -1,4 +1,3 @@
-import logging
 from pathlib import Path
 from typing import List
 
@@ -18,8 +17,3 @@ class KoswatRunSettings(KoswatConfigProtocol):
         self.run_scenarios = []
         self.input_profile_cases = []
         self.output_dir = None
-
-    def run(self) -> None:
-        logging.info("Initializing run for all cases.")
-
-        logging.info("Finalized run for all cases.")
