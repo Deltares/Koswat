@@ -20,6 +20,8 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         self.koswat_summary = None
 
     def build(self) -> KoswatCsvFom:
+        _csv_fom = KoswatCsvFom()
+
         _profile_type_key = "Profile type"
         _cost_per_km_key = "Cost per km (€)"
         _locations_key = "locations"
@@ -36,7 +38,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
         if not _dict_of_entries:
             logging.error("No entries generated for the CSV Matrix.")
-            return None
+            return _csv_fom
 
         def dict_to_csv_row(key, placeholders: int) -> List[str]:
             row = _dict_of_entries[key]
@@ -59,7 +61,6 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             or self._cost_key_column in _parameter_key
         ]
         _cost_rows.insert(0, dict_to_csv_row(_cost_per_km_key, _required_placeholders))
-        _csv_fom = KoswatCsvFom()
         _csv_fom.headers = _headers
         _csv_fom.entries = _location_rows + _cost_rows
         return _csv_fom
