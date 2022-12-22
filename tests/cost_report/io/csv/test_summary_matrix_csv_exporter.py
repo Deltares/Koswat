@@ -7,6 +7,10 @@ from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
+from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
+    MultiLocationProfileCostReport,
+)
+from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from tests import test_results
 from tests.cost_report.io.csv import get_valid_test_summary
 
@@ -31,9 +35,30 @@ class TestSummaryMatrixCsvExporter:
 
         # 3. Validate results
         assert _export_path.exists()
-        _lines = _export_path.read_text().strip().splitlines()
-        assert (
-            _lines[0]
-            == ";;Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand"
-        )
-        assert _lines[-1] == ";;New maaiveld surface (cost):;nan;nan;nan;nan"
+        _read_text = _export_path.read_text()
+        _expected_text = """;;Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand
+A;0.24;0.42;0;1;1;1
+A;2.4;0.42;0;0;1;1
+A;0.24;2.4;0;0;0;1
+;;Cost per km (€);0.0;8144.4;16288.8;24433.2
+;;Reused grass volume (volume / surface):;nan;nan;nan;nan
+;;Reused grass volume (cost):;nan;nan;nan;nan
+;;Aanleg grass volume (volume / surface):;nan;nan;nan;nan
+;;Aanleg grass volume (cost):;nan;nan;nan;nan
+;;Aanleg clay volume (volume / surface):;nan;nan;nan;nan
+;;Aanleg clay volume (cost):;nan;nan;nan;nan
+;;Reused core volume (volume / surface):;nan;nan;nan;nan
+;;Reused core volume (cost):;nan;nan;nan;nan
+;;Aanleg core volume (volume / surface):;nan;nan;nan;nan
+;;Aanleg core volume (cost):;nan;nan;nan;nan
+;;Removed material volume (volume / surface):;nan;nan;nan;nan
+;;Removed material volume (cost):;nan;nan;nan;nan
+;;New grass layer surface (volume / surface):;nan;nan;nan;nan
+;;New grass layer surface (cost):;nan;nan;nan;nan
+;;New clay layer surface (volume / surface):;nan;nan;nan;nan
+;;New clay layer surface (cost):;nan;nan;nan;nan
+;;New core layer surface (volume / surface):;nan;nan;nan;nan
+;;New core layer surface (cost):;nan;nan;nan;nan
+;;New maaiveld surface (volume / surface):;nan;nan;nan;nan
+;;New maaiveld surface (cost):;nan;nan;nan;nan"""
+        assert _expected_text == _read_text
