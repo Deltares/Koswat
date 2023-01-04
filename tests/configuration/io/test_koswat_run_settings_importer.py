@@ -5,7 +5,12 @@ import pytest
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
+from koswat.configuration.settings.koswat_run_scenario_settings import (
+    KoswatRunScenarioSettings,
+)
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from tests import test_data
 
 
 class TestKoswatRunSettingsImporter:
@@ -47,3 +52,22 @@ class TestKoswatRunSettingsImporter:
 
         # 3. Verify final expectations.
         assert _result == None
+
+    def test_koswat_run_settings_importer_build_from_valid_ini(self):
+        # 1. Define test data.
+        _ini_file = test_data / "acceptance" / "koswat_general.ini"
+        assert _ini_file.is_file()
+
+        # 2. Run test.
+        _config = KoswatRunSettingsImporter().import_from(_ini_file)
+
+        # 3. Verify final expectations.
+        assert isinstance(_config.run_scenarios, list)
+        assert all(
+            isinstance(_rs, KoswatRunScenarioSettings) for _rs in _config.run_scenarios
+        )
+        assert isinstance(_config.input_profile_cases, list)
+        assert all(
+            isinstance(_pc, KoswatProfileBase) for _pc in _config.input_profile_cases
+        )
+        assert isinstance(_config.output_dir, Path)
