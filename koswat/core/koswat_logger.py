@@ -14,8 +14,8 @@ class KoswatLogger:
         if log_file.suffix != ".log":
             log_file = log_file.with_suffix(".log")
 
-        if log_file.is_file():
-            log_file.unlink()
+        log_file.parent.mkdir(parents=True, exist_ok=True)
+        log_file.unlink(missing_ok=True)
         log_file.touch()
 
         _logger.log_file = log_file

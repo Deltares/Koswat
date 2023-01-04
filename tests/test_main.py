@@ -29,13 +29,15 @@ class TestMain:
         assert not any(
             _results_dir.glob("*.log")
         ), "Log files still present, directory should be purged to ensure test validity."
-        _cli_arg = f'python -m koswat --input_file "{_valid_path}" --log_output "{_results_dir}"'
+        _cli_arg = f'--input_file "{_valid_path}" --log_output "{_results_dir}"'
 
         # 2. Run test.
-        _run_result = subprocess.check_call(_cli_arg.split(" "))
-
+        _run_result = CliRunner().invoke(
+            __main__.run_analysis,
+            _cli_arg,
+        )
         # 3. Verify final expectations.
-        assert _run_result == 0
+        assert _run_result.exit_code == 0
         _log: Path = next(_results_dir.glob("*.log"), None)
         assert _log and _log.is_file(), "Log file was not generated."
         assert (
