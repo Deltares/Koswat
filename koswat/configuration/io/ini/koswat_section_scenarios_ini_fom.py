@@ -19,6 +19,7 @@ class SectionScenarioFom(KoswatIniFomProtocol):
     def from_config(cls, ini_config: ConfigParser) -> SectionScenarioFom:
         _section = cls()
         # Retrieves the values as written (and expected) in the ini file.
+        _section.scenario_name = ""
         _section.d_h = ini_config.getfloat("dH")
         _section.d_s = ini_config.getfloat("dS")
         _section.d_p = ini_config.getfloat("dP")
