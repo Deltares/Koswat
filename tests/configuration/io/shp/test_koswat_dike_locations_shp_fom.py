@@ -17,4 +17,3 @@ class TestKoswatDikeLocationsShpFom:
         assert _shp_fom.dike_traject == ""
         assert _shp_fom.dike_subtraject == ""
         assert not _shp_fom.is_valid()
-        

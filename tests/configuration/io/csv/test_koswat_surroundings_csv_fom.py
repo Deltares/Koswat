@@ -15,6 +15,7 @@ class TestKoswatTrajectSurroundingsCsvFom:
         assert _csv_fom.traject == ""
         assert not _csv_fom.is_valid()
 
+
 class TestKoswatTrajectSurroundingsWrapperCsvFom:
     def test_initialize(self):
         _csv_fom = KoswatTrajectSurroundingsWrapperCsvFom()

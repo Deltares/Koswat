@@ -17,7 +17,7 @@ class TestOutsideSlopeReinforcementProfile:
         assert isinstance(_reinforcement, OutsideSlopeReinforcementProfile)
         assert isinstance(_reinforcement, ReinforcementProfileProtocol)
         assert isinstance(_reinforcement, KoswatProfileBase)
-    
+
     def test_get_new_ground_level_surface(self):
         # 1. Define test data.
         _reinforcement = OutsideSlopeReinforcementProfile()
@@ -33,4 +33,3 @@ class TestOutsideSlopeReinforcementProfile:
 
         # 2.  Verify expectations
         assert _reinforcement.new_ground_level_surface == pytest.approx(2.0, 0.001)
-        
