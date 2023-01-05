@@ -94,10 +94,6 @@ def get_polygon_coordinates(
     """
     if isinstance(pol_geometry, geometry.Polygon):
         return geometry.LineString(pol_geometry.exterior.coords)
-    elif isinstance(pol_geometry, geometry.MultiPolygon):
-        # TODO: Check if this can be removed, in theory it should never happen.
-        _geoms_coords = [_geom.exterior.coords for _geom in pol_geometry.geoms]
-        return ops.linemerge(_geoms_coords)
     raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
 
 
