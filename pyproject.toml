@@ -39,6 +39,7 @@ commitizen = "^2.35.0"
 mypy = "^0.971"
 termcolor = "^2.0.1"
 coverage = "^6.4.4"
+mkdocs = "^1.4.2"
 
 
 [tool.black]
