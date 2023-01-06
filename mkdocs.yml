@@ -12,7 +12,7 @@ plugins:
           options:
             # docstring_style: sphinx
             show_root_toc_entry: false
-            show_source: true
+            show_source: false
             show_signature_annotations: true
             heading_level: 3
             show_category_heading: false
