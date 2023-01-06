@@ -1,5 +1,5 @@
 import random
-from typing import List, Type
+from typing import List, Tuple, Type
 
 from shapely.geometry import Point
 
@@ -31,21 +31,22 @@ class MockLayerReport:
     total_volume = 42
 
 
-def _create_locations(locations: int) -> List[PointSurroundings]:
-    _points = []
-    for _ in range(0, locations):
-        _x_coord = random.uniform(0, 4).__round__(2)
-        _y_coord = random.uniform(0, 4).__round__(2)
+def _create_locations() -> List[PointSurroundings]:
+    _points = [(0.24, 0.42), (2.4, 0.42), (0.24, 2.4), (0.24, 2.4)]
+
+    def to_point(tuple_float: Tuple[float, float]) -> PointSurroundings:
         _ps = PointSurroundings()
-        _ps.location = Point(_x_coord, _y_coord)
+        _ps.location = Point(tuple_float[0], tuple_float[1])
         _ps.section = "A"
-        _points.append(_ps)
-    return _points
+        return _ps
+
+    return list(map(to_point, _points))
 
 
 def _create_report(
     report_type: Type[ReinforcementProfileProtocol],
     available_points: List[PointSurroundings],
+    selected_locations: int,
 ) -> MultiLocationProfileCostReport:
     def _get_layer(material: str, volume: float) -> MockLayerReport:
         _layer_report = MockLayerReport()
@@ -54,10 +55,9 @@ def _create_report(
         return _layer_report
 
     _report = MockSummary()
-    _sel_locations = random.choice(range(0, len(available_points)))
-    _report.locations = random.sample(available_points, k=_sel_locations)
-    _required_klei = random.uniform(1, 100).__round__(2) * _sel_locations
-    _required_zand = random.uniform(1, 100).__round__(2) * _sel_locations
+    _report.locations = available_points[0:selected_locations]
+    _required_klei = 2.4 * selected_locations
+    _required_zand = 4.2 * selected_locations
     _report.profile_type = str(report_type())
     _report.cost_per_km = (_required_klei + _required_zand) * 1234
     _report.profile_cost_report = ProfileCostReport()
@@ -75,9 +75,12 @@ def get_valid_test_summary() -> KoswatSummary:
         SoilReinforcementProfile,
         StabilityWallReinforcementProfile,
     ]
-    _available_points = _create_locations(len(_required_profiles))
+    _available_points = _create_locations()
     _summary = KoswatSummary()
     _summary.locations_profile_report_list = list(
-        map(lambda x: _create_report(x, _available_points), _required_profiles)
+        map(
+            lambda x: _create_report(x, _available_points, _required_profiles.index(x)),
+            _required_profiles,
+        )
     )
     return _summary

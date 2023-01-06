@@ -28,7 +28,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
     def import_from(self, from_path: Path) -> KoswatCostsSettings:
         if not from_path.is_file():
             _error = "Costs ini file not found at {}.".format(from_path)
-            raise NotImplementedError(_error)
+            raise FileNotFoundError(_error)
         if self.include_taxes is None:
             raise ValueError("A boolean value is expected for `include_taxes`.")
         logging.info("Importing costs from {}.".format(from_path))

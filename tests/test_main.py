@@ -1,3 +1,4 @@
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -35,7 +36,6 @@ class TestMain:
             __main__.run_analysis,
             _cli_arg,
         )
-
         # 3. Verify final expectations.
         assert _run_result.exit_code == 0
         _log: Path = next(_results_dir.glob("*.log"), None)

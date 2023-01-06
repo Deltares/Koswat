@@ -10,6 +10,9 @@ from koswat.calculations import ReinforcementProfileBuilderFactory
 from koswat.calculations.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
 )
+from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
+    CofferDamInputProfile,
+)
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
 )
@@ -23,6 +26,15 @@ from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
+)
+from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
+    PipingWallInputProfile,
+)
+from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
+    SoilInputProfile,
+)
+from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
+    StabilityWallInputProfile,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
@@ -52,12 +64,6 @@ from tests.library_test_cases import (
     LayersCases,
     ScenarioCases,
 )
-
-
-class TestReinforcementProfileCalculationProtocol:
-    def test_initialize(self):
-        with pytest.raises(TypeError):
-            ReinforcementInputProfileCalculationProtocol()
 
 
 def scenario_ini_file() -> List[pytest.param]:
@@ -125,6 +131,47 @@ class TestReinforcementProfileBuilderFactory:
             _reinforcement in _available_reinforcements
             for _reinforcement in _expected_reinforcements
         )
+
+    def test_get_reinforcement_input_profile_unknown_reinforcement(self):
+        with pytest.raises(NotImplementedError):
+            ReinforcementProfileBuilderFactory.get_reinforcement_input_profile(None)
+
+    @pytest.mark.parametrize(
+        "reinforcement_profile_type, expected_input_profile_type",
+        [
+            pytest.param(
+                SoilReinforcementProfile,
+                SoilInputProfile,
+                id="[Standard] Soil reinforcement",
+            ),
+            pytest.param(
+                PipingWallReinforcementProfile,
+                PipingWallInputProfile,
+                id="[Standard] Piping wall reinforcement",
+            ),
+            pytest.param(
+                StabilityWallReinforcementProfile,
+                StabilityWallInputProfile,
+                id="[Standard] Stability wall reinforcement",
+            ),
+            pytest.param(
+                CofferdamReinforcementProfile,
+                CofferDamInputProfile,
+                id="[Oustide Slope] Cofferdam reinforcement",
+            ),
+        ],
+    )
+    def test_get_reinforcement_input_profile(
+        self,
+        reinforcement_profile_type: Type[ReinforcementProfileProtocol],
+        expected_input_profile_type,
+    ):
+        _input_profile = (
+            ReinforcementProfileBuilderFactory.get_reinforcement_input_profile(
+                reinforcement_profile_type
+            )
+        )
+        assert _input_profile == expected_input_profile_type
 
     @pytest.mark.parametrize(
         "reinforcement_profile_type, expected_builder",
