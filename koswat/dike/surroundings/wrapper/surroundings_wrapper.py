@@ -81,6 +81,7 @@ class SurroundingsWrapper:
         Returns:
             List[Point]: List of safe locations (points).
         """
+
         def is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
             if not point_surroundings.distance_to_buildings:
                 return True
