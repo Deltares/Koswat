@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional
+import logging
+from typing import Union
 
 from koswat.calculations.protocols import ReinforcementProfileProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
@@ -20,9 +21,22 @@ class VolumeCostParametersCalculator:
     @classmethod
     def from_reinforced_profile(
         cls, reinforced_profile: ReinforcementProfileProtocol
-    ) -> Optional[VolumeCostParametersCalculator]:
+    ) -> Union[VolumeCostParametersCalculator, None]:
+        """
+        Creates an instance of a `VolumeCostParametersCalculator` based on the parameters of a given `ReinforcementProfileProtocol` instance.
+        If the instance of the `ReinforcementProfileProtocol` does not contain three layers then nothing will be returned.
+
+        Args:
+            reinforced_profile (ReinforcementProfileProtocol): Instance defining a reinforced profile.
+
+        Returns:
+            Union[VolumeCostParametersCalculator, None]: A valid instance of a `VolumeCostParametersCalculator` or `None`.
+        """
         _vcp = cls()
         if len(reinforced_profile.layers_wrapper.layers) != 3:
+            logging.error(
+                "Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass)."
+            )
             return None
         _grass_layer = reinforced_profile.layers_wrapper.get_layer(
             KoswatMaterialType.GRASS
