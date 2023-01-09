@@ -5,20 +5,13 @@ import shutil
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
-    KoswatSurroundingsCsvReader,
-)
 from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
-)
-from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
-    KoswatDikeLocationsListShpReader,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
-from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
@@ -32,10 +25,6 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
-    KoswatBuildingsPoldersideBuilder,
-)
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from tests import get_testcase_results_dir, test_data
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
@@ -78,19 +67,6 @@ class TestAcceptance:
         )
         assert _csv_surroundings_file.is_file()
         assert _shp_trajects_file.is_file()
-
-        _builder_buildings_polderside = KoswatBuildingsPoldersideBuilder()
-        _builder_buildings_polderside.koswat_csv_fom = (
-            KoswatSurroundingsCsvReader().read(_csv_surroundings_file)
-        )
-        _builder_buildings_polderside.koswat_shp_fom = None
-
-        _shp_wrapper_reader = KoswatDikeLocationsListShpReader()
-        _locations_shp_fom = _shp_wrapper_reader.read(_shp_trajects_file)
-        _builder_buildings_polderside.koswat_shp_fom = _locations_shp_fom[0]
-
-        _surroundings = SurroundingsWrapper()
-        _surroundings.buldings_polderside = _builder_buildings_polderside.build()
 
         _surroundings_importer = KoswatSurroundingsImporter()
         _new_csv_path = _test_dir / "10_3" / _csv_surroundings_file.name
