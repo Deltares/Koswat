@@ -12,8 +12,8 @@ class HighlightGeometryPlot(KoswatPlotProtocol):
         """
         Plots a layer highlighting its content.
 
-        Args:
-            subplot (pyplot.axes):  Pyplot containing the drawing canvas.
+        Returns:
+            pyplot.axes: Polygon with its area painted.
         """
         if isinstance(self.koswat_object, Polygon):
             _x_coords, y_coords = self.koswat_object.exterior.coords.xy
