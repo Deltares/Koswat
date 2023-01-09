@@ -22,4 +22,10 @@ class PointSurroundings:
 
     @property
     def closest_building(self) -> float:
+        """
+        Distance to the closest building. When no buildings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
+
+        Returns:
+            float: Distance to the closest building.
+        """
         return min(self.distance_to_buildings, default=math.nan)

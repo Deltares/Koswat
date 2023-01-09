@@ -34,6 +34,16 @@ class KoswatBuildingsPolderside(KoswatSurroundingsProtocol):
         return _surroundings_dict
 
     def get_locations_after_distance(self, distance: float) -> List[Point]:
+        """
+        Gets all points which do not contain any building between their position and a radius of `distance` meters.
+
+        Args:
+            distance (float): Radius from a coordinate where to check for buildings.
+
+        Returns:
+            List[Point]: List of points which do not contain any building for the provided distance.
+        """
+
         def is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
             if not point_surroundings.distance_to_buildings:
                 return True

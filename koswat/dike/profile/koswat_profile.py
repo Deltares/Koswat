@@ -12,6 +12,9 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class KoswatProfileBase(KoswatProfileProtocol):
+    """
+    Basic definition and implementation of a `KoswatProfileProtocol`. It represents the initial koswat profile being provided by the user from which further calculations will be made.
+    """
 
     input_data: KoswatInputProfileBase
     characteristic_points: CharacteristicPoints
@@ -38,6 +41,12 @@ class KoswatProfileBase(KoswatProfileProtocol):
 
     @property
     def profile_width(self) -> float:
+        """
+        The profile extent from the lowest (left-most) x-coordinate to the largets (right-most) x-coordinate from a dike geometry polygon.
+
+        Returns:
+            float: Total distance.
+        """
         if not self.points:
             return math.nan
         return self.points[-1].x - self.points[0].x
