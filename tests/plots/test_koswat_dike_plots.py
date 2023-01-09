@@ -1,5 +1,6 @@
 import pytest
 
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.plots.dike.koswat_profile_plot import KoswatProfilePlot
@@ -67,7 +68,9 @@ class TestKoswatDikePlots:
 
                 # Highlight plot
                 _highlight_plot = HighlightGeometryPlot()
-                _highlight_plot.koswat_object = layer
+                _highlight_plot.koswat_object = layer.material_geometry
+                if layer.material_type == KoswatMaterialType.SAND:
+                    _highlight_plot.koswat_object = layer.outer_geometry
                 _highlight_plot.subplot = _subplot
                 _highlight_plot.plot()
 
