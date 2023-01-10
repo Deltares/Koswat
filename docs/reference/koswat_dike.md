@@ -1,4 +1,4 @@
-# Koswat dike
+# Dike profile
 
 In this section we will describe how a Koswat dike is defined and what its parts are.
 
@@ -26,11 +26,12 @@ A dike is composed by three layers:
 These layers are wrapped under a `KoswatLayersWrapperProtocol`  instance. At the same time, each layer is an instance of a `KoswatLayerProtocol` containing the following properties:
 
 - `material_type`: Either Sand, Clay or Grass.
-- `upper_points`: The surface points of the layer. This property can be used to calculate the _surface_ ($m^2$) of a material.
+- `upper_points`: The surface points of the layer. This property can be used to calculate the _surface_ (m<sup>2</sup>) of a material.
 - `outer_geometry`: A polygon representing the material layer and the 'wrapped' polygons. For instance, the Clay `outer_geometry` will also include the Sand `material_geometry`.
 - `material_geometry`: A closed polygon containing __only__ the points representing the layer.
 
 Using _Image 3. Clay layer highlighted_ as an example, we can map the previous properties:
+
 - `material_type`: Clay, the 'in-between' layer.
 - `upper_points`: Line with the 'orange' points, without 'closing' the polygon, something like: [(-18, 0), (0, 5.5), (8, 5.5), (21, 0)].
 - `outer_geometry`: Closed geometry using the `upper points` and the 'ground floor' points: [(-18, 0), (0, 5.5), (8, 5.5), (21, 0), __(-18, 0)__].
