@@ -42,7 +42,6 @@ class TestKoswatDikePlots:
     ):
         # 1. Define test data.
         _test_dir = get_test_results_dir(request)
-        _test_file = _test_dir / "base_profile_layers.png"
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
