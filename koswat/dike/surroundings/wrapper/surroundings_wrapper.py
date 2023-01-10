@@ -72,6 +72,16 @@ class SurroundingsWrapper:
         return [p.location for p in self.buldings_polderside.points]
 
     def get_locations_after_distance(self, distance: float) -> List[Point]:
+        """
+        Gets all locations which are safe from buildings in a radius of `distance`.
+
+        Args:
+            distance (float): Radius from each point that should be free of buildings.
+
+        Returns:
+            List[Point]: List of safe locations (points).
+        """
+
         def is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
             if not point_surroundings.distance_to_buildings:
                 return True

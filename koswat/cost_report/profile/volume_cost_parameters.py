@@ -73,6 +73,16 @@ class VolumeCostParameters:
     def from_reinforced_profile(
         cls, reinforced_profile: ReinforcementProfileProtocol
     ) -> VolumeCostParameters:
+        """
+        Generates a valid instance of `VolumeCostParameters` based on the provided instance of a `ReinforcementProfileProtocol`.
+
+        Args:
+            reinforced_profile (ReinforcementProfileProtocol): Instance containing the base information to be used.
+
+        Returns:
+            VolumeCostParameters: Instance with initialized valid parameters.
+        """
+
         def _create(volume: float, cost: float) -> VolumeCostParameter:
             _vp = VolumeCostParameter()
             _vp.volume = volume

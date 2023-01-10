@@ -29,9 +29,9 @@ def get_fixturerequest_case_name(request: FixtureRequest) -> str:
 def get_testcase_results_dir(request: FixtureRequest) -> Path:
     _case_name = get_fixturerequest_case_name(request)
     _test_dir: Path = test_results / request.node.originalname
+    _test_dir = _test_dir / _case_name
     if _test_dir.is_dir():
         shutil.rmtree(_test_dir)
-    _test_dir = _test_dir / _case_name
     _test_dir.mkdir(parents=True)
     return _test_dir
 

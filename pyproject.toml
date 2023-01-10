@@ -39,6 +39,10 @@ commitizen = "^2.35.0"
 mypy = "^0.971"
 termcolor = "^2.0.1"
 coverage = "^6.4.4"
+mkdocs = "^1.4.2"
+myst-parser = "^0.18.1"
+mkdocstrings-python = "^0.8.3"
+mkdocstrings = "^0.19.1"
 
 
 [tool.black]

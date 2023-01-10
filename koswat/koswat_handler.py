@@ -22,7 +22,17 @@ from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuild
 
 
 class KoswatHandler:
+    """
+    Handler for CLI usage of `Koswat`. It allows the initialization of a logger during the analysis.
+    """
+
     def __init__(self, log_output: Optional[str]) -> None:
+        """
+        Initializes the handler creating a log file at the optional provided directory `log_output`.
+
+        Args:
+            log_output (Optional[str]): Directory where to save the `koswat.log` file.
+        """
         _log_path = Path("koswat.log")
         if log_output:
             _log_path = Path(log_output) / "koswat.log"
@@ -73,6 +83,13 @@ class KoswatHandler:
                 logging.error(e_info)
 
     def run_analysis(self, analysis_file: str) -> None:
+        """
+        Runs a Koswat analysis using the provided `*.ini` file `analysis_file`.
+
+        Args:
+            analysis_file (str): Location of the main koswat analisis ini file.
+        """
+
         def _as_path(ini_file: str) -> Optional[Path]:
             _ini = Path(ini_file)
             if not _ini.is_file():

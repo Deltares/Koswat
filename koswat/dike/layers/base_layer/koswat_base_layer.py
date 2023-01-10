@@ -17,16 +17,6 @@ class KoswatBaseLayer(KoswatLayerProtocol):
         self.material_geometry = None
         self.upper_points = None
 
-    @property
-    def layer_points(self) -> LineString:
-        """
-        A Koswat Base Layer has no layer points, only upper surface.
-
-        Returns:
-            None: Only upper (coating layer) points available.
-        """
-        return None
-
     def as_data_dict(self) -> dict:
         _geometry = []
         if self.outer_geometry:

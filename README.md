@@ -16,6 +16,7 @@ Koswat targets two types of users:
     - Creating their own scripts. It is possible to use the full extent of Koswat features on custom scripts, of course under your own responsibility. In this case the user only requires to install the most convinient version of the package as a [sandbox / endpoint](#sandbox--endpoint).
 - Single endpoint users. These users are only interested in running the tool via command line or other User Interfaces. For them, it is advised to install the tool as a [sandbox / endpoint](#sandbox--endpoint) and to check the tool's [endpoint usage](#endpoint-usage).
 
+
 ## Installation
 
 __Important!__ The following installation steps are written based on a Windows environment. When using other systems (which should be possible) it might be required to use different commands. However, the fundamental of the installation steps should remain the same. This meaning, no additional packages or libraries should be required. If problems would arose during your installation, please contact the maintainers of the tool.
@@ -60,6 +61,14 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
         pip install .
         ```
         | Note, this will not install `Poetry`, which is required to properly maintain the interdependencies of `Koswat` tool.
+
+## Read the docs documentation.
+
+Documentation for the project is currently only available with a manual step. You can do this if you installed the project following the steps of the [development mode](#development-mode). Then execute the `MkDocs` build and serve step:
+```cli
+poetry run mkdocs build
+poetry run mkdocs serve
+```
 
 ## Endpoint usage
  

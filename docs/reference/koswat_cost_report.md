@@ -1,0 +1,23 @@
+# Cost report
+
+A Koswat report is divided in different parts:
+- __Summary report__: A summary containing all 'location reports'.
+- __Location report__: Which profile reinforcements can be applied to each location based on their surroundings and reinforcement properties (`MultiLocationProfileCostReport`). 
+- __Profile report__: (`ProfileCostReport`), what are the (material) volume costs associated when applying a given [reinforced profile](./koswat_reinforced_profile.md#possible-reinforcements) .
+- __Layer report__: A sub report of the 'profile report' which breaks down the different costs of each one of the layers. This can be seen in _Image 1 Volume costs_.
+
+|![Base profile sand layer](./imgs/reinforcement_calculations.png)|
+|:--:|
+|Image 1. Volume costs|
+
+
+## Generated files
+After running a Koswat analysis, several files and directories will be generated, usually the structure will be as follows:
+`Dike profile scenarios -> Scenario -> dike section -> Generated files`
+
+- Dike profile - scenarios directory: Each dike can be run using different scenarios.
+- Scenario: Scenario being applied to the selected dike profile.
+- Dike section: The selected dike section being analyzed.
+- Generated files: A combination of images and a 'csv' matrix result.
+    - Images: Visual description of each of the possible reinforcements being applied.
+    - matrix_result.csv: A csv file containing all the information of the Summary report (and therefore the location, profile and layer report).

@@ -1,0 +1,40 @@
+site_name: Koswat
+theme:
+  name: readthedocs
+  highlightjs: true
+plugins:
+  - search
+  - autorefs
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            # docstring_style: sphinx
+            show_root_toc_entry: false
+            show_source: false
+            show_signature_annotations: true
+            heading_level: 3
+            show_category_heading: false
+            group_by_category: false
+            inherited_members: false
+use_directory_urls: false
+watch:
+    - koswat/
+markdown_extensions:
+  # - markdown_include.include:
+  #     base_path: .
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition
+  - toc:
+      permalink: true
+repo_url: https://github.com/Deltares/koswat
+repo_name: Deltares/koswat
+extra:
+  authoremail: carles.sorianoperez@deltares.nl
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Deltares/koswat
+      name: Source code
+copyright: Copyright &copy; 2022 Carsopre
