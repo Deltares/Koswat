@@ -1,3 +1,9 @@
+## v0.11.5 (2023-01-12)
+
+### Fix
+
+- **calc_library**: Small correction to avoid crashing when trying to order multiline strings
+
 ## v0.11.4 (2023-01-12)
 
 ### Fix
