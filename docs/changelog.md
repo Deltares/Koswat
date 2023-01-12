@@ -1,3 +1,9 @@
+## v0.11.3 (2023-01-12)
+
+### Fix
+
+- **koswat/configuration**: Fixed creation of scenarios based on selected dike sections
+
 ## v0.11.2 (2022-12-21)
 
 ## v0.11.1 (2022-12-20)
