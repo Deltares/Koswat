@@ -30,13 +30,13 @@ class SectionScenarioFom(KoswatIniFomProtocol):
 
 class KoswatSectionScenariosIniFom(KoswatIniFomProtocol):
     section_scenarios: List[SectionScenarioFom]
-    scenario_section: str
+    scenario_dike_section: str
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatSectionScenariosIniFom:
         _ini_fom = cls()
         _ini_fom.section_scenarios = []
-        _ini_fom.scenario_section = ""
+        _ini_fom.scenario_dike_section = ""
         for _section_name in ini_config.sections():
             _new_section = SectionScenarioFom.from_config(ini_config[_section_name])
             _new_section.scenario_name = _section_name

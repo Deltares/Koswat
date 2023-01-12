@@ -40,18 +40,14 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 
 class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def import_from(self, from_path: Path) -> KoswatRunSettings:
-        _run_settings = KoswatRunSettings()
-
         # First get the FOM
         logging.info("Importing INI configuration from {}".format(from_path))
         _general_settings = self._import_general_settings(from_path)
-        _run_settings.output_dir = (
-            _general_settings.analyse_section_fom.analysis_output_dir
-        )
+        _output_dir = _general_settings.analyse_section_fom.analysis_output_dir
         _dike_selected_sections = self._import_selected_dike_section_names(
             _general_settings.analyse_section_fom.dike_selection_txt_file
         )
-        _run_settings.input_profile_cases = self._import_dike_input_profiles_list(
+        _input_profile_cases = self._import_dike_input_profiles_list(
             csv_file=_general_settings.analyse_section_fom.input_profiles_csv_file,
             dike_selection=_dike_selected_sections,
             layers_info=self._get_layers_info(
@@ -70,52 +66,86 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _surroundings_fom = self._import_surroundings(
             _general_settings.surroundings_section.surroundings_database_dir,
             _general_settings.analyse_section_fom.dike_section_location_shp_file,
-            [_s.scenario_section for _s in _scenario_fom_list],
+            [_s.scenario_dike_section for _s in _scenario_fom_list],
         )
 
         logging.info("Importing INI configuration completed.")
 
         # Then convert to DOM
         logging.info("Mapping data to Koswat Settings")
-        self._get_scenarios(
-            _run_settings, _scenario_fom_list, _dike_costs, _surroundings_fom
+        _run_settings = self._get_run_settings(
+            _input_profile_cases,
+            _scenario_fom_list,
+            _dike_costs,
+            _surroundings_fom,
+            _output_dir,
         )
         logging.info("Settings import completed.")
 
         return _run_settings
 
-    def _get_scenarios(
+    def _get_run_settings(
         self,
-        run_settings: KoswatRunSettings,
-        fom_scenario: List[KoswatSectionScenariosIniFom],
+        input_profiles: List[KoswatProfileBase],
+        fom_scenario_list: List[KoswatSectionScenariosIniFom],
         costs_settings: KoswatCostsSettings,
         surroundings_fom: List[SurroundingsWrapper],
+        output_dir: Path,
     ) -> None:
-        for _fom_scenario in fom_scenario:
-            _scenario_output = run_settings.output_dir / (
-                "scenario_" + _fom_scenario.scenario_section
-            )
-            _surrounding = next(
-                filter(
-                    lambda x: x.dike_section == _fom_scenario.scenario_section,
-                    surroundings_fom,
+        _run_settings = KoswatRunSettings()
+        _run_settings.output_dir = output_dir
+        for _ip in input_profiles:
+            # Find this input profile scenarios.
+            _fom_scenario = next(
+                (
+                    _fs
+                    for _fs in fom_scenario_list
+                    if _fs.scenario_dike_section == _ip.input_data.dike_section
                 ),
                 None,
             )
+            if not _fom_scenario:
+                logging.warning(
+                    "No scenario found for selected section {}.".format(
+                        _ip.input_data.dike_section
+                    )
+                )
+                continue
+
+            # Define section-dependent properties
+            _surrounding = next(
+                (
+                    _surrounding
+                    for _surrounding in surroundings_fom
+                    if _surrounding.dike_section == _fom_scenario.scenario_dike_section
+                ),
+                None,
+            )
+            _dike_output_dir = output_dir / ("dike_" + _ip.input_data.dike_section)
+
+            # Create new run scenario setting
+            logging.info(
+                "Creating scenarios for profile {}.".format(_ip.input_data.dike_section)
+            )
             for _sub_scenario in _fom_scenario.section_scenarios:
-                _sub_output = _scenario_output / _sub_scenario.scenario_name
-                for _input_profile in run_settings.input_profile_cases:
-                    _run_scenario = KoswatRunScenarioSettings()
-                    _run_scenario.input_profile_case = _input_profile
-                    _run_scenario.scenario = self._get_koswat_scenario(
-                        _sub_scenario, _input_profile
-                    )
-                    _run_scenario.surroundings = _surrounding
-                    _run_scenario.costs = costs_settings
-                    _run_scenario.output_dir = (
-                        _sub_output / _input_profile.input_data.dike_section
-                    )
-                    run_settings.run_scenarios.append(_run_scenario)
+                _run_scenario = KoswatRunScenarioSettings()
+                _run_scenario.input_profile_case = _ip
+                _run_scenario.scenario = self._get_koswat_scenario(_sub_scenario, _ip)
+                _run_scenario.surroundings = _surrounding
+                _run_scenario.costs = costs_settings
+                _run_scenario.output_dir = _dike_output_dir / (
+                    "scenario_" + _sub_scenario.scenario_name.lower()
+                )
+                logging.info(
+                    "Created sub scenario {}.".format(_sub_scenario.scenario_name)
+                )
+                _run_settings.run_scenarios.append(_run_scenario)
+        logging.info(
+            "Finished generating koswat scenarios. A total of {} scenarios were created.".format(
+                len(_run_settings.run_scenarios)
+            )
+        )
+        return _run_settings
 
     def _import_general_settings(self, ini_config_file: Path) -> KoswatGeneralIniFom:
         reader = KoswatIniReader()

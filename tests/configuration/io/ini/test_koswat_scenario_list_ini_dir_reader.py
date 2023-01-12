@@ -55,7 +55,7 @@ class TestKoswatScenarioListIniDirReader:
 
         # 3. Verify expectations.
         assert isinstance(_scenario_fom, KoswatSectionScenariosIniFom)
-        assert _scenario_fom.scenario_section == _test_file.stem
+        assert _scenario_fom.scenario_dike_section == _test_file.stem
 
     def test_read_without_dir(self):
         _result = KoswatSectionScenarioListIniDirReader().read(Path("not_a_dir"))

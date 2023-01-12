@@ -13,7 +13,8 @@ A Koswat report is divided in different parts:
 
 ## Generated files
 After running a Koswat analysis, several files and directories will be generated, usually the structure will be as follows:
-`Dike profile scenarios -> Scenario -> dike section -> Generated files`
+
+`Dike profile section scenarios -> Scenario -> Generated files`
 
 - Dike profile - scenarios directory: Each dike can be run using different scenarios.
 - Scenario: Scenario being applied to the selected dike profile.
@@ -21,3 +22,36 @@ After running a Koswat analysis, several files and directories will be generated
 - Generated files: A combination of images and a 'csv' matrix result.
     - Images: Visual description of each of the possible reinforcements being applied.
     - matrix_result.csv: A csv file containing all the information of the Summary report (and therefore the location, profile and layer report).
+
+Example using a summarized view of the output tree directory when running the acceptance test `test_main.test_given_valid_input_succeeds`: 
+```
+acceptance
+|   koswat.log
+|
++-- results_output
+|   +-- dike_10-1-1-A-1-A
+|   |   +-- scenario_scenario1
+|   |   |   |   Grondmaatregel profiel.png
+|   |   |   |   Kistdam.png
+|   |   |   |   Kwelscherm.png
+|   |   |   |   matrix_results.csv
+|   |   |   |   Stabiliteitswand.png
+|   |   |   |
+|   |   |   +-- Grondmaatregel profiel
+|   |   |       |   added_Grondmaatregelprofiel_CLAY.png
+|   |   |       |   added_Grondmaatregelprofiel_GRASS.png
+|   |   |       |   added_Grondmaatregelprofiel_SAND.png
+|   |   |       |   removed_Grondmaatregelprofiel_CLAY.png
+|   |   |       |   removed_Grondmaatregelprofiel_GRASS.png
+|   |   |   +-- Kistdam
+|   |   |       |   ...
+|   |   |
+|   |   |   +-- Kwelscherm
+|   |   |       |   ...
+|   |   |
+|   |   |   +-- Stabiliteitswand
+|   |   |       |   ...
+|   |   |
+|   |   +-- scenario_scenario2
+|   |       |   ...
+```

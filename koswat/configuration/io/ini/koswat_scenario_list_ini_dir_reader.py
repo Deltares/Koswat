@@ -32,7 +32,7 @@ class KoswatSectionScenarioListIniDirReader(KoswatReaderProtocol):
         _reader = KoswatIniReader()
         _reader.koswat_ini_fom_type = KoswatSectionScenariosIniFom
         _section_scenarios: KoswatSectionScenariosIniFom = _reader.read(scenario_file)
-        _section_scenarios.scenario_section = scenario_file.stem
+        _section_scenarios.scenario_dike_section = scenario_file.stem
         return _section_scenarios
 
     def read(self, dir_path: Path) -> List[KoswatSectionScenariosIniFom]:

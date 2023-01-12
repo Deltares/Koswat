@@ -61,6 +61,6 @@ class TestKoswatSectionScenariosIniFom:
         _ini_fom = KoswatSectionScenariosIniFom.from_config(_parser)
         assert isinstance(_ini_fom, KoswatSectionScenariosIniFom)
         assert isinstance(_ini_fom, KoswatIniFomProtocol)
-        assert _ini_fom.scenario_section == ""
+        assert _ini_fom.scenario_dike_section == ""
         assert len(_ini_fom.section_scenarios) == 1
         _validate_test_section_scenario(_ini_fom.section_scenarios[0], "test_section")
