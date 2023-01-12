@@ -30,6 +30,7 @@ class SectionScenarioFom(KoswatIniFomProtocol):
 
 class KoswatSectionScenariosIniFom(KoswatIniFomProtocol):
     section_scenarios: List[SectionScenarioFom]
+    # TODO: Represents a Dike section!
     scenario_section: str
 
     @classmethod

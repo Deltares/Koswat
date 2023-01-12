@@ -1,11 +1,10 @@
-import subprocess
+import shutil
 from pathlib import Path
 
-import pytest
 from click.testing import CliRunner
 
 from koswat import __main__
-from tests import get_test_results_dir, test_data
+from tests import test_data, test_results
 
 
 class TestMain:
@@ -20,15 +19,16 @@ class TestMain:
         assert FileNotFoundError == type(_run_result.exc_info[1])
         assert _invalid_path == str(_run_result.exc_info[1])
 
-    def test_given_valid_input_succeeds(self, request: pytest.FixtureRequest):
+    def test_given_valid_input_succeeds(self):
         # 1. Define test data.
         _valid_path = test_data / "acceptance" / "koswat_general.ini"
         assert _valid_path.is_file()
-        _results_dir = get_test_results_dir(request)
-        assert _results_dir.is_dir()
-        assert not any(
-            _results_dir.glob("*.log")
-        ), "Log files still present, directory should be purged to ensure test validity."
+        # Ensure we have a clean results dir.
+        _results_dir = test_results / "acceptance"
+        if _results_dir.exists():
+            shutil.rmtree(_results_dir)
+        _results_dir.mkdir(parents=True)
+
         _cli_arg = f'--input_file "{_valid_path}" --log_output "{_results_dir}"'
 
         # 2. Run test.
