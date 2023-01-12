@@ -1,3 +1,10 @@
+## v0.11.4 (2023-01-12)
+
+### Fix
+
+- **standard_reinforcement_layers_wrapper_builder**: Fixed sand layer added surface not being correct
+- **calc_library.py**: After doing a geometry union the resulting geometry gets now their points in order
+
 ## v0.11.3 (2023-01-12)
 
 ### Fix
