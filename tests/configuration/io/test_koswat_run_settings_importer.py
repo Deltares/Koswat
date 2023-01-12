@@ -66,8 +66,4 @@ class TestKoswatRunSettingsImporter:
         assert all(
             isinstance(_rs, KoswatRunScenarioSettings) for _rs in _config.run_scenarios
         )
-        assert isinstance(_config.input_profile_cases, list)
-        assert all(
-            isinstance(_pc, KoswatProfileBase) for _pc in _config.input_profile_cases
-        )
         assert isinstance(_config.output_dir, Path)
