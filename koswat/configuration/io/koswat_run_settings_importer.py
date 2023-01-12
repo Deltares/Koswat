@@ -40,8 +40,6 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 
 class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def import_from(self, from_path: Path) -> KoswatRunSettings:
-        _run_settings = KoswatRunSettings()
-
         # First get the FOM
         logging.info("Importing INI configuration from {}".format(from_path))
         _general_settings = self._import_general_settings(from_path)
@@ -116,9 +114,10 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
             # Define section-dependent properties
             _surrounding = next(
-                filter(
-                    lambda x: x.dike_section == _fom_scenario.scenario_dike_section,
-                    surroundings_fom,
+                (
+                    _surrounding
+                    for _surrounding in surroundings_fom
+                    if _surrounding.dike_section == _fom_scenario.scenario_dike_section
                 ),
                 None,
             )
