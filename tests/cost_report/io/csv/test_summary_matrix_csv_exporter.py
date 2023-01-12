@@ -37,9 +37,6 @@ class TestSummaryMatrixCsvExporter:
         assert _export_path.exists()
         _read_text = _export_path.read_text()
         _expected_text = """;;Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand
-A;0.24;0.42;0;1;1;1
-A;2.4;0.42;0;0;1;1
-A;0.24;2.4;0;0;0;1
 ;;Cost per km (€);0.0;8144.4;16288.8;24433.2
 ;;Reused grass volume (volume / surface):;nan;nan;nan;nan
 ;;Reused grass volume (cost):;nan;nan;nan;nan
@@ -60,5 +57,8 @@ A;0.24;2.4;0;0;0;1
 ;;New core layer surface (volume / surface):;nan;nan;nan;nan
 ;;New core layer surface (cost):;nan;nan;nan;nan
 ;;New maaiveld surface (volume / surface):;nan;nan;nan;nan
-;;New maaiveld surface (cost):;nan;nan;nan;nan"""
+;;New maaiveld surface (cost):;nan;nan;nan;nan
+A;0.24;0.42;0;1;1;1
+A;2.4;0.42;0;0;1;1
+A;0.24;2.4;0;0;0;1"""
         assert _expected_text == _read_text

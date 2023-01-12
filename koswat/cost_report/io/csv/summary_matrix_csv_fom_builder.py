@@ -62,7 +62,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         ]
         _cost_rows.insert(0, dict_to_csv_row(_cost_per_km_key, _required_placeholders))
         _csv_fom.headers = _headers
-        _csv_fom.entries = _location_rows + _cost_rows
+        _csv_fom.entries = _cost_rows + _location_rows
         return _csv_fom
 
     def _get_locations_matrix(
