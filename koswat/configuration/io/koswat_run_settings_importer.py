@@ -68,7 +68,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _surroundings_fom = self._import_surroundings(
             _general_settings.surroundings_section.surroundings_database_dir,
             _general_settings.analyse_section_fom.dike_section_location_shp_file,
-            [_s.scenario_section for _s in _scenario_fom_list],
+            [_s.scenario_dike_section for _s in _scenario_fom_list],
         )
 
         logging.info("Importing INI configuration completed.")
@@ -102,7 +102,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 (
                     _fs
                     for _fs in fom_scenario_list
-                    if _fs.scenario_section == _ip.input_data.dike_section
+                    if _fs.scenario_dike_section == _ip.input_data.dike_section
                 ),
                 None,
             )
@@ -117,7 +117,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             # Define section-dependent properties
             _surrounding = next(
                 filter(
-                    lambda x: x.dike_section == _fom_scenario.scenario_section,
+                    lambda x: x.dike_section == _fom_scenario.scenario_dike_section,
                     surroundings_fom,
                 ),
                 None,

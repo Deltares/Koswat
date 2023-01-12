@@ -74,7 +74,7 @@ def scenario_ini_file() -> List[pytest.param]:
     ) -> Iterable[KoswatScenario]:
         for _section_scenario in scenario_data.section_scenarios:
             _scenario = KoswatScenario()
-            _scenario.scenario_section = scenario_data.scenario_section
+            _scenario.scenario_section = scenario_data.scenario_dike_section
             _scenario.scenario_name = _section_scenario.scenario_name
             _scenario.d_h = _section_scenario.d_h
             _scenario.d_s = _section_scenario.d_s
