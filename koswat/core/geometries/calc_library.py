@@ -16,7 +16,9 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
         geometry.Polygon: Normalized polygon.
     """
     if isinstance(dike_polygon.boundary, geometry.MultiLineString):
-        logging.warning("Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.")
+        logging.warning(
+            "Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this."
+        )
         return dike_polygon
     _x, _y = tuple(map(list, dike_polygon.boundary.coords.xy))
     # remove last point as it's repeated.
