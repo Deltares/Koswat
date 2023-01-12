@@ -75,7 +75,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
         # Then convert to DOM
         logging.info("Mapping data to Koswat Settings")
-        _run_settings = self._get_scenarios(
+        _run_settings = self._get_run_settings(
             _input_profile_cases,
             _scenario_fom_list,
             _dike_costs,
@@ -86,7 +86,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
         return _run_settings
 
-    def _get_scenarios(
+    def _get_run_settings(
         self,
         input_profiles: List[KoswatProfileBase],
         fom_scenario_list: List[KoswatSectionScenariosIniFom],
@@ -125,16 +125,27 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _dike_output_dir = output_dir / ("dike_" + _ip.input_data.dike_section)
 
             # Create new run scenario setting
-            for _sub_scenarios in _fom_scenario.section_scenarios:
+            logging.info(
+                "Creating scenarios for profile {}.".format(_ip.input_data.dike_section)
+            )
+            for _sub_scenario in _fom_scenario.section_scenarios:
                 _run_scenario = KoswatRunScenarioSettings()
                 _run_scenario.input_profile_case = _ip
-                _run_scenario.scenario = self._get_koswat_scenario(_sub_scenarios, _ip)
+                _run_scenario.scenario = self._get_koswat_scenario(_sub_scenario, _ip)
                 _run_scenario.surroundings = _surrounding
                 _run_scenario.costs = costs_settings
                 _run_scenario.output_dir = _dike_output_dir / (
-                    "scenario_" + _sub_scenarios.scenario_name.lower()
+                    "scenario_" + _sub_scenario.scenario_name.lower()
+                )
+                logging.info(
+                    "Created sub scenario {}.".format(_sub_scenario.scenario_name)
                 )
                 _run_settings.run_scenarios.append(_run_scenario)
+        logging.info(
+            "Finished generating koswat scenarios. A total of {} scenarios were created.".format(
+                len(_run_settings.run_scenarios)
+            )
+        )
         return _run_settings
 
     def _import_general_settings(self, ini_config_file: Path) -> KoswatGeneralIniFom:
