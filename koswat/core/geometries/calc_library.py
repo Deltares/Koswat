@@ -141,6 +141,7 @@ def get_polygon_surface_points(
 ) -> geometry.LineString:
     """
     Gets all the points composing the upper surface of a 'dike' geometry.
+    IMPORTANT! The calling of this method __assumes__ the `base_geometry` points are in order, call `order_geometry_points` if needed.
 
     Args:
         base_geometry (Union[geometry.Polygon, geometry.MultiPolygon]): Source geometry.

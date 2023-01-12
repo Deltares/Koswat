@@ -11,6 +11,7 @@ from koswat.core.geometries.calc_library import (
     as_unified_geometry,
     get_polygon_surface_points,
     get_relative_core_layer,
+    order_geometry_points,
 )
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.layers_wrapper import (
@@ -43,7 +44,9 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             new_layer
         )
         _old_geom = Polygon(self.layers_data["base_layer"]["geometry"])
-        _added_geometry = new_layer.outer_geometry.difference(_old_geom)
+        _added_geometry = order_geometry_points(
+            new_layer.outer_geometry.difference(_old_geom)
+        )
         _reinforced_base_layer.old_layer_geometry = _old_geom
         _reinforced_base_layer.new_layer_geometry = _added_geometry
         _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
