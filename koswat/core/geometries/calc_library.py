@@ -39,11 +39,11 @@ def as_unified_geometry(
         source_geom (Union[geometry.Polygon, geometry.MultiPolygon]): Calculated source geometry.
 
     Returns:
-        geometry.Polygon: Unified resulting geometry.
+        geometry.Polygon: Unified resulting geometry with its points ordered (first one is the most-left x coordinate).
     """
     if isinstance(source_geom, geometry.MultiPolygon):
-        return source_geom.union(source_geom.convex_hull)
-    return source_geom
+        return order_geometry_points(source_geom.union(source_geom.convex_hull))
+    return order_geometry_points(source_geom)
 
 
 def get_relative_core_layer(
