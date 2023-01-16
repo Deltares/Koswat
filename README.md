@@ -6,10 +6,21 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Deltares/Koswat)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Deltares/Koswat) -->
 
-## Description
+## Detailed documentation
 
+Currently the detailed documentation is only reachable when building it locally, to do so check the section [read the docs documentation](#read-the-docs-documentation).
 
-### Intended audience
+## Features
+
+- Dike profile generation based on data from the koswat `ini` file.
+- Calculation of all possible reinforcement profiles.
+- Filtering of reinforcement profiles based on their surroundings.
+- Cost calculation for added and removed material per layer per reinforcement.
+- Plotting of reinforcements and layer cross section.
+- Export of results to `csv`.
+- Logging of analysis.
+
+## Intended audience
 Koswat targets two types of users:
 - Sandbox users. This target group are users acquianted with `Python` scripting. For them we envision two main interests when using the tool as a sandbox:
     - Extending its functionality, or _correcting_ the existing one via pull-requests. This requires them to adhere to our __Development Guidelines__ (not yet present) and to use the Koswat repository in [Development mode](#development-mode).
@@ -62,7 +73,7 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
         ```
         | Note, this will not install `Poetry`, which is required to properly maintain the interdependencies of `Koswat` tool.
 
-## Read the docs documentation.
+#### Read the docs documentation.
 
 Documentation for the project is currently only available with a manual step. You can do this if you installed the project following the steps of the [development mode](#development-mode). Then execute the `MkDocs` build and serve step:
 ```cli
