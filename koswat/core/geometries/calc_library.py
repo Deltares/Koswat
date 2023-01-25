@@ -134,8 +134,7 @@ def _get_single_polygon_surface_points(
     _idx_mlc = _x_coords.index(min(_x_coords))
     _idx_mrc = _x_coords.index(max(_x_coords))
     if _idx_mlc > _idx_mrc:
-        _surface_points = _coordinates[: (_idx_mrc + 1)] + _coordinates[_idx_mlc:]
-        _surface_points.reverse()
+        _surface_points = _coordinates[_idx_mlc:] + _coordinates[: (_idx_mrc + 1)]
     else:
         _surface_points = _coordinates[_idx_mlc : (_idx_mrc + 1)]
 
