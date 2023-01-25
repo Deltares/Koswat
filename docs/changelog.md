@@ -1,3 +1,10 @@
+## v0.11.6 (2023-01-25)
+
+### Fix
+
+- **calc_library.py;koswat_coating_layer_builder.py**: We now round up the coordinates of the calculated layers to avoid precision issues
+- **calc_library.py**: Corrected collection of surface points, added extra plot for reinforced profiles
+
 ## v0.11.5 (2023-01-12)
 
 ### Fix

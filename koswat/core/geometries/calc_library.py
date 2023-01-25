@@ -51,6 +51,7 @@ def as_unified_geometry(
         return order_geometry_points(source_geom.union(source_geom.convex_hull))
     return order_geometry_points(source_geom)
 
+
 def get_relative_core_layer(
     core_geometry: geometry.Polygon, coating_geometry: geometry.Polygon
 ) -> geometry.Polygon:
