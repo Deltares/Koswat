@@ -1,3 +1,9 @@
+## v0.11.7 (2023-01-25)
+
+### Fix
+
+- **calc_library.py**: We now check whether the last point intersects with the line drawn between the first two points to avoid precission issues
+
 ## v0.11.6 (2023-01-25)
 
 ### Fix
