@@ -18,6 +18,7 @@ class ReinforcementLayerProtocol(KoswatLayerProtocol, Protocol):
     new_layer_surface: LineString
     old_layer_geometry: Polygon
 
+
 class ReinforcementCoatingLayer(KoswatLayerProtocol):
     material_type: KoswatMaterialType
     outer_geometry: Polygon
