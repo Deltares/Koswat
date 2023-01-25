@@ -27,9 +27,9 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
         _offset_geom_linestring = _offset_geom_linestring.intersection(
             self.base_geometry
         )
-        # We round to 6 decimals to avoid precission issues when computing the geometries differences.
+        # We round to 3 decimals (mm) to avoid precission issues when computing the geometries differences.
         _offset_geom_coords = [
-            (round(x, 6), round(y, 6)) for x, y in _offset_geom_linestring.coords
+            (round(x, 3), round(y, 3)) for x, y in _offset_geom_linestring.coords
         ]
         if _offset_geom_coords[-1][0] > _offset_geom_coords[0][0]:
             # Reverse it so it can be built into a polygon with the upper layer.

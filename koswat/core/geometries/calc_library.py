@@ -129,6 +129,11 @@ def _get_single_polygon_surface_points(
         return geometry.LineString()
 
     _coordinates.pop(-1)
+    if _coordinates[1][0] > _coordinates[-1][0]:
+        _gls = geometry.LineString(_coordinates[0:2])
+        if _gls.intersects(geometry.Point(_coordinates[-1]).buffer(0.01)):
+            # Apparently sometimes the difference method does not entirely take out the water-side old polygon for a very small precision difference.
+            _coordinates.pop(0)
     _x_coords, _ = list(zip(*_coordinates))
     _idx_mlc = _x_coords.index(min(_x_coords))
     _idx_mrc = _x_coords.index(max(_x_coords))
