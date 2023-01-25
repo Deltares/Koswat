@@ -96,6 +96,7 @@ class LayersCases(CasesProtocol):
     # Only cases that should be 'realistic'.
     cases = [
         pytest.param(with_clay_and_grass, id="With grass and clay layer"),
+        pytest.param(with_acceptance_criteria, id="With acceptance criteria"),
     ]
 
 
