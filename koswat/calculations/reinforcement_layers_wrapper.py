@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Protocol
+from typing import List, Protocol, runtime_checkable
 
 from shapely.geometry import LineString, Polygon
 
@@ -12,6 +12,7 @@ from koswat.dike.layers.layers_wrapper import KoswatLayersWrapperProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
+@runtime_checkable
 class ReinforcementLayerProtocol(KoswatLayerProtocol, Protocol):
     new_layer_geometry: Polygon
     new_layer_surface: LineString

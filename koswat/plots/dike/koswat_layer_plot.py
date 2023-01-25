@@ -34,4 +34,18 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         self.subplot.plot(_x_coords, y_coords, **dict_values)
         _x_points, _y_points = list(zip(*self.koswat_object.upper_points.coords))
         self.subplot.scatter(_x_points, _y_points)
+        from koswat.calculations.reinforcement_layers_wrapper import (
+            ReinforcementLayerProtocol,
+        )
+
+        if isinstance(self.koswat_object, ReinforcementLayerProtocol):
+            _surface_x, _surface_y = self.koswat_object.new_layer_surface.coords.xy
+            self.subplot.plot(
+                _surface_x,
+                _surface_y,
+                color="#000",
+                linewidth=2,
+                zorder=1,
+                linestyle="solid",
+            )
         return self.subplot
