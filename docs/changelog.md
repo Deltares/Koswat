@@ -1,3 +1,9 @@
+## v0.12.0 (2023-01-26)
+
+### Feat
+
+- **koswat/cost_report**: Koswat Summary now includes all available locations even if they are not suitable for any reinforcement profile. Adapted the rest of the classes to generate a proper matrix also during export
+
 ## v0.11.7 (2023-01-25)
 
 ### Fix
