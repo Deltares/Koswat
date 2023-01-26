@@ -60,16 +60,16 @@ class SurroundingsWrapper:
         self.roads_class_unknown_dikeside = None
 
     @property
-    def locations(self) -> List[Point]:
+    def locations(self) -> List[PointSurroundings]:
         """
         Each location represents 1 meter in a real scale map.
 
         Returns:
-            List[Point]: List of points along the polderside.
+            List[PointSurroundings]: List of points along the polderside.
         """
         if not self.buldings_polderside:
             return []
-        return [p.location for p in self.buldings_polderside.points]
+        return self.buldings_polderside.points
 
     def get_locations_after_distance(self, distance: float) -> List[Point]:
         """

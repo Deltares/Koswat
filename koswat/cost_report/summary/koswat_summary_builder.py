@@ -51,6 +51,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()
+        _summary.available_locations = self.run_scenario_settings.surroundings.locations
         logging.info(
             "Creating analysis for {} - scenario {} - {}".format(
                 self.run_scenario_settings.input_profile_case.input_data.dike_section,

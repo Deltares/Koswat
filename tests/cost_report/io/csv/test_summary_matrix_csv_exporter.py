@@ -60,5 +60,6 @@ class TestSummaryMatrixCsvExporter:
 ;;New maaiveld surface (cost):;nan;nan;nan;nan
 A;0.24;0.42;0;1;1;1
 A;2.4;0.42;0;0;1;1
-A;0.24;2.4;0;0;0;1"""
+A;0.24;2.4;0;0;0;1
+A;2.4;2.4;0;0;0;0"""
         assert _expected_text == _read_text
