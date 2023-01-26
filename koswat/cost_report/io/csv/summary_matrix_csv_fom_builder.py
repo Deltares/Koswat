@@ -47,7 +47,9 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
                 row.insert(n, "")
             return row
 
-        _location_rows = self._get_locations_matrix(_dict_of_entries[_locations_key])
+        _location_rows = self._get_locations_matrix(
+            _dict_of_entries[_locations_key], self.koswat_summary.available_locations
+        )
         _required_placeholders = (
             len(_location_rows[0])
             - len(self.koswat_summary.locations_profile_report_list)
@@ -66,7 +68,9 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         return _csv_fom
 
     def _get_locations_matrix(
-        self, locations_lists: List[List[PointSurroundings]]
+        self,
+        suitable_locations: List[List[PointSurroundings]],
+        available_locations: List[PointSurroundings],
     ) -> List[List[Any]]:
         def location_as_row(
             matrix_item: Tuple[PointSurroundings, List[int]]
@@ -76,11 +80,16 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             _location_as_row.extend(_m_values)
             return _location_as_row
 
+        # Initiate locations matrix.
+        # Note: Not the most efficient way, but I want to keep the reports with only
+        # the locations that support one (or more) profile reinforcements.
         _matrix = defaultdict(list)
-        for idx, _loc_list in enumerate(locations_lists):
+        for _available_loc in available_locations:
+            _matrix[_available_loc] = [0] * len(suitable_locations)
+
+        # Set the suitable locations.
+        for idx, _loc_list in enumerate(suitable_locations):
             for _loc in _loc_list:
-                if not _matrix[_loc]:
-                    _matrix[_loc] = [0] * len(locations_lists)
                 _matrix[_loc][idx] = 1
         return list(
             map(

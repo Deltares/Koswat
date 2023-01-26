@@ -37,4 +37,4 @@ class TestSurroundingsWrapper:
 
         # 3. Verify expectations.
         assert isinstance(_surroundings.buldings_polderside, KoswatBuildingsPolderside)
-        assert _surroundings.locations == _locations
+        assert [x.location for x in _surroundings.locations] == _locations
