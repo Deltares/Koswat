@@ -51,7 +51,7 @@ class TestKoswatCoatingLayerBuilder:
     def test_given_valid_data_when_build_then_returns_koswat_coating_layer(self):
         # 1. Define test data
         _builder = KoswatCoatingLayerBuilder()
-        _points = list(map(Point, [(0, 0), (3, 3), (4, 5), (5, 3), (8, 0)]))
+        _points = [(0, 0), (3, 3), (4, 5), (5, 3), (8, 0)]
         _builder.upper_linestring = LineString(_points)
         _builder.layer_data = dict(material="klei", depth=1)
         _points.append(_points[0])

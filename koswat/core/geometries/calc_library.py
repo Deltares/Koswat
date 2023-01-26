@@ -31,7 +31,7 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
     # We can assume that there won't be two 'lowest' x points with different y position (so a 'cliff')
     new_x = _x[_lowest_x:] + _x[0:_lowest_x] + [_x[_lowest_x]]
     new_y = _y[_lowest_x:] + _y[0:_lowest_x] + [_y[_lowest_x]]
-    _points = [geometry.Point(new_x[idx], new_y[idx]) for idx in range(0, len(new_x))]
+    _points = [(new_x[idx], new_y[idx]) for idx in range(0, len(new_x))]
     return geometry.Polygon(_points)
 
 
@@ -182,7 +182,7 @@ def profile_points_to_polygon(points_list: List[geometry.Point]) -> geometry.Pol
         _geometry_points.append(geometry.Point(0, points_list[-1].y))
         _geometry_points.append(geometry.Point(0, points_list[0].y))
     _geometry_points.append(points_list[0])
-    return geometry.Polygon(_geometry_points)
+    return geometry.Polygon(geometry.LineString(_geometry_points))
 
 
 def remove_layer_from_polygon(
