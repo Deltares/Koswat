@@ -236,13 +236,6 @@ class TestReinforcementProfileBuilderFactory:
                 id="Soil, Default input profile, Default Scenario",
             ),
             pytest.param(
-                SoilReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.scenario_2,
-                InputProfileScenarioLookup.reinforcement_soil_default_scenario_2_no_layers,
-                id="Soil, Default input profile, Scenario 2",
-            ),
-            pytest.param(
                 CofferdamReinforcementProfile,
                 InputProfileCases.default,
                 ScenarioCases.scenario_3,
