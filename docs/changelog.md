@@ -1,3 +1,9 @@
+## v0.12.1 (2023-01-27)
+
+### Fix
+
+- **calc_library.py**: Standrad reinforcement calculation now uses a different method to make sure the added geometry is normalized
+
 ## v0.12.0 (2023-01-26)
 
 ### Feat
