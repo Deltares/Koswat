@@ -122,6 +122,43 @@ def get_groundlevel_surface(pol_geometry: geometry.Polygon) -> geometry.LineStri
     )
 
 
+def _get_normalized_polygon(base_polygon: geometry.Polygon) -> geometry.Polygon:
+    _coordinates = list(get_polygon_coordinates(base_polygon).coords)
+    if not _coordinates:
+        return geometry.LineString()
+    _coordinates.pop(-1)
+
+    def _last_point_intersects() -> bool:
+        if _coordinates[1][0] <= _coordinates[-1][0]:
+            return False
+        _gls = geometry.LineString(_coordinates[0:2])
+        return _gls.intersects(geometry.Point(_coordinates[-1]).buffer(0.01))
+
+    while _last_point_intersects():
+        # Apparently sometimes the difference method does not entirely take out the water-side old polygon for a very small precision difference.
+        _coordinates.pop(0)
+        _coordinates.insert(0, _coordinates.pop(-1))
+    _coordinates.append(_coordinates[0])
+    return geometry.Polygon(_coordinates)
+
+
+def get_normalized_polygon_difference(
+    left_geom: geometry.Polygon, right_geom: geometry.Polygon
+) -> geometry.Polygon:
+    """
+    Given two polygons calculates the difference between them and removes any residual polygon due to minor precission errors.
+
+    Args:
+        left_geom (geometry.Polygon): Base polygon from where to substract.
+        right_geom (geometry.Polygon): Polygon to substract from base.
+
+    Returns:
+        geometry.Polygon: Resulting normalized substraction polygon.
+    """
+    _result_geom = order_geometry_points(left_geom.difference(right_geom))
+    return _get_normalized_polygon(_result_geom)
+
+
 def _get_single_polygon_surface_points(
     base_geometry: geometry.Polygon,
 ) -> geometry.LineString:
@@ -130,11 +167,6 @@ def _get_single_polygon_surface_points(
         return geometry.LineString()
 
     _coordinates.pop(-1)
-    if _coordinates[1][0] > _coordinates[-1][0]:
-        _gls = geometry.LineString(_coordinates[0:2])
-        if _gls.intersects(geometry.Point(_coordinates[-1]).buffer(0.01)):
-            # Apparently sometimes the difference method does not entirely take out the water-side old polygon for a very small precision difference.
-            _coordinates.pop(0)
     _x_coords, _ = list(zip(*_coordinates))
     _idx_mlc = _x_coords.index(min(_x_coords))
     _idx_mrc = _x_coords.index(max(_x_coords))
@@ -163,7 +195,9 @@ def get_polygon_surface_points(
         return ops.linemerge(
             list(map(_get_single_polygon_surface_points, base_geometry.geoms))
         )
-    return _get_single_polygon_surface_points(base_geometry)
+    if isinstance(base_geometry, geometry.Polygon):
+        return _get_single_polygon_surface_points(base_geometry)
+    return base_geometry
 
 
 def profile_points_to_polygon(points_list: List[geometry.Point]) -> geometry.Polygon:
