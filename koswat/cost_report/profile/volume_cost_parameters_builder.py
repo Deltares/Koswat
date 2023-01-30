@@ -22,6 +22,11 @@ class VolumeCostParametersBuilder(BuilderProtocol):
     koswat_costs: KoswatCostsSettings
 
     def build(self) -> VolumeCostParameters:
+        if not self.reinforced_profile:
+            raise ValueError("No reinforced profile provided.")
+        if not self.koswat_costs:
+            raise ValueError("No koswat costs provided.")
+
         _volume_parameters = VolumeCostParameters()
         self._set_volume_cost_parameters(
             _volume_parameters, self.koswat_costs.dike_profile_costs
@@ -75,34 +80,34 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         _vcp = self._get_volume_cost_calculator()
         if not _vcp:
             return
-        vc_parameters.reused_grass_volume = self._create(
+        vc_parameters.reused_grass_volume = self._get_volume_cost_parameter(
             _vcp.get_reused_grass_volume(), dike_profile_costs.reused_layer_grass_m3
         )
-        vc_parameters.aanleg_grass_volume = self._create(
+        vc_parameters.aanleg_grass_volume = self._get_volume_cost_parameter(
             _vcp.get_aanleg_grass_volume(), dike_profile_costs.added_layer_grass_m3
         )
-        vc_parameters.aanleg_clay_volume = self._create(
+        vc_parameters.aanleg_clay_volume = self._get_volume_cost_parameter(
             _vcp.get_aanleg_clay_volume(), dike_profile_costs.added_layer_clay_m3
         )
-        vc_parameters.reused_core_volume = self._create(
+        vc_parameters.reused_core_volume = self._get_volume_cost_parameter(
             _vcp.get_reused_core_volume(), dike_profile_costs.reused_layer_core_m3
         )
-        vc_parameters.aanleg_core_volume = self._create(
+        vc_parameters.aanleg_core_volume = self._get_volume_cost_parameter(
             _vcp.get_aanleg_core_volume(), dike_profile_costs.added_layer_sand_m3
         )
-        vc_parameters.removed_material_volume = self._create(
+        vc_parameters.removed_material_volume = self._get_volume_cost_parameter(
             _vcp.get_removed_material_volume(), dike_profile_costs.disposed_material_m3
         )
-        vc_parameters.new_grass_layer_surface = self._create(
+        vc_parameters.new_grass_layer_surface = self._get_volume_cost_parameter(
             _vcp.new_grass_layer_surface, dike_profile_costs.profiling_layer_grass_m2
         )
-        vc_parameters.new_clay_layer_surface = self._create(
+        vc_parameters.new_clay_layer_surface = self._get_volume_cost_parameter(
             _vcp.new_clay_layer_surface, dike_profile_costs.profiling_layer_clay_m2
         )
-        vc_parameters.new_core_layer_surface = self._create(
+        vc_parameters.new_core_layer_surface = self._get_volume_cost_parameter(
             _vcp.new_core_layer_surface, dike_profile_costs.profiling_layer_sand_m2
         )
-        vc_parameters.new_maaiveld_surface = self._create(
+        vc_parameters.new_maaiveld_surface = self._get_volume_cost_parameter(
             _vcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
         )
         return vc_parameters

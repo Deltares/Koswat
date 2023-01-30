@@ -9,6 +9,10 @@ from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.costs.dike_profile_costs_settings import (
+    DikeProfileCostsSettings,
+)
+from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -47,7 +51,7 @@ class TestAcceptance:
         "layers_case",
         LayersCases.cases,
     )
-    def test_given_surrounding_files_run_calculations_for_all_included_profiles(
+    def test_koswat_run_as_sandbox(
         self,
         input_profile_case,
         scenario_case: KoswatProfileBase,
@@ -88,6 +92,20 @@ class TestAcceptance:
         _run_settings.scenario = scenario_case
         _run_settings.surroundings = _surroundings
         _run_settings.input_profile_case = _base_koswat_profile
+        _costs = KoswatCostsSettings()
+        _run_settings.costs = _costs
+        # Set default dike profile costs.
+        _costs.dike_profile_costs = DikeProfileCostsSettings()
+        _costs.dike_profile_costs.added_layer_grass_m3 = 12.44
+        _costs.dike_profile_costs.added_layer_clay_m3 = 18.05
+        _costs.dike_profile_costs.added_layer_sand_m3 = 10.98
+        _costs.dike_profile_costs.reused_layer_grass_m3 = 6.04
+        _costs.dike_profile_costs.reused_layer_core_m3 = 4.67
+        _costs.dike_profile_costs.disposed_material_m3 = 7.07
+        _costs.dike_profile_costs.profiling_layer_grass_m2 = 0.88
+        _costs.dike_profile_costs.profiling_layer_clay_m2 = 0.65
+        _costs.dike_profile_costs.profiling_layer_sand_m2 = 0.60
+        _costs.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
 
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
