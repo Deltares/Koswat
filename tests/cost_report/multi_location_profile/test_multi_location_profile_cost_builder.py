@@ -7,6 +7,7 @@ from koswat.calculations.reinforcement_profile_builder_factory import (
     ReinforcementProfileBuilderFactory,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -35,6 +36,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _builder = MultiLocationProfileCostReportBuilder()
         _builder.scenario = ScenarioCases.default
         _builder.surroundings = SurroundingsWrapper()
+        _builder.koswat_costs = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []
         _p_surrounding.location = Point(2.4, 4.2)

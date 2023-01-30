@@ -18,6 +18,10 @@ class ProfileCostReportBuilder(BuilderProtocol):
     reinforced_profile: ReinforcementProfileProtocol
     koswat_costs: KoswatCostsSettings
 
+    def __init__(self) -> None:
+        self.reinforced_profile = None
+        self.koswat_costs = None
+
     def _get_layers_report(
         self, cost_parameters: List[VolumeCostParameters]
     ) -> List[LayerCostReport]:

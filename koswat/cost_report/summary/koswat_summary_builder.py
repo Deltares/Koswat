@@ -47,6 +47,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
     ) -> MultiLocationProfileCostReportBuilder:
         _builder = MultiLocationProfileCostReportBuilder()
         _builder.surroundings = self.run_scenario_settings.surroundings
+        _builder.koswat_costs = self.run_scenario_settings.costs
         return _builder
 
     def build(self) -> KoswatSummary:

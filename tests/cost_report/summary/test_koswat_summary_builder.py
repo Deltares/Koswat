@@ -11,6 +11,7 @@ from koswat.calculations.standard_reinforcement import (
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -80,6 +81,7 @@ class TestKoswatSummaryBuilder:
         _builder = KoswatSummaryBuilder()
         _settings = KoswatRunScenarioSettings()
         _settings.surroundings = SurroundingsWrapper()
+        _settings.costs = KoswatCostsSettings()
         _builder.run_scenario_settings = _settings
 
         # 2. Run test.
@@ -102,6 +104,7 @@ class TestKoswatSummaryBuilder:
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
         _run_settings.surroundings = SurroundingsWrapper()
+        _run_settings.costs = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []
         _p_surrounding.location = Point(2.4, 4.2)
