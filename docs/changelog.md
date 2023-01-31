@@ -1,3 +1,9 @@
+## v0.13.0 (2023-01-31)
+
+### Feat
+
+- **volume_cost_parameters_builder.py**: We now calculate the costs based on the ini input file
+
 ## v0.12.1 (2023-01-27)
 
 ### Fix
