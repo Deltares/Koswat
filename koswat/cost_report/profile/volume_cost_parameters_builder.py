@@ -21,6 +21,10 @@ class VolumeCostParametersBuilder(BuilderProtocol):
     reinforced_profile: ReinforcementProfileProtocol
     koswat_costs: KoswatCostsSettings
 
+    def __init__(self) -> None:
+        self.reinforced_profile = None
+        self.koswat_costs = None
+
     def build(self) -> VolumeCostParameters:
         if not self.reinforced_profile:
             raise ValueError("No reinforced profile provided.")
