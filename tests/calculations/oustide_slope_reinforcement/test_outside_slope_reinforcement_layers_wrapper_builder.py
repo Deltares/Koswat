@@ -1,5 +1,3 @@
-import pytest
-
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
