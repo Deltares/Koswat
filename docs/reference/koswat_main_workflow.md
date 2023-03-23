@@ -8,6 +8,10 @@ First of all, let's write the workflow as a pipeline:
 
 `CLI call -> Import of ini files -> Run scenarios -> [Generate reinforcement profiles -> Calculate costs -> Export results]`
 
+|![General Workflow](./imgs/general_workflow.png)|
+|:--:|
+|Image 1. General Workflow|
+
 ## CLI Call
 
 This step is very straightforward, the command line will run the method `run_analysis`, which will initiate the `KoswatHandler` and start an analysis.

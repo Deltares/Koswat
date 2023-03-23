@@ -1,6 +1,7 @@
 # Cost report
 
 A Koswat report is divided in different parts:
+
 - __Summary report__: A summary containing all 'location reports'.
 - __Location report__: Which profile reinforcements can be applied to each location based on their surroundings and reinforcement properties (`MultiLocationProfileCostReport`). 
 - __Profile report__: (`ProfileCostReport`), what are the (material) volume costs associated when applying a given [reinforced profile](./koswat_reinforced_profile.md#possible-reinforcements) .
