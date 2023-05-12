@@ -1551,6 +1551,18 @@ lint = ["docutils-stubs", "flake8", "mypy"]
 test = ["pytest"]
 
 [[package]]
+name = "teamcity-messages"
+version = "1.32"
+description = "Send test results to TeamCity continuous integration server from unittest, nose, py.test, twisted trial, behave (Python 2.6+)"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "teamcity-messages-1.32.tar.gz", hash = "sha256:6991d95642c8d067524c90985b650d89caab6ac0bf47b721b931b04951abbfc1"},
+    {file = "teamcity_messages-1.32-py3-none-any.whl", hash = "sha256:1dbd30e24e80ee80083a5ce01d8898c8157a974fd7cd13ee219834b918f4ab8c"},
+]
+
+[[package]]
 name = "termcolor"
 version = "2.3.0"
 description = "ANSI color formatting for output in terminal"
@@ -1689,4 +1701,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9, <3.11"
-content-hash = "abb279cfccd47dae1334ea43b1447d30f9f04ea9440c306f0fb174c9c39dd824"
+content-hash = "eda4e06ec48acdd1f95f1eb173c5616af43ae871093f76501938cc6f8a2eca11"
