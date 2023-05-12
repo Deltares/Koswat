@@ -43,7 +43,6 @@ isort = "^5.10.1"
 commitizen = "^2.35.0"
 urllib3 = "1.26.15"
 
-
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.4.3"
 myst-parser = "^1.0.0"
