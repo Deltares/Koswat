@@ -36,13 +36,13 @@ shapely = "^2.0.1"
 pytest = "^7.2.1"
 pytest-cov = "^3.0.0"
 coverage = "^6.4.4"
+teamcity-messages = "^1.32"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
 isort = "^5.10.1"
 commitizen = "^2.35.0"
 urllib3 = "1.26.15"
-
 
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.4.3"
@@ -55,17 +55,15 @@ target-version = ['py310']
 exclude = '''
 (
   /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
+      \.git         # exclude a few common directories in the
+    | \.github          # root of the project
+    | \.env
     | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | \.virtualenvs
+    | \.config
+    | .pytest_cache
+    | .scannerwork
+    | .vscode
+    | site
   )/
 )
 '''
@@ -74,6 +72,7 @@ exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
+skip = [".git", ".github", ".env", ".venv", ".config", ".pytest_cache", ".scannerwork", ".vscode", "site"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -84,6 +83,11 @@ tag_format = "v$major.$minor.$patch"
 version_files= [
     "koswat/__init__.py",
     "pyproject.toml:version",]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

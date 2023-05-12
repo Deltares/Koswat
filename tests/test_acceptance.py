@@ -51,6 +51,7 @@ class TestAcceptance:
         "layers_case",
         LayersCases.cases,
     )
+    @pytest.mark.slow
     def test_koswat_run_as_sandbox(
         self,
         input_profile_case,
