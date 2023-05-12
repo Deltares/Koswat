@@ -1,6 +1,7 @@
 # KOSWAT
 [![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3106/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+![TeamCity build status](https://dpcbuild.deltares.nl/app/rest/builds/buildType:id:Koswat_ContinuousIntegrationBuild_RunFastTests/statusIcon.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_Koswat&metric=alert_status&token=87fdd0648c19800b4b5fc11334461a7fb602bf20)](https://sonarcloud.io/summary/new_code?id=Deltares_Koswat)
 <!--  These tags won't work while being private.
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Deltares/Koswat)
