@@ -173,7 +173,7 @@ class InputProfileScenarioLookup:
             binnen_berm_breedte=20,
             binnen_maaiveld=0,
         ),
-        layers_data=LayersCases.without_layers,
+        layers_data=LayersCases.without_layers.layers_dict,
         p4_x_coordinate=3,
     )
     reinforcement_soil_default_scenario_2_no_layers = dict(
@@ -190,7 +190,7 @@ class InputProfileScenarioLookup:
             binnen_berm_breedte=54,
             binnen_maaiveld=0,
         ),
-        layers_data=LayersCases.without_layers,
+        layers_data=LayersCases.without_layers.layers_dict,
         p4_x_coordinate=2,
     )
     reinforcement_piping_wall_default_scenario_3_no_layers = dict(
@@ -208,7 +208,7 @@ class InputProfileScenarioLookup:
             binnen_maaiveld=0,
             length_piping_wall=4.5,
         ),
-        layers_data=LayersCases.without_layers,
+        layers_data=LayersCases.without_layers.layers_dict,
         p4_x_coordinate=6,
     )
     reinforcement_stability_wall_default_scenario_3_no_layers = dict(
@@ -226,7 +226,7 @@ class InputProfileScenarioLookup:
             binnen_maaiveld=0,
             length_stability_wall=17,
         ),
-        layers_data=LayersCases.without_layers,
+        layers_data=LayersCases.without_layers.layers_dict,
         p4_x_coordinate=6,
     )
     reinforcement_coffer_dam_wall_default_scenario_3_no_layers = dict(
@@ -244,6 +244,6 @@ class InputProfileScenarioLookup:
             binnen_maaiveld=0,
             length_coffer_dam=17,
         ),
-        layers_data=LayersCases.without_layers,
+        layers_data=LayersCases.without_layers.layers_dict,
         p4_x_coordinate=0,
     )

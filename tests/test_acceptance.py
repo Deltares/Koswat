@@ -189,10 +189,7 @@ class TestAcceptance:
         # 2. Run acceptance test case.
         yield _run_settings, _output_dir
 
-        # 3. Validate acceptance test case.
-
     @pytest.mark.slow
-    # @pytest.mark.skip(reason="Work in progress")
     def test_koswat_when_sandbox_given_run_scenario_then_returns_expectation(
         self, sandbox_acceptance_case: tuple[KoswatRunScenarioSettings, Path]
     ):
