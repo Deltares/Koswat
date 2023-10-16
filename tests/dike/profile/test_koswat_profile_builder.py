@@ -46,14 +46,14 @@ class TestKoswatProfileBuilder:
             pytest.param(
                 dict(
                     input_profile_data=InputProfileCases.default,
-                    layers_data=LayersCases.without_layers,
+                    layers_data=LayersCases.without_layers.layers_dict,
                 ),
                 id="No p4_x coordinate",
             ),
             pytest.param(
                 dict(
                     input_profile_data=InputProfileCases.default,
-                    layers_data=LayersCases.without_layers,
+                    layers_data=LayersCases.without_layers.layers_dict,
                     p4_x_coordinate=0,
                 ),
                 id="Given p4_x coordinate",

@@ -1,27 +1,20 @@
 from __future__ import annotations
+from dataclasses import dataclass
 
 import math
 
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 
 
+@dataclass
 class KoswatScenario(KoswatConfigProtocol):
-    scenario_name: str
-    scenario_section: str
-    d_h: float
-    d_s: float
-    d_p: float
-    kruin_breedte: float
-    buiten_talud: float
-
-    def __init__(self) -> None:
-        self.scenario_name = ""
-        self.scenario_section = ""
-        self.d_h = math.nan
-        self.d_s = math.nan
-        self.d_p = math.nan
-        self.kruin_breedte = math.nan
-        self.buiten_talud = math.nan
+    scenario_name: str = ""
+    scenario_section: str = ""
+    d_h: float = math.nan
+    d_s: float = math.nan
+    d_p: float = math.nan
+    kruin_breedte: float = math.nan
+    buiten_talud: float = math.nan
 
     def is_valid(self) -> bool:
         return (

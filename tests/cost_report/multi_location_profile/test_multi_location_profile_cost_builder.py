@@ -6,7 +6,6 @@ from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinfor
 from koswat.calculations.reinforcement_profile_builder_factory import (
     ReinforcementProfileBuilderFactory,
 )
-from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
@@ -14,7 +13,6 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_build
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
     KoswatBuildingsPolderside,
@@ -45,7 +43,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _builder.reinforced_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.profile_case_2,
-                layers_data=LayersCases.without_layers,
+                layers_data=LayersCases.without_layers.layers_dict,
                 p4_x_coordinate=3,
                 reinforcement_type=CofferdamReinforcementProfile,
             )

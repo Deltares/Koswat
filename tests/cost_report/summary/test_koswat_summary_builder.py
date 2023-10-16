@@ -53,7 +53,7 @@ class TestKoswatSummaryBuilder:
         _settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.without_layers,
+                layers_data=LayersCases.without_layers.layers_dict,
                 p4_x_coordinate=0,
                 profile_type=KoswatProfileBase,
             )
@@ -113,7 +113,7 @@ class TestKoswatSummaryBuilder:
         _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.without_layers,
+                layers_data=LayersCases.without_layers.layers_dict,
                 p4_x_coordinate=0,
                 profile_type=KoswatProfileBase,
             )

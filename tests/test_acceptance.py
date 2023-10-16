@@ -1,4 +1,5 @@
 from __future__ import annotations
+from pathlib import Path
 
 import shutil
 
@@ -30,6 +31,13 @@ from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
 from tests import get_testcase_results_dir, test_data
+from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
+    AcceptanceTestScenarioCombinations,
+    AcceptanceTestScenario,
+)
+from tests.acceptance_scenarios.acceptance_test_scenario_cases import (
+    acceptance_test_combinations,
+)
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 
 
@@ -52,7 +60,7 @@ class TestAcceptance:
         LayersCases.cases,
     )
     @pytest.mark.slow
-    def test_koswat_run_as_sandbox(
+    def test_koswat_run_as_sandbox_phased_out(
         self,
         input_profile_case,
         scenario_case: KoswatProfileBase,
@@ -143,3 +151,57 @@ class TestAcceptance:
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
             assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
             assert all(isinstance(lcr, CostReportProtocol) for lcr in _layers_report)
+
+    @pytest.fixture(
+        params=AcceptanceTestScenarioCombinations.get_all_cases(
+            acceptance_test_combinations
+        )
+    )
+    def sandbox_acceptance_case(
+        self, request: pytest.FixtureRequest
+    ) -> tuple[KoswatRunScenarioSettings, Path]:
+        _acceptance_test_scenario: AcceptanceTestScenario = request.param
+        assert isinstance(_acceptance_test_scenario, AcceptanceTestScenario)
+
+        # 1. Setup acceptance test case
+        # Get the refernce data in the output directory.
+        _output_dir = get_testcase_results_dir(request)
+        if _output_dir.exists():
+            shutil.rmtree(_output_dir.parent)
+        shutil.copy(
+            _acceptance_test_scenario.reference_data_dir,
+            _output_dir.joinpath("reference"),
+        )
+
+        _run_settings = KoswatRunScenarioSettings()
+        _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
+        _run_settings.scenario = _acceptance_test_scenario.scenario_case
+        _run_settings.surroundings = ...
+        _run_settings.costs = KoswatCostsSettings()
+        _run_settings.costs.dike_profile_costs = DikeProfileCostsSettings()
+
+        # 2. Run acceptance test case.
+        yield _run_settings, _output_dir
+
+        # 3. Validate acceptance test case.
+
+    @pytest.mark.slow
+    def test_koswat_when_sandbox_given_run_scenario_then_returns_expectation(
+        self, sandbox_acceptance_case: tuple[KoswatRunScenarioSettings, Path]
+    ):
+        # 1. Define test data
+        _run_scenario, _export_path = sandbox_acceptance_case
+        assert isinstance(_run_scenario, KoswatRunScenarioSettings)
+        assert not _export_path.parent.exists()
+
+        # 2. Run test.
+        _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
+        _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_scenario
+        _summary = _multi_loc_multi_prof_cost_builder.build()
+
+        # Export results
+        SummaryMatrixCsvExporter().export(_summary, _export_path)
+
+        # 3. Verify final expectations
+        assert isinstance(_summary, KoswatSummary)
+        assert _export_path.exists()

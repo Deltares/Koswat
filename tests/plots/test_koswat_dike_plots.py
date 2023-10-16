@@ -20,7 +20,7 @@ class TestKoswatDikePlots:
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.with_clay_and_grass,
+                layers_data=LayersCases.with_clay_and_grass.layers_dict,
                 profile_type=KoswatProfileBase,
             )
         ).build()
@@ -45,7 +45,7 @@ class TestKoswatDikePlots:
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
-                layers_data=LayersCases.with_clay_and_grass,
+                layers_data=LayersCases.with_clay_and_grass.layers_dict,
                 profile_type=KoswatProfileBase,
             )
         ).build()
