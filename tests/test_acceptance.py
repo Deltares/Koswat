@@ -30,7 +30,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
-from tests import get_testcase_results_dir, test_data
+from tests import get_testcase_results_dir, test_data, test_results
 from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
     AcceptanceTestScenarioCombinations,
     AcceptanceTestScenario,
@@ -165,18 +165,21 @@ class TestAcceptance:
 
         # 1. Setup acceptance test case
         # Get the refernce data in the output directory.
-        _output_dir = get_testcase_results_dir(request)
-        if _output_dir.exists():
-            shutil.rmtree(_output_dir.parent)
-        shutil.copy(
-            _acceptance_test_scenario.reference_data_dir,
-            _output_dir.joinpath("reference"),
+        _results_dir_name = get_testcase_results_dir(request).name
+        _output_dir = test_results.joinpath(
+            "sandbox_acceptance_case", _results_dir_name
         )
+        # if _output_dir.exists():
+        #     shutil.rmtree(_output_dir.parent)
+        # shutil.copy(
+        #     _acceptance_test_scenario.reference_data_dir,
+        #     _output_dir.joinpath("reference"),
+        # )
 
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
-        _run_settings.surroundings = ...
+        _run_settings.surroundings = None
         _run_settings.costs = KoswatCostsSettings()
         _run_settings.costs.dike_profile_costs = DikeProfileCostsSettings()
 
@@ -186,6 +189,7 @@ class TestAcceptance:
         # 3. Validate acceptance test case.
 
     @pytest.mark.slow
+    @pytest.mark.skip(reason="Work in progress")
     def test_koswat_when_sandbox_given_run_scenario_then_returns_expectation(
         self, sandbox_acceptance_case: tuple[KoswatRunScenarioSettings, Path]
     ):
