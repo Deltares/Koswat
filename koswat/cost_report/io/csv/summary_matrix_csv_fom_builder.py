@@ -50,10 +50,13 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         _location_rows = self._get_locations_matrix(
             _dict_of_entries[_locations_key], self.koswat_summary.available_locations
         )
-        _required_placeholders = (
-            len(_location_rows[0])
-            - len(self.koswat_summary.locations_profile_report_list)
-            - 1
+        _required_placeholders = min(
+            0,
+            (
+                len(_location_rows[0])
+                - len(self.koswat_summary.locations_profile_report_list)
+                - 1
+            ),
         )
         _headers = dict_to_csv_row(_profile_type_key, _required_placeholders)
         _cost_rows = [
@@ -79,6 +82,10 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             _location_as_row = [_ps.section, _ps.location.x, _ps.location.y]
             _location_as_row.extend(_m_values)
             return _location_as_row
+
+        if not any(available_locations):
+            logging.warning("No locations specified for the report.")
+            return [[]]
 
         # Initiate locations matrix.
         # Note: Not the most efficient way, but I want to keep the reports with only

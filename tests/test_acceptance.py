@@ -30,6 +30,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from tests import get_testcase_results_dir, test_data, test_results
 from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
     AcceptanceTestScenarioCombinations,
@@ -39,6 +40,8 @@ from tests.acceptance_scenarios.acceptance_test_scenario_cases import (
     acceptance_test_combinations,
 )
 from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
+import cv2
+import numpy as np
 
 
 class TestAcceptance:
@@ -169,17 +172,17 @@ class TestAcceptance:
         _output_dir = test_results.joinpath(
             "sandbox_acceptance_case", _results_dir_name
         )
-        # if _output_dir.exists():
-        #     shutil.rmtree(_output_dir.parent)
-        # shutil.copy(
-        #     _acceptance_test_scenario.reference_data_dir,
-        #     _output_dir.joinpath("reference"),
-        # )
+        if _output_dir.exists():
+            shutil.rmtree(_output_dir.parent)
+        shutil.copytree(
+            _acceptance_test_scenario.reference_data_dir,
+            _output_dir.joinpath("reference"),
+        )
 
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
-        _run_settings.surroundings = None
+        _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.costs = KoswatCostsSettings()
         _run_settings.costs.dike_profile_costs = DikeProfileCostsSettings()
 
@@ -189,23 +192,60 @@ class TestAcceptance:
         # 3. Validate acceptance test case.
 
     @pytest.mark.slow
-    @pytest.mark.skip(reason="Work in progress")
+    # @pytest.mark.skip(reason="Work in progress")
     def test_koswat_when_sandbox_given_run_scenario_then_returns_expectation(
         self, sandbox_acceptance_case: tuple[KoswatRunScenarioSettings, Path]
     ):
         # 1. Define test data
-        _run_scenario, _export_path = sandbox_acceptance_case
+        _run_scenario, _export_path_dir = sandbox_acceptance_case
+        _export_csv_path = _export_path_dir.joinpath("matrix_results.csv")
+        _export_figures_path = _export_path_dir.joinpath("figures")
         assert isinstance(_run_scenario, KoswatRunScenarioSettings)
-        assert not _export_path.parent.exists()
+        assert not _export_csv_path.exists()
 
         # 2. Run test.
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
         _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_scenario
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
-        # Export results
-        SummaryMatrixCsvExporter().export(_summary, _export_path)
-
         # 3. Verify final expectations
         assert isinstance(_summary, KoswatSummary)
-        assert _export_path.exists()
+
+        # Export results
+        SummaryMatrixCsvExporter().export(_summary, _export_csv_path)
+        for _multi_report in _summary.locations_profile_report_list:
+            _mlp_plot = MultiLocationProfileComparisonPlotExporter()
+            _mlp_plot.cost_report = _multi_report
+            _mlp_plot.export_dir = _export_figures_path
+            _mlp_plot.export()
+
+        assert _export_figures_path.exists()
+
+        # 4. Compare CSV results
+        _reference_dir = _export_path_dir.joinpath("reference")
+        assert _export_csv_path.exists()
+        _csv_result = _export_csv_path.read_text()
+        _csv_reference = _reference_dir.joinpath(_export_csv_path.name).read_text()
+        assert _csv_result == _csv_reference, "CSV Summary differs from reference."
+
+        # 5. Compare geometry images.
+        def compare_images(reference_img, result_image) -> tuple[float, np.ndarray]:
+            # https://www.tutorialspoint.com/how-to-compare-two-images-in-opencv-python
+            h, w = reference_img.shape
+            diff = cv2.subtract(reference_img, result_image)
+            err = np.sum(diff**2)
+            # compute mean squared error
+            mse = err / (float(h * w))
+            return mse, diff
+
+        _glob_filter = "**/*.png"
+        assert any(_export_figures_path.glob(_glob_filter))
+        for _result_figure in _export_figures_path.glob(_glob_filter):
+            _relative_to = _result_figure.relative_to(_export_path_dir)
+            _reference_figure = _reference_dir.joinpath(_relative_to)
+            _ref_img = cv2.cvtColor(
+                cv2.imread(str(_reference_figure)), cv2.COLOR_BGR2GRAY
+            )
+            _res_img = cv2.cvtColor(cv2.imread(str(_result_figure)), cv2.COLOR_BGR2GRAY)
+            _mse, _ = compare_images(_ref_img, _res_img)
+            assert _mse == pytest.approx(0.0, rel=1e-6), "Differences for {}".format(_relative_to)
