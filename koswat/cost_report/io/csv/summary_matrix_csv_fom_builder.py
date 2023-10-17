@@ -50,13 +50,10 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         _location_rows = self._get_locations_matrix(
             _dict_of_entries[_locations_key], self.koswat_summary.available_locations
         )
-        _required_placeholders = min(
-            0,
-            (
-                len(_location_rows[0])
-                - len(self.koswat_summary.locations_profile_report_list)
-                - 1
-            ),
+        _required_placeholders = (
+            len(_location_rows[0])
+            - len(self.koswat_summary.locations_profile_report_list)
+            - 1
         )
         _headers = dict_to_csv_row(_profile_type_key, _required_placeholders)
         _cost_rows = [
