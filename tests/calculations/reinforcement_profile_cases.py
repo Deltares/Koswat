@@ -138,9 +138,7 @@ class ReinforcementProfileCaseCombination:
                 )
             ).build(),
             koswat_scenario_case=self.koswat_scenario_case,
-            expected_reinforcement_profile=self._get_reinforced_profile(
-                self.reinforcement_profile_type, self.expexpected_profile_data
-            ),
+            expected_reinforcement_profile=self._get_reinforced_profile(),
         )
 
 
@@ -232,7 +230,7 @@ reinforcement_profile_cases = [
                 binnen_maaiveld=0,
                 length_coffer_dam=17,
             ),
-            koswat_layers_case=LayersCases.without_layers.layers_dict,
+            koswat_layers_case=LayersCases.without_layers,
             p4_x_coordinate=0,
         ),
     ),

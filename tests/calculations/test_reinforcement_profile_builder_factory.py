@@ -212,7 +212,9 @@ class TestReinforcementProfileBuilderFactory:
         "reinforcement_profile_case",
         list(
             map(
-                lambda x: pytest.param(x.to_reinforcement_profile_case, id=x.case_name),
+                lambda x: pytest.param(
+                    x.to_reinforcement_profile_case(), id=x.case_name
+                ),
                 reinforcement_profile_cases,
             )
         ),
