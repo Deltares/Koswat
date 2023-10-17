@@ -7,7 +7,8 @@ from koswat.plots.dike.koswat_profile_plot import KoswatProfilePlot
 from koswat.plots.geometries.highlight_geometry_plot import HighlightGeometryPlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import get_test_results_dir
-from tests.library_test_cases import InputProfileCases, LayersCases
+from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
+from tests.acceptance_scenarios.layers_cases import LayersCases
 
 
 class TestKoswatDikePlots:

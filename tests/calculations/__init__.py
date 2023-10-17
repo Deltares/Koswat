@@ -28,48 +28,6 @@ def almost_equal(left_value: float, right_value: float) -> bool:
     return abs(left_value - right_value) <= 0.01
 
 
-def get_reinforced_profile(
-    type_reinforcement: Type[ReinforcementProfileProtocol], reinforced_data: dict
-) -> ReinforcementProfileProtocol:
-    _reinforcement = type_reinforcement()
-    # Input profile data.
-    _reinforcement.input_data = reinforced_data["input_profile_data"]
-    # Char points
-    _char_points_builder = CharacteristicPointsBuilder()
-    _char_points_builder.input_profile = _reinforcement.input_data
-    _char_points_builder.p4_x_coordinate = reinforced_data["p4_x_coordinate"]
-    _reinforcement.characteristic_points = _char_points_builder.build()
-
-    # layers
-    def _get_layers(
-        builder: KoswatLayersWrapperBuilderProtocol,
-        layers_data: dict,
-        char_points,
-    ) -> KoswatLayersWrapperProtocol:
-        builder.layers_data = layers_data
-        builder.profile_points = char_points
-        return builder.build()
-
-    _layers_wrapper_builder: KoswatLayersWrapperBuilderProtocol = None
-    if isinstance(_reinforcement, StandardReinforcementProfile):
-        _layers_wrapper_builder = StandardReinforcementLayersWrapperBuilder()
-    elif isinstance(_reinforcement, OutsideSlopeReinforcementProfile):
-        _layers_wrapper_builder = OutsideSlopeReinforcementLayersWrapperBuilder()
-
-    _initial_layers_wrapper = _get_layers(
-        KoswatLayersWrapperBuilder(),
-        reinforced_data["layers_data"],
-        _reinforcement.characteristic_points.points,
-    )
-    _reinforcement.layers_wrapper = _get_layers(
-        _layers_wrapper_builder,
-        _initial_layers_wrapper.as_data_dict(),
-        _reinforcement.characteristic_points.points,
-    )
-
-    return _reinforcement
-
-
 def _compare_points(new_points: List[Point], expected_points: List[Point]) -> List[str]:
     _new_points = [(p.x, p.y) for p in new_points]
     _expected_points = [(p.x, p.y) for p in expected_points]
