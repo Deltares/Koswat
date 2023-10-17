@@ -68,6 +68,7 @@ class ReinforcementProfileCase:
     case_name: str
     koswat_input_profile_base_case: KoswatInputProfileBase
     koswat_scenario_case: KoswatScenario
+    reinforcement_profile_type: type[ReinforcementProfileProtocol]
     expected_reinforcement_profile: ReinforcementProfileProtocol
 
 
@@ -130,6 +131,7 @@ class ReinforcementProfileCaseCombination:
     def to_reinforcement_profile_case(self) -> ReinforcementProfileCase:
         return ReinforcementProfileCase(
             case_name=self.case_name,
+            reinforcement_profile_type=self.reinforcement_profile_type,
             koswat_input_profile_base_case=KoswatProfileBuilder.with_data(
                 dict(
                     input_profile_data=self.input_profile_case,
