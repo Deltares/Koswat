@@ -39,9 +39,12 @@ from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
 from tests.acceptance_scenarios.acceptance_test_scenario_cases import (
     acceptance_test_combinations,
 )
-from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
 import cv2
 import numpy as np
+
+from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
+from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
+from tests.acceptance_scenarios.layers_cases import LayersCases
 
 
 class TestAcceptance:
@@ -245,4 +248,6 @@ class TestAcceptance:
             )
             _res_img = cv2.cvtColor(cv2.imread(str(_result_figure)), cv2.COLOR_BGR2GRAY)
             _mse, _ = compare_images(_ref_img, _res_img)
-            assert _mse == pytest.approx(0.0, rel=1e-6), "Differences for {}".format(_relative_to)
+            assert _mse == pytest.approx(0.0, rel=1e-6), "Differences for {}".format(
+                _relative_to
+            )

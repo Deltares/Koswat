@@ -19,7 +19,9 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from tests.library_test_cases import InputProfileCases, LayersCases, ScenarioCases
+from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
+from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
+from tests.acceptance_scenarios.layers_cases import LayersCases
 
 
 class TestMultiLocationProfileCostReportBuilder:

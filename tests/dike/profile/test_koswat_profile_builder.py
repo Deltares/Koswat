@@ -10,7 +10,11 @@ from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from tests.library_test_cases import InitialPointsLookup, InputProfileCases, LayersCases
+from tests.acceptance_scenarios.initial_characteristic_points_cases import (
+    InitialPointsLookup,
+)
+from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
+from tests.acceptance_scenarios.layers_cases import LayersCases
 
 
 class TestKoswatProfileBuilder:

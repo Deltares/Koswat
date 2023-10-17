@@ -57,13 +57,10 @@ from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import get_custom_testcase_results_dir, get_testcase_results_dir, test_data
-from tests.calculations import get_reinforced_profile, validated_reinforced_profile
-from tests.library_test_cases import (
-    InputProfileCases,
-    InputProfileScenarioLookup,
-    LayersCases,
-    ScenarioCases,
-)
+from tests.acceptance_scenarios.layers_cases import LayersCases
+from tests.calculations import validated_reinforced_profile
+from tests.calculations.reinforcement_profile_cases import reinforcement_profile_cases
+from tests.calculations.reinforcement_profile_cases import ReinforcementProfileCase
 
 
 def scenario_ini_file() -> List[pytest.param]:
@@ -212,78 +209,53 @@ class TestReinforcementProfileBuilderFactory:
         assert isinstance(_builder, ReinforcementProfileBuilderProtocol)
 
     @pytest.mark.parametrize(
-        "profile_type, profile_data, scenario_data, expected_profile_data",
-        [
-            pytest.param(
-                PipingWallReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.scenario_3,
-                InputProfileScenarioLookup.reinforcement_piping_wall_default_scenario_3_no_layers,
-                id="Piping Wall, Default input profile, Scenario 3",
-            ),
-            pytest.param(
-                StabilityWallReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.scenario_3,
-                InputProfileScenarioLookup.reinforcement_stability_wall_default_scenario_3_no_layers,
-                id="Stability Wall, Default input profile, Scenario 3",
-            ),
-            pytest.param(
-                SoilReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.default,
-                InputProfileScenarioLookup.reinforcement_soil_default_default_no_layers,
-                id="Soil, Default input profile, Default Scenario",
-            ),
-            pytest.param(
-                CofferdamReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.scenario_3,
-                InputProfileScenarioLookup.reinforcement_coffer_dam_wall_default_scenario_3_no_layers,
-            ),
-        ],
+        "reinforcement_profile_case",
+        list(
+            map(
+                lambda x: pytest.param(x.to_reinforcement_profile_case, id=x.case_name),
+                reinforcement_profile_cases,
+            )
+        ),
     )
     def test_given_profile_and_scenario_calculate_new_geometry_without_layers(
         self,
-        profile_type: Type[ReinforcementProfileProtocol],
-        profile_data: KoswatInputProfileProtocol,
-        scenario_data: KoswatScenario,
-        expected_profile_data: dict,
+        reinforcement_profile_case: ReinforcementProfileCase,
         request: pytest.FixtureRequest,
     ):
-        # TO-DO, potentially remove as the test below covers better this test case.
         # 1. Define test data.
         _plot_dir = get_testcase_results_dir(request)
-        _base_profile = KoswatProfileBuilder.with_data(
-            dict(
-                input_profile_data=profile_data,
-                layers_data=LayersCases.without_layers.layers_dict,
-                p4_x_coordinate=0,
-            )
-        ).build()
-        _expected_profile = get_reinforced_profile(profile_type, expected_profile_data)
-        assert isinstance(_base_profile, KoswatProfileBase)
-        assert isinstance(_expected_profile, profile_type)
-        assert isinstance(_expected_profile, ReinforcementProfileProtocol)
-        assert isinstance(scenario_data, KoswatScenario)
 
         # 2. Run test.
         _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
-            profile_type
+            reinforcement_profile_case.reinforcement_profile_type
         )
-        _reinforcement_builder.base_profile = _base_profile
-        _reinforcement_builder.scenario = scenario_data
+        _reinforcement_builder.base_profile = (
+            reinforcement_profile_case.koswat_input_profile_base_case
+        )
+        _reinforcement_builder.scenario = (
+            reinforcement_profile_case.koswat_scenario_case
+        )
         _reinforcement_profile = _reinforcement_builder.build()
 
         # 3. Verify expectations.
-        assert isinstance(_reinforcement_profile, profile_type)
+        assert isinstance(
+            _reinforcement_profile,
+            reinforcement_profile_case.reinforcement_profile_type,
+        )
         assert isinstance(_reinforcement_profile, ReinforcementProfileProtocol)
         assert isinstance(_reinforcement_profile, KoswatProfileProtocol)
         assert isinstance(
             _reinforcement_profile.input_data, ReinforcementInputProfileProtocol
         )
-        validated_reinforced_profile(_reinforcement_profile, _expected_profile)
-        self._plot_profiles(_base_profile, _reinforcement_profile, _plot_dir)
+        validated_reinforced_profile(
+            _reinforcement_profile,
+            reinforcement_profile_case.expected_reinforcement_profile,
+        )
+        self._plot_profiles(
+            reinforcement_profile_case.koswat_input_profile_base_case,
+            _reinforcement_profile,
+            _plot_dir,
+        )
 
     @pytest.mark.parametrize(
         "profile_type",
