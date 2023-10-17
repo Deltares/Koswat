@@ -13,6 +13,18 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
+from koswat.dike.surroundings.railways_polderside.koswat_railways_polderside import (
+    KoswatRailwaysPolderside,
+)
+from koswat.dike.surroundings.railways_polderside.koswat_railways_polderside_builder import (
+    KoswatRailwaysPoldersideBuilder,
+)
+from koswat.dike.surroundings.waters_polderside.koswat_waters_polderside import (
+    KoswatWatersPolderside,
+)
+from koswat.dike.surroundings.waters_polderside.koswat_waters_polderside_builder import (
+    KoswatWatersPoldersideBuilder,
+)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
@@ -27,7 +39,19 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     def _get_buildings_polder_side(self) -> KoswatBuildingsPolderside:
         _builder = KoswatBuildingsPoldersideBuilder()
         _builder.koswat_shp_fom = self.trajects_fom
-        _builder.koswat_csv_fom = self.surroundings_fom.buldings_polderside
+        _builder.koswat_csv_fom = self.surroundings_fom.buildings_polderside
+        return _builder.build()
+    
+    def _get_railways_polder_side(self) -> KoswatRailwaysPolderside:
+        _builder = KoswatRailwaysPoldersideBuilder()
+        _builder.koswat_shp_fom = self.trajects_fom
+        _builder.koswat_csv_fom = self.surroundings_fom.railways_polderside
+        return _builder.build()
+    
+    def _get_waters_polder_side(self) -> KoswatWatersPolderside:
+        _builder = KoswatWatersPoldersideBuilder()
+        _builder.koswat_shp_fom = self.trajects_fom
+        _builder.koswat_csv_fom = self.surroundings_fom.waters_polderside
         return _builder.build()
 
     def build(self) -> SurroundingsWrapper:
@@ -45,7 +69,9 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         _surroundings.traject = self.trajects_fom.dike_traject
         _surroundings.subtraject = self.trajects_fom.dike_subtraject
 
-        # For now we only include buildings_polderside
-        _surroundings.buldings_polderside = self._get_buildings_polder_side()
+        # For now we only include buildings_polderside/railway_polderside/water_polderside
+        _surroundings.buildings_polderside = self._get_buildings_polder_side()
+        _surroundings.railways_polderside = self._get_railways_polder_side()
+        _surroundings.waters_polderside = self._get_waters_polder_side()
 
         return _surroundings

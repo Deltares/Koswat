@@ -18,4 +18,10 @@ class PointSurroundingsBuilder(BuilderProtocol):
         _point.distance_to_buildings = self.point_surroundings_data.get(
             "distance_to_buildings", []
         )
+        _point.distance_to_railways = self.point_surroundings_data.get(
+            "distance_to_railways", []
+        )
+        _point.distance_to_waters = self.point_surroundings_data.get(
+            "distance_to_waters", []
+        )
         return _point

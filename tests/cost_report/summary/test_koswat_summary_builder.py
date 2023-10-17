@@ -108,8 +108,8 @@ class TestKoswatSummaryBuilder:
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []
         _p_surrounding.location = Point(2.4, 4.2)
-        _run_settings.surroundings.buldings_polderside = KoswatBuildingsPolderside()
-        _run_settings.surroundings.buldings_polderside.points = [_p_surrounding]
+        _run_settings.surroundings.buildings_polderside = KoswatBuildingsPolderside()
+        _run_settings.surroundings.buildings_polderside.points = [_p_surrounding]
         _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,

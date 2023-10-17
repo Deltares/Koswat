@@ -38,8 +38,8 @@ class TestMultiLocationProfileCostReportBuilder:
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_buildings = []
         _p_surrounding.location = Point(2.4, 4.2)
-        _builder.surroundings.buldings_polderside = KoswatBuildingsPolderside()
-        _builder.surroundings.buldings_polderside.points = [_p_surrounding]
+        _builder.surroundings.buildings_polderside = KoswatBuildingsPolderside()
+        _builder.surroundings.buildings_polderside.points = [_p_surrounding]
         _builder.reinforced_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.profile_case_2,

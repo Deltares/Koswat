@@ -20,14 +20,14 @@ class KoswatTrajectSurroundingsCsvFom(KoswatCsvFomProtocol):
 
 class KoswatTrajectSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
     traject: str
-    buldings_polderside: KoswatTrajectSurroundingsCsvFom
+    buildings_polderside: KoswatTrajectSurroundingsCsvFom
     buildings_dikeside: KoswatTrajectSurroundingsCsvFom
 
-    platform_polderside: KoswatTrajectSurroundingsCsvFom
-    platform_dikeside: KoswatTrajectSurroundingsCsvFom
+    railways_polderside: KoswatTrajectSurroundingsCsvFom
+    railways_dikeside: KoswatTrajectSurroundingsCsvFom
 
-    water_polderside: KoswatTrajectSurroundingsCsvFom
-    water_dikeside: KoswatTrajectSurroundingsCsvFom
+    waters_polderside: KoswatTrajectSurroundingsCsvFom
+    waters_dikeside: KoswatTrajectSurroundingsCsvFom
 
     roads_class_2_polderside: KoswatTrajectSurroundingsCsvFom
     roads_class_7_polderside: KoswatTrajectSurroundingsCsvFom
@@ -43,12 +43,12 @@ class KoswatTrajectSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
 
     def __init__(self) -> None:
         self.traject = ""
-        self.buldings_polderside = None
+        self.buildings_polderside = None
         self.buildings_dikeside = None
-        self.platform_polderside = None
-        self.platform_dikeside = None
-        self.water_polderside = None
-        self.water_dikeside = None
+        self.railways_polderside = None
+        self.railways_dikeside = None
+        self.waters_polderside = None
+        self.waters_dikeside = None
         self.roads_class_2_polderside = None
         self.roads_class_7_polderside = None
         self.roads_class_24_polderside = None

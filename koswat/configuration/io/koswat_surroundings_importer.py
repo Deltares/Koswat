@@ -77,12 +77,12 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
     def _map_surrounding_type(self, surrounding_type: str) -> str:
         _normalized = surrounding_type.lower().strip()
         _translations = dict(
-            bebouwing_binnendijks="buldings_polderside",
+            bebouwing_binnendijks="buildings_polderside",
             bebouwing_buitendijks="buildings_dikeside",
-            spoor_binnendijks="platform_polderside",
-            spoor_buitendijks="platform_dikeside",
-            water_binnendijks="water_polderside",
-            water_buitendijks="water_dikeside",
+            spoor_binnendijks="railways_polderside",
+            spoor_buitendijks="railways_dikeside",
+            water_binnendijks="waters_polderside",
+            water_buitendijks="waters_dikeside",
             wegen_binnendijks_klasse2="roads_class_2_polderside",
             wegen_binnendijks_klasse7="roads_class_7_polderside",
             wegen_binnendijks_klasse24="roads_class_24_polderside",
