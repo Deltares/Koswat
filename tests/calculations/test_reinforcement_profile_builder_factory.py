@@ -13,11 +13,16 @@ from koswat.calculations.outside_slope_reinforcement import (
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
+from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
+    OutsideSlopeReinforcementProfile,
+)
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
 )
 from koswat.calculations.protocols import (
-    ReinforcementInputProfileCalculationProtocol,
     ReinforcementInputProfileProtocol,
     ReinforcementProfileBuilderProtocol,
     ReinforcementProfileProtocol,
@@ -36,6 +41,12 @@ from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
+from koswat.calculations.standard_reinforcement.standard_reinforcement_layers_wrapper_builder import (
+    StandardReinforcementLayersWrapperBuilder,
+)
+from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
+    StandardReinforcementProfile,
+)
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
@@ -49,21 +60,33 @@ from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.dike.characteristic_points.characteristic_points_builder import (
+    CharacteristicPointsBuilder,
+)
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder import (
+    KoswatLayersWrapperBuilder,
+)
+from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol import (
+    KoswatLayersWrapperBuilderProtocol,
+)
+from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_protocol import (
+    KoswatLayersWrapperProtocol,
+)
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import get_custom_testcase_results_dir, get_testcase_results_dir, test_data
-from tests.calculations import get_reinforced_profile, validated_reinforced_profile
-from tests.library_test_cases import (
-    InputProfileCases,
-    InputProfileScenarioLookup,
-    LayersCases,
-    ScenarioCases,
+from tests.acceptance_scenarios.layers_cases import LayersCases
+from tests.calculations import validated_reinforced_profile
+from tests.calculations.reinforcement_profile_cases import (
+    ReinforcementProfileCaseCombination,
+    reinforcement_profile_cases,
 )
+from tests.calculations.reinforcement_profile_cases import ReinforcementProfileCase
 
 
 def scenario_ini_file() -> List[pytest.param]:
@@ -73,14 +96,15 @@ def scenario_ini_file() -> List[pytest.param]:
         scenario_data: KoswatSectionScenariosIniFom,
     ) -> Iterable[KoswatScenario]:
         for _section_scenario in scenario_data.section_scenarios:
-            _scenario = KoswatScenario()
-            _scenario.scenario_section = scenario_data.scenario_dike_section
-            _scenario.scenario_name = _section_scenario.scenario_name
-            _scenario.d_h = _section_scenario.d_h
-            _scenario.d_s = _section_scenario.d_s
-            _scenario.d_p = _section_scenario.d_p
-            _scenario.kruin_breedte = _section_scenario.kruin_breedte
-            _scenario.buiten_talud = _section_scenario.buiten_talud
+            _scenario = KoswatScenario(
+                d_h=_section_scenario.d_h,
+                d_s=_section_scenario.d_s,
+                d_p=_section_scenario.d_p,
+                scenario_section = scenario_data.scenario_dike_section,
+                scenario_name = _section_scenario.scenario_name,
+                kruin_breedte = _section_scenario.kruin_breedte,
+                buiten_talud = _section_scenario.buiten_talud,
+            )
             yield _scenario
 
     def _to_pytest_param(scenario: KoswatScenario) -> pytest.param:
@@ -164,7 +188,10 @@ class TestReinforcementProfileBuilderFactory:
     def test_get_reinforcement_input_profile(
         self,
         reinforcement_profile_type: Type[ReinforcementProfileProtocol],
-        expected_input_profile_type,
+        expected_input_profile_type: type[SoilInputProfile]
+        | type[PipingWallInputProfile]
+        | type[StabilityWallInputProfile]
+        | type[CofferDamInputProfile],
     ):
         _input_profile = (
             ReinforcementProfileBuilderFactory.get_reinforcement_input_profile(
@@ -211,79 +238,114 @@ class TestReinforcementProfileBuilderFactory:
         assert isinstance(_builder, expected_builder)
         assert isinstance(_builder, ReinforcementProfileBuilderProtocol)
 
-    @pytest.mark.parametrize(
-        "profile_type, profile_data, scenario_data, expected_profile_data",
-        [
-            pytest.param(
-                PipingWallReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.scenario_3,
-                InputProfileScenarioLookup.reinforcement_piping_wall_default_scenario_3_no_layers,
-                id="Piping Wall, Default input profile, Scenario 3",
-            ),
-            pytest.param(
-                StabilityWallReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.scenario_3,
-                InputProfileScenarioLookup.reinforcement_stability_wall_default_scenario_3_no_layers,
-                id="Stability Wall, Default input profile, Scenario 3",
-            ),
-            pytest.param(
-                SoilReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.default,
-                InputProfileScenarioLookup.reinforcement_soil_default_default_no_layers,
-                id="Soil, Default input profile, Default Scenario",
-            ),
-            pytest.param(
-                CofferdamReinforcementProfile,
-                InputProfileCases.default,
-                ScenarioCases.scenario_3,
-                InputProfileScenarioLookup.reinforcement_coffer_dam_wall_default_scenario_3_no_layers,
-            ),
-        ],
+    @pytest.fixture(
+        params=list(
+            map(lambda x: pytest.param(x, id=x.case_name), reinforcement_profile_cases)
+        ),
     )
-    def test_given_profile_and_scenario_calculate_new_geometry_without_layers(
-        self,
-        profile_type: Type[ReinforcementProfileProtocol],
-        profile_data: KoswatInputProfileProtocol,
-        scenario_data: KoswatScenario,
-        expected_profile_data: dict,
-        request: pytest.FixtureRequest,
-    ):
-        # TO-DO, potentially remove as the test below covers better this test case.
-        # 1. Define test data.
-        _plot_dir = get_testcase_results_dir(request)
-        _base_profile = KoswatProfileBuilder.with_data(
+    def reinforcement_profile_case(
+        self, request: pytest.FixtureRequest
+    ) -> ReinforcementProfileCase:
+        _combination: ReinforcementProfileCaseCombination = request.param
+        _base_input_profile = KoswatProfileBuilder.with_data(
             dict(
-                input_profile_data=profile_data,
-                layers_data=LayersCases.without_layers,
-                p4_x_coordinate=0,
+                input_profile_data=_combination.input_profile_case,
+                layers_data=_combination.koswat_layers_case.layers_dict,
+                p4_x_coordinate=_combination.p4_x_coordinate,
             )
         ).build()
-        _expected_profile = get_reinforced_profile(profile_type, expected_profile_data)
-        assert isinstance(_base_profile, KoswatProfileBase)
-        assert isinstance(_expected_profile, profile_type)
-        assert isinstance(_expected_profile, ReinforcementProfileProtocol)
-        assert isinstance(scenario_data, KoswatScenario)
+
+        def _get_reinforced_profile() -> ReinforcementProfileProtocol:
+            _reinforcement = _combination.reinforcement_profile_type()
+            # Input profile data.
+            _reinforcement.input_data = _combination.expectation.input_profile_base
+            # Char points
+            _char_points_builder = CharacteristicPointsBuilder()
+            _char_points_builder.input_profile = _reinforcement.input_data
+            _char_points_builder.p4_x_coordinate = (
+                _combination.expectation.p4_x_coordinate
+            )
+            _reinforcement.characteristic_points = _char_points_builder.build()
+
+            # layers
+            def _get_layers(
+                builder: KoswatLayersWrapperBuilderProtocol,
+                layers_data: dict,
+                char_points,
+            ) -> KoswatLayersWrapperProtocol:
+                builder.layers_data = layers_data
+                builder.profile_points = char_points
+                return builder.build()
+
+            _layers_wrapper_builder: KoswatLayersWrapperBuilderProtocol = None
+            if isinstance(_reinforcement, StandardReinforcementProfile):
+                _layers_wrapper_builder = StandardReinforcementLayersWrapperBuilder()
+            elif isinstance(_reinforcement, OutsideSlopeReinforcementProfile):
+                _layers_wrapper_builder = (
+                    OutsideSlopeReinforcementLayersWrapperBuilder()
+                )
+
+            _initial_layers_wrapper = _get_layers(
+                KoswatLayersWrapperBuilder(),
+                _combination.expectation.koswat_layers_case.layers_dict,
+                _reinforcement.characteristic_points.points,
+            )
+            _reinforcement.layers_wrapper = _get_layers(
+                _layers_wrapper_builder,
+                _initial_layers_wrapper.as_data_dict(),
+                _reinforcement.characteristic_points.points,
+            )
+
+            return _reinforcement
+
+        _expected_reinforcement = _get_reinforced_profile()
+        yield ReinforcementProfileCase(
+            case_name=_combination.case_name,
+            koswat_input_profile_base_case=_base_input_profile,
+            koswat_scenario_case=_combination.koswat_scenario_case,
+            reinforcement_profile_type=_combination.reinforcement_profile_type,
+            expected_reinforcement_profile=_expected_reinforcement,
+        )
+
+    def test_given_profile_and_scenario_calculate_new_geometry_without_layers(
+        self,
+        reinforcement_profile_case: ReinforcementProfileCase,
+        request: pytest.FixtureRequest,
+    ):
+        # 1. Define test data.
+        _plot_dir = get_testcase_results_dir(request)
 
         # 2. Run test.
         _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
-            profile_type
+            reinforcement_profile_case.reinforcement_profile_type
         )
-        _reinforcement_builder.base_profile = _base_profile
-        _reinforcement_builder.scenario = scenario_data
+        _reinforcement_builder.base_profile = (
+            reinforcement_profile_case.koswat_input_profile_base_case
+        )
+        _reinforcement_builder.scenario = (
+            reinforcement_profile_case.koswat_scenario_case
+        )
         _reinforcement_profile = _reinforcement_builder.build()
 
         # 3. Verify expectations.
-        assert isinstance(_reinforcement_profile, profile_type)
+        assert isinstance(
+            _reinforcement_profile,
+            reinforcement_profile_case.reinforcement_profile_type,
+        )
         assert isinstance(_reinforcement_profile, ReinforcementProfileProtocol)
         assert isinstance(_reinforcement_profile, KoswatProfileProtocol)
         assert isinstance(
             _reinforcement_profile.input_data, ReinforcementInputProfileProtocol
         )
-        validated_reinforced_profile(_reinforcement_profile, _expected_profile)
-        self._plot_profiles(_base_profile, _reinforcement_profile, _plot_dir)
+        validated_reinforced_profile(
+            _reinforcement_profile,
+            reinforcement_profile_case.expected_reinforcement_profile,
+        )
+        self._plot_profiles(
+            reinforcement_profile_case.koswat_input_profile_base_case,
+            _reinforcement_profile,
+            _plot_dir,
+        )
 
     @pytest.mark.parametrize(
         "profile_type",
@@ -308,7 +370,7 @@ class TestReinforcementProfileBuilderFactory:
         _base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile,
-                layers_data=LayersCases.with_acceptance_criteria,
+                layers_data=LayersCases.with_acceptance_criteria.layers_dict,
                 p4_x_coordinate=0,
             )
         ).build()

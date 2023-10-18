@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import math
 from typing import Type
 
 from koswat.calculations.protocols import (
@@ -57,7 +58,8 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         return _calculator.build()
 
     def _get_characteristic_points(
-        self, input_profile: ReinforcementInputProfileProtocol
+        self,
+        input_profile: ReinforcementInputProfileProtocol,
     ) -> CharacteristicPoints:
         _char_points_builder = CharacteristicPointsBuilder()
         _char_points_builder.input_profile = input_profile
