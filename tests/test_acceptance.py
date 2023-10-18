@@ -180,7 +180,7 @@ class TestAcceptance:
             "sandbox_acceptance_case", _results_dir_name
         )
         if _output_dir.exists():
-            shutil.rmtree(_output_dir.parent)
+            shutil.rmtree(_output_dir)
         if _acceptance_test_scenario.reference_data_dir.exists():
             # If it does not exist the test will fail but at least
             # the test results data should be generated.

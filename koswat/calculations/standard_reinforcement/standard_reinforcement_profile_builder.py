@@ -70,25 +70,22 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
 
         return _new_koswat_scenario
 
-    def _get_reinforcement_profile_input(
-        self, koswat_scenario: KoswatScenario
-    ) -> ReinforcementInputProfileProtocol:
+    def _get_reinforcement_profile_input(self) -> ReinforcementInputProfileProtocol:
         _calculator = self.get_standard_reinforcement_calculator(
             self.reinforcement_profile_type
         )()
         _calculator.base_profile = self.base_profile
-        _calculator.scenario = koswat_scenario
+        _calculator.scenario = self.scenario
         return _calculator.build()
 
     def _get_characteristic_points(
         self,
         input_profile: ReinforcementInputProfileProtocol,
-        koswat_scenario: KoswatScenario,
     ) -> CharacteristicPoints:
         _char_points_builder = CharacteristicPointsBuilder()
         _char_points_builder.input_profile = input_profile
         _char_points_builder.p4_x_coordinate = (
-            koswat_scenario.d_h * koswat_scenario.buiten_talud
+            self.scenario.d_h * self.scenario.buiten_talud
         )
         return _char_points_builder.build()
 
@@ -101,14 +98,13 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         return _layers_builder.build()
 
     def build(self) -> StandardReinforcementProfile:
-        _corrected_scenario = self._get_corrected_koswat_scenario()
         _profile = self.reinforcement_profile_type()
         logging.info("Building reinforcement {}".format(_profile))
 
         _profile.old_profile = self.base_profile
-        _profile.input_data = self._get_reinforcement_profile_input(_corrected_scenario)
+        _profile.input_data = self._get_reinforcement_profile_input()
         _profile.characteristic_points = self._get_characteristic_points(
-            _profile.input_data, _corrected_scenario
+            _profile.input_data
         )
         _profile.layers_wrapper = self._get_reinforcement_layers_wrapper(
             _profile.characteristic_points
