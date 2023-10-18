@@ -41,6 +41,8 @@ class Dijk1ScenarioCases(CasesProtocol):
         d_h=0.5,
         d_s=0,
         d_p=0,
+        kruin_breedte=5,
+        buiten_talud=3,
     )
     s1b_ds = KoswatScenario(
         scenario_name="s1b_ds",

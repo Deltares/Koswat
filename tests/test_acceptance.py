@@ -177,10 +177,11 @@ class TestAcceptance:
         )
         if _output_dir.exists():
             shutil.rmtree(_output_dir.parent)
-        shutil.copytree(
-            _acceptance_test_scenario.reference_data_dir,
-            _output_dir.joinpath("reference"),
-        )
+        if _acceptance_test_scenario.reference_data_dir.exists():
+            shutil.copytree(
+                _acceptance_test_scenario.reference_data_dir,
+                _output_dir.joinpath("reference"),
+            )
 
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
