@@ -96,14 +96,15 @@ def scenario_ini_file() -> List[pytest.param]:
         scenario_data: KoswatSectionScenariosIniFom,
     ) -> Iterable[KoswatScenario]:
         for _section_scenario in scenario_data.section_scenarios:
-            _scenario = KoswatScenario()
-            _scenario.scenario_section = scenario_data.scenario_dike_section
-            _scenario.scenario_name = _section_scenario.scenario_name
-            _scenario.d_h = _section_scenario.d_h
-            _scenario.d_s = _section_scenario.d_s
-            _scenario.d_p = _section_scenario.d_p
-            _scenario.kruin_breedte = _section_scenario.kruin_breedte
-            _scenario.buiten_talud = _section_scenario.buiten_talud
+            _scenario = KoswatScenario(
+                d_h=_section_scenario.d_h,
+                d_s=_section_scenario.d_s,
+                d_p=_section_scenario.d_p,
+                scenario_section = scenario_data.scenario_dike_section,
+                scenario_name = _section_scenario.scenario_name,
+                kruin_breedte = _section_scenario.kruin_breedte,
+                buiten_talud = _section_scenario.buiten_talud,
+            )
             yield _scenario
 
     def _to_pytest_param(scenario: KoswatScenario) -> pytest.param:
