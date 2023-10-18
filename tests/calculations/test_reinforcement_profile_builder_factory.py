@@ -255,6 +255,15 @@ class TestReinforcementProfileBuilderFactory:
             )
         ).build()
 
+        if math.isnan(_combination.koswat_scenario_case.kruin_breedte):
+            _combination.koswat_scenario_case.kruin_breedte = (
+                _combination.input_profile_case.kruin_breedte
+            )
+        if math.isnan(_combination.koswat_scenario_case.buiten_talud):
+            _combination.koswat_scenario_case.buiten_talud = (
+                _combination.input_profile_case.buiten_talud
+            )
+
         def _get_reinforced_profile() -> ReinforcementProfileProtocol:
             _reinforcement = _combination.reinforcement_profile_type()
             # Input profile data.
