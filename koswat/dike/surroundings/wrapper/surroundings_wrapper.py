@@ -87,9 +87,9 @@ class SurroundingsWrapper:
         """
 
         def is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
-            if not point_surroundings.distance_to_buildings:
+            if not point_surroundings.distance_to_surroundings:
                 return True
-            return distance < point_surroundings.distance_to_buildings[0]
+            return distance < point_surroundings.distance_to_surroundings[0]
 
         if not self.buildings_polderside:
             return []

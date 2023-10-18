@@ -40,7 +40,7 @@ class TestKoswatBuildingsPoldersideBuilder:
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location
-        _ps.distance_to_buildings = distances
+        _ps.distance_to_surroundings = distances
         return _ps
 
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):

@@ -17,7 +17,7 @@ class TestSurroundingsWrapper:
     def _to_surrounding_point(self, location: Point) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location
-        _ps.distance_to_buildings = []
+        _ps.distance_to_surroundings = []
         return _ps
 
     def test_set_buildings_polderside(self):

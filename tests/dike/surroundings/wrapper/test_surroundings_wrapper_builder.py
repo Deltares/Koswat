@@ -36,7 +36,7 @@ class TestSurroundingsWrapperBuilder:
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location
-        _ps.distance_to_buildings = distances
+        _ps.distance_to_surroundings = distances
         return _ps
 
     def test_given_valid_data_build_returns_surroundings(self):

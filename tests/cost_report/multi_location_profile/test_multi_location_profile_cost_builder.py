@@ -38,7 +38,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _builder.surroundings = SurroundingsWrapper()
         _builder.koswat_costs = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
-        _p_surrounding.distance_to_buildings = []
+        _p_surrounding.distance_to_surroundings = []
         _p_surrounding.location = Point(2.4, 4.2)
         _builder.surroundings.buildings_polderside = KoswatBuildingsPolderside()
         _builder.surroundings.buildings_polderside.points = [_p_surrounding]

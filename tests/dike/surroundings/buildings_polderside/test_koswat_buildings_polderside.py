@@ -15,7 +15,7 @@ class TestKoswatBuildingsPolderside:
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location
-        _ps.distance_to_buildings = distance_list
+        _ps.distance_to_surroundings = distance_list
         return _ps
 
     def test_initialize_koswat_buildings_polderside(self):
