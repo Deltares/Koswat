@@ -1,6 +1,7 @@
 import pytest
-from tests.acceptance_scenarios.cases_protocol import CasesProtocol
 from shapely.geometry.point import Point
+
+from tests.acceptance_scenarios.cases_protocol import CasesProtocol
 
 
 class InitialPointsLookup(CasesProtocol):

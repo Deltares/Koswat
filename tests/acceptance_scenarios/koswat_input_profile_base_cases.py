@@ -78,5 +78,3 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         binnen_berm_breedte=0,
         binnen_maaiveld=-2,
     )
-
-    cases = []
