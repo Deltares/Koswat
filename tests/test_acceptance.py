@@ -1,8 +1,10 @@
 from __future__ import annotations
-from pathlib import Path
 
 import shutil
+from pathlib import Path
 
+import cv2
+import numpy as np
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
@@ -32,16 +34,13 @@ from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from tests import get_testcase_results_dir, test_data, test_results
-from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
-    AcceptanceTestScenarioCombinations,
-    AcceptanceTestScenario,
-)
 from tests.acceptance_scenarios.acceptance_test_scenario_cases import (
     acceptance_test_combinations,
 )
-import cv2
-import numpy as np
-
+from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
+    AcceptanceTestScenario,
+    AcceptanceTestScenarioCombinations,
+)
 from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
 from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
 from tests.acceptance_scenarios.layers_cases import LayersCases
@@ -177,6 +176,7 @@ class TestAcceptance:
         )
         if _output_dir.exists():
             shutil.rmtree(_output_dir.parent)
+
         shutil.copytree(
             _acceptance_test_scenario.reference_data_dir,
             _output_dir.joinpath("reference"),
