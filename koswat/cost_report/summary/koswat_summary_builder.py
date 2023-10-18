@@ -31,6 +31,9 @@ class KoswatSummaryBuilder(BuilderProtocol):
         In practice this means that when a `KoswatScenario` value has not been set
         the corresponding one from `KoswatProfileBase` will be used instead.
 
+        By having this code here we *guarantee* that a summary can be built with only
+        the mandatory values of a `KoswatScenario`.
+
         Returns:
             KoswatScenario: Valid scenario to be used in reinforcements.
         """

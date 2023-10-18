@@ -49,27 +49,6 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         else:
             raise NotImplementedError(f"Type {reinforcement_type} not supported.")
 
-    def _get_corrected_koswat_scenario(self) -> KoswatScenario:
-        """
-        Get a koswat scenario (`KoswatScenario`) whose values are not `math.nan`.
-        In practice this means that when a `KoswatScenario` value has not been set
-        the corresponding one from `KoswatProfileBase` will be used instead.
-
-        Returns:
-            KoswatScenario: Valid scenario to be used in reinforcements.
-        """
-        _new_koswat_scenario = KoswatScenario(**self.scenario.__dict__)
-        if math.isnan(_new_koswat_scenario.kruin_breedte):
-            _new_koswat_scenario.kruin_breedte = (
-                self.base_profile.input_data.kruin_breedte
-            )
-        if math.isnan(_new_koswat_scenario.buiten_talud):
-            _new_koswat_scenario.buiten_talud = (
-                self.base_profile.input_data.buiten_talud
-            )
-
-        return _new_koswat_scenario
-
     def _get_reinforcement_profile_input(self) -> ReinforcementInputProfileProtocol:
         _calculator = self.get_standard_reinforcement_calculator(
             self.reinforcement_profile_type
