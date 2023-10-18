@@ -10,8 +10,6 @@ class ScenarioCases(CasesProtocol):
         d_s=10,
         d_p=30,
         kruin_breedte=5,
-        buiten_talud=3,
-        scenario_name="default_scenario",
     )
     scenario_2 = KoswatScenario(
         d_h=0.5,
@@ -42,6 +40,8 @@ class ScenarioCasesAB(CasesProtocol):
             d_h=0.5,
             d_s=0,
             d_p=0,
+            kruin_breedte=5,
+            buiten_talud=3,
         ),
         KoswatScenario(
             scenario_name="1b_ds",
