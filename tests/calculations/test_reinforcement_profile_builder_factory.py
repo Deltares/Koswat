@@ -100,10 +100,10 @@ def scenario_ini_file() -> List[pytest.param]:
                 d_h=_section_scenario.d_h,
                 d_s=_section_scenario.d_s,
                 d_p=_section_scenario.d_p,
-                scenario_section = scenario_data.scenario_dike_section,
-                scenario_name = _section_scenario.scenario_name,
-                kruin_breedte = _section_scenario.kruin_breedte,
-                buiten_talud = _section_scenario.buiten_talud,
+                scenario_section=scenario_data.scenario_dike_section,
+                scenario_name=_section_scenario.scenario_name,
+                kruin_breedte=_section_scenario.kruin_breedte,
+                buiten_talud=_section_scenario.buiten_talud,
             )
             yield _scenario
 
@@ -254,6 +254,15 @@ class TestReinforcementProfileBuilderFactory:
                 p4_x_coordinate=_combination.p4_x_coordinate,
             )
         ).build()
+
+        if math.isnan(_combination.koswat_scenario_case.kruin_breedte):
+            _combination.koswat_scenario_case.kruin_breedte = (
+                _combination.input_profile_case.kruin_breedte
+            )
+        if math.isnan(_combination.koswat_scenario_case.buiten_talud):
+            _combination.koswat_scenario_case.buiten_talud = (
+                _combination.input_profile_case.buiten_talud
+            )
 
         def _get_reinforced_profile() -> ReinforcementProfileProtocol:
             _reinforcement = _combination.reinforcement_profile_type()
