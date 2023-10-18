@@ -8,11 +8,11 @@ from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 
 @dataclass
 class KoswatScenario(KoswatConfigProtocol):
-    d_h: float
-    d_s: float
-    d_p: float
     scenario_name: str = ""
     scenario_section: str = ""
+    d_h: float = math.nan
+    d_s: float = math.nan
+    d_p: float = math.nan
     kruin_breedte: float = math.nan
     buiten_talud: float = math.nan
 
