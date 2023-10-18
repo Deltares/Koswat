@@ -1,6 +1,6 @@
 from typing import List
 
-from shapely.geometry import Point, Polygon
+from shapely.geometry import Point, Polygon, LineString
 
 from koswat.calculations.reinforcement_layers_wrapper import (
     ReinforcementBaseLayer,
@@ -90,9 +90,10 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
         _reinforced_base_layer = ReinforcementBaseLayer.from_koswat_base_layer(
             new_layer
         )
-        _reinforced_base_layer.old_layer_geometry = old_geometry
         # New Geometry (Added volume)
         _added_geometry = new_layer.outer_geometry.difference(calc_geometry)
+
+        _reinforced_base_layer.old_layer_geometry = old_geometry
         _reinforced_base_layer.new_layer_geometry = _added_geometry
         _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
             _added_geometry
@@ -106,6 +107,11 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
         calc_geometry: Polygon,
         base_core_geometry: Polygon,
     ) -> List[ReinforcementCoatingLayer]:
+        if old_geometry == new_layer.outer_geometry:
+            # KOSWAT_82: For now, we assume that the depth of layers remains the same
+            # as from the input profile base.
+            return ReinforcementCoatingLayer.with_same_outer_geometry(new_layer)
+
         # Create new Reinforced Coating Layer
         _rc_layer = ReinforcementCoatingLayer.from_koswat_coating_layer(new_layer)
         _rc_layer.old_layer_geometry = old_geometry
