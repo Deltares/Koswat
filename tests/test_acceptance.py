@@ -33,7 +33,12 @@ from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from tests import get_testcase_results_dir, test_data, test_results
+from tests import (
+    get_fixturerequest_case_name,
+    get_testcase_results_dir,
+    test_data,
+    test_results,
+)
 from tests.acceptance_scenarios.acceptance_test_scenario_cases import (
     acceptance_test_combinations,
 )
@@ -170,17 +175,19 @@ class TestAcceptance:
 
         # 1. Setup acceptance test case
         # Get the refernce data in the output directory.
-        _results_dir_name = get_testcase_results_dir(request).name
+        _results_dir_name = get_fixturerequest_case_name(request)
         _output_dir = test_results.joinpath(
             "sandbox_acceptance_case", _results_dir_name
         )
         if _output_dir.exists():
             shutil.rmtree(_output_dir.parent)
-
-        shutil.copytree(
-            _acceptance_test_scenario.reference_data_dir,
-            _output_dir.joinpath("reference"),
-        )
+        if _acceptance_test_scenario.reference_data_dir.exists():
+            # If it does not exist the test will fail but at least
+            # the test results data should be generated.
+            shutil.copytree(
+                _acceptance_test_scenario.reference_data_dir,
+                _output_dir.joinpath("reference"),
+            )
 
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
