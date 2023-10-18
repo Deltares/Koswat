@@ -1,7 +1,7 @@
 from __future__ import annotations
-from dataclasses import dataclass
 
 import math
+from dataclasses import dataclass
 
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 

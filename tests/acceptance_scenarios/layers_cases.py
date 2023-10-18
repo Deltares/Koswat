@@ -1,4 +1,5 @@
 import pytest
+
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
     LayersTestCase,

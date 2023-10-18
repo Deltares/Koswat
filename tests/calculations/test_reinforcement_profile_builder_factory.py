@@ -83,10 +83,10 @@ from tests import get_custom_testcase_results_dir, get_testcase_results_dir, tes
 from tests.acceptance_scenarios.layers_cases import LayersCases
 from tests.calculations import validated_reinforced_profile
 from tests.calculations.reinforcement_profile_cases import (
+    ReinforcementProfileCase,
     ReinforcementProfileCaseCombination,
     reinforcement_profile_cases,
 )
-from tests.calculations.reinforcement_profile_cases import ReinforcementProfileCase
 
 
 def scenario_ini_file() -> List[pytest.param]:
@@ -100,10 +100,10 @@ def scenario_ini_file() -> List[pytest.param]:
                 d_h=_section_scenario.d_h,
                 d_s=_section_scenario.d_s,
                 d_p=_section_scenario.d_p,
-                scenario_section = scenario_data.scenario_dike_section,
-                scenario_name = _section_scenario.scenario_name,
-                kruin_breedte = _section_scenario.kruin_breedte,
-                buiten_talud = _section_scenario.buiten_talud,
+                scenario_section=scenario_data.scenario_dike_section,
+                scenario_name=_section_scenario.scenario_name,
+                kruin_breedte=_section_scenario.kruin_breedte,
+                buiten_talud=_section_scenario.buiten_talud,
             )
             yield _scenario
 
