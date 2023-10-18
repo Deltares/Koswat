@@ -1,0 +1,22 @@
+Profile type;Grondmaatregel profiel;Kwelscherm;Stabiliteitswand;Kistdam
+Cost per km (€);nan;nan;nan;nan
+Reused grass volume (volume / surface):;9.149999999999984;9.149999999999984;9.149999999999984;13.829999999999991
+Reused grass volume (cost):;nan;nan;nan;nan
+Aanleg grass volume (volume / surface):;4.905000000000058;4.905000000000058;0.042352941176517334;0.04479638009050291
+Aanleg grass volume (cost):;nan;nan;nan;nan
+Aanleg clay volume (volume / surface):;22.024999999999984;22.024999999999984;14.308823529411747;24.23930361990949
+Aanleg clay volume (cost):;nan;nan;nan;nan
+Reused core volume (volume / surface):;14.986000000000002;14.986000000000002;14.986000000000002;23.462000000000003
+Reused core volume (cost):;nan;nan;nan;nan
+Aanleg core volume (volume / surface):;78.11769999999997;78.11769999999997;19.917250000000017;9.965900000000019
+Aanleg core volume (cost):;nan;nan;nan;nan
+Removed material volume (volume / surface):;0;0;0;0
+Removed material volume (cost):;nan;nan;nan;nan
+New grass layer surface (volume / surface):;49.157358775969;49.157358775969;33.56603741656261;49.95231750550329
+New grass layer surface (cost):;nan;nan;nan;nan
+New clay layer surface (volume / surface):;46.97174379023319;46.97174379023319;31.930704361158792;48.3344059279262
+New clay layer surface (cost):;nan;nan;nan;nan
+New core layer surface (volume / surface):;43.10005214734018;43.10005214734018;28.89120218108245;45.32740372496252
+New core layer surface (cost):;nan;nan;nan;nan
+New maaiveld surface (volume / surface):;16.5;16.5;0.0;0.0
+New maaiveld surface (cost):;nan;nan;nan;nan
