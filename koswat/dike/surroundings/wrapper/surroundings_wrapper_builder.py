@@ -13,18 +13,6 @@ from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside i
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
     KoswatBuildingsPoldersideBuilder,
 )
-from koswat.dike.surroundings.railways_polderside.koswat_railways_polderside import (
-    KoswatRailwaysPolderside,
-)
-from koswat.dike.surroundings.railways_polderside.koswat_railways_polderside_builder import (
-    KoswatRailwaysPoldersideBuilder,
-)
-from koswat.dike.surroundings.waters_polderside.koswat_waters_polderside import (
-    KoswatWatersPolderside,
-)
-from koswat.dike.surroundings.waters_polderside.koswat_waters_polderside_builder import (
-    KoswatWatersPoldersideBuilder,
-)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
@@ -42,14 +30,14 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         _builder.koswat_csv_fom = self.surroundings_fom.buildings_polderside
         return _builder.build()
     
-    def _get_railways_polder_side(self) -> KoswatRailwaysPolderside:
-        _builder = KoswatRailwaysPoldersideBuilder()
+    def _get_railways_polder_side(self) -> KoswatBuildingsPolderside:
+        _builder = KoswatBuildingsPoldersideBuilder()
         _builder.koswat_shp_fom = self.trajects_fom
         _builder.koswat_csv_fom = self.surroundings_fom.railways_polderside
         return _builder.build()
     
-    def _get_waters_polder_side(self) -> KoswatWatersPolderside:
-        _builder = KoswatWatersPoldersideBuilder()
+    def _get_waters_polder_side(self) -> KoswatBuildingsPolderside:
+        _builder = KoswatBuildingsPoldersideBuilder()
         _builder.koswat_shp_fom = self.trajects_fom
         _builder.koswat_csv_fom = self.surroundings_fom.waters_polderside
         return _builder.build()

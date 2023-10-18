@@ -1,3 +1,5 @@
+import logging
+
 from shapely.geometry import Point
 
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
@@ -7,12 +9,6 @@ from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.railways_polderside.koswat_railways_polderside import (
-    KoswatRailwaysPolderside,
-)
-from koswat.dike.surroundings.waters_polderside.koswat_waters_polderside import (
-    KoswatWatersPolderside,
-)
 
 
 class SurroundingsWrapper:
@@ -23,10 +19,10 @@ class SurroundingsWrapper:
     buildings_polderside: KoswatBuildingsPolderside
     buildings_dikeside: KoswatSurroundingsProtocol
 
-    railways_polderside: KoswatRailwaysPolderside
+    railways_polderside: KoswatBuildingsPolderside
     railways_dikeside: KoswatSurroundingsProtocol
 
-    waters_polderside: KoswatWatersPolderside
+    waters_polderside: KoswatBuildingsPolderside
     waters_dikeside: KoswatSurroundingsProtocol
 
     roads_class_2_polderside: KoswatSurroundingsProtocol
@@ -66,6 +62,7 @@ class SurroundingsWrapper:
     @property
     def locations(self) -> list[PointSurroundings]:
         """
+        Overlay of locations of the different surroundings that are present.
         Each location represents 1 meter in a real scale map.
 
         Returns:
@@ -73,14 +70,24 @@ class SurroundingsWrapper:
         """
         if not self.buildings_polderside:
             return []
-        return self.buildings_polderside.points
-
+        _points = self.buildings_polderside.points
+        for _p, _point in enumerate(self.buildings_polderside.points):
+            if self.railways_polderside:
+                if (not _point.location == self.railways_polderside.points[_p].location):
+                    logging.warning(f"Mismatching railway polderside location {self.railways_polderside.points[_p].location}")
+                _points[_p].distance_to_surroundings += self.railways_polderside.points[_p].distance_to_surroundings
+            if self.waters_polderside:
+                if (not _point.location == self.waters_polderside.points[_p].location):
+                    logging.warning(f"Mismatching water polderside location {self.waters_polderside.points[_p].location}")
+                _points[_p].distance_to_surroundings += self.waters_polderside.points[_p].distance_to_surroundings
+        return _points
+    
     def get_locations_after_distance(self, distance: float) -> list[Point]:
         """
         Gets all locations which are safe from surroundings (building/railway/water) in a radius of `distance`.
 
         Args:
-            distance (float): Radius from each point that should be free of buildings.
+            distance (float): Radius from each point that should be free of surroundings.
 
         Returns:
             List[Point]: List of safe locations (points).
@@ -91,7 +98,7 @@ class SurroundingsWrapper:
                 return True
             return distance < point_surroundings.distance_to_surroundings[0]
 
-        if not self.buildings_polderside:
+        if not self.surroundings_polderside:
             return []
 
-        return list(filter(is_at_safe_distance, self.buildings_polderside.points))
+        return list(filter(is_at_safe_distance, self.locations))
