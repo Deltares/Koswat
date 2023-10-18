@@ -34,15 +34,14 @@ class ScenarioCases(CasesProtocol):
         pytest.param(scenario_3, id="Scenario 3"),
     ]
 
-
 class Dijk1ScenarioCases(CasesProtocol):
     s1a_dh = KoswatScenario(
         scenario_name="s1a_dh",
         d_h=0.5,
         d_s=0,
         d_p=0,
-        kruin_breedte=5,
-        buiten_talud=3,
+        # kruin_breedte=5,
+        # buiten_talud=3,
     )
     s1b_ds = KoswatScenario(
         scenario_name="s1b_ds",

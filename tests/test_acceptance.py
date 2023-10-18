@@ -178,6 +178,8 @@ class TestAcceptance:
         if _output_dir.exists():
             shutil.rmtree(_output_dir.parent)
         if _acceptance_test_scenario.reference_data_dir.exists():
+            # If it does not exist the test will fail but at least
+            # the test results data should be generated.
             shutil.copytree(
                 _acceptance_test_scenario.reference_data_dir,
                 _output_dir.joinpath("reference"),
