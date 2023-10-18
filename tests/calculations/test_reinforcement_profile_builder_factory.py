@@ -83,10 +83,10 @@ from tests import get_custom_testcase_results_dir, get_testcase_results_dir, tes
 from tests.acceptance_scenarios.layers_cases import LayersCases
 from tests.calculations import validated_reinforced_profile
 from tests.calculations.reinforcement_profile_cases import (
+    ReinforcementProfileCase,
     ReinforcementProfileCaseCombination,
     reinforcement_profile_cases,
 )
-from tests.calculations.reinforcement_profile_cases import ReinforcementProfileCase
 
 
 def scenario_ini_file() -> List[pytest.param]:

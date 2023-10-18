@@ -1,6 +1,7 @@
 from __future__ import annotations
-from dataclasses import dataclass
+
 import math
+from dataclasses import dataclass
 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 

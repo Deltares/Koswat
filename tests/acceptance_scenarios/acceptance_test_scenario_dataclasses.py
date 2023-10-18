@@ -1,5 +1,7 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
+from itertools import product
 from pathlib import Path
 
 import pytest
@@ -7,9 +9,7 @@ import pytest
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from itertools import product
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from tests import test_data
 
