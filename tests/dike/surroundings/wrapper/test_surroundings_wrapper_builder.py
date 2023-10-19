@@ -7,6 +7,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
     KoswatTrajectSurroundingsWrapperCsvFom,
 )
+from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
@@ -57,15 +58,22 @@ class TestSurroundingsWrapperBuilder:
         ]
         _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
         _surroundings_wrapper.buildings_polderside = _surroundings_csv_fom
+        
+        _surroundings_section = SurroundingsSectionFom()
+        _surroundings_section.buitendijks = False
+        _surroundings_section.bebouwing = True
+        _surroundings_section.spoorwegen = False
+        _surroundings_section.water = False
 
         # Traject wrapper
         _koswat_shp_fom = KoswatDikeLocationsShpFom()
         _koswat_shp_fom.initial_point = _start_point
-        _koswat_shp_fom.end_point = _end_point
-
+        _koswat_shp_fom.end_point = _end_point      
+        
         # 2. Run test.
         with pytest.raises(ValueError) as _err_info:
             _builder = SurroundingsWrapperBuilder()
             _builder.trajects_fom = _koswat_shp_fom
             _builder.surroundings_fom = _surroundings_wrapper
+            _builder.surroundings_section = _surroundings_section
             _surroundings = _builder.build()
