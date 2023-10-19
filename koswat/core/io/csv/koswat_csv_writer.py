@@ -20,4 +20,4 @@ class KoswatCsvWriter(KoswatWriterProtocol):
         _lines = list(map(format_line, [fom_instance.headers] + fom_instance.entries))
         _text = "\n".join(_lines)
 
-        to_path.write_text(_text, encoding="utf-8")
+        to_path.write_text(_text)
