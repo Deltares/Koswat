@@ -1,6 +1,4 @@
-from typing import List
-
-from shapely.geometry import Point, Polygon, LineString
+from shapely.geometry import Point, Polygon
 
 from koswat.calculations.reinforcement_layers_wrapper import (
     ReinforcementBaseLayer,
@@ -21,7 +19,7 @@ from koswat.dike.layers.layers_wrapper import (
 
 class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
     layers_data: dict  # Previous profile layers wrapper
-    profile_points: List[Point]  # Characteristic points.
+    profile_points: list[Point]  # Characteristic points.
 
     def build(self) -> ReinforcementLayersWrapper:
         _reinforcement_layers_wrapper = ReinforcementLayersWrapper()
@@ -37,7 +35,7 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
 
     def _get_reinforced_layers(
         self, layers_wrapper: KoswatLayersWrapperProtocol
-    ) -> List[ReinforcementLayerProtocol]:
+    ) -> list[ReinforcementLayerProtocol]:
         _mapped_layers = list(
             zip(self.layers_data["coating_layers"], layers_wrapper.coating_layers)
         )
@@ -50,7 +48,7 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
         _add_layers_reference.append(
             Polygon(self.layers_data["base_layer"]["geometry"])
         )
-        _reinforcement_list: List[ReinforcementLayerProtocol] = []
+        _reinforcement_list: list[ReinforcementLayerProtocol] = []
         for idx, (_base_layer_data, _calc_layer) in enumerate(_mapped_layers):
             _core_idx = min(idx + 1, len(_mapped_layers) - 1)
             _base_core, _ = _mapped_layers[_core_idx]
@@ -106,7 +104,7 @@ class OutsideSlopeReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderPr
         old_geometry: Polygon,
         calc_geometry: Polygon,
         base_core_geometry: Polygon,
-    ) -> List[ReinforcementCoatingLayer]:
+    ) -> list[ReinforcementCoatingLayer]:
         if old_geometry == new_layer.outer_geometry:
             # KOSWAT_82: For now, we assume that the depth of layers remains the same
             # as from the input profile base.
