@@ -55,6 +55,29 @@ class ReinforcementCoatingLayer(KoswatLayerProtocol):
         _reinforced_coating_layer.__dict__ = coating_layer.__dict__
         return _reinforced_coating_layer
 
+    @classmethod
+    def with_same_outer_geometry(
+        cls, coating_layer: KoswatCoatingLayer
+    ) -> ReinforcementCoatingLayer:
+        """
+        Creates a new reinforcement coating layer which does not differ
+        in geometry from the provided coating layer. This was found to
+        be needed in KOSWAT_82.
+
+        Args:
+            coating_layer (KoswatCoatingLayer): Base coating layer.
+
+        Returns:
+            ReinforcementCoatingLayer: Resulting coating layer with "empty"
+            polygons for added / removed (layer) geometries.
+        """
+        _reinforced_coating_layer = cls.from_koswat_coating_layer(coating_layer)
+        _reinforced_coating_layer.old_layer_geometry = coating_layer.outer_geometry
+        _reinforced_coating_layer.removal_layer_geometry = Polygon()
+        _reinforced_coating_layer.new_layer_geometry = Polygon()
+        _reinforced_coating_layer.new_layer_surface = LineString()
+        return _reinforced_coating_layer
+
 
 class ReinforcementBaseLayer(ReinforcementLayerProtocol):
     material_type: KoswatMaterialType
