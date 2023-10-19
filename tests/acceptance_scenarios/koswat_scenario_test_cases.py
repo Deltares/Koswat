@@ -171,6 +171,13 @@ class ScenarioCasesAB(CasesProtocol):
             buiten_talud=4,
         ),
         KoswatScenario(
+            scenario_name="3h_bt",
+            d_h=0,
+            d_s=0,
+            d_p=0,
+            buiten_talud=4,
+        ),
+        KoswatScenario(
             scenario_name="4a_dh_kb",
             d_h=0.5,
             d_s=0,
@@ -217,6 +224,13 @@ class ScenarioCasesAB(CasesProtocol):
             d_h=0.5,
             d_s=14.5,
             d_p=34.5,
+            kruin_breedte=10,
+        ),
+        KoswatScenario(
+            scenario_name="4h_kb",
+            d_h=0,
+            d_s=0,
+            d_p=0,
             kruin_breedte=10,
         ),
     ]
@@ -358,6 +372,13 @@ class ScenarioCasesC(CasesProtocol):
             buiten_talud=4,
         ),
         KoswatScenario(
+            scenario_name="3h_bt",
+            d_h=0,
+            d_s=0,
+            d_p=0,
+            buiten_talud=4,
+        ),
+        KoswatScenario(
             scenario_name="4a_dh_kb",
             d_h=0.5,
             d_s=0,
@@ -404,6 +425,13 @@ class ScenarioCasesC(CasesProtocol):
             d_h=0.5,
             d_s=16.5,
             d_p=36.5,
+            kruin_breedte=10,
+        ),
+        KoswatScenario(
+            scenario_name="4h_kb",
+            d_h=0,
+            d_s=0,
+            d_p=0,
             kruin_breedte=10,
         ),
     ]
