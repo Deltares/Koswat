@@ -1,8 +1,8 @@
 import pytest
+from shapely.geometry import LineString, Polygon
+
 from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
 from koswat.dike.layers.coating_layer.koswat_coating_layer import KoswatCoatingLayer
-from shapely.geometry import Polygon, LineString
-
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
