@@ -1,14 +1,12 @@
+from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
+)
 from koswat.calculations.reinforcement_layers.reinforcement_base_layer import (
     ReinforcementBaseLayer,
 )
 from koswat.calculations.reinforcement_layers.reinforcement_coating_layer import (
     ReinforcementCoatingLayer,
 )
-from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
-    ReinforcementLayerProtocol,
-)
-
-
 from koswat.dike.layers.layers_wrapper import KoswatLayersWrapperProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 

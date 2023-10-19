@@ -5,6 +5,9 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 from shapely import geometry
 from numpy import concatenate
+from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
+)
 
 
 class KoswatLayerPlot(KoswatPlotProtocol):
@@ -36,9 +39,6 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         self.subplot.plot(_x_coords, y_coords, **dict_values)
         _x_points, _y_points = list(zip(*self.koswat_object.upper_points.coords))
         self.subplot.scatter(_x_points, _y_points)
-        from koswat.calculations.reinforcement_layers_wrapper import (
-            ReinforcementLayerProtocol,
-        )
 
         if isinstance(self.koswat_object, ReinforcementLayerProtocol):
             if isinstance(self.koswat_object.new_layer_surface, geometry.Polygon):

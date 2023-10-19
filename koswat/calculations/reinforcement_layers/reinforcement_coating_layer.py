@@ -2,11 +2,14 @@ from __future__ import annotations
 
 
 from shapely.geometry import LineString, Polygon, MultiPolygon
-from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import ReinforcementLayerProtocol
+from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
+)
 
 from koswat.core.geometries.calc_library import get_polygon_coordinates
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
+
 
 class ReinforcementCoatingLayer(ReinforcementLayerProtocol):
     material_type: KoswatMaterialType
@@ -66,4 +69,3 @@ class ReinforcementCoatingLayer(ReinforcementLayerProtocol):
         _reinforced_coating_layer.new_layer_geometry = Polygon()
         _reinforced_coating_layer.new_layer_surface = LineString()
         return _reinforced_coating_layer
-
