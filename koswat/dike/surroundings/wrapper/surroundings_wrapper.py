@@ -2,27 +2,31 @@ import logging
 
 from shapely.geometry import Point
 
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
-)
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
+)
 
 
 class SurroundingsWrapper:
     dike_section: str
     traject: str
     subtraject: str
+    apply_waterside: bool
+    apply_buildings: bool
+    apply_railways: bool
+    apply_waters: bool
 
-    buildings_polderside: KoswatBuildingsPolderside
+    buildings_polderside: KoswatSurroundingsPolderside
     buildings_dikeside: KoswatSurroundingsProtocol
 
-    railways_polderside: KoswatBuildingsPolderside
+    railways_polderside: KoswatSurroundingsPolderside
     railways_dikeside: KoswatSurroundingsProtocol
 
-    waters_polderside: KoswatBuildingsPolderside
+    waters_polderside: KoswatSurroundingsPolderside
     waters_dikeside: KoswatSurroundingsProtocol
 
     roads_class_2_polderside: KoswatSurroundingsProtocol
@@ -41,6 +45,11 @@ class SurroundingsWrapper:
         self.dike_section = ""
         self.traject = ""
         self.subtraject = ""
+        
+        self.apply_waterside = None
+        self.apply_buildings = None
+        self.apply_railways = None
+        self.apply_waters = None
 
         self.buildings_polderside = None
         self.buildings_dikeside = None
@@ -70,16 +79,23 @@ class SurroundingsWrapper:
         """
         if not self.buildings_polderside:
             return []
+        
         _points = self.buildings_polderside.points
+        if not self.apply_buildings:
+            pass # TODO reset distance_to_surroundings
+            
         for _p, _point in enumerate(self.buildings_polderside.points):
-            if self.railways_polderside:
+            
+            if self.railways_polderside and self.apply_railways:
                 if (not _point.location == self.railways_polderside.points[_p].location):
                     logging.warning(f"Mismatching railway polderside location {self.railways_polderside.points[_p].location}")
                 _points[_p].distance_to_surroundings += self.railways_polderside.points[_p].distance_to_surroundings
-            if self.waters_polderside:
+                
+            if self.waters_polderside and self.apply_waters:
                 if (not _point.location == self.waters_polderside.points[_p].location):
                     logging.warning(f"Mismatching water polderside location {self.waters_polderside.points[_p].location}")
                 _points[_p].distance_to_surroundings += self.waters_polderside.points[_p].distance_to_surroundings
+                
         return _points
     
     def get_locations_after_distance(self, distance: float) -> list[Point]:
@@ -97,8 +113,5 @@ class SurroundingsWrapper:
             if not point_surroundings.distance_to_surroundings:
                 return True
             return distance < point_surroundings.distance_to_surroundings[0]
-
-        if not self.surroundings_polderside:
-            return []
 
         return list(filter(is_at_safe_distance, self.locations))

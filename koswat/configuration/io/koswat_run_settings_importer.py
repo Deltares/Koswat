@@ -4,7 +4,10 @@ from pathlib import Path
 from typing import Any, List
 
 from koswat.configuration.io.ini import KoswatGeneralIniFom
-from koswat.configuration.io.ini.koswat_general_ini_fom import DikeProfileSectionFom
+from koswat.configuration.io.ini.koswat_general_ini_fom import (
+    DikeProfileSectionFom,
+    SurroundingsSectionFom,
+)
 from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
     KoswatSectionScenarioListIniDirReader,
 )
@@ -64,7 +67,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
 
         _surroundings_fom = self._import_surroundings(
-            _general_settings.surroundings_section.surroundings_database_dir,
+            _general_settings.surroundings_section,
             _general_settings.analyse_section_fom.dike_section_location_shp_file,
             [_s.scenario_dike_section for _s in _scenario_fom_list],
         )
@@ -227,12 +230,12 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         return _reader.read(scenario_dir)
 
     def _import_surroundings(
-        self, surroundings_dir: Path, traject_shp_file: Path, dike_selections: List[str]
+        self, surroundings_section: SurroundingsSectionFom, traject_shp_file: Path, dike_selections: List[str]
     ) -> Any:
         _importer = KoswatSurroundingsImporter()
         _importer.traject_loc_shp_file = traject_shp_file
         _importer.selected_locations = dike_selections
-        return _importer.import_from(surroundings_dir)
+        return _importer.import_from(surroundings_section)
 
     def _get_koswat_scenario(
         self, fom_scenario: SectionScenarioFom, base_profile: KoswatProfileBase

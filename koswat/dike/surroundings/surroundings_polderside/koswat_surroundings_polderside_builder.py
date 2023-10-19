@@ -9,13 +9,13 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
 
 
-class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
+class KoswatSurroundingsPoldersideBuilder(BuilderProtocol):
     koswat_shp_fom: KoswatDikeLocationsShpFom
     koswat_csv_fom: KoswatTrajectSurroundingsCsvFom
 
@@ -40,14 +40,14 @@ class KoswatBuildingsPoldersideBuilder(BuilderProtocol):
             ]
         return self.koswat_csv_fom.points_surroundings_list[start_idx : (end_idx + 1)]
 
-    def build(self) -> KoswatBuildingsPolderside:
+    def build(self) -> KoswatSurroundingsPolderside:
         if not self.koswat_shp_fom or not self.koswat_csv_fom:
             raise ValueError("FileObjectModel for both CSV and SHP should be provided.")
 
         start_idx = self._find_polderside_point_idx(self.koswat_shp_fom.initial_point)
         end_idx = self._find_polderside_point_idx(self.koswat_shp_fom.end_point)
 
-        _kbp = KoswatBuildingsPolderside()
+        _kbp = KoswatSurroundingsPolderside()
         _kbp.points = self._get_polderside_points(start_idx, end_idx)
 
         return _kbp

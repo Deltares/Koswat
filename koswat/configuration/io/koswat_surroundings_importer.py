@@ -10,6 +10,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
 )
+from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
@@ -37,7 +38,8 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
         _reader.selected_locations = self.selected_locations
         return _reader.read(self.traject_loc_shp_file)
 
-    def import_from(self, from_path: Path) -> List[SurroundingsWrapper]:
+    def import_from(self, surroundings_section: SurroundingsSectionFom) -> List[SurroundingsWrapper]:
+        from_path = surroundings_section.surroundings_database_dir
         if not isinstance(from_path, Path):
             raise ValueError("No surroundings csv directory path given.")
         if not isinstance(self.traject_loc_shp_file, Path):
@@ -63,6 +65,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
                 _builder = SurroundingsWrapperBuilder()
                 _builder.trajects_fom = _location
                 _builder.surroundings_fom = _surroudings_fom
+                _builder.surroundings_section = surroundings_section
                 try:
                     _surroundings_wrappers.append(_builder.build())
                 except Exception as e_info:

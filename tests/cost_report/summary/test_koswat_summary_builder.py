@@ -25,8 +25,8 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
@@ -110,7 +110,7 @@ class TestKoswatSummaryBuilder:
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_surroundings = []
         _p_surrounding.location = Point(2.4, 4.2)
-        _run_settings.surroundings.buildings_polderside = KoswatBuildingsPolderside()
+        _run_settings.surroundings.buildings_polderside = KoswatSurroundingsPolderside()
         _run_settings.surroundings.buildings_polderside.points = [_p_surrounding]
         _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(

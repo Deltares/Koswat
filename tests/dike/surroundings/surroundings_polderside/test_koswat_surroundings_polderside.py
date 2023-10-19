@@ -3,13 +3,13 @@ from typing import List
 
 from shapely.geometry import Point
 
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
 
 
-class TestKoswatBuildingsPolderside:
+class TestKoswatSurroundingsPolderside:
     def _to_surrounding_point(
         self, location: Point, distance_list: List[float]
     ) -> PointSurroundings:
@@ -19,8 +19,8 @@ class TestKoswatBuildingsPolderside:
         return _ps
 
     def test_initialize_koswat_buildings_polderside(self):
-        _kbp = KoswatBuildingsPolderside()
-        assert isinstance(_kbp, KoswatBuildingsPolderside)
+        _kbp = KoswatSurroundingsPolderside()
+        assert isinstance(_kbp, KoswatSurroundingsPolderside)
         assert not _kbp.conflicting_points
         assert not _kbp.get_classify_surroundings()
 
@@ -38,7 +38,7 @@ class TestKoswatBuildingsPolderside:
         ]
 
         # 2. Run test
-        _kbp = KoswatBuildingsPolderside()
+        _kbp = KoswatSurroundingsPolderside()
         _kbp.points = _surrounding_points
         _classified_surroundings = _kbp.get_classify_surroundings()
 

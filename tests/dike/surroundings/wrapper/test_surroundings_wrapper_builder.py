@@ -9,14 +9,12 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
     PointSurroundings,
 )
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
-    KoswatBuildingsPoldersideBuilder,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside_builder import (
+    KoswatSurroundingsPoldersideBuilder,
 )
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
@@ -41,7 +39,7 @@ class TestSurroundingsWrapperBuilder:
 
     def test_given_valid_data_build_returns_surroundings(self):
         # 1. Define test data.
-        _buildings_foms = KoswatBuildingsPoldersideBuilder()
+        _buildings_foms = KoswatSurroundingsPoldersideBuilder()
         _end_point = Point(4.2, 4.2)
         _start_point = Point(4.2, 2.4)
         _expected_points = [

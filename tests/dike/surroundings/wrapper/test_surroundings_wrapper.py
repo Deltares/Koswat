@@ -1,7 +1,7 @@
 from shapely.geometry import Point
 
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
@@ -22,7 +22,7 @@ class TestSurroundingsWrapper:
 
     def test_set_buildings_polderside(self):
         # 1. Define test data.
-        _buildings_polderside = KoswatBuildingsPolderside()
+        _buildings_polderside = KoswatSurroundingsPolderside()
         _locations = [
             Point(4.2, 2.4),
             Point(4.2, 4.2),
@@ -36,5 +36,5 @@ class TestSurroundingsWrapper:
         _surroundings.buildings_polderside = _buildings_polderside
 
         # 3. Verify expectations.
-        assert isinstance(_surroundings.buildings_polderside, KoswatBuildingsPolderside)
+        assert isinstance(_surroundings.buildings_polderside, KoswatSurroundingsPolderside)
         assert [x.location for x in _surroundings.locations] == _locations

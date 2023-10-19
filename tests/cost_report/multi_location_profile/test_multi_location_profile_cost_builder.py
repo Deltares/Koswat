@@ -14,8 +14,8 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
     MultiLocationProfileCostReport,
 )
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
@@ -40,7 +40,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_surroundings = []
         _p_surrounding.location = Point(2.4, 4.2)
-        _builder.surroundings.buildings_polderside = KoswatBuildingsPolderside()
+        _builder.surroundings.buildings_polderside = KoswatSurroundingsPolderside()
         _builder.surroundings.buildings_polderside.points = [_p_surrounding]
         _builder.reinforced_profile = KoswatProfileBuilder.with_data(
             dict(
