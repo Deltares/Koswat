@@ -100,7 +100,7 @@ def get_polygon_coordinates(
     """
     if isinstance(pol_geometry, geometry.Polygon):
         return geometry.LineString(pol_geometry.exterior.coords)
-    raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
+    raise NotImplementedError(f"Geometry type {pol_geometry.geom_type} not supported.")
 
 
 def get_groundlevel_surface(pol_geometry: geometry.Polygon) -> geometry.LineString:
@@ -144,7 +144,7 @@ def _get_normalized_polygon(base_polygon: geometry.Polygon) -> geometry.Polygon:
 
 def get_normalized_polygon_difference(
     left_geom: geometry.Polygon, right_geom: geometry.Polygon
-) -> geometry.Polygon:
+) -> geometry.Polygon | geometry.MultiPolygon:
     """
     Given two polygons calculates the difference between them and removes any residual polygon due to minor precission errors.
 
@@ -156,6 +156,8 @@ def get_normalized_polygon_difference(
         geometry.Polygon: Resulting normalized substraction polygon.
     """
     _result_geom = order_geometry_points(left_geom.difference(right_geom))
+    if isinstance(_result_geom, geometry.MultiPolygon):
+        return _result_geom
     return _get_normalized_polygon(_result_geom)
 
 
