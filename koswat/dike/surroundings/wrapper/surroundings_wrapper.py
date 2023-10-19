@@ -81,17 +81,18 @@ class SurroundingsWrapper:
             return []
         
         _points = self.buildings_polderside.points
-        if not self.apply_buildings:
-            pass # TODO reset distance_to_surroundings
             
         for _p, _point in enumerate(self.buildings_polderside.points):
             
-            if self.railways_polderside and self.apply_railways:
+            if not self.apply_buildings:
+                _points[_p].distance_to_surroundings = []
+                
+            if self.apply_railways and self.railways_polderside:
                 if (not _point.location == self.railways_polderside.points[_p].location):
                     logging.warning(f"Mismatching railway polderside location {self.railways_polderside.points[_p].location}")
                 _points[_p].distance_to_surroundings += self.railways_polderside.points[_p].distance_to_surroundings
                 
-            if self.waters_polderside and self.apply_waters:
+            if self.apply_waters and self.waters_polderside:
                 if (not _point.location == self.waters_polderside.points[_p].location):
                     logging.warning(f"Mismatching water polderside location {self.waters_polderside.points[_p].location}")
                 _points[_p].distance_to_surroundings += self.waters_polderside.points[_p].distance_to_surroundings

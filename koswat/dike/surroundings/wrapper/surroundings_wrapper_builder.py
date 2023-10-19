@@ -37,12 +37,16 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_shp_fom = self.trajects_fom
         _builder.koswat_csv_fom = self.surroundings_fom.railways_polderside
+        if not _builder.koswat_csv_fom:
+            return None
         return _builder.build()
     
     def _get_waters_polder_side(self) -> KoswatSurroundingsPolderside:
         _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_shp_fom = self.trajects_fom
         _builder.koswat_csv_fom = self.surroundings_fom.waters_polderside
+        if not _builder.koswat_csv_fom:
+            return None
         return _builder.build()
 
     def build(self) -> SurroundingsWrapper:

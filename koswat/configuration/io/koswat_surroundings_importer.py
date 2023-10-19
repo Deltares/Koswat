@@ -98,7 +98,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
             wegen_buitendijks_klasseonbekend="roads_class_unknown_dikeside",
         )
         _translation = _translations.get(_normalized, None)
-        if not _translations:
+        if not _translation:
             _error = "No mapping found for {}".format(surrounding_type)
             logging.error(_error)
             raise ValueError(_error)
