@@ -1,5 +1,4 @@
 import logging
-from typing import List, Union
 
 from shapely import affinity, geometry, ops
 
@@ -36,13 +35,13 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
 
 
 def as_unified_geometry(
-    source_geom: Union[geometry.Polygon, geometry.MultiPolygon]
+    source_geom: geometry.Polygon | geometry.MultiPolygon,
 ) -> geometry.Polygon:
     """
     Ensures the calculated geometry is returned as a single polygon.
 
     Args:
-        source_geom (Union[geometry.Polygon, geometry.MultiPolygon]): Calculated source geometry.
+        source_geom (geometry.Polygon | geometry.MultiPolygon): Calculated source geometry.
 
     Returns:
         geometry.Polygon: Unified resulting geometry with its points ordered (first one is the most-left x coordinate).
@@ -84,13 +83,13 @@ def get_relative_core_layer(
 
 
 def get_polygon_coordinates(
-    pol_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
+    pol_geometry: geometry.Polygon | geometry.MultiPolygon,
 ) -> geometry.LineString:
     """
     Given a single or multi geometry returns the coordinates composing its outer layout.
 
     Args:
-        pol_geometry (Union[geometry.Polygon, geometry.MultiPolygon]): Source geometry.
+        pol_geometry (geometry.Polygon | geometry.MultiPolygon): Source geometry.
 
     Raises:
         NotImplementedError: When the provided geometry is not yet supported.
@@ -181,7 +180,7 @@ def _get_single_polygon_surface_points(
 
 
 def get_polygon_surface_points(
-    base_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
+    base_geometry: geometry.Polygon | geometry.MultiPolygon,
 ) -> geometry.LineString:
     """
     Gets all the points composing the upper surface of a 'dike' geometry.
@@ -202,7 +201,7 @@ def get_polygon_surface_points(
     return base_geometry
 
 
-def profile_points_to_polygon(points_list: List[geometry.Point]) -> geometry.Polygon:
+def profile_points_to_polygon(points_list: list[geometry.Point]) -> geometry.Polygon:
     """
     Transforms a list of points into a valid 'dike' polygon. When there is a difference in height between left and right side then we correct it in the x = 0 coordinate.
 
