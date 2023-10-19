@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from pathlib import Path
-from typing import Iterable, List, Type
+from typing import Iterable
 
 import pytest
 
@@ -13,7 +13,7 @@ from koswat.calculations.outside_slope_reinforcement import (
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_layers_wrapper_builder import (
+from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
@@ -41,7 +41,7 @@ from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
-from koswat.calculations.standard_reinforcement.standard_reinforcement_layers_wrapper_builder import (
+from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
     StandardReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
@@ -89,7 +89,7 @@ from tests.calculations.reinforcement_profile_cases import (
 )
 
 
-def scenario_ini_file() -> List[pytest.param]:
+def scenario_ini_file() -> list[pytest.param]:
     scenarios_dir = test_data / "acceptance" / "scenarios"
 
     def _to_koswat_scenario(
@@ -122,7 +122,7 @@ def scenario_ini_file() -> List[pytest.param]:
     return list(map(_to_pytest_param, _scenarios))
 
 
-def input_profile_data_csv_file() -> List[pytest.param]:
+def input_profile_data_csv_file() -> list[pytest.param]:
     _csv_file = test_data / "acceptance" / "csv" / "dike_input_profiles.csv"
 
     def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
@@ -187,7 +187,7 @@ class TestReinforcementProfileBuilderFactory:
     )
     def test_get_reinforcement_input_profile(
         self,
-        reinforcement_profile_type: Type[ReinforcementProfileProtocol],
+        reinforcement_profile_type: type[ReinforcementProfileProtocol],
         expected_input_profile_type: type[SoilInputProfile]
         | type[PipingWallInputProfile]
         | type[StabilityWallInputProfile]
@@ -227,7 +227,7 @@ class TestReinforcementProfileBuilderFactory:
     )
     def test_get_builder(
         self,
-        reinforcement_profile_type: Type[ReinforcementProfileProtocol],
+        reinforcement_profile_type: type[ReinforcementProfileProtocol],
         expected_builder: ReinforcementProfileBuilderProtocol,
     ):
         _builder = ReinforcementProfileBuilderFactory.get_builder(
@@ -369,7 +369,7 @@ class TestReinforcementProfileBuilderFactory:
     @pytest.mark.parametrize("scenario", _scenarios)
     def test_generate_reinforcement_profiles_from_acceptance_data(
         self,
-        profile_type: Type[ReinforcementProfileProtocol],
+        profile_type: type[ReinforcementProfileProtocol],
         input_profile: KoswatInputProfileProtocol,
         scenario: KoswatScenario,
         request: pytest.FixtureRequest,

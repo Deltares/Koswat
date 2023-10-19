@@ -3,7 +3,7 @@ from typing import Protocol, runtime_checkable
 from koswat.calculations.protocols.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import ReinforcementLayersWrapper
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
 

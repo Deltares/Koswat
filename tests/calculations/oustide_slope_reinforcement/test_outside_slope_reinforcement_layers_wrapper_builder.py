@@ -1,4 +1,4 @@
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_layers_wrapper_builder import (
+from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol import (
