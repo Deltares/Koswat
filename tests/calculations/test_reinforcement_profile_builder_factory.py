@@ -6,26 +6,26 @@ from typing import Iterable
 
 import pytest
 
-from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.calculations.reinforcement_profiles.outside_slope_reinforcement import (
+from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
+from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
     OutsideSlopeReinforcementProfile,
     OutsideSlopeReinforcementProfileBuilder,
     CofferDamInputProfile,
 )
-from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
+from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
-from koswat.calculations.reinforcement_profiles.reinforcement_input_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
-from koswat.calculations.reinforcement_profiles.reinforcement_profile_builder_protocol import (
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
 )
-from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.calculations.reinforcement_profiles.standard_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
@@ -35,7 +35,7 @@ from koswat.calculations.reinforcement_profiles.standard_reinforcement import (
     StandardReinforcementProfile,
     StandardReinforcementProfileBuilder,
 )
-from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
+from koswat.dike_reinforcements.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
     StandardReinforcementLayersWrapperBuilder,
 )
 from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (

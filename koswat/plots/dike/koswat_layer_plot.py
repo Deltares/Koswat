@@ -5,7 +5,7 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 from shapely import geometry
 from numpy import concatenate
-from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
     ReinforcementLayerProtocol,
 )
 

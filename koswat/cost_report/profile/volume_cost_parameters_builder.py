@@ -1,7 +1,7 @@
 import logging
 from typing import Union
 
-from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (

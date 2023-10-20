@@ -3,13 +3,13 @@ from typing import List, Tuple, Type
 
 from shapely.geometry import Point
 
-from koswat.calculations.reinforcement_profiles.outside_slope_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
 )
-from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.calculations.reinforcement_profiles.standard_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,

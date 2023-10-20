@@ -3,7 +3,9 @@ from __future__ import annotations
 import math
 from typing import List
 
-from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import ReinforcementProfileProtocol
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.layer_cost_report import LayerCostReport
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameters

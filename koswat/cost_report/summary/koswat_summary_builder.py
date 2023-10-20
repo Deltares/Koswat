@@ -2,8 +2,8 @@ import logging
 import math
 from typing import List
 
-from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.configuration.settings.koswat_run_scenario_settings import (

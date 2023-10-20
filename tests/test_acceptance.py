@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 import pytest
 
-from koswat.calculations import ReinforcementProfileBuilderFactory
+from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
 )
