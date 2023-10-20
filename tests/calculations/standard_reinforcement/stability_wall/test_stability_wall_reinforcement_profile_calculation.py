@@ -1,4 +1,4 @@
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_calculation_protocol import (
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement.stability_wall.stability_wall_input_profile import (

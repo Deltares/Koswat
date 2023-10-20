@@ -8,7 +8,7 @@ from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement
 from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_calculation_protocol import (
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_protocol import (
