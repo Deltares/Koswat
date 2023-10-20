@@ -56,11 +56,7 @@ class ReinforcementProfileBuilderBase(ReinforcementProfileBuilderProtocol):
 
     def build(self) -> ReinforcementProfile:
         _profile = self.reinforcement_profile_type()
-        logging.info(
-            "Building reinforcement {}".format(
-                _profile.input_data.reinforcement_domain_name
-            )
-        )
+        logging.info("Building reinforcement {}".format(type(_profile).__name__))
 
         _profile.old_profile = self.base_profile
         _profile.input_data = self._get_reinforcement_profile_input()
@@ -71,7 +67,7 @@ class ReinforcementProfileBuilderBase(ReinforcementProfileBuilderProtocol):
             _profile.characteristic_points
         )
         logging.info(
-            "Generated reinforcement {}".format(
+            "Built reinforcement {}".format(
                 _profile.input_data.reinforcement_domain_name
             )
         )

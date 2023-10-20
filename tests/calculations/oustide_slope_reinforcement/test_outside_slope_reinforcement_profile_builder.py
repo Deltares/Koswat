@@ -25,12 +25,12 @@ class TestOutsideSlopeReinforcementProfileBuilder:
             pass
 
         with pytest.raises(NotImplementedError):
-            OutsideSlopeReinforcementProfileBuilder.get_outside_slope_reinforcement_calculator(
+            OutsideSlopeReinforcementProfileBuilder.get_input_profile_calculator(
                 MockClass
             )
 
     def test_get_standard_reinforcement_calculator_returns_when_valid(self):
-        _value = OutsideSlopeReinforcementProfileBuilder.get_outside_slope_reinforcement_calculator(
+        _value = OutsideSlopeReinforcementProfileBuilder.get_input_profile_calculator(
             CofferdamReinforcementProfile
         )
-        assert _value == CofferdamInputProfileCalculation
+        assert isinstance(_value, CofferdamInputProfileCalculation)

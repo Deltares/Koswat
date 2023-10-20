@@ -8,9 +8,10 @@ from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_protocol import (
-    ReinforcementProfileBuilderProtocol,
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_base import (
+    ReinforcementProfileBuilderBase,
 )
+
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
@@ -38,7 +39,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard import (
 )
 
 
-class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
+class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
     reinforcement_profile_type: type[StandardReinforcementProfile]
