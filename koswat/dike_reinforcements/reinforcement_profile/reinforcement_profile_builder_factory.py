@@ -1,3 +1,5 @@
+from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
@@ -43,6 +45,25 @@ _reinforcements = {
 
 
 class ReinforcementProfileBuilderFactory:
+    base_profile: KoswatProfileBase
+    scenario: KoswatScenario
+
+    def __init__(
+        self, base_profile: KoswatProfileBase, scenario: KoswatScenario
+    ) -> None:
+        self.base_profile = base_profile
+        self.scenario = scenario
+
+    def build(
+        self, reinforcement_profile_type: type[ReinforcementProfileProtocol]
+    ) -> ReinforcementProfileProtocol:
+        if not reinforcement_profile_type:
+            raise ValueError("No specified `reinforcement_profile_type`.")
+        _builder = self.get_reinforcement_builder(reinforcement_profile_type)
+        _builder.base_profile = self.base_profile
+        _builder.scenario = self.scenario
+        return _builder.build()
+
     @staticmethod
     def get_available_reinforcements() -> list[ReinforcementProfileProtocol]:
         """
@@ -54,30 +75,7 @@ class ReinforcementProfileBuilderFactory:
         return list(_reinforcements.keys())
 
     @staticmethod
-    def get_reinforcement_input_profile(
-        reinforcement_profile: ReinforcementProfileProtocol,
-    ) -> ReinforcementInputProfileProtocol:
-        """
-        Gets the appropiate reinforcement input profile (`ReinforcementInputProfileProtocol`) for the given reinforcement profile.
-
-        Args:
-            reinforcement_profile (ReinforcementProfileProtocol): Reinforcement profile type that needs an associated input profile.
-
-        Raises:
-            NotImplementedError: When the given `reinforcement_profile` (`ReinforcementProfileProtocol`) is not mapped to an existing type.
-
-        Returns:
-            ReinforcementInputProfileProtocol: Valid `typing.Type`.
-        """
-        _input_profile = _reinforcements.get(reinforcement_profile, None)
-        if not _input_profile:
-            raise NotImplementedError(
-                "Reinforcement profile {} not recognized.".format(reinforcement_profile)
-            )
-        return _input_profile
-
-    @staticmethod
-    def get_builder(
+    def get_reinforcement_builder(
         reinforcement_profile_type: type[ReinforcementProfileProtocol],
     ) -> ReinforcementProfileBuilderProtocol:
         """

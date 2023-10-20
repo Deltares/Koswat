@@ -153,50 +153,6 @@ class TestReinforcementProfileBuilderFactory:
             for _reinforcement in _expected_reinforcements
         )
 
-    def test_get_reinforcement_input_profile_unknown_reinforcement(self):
-        with pytest.raises(NotImplementedError):
-            ReinforcementProfileBuilderFactory.get_reinforcement_input_profile(None)
-
-    @pytest.mark.parametrize(
-        "reinforcement_profile_type, expected_input_profile_type",
-        [
-            pytest.param(
-                SoilReinforcementProfile,
-                SoilInputProfile,
-                id="[Standard] Soil reinforcement",
-            ),
-            pytest.param(
-                PipingWallReinforcementProfile,
-                PipingWallInputProfile,
-                id="[Standard] Piping wall reinforcement",
-            ),
-            pytest.param(
-                StabilityWallReinforcementProfile,
-                StabilityWallInputProfile,
-                id="[Standard] Stability wall reinforcement",
-            ),
-            pytest.param(
-                CofferdamReinforcementProfile,
-                CofferDamInputProfile,
-                id="[Oustide Slope] Cofferdam reinforcement",
-            ),
-        ],
-    )
-    def test_get_reinforcement_input_profile(
-        self,
-        reinforcement_profile_type: type[ReinforcementProfileProtocol],
-        expected_input_profile_type: type[SoilInputProfile]
-        | type[PipingWallInputProfile]
-        | type[StabilityWallInputProfile]
-        | type[CofferDamInputProfile],
-    ):
-        _input_profile = (
-            ReinforcementProfileBuilderFactory.get_reinforcement_input_profile(
-                reinforcement_profile_type
-            )
-        )
-        assert _input_profile == expected_input_profile_type
-
     @pytest.mark.parametrize(
         "reinforcement_profile_type, expected_builder",
         [
@@ -227,7 +183,7 @@ class TestReinforcementProfileBuilderFactory:
         reinforcement_profile_type: type[ReinforcementProfileProtocol],
         expected_builder: ReinforcementProfileBuilderProtocol,
     ):
-        _builder = ReinforcementProfileBuilderFactory.get_builder(
+        _builder = ReinforcementProfileBuilderFactory.get_reinforcement_builder(
             reinforcement_profile_type
         )
         # Verify expectations.
@@ -322,8 +278,10 @@ class TestReinforcementProfileBuilderFactory:
         _plot_dir = get_testcase_results_dir(request)
 
         # 2. Run test.
-        _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
-            reinforcement_profile_case.reinforcement_profile_type
+        _reinforcement_builder = (
+            ReinforcementProfileBuilderFactory.get_reinforcement_builder(
+                reinforcement_profile_case.reinforcement_profile_type
+            )
         )
         _reinforcement_builder.base_profile = (
             reinforcement_profile_case.koswat_input_profile_base_case
@@ -389,8 +347,8 @@ class TestReinforcementProfileBuilderFactory:
             scenario.kruin_breedte = input_profile.kruin_breedte
 
         # 2. Run test.
-        _reinforcement_builder = ReinforcementProfileBuilderFactory.get_builder(
-            profile_type
+        _reinforcement_builder = (
+            ReinforcementProfileBuilderFactory.get_reinforcement_builder(profile_type)
         )
         _reinforcement_builder.base_profile = _base_profile
         _reinforcement_builder.scenario = scenario

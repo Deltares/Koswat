@@ -1,6 +1,5 @@
 import logging
 import math
-from typing import List
 
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -47,28 +46,25 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         return _new_koswat_scenario
 
-    def _get_calculated_profile_list(self) -> List[ReinforcementProfileProtocol]:
-        _available_reinforcements = (
-            ReinforcementProfileBuilderFactory.get_available_reinforcements()
-        )
+    def _get_calculated_profile_list(self) -> list[ReinforcementProfileProtocol]:
         _calculated_profiles = []
-        _corrected_scenario = self._get_corrected_koswat_scenario(
-            self.run_scenario_settings.scenario,
-            self.run_scenario_settings.input_profile_case.input_data,
+        _factory_builder = ReinforcementProfileBuilderFactory(
+            base_profile=self.run_scenario_settings.input_profile_case,
+            scenario=self._get_corrected_koswat_scenario(
+                self.run_scenario_settings.scenario,
+                self.run_scenario_settings.input_profile_case.input_data,
+            ),
         )
-        for _reinforcement_type in _available_reinforcements:
+        for (
+            _reinforcement_profile_type
+        ) in ReinforcementProfileBuilderFactory.get_available_reinforcements():
             try:
-                _builder = ReinforcementProfileBuilderFactory.get_builder(
-                    _reinforcement_type
-                )
-                _builder.base_profile = self.run_scenario_settings.input_profile_case
-                _builder.scenario = _corrected_scenario
-                _calc_profile = _builder.build()
+                _calc_profile = _factory_builder.build(_reinforcement_profile_type)
                 _calculated_profiles.append(_calc_profile)
             except Exception as e_info:
                 logging.error(
                     "Error calculating reinforcement: {}. Detailed error: {}".format(
-                        _reinforcement_type(), e_info
+                        _reinforcement_profile_type(), e_info
                     )
                 )
 
