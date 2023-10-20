@@ -1,18 +1,18 @@
 from dataclasses import dataclass
 
-from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_input_profiles import (
     CofferDamInputProfile,
-    CofferdamReinforcementProfile,
+    PipingWallInputProfile,
+    SoilInputProfile,
+    StabilityWallInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement import (
-    PipingWallInputProfile,
-    PipingWallReinforcementProfile,
-    SoilInputProfile,
+from koswat.dike_reinforcements.reinforcement_profiles import (
     SoilReinforcementProfile,
-    StabilityWallInputProfile,
+    CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
     StabilityWallReinforcementProfile,
 )
 from koswat.configuration.settings.koswat_scenario import KoswatScenario

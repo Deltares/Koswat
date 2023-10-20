@@ -1,9 +1,9 @@
 import pytest
 
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_calculation_protocol import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement.soil.soil_reinforcement_profile_calculation import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.soil.soil_reinforcement_profile_calculation import (
     SoilReinforcementProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario

@@ -1,6 +1,8 @@
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import ReinforcementLayersWrapper
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
+)
+from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
 

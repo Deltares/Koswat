@@ -1,10 +1,10 @@
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement_profiles.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement.standard_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement_profiles.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol

@@ -1,11 +1,8 @@
-from koswat.dike_reinforcements.reinforcement_input_profiles.outside_slope_reinforcement import (
-    CofferDamInputProfile,
-    CofferdamReinforcementProfile,
-    OutsideSlopeReinforcementProfile,
-    OutsideSlopeReinforcementProfileBuilder,
-)
 from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile import (
+    OutsideSlopeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
@@ -13,14 +10,27 @@ from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_bui
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_input_profiles.standard_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_input_profiles import (
     PipingWallInputProfile,
-    PipingWallReinforcementProfile,
     SoilInputProfile,
-    SoilReinforcementProfile,
     StabilityWallInputProfile,
+    CofferDamInputProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement_profiles import (
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement_profiles import (
+    CofferdamReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile_builder import (
+    OutsideSlopeReinforcementProfileBuilder,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement_profiles.standard_reinforcement_profile import (
     StandardReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement_profiles.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
 

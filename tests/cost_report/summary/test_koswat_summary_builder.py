@@ -1,17 +1,13 @@
 from shapely.geometry import Point
 
-from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_profiles import (
     CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
+    StabilityWallReinforcementProfile,
+    SoilReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement import (
-    PipingWallReinforcementProfile,
-    SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
-    StabilityWallReinforcementProfile,
 )
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_run_scenario_settings import (

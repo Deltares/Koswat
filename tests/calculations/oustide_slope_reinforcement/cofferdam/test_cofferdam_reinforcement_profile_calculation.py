@@ -1,12 +1,12 @@
 import pytest
 
-from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile_calculation import (
-    CofferdamReinforcementProfileCalculation,
+from koswat.dike_reinforcements.reinforcement_input_profiles.cofferdam.cofferdam_reinforcement_profile_calculation import (
+    CofferdamInputProfileCalculation,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_calculation_protocol import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.configuration.settings import KoswatScenario
@@ -14,13 +14,13 @@ from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
-class TestCofferDamReinforcementProfileCalculation:
+class TestCofferdamInputProfileCalculation:
     def test_initialize(self):
-        _calculation = CofferdamReinforcementProfileCalculation()
+        _calculation = CofferdamInputProfileCalculation()
         assert _calculation
         assert not _calculation.base_profile
         assert not _calculation.scenario
-        assert isinstance(_calculation, CofferdamReinforcementProfileCalculation)
+        assert isinstance(_calculation, CofferdamInputProfileCalculation)
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
 
     def test_calculate_length_coffer_dam(self):
@@ -29,7 +29,7 @@ class TestCofferDamReinforcementProfileCalculation:
             binnen_maaiveld: float
 
         # 1. Define test data.
-        _calculator = CofferdamReinforcementProfileCalculation()
+        _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 8
         _input_data.binnen_maaiveld = 2
@@ -48,7 +48,7 @@ class TestCofferDamReinforcementProfileCalculation:
             kruin_hoogte: float
 
         # 1. Define test data.
-        _calculator = CofferdamReinforcementProfileCalculation()
+        _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 6
         _scenario = KoswatScenario()
@@ -68,7 +68,7 @@ class TestCofferDamReinforcementProfileCalculation:
             buiten_maaiveld: float
 
         # 1. Define test data.
-        _calculator = CofferdamReinforcementProfileCalculation()
+        _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 8
         _input_data.buiten_maaiveld = 2
@@ -92,7 +92,7 @@ class TestCofferDamReinforcementProfileCalculation:
 
         # 1. Define test data.
         _expected_result = 2.25
-        _calculator = CofferdamReinforcementProfileCalculation()
+        _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 6
         _input_data.binnen_maaiveld = 0
@@ -120,7 +120,7 @@ class TestCofferDamReinforcementProfileCalculation:
             buiten_talud: float
 
         # 1. Define test data.
-        _calculator = CofferdamReinforcementProfileCalculation()
+        _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.dike_section = "mocked_section"
         _input_data.kruin_hoogte = 30
