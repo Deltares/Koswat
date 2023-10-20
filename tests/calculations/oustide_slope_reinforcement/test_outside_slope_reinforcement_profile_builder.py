@@ -1,15 +1,15 @@
 import pytest
 
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
+from koswat.calculations.reinforcement_profiles.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile_calculation import (
+from koswat.calculations.reinforcement_profiles.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile_calculation import (
     CofferdamReinforcementProfileCalculation,
 )
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
+from koswat.calculations.reinforcement_profiles.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
 )
-from koswat.calculations.protocols.reinforcement_profile_builder_protocol import (
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
 )
 

@@ -3,7 +3,9 @@ import math
 from typing import List
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.calculations.protocols import ReinforcementProfileProtocol
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )

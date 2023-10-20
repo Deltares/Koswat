@@ -1,7 +1,9 @@
 import pytest
 
-from koswat.calculations.protocols import ReinforcementInputProfileCalculationProtocol
-from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile_calculation import (
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_calculation_protocol import (
+    ReinforcementInputProfileCalculationProtocol,
+)
+from koswat.calculations.reinforcement_profiles.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile_calculation import (
     PipingWallReinforcementProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario

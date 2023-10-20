@@ -1,30 +1,18 @@
 from dataclasses import dataclass
 
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
+from koswat.calculations.reinforcement_profiles.outside_slope_reinforcement import (
     CofferDamInputProfile,
-)
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.calculations.protocols.reinforcement_profile_protocol import (
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
+from koswat.calculations.reinforcement_profiles.standard_reinforcement import (
     PipingWallInputProfile,
-)
-from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
-)
-from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
     SoilInputProfile,
-)
-from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile import (
     SoilReinforcementProfile,
-)
-from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
-)
-from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
 from koswat.configuration.settings.koswat_scenario import KoswatScenario

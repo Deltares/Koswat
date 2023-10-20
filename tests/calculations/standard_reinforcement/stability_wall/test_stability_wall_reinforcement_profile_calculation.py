@@ -1,8 +1,10 @@
-from koswat.calculations.protocols import ReinforcementInputProfileCalculationProtocol
-from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_calculation_protocol import (
+    ReinforcementInputProfileCalculationProtocol,
+)
+from koswat.calculations.reinforcement_profiles.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
-from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile_calculation import (
+from koswat.calculations.reinforcement_profiles.standard_reinforcement.stability_wall.stability_wall_reinforcement_profile_calculation import (
     StabilityWallReinforcementProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario

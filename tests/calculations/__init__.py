@@ -1,8 +1,8 @@
 import pytest
 from shapely.geometry import Point, Polygon
 
-from koswat.calculations import ReinforcementLayersWrapper
-from koswat.calculations.protocols import ReinforcementProfileProtocol
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import ReinforcementLayersWrapper
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import ReinforcementProfileProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 

@@ -1,4 +1,6 @@
-from koswat.calculations.protocols import ReinforcementProfileProtocol
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (

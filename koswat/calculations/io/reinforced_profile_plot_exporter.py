@@ -1,6 +1,8 @@
 from pathlib import Path
 
-from koswat.calculations.protocols import ReinforcementProfileProtocol
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementCoatingLayer,
 )

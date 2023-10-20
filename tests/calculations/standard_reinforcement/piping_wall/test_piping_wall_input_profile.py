@@ -1,4 +1,4 @@
-from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
+from koswat.calculations.reinforcement_profiles.standard_reinforcement.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol

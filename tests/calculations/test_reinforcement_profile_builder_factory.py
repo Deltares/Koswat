@@ -7,48 +7,36 @@ from typing import Iterable
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
-from koswat.calculations.outside_slope_reinforcement import (
+from koswat.calculations.reinforcement_profiles.outside_slope_reinforcement import (
     CofferdamReinforcementProfile,
-)
-from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
+    OutsideSlopeReinforcementProfile,
+    OutsideSlopeReinforcementProfileBuilder,
     CofferDamInputProfile,
 )
 from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
-    OutsideSlopeReinforcementProfile,
-)
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile_builder import (
-    OutsideSlopeReinforcementProfileBuilder,
-)
-from koswat.calculations.protocols import (
+from koswat.calculations.reinforcement_profiles.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
+)
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
+)
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.calculations.standard_reinforcement import (
+from koswat.calculations.reinforcement_profiles.standard_reinforcement import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
-)
-from koswat.calculations.standard_reinforcement.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
-)
-from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
     SoilInputProfile,
-)
-from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
+    StandardReinforcementProfile,
+    StandardReinforcementProfileBuilder,
 )
 from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
     StandardReinforcementLayersWrapperBuilder,
-)
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
-    StandardReinforcementProfile,
-)
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile_builder import (
-    StandardReinforcementProfileBuilder,
 )
 from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
     KoswatSectionScenarioListIniDirReader,

@@ -1,16 +1,16 @@
 import pytest
 
-from koswat.calculations.protocols.reinforcement_profile_protocol import (
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementCoatingLayer,
     ReinforcementLayersWrapper,
 )
-from koswat.calculations.standard_reinforcement.soil.soil_reinforcement_profile import (
+from koswat.calculations.reinforcement_profiles.standard_reinforcement.soil.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
-from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
+from koswat.calculations.reinforcement_profiles.standard_reinforcement.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (

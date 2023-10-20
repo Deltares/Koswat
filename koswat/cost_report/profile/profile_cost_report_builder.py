@@ -1,6 +1,8 @@
 from typing import List
 
-from koswat.calculations.protocols import ReinforcementProfileProtocol
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.profile.layer_cost_report import LayerCostReport

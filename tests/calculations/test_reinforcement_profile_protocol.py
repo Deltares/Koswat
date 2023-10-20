@@ -1,6 +1,8 @@
 import pytest
 
-from koswat.calculations.protocols import ReinforcementProfileProtocol
+from koswat.calculations.reinforcement_profiles.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 
 
 class TestReinforcementProfileProtocol:
