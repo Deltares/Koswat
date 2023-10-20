@@ -91,9 +91,11 @@ class SurroundingsWrapper:
         if not self.buildings_polderside:
             return []
 
-        _points = copy.deepcopy(self.buildings_polderside.points)
+        _points = []
 
-        for _p, _point in enumerate(_points):
+        for _p, _point in enumerate(self.buildings_polderside.points):
+            _points.append(_point)
+
             if not self.apply_buildings:
                 _points[_p].distance_to_surroundings = []
 
