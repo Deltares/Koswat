@@ -34,7 +34,6 @@ class TestMultiLocationProfileCostReportBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = MultiLocationProfileCostReportBuilder()
-        _builder.scenario = ScenarioCases.default
         _builder.surroundings = SurroundingsWrapper()
         _builder.koswat_costs = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
@@ -56,4 +55,4 @@ class TestMultiLocationProfileCostReportBuilder:
 
         # 3. Verify expectations.
         assert isinstance(_profile_cost_report, MultiLocationProfileCostReport)
-        assert _profile_cost_report.locations == [_p_surrounding]
+        assert _profile_cost_report.locations[0].location == _p_surrounding.location
