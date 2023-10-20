@@ -40,7 +40,6 @@ class TestSurroundingsWrapperBuilder:
 
     def test_given_valid_data_build_returns_surroundings(self):
         # 1. Define test data.
-        _buildings_foms = KoswatSurroundingsPoldersideBuilder()
         _end_point = Point(4.2, 4.2)
         _start_point = Point(4.2, 2.4)
         _expected_points = [
@@ -72,9 +71,10 @@ class TestSurroundingsWrapperBuilder:
         _koswat_shp_fom.end_point = _end_point      
         
         # 2. Run test.
-        with pytest.raises(ValueError) as _err_info:
-            _builder = SurroundingsWrapperBuilder()
-            _builder.trajects_fom = _koswat_shp_fom
-            _builder.surroundings_fom = _surroundings_wrapper
-            _builder.surroundings_section = _surroundings_section
-            _surroundings = _builder.build()
+        _builder = SurroundingsWrapperBuilder()
+        _builder.trajects_fom = _koswat_shp_fom
+        _builder.surroundings_fom = _surroundings_wrapper
+        _builder.surroundings_section = _surroundings_section
+        _surroundings = _builder.build()
+        
+        assert [_point.location for _point in _surroundings.buildings_polderside.points] == _expected_points
