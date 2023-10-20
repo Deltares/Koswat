@@ -10,7 +10,7 @@ from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
-class StabilityWallReinforcementProfileCalculation(
+class StabilityWallInputProfileCalculation(
     ReinforcementInputProfileCalculationProtocol
 ):
     base_profile: KoswatProfileProtocol

@@ -9,7 +9,7 @@ from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
-class SoilReinforcementProfileCalculation(ReinforcementInputProfileCalculationProtocol):
+class SoilInputProfileCalculation(ReinforcementInputProfileCalculationProtocol):
     base_profile: KoswatProfileProtocol
     scenario: KoswatScenario
 

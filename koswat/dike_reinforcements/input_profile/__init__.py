@@ -1,14 +1,14 @@
 from koswat.dike_reinforcements.input_profile.piping_wall import (
     PipingWallInputProfile,
-    PipingWallReinforcementProfileCalculation,
+    PipingWallInputProfileCalculation,
 )
 from koswat.dike_reinforcements.input_profile.soil import (
     SoilInputProfile,
-    SoilReinforcementProfileCalculation,
+    SoilInputProfileCalculation,
 )
 from koswat.dike_reinforcements.input_profile.stability_wall import (
     StabilityWallInputProfile,
-    StabilityWallReinforcementProfileCalculation,
+    StabilityWallInputProfileCalculation,
 )
 from koswat.dike_reinforcements.input_profile.cofferdam import (
     CofferDamInputProfile,

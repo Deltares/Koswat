@@ -4,20 +4,20 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.input_profile.soil.soil_input_profile_calculation import (
-    SoilReinforcementProfileCalculation,
+    SoilInputProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
-class TestSoilReinforcementProfileCalculation:
+class TestSoilInputProfileCalculation:
     def test_initialize(self):
-        _calculation = SoilReinforcementProfileCalculation()
+        _calculation = SoilInputProfileCalculation()
         assert _calculation
         assert not _calculation.base_profile
         assert not _calculation.scenario
-        assert isinstance(_calculation, SoilReinforcementProfileCalculation)
+        assert isinstance(_calculation, SoilInputProfileCalculation)
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
@@ -38,7 +38,7 @@ class TestSoilReinforcementProfileCalculation:
 
         # 2. Run test
         _new_binnen_talud = (
-            SoilReinforcementProfileCalculation()._calculate_new_binnen_talud(
+            SoilInputProfileCalculation()._calculate_new_binnen_talud(
                 _input_profile, _scenario
             )
         )
@@ -60,7 +60,7 @@ class TestSoilReinforcementProfileCalculation:
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
-            SoilReinforcementProfileCalculation()._calculate_new_binnen_berm_hoogte(
+            SoilInputProfileCalculation()._calculate_new_binnen_berm_hoogte(
                 _old_data, _new_data, _scenario
             )
         )
@@ -79,7 +79,7 @@ class TestSoilReinforcementProfileCalculation:
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
-            SoilReinforcementProfileCalculation()._calculate_new_binnen_berm_hoogte(
+            SoilInputProfileCalculation()._calculate_new_binnen_berm_hoogte(
                 _old_data, _new_data, _scenario
             )
         )
@@ -112,7 +112,7 @@ class TestSoilReinforcementProfileCalculation:
 
         # 2. Run test
         _new_binnen_berm_breedte = (
-            SoilReinforcementProfileCalculation()._calculate_new_binnen_berm_breedte(
+            SoilInputProfileCalculation()._calculate_new_binnen_berm_breedte(
                 _old_profile, _new_profile, _scenario
             )
         )
@@ -130,7 +130,7 @@ class TestSoilReinforcementProfileCalculation:
 
         # 2. Run test
         _new_kruin_hoogte = (
-            SoilReinforcementProfileCalculation()._calculate_new_kruin_hoogte(
+            SoilInputProfileCalculation()._calculate_new_kruin_hoogte(
                 _old_data, _scenario
             )
         )

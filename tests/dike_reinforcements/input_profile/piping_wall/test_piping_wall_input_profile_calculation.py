@@ -4,20 +4,20 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile_calculation import (
-    PipingWallReinforcementProfileCalculation,
+    PipingWallInputProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 
-class TestPipingWallReinforcementProfileCalculation:
+class TestPipingWallInputProfileCalculation:
     def test_initialize(self):
-        _calculation = PipingWallReinforcementProfileCalculation()
+        _calculation = PipingWallInputProfileCalculation()
         assert _calculation
         assert not _calculation.base_profile
         assert not _calculation.scenario
-        assert isinstance(_calculation, PipingWallReinforcementProfileCalculation)
+        assert isinstance(_calculation, PipingWallInputProfileCalculation)
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
@@ -26,7 +26,7 @@ class TestPipingWallReinforcementProfileCalculation:
             binnen_berm_breedte: float
 
         # 1. Define test data.
-        _calculator = PipingWallReinforcementProfileCalculation()
+        _calculator = PipingWallInputProfileCalculation()
         _profile_data = MockProfile()
         _profile_data.binnen_berm_breedte = 6
         _expected_result = 2.5
@@ -50,7 +50,7 @@ class TestPipingWallReinforcementProfileCalculation:
 
         # 2. Run test.
         _result = (
-            PipingWallReinforcementProfileCalculation()._calculate_new_kruin_hoogte(
+            PipingWallInputProfileCalculation()._calculate_new_kruin_hoogte(
                 _profile_data, _scenario
             )
         )
@@ -81,7 +81,7 @@ class TestPipingWallReinforcementProfileCalculation:
 
         # 2. Run test
         _new_binnen_talud = (
-            PipingWallReinforcementProfileCalculation()._calculate_new_binnen_talud(
+            PipingWallInputProfileCalculation()._calculate_new_binnen_talud(
                 _input_profile, _scenario
             )
         )

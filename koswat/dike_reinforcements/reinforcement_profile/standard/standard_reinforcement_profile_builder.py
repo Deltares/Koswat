@@ -16,9 +16,9 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
     ReinforcementLayersWrapper,
 )
 from koswat.dike_reinforcements.input_profile import (
-    PipingWallReinforcementProfileCalculation,
-    SoilReinforcementProfileCalculation,
-    StabilityWallReinforcementProfileCalculation,
+    PipingWallInputProfileCalculation,
+    SoilInputProfileCalculation,
+    StabilityWallInputProfileCalculation,
 )
 from koswat.dike_reinforcements.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
     StandardReinforcementLayersWrapperBuilder,
@@ -49,11 +49,11 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
         reinforcement_type: type[StandardReinforcementProfile],
     ) -> ReinforcementInputProfileCalculationProtocol:
         if issubclass(reinforcement_type, PipingWallReinforcementProfile):
-            return PipingWallReinforcementProfileCalculation()
+            return PipingWallInputProfileCalculation()
         elif issubclass(reinforcement_type, SoilReinforcementProfile):
-            return SoilReinforcementProfileCalculation()
+            return SoilInputProfileCalculation()
         elif issubclass(reinforcement_type, StabilityWallReinforcementProfile):
-            return StabilityWallReinforcementProfileCalculation()
+            return StabilityWallInputProfileCalculation()
         raise NotImplementedError(f"Type {reinforcement_type} not supported.")
 
     def _get_reinforcement_layers_wrapper(

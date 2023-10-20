@@ -5,7 +5,7 @@ from koswat.dike_reinforcements.input_profile import (
     StabilityWallInputProfile,
 )
 from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile_calculation import (
-    StabilityWallReinforcementProfileCalculation,
+    StabilityWallInputProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.core.protocols import BuilderProtocol
@@ -13,13 +13,13 @@ from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
-class TestStabilityWallReinforcementProfileCalculation:
+class TestStabilityWallInputProfileCalculation:
     def test_initialize(self):
-        _calculation = StabilityWallReinforcementProfileCalculation()
+        _calculation = StabilityWallInputProfileCalculation()
         assert _calculation
         assert not _calculation.base_profile
         assert not _calculation.scenario
-        assert isinstance(_calculation, StabilityWallReinforcementProfileCalculation)
+        assert isinstance(_calculation, StabilityWallInputProfileCalculation)
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
@@ -29,7 +29,7 @@ class TestStabilityWallReinforcementProfileCalculation:
             binnen_maaiveld: float
 
         # 1. Define test data.
-        _calculator = StabilityWallReinforcementProfileCalculation()
+        _calculator = StabilityWallInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 19
         _input_data.binnen_maaiveld = 2
@@ -48,7 +48,7 @@ class TestStabilityWallReinforcementProfileCalculation:
             kruin_hoogte: float
 
         # 1. Define test data.
-        _calculator = StabilityWallReinforcementProfileCalculation()
+        _calculator = StabilityWallInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 30
         _scenario = KoswatScenario()
@@ -69,7 +69,7 @@ class TestStabilityWallReinforcementProfileCalculation:
             kruin_breedte: float
 
         # 1. Define test data.
-        _calculator = StabilityWallReinforcementProfileCalculation()
+        _calculator = StabilityWallInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 30
         _input_data.binnen_maaiveld = 2.3
@@ -97,7 +97,7 @@ class TestStabilityWallReinforcementProfileCalculation:
             buiten_berm_breedte: float
 
         # 1. Define test data.
-        _calculator = StabilityWallReinforcementProfileCalculation()
+        _calculator = StabilityWallInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.dike_section = "mocked_section"
         _input_data.kruin_hoogte = 30
