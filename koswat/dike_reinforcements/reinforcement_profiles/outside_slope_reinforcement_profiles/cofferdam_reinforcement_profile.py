@@ -1,0 +1,14 @@
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike_reinforcements.reinforcement_input_profiles.cofferdam.cofferdam_input_profile import CofferDamInputProfile
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile import OutsideSlopeReinforcementProfile
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile import ReinforcementProfile
+
+
+class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
+    input_data: CofferDamInputProfile
+    layers_wrapper: ReinforcementLayersWrapper
+    old_profile: KoswatProfileProtocol
+    new_ground_level_surface: float
