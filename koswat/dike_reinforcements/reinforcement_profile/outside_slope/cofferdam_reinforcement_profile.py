@@ -5,7 +5,7 @@ from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile 
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (

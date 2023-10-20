@@ -29,10 +29,10 @@ from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike_reinforcements.reinforcement_profile.standard_reinforcement_profiles.standard_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard_reinforcement_profiles import (
+from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,

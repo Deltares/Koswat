@@ -1,7 +1,7 @@
 import pytest
 from shapely.geometry import Point
 
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (

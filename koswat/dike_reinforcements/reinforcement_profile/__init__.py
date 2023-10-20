@@ -1,7 +1,7 @@
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope_reinforcement_profiles import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard_reinforcement_profiles import (
+from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,

@@ -7,7 +7,7 @@ from typing import Iterable
 import pytest
 
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope_reinforcement_profiles import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
 )
 
@@ -17,7 +17,7 @@ from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_protocol import (
@@ -37,10 +37,10 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile_builder import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard_reinforcement_profiles.standard_reinforcement_profile_builder import (
+from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile_builder import (
     StandardReinforcementProfile,
     StandardReinforcementProfileBuilder,
 )
