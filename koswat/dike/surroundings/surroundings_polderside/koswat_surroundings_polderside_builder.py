@@ -47,7 +47,7 @@ class KoswatSurroundingsPoldersideBuilder(BuilderProtocol):
         start_idx = self._find_polderside_point_idx(self.koswat_shp_fom.initial_point)
         end_idx = self._find_polderside_point_idx(self.koswat_shp_fom.end_point)
 
-        _kbp = KoswatSurroundingsPolderside()
-        _kbp.points = self._get_polderside_points(start_idx, end_idx)
+        _ksp = KoswatSurroundingsPolderside()
+        _ksp.points = self._get_polderside_points(start_idx, end_idx)
 
-        return _kbp
+        return _ksp

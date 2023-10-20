@@ -19,10 +19,10 @@ class TestKoswatSurroundingsPolderside:
         return _ps
 
     def test_initialize_koswat_buildings_polderside(self):
-        _kbp = KoswatSurroundingsPolderside()
-        assert isinstance(_kbp, KoswatSurroundingsPolderside)
-        assert not _kbp.conflicting_points
-        assert not _kbp.get_classify_surroundings()
+        _ksp = KoswatSurroundingsPolderside()
+        assert isinstance(_ksp, KoswatSurroundingsPolderside)
+        assert not _ksp.conflicting_points
+        assert not _ksp.get_classify_surroundings()
 
     def test_classify_surroundings(self):
         # 1. Define test data
@@ -38,9 +38,9 @@ class TestKoswatSurroundingsPolderside:
         ]
 
         # 2. Run test
-        _kbp = KoswatSurroundingsPolderside()
-        _kbp.points = _surrounding_points
-        _classified_surroundings = _kbp.get_classify_surroundings()
+        _ksp = KoswatSurroundingsPolderside()
+        _ksp.points = _surrounding_points
+        _classified_surroundings = _ksp.get_classify_surroundings()
 
         # 3. Verify expectations.
         assert isinstance(_classified_surroundings, dict)

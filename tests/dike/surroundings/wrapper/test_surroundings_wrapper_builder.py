@@ -48,6 +48,7 @@ class TestSurroundingsWrapperBuilder:
             Point(2.4, 4.2),
             _end_point,
         ]
+        
         # Surroundings wrapper
         _surroundings_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _surroundings_csv_fom.points_surroundings_list = [
