@@ -347,12 +347,9 @@ class TestReinforcementProfileBuilderFactory:
             scenario.kruin_breedte = input_profile.kruin_breedte
 
         # 2. Run test.
-        _reinforcement_builder = (
-            ReinforcementProfileBuilderFactory.get_reinforcement_builder(profile_type)
-        )
-        _reinforcement_builder.base_profile = _base_profile
-        _reinforcement_builder.scenario = scenario
-        _reinforcement_profile = _reinforcement_builder.build()
+        _reinforcement_profile = ReinforcementProfileBuilderFactory(
+            _base_profile, scenario
+        ).build(profile_type)
 
         # 3. Verify expectations.
         assert isinstance(_reinforcement_profile, profile_type)
@@ -369,7 +366,9 @@ class TestReinforcementProfileBuilderFactory:
         reinforced_profile: ReinforcementProfileProtocol,
         output_dir: Path,
     ):
-        _plot_filename = output_dir / str(reinforced_profile)
+        _plot_filename = output_dir.joinpath(
+            reinforced_profile.input_data.reinforcement_domain_name
+        )
         with KoswatFigureContextHandler(
             _plot_filename.with_suffix(".png"), 250
         ) as _koswat_figure:

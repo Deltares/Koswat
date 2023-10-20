@@ -20,17 +20,17 @@ class TestOutsideSlopeReinforcementProfileBuilder:
         assert isinstance(_builder, OutsideSlopeReinforcementProfileBuilder)
         assert isinstance(_builder, ReinforcementProfileBuilderProtocol)
 
-    def test_get_standard_reinforcement_calculator_raises_for_unknown_type(self):
+    def test_get_outside_slope_reinforcement_calculator_raises_for_unknown_type(self):
         class MockClass:
             pass
 
         with pytest.raises(NotImplementedError):
-            OutsideSlopeReinforcementProfileBuilder.get_standard_reinforcement_calculator(
+            OutsideSlopeReinforcementProfileBuilder.get_outside_slope_reinforcement_calculator(
                 MockClass
             )
 
     def test_get_standard_reinforcement_calculator_returns_when_valid(self):
-        _value = OutsideSlopeReinforcementProfileBuilder.get_standard_reinforcement_calculator(
+        _value = OutsideSlopeReinforcementProfileBuilder.get_outside_slope_reinforcement_calculator(
             CofferdamReinforcementProfile
         )
         assert _value == CofferdamInputProfileCalculation

@@ -42,6 +42,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard import (
 class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
+    reinforcement_profile_type: type[StandardReinforcementProfile]
 
     @staticmethod
     def get_standard_reinforcement_calculator(
@@ -90,7 +91,7 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         return _layers_builder.build()
 
     def build(self) -> ReinforcementProfile:
-        _profile = ReinforcementProfile()
+        _profile = self.reinforcement_profile_type()
         logging.info("Building reinforcement {}".format(_profile))
 
         _profile.old_profile = self.base_profile

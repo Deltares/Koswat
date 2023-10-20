@@ -1,3 +1,6 @@
+from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile_calculation import (
+    CofferdamInputProfileCalculation,
+)
 from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
@@ -6,6 +9,12 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 )
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
+    OutsideSlopeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
     ReinforcementProfile,
@@ -27,11 +36,20 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 class OutsideSlopeReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
+    reinforcement_profile_type: type[OutsideSlopeReinforcementProfile]
+
+    @staticmethod
+    def get_outside_slope_reinforcement_calculator(
+        reinforcement_type: type[OutsideSlopeReinforcementProfile],
+    ):
+        if issubclass(reinforcement_type, CofferdamReinforcementProfile):
+            return CofferdamInputProfileCalculation
+        raise NotImplementedError(f"Type {reinforcement_type} not supported.")
 
     def _get_reinforcement_profile_input(
         self,
     ) -> ReinforcementInputProfileCalculationProtocol:
-        _calculator = self.get_standard_reinforcement_calculator(
+        _calculator = self.get_outside_slope_reinforcement_calculator(
             self.reinforcement_profile_type
         )()
         _calculator.base_profile = self.base_profile
@@ -55,7 +73,7 @@ class OutsideSlopeReinforcementProfileBuilder(ReinforcementProfileBuilderProtoco
         return _char_points_builder.build()
 
     def build(self) -> ReinforcementProfile:
-        _profile = ReinforcementProfile()
+        _profile = self.reinforcement_profile_type()
         _profile.old_profile = self.base_profile
         _profile.input_data = self._get_reinforcement_profile_input()
         _profile.characteristic_points = self._get_characteristic_points(

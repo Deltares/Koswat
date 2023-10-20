@@ -8,9 +8,6 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
-)
 
 
 class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
