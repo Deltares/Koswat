@@ -1,15 +1,15 @@
 from dataclasses import dataclass
 
-from koswat.dike_reinforcements.reinforcement_input_profiles import (
+from koswat.dike_reinforcements.input_profile import (
     CofferDamInputProfile,
     PipingWallInputProfile,
     SoilInputProfile,
     StabilityWallInputProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profiles import (
+from koswat.dike_reinforcements.reinforcement_profile import (
     SoilReinforcementProfile,
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,

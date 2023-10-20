@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 from typing import List, Tuple
 
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.cost_report.profile.volume_cost_parameters_calculator import (

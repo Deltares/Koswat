@@ -1,12 +1,12 @@
 import pytest
 
-from koswat.dike_reinforcements.reinforcement_input_profiles.cofferdam.cofferdam_input_profile import (
+from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
-from koswat.dike_reinforcements.reinforcement_input_profiles.cofferdam.cofferdam_input_profile_calculation import (
+from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile_calculation import (
     CofferdamInputProfileCalculation,
 )
-from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_calculation_protocol import (
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.configuration.settings import KoswatScenario

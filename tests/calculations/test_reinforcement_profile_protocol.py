@@ -1,6 +1,6 @@
 import pytest
 
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 

@@ -1,10 +1,10 @@
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement_profiles import (
+from koswat.dike_reinforcements.reinforcement_profile.standard_reinforcement_profiles import (
     SoilReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement_profiles.standard_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile.standard_reinforcement_profiles.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
