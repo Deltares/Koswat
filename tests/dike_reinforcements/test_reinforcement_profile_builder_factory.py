@@ -78,8 +78,8 @@ from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import get_custom_testcase_results_dir, get_testcase_results_dir, test_data
 from tests.acceptance_scenarios.layers_cases import LayersCases
-from tests.calculations import validated_reinforced_profile
-from tests.calculations.reinforcement_profile_cases import (
+from tests.dike_reinforcements import validated_reinforced_profile
+from tests.dike_reinforcements.reinforcement_profile_cases import (
     ReinforcementProfileCase,
     ReinforcementProfileCaseCombination,
     reinforcement_profile_cases,
