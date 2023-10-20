@@ -238,8 +238,10 @@ class TestAcceptance:
         # 4. Compare CSV results
         _reference_dir = _export_path_dir.joinpath("reference")
         assert _export_csv_path.exists()
-        _csv_result = _export_csv_path.read_text()
-        _csv_reference = _reference_dir.joinpath(_export_csv_path.name).read_text()
+        _csv_result = _export_csv_path.read_text(encoding="utf-8")
+        _csv_reference = _reference_dir.joinpath(_export_csv_path.name).read_text(
+            encoding="utf-8"
+        )
         assert _csv_result == _csv_reference, "CSV Summary differs from reference."
 
         # 5. Compare geometry images.
