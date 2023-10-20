@@ -2,15 +2,10 @@ import shutil
 
 import pytest
 
-from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
-from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
-    MultiLocationProfileCostReport,
-)
-from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from tests import test_results
 from tests.cost_report.io.csv import get_valid_test_summary
 
@@ -35,7 +30,7 @@ class TestSummaryMatrixCsvExporter:
 
         # 3. Validate results
         assert _export_path.exists()
-        _read_text = _export_path.read_text()
+        _read_text = _export_path.read_text(encoding="utf-8")
         _expected_text = """;;Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand
 ;;Cost per km (€);0.0;8144.4;16288.8;24433.2
 ;;Reused grass volume (volume / surface):;nan;nan;nan;nan

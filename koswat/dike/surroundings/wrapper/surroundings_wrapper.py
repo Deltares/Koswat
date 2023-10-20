@@ -1,5 +1,3 @@
-from typing import List
-
 from shapely.geometry import Point
 
 from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
@@ -60,7 +58,7 @@ class SurroundingsWrapper:
         self.roads_class_unknown_dikeside = None
 
     @property
-    def locations(self) -> List[PointSurroundings]:
+    def locations(self) -> list[PointSurroundings]:
         """
         Each location represents 1 meter in a real scale map.
 
@@ -71,7 +69,7 @@ class SurroundingsWrapper:
             return []
         return self.buldings_polderside.points
 
-    def get_locations_after_distance(self, distance: float) -> List[Point]:
+    def get_locations_after_distance(self, distance: float) -> list[Point]:
         """
         Gets all locations which are safe from buildings in a radius of `distance`.
 
@@ -86,5 +84,8 @@ class SurroundingsWrapper:
             if not point_surroundings.distance_to_buildings:
                 return True
             return distance < point_surroundings.distance_to_buildings[0]
+
+        if not self.buldings_polderside:
+            return []
 
         return list(filter(is_at_safe_distance, self.buldings_polderside.points))

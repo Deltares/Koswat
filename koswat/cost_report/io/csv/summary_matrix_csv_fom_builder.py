@@ -80,6 +80,10 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             _location_as_row.extend(_m_values)
             return _location_as_row
 
+        if not any(available_locations):
+            logging.warning("No locations specified for the report.")
+            return [[]]
+
         # Initiate locations matrix.
         # Note: Not the most efficient way, but I want to keep the reports with only
         # the locations that support one (or more) profile reinforcements.

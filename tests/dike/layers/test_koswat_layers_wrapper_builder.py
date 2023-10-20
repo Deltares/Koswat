@@ -11,7 +11,10 @@ from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperBuilder,
 )
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
-from tests.library_test_cases import InitialPointsLookup, LayersCases
+from tests.acceptance_scenarios.initial_characteristic_points_cases import (
+    InitialPointsLookup,
+)
+from tests.acceptance_scenarios.layers_cases import LayersCases
 
 
 class TestKoswatLayersWrapperBuilder:

@@ -7,8 +7,10 @@ from koswat.dike.characteristic_points.characteristic_points import Characterist
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from tests.library_test_cases import InitialPointsLookup, InputProfileCases
+from tests.acceptance_scenarios.initial_characteristic_points_cases import (
+    InitialPointsLookup,
+)
+from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
 
 
 class TestCharacteristicPointsBuilder:
