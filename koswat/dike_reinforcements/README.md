@@ -1,16 +1,15 @@
-# Calculations
+# Dike reinforcements
 
-This module contains the information on calculating a reinforcement (`ReinforcementProfileCalculationProtocol`) for a Profile (`KoswatProfileProtocol`) resulting in a 'Reinforced' Profile (`ReinforcementProfileProtocol`). It is divided in submodules representing the different types of reinforcements and their builders.
+This module contains the information on calculating a reinforcement input data (`ReinforcementProfileCalculationProtocol`) for a Profile (`KoswatProfileProtocol`) resulting in a 'Reinforced' Profile (`ReinforcementProfileProtocol`). It is divided in submodules representing the different types of reinforcements and their builders.
+
+A `ReinforcementProfileProtocol` is built from a `ReinforcementInputProfileProtocol` and combined with an instance of `ReinforcementLayerProtocol`.
 
 The module is divided as:
 - __io__: Input / output module containing the concrete importers and exporters for the models here defined.
+- __input_profile__: Module containing the definition of all `ReinforcementInputProfileProtocol` implementations and their builders (`ReinforcementInputProfileCalculationProtocol`).
 - __reinforcement_layers__: Module containing the definition of all `ReinforcementLayerProtocol` implementations and their builders.
-- __outside_slope_reinforcement__: Module containing the definition of all `OutsideSlopeReinforcementProfile` implementations and their builders.
-- __standard_reinforcement__: Module containing the definition of all `StandardReinforcementProfile` implementations and their builders.
-- __protocols__: Module where the `typing.Protocol` concrete definitions used across the whole calculation modules are saved.
-
-At  the same time we expose directly the 
-- `ReinforcementProfileBuilderFactory`: Factory to retrieve the correct instances of a `ReinforcementProfileBuilderProtocol`.
+- __reinforcement_profile__: Module containing the definition of all `ReinforcementProfileProtocol` implementations and their builders ( `ReinforcementProfileBuilderProtocol`).
+    - It also contains`ReinforcementProfileBuilderFactory`: Factory to retrieve the correct instances of a `ReinforcementProfileBuilderProtocol`.
 
 ## Design decisions.
 It could be argued that some of the code could be reduced by using abstractions or simple inheritance. However I opted for 'duplicating' methods logic in order to reduce the dependency between classes thus making them totally independent. Alas the usage of protocols over abstractions.
