@@ -12,7 +12,6 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 class ReinforcementProfileBuilderProtocol(BuilderProtocol, Protocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
-    reinforcement_profile_type: type[ReinforcementProfileProtocol]
 
     def build(self) -> ReinforcementProfileProtocol:
         """

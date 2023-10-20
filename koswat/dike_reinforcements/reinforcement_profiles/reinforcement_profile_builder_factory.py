@@ -1,10 +1,10 @@
-from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.outside_slope_reinforcement import (
     CofferDamInputProfile,
     CofferdamReinforcementProfile,
     OutsideSlopeReinforcementProfile,
     OutsideSlopeReinforcementProfileBuilder,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_builder_protocol import (
@@ -13,7 +13,7 @@ from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_bui
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.standard_reinforcement import (
     PipingWallInputProfile,
     PipingWallReinforcementProfile,
     SoilInputProfile,

@@ -1,12 +1,13 @@
-from __future__ import annotations
-
 import logging
 from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
 
-from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_input_profile_protocol import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile import (
+    ReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
@@ -14,7 +15,7 @@ from koswat.dike_reinforcements.reinforcement_profiles.reinforcement_profile_bui
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.standard_reinforcement import (
     PipingWallReinforcementProfile,
     PipingWallReinforcementProfileCalculation,
     SoilReinforcementProfile,
@@ -24,9 +25,6 @@ from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement im
 )
 from koswat.dike_reinforcements.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
     StandardReinforcementLayersWrapperBuilder,
-)
-from koswat.dike_reinforcements.reinforcement_profiles.standard_reinforcement.standard_reinforcement_profile import (
-    StandardReinforcementProfile,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
@@ -39,7 +37,6 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
-    reinforcement_profile_type: type[StandardReinforcementProfile]
 
     @staticmethod
     def get_standard_reinforcement_calculator(
@@ -87,8 +84,8 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         _layers_builder.profile_points = profile_points.points
         return _layers_builder.build()
 
-    def build(self) -> StandardReinforcementProfile:
-        _profile = self.reinforcement_profile_type()
+    def build(self) -> ReinforcementProfile:
+        _profile = ReinforcementProfile()
         logging.info("Building reinforcement {}".format(_profile))
 
         _profile.old_profile = self.base_profile
