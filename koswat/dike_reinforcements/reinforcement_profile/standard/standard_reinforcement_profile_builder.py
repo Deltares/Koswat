@@ -1,13 +1,12 @@
-import logging
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
+    ReinforcementInputProfileCalculationProtocol,
+)
 from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
 )
 
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
@@ -45,35 +44,16 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     reinforcement_profile_type: type[StandardReinforcementProfile]
 
     @staticmethod
-    def get_standard_reinforcement_calculator(
+    def get_input_profile_calculator(
         reinforcement_type: type[StandardReinforcementProfile],
-    ):
+    ) -> ReinforcementInputProfileCalculationProtocol:
         if issubclass(reinforcement_type, PipingWallReinforcementProfile):
-            return PipingWallReinforcementProfileCalculation
+            return PipingWallReinforcementProfileCalculation()
         elif issubclass(reinforcement_type, SoilReinforcementProfile):
-            return SoilReinforcementProfileCalculation
+            return SoilReinforcementProfileCalculation()
         elif issubclass(reinforcement_type, StabilityWallReinforcementProfile):
-            return StabilityWallReinforcementProfileCalculation
+            return StabilityWallReinforcementProfileCalculation()
         raise NotImplementedError(f"Type {reinforcement_type} not supported.")
-
-    def _get_reinforcement_profile_input(self) -> ReinforcementInputProfileProtocol:
-        _calculator = self.get_standard_reinforcement_calculator(
-            self.reinforcement_profile_type
-        )()
-        _calculator.base_profile = self.base_profile
-        _calculator.scenario = self.scenario
-        return _calculator.build()
-
-    def _get_characteristic_points(
-        self,
-        input_profile: ReinforcementInputProfileProtocol,
-    ) -> CharacteristicPoints:
-        _char_points_builder = CharacteristicPointsBuilder()
-        _char_points_builder.input_profile = input_profile
-        _char_points_builder.p4_x_coordinate = (
-            self.scenario.d_h * self.scenario.buiten_talud
-        )
-        return _char_points_builder.build()
 
     def _get_reinforcement_layers_wrapper(
         self, profile_points: CharacteristicPoints
@@ -90,18 +70,13 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
         _layers_builder.profile_points = profile_points.points
         return _layers_builder.build()
 
-    def build(self) -> ReinforcementProfile:
-        _profile = self.reinforcement_profile_type()
-        logging.info("Building reinforcement {}".format(_profile))
-
-        _profile.old_profile = self.base_profile
-        _profile.input_data = self._get_reinforcement_profile_input()
-        _profile.characteristic_points = self._get_characteristic_points(
-            _profile.input_data
+    def _get_characteristic_points(
+        self,
+        input_profile: ReinforcementInputProfileProtocol,
+    ) -> CharacteristicPoints:
+        _char_points_builder = CharacteristicPointsBuilder()
+        _char_points_builder.input_profile = input_profile
+        _char_points_builder.p4_x_coordinate = (
+            self.scenario.d_h * self.scenario.buiten_talud
         )
-        _profile.layers_wrapper = self._get_reinforcement_layers_wrapper(
-            _profile.characteristic_points
-        )
-        logging.info("Generated reinforcement {}".format(_profile))
-
-        return _profile
+        return _char_points_builder.build()
