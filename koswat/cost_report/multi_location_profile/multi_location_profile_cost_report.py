@@ -1,5 +1,4 @@
 import math
-from typing import List
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
@@ -9,7 +8,7 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
 
 
 class MultiLocationProfileCostReport(CostReportProtocol):
-    locations: List[PointSurroundings]
+    locations: list[PointSurroundings]
     profile_cost_report: ProfileCostReport
 
     def __init__(self) -> None:

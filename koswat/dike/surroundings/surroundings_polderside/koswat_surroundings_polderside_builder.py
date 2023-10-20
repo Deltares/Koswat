@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import List
-
 from shapely.geometry import Point
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
@@ -33,7 +31,7 @@ class KoswatSurroundingsPoldersideBuilder(BuilderProtocol):
 
     def _get_polderside_points(
         self, start_idx: int, end_idx: int
-    ) -> List[PointSurroundings]:
+    ) -> list[PointSurroundings]:
         if start_idx > end_idx:
             return self.koswat_csv_fom.points_surroundings_list[
                 end_idx : (start_idx + 1)

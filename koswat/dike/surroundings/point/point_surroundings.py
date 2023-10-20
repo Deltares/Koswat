@@ -1,5 +1,4 @@
 import math
-from typing import List
 
 from shapely.geometry import Point
 
@@ -12,7 +11,7 @@ class PointSurroundings:
     section: str
     traject_order: int
     location: Point
-    distance_to_surroundings: List[float]
+    distance_to_surroundings: list[float]
 
     def __init__(self) -> None:
         self.section = ""

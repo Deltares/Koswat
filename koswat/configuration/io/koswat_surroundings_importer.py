@@ -1,7 +1,6 @@
 import logging
 from itertools import groupby
 from pathlib import Path
-from typing import List, Tuple
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
@@ -27,18 +26,20 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
 
 class KoswatSurroundingsImporter(KoswatImporterProtocol):
     traject_loc_shp_file: Path
-    selected_locations: List[str]
+    selected_locations: list[str]
 
     def __init__(self) -> None:
         self.traject_loc_shp_file = None
         self.selected_locations = []
 
-    def _get_dike_locations_shp_fom(self) -> List[KoswatDikeLocationsShpFom]:
+    def _get_dike_locations_shp_fom(self) -> list[KoswatDikeLocationsShpFom]:
         _reader = KoswatDikeLocationsListShpReader()
         _reader.selected_locations = self.selected_locations
         return _reader.read(self.traject_loc_shp_file)
 
-    def import_from(self, surroundings_section: SurroundingsSectionFom) -> List[SurroundingsWrapper]:
+    def import_from(
+        self, surroundings_section: SurroundingsSectionFom
+    ) -> list[SurroundingsWrapper]:
         from_path = surroundings_section.surroundings_database_dir
         if not isinstance(from_path, Path):
             raise ValueError("No surroundings csv directory path given.")
@@ -106,7 +107,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
 
     def _csv_file_to_fom(
         self, csv_file: Path, traject_name: str
-    ) -> Tuple[str, KoswatTrajectSurroundingsCsvFom]:
+    ) -> tuple[str, KoswatTrajectSurroundingsCsvFom]:
         _surrounding_csv_fom = KoswatSurroundingsCsvReader().read(csv_file)
         _surrounding_csv_fom.traject = traject_name
         _surrounding_type = self._map_surrounding_type(

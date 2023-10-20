@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 from shapely.geometry import Point
 
@@ -36,7 +34,7 @@ class TestKoswatSurroundingsPoldersideBuilder:
         assert not _builder.koswat_csv_fom
 
     def _as_surrounding_point(
-        self, location: Point, distances: List[float]
+        self, location: Point, distances: list[float]
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location

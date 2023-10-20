@@ -1,6 +1,5 @@
 import re
 from pathlib import Path
-from typing import List
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
@@ -27,7 +26,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
         )
         return _koswat_fom
 
-    def _get_surroundings_distances(self, distance_list: List[str]) -> List[float]:
+    def _get_surroundings_distances(self, distance_list: list[str]) -> list[float]:
         def to_distance_float(header_value: str) -> float:
             _d_values = re.findall(r"\d+", header_value)
             if len(_d_values) != 1:
@@ -39,7 +38,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
         return list(map(to_distance_float, distance_list))
 
     def _build_point_surroundings(
-        self, entry: List[str], distances_list: List[float]
+        self, entry: list[str], distances_list: list[float]
     ) -> PointSurroundings:
         _point_dict = dict(
             traject_order=entry[0],
@@ -56,8 +55,8 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
         return _builder.build()
 
     def _build_points_surroundings_list(
-        self, distances_list: List[float], entries: List[List[str]]
-    ) -> List[PointSurroundings]:
+        self, distances_list: list[float], entries: list[list[str]]
+    ) -> list[PointSurroundings]:
         _point_list = []
         for idx, _point_entry in enumerate(entries):
             _point_entry.insert(0, idx)

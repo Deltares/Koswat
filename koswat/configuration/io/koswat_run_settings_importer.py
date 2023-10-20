@@ -1,7 +1,7 @@
 import logging
 import math
 from pathlib import Path
-from typing import Any, List
+from typing import Any
 
 from koswat.configuration.io.ini import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
@@ -89,10 +89,10 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
     def _get_run_settings(
         self,
-        input_profiles: List[KoswatProfileBase],
-        fom_scenario_list: List[KoswatSectionScenariosIniFom],
+        input_profiles: list[KoswatProfileBase],
+        fom_scenario_list: list[KoswatSectionScenariosIniFom],
         costs_settings: KoswatCostsSettings,
-        surroundings_fom: List[SurroundingsWrapper],
+        surroundings_fom: list[SurroundingsWrapper],
         output_dir: Path,
     ) -> None:
         _run_settings = KoswatRunSettings()
@@ -171,8 +171,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
 
     def _import_dike_input_profiles_list(
-        self, csv_file: Path, dike_selection: List[str], layers_info: dict
-    ) -> List[KoswatInputProfileBase]:
+        self, csv_file: Path, dike_selection: list[str], layers_info: dict
+    ) -> list[KoswatInputProfileBase]:
         if not csv_file.is_file():
             logging.error(
                 "Dike input profiles csv file not found at {}".format(csv_file)
@@ -204,7 +204,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
         return _profile_list
 
-    def _import_selected_dike_section_names(self, txt_file: Path) -> List[str]:
+    def _import_selected_dike_section_names(self, txt_file: Path) -> list[str]:
         if not txt_file.is_file():
             logging.error("Dike selection txt file not found at {}".format(txt_file))
             return []
@@ -223,14 +223,17 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         return _importer.import_from(ini_file)
 
     def _import_scenario_fom_list(
-        self, scenario_dir: Path, dike_selections: List[str]
-    ) -> List[KoswatSectionScenariosIniFom]:
+        self, scenario_dir: Path, dike_selections: list[str]
+    ) -> list[KoswatSectionScenariosIniFom]:
         _reader = KoswatSectionScenarioListIniDirReader()
         _reader.dike_selection = dike_selections
         return _reader.read(scenario_dir)
 
     def _import_surroundings(
-        self, surroundings_section: SurroundingsSectionFom, traject_shp_file: Path, dike_selections: List[str]
+        self,
+        surroundings_section: SurroundingsSectionFom,
+        traject_shp_file: Path,
+        dike_selections: list[str],
     ) -> Any:
         _importer = KoswatSurroundingsImporter()
         _importer.traject_loc_shp_file = traject_shp_file

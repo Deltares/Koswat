@@ -1,5 +1,4 @@
 import math
-from typing import List
 
 from shapely.geometry import Point
 
@@ -11,7 +10,7 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
 
 class TestKoswatSurroundingsPolderside:
     def _to_surrounding_point(
-        self, location: Point, distance_list: List[float]
+        self, location: Point, distance_list: list[float]
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location

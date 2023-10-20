@@ -1,12 +1,10 @@
-from typing import List
-
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class KoswatTrajectSurroundingsCsvFom(KoswatCsvFomProtocol):
-    points_surroundings_list: List[PointSurroundings]
-    distances_list: List[float]
+    points_surroundings_list: list[PointSurroundings]
+    distances_list: list[float]
     traject: str
 
     def __init__(self) -> None:

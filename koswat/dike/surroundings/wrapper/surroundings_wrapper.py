@@ -1,3 +1,4 @@
+import copy
 import logging
 import math
 
@@ -79,32 +80,32 @@ class SurroundingsWrapper:
         Returns:
             List[PointSurroundings]: List of points along the polderside.
         """
+
+        def _match_locations(point1: Point, point2: Point) -> Point:
+            if not point1.location == point2.location:
+                logging.warning(
+                    f"Mismatching railway polderside location {point2.location}"
+                )
+            return point2.distance_to_surroundings + point1.distance_to_surroundings
+
         if not self.buildings_polderside:
             return []
 
-        _points = self.buildings_polderside.points
+        _points = copy.deepcopy(self.buildings_polderside.points)
 
-        for _p, _point in enumerate(self.buildings_polderside.points):
+        for _p, _point in enumerate(_points):
             if not self.apply_buildings:
                 _points[_p].distance_to_surroundings = []
 
             if self.apply_railways and self.railways_polderside:
-                if not _point.location == self.railways_polderside.points[_p].location:
-                    logging.warning(
-                        f"Mismatching railway polderside location {self.railways_polderside.points[_p].location}"
-                    )
-                _points[_p].distance_to_surroundings += self.railways_polderside.points[
-                    _p
-                ].distance_to_surroundings
+                _points[_p].distance_to_surroundings = _match_locations(
+                    _point, self.railways_polderside.points[_p]
+                )
 
             if self.apply_waters and self.waters_polderside:
-                if not _point.location == self.waters_polderside.points[_p].location:
-                    logging.warning(
-                        f"Mismatching water polderside location {self.waters_polderside.points[_p].location}"
-                    )
-                _points[_p].distance_to_surroundings += self.waters_polderside.points[
-                    _p
-                ].distance_to_surroundings
+                _points[_p].distance_to_surroundings = _match_locations(
+                    _point, self.waters_polderside.points[_p]
+                )
 
         return _points
 
@@ -119,9 +120,9 @@ class SurroundingsWrapper:
             List[Point]: List of safe locations (points).
         """
 
-        def is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
+        def _is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
             if math.isnan(point_surroundings.closest_surrounding):
                 return True
             return distance < point_surroundings.closest_surrounding
 
-        return list(filter(is_at_safe_distance, self.locations))
+        return list(filter(_is_at_safe_distance, self.locations))
