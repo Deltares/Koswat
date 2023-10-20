@@ -3,7 +3,7 @@ import pytest
 from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement_profiles.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_input_profiles.cofferdam.cofferdam_reinforcement_profile_calculation import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.cofferdam.cofferdam_input_profile_calculation import (
     CofferdamInputProfileCalculation,
 )
 from koswat.dike_reinforcements.reinforcement_profiles.outside_slope_reinforcement_profiles.outside_slope_reinforcement_profile_builder import (

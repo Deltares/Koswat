@@ -3,7 +3,7 @@ import pytest
 from koswat.dike_reinforcements.reinforcement_input_profiles.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_input_profiles.piping_wall.piping_wall_reinforcement_profile_calculation import (
+from koswat.dike_reinforcements.reinforcement_input_profiles.piping_wall.piping_wall_input_profile_calculation import (
     PipingWallReinforcementProfileCalculation,
 )
 from koswat.configuration.settings import KoswatScenario
