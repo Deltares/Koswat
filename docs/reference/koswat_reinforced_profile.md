@@ -1,6 +1,6 @@
 # Reinforcement profile
 
-In koswat we consider a reinforcement profile that of a result of applying one of the multiple possible reinforcement calculations on an instance of a `KoswatProfileBase` ([Koswat dike](koswat_dike.md)).
+In koswat we consider a reinforcement profile the result of applying one of the multiple possible reinforcement calculations on an instance of a `KoswatProfileBase` ([Koswat dike](koswat_dike.md)).
 
 This chapter covers the description of a reinforcement profile and its parts.
 

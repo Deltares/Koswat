@@ -11,8 +11,8 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
     MultiLocationProfileCostReport,
 )
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
@@ -31,14 +31,13 @@ class TestMultiLocationProfileCostReportBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = MultiLocationProfileCostReportBuilder()
-        _builder.scenario = ScenarioCases.default
         _builder.surroundings = SurroundingsWrapper()
         _builder.koswat_costs = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
-        _p_surrounding.distance_to_buildings = []
+        _p_surrounding.distance_to_surroundings = []
         _p_surrounding.location = Point(2.4, 4.2)
-        _builder.surroundings.buldings_polderside = KoswatBuildingsPolderside()
-        _builder.surroundings.buldings_polderside.points = [_p_surrounding]
+        _builder.surroundings.buildings_polderside = KoswatSurroundingsPolderside()
+        _builder.surroundings.buildings_polderside.points = [_p_surrounding]
         _builder.reinforced_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.profile_case_2,
@@ -53,4 +52,4 @@ class TestMultiLocationProfileCostReportBuilder:
 
         # 3. Verify expectations.
         assert isinstance(_profile_cost_report, MultiLocationProfileCostReport)
-        assert _profile_cost_report.locations == [_p_surrounding]
+        assert _profile_cost_report.locations[0].location == _p_surrounding.location

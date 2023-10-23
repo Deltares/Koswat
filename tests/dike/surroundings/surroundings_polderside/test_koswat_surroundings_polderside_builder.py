@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 from shapely.geometry import Point
 
@@ -17,35 +15,35 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside_builder import (
-    KoswatBuildingsPoldersideBuilder,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside_builder import (
+    KoswatSurroundingsPoldersideBuilder,
 )
 from tests import test_data
 
 
-class TestKoswatBuildingsPoldersideBuilder:
+class TestKoswatSurroundingsPoldersideBuilder:
     def test_initialize_builder(self):
-        _builder = KoswatBuildingsPoldersideBuilder()
-        assert isinstance(_builder, KoswatBuildingsPoldersideBuilder)
+        _builder = KoswatSurroundingsPoldersideBuilder()
+        assert isinstance(_builder, KoswatSurroundingsPoldersideBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.koswat_shp_fom
         assert not _builder.koswat_csv_fom
 
     def _as_surrounding_point(
-        self, location: Point, distances: List[float]
+        self, location: Point, distances: list[float]
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location
-        _ps.distance_to_buildings = distances
+        _ps.distance_to_surroundings = distances
         return _ps
 
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):
         # 1. Define test data.
-        _builder = KoswatBuildingsPoldersideBuilder()
+        _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = []
 
@@ -68,7 +66,7 @@ class TestKoswatBuildingsPoldersideBuilder:
     )
     def test_find_conflicting_point_idx_returns_value(self, limit_point: Point):
         # 1. Define test data.
-        _builder = KoswatBuildingsPoldersideBuilder()
+        _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), []),
@@ -93,7 +91,7 @@ class TestKoswatBuildingsPoldersideBuilder:
     def test_get_conflicting_points_regardless_of_index_order(
         self, start_idx: int, end_idx: int
     ):
-        _builder = KoswatBuildingsPoldersideBuilder()
+        _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             Point(2.4, 2.4),
@@ -122,7 +120,7 @@ class TestKoswatBuildingsPoldersideBuilder:
             Point(2.4, 4.2),
             _end_point,
         ]
-        _builder = KoswatBuildingsPoldersideBuilder()
+        _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
@@ -140,7 +138,7 @@ class TestKoswatBuildingsPoldersideBuilder:
         _kbp = _builder.build()
 
         # 3. Verify expectations.
-        assert isinstance(_kbp, KoswatBuildingsPolderside)
+        assert isinstance(_kbp, KoswatSurroundingsPolderside)
         assert len(_kbp.conflicting_points) == len(_expected_points)
 
     def test_from_files_then_build_returns_expected_model(self):
@@ -162,12 +160,12 @@ class TestKoswatBuildingsPoldersideBuilder:
         _koswat_wrapper_shp_fom = _shp_fom_builder.read(_shp_test_file)
 
         # 2. Run test
-        _builder = KoswatBuildingsPoldersideBuilder()
+        _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatSurroundingsCsvReader().read(_csv_test_file)
         _builder.koswat_shp_fom = _koswat_wrapper_shp_fom[0]
         _buildings = _builder.build()
 
         # 3. Verify expectations.
-        assert isinstance(_buildings, KoswatBuildingsPolderside)
+        assert isinstance(_buildings, KoswatSurroundingsPolderside)
         assert len(_buildings.points) == 3728
         assert _buildings.conflicting_points

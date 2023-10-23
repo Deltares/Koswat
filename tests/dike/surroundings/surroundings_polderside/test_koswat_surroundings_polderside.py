@@ -1,28 +1,27 @@
 import math
-from typing import List
 
 from shapely.geometry import Point
 
-from koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside import (
-    KoswatBuildingsPolderside,
+from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
+    KoswatSurroundingsPolderside,
     PointSurroundings,
 )
 
 
-class TestKoswatBuildingsPolderside:
+class TestKoswatSurroundingsPolderside:
     def _to_surrounding_point(
-        self, location: Point, distance_list: List[float]
+        self, location: Point, distance_list: list[float]
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location
-        _ps.distance_to_buildings = distance_list
+        _ps.distance_to_surroundings = distance_list
         return _ps
 
     def test_initialize_koswat_buildings_polderside(self):
-        _kbp = KoswatBuildingsPolderside()
-        assert isinstance(_kbp, KoswatBuildingsPolderside)
-        assert not _kbp.conflicting_points
-        assert not _kbp.get_classify_surroundings()
+        _ksp = KoswatSurroundingsPolderside()
+        assert isinstance(_ksp, KoswatSurroundingsPolderside)
+        assert not _ksp.conflicting_points
+        assert not _ksp.get_classify_surroundings()
 
     def test_classify_surroundings(self):
         # 1. Define test data
@@ -38,9 +37,9 @@ class TestKoswatBuildingsPolderside:
         ]
 
         # 2. Run test
-        _kbp = KoswatBuildingsPolderside()
-        _kbp.points = _surrounding_points
-        _classified_surroundings = _kbp.get_classify_surroundings()
+        _ksp = KoswatSurroundingsPolderside()
+        _ksp.points = _surrounding_points
+        _classified_surroundings = _ksp.get_classify_surroundings()
 
         # 3. Verify expectations.
         assert isinstance(_classified_surroundings, dict)

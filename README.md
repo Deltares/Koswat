@@ -63,7 +63,7 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
     1. With [Anaconda](https://www.anaconda.com/) (our recommendation):    
         ```bash
         cd C:\repos\koswat
-        conda env create -f .conf\environment.yml
+        conda env create -f .config\environment.yml
         conda activate koswat_env
         poetry install
         ```
