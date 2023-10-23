@@ -145,7 +145,7 @@ def get_normalized_polygon_difference(
     left_geom: geometry.Polygon, right_geom: geometry.Polygon
 ) -> geometry.Polygon | geometry.MultiPolygon:
     """
-    Given two polygons calculates the difference between them and removes any residual polygon due to minor precission errors.
+    Given two polygons calculates the difference between them and removes any residual polygon due to minor precision errors.
 
     Args:
         left_geom (geometry.Polygon): Base polygon from where to substract.
