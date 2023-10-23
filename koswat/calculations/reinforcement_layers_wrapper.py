@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
-from shapely.geometry import LineString, Polygon, MultiPolygon
+from shapely.geometry import LineString, MultiPolygon, Polygon
 
 from koswat.core.geometries.calc_library import get_polygon_coordinates
 from koswat.dike.layers import KoswatLayerProtocol
