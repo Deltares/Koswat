@@ -1,34 +1,16 @@
-from typing import List, Type
-
 import pytest
 from shapely.geometry import Point, Polygon
 
 from koswat.calculations import ReinforcementLayersWrapper
-from koswat.calculations.outside_slope_reinforcement import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
-    OutsideSlopeReinforcementProfile,
-)
 from koswat.calculations.protocols import ReinforcementProfileProtocol
-from koswat.calculations.standard_reinforcement import (
-    StandardReinforcementLayersWrapperBuilder,
-    StandardReinforcementProfile,
-)
-from koswat.dike.characteristic_points.characteristic_points_builder import (
-    CharacteristicPointsBuilder,
-)
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.layers.layers_wrapper import (
-    KoswatLayersWrapperBuilder,
-    KoswatLayersWrapperBuilderProtocol,
-    KoswatLayersWrapperProtocol,
-)
 
 
 def almost_equal(left_value: float, right_value: float) -> bool:
     return abs(left_value - right_value) <= 0.01
 
 
-def _compare_points(new_points: List[Point], expected_points: List[Point]) -> List[str]:
+def _compare_points(new_points: list[Point], expected_points: list[Point]) -> list[str]:
     _new_points = [(p.x, p.y) for p in new_points]
     _expected_points = [(p.x, p.y) for p in expected_points]
     _wrong_points = []
@@ -44,7 +26,7 @@ def _compare_points(new_points: List[Point], expected_points: List[Point]) -> Li
 def _compare_koswat_input_profile(
     reinforced_input_profile: KoswatInputProfileProtocol,
     expected_input_profile: KoswatInputProfileProtocol,
-) -> List[str]:
+) -> list[str]:
     _new_data_dict = reinforced_input_profile.__dict__
     _exp_data_dict = expected_input_profile.__dict__
     assert len(_new_data_dict) >= 10
@@ -58,7 +40,7 @@ def _compare_koswat_input_profile(
 
 def _compare_koswat_layers(
     new_layers: ReinforcementLayersWrapper, expected_layers: ReinforcementLayersWrapper
-) -> List[str]:
+) -> list[str]:
     _tolerance = 0.001
     if not new_layers.base_layer.outer_geometry.almost_equals(
         expected_layers.base_layer.outer_geometry, _tolerance

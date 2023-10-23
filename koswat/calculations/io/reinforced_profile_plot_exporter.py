@@ -1,8 +1,9 @@
 from pathlib import Path
-from typing import List
 
 from koswat.calculations.protocols import ReinforcementProfileProtocol
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementCoatingLayer,
+)
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.plots.dike.koswat_layers_wrapper_plot import KoswatLayersWrapperPlot
 from koswat.plots.geometries.highlight_geometry_plot import HighlightGeometryPlot
@@ -44,7 +45,7 @@ class ReinforcedProfilePlotExporter(PlotExporterProtocol):
         self,
         output_file: Path,
         layer_to_highlight,
-        layers_to_plot: List[KoswatLayerProtocol],
+        layers_to_plot: list[KoswatLayerProtocol],
     ):
         # Define canvas
         with KoswatFigureContextHandler(

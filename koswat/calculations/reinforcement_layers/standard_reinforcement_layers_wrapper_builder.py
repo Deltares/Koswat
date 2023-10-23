@@ -1,6 +1,6 @@
 from shapely.geometry import Point, Polygon
 
-from koswat.calculations.reinforcement_layers_wrapper import (
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementBaseLayer,
     ReinforcementCoatingLayer,
     ReinforcementLayersWrapper,

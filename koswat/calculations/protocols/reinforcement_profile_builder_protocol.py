@@ -1,4 +1,4 @@
-from typing import Protocol, Type, runtime_checkable
+from typing import Protocol, runtime_checkable
 
 from koswat.calculations.protocols.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -12,7 +12,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 class ReinforcementProfileBuilderProtocol(BuilderProtocol, Protocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
-    reinforcement_profile_type: Type[ReinforcementProfileProtocol]
+    reinforcement_profile_type: type[ReinforcementProfileProtocol]
 
     def build(self) -> ReinforcementProfileProtocol:
         """

@@ -1,12 +1,14 @@
 import pytest
 from shapely.geometry import LineString, Polygon
 
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementCoatingLayer
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementCoatingLayer,
+)
 from koswat.dike.layers.coating_layer.koswat_coating_layer import KoswatCoatingLayer
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
-class TestReinforcementLayersWrapper:
+class TestReinforcementCoatingLayer:
     @pytest.fixture
     def dummy_coating_layer(self) -> KoswatCoatingLayer:
         _test_coating_layer = KoswatCoatingLayer()

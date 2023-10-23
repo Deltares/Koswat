@@ -1,5 +1,3 @@
-from typing import List, Type
-
 from koswat.calculations.outside_slope_reinforcement import (
     CofferDamInputProfile,
     CofferdamReinforcementProfile,
@@ -32,7 +30,7 @@ _reinforcements = {
 
 class ReinforcementProfileBuilderFactory:
     @staticmethod
-    def get_available_reinforcements() -> List[ReinforcementProfileProtocol]:
+    def get_available_reinforcements() -> list[ReinforcementProfileProtocol]:
         """
         Gets all available reinforcements defined in Koswat.
 
@@ -66,7 +64,7 @@ class ReinforcementProfileBuilderFactory:
 
     @staticmethod
     def get_builder(
-        reinforcement_profile_type: Type[ReinforcementProfileProtocol],
+        reinforcement_profile_type: type[ReinforcementProfileProtocol],
     ) -> ReinforcementProfileBuilderProtocol:
         """
         Gets a valid reinforcement profile `builder` instance (`ReinforcementProfileBuilderProtocol`).
