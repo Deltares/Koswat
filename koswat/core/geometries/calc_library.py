@@ -156,7 +156,7 @@ def get_normalized_polygon_difference(
     """
     _result_geom = order_geometry_points(left_geom.difference(right_geom))
     if isinstance(_result_geom, geometry.MultiPolygon):
-        return _result_geom
+        return geometry.MultiPolygon(map(_get_normalized_polygon, _result_geom.geoms))
     return _get_normalized_polygon(_result_geom)
 
 
