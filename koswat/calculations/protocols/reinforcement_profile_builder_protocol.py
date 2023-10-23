@@ -16,7 +16,7 @@ class ReinforcementProfileBuilderProtocol(BuilderProtocol, Protocol):
 
     def build(self) -> ReinforcementProfileProtocol:
         """
-        Builds a concrete instance of a `ReinforcementProfileProtocol` base don the required data.
+        Builds a concrete instance of a `ReinforcementProfileProtocol` based on the required data.
 
         Returns:
             ReinforcementProfileProtocol: Valid instance of a `ReinforcementProfileProtocol`.
