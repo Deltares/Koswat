@@ -3,8 +3,6 @@ from matplotlib import pyplot
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
-from shapely import geometry
-from numpy import concatenate
 
 
 class KoswatLayerPlot(KoswatPlotProtocol):
