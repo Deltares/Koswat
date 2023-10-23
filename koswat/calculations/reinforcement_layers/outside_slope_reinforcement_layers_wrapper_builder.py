@@ -1,12 +1,13 @@
 from shapely.geometry import Point, Polygon
-from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
-    ReinforcementLayerProtocol,
-)
+
 from koswat.calculations.reinforcement_layers.reinforcement_base_layer import (
     ReinforcementBaseLayer,
 )
 from koswat.calculations.reinforcement_layers.reinforcement_coating_layer import (
     ReinforcementCoatingLayer,
+)
+from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
 )
 from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,

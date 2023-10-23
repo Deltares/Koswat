@@ -1,16 +1,19 @@
 from __future__ import annotations
 
 import logging
-from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
-)
 
 from koswat.calculations.protocols import (
     ReinforcementInputProfileProtocol,
     ReinforcementProfileBuilderProtocol,
 )
+from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
 from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
+)
+from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
+    StandardReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
@@ -19,9 +22,6 @@ from koswat.calculations.standard_reinforcement import (
     SoilReinforcementProfileCalculation,
     StabilityWallReinforcementProfile,
     StabilityWallReinforcementProfileCalculation,
-)
-from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
-    StandardReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
     StandardReinforcementProfile,

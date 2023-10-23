@@ -13,9 +13,6 @@ from koswat.calculations.outside_slope_reinforcement import (
 from koswat.calculations.outside_slope_reinforcement.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
-from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
-)
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
@@ -26,6 +23,12 @@ from koswat.calculations.protocols import (
     ReinforcementInputProfileProtocol,
     ReinforcementProfileBuilderProtocol,
     ReinforcementProfileProtocol,
+)
+from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
+from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
+    StandardReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
@@ -40,9 +43,6 @@ from koswat.calculations.standard_reinforcement.soil.soil_input_profile import (
 )
 from koswat.calculations.standard_reinforcement.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
-)
-from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
-    StandardReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
     StandardReinforcementProfile,
