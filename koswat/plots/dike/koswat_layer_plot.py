@@ -1,10 +1,11 @@
 from matplotlib import pyplot
+from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
+)
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
-from shapely import geometry
-from numpy import concatenate
 from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
     ReinforcementLayerProtocol,
 )
@@ -41,33 +42,13 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         self.subplot.scatter(_x_points, _y_points)
 
         if isinstance(self.koswat_object, ReinforcementLayerProtocol):
-            if isinstance(self.koswat_object.new_layer_surface, geometry.Polygon):
-                _surface_x, _surface_y = self.koswat_object.new_layer_surface.coords.xy
-                self.subplot.plot(
-                    _surface_x,
-                    _surface_y,
-                    color="#000",
-                    linewidth=2,
-                    zorder=1,
-                    linestyle="solid",
-                )
-            if isinstance(self.koswat_object.new_layer_surface, geometry.MultiPolygon):
-                _combined_xy = list(
-                    map(
-                        concatenate(
-                            zip(
-                                self.koswat_object.new_layer_surface.geoms[0].coords.xy,
-                                self.koswat_object.new_layer_surface.geoms[1].coords.xy,
-                            )
-                        )
-                    )
-                )
-                self.subplot.plot(
-                    _combined_xy[0],
-                    _combined_xy[1],
-                    color="#000",
-                    linewidth=2,
-                    zorder=1,
-                    linestyle="solid",
-                )
+            _surface_x, _surface_y = self.koswat_object.new_layer_surface.coords.xy
+            self.subplot.plot(
+                _surface_x,
+                _surface_y,
+                color="#000",
+                linewidth=2,
+                zorder=1,
+                linestyle="solid",
+            )
         return self.subplot
