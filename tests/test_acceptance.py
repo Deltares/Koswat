@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 
 from koswat.calculations import ReinforcementProfileBuilderFactory
+from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
 )
@@ -95,8 +96,14 @@ class TestAcceptance:
         _new_csv_path = _test_dir / "10_3" / _csv_surroundings_file.name
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
+        _surroundings_section = SurroundingsSectionFom()
+        _surroundings_section.surroundings_database_dir = _test_dir
+        _surroundings_section.buitendijks = False
+        _surroundings_section.bebouwing = True
+        _surroundings_section.spoorwegen = False
+        _surroundings_section.water = False
         _surroundings_importer.traject_loc_shp_file = _shp_trajects_file
-        _surroundings = _surroundings_importer.import_from(_test_dir)[0]
+        _surroundings = _surroundings_importer.import_from(_surroundings_section)[0]
 
         assert isinstance(scenario_case, KoswatScenario)
         _base_koswat_profile = KoswatProfileBuilder.with_data(
@@ -231,8 +238,10 @@ class TestAcceptance:
         # 4. Compare CSV results
         _reference_dir = _export_path_dir.joinpath("reference")
         assert _export_csv_path.exists()
-        _csv_result = _export_csv_path.read_text()
-        _csv_reference = _reference_dir.joinpath(_export_csv_path.name).read_text()
+        _csv_result = _export_csv_path.read_text(encoding="utf-8")
+        _csv_reference = _reference_dir.joinpath(_export_csv_path.name).read_text(
+            encoding="utf-8"
+        )
         assert _csv_result == _csv_reference, "CSV Summary differs from reference."
 
         # 5. Compare geometry images.

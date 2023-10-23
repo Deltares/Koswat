@@ -1,11 +1,6 @@
-from typing import Type
-
 from koswat.calculations.outside_slope_reinforcement.cofferdam import (
     CofferdamReinforcementProfile,
     CofferdamReinforcementProfileCalculation,
-)
-from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_layers_wrapper_builder import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.outside_slope_reinforcement.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
@@ -15,7 +10,12 @@ from koswat.calculations.protocols import (
     ReinforcementInputProfileProtocol,
     ReinforcementProfileBuilderProtocol,
 )
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
+from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
+)
 from koswat.configuration.settings import KoswatScenario
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.characteristic_points.characteristic_points_builder import (
@@ -27,16 +27,15 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 class OutsideSlopeReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
-    reinforcement_profile_type: Type[OutsideSlopeReinforcementProfile]
+    reinforcement_profile_type: type[OutsideSlopeReinforcementProfile]
 
     @staticmethod
     def get_standard_reinforcement_calculator(
-        reinforcement_type: Type[OutsideSlopeReinforcementProfile],
+        reinforcement_type: type[OutsideSlopeReinforcementProfile],
     ):
         if issubclass(reinforcement_type, CofferdamReinforcementProfile):
             return CofferdamReinforcementProfileCalculation
-        else:
-            raise NotImplementedError(f"Type {reinforcement_type} not supported.")
+        raise NotImplementedError(f"Type {reinforcement_type} not supported.")
 
     def _get_reinforcement_profile_input(
         self,

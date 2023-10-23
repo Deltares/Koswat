@@ -1,5 +1,8 @@
 from matplotlib import pyplot
 
+from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
+)
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
@@ -34,9 +37,6 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         self.subplot.plot(_x_coords, y_coords, **dict_values)
         _x_points, _y_points = list(zip(*self.koswat_object.upper_points.coords))
         self.subplot.scatter(_x_points, _y_points)
-        from koswat.calculations.reinforcement_layers_wrapper import (
-            ReinforcementLayerProtocol,
-        )
 
         if isinstance(self.koswat_object, ReinforcementLayerProtocol):
             _surface_x, _surface_y = self.koswat_object.new_layer_surface.coords.xy

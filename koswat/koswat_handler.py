@@ -87,7 +87,7 @@ class KoswatHandler:
         Runs a Koswat analysis using the provided `*.ini` file `analysis_file`.
 
         Args:
-            analysis_file (str): Location of the main koswat analisis ini file.
+            analysis_file (str): Location of the main koswat analysis ini file.
         """
 
         def _as_path(ini_file: str) -> Optional[Path]:

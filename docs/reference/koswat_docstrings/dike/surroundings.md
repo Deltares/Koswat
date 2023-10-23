@@ -2,8 +2,8 @@
 
 ::: koswat.dike.surroundings.koswat_surroundings_protocol
 
-## Buildings polderside
-::: koswat.dike.surroundings.buildings_polderside.koswat_buildings_polderside
+## Surroundings polderside
+::: koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside
 
 ## Point
 ::: koswat.dike.surroundings.point.point_surroundings

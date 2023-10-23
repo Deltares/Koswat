@@ -1,14 +1,20 @@
 from __future__ import annotations
 
 import logging
-import math
-from typing import Type
 
 from koswat.calculations.protocols import (
     ReinforcementInputProfileProtocol,
     ReinforcementProfileBuilderProtocol,
 )
-from koswat.calculations.reinforcement_layers_wrapper import ReinforcementLayersWrapper
+from koswat.calculations.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
+)
+from koswat.calculations.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
+    StandardReinforcementLayersWrapperBuilder,
+)
 from koswat.calculations.standard_reinforcement import (
     PipingWallReinforcementProfile,
     PipingWallReinforcementProfileCalculation,
@@ -16,9 +22,6 @@ from koswat.calculations.standard_reinforcement import (
     SoilReinforcementProfileCalculation,
     StabilityWallReinforcementProfile,
     StabilityWallReinforcementProfileCalculation,
-)
-from koswat.calculations.standard_reinforcement.standard_reinforcement_layers_wrapper_builder import (
-    StandardReinforcementLayersWrapperBuilder,
 )
 from koswat.calculations.standard_reinforcement.standard_reinforcement_profile import (
     StandardReinforcementProfile,
@@ -34,11 +37,11 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     base_profile: KoswatProfileBase
     scenario: KoswatScenario
-    reinforcement_profile_type: Type[StandardReinforcementProfile]
+    reinforcement_profile_type: type[StandardReinforcementProfile]
 
     @staticmethod
     def get_standard_reinforcement_calculator(
-        reinforcement_type: Type[StandardReinforcementProfile],
+        reinforcement_type: type[StandardReinforcementProfile],
     ):
         if issubclass(reinforcement_type, PipingWallReinforcementProfile):
             return PipingWallReinforcementProfileCalculation
@@ -46,8 +49,7 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
             return SoilReinforcementProfileCalculation
         elif issubclass(reinforcement_type, StabilityWallReinforcementProfile):
             return StabilityWallReinforcementProfileCalculation
-        else:
-            raise NotImplementedError(f"Type {reinforcement_type} not supported.")
+        raise NotImplementedError(f"Type {reinforcement_type} not supported.")
 
     def _get_reinforcement_profile_input(self) -> ReinforcementInputProfileProtocol:
         _calculator = self.get_standard_reinforcement_calculator(
@@ -71,7 +73,14 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderProtocol):
     def _get_reinforcement_layers_wrapper(
         self, profile_points: CharacteristicPoints
     ) -> ReinforcementLayersWrapper:
-        _layers_builder = StandardReinforcementLayersWrapperBuilder()
+        _unchanged_outside_slope = (
+            self.scenario.buiten_talud == self.base_profile.input_data.buiten_talud
+        )
+        _layers_builder = (
+            StandardReinforcementLayersWrapperBuilder()
+            if _unchanged_outside_slope
+            else OutsideSlopeReinforcementLayersWrapperBuilder()
+        )
         _layers_builder.layers_data = self.base_profile.layers_wrapper.as_data_dict()
         _layers_builder.profile_points = profile_points.points
         return _layers_builder.build()

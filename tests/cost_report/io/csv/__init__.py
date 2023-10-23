@@ -34,13 +34,14 @@ class MockLayerReport:
 def _create_locations() -> List[PointSurroundings]:
     _points = [(0.24, 0.42), (2.4, 0.42), (0.24, 2.4), (2.4, 2.4)]
 
-    def to_point(tuple_float: Tuple[float, float]) -> PointSurroundings:
+    def to_point(tuple_float: Tuple[float, float], order: int) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = Point(tuple_float[0], tuple_float[1])
         _ps.section = "A"
+        _ps.traject_order = order
         return _ps
 
-    return list(map(to_point, _points))
+    return list(map(to_point, _points, range(0, 4)))
 
 
 def _create_report(

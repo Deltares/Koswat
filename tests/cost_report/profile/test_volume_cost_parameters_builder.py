@@ -3,8 +3,7 @@ import pytest
 from koswat.calculations.protocols.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.calculations.reinforcement_layers_wrapper import (
-    ReinforcementBaseLayer,
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementCoatingLayer,
     ReinforcementLayersWrapper,
 )

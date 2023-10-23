@@ -1,8 +1,6 @@
-from typing import List
-
 from shapely.geometry import Point, Polygon
 
-from koswat.calculations.reinforcement_layers_wrapper import (
+from koswat.calculations.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementBaseLayer,
     ReinforcementCoatingLayer,
     ReinforcementLayersWrapper,
@@ -23,7 +21,7 @@ from koswat.dike.layers.layers_wrapper import (
 
 class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
     layers_data: dict  # Previous profile layers wrapper
-    profile_points: List[Point]  # Characteristic points.
+    profile_points: list[Point]  # Characteristic points.
 
     def build(self) -> ReinforcementLayersWrapper:
         _reinforcement_layers_wrapper = ReinforcementLayersWrapper()
@@ -44,6 +42,8 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             new_layer
         )
         _old_geom = Polygon(self.layers_data["base_layer"]["geometry"])
+
+        # New Geometry (Added volume)
         _added_geometry = get_normalized_polygon_difference(
             new_layer.outer_geometry, _old_geom
         )
@@ -56,18 +56,28 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
 
     def _get_coating_layers(
         self,
-        new_coating_layers: KoswatLayerProtocol,
+        new_coating_layers: list[KoswatLayerProtocol],
         base_layer: ReinforcementBaseLayer,
-    ) -> List[ReinforcementCoatingLayer]:
+    ) -> list[ReinforcementCoatingLayer]:
         _mapped_layers = list(
             zip(self.layers_data["coating_layers"], new_coating_layers)
         )
-        _rc_layer_list: List[ReinforcementCoatingLayer] = []
+        _rc_layer_list: list[ReinforcementCoatingLayer] = []
         _relative_core_geom = base_layer.old_layer_geometry
         _wrapped_calc_layer = base_layer
         for (_old_coating_data, _new_coating_layer) in reversed(_mapped_layers):
             # Define old and relative geometries.
             _old_geom = Polygon(_old_coating_data["geometry"])
+            if _old_geom == _new_coating_layer.outer_geometry:
+                # Create new Reinforced Coating Layer
+                _rc_layer = ReinforcementCoatingLayer.with_same_outer_geometry(
+                    _new_coating_layer
+                )
+                _rc_layer_list.append(_rc_layer)
+
+                # Update wrapped calc geometry.
+                _wrapped_calc_layer = _rc_layer
+                continue
             _relative_core_geom = get_relative_core_layer(
                 _relative_core_geom, _old_geom
             )
