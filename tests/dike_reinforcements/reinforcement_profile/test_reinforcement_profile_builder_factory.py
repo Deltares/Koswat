@@ -26,12 +26,6 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_buil
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.input_profile import (
-    PipingWallInputProfile,
-    SoilInputProfile,
-    StabilityWallInputProfile,
-    CofferDamInputProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
