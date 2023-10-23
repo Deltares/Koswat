@@ -1,7 +1,7 @@
 import logging
 import math
 from collections import defaultdict
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
@@ -40,7 +40,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             logging.error("No entries generated for the CSV Matrix.")
             return _csv_fom
 
-        def dict_to_csv_row(key, placeholders: int) -> List[str]:
+        def dict_to_csv_row(key, placeholders: int) -> list[str]:
             row = _dict_of_entries[key]
             row.insert(0, key)
             for n in range(0, placeholders):
@@ -69,12 +69,21 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
     def _get_locations_matrix(
         self,
-        suitable_locations: List[List[PointSurroundings]],
-        available_locations: List[PointSurroundings],
-    ) -> List[List[Any]]:
-        def location_as_row(
-            matrix_item: Tuple[PointSurroundings, List[int]]
-        ) -> List[Any]:
+        suitable_locations: list[list[PointSurroundings]],
+        available_locations: list[PointSurroundings],
+    ) -> list[list[Any]]:
+        def _find_location(
+            location: PointSurroundings, locations: list[PointSurroundings]
+        ) -> PointSurroundings:
+            return next(
+                _loc
+                for _loc in locations
+                if _loc.traject_order == location.traject_order
+            )
+
+        def _location_as_row(
+            matrix_item: tuple[PointSurroundings, list[int]]
+        ) -> list[Any]:
             _ps, _m_values = matrix_item
             _location_as_row = [_ps.section, _ps.location.x, _ps.location.y]
             _location_as_row.extend(_m_values)
@@ -85,8 +94,6 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             return [[]]
 
         # Initiate locations matrix.
-        # Note: Not the most efficient way, but I want to keep the reports with only
-        # the locations that support one (or more) profile reinforcements.
         _matrix = defaultdict(list)
         for _available_loc in available_locations:
             _matrix[_available_loc] = [0] * len(suitable_locations)
@@ -94,16 +101,17 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         # Set the suitable locations.
         for idx, _loc_list in enumerate(suitable_locations):
             for _loc in _loc_list:
-                _matrix[_loc][idx] = 1
+                _available_loc = _find_location(_loc, available_locations)
+                _matrix[_available_loc][idx] = 1
         return list(
             map(
-                location_as_row,
+                _location_as_row,
                 sorted(_matrix.items(), key=lambda x: x[0].traject_order),
             )
         )
 
     def _get_volume_cost_parameters(
-        self, vc_parameters: Dict[str, VolumeCostParameter], csv_dictionary: dict
+        self, vc_parameters: dict[str, VolumeCostParameter], csv_dictionary: dict
     ):
         def _format_parameter_name(dict_name: str) -> str:
             return dict_name.replace("_", " ").capitalize().strip()

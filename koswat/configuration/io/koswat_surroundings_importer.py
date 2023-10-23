@@ -1,7 +1,6 @@
 import logging
 from itertools import groupby
 from pathlib import Path
-from typing import List, Tuple
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
@@ -10,6 +9,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
 )
+from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
@@ -26,18 +26,21 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
 
 class KoswatSurroundingsImporter(KoswatImporterProtocol):
     traject_loc_shp_file: Path
-    selected_locations: List[str]
+    selected_locations: list[str]
 
     def __init__(self) -> None:
         self.traject_loc_shp_file = None
         self.selected_locations = []
 
-    def _get_dike_locations_shp_fom(self) -> List[KoswatDikeLocationsShpFom]:
+    def _get_dike_locations_shp_fom(self) -> list[KoswatDikeLocationsShpFom]:
         _reader = KoswatDikeLocationsListShpReader()
         _reader.selected_locations = self.selected_locations
         return _reader.read(self.traject_loc_shp_file)
 
-    def import_from(self, from_path: Path) -> List[SurroundingsWrapper]:
+    def import_from(
+        self, surroundings_section: SurroundingsSectionFom
+    ) -> list[SurroundingsWrapper]:
+        from_path = surroundings_section.surroundings_database_dir
         if not isinstance(from_path, Path):
             raise ValueError("No surroundings csv directory path given.")
         if not isinstance(self.traject_loc_shp_file, Path):
@@ -63,6 +66,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
                 _builder = SurroundingsWrapperBuilder()
                 _builder.trajects_fom = _location
                 _builder.surroundings_fom = _surroudings_fom
+                _builder.surroundings_section = surroundings_section
                 try:
                     _surroundings_wrappers.append(_builder.build())
                 except Exception as e_info:
@@ -77,12 +81,12 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
     def _map_surrounding_type(self, surrounding_type: str) -> str:
         _normalized = surrounding_type.lower().strip()
         _translations = dict(
-            bebouwing_binnendijks="buldings_polderside",
+            bebouwing_binnendijks="buildings_polderside",
             bebouwing_buitendijks="buildings_dikeside",
-            spoor_binnendijks="platform_polderside",
-            spoor_buitendijks="platform_dikeside",
-            water_binnendijks="water_polderside",
-            water_buitendijks="water_dikeside",
+            spoor_binnendijks="railways_polderside",
+            spoor_buitendijks="railways_dikeside",
+            water_binnendijks="waters_polderside",
+            water_buitendijks="waters_dikeside",
             wegen_binnendijks_klasse2="roads_class_2_polderside",
             wegen_binnendijks_klasse7="roads_class_7_polderside",
             wegen_binnendijks_klasse24="roads_class_24_polderside",
@@ -95,7 +99,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
             wegen_buitendijks_klasseonbekend="roads_class_unknown_dikeside",
         )
         _translation = _translations.get(_normalized, None)
-        if not _translations:
+        if not _translation:
             _error = "No mapping found for {}".format(surrounding_type)
             logging.error(_error)
             raise ValueError(_error)
@@ -103,7 +107,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
 
     def _csv_file_to_fom(
         self, csv_file: Path, traject_name: str
-    ) -> Tuple[str, KoswatTrajectSurroundingsCsvFom]:
+    ) -> tuple[str, KoswatTrajectSurroundingsCsvFom]:
         _surrounding_csv_fom = KoswatSurroundingsCsvReader().read(csv_file)
         _surrounding_csv_fom.traject = traject_name
         _surrounding_type = self._map_surrounding_type(
