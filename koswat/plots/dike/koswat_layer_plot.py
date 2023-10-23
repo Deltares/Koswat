@@ -1,7 +1,4 @@
 from matplotlib import pyplot
-from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
-    ReinforcementLayerProtocol,
-)
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
