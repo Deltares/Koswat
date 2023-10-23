@@ -132,4 +132,7 @@ class TestKoswatSummaryBuilder:
             isinstance(lpr, MultiLocationProfileCostReport)
             for lpr in _summary.locations_profile_report_list
         )
-        assert _summary.locations_profile_report_list[0].locations == [_p_surrounding]
+        assert (
+            _summary.locations_profile_report_list[0].locations[0].location
+            == _p_surrounding.location
+        )

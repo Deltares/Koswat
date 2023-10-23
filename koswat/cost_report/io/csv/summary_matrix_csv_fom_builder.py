@@ -72,7 +72,18 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         suitable_locations: List[List[PointSurroundings]],
         available_locations: List[PointSurroundings],
     ) -> List[List[Any]]:
-        def location_as_row(
+        def _find_location(
+            location: PointSurroundings, locations: list[PointSurroundings]
+        ) -> PointSurroundings:
+            return next(
+                (
+                    _loc
+                    for _loc in locations
+                    if _loc.traject_order == location.traject_order
+                ),
+            )
+
+        def _location_as_row(
             matrix_item: Tuple[PointSurroundings, List[int]]
         ) -> List[Any]:
             _ps, _m_values = matrix_item
@@ -85,8 +96,6 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             return [[]]
 
         # Initiate locations matrix.
-        # Note: Not the most efficient way, but I want to keep the reports with only
-        # the locations that support one (or more) profile reinforcements.
         _matrix = defaultdict(list)
         for _available_loc in available_locations:
             _matrix[_available_loc] = [0] * len(suitable_locations)
@@ -94,10 +103,11 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         # Set the suitable locations.
         for idx, _loc_list in enumerate(suitable_locations):
             for _loc in _loc_list:
-                _matrix[_loc][idx] = 1
+                _available_loc = _find_location(_loc, available_locations)
+                _matrix[_available_loc][idx] = 1
         return list(
             map(
-                location_as_row,
+                _location_as_row,
                 sorted(_matrix.items(), key=lambda x: x[0].traject_order),
             )
         )

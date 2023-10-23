@@ -81,7 +81,9 @@ class SurroundingsWrapper:
             List[PointSurroundings]: List of points along the polderside.
         """
 
-        def _match_locations(point1: Point, point2: Point) -> Point:
+        def _match_locations(
+            point1: PointSurroundings, point2: PointSurroundings
+        ) -> list[float]:
             if not point1.location == point2.location:
                 logging.warning(
                     f"Mismatching railway polderside location {point2.location}"
@@ -91,11 +93,9 @@ class SurroundingsWrapper:
         if not self.buildings_polderside:
             return []
 
-        _points = []
+        _points = copy.deepcopy(self.buildings_polderside.points)
 
-        for _p, _point in enumerate(self.buildings_polderside.points):
-            _points.append(_point)
-
+        for _p, _point in enumerate(_points):
             if not self.apply_buildings:
                 _points[_p].distance_to_surroundings = []
 
