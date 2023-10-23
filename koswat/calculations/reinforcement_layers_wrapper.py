@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import List, Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable
 
-from shapely.geometry import LineString, Polygon
+from shapely.geometry import LineString, Polygon, MultiPolygon
 
 from koswat.core.geometries.calc_library import get_polygon_coordinates
 from koswat.dike.layers import KoswatLayerProtocol
@@ -14,18 +14,18 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 @runtime_checkable
 class ReinforcementLayerProtocol(KoswatLayerProtocol, Protocol):
-    new_layer_geometry: Polygon
+    new_layer_geometry: Polygon | MultiPolygon
     new_layer_surface: LineString
     old_layer_geometry: Polygon
 
 
-class ReinforcementCoatingLayer(KoswatLayerProtocol):
+class ReinforcementCoatingLayer(ReinforcementLayerProtocol):
     material_type: KoswatMaterialType
     outer_geometry: Polygon
     material_geometry: Polygon
     upper_points: LineString
     old_layer_geometry: Polygon
-    new_layer_geometry: Polygon
+    new_layer_geometry: Polygon | MultiPolygon
     new_layer_surface: LineString
     removal_layer_geometry: Polygon
 
@@ -84,7 +84,7 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
     outer_geometry: Polygon
     material_geometry: Polygon
     upper_points: LineString
-    new_layer_geometry: Polygon
+    new_layer_geometry: Polygon | MultiPolygon
     new_layer_surface: LineString
     old_layer_geometry: Polygon
 
@@ -115,7 +115,7 @@ class ReinforcementBaseLayer(ReinforcementLayerProtocol):
 
 class ReinforcementLayersWrapper(KoswatLayersWrapperProtocol):
     base_layer: ReinforcementBaseLayer
-    coating_layers: List[ReinforcementCoatingLayer]
+    coating_layers: list[ReinforcementCoatingLayer]
 
     def __init__(self) -> None:
         self.base_layer = None
@@ -143,7 +143,7 @@ class ReinforcementLayersWrapper(KoswatLayersWrapperProtocol):
         return _found_layer
 
     @property
-    def layers(self) -> List[ReinforcementLayerProtocol]:
+    def layers(self) -> list[ReinforcementLayerProtocol]:
         """
         All the stored layers being the `KoswatBaseLayer` the latest one in the collection.
 

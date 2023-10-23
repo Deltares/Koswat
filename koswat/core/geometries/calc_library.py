@@ -1,5 +1,4 @@
 import logging
-from typing import List, Union
 
 from shapely import affinity, geometry, ops
 
@@ -36,13 +35,13 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
 
 
 def as_unified_geometry(
-    source_geom: Union[geometry.Polygon, geometry.MultiPolygon]
+    source_geom: geometry.Polygon | geometry.MultiPolygon,
 ) -> geometry.Polygon:
     """
     Ensures the calculated geometry is returned as a single polygon.
 
     Args:
-        source_geom (Union[geometry.Polygon, geometry.MultiPolygon]): Calculated source geometry.
+        source_geom (geometry.Polygon | geometry.MultiPolygon): Calculated source geometry.
 
     Returns:
         geometry.Polygon: Unified resulting geometry with its points ordered (first one is the most-left x coordinate).
@@ -84,13 +83,13 @@ def get_relative_core_layer(
 
 
 def get_polygon_coordinates(
-    pol_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
+    pol_geometry: geometry.Polygon | geometry.MultiPolygon,
 ) -> geometry.LineString:
     """
     Given a single or multi geometry returns the coordinates composing its outer layout.
 
     Args:
-        pol_geometry (Union[geometry.Polygon, geometry.MultiPolygon]): Source geometry.
+        pol_geometry (geometry.Polygon | geometry.MultiPolygon): Source geometry.
 
     Raises:
         NotImplementedError: When the provided geometry is not yet supported.
@@ -100,7 +99,7 @@ def get_polygon_coordinates(
     """
     if isinstance(pol_geometry, geometry.Polygon):
         return geometry.LineString(pol_geometry.exterior.coords)
-    raise NotImplementedError(f"Geometry type {geometry.geom_type} not supported.")
+    raise NotImplementedError(f"Geometry type {pol_geometry.geom_type} not supported.")
 
 
 def get_groundlevel_surface(pol_geometry: geometry.Polygon) -> geometry.LineString:
@@ -144,9 +143,9 @@ def _get_normalized_polygon(base_polygon: geometry.Polygon) -> geometry.Polygon:
 
 def get_normalized_polygon_difference(
     left_geom: geometry.Polygon, right_geom: geometry.Polygon
-) -> geometry.Polygon:
+) -> geometry.Polygon | geometry.MultiPolygon:
     """
-    Given two polygons calculates the difference between them and removes any residual polygon due to minor precission errors.
+    Given two polygons calculates the difference between them and removes any residual polygon due to minor precision errors.
 
     Args:
         left_geom (geometry.Polygon): Base polygon from where to substract.
@@ -156,6 +155,8 @@ def get_normalized_polygon_difference(
         geometry.Polygon: Resulting normalized substraction polygon.
     """
     _result_geom = order_geometry_points(left_geom.difference(right_geom))
+    if isinstance(_result_geom, geometry.MultiPolygon):
+        return geometry.MultiPolygon(map(_get_normalized_polygon, _result_geom.geoms))
     return _get_normalized_polygon(_result_geom)
 
 
@@ -179,7 +180,7 @@ def _get_single_polygon_surface_points(
 
 
 def get_polygon_surface_points(
-    base_geometry: Union[geometry.Polygon, geometry.MultiPolygon]
+    base_geometry: geometry.Polygon | geometry.MultiPolygon,
 ) -> geometry.LineString:
     """
     Gets all the points composing the upper surface of a 'dike' geometry.
@@ -200,7 +201,7 @@ def get_polygon_surface_points(
     return base_geometry
 
 
-def profile_points_to_polygon(points_list: List[geometry.Point]) -> geometry.Polygon:
+def profile_points_to_polygon(points_list: list[geometry.Point]) -> geometry.Polygon:
     """
     Transforms a list of points into a valid 'dike' polygon. When there is a difference in height between left and right side then we correct it in the x = 0 coordinate.
 
