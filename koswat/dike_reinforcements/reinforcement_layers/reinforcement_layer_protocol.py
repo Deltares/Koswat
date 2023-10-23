@@ -1,6 +1,8 @@
 from typing import Protocol, runtime_checkable
+
+from shapely.geometry import LineString, MultiPolygon, Polygon
+
 from koswat.dike.layers import KoswatLayerProtocol
-from shapely.geometry import LineString, Polygon, MultiPolygon
 
 
 @runtime_checkable
