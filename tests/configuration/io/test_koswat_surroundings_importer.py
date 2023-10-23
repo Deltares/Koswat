@@ -14,10 +14,11 @@ class SurroundingsSection:
     """
     Helper class for unittests
     """
+
     surroundings_database_dir: str
-        
+
+
 class TestKoswatSurroundingsImporter:
-        
     def test_initialize(self):
         _importer = KoswatSurroundingsImporter()
         assert isinstance(_importer, KoswatSurroundingsImporter)
@@ -30,7 +31,7 @@ class TestKoswatSurroundingsImporter:
         _importer = KoswatSurroundingsImporter()
         _expected_error = "No surroundings csv directory path given."
         _surroundings_section = SurroundingsSection(surroundings_database_dir=None)
-          
+
         # 2. Run test.
         with pytest.raises(ValueError) as exc_err:
             _importer.import_from(_surroundings_section)
