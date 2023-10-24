@@ -1,6 +1,3 @@
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
@@ -10,6 +7,9 @@ from koswat.cost_report.profile.profile_cost_report_builder import (
     ProfileCostReportBuilder,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 
 
 class MultiLocationProfileCostReportBuilder(BuilderProtocol):

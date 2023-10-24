@@ -1,13 +1,13 @@
+from koswat.configuration.settings import KoswatScenario
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
-from koswat.configuration.settings import KoswatScenario
-from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class StabilityWallInputProfileCalculation(

@@ -1,9 +1,6 @@
 import logging
 from typing import Union
 
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
@@ -17,6 +14,9 @@ from koswat.cost_report.profile.volume_cost_parameters_calculator import (
     VolumeCostParametersCalculator,
 )
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 
 
 class VolumeCostParametersBuilder(BuilderProtocol):

@@ -1,14 +1,23 @@
+from koswat.configuration.settings import KoswatScenario
+from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
+from koswat.dike.characteristic_points.characteristic_points_builder import (
+    CharacteristicPointsBuilder,
+)
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile_calculation import (
     CofferdamInputProfileCalculation,
-)
-from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
 )
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
 )
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
@@ -19,15 +28,6 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slop
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_base import (
     ReinforcementProfileBuilderBase,
 )
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
-)
-from koswat.configuration.settings import KoswatScenario
-from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
-from koswat.dike.characteristic_points.characteristic_points_builder import (
-    CharacteristicPointsBuilder,
-)
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class OutsideSlopeReinforcementProfileBuilder(ReinforcementProfileBuilderBase):

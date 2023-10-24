@@ -1,13 +1,13 @@
 import pytest
 from shapely.geometry import Point, Polygon
 
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 
 def almost_equal(left_value: float, right_value: float) -> bool:

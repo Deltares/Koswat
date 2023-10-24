@@ -1,3 +1,5 @@
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -7,8 +9,6 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinf
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class TestPipingWallReinforcementProfile:

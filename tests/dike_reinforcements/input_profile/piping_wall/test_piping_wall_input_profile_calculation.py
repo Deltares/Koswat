@@ -1,14 +1,14 @@
 import pytest
 
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
-    ReinforcementInputProfileCalculationProtocol,
-)
-from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile_calculation import (
-    PipingWallInputProfileCalculation,
-)
 from koswat.configuration.settings import KoswatScenario
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
+from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile_calculation import (
+    PipingWallInputProfileCalculation,
+)
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
+    ReinforcementInputProfileCalculationProtocol,
+)
 
 
 class TestPipingWallInputProfileCalculation:
@@ -49,10 +49,8 @@ class TestPipingWallInputProfileCalculation:
         _scenario.d_h = 2.4
 
         # 2. Run test.
-        _result = (
-            PipingWallInputProfileCalculation()._calculate_new_kruin_hoogte(
-                _profile_data, _scenario
-            )
+        _result = PipingWallInputProfileCalculation()._calculate_new_kruin_hoogte(
+            _profile_data, _scenario
         )
 
         # 3. Verify Expectations.

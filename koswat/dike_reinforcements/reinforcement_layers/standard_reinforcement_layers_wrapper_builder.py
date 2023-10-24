@@ -1,10 +1,5 @@
 from shapely.geometry import Point, Polygon
 
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementBaseLayer,
-    ReinforcementCoatingLayer,
-    ReinforcementLayersWrapper,
-)
 from koswat.core.geometries.calc_library import (
     as_unified_geometry,
     get_normalized_polygon_difference,
@@ -16,6 +11,11 @@ from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperBuilder,
     KoswatLayersWrapperBuilderProtocol,
     KoswatLayersWrapperProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementBaseLayer,
+    ReinforcementCoatingLayer,
+    ReinforcementLayersWrapper,
 )
 
 

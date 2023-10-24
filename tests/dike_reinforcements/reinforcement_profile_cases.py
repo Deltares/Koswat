@@ -1,23 +1,23 @@
 from dataclasses import dataclass
 
+from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile import (
     CofferDamInputProfile,
     PipingWallInputProfile,
     SoilInputProfile,
     StabilityWallInputProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile import (
+    CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+    StabilityWallReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profile import (
-    SoilReinforcementProfile,
-    CofferdamReinforcementProfile,
-    PipingWallReinforcementProfile,
-    StabilityWallReinforcementProfile,
-)
-from koswat.configuration.settings.koswat_scenario import KoswatScenario
-from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from tests.acceptance_scenarios.acceptance_test_scenario_dataclasses import (
     LayersTestCase,
 )

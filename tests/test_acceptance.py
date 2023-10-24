@@ -7,7 +7,6 @@ import cv2
 import numpy as np
 import pytest
 
-from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
@@ -34,6 +33,7 @@ from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from tests import (
     get_fixturerequest_case_name,
     get_testcase_results_dir,

@@ -1,16 +1,5 @@
 from shapely.geometry import Point, Polygon
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
-    ReinforcementLayerProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_base_layer import (
-    ReinforcementBaseLayer,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_coating_layer import (
-    ReinforcementCoatingLayer,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
-)
+
 from koswat.core.geometries.calc_library import get_polygon_surface_points
 from koswat.dike.layers import KoswatLayerProtocol
 from koswat.dike.layers.base_layer import KoswatBaseLayer
@@ -19,6 +8,18 @@ from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperBuilder,
     KoswatLayersWrapperBuilderProtocol,
     KoswatLayersWrapperProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_base_layer import (
+    ReinforcementBaseLayer,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_coating_layer import (
+    ReinforcementCoatingLayer,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
 )
 
 

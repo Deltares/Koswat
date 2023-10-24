@@ -1,8 +1,5 @@
 from typing import List
 
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.profile.layer_cost_report import LayerCostReport
@@ -13,6 +10,9 @@ from koswat.cost_report.profile.profile_cost_report import (
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameters
 from koswat.cost_report.profile.volume_cost_parameters_builder import (
     VolumeCostParametersBuilder,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
 )
 
 

@@ -1,14 +1,14 @@
 import pytest
 
+from koswat.configuration.settings import KoswatScenario
+from koswat.core.protocols import BuilderProtocol
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.input_profile.soil.soil_input_profile_calculation import (
     SoilInputProfileCalculation,
 )
-from koswat.configuration.settings import KoswatScenario
-from koswat.core.protocols import BuilderProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class TestSoilInputProfileCalculation:
@@ -37,10 +37,8 @@ class TestSoilInputProfileCalculation:
         _input_profile.binnen_maaiveld = 2
 
         # 2. Run test
-        _new_binnen_talud = (
-            SoilInputProfileCalculation()._calculate_new_binnen_talud(
-                _input_profile, _scenario
-            )
+        _new_binnen_talud = SoilInputProfileCalculation()._calculate_new_binnen_talud(
+            _input_profile, _scenario
         )
 
         # 3. Verify expectations
@@ -129,10 +127,8 @@ class TestSoilInputProfileCalculation:
         _old_data.kruin_hoogte = 40.04
 
         # 2. Run test
-        _new_kruin_hoogte = (
-            SoilInputProfileCalculation()._calculate_new_kruin_hoogte(
-                _old_data, _scenario
-            )
+        _new_kruin_hoogte = SoilInputProfileCalculation()._calculate_new_kruin_hoogte(
+            _old_data, _scenario
         )
 
         # 3. Verify expectations
