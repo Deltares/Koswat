@@ -58,7 +58,7 @@ class DikeProfileSectionFom(KoswatIniFomProtocol):
 class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
     soil_raise_factor: RaiseFactorEnum
     constructive_raise_factor: RaiseFactorEnum
-    purchased_soil_raise_factor: Optional[RaiseFactorEnum]
+    purchased_land_raise_factor: Optional[RaiseFactorEnum]
 
     def _set_properties_from_dict(self, properties_dict: dict) -> None:
         self.soil_raise_factor = RaiseFactorEnum[
@@ -69,7 +69,7 @@ class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
                 "opslagfactor_constructief", RaiseFactorEnum.NORMAAL.name
             ).upper()
         ]
-        self.purchased_soil_raise_factor = RaiseFactorEnum[
+        self.purchase_land_raise_factor = RaiseFactorEnum[
             properties_dict.get(
                 "opslagfactor_grondaankoop", RaiseFactorEnum.NORMAAL.name
             ).upper()
