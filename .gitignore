@@ -20,3 +20,6 @@ coverage.xml
 
 # Koswat ignore
 tests/test_results/
+
+# Lcoal configurations files covered in pyproject.toml
+pytest.ini 
