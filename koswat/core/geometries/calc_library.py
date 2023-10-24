@@ -91,7 +91,7 @@ def get_polygon_coordinates(
     Args:
         pol_geometry (geometry.Polygon | geometry.MultiPolygon): Source geometry.
 
-    Raises:
+    Surtaxs:
         NotImplementedError: When the provided geometry is not yet supported.
 
     Returns:

@@ -7,7 +7,7 @@ from typing import Optional
 
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
-    RaiseFactorEnum,
+    SurtaxFactorEnum,
 )
 from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
@@ -56,22 +56,22 @@ class DikeProfileSectionFom(KoswatIniFomProtocol):
 
 
 class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
-    soil_raise_factor: RaiseFactorEnum
-    constructive_raise_factor: RaiseFactorEnum
-    land_purchase_raise_factor: Optional[RaiseFactorEnum]
+    soil_surtax_factor: SurtaxFactorEnum
+    constructive_surtax_factor: SurtaxFactorEnum
+    land_purchase_surtax_factor: Optional[SurtaxFactorEnum]
 
     def _set_properties_from_dict(self, properties_dict: dict) -> None:
-        self.soil_raise_factor = RaiseFactorEnum[
+        self.soil_surtax_factor = SurtaxFactorEnum[
             properties_dict["opslagfactor_grond"].upper()
         ]
-        self.constructive_raise_factor = RaiseFactorEnum[
+        self.constructive_surtax_factor = SurtaxFactorEnum[
             properties_dict.get(
-                "opslagfactor_constructief", RaiseFactorEnum.NORMAAL.name
+                "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
             ).upper()
         ]
-        self.land_purchase_raise_factor = RaiseFactorEnum[
+        self.land_purchase_surtax_factor = SurtaxFactorEnum[
             properties_dict.get(
-                "opslagfactor_grondaankoop", RaiseFactorEnum.NORMAAL.name
+                "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
             ).upper()
         ]
 
@@ -172,7 +172,7 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
 
 class InfrastructureSectionFom(KoswatIniFomProtocol):
     infrastructuur: bool
-    opslagfactor_wegen: RaiseFactorEnum
+    opslagfactor_wegen: SurtaxFactorEnum
     infrakosten_0dh: InfraCostsEnum
     buffer_buitendijks: float
     wegen_klasse2_breedte: float
@@ -185,7 +185,7 @@ class InfrastructureSectionFom(KoswatIniFomProtocol):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.infrastructuur = ini_config.getboolean("infrastructuur")
-        _section.opslagfactor_wegen = RaiseFactorEnum[
+        _section.opslagfactor_wegen = SurtaxFactorEnum[
             ini_config["opslagfactor_wegen"].upper()
         ]
         _section.infrakosten_0dh = InfraCostsEnum[ini_config["infrakosten_0dh"].upper()]

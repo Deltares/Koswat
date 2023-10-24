@@ -1,10 +1,22 @@
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.dike_reinforcements.input_profile import (
+    CofferDamInputProfile,
+    PipingWallInputProfile,
+    SoilInputProfile,
+    StabilityWallInputProfile,
+)
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
+    CofferdamReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile_builder import (
+    OutsideSlopeReinforcementProfileBuilder,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
@@ -12,22 +24,10 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_buil
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.input_profile import (
-    PipingWallInputProfile,
-    SoilInputProfile,
-    StabilityWallInputProfile,
-    CofferDamInputProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
-    CofferdamReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile_builder import (
-    OutsideSlopeReinforcementProfileBuilder,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
@@ -84,7 +84,7 @@ class ReinforcementProfileBuilderFactory:
         Args:
             reinforcement_profile_type (Type[ReinforcementProfileProtocol]): Type that requires a builder.
 
-        Raises:
+        Surtaxs:
             NotImplementedError: When there is no builder associated to the given `reinforcement_profile_type`.
 
         Returns:

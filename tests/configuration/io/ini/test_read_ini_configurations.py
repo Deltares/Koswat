@@ -27,7 +27,7 @@ from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
 )
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
-    RaiseFactorEnum,
+    SurtaxFactorEnum,
 )
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
@@ -107,15 +107,16 @@ class TestReadIniConfigurations:
         # Grondmaatregel section
         assert isinstance(_ini_fom.grondmaatregel_section, SoilReinforcementSectionFom)
         assert (
-            _ini_fom.grondmaatregel_section.soil_raise_factor == RaiseFactorEnum.NORMAAL
+            _ini_fom.grondmaatregel_section.soil_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.grondmaatregel_section.constructive_raise_factor
-            == RaiseFactorEnum.NORMAAL
+            _ini_fom.grondmaatregel_section.constructive_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.grondmaatregel_section.land_purchase_raise_factor
-            == RaiseFactorEnum.NORMAAL
+            _ini_fom.grondmaatregel_section.land_purchase_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
         )
         assert _ini_fom.grondmaatregel_section.min_bermhoogte == 0.5
         assert _ini_fom.grondmaatregel_section.max_bermhoogte_factor == 0.4
@@ -124,14 +125,16 @@ class TestReadIniConfigurations:
         assert isinstance(
             _ini_fom.kwelscherm_section, PipingwallReinforcementSectionFom
         )
-        assert _ini_fom.kwelscherm_section.soil_raise_factor == RaiseFactorEnum.NORMAAL
         assert (
-            _ini_fom.kwelscherm_section.constructive_raise_factor
-            == RaiseFactorEnum.NORMAAL
+            _ini_fom.kwelscherm_section.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.kwelscherm_section.land_purchase_raise_factor
-            == RaiseFactorEnum.NORMAAL
+            _ini_fom.kwelscherm_section.constructive_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
+        )
+        assert (
+            _ini_fom.kwelscherm_section.land_purchase_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
         )
         assert _ini_fom.kwelscherm_section.min_lengte_kwelscherm == 4
         assert _ini_fom.kwelscherm_section.overgang_cbwand_damwand == 99
@@ -142,16 +145,16 @@ class TestReadIniConfigurations:
             _ini_fom.stabiliteitswand_section, StabilitywallReinforcementSectionFom
         )
         assert (
-            _ini_fom.stabiliteitswand_section.soil_raise_factor
-            == RaiseFactorEnum.MOEILIJK
+            _ini_fom.stabiliteitswand_section.soil_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
         )
         assert (
-            _ini_fom.stabiliteitswand_section.constructive_raise_factor
-            == RaiseFactorEnum.NORMAAL
+            _ini_fom.stabiliteitswand_section.constructive_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.stabiliteitswand_section.land_purchase_raise_factor
-            == RaiseFactorEnum.MOEILIJK
+            _ini_fom.stabiliteitswand_section.land_purchase_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
         )
         assert _ini_fom.stabiliteitswand_section.versteiling_binnentalud == 2
         assert _ini_fom.stabiliteitswand_section.min_lengte_stabiliteitswand == 5
@@ -160,14 +163,14 @@ class TestReadIniConfigurations:
 
         # Kistdam section
         assert isinstance(_ini_fom.kistdam_section, CofferdamReinforcementSectionFom)
-        assert _ini_fom.kistdam_section.soil_raise_factor == RaiseFactorEnum.MOEILIJK
+        assert _ini_fom.kistdam_section.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
         assert (
-            _ini_fom.kistdam_section.constructive_raise_factor
-            == RaiseFactorEnum.MOEILIJK
+            _ini_fom.kistdam_section.constructive_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
         )
         assert (
-            _ini_fom.kistdam_section.land_purchase_raise_factor
-            == RaiseFactorEnum.NORMAAL
+            _ini_fom.kistdam_section.land_purchase_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
         )
         assert _ini_fom.kistdam_section.min_lengte_kistdam == 5
         assert _ini_fom.kistdam_section.max_lengte_kistdam == 25
@@ -190,7 +193,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.infrastructuur_section.infrastructuur == False
         assert (
             _ini_fom.infrastructuur_section.opslagfactor_wegen
-            == RaiseFactorEnum.NORMAAL
+            == SurtaxFactorEnum.NORMAAL
         )
         assert _ini_fom.infrastructuur_section.infrakosten_0dh == InfraCostsEnum.GEEN
         assert _ini_fom.infrastructuur_section.buffer_buitendijks == 0

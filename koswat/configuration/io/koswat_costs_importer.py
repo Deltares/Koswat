@@ -8,7 +8,7 @@ from koswat.configuration.settings.costs.koswat_costs import (
     DikeProfileCostsSettings,
     InfrastructureCostsSettings,
     KoswatCostsSettings,
-    RaiseCostsSettings,
+    SurtaxCostsSettings,
 )
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
@@ -42,13 +42,13 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         _costs_settings.infrastructure_costs = self._get_infrastructure_costs_settings(
             _costs_fom
         )
-        _costs_settings.raise_costs = self._get_raise_costs(
+        _costs_settings.surtax_costs = self._get_surtax_costs(
             _costs_fom,
         )
         return _costs_settings
 
-    def _get_raise_costs(self, fom_costs: KoswatCostsIniFom) -> RaiseCostsSettings:
-        _settings = RaiseCostsSettings()
+    def _get_surtax_costs(self, fom_costs: KoswatCostsIniFom) -> SurtaxCostsSettings:
+        _settings = SurtaxCostsSettings()
         _fom_settings = (
             fom_costs.storing_costs_incl_tax_section
             if self.include_taxes
