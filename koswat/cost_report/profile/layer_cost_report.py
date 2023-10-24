@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 
-from koswat.calculations.reinforcement_layers.reinforcement_layer_protocol import (
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
     ReinforcementLayerProtocol,
 )
 from koswat.cost_report.cost_report_protocol import CostReportProtocol

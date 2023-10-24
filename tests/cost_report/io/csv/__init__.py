@@ -1,13 +1,14 @@
-import random
 from typing import List, Tuple, Type
 
 from shapely.geometry import Point
 
-from koswat.calculations.outside_slope_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
 )
-from koswat.calculations.protocols import ReinforcementProfileProtocol
-from koswat.calculations.standard_reinforcement import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
