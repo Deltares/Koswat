@@ -114,7 +114,7 @@ class TestReadIniConfigurations:
             == RaiseFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.grondmaatregel_section.purchase_land_raise_factor
+            _ini_fom.grondmaatregel_section.land_purchase_raise_factor
             == RaiseFactorEnum.NORMAAL
         )
         assert _ini_fom.grondmaatregel_section.min_bermhoogte == 0.5
@@ -130,7 +130,7 @@ class TestReadIniConfigurations:
             == RaiseFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.kwelscherm_section.purchase_land_raise_factor
+            _ini_fom.kwelscherm_section.land_purchase_raise_factor
             == RaiseFactorEnum.NORMAAL
         )
         assert _ini_fom.kwelscherm_section.min_lengte_kwelscherm == 4
@@ -150,7 +150,7 @@ class TestReadIniConfigurations:
             == RaiseFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.stabiliteitswand_section.purchase_land_raise_factor
+            _ini_fom.stabiliteitswand_section.land_purchase_raise_factor
             == RaiseFactorEnum.MOEILIJK
         )
         assert _ini_fom.stabiliteitswand_section.versteiling_binnentalud == 2
@@ -166,7 +166,7 @@ class TestReadIniConfigurations:
             == RaiseFactorEnum.MOEILIJK
         )
         assert (
-            _ini_fom.kistdam_section.purchase_land_raise_factor
+            _ini_fom.kistdam_section.land_purchase_raise_factor
             == RaiseFactorEnum.NORMAAL
         )
         assert _ini_fom.kistdam_section.min_lengte_kistdam == 5

@@ -69,7 +69,7 @@ class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
                 "opslagfactor_constructief", RaiseFactorEnum.NORMAAL.name
             ).upper()
         ]
-        self.purchase_land_raise_factor = RaiseFactorEnum[
+        self.land_purchase_raise_factor = RaiseFactorEnum[
             properties_dict.get(
                 "opslagfactor_grondaankoop", RaiseFactorEnum.NORMAAL.name
             ).upper()
