@@ -36,7 +36,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         self, locations_profile: MultiLocationProfileCostReport
     ) -> dict[PointSurroundings, ReinforcementProfile]:
         return dict(
-            (_location, locations_profile.profile_cost_report.reinforced_profile)
+            (_location, type(locations_profile.profile_cost_report.reinforced_profile))
             for _location in locations_profile.locations
         )
 

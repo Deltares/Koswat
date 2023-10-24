@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Type
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
     ReinforcementProfile,
@@ -6,10 +7,13 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile impo
 
 
 class KoswatSummaryLocationMatrix:
-    locations_matrix: dict[PointSurroundings, list[ReinforcementProfile]]
+    locations_matrix: dict[PointSurroundings, list[Type[ReinforcementProfile]]]
 
     def __init__(self) -> None:
         self.locations_matrix = []
+
+    def get_order_by_location(self):
+        pass
 
     @classmethod
     def from_point_surroundings_list(cls, point_surroundings: list[PointSurroundings]):

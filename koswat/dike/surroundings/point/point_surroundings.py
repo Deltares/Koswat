@@ -29,7 +29,6 @@ class PointSurroundings:
                 self.section,
                 self.traject_order,
                 self.location,
-                self.distance_to_surroundings,
             )
         )
 
