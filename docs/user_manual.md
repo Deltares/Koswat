@@ -34,7 +34,7 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
 )
-from koswat.calculations import ReinforcementProfileBuilderFactory
+from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 
 # 1. Define input data.
 _input_dir = Path("C:\\my_koswat_input_dir")
