@@ -65,7 +65,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         _settings.roads_hard = _fom_settings.wegen_moeilijk
         _settings.ground_purchase_easy = _fom_settings.grond_makkelijk
         _settings.ground_purchase_normal = _fom_settings.grondaankoop_normaal
-        _settings.ground_purchas_hard = _fom_settings.grondaankoop_moeilijk
+        _settings.ground_purchase_hard = _fom_settings.grondaankoop_moeilijk
         return _settings
 
     def _get_infrastructure_costs_settings(

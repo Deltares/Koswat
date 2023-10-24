@@ -19,7 +19,7 @@ class StorageCostsSettings(KoswatConfigProtocol):
     roads_hard: float
     ground_purchase_easy: float
     ground_purchase_normal: float
-    ground_purchas_hard: float
+    ground_purchase_hard: float
 
     def __init__(self) -> None:
         self.ground_easy = math.nan
@@ -33,7 +33,7 @@ class StorageCostsSettings(KoswatConfigProtocol):
         self.roads_hard = math.nan
         self.ground_purchase_easy = math.nan
         self.ground_purchase_normal = math.nan
-        self.ground_purchas_hard = math.nan
+        self.ground_purchase_hard = math.nan
 
     def is_valid(self) -> bool:
         return all(_valid_float_prop(_prop) for _prop in self.__dict__.values())
