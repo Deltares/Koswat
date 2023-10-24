@@ -1,11 +1,11 @@
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
-    ReinforcementInputProfileProtocol,
-)
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
-from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
+    ReinforcementInputProfileProtocol,
+)
 
 
 class TestCofferDamInputProfile:

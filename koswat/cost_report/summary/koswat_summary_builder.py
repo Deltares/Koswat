@@ -1,10 +1,6 @@
 import logging
 import math
 
-from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -15,6 +11,10 @@ from koswat.cost_report.multi_location_profile import (
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
+from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 
 
 class KoswatSummaryBuilder(BuilderProtocol):

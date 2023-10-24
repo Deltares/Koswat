@@ -1,14 +1,14 @@
 import pytest
 from shapely.geometry import Point
 
+from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class TestOutsideSlopeReinforcementProfile:

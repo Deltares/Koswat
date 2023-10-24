@@ -1,13 +1,13 @@
 from pathlib import Path
 
+from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
+    MultiLocationProfileCostReport,
+)
 from koswat.dike_reinforcements.io.reinforced_profile_comparison_plot_exporter import (
     ReinforcedProfileComparisonPlotExporter,
 )
 from koswat.dike_reinforcements.io.reinforced_profile_plot_exporter import (
     ReinforcedProfilePlotExporter,
-)
-from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
-    MultiLocationProfileCostReport,
 )
 from koswat.plots.plot_exporter_protocol import PlotExporterProtocol
 

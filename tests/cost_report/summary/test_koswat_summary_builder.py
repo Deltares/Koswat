@@ -1,14 +1,5 @@
 from shapely.geometry import Point
 
-from koswat.dike_reinforcements.reinforcement_profile import (
-    CofferdamReinforcementProfile,
-    PipingWallReinforcementProfile,
-    StabilityWallReinforcementProfile,
-    SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
@@ -28,6 +19,15 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike_reinforcements.reinforcement_profile import (
+    CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+    StabilityWallReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
 from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
 from tests.acceptance_scenarios.layers_cases import LayersCases

@@ -1,8 +1,8 @@
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
 )
-from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class TestPipingWallInputProfile:

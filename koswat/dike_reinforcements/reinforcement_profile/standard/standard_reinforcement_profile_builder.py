@@ -1,41 +1,39 @@
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
-    ReinforcementInputProfileCalculationProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
-    OutsideSlopeReinforcementLayersWrapperBuilder,
-)
-
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
-    ReinforcementInputProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_base import (
-    ReinforcementProfileBuilderBase,
-)
-
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
-)
-from koswat.dike_reinforcements.input_profile import (
-    PipingWallInputProfileCalculation,
-    SoilInputProfileCalculation,
-    StabilityWallInputProfileCalculation,
-)
-from koswat.dike_reinforcements.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
-    StandardReinforcementLayersWrapperBuilder,
-)
 from koswat.configuration.settings import KoswatScenario
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
-    StandardReinforcementProfile,
+from koswat.dike_reinforcements.input_profile import (
+    PipingWallInputProfileCalculation,
+    SoilInputProfileCalculation,
+    StabilityWallInputProfileCalculation,
+)
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
+    ReinforcementInputProfileCalculationProtocol,
+)
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
+    ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
+    OutsideSlopeReinforcementLayersWrapperBuilder,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
+)
+from koswat.dike_reinforcements.reinforcement_layers.standard_reinforcement_layers_wrapper_builder import (
+    StandardReinforcementLayersWrapperBuilder,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_base import (
+    ReinforcementProfileBuilderBase,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
+    StandardReinforcementProfile,
 )
 
 

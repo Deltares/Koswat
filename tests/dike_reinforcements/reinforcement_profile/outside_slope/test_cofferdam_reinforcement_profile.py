@@ -1,3 +1,5 @@
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
@@ -7,8 +9,6 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slop
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 
 
 class TestCofferDamReinforcementProfile:

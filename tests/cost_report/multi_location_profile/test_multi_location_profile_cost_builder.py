@@ -1,8 +1,5 @@
 from shapely.geometry import Point
 
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
-    CofferdamReinforcementProfile,
-)
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
@@ -16,6 +13,9 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
     PointSurroundings,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
 from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
 from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
 from tests.acceptance_scenarios.layers_cases import LayersCases

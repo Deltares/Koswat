@@ -1,11 +1,11 @@
 from typing import Protocol, runtime_checkable
 
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.configuration.settings import KoswatScenario
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 
 
 @runtime_checkable

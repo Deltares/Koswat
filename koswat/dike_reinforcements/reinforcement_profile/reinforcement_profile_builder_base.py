@@ -1,11 +1,17 @@
-from abc import abstractmethod
 import logging
+from abc import abstractmethod
 
+from koswat.configuration.settings import KoswatScenario
+from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementLayersWrapper,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
     ReinforcementProfile,
@@ -13,12 +19,6 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile impo
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
-)
-from koswat.configuration.settings import KoswatScenario
-from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
