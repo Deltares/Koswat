@@ -7,7 +7,7 @@ from typing import Optional
 
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
-    StorageFactorEnum,
+    RaiseFactorEnum,
 )
 from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
@@ -56,22 +56,22 @@ class DikeProfileSectionFom(KoswatIniFomProtocol):
 
 
 class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
-    soil_storage_factor: StorageFactorEnum
-    constructive_storage_factor: StorageFactorEnum
-    purchased_soil_storage_factor: Optional[StorageFactorEnum]
+    soil_raise_factor: RaiseFactorEnum
+    constructive_raise_factor: RaiseFactorEnum
+    purchased_soil_raise_factor: Optional[RaiseFactorEnum]
 
     def _set_properties_from_dict(self, properties_dict: dict) -> None:
-        self.soil_storage_factor = StorageFactorEnum[
+        self.soil_raise_factor = RaiseFactorEnum[
             properties_dict["opslagfactor_grond"].upper()
         ]
-        self.constructive_storage_factor = StorageFactorEnum[
+        self.constructive_raise_factor = RaiseFactorEnum[
             properties_dict.get(
-                "opslagfactor_constructief", StorageFactorEnum.NORMAAL.name
+                "opslagfactor_constructief", RaiseFactorEnum.NORMAAL.name
             ).upper()
         ]
-        self.purchased_soil_storage_factor = StorageFactorEnum[
+        self.purchased_soil_raise_factor = RaiseFactorEnum[
             properties_dict.get(
-                "opslagfactor_grondaankoop", StorageFactorEnum.NORMAAL.name
+                "opslagfactor_grondaankoop", RaiseFactorEnum.NORMAAL.name
             ).upper()
         ]
 
@@ -172,7 +172,7 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
 
 class InfrastructureSectionFom(KoswatIniFomProtocol):
     infrastructuur: bool
-    opslagfactor_wegen: StorageFactorEnum
+    opslagfactor_wegen: RaiseFactorEnum
     infrakosten_0dh: InfraCostsEnum
     buffer_buitendijks: float
     wegen_klasse2_breedte: float
@@ -185,7 +185,7 @@ class InfrastructureSectionFom(KoswatIniFomProtocol):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section.infrastructuur = ini_config.getboolean("infrastructuur")
-        _section.opslagfactor_wegen = StorageFactorEnum[
+        _section.opslagfactor_wegen = RaiseFactorEnum[
             ini_config["opslagfactor_wegen"].upper()
         ]
         _section.infrakosten_0dh = InfraCostsEnum[ini_config["infrakosten_0dh"].upper()]

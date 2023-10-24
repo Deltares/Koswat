@@ -7,7 +7,7 @@ def _valid_float_prop(config_property: float) -> bool:
     return config_property is not None and not math.isnan(config_property)
 
 
-class StorageCostsSettings(KoswatConfigProtocol):
+class RaiseCostsSettings(KoswatConfigProtocol):
     ground_easy: float
     ground_normal: float
     ground_hard: float
