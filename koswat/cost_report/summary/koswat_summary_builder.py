@@ -10,7 +10,7 @@ from koswat.cost_report.multi_location_profile import (
     MultiLocationProfileCostReportBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-from koswat.cost_report.summary.koswat_summary_location_matrix import (
+from koswat.cost_report.summary.koswat_summary_location_matrix_builder import (
     KoswatSummaryLocationMatrixBuilder,
 )
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
