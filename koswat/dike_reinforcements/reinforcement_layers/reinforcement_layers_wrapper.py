@@ -1,14 +1,14 @@
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
-    ReinforcementLayerProtocol,
-)
+from koswat.dike.layers.layers_wrapper import KoswatLayersWrapperProtocol
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_base_layer import (
     ReinforcementBaseLayer,
 )
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_coating_layer import (
     ReinforcementCoatingLayer,
 )
-from koswat.dike.layers.layers_wrapper import KoswatLayersWrapperProtocol
-from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
+    ReinforcementLayerProtocol,
+)
 
 
 class ReinforcementLayersWrapper(KoswatLayersWrapperProtocol):

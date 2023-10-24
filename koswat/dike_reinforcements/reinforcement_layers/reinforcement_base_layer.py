@@ -1,14 +1,13 @@
 from __future__ import annotations
 
+from shapely.geometry import LineString, MultiPolygon, Polygon
 
-from shapely.geometry import LineString, Polygon, MultiPolygon
+from koswat.core.geometries.calc_library import get_polygon_coordinates
+from koswat.dike.layers.base_layer import KoswatBaseLayer
+from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
     ReinforcementLayerProtocol,
 )
-from koswat.core.geometries.calc_library import get_polygon_coordinates
-from koswat.dike.layers.base_layer import KoswatBaseLayer
-
-from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
 class ReinforcementBaseLayer(ReinforcementLayerProtocol):

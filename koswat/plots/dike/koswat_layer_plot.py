@@ -2,10 +2,10 @@ from matplotlib import pyplot
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
-from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protocol import (
     ReinforcementLayerProtocol,
 )
+from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 
 class KoswatLayerPlot(KoswatPlotProtocol):

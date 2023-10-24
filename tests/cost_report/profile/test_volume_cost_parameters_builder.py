@@ -1,18 +1,5 @@
 import pytest
 
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementCoatingLayer,
-    ReinforcementLayersWrapper,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
-    SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
-    StandardReinforcementProfile,
-)
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
@@ -29,6 +16,19 @@ from koswat.cost_report.profile.volume_cost_parameters_calculator import (
     VolumeCostParametersCalculator,
 )
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
+    ReinforcementCoatingLayer,
+    ReinforcementLayersWrapper,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
+    SoilReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
+    StandardReinforcementProfile,
+)
 
 
 class TestVolumeCostParametersBuilder:

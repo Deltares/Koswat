@@ -1,12 +1,12 @@
 from typing import Protocol, runtime_checkable
 
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
 
 @runtime_checkable
