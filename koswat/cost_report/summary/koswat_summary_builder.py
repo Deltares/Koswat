@@ -10,6 +10,9 @@ from koswat.cost_report.multi_location_profile import (
     MultiLocationProfileCostReportBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
+from koswat.cost_report.summary.koswat_summary_location_matrix import (
+    KoswatSummaryLocationMatrixBuilder,
+)
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -92,4 +95,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         for _calc_profile in self._get_calculated_profile_list():
             _mlpc_builder.reinforced_profile = _calc_profile
             _summary.locations_profile_report_list.append(_mlpc_builder.build())
+        _matrix = KoswatSummaryLocationMatrixBuilder(
+            _summary.locations_profile_report_list, _summary.available_locations
+        ).build()
         return _summary
