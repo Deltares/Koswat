@@ -1,4 +1,3 @@
-from collections import defaultdict
 import logging
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
@@ -33,7 +32,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         self.locations_profile_report_list = locations_profile
         self.available_locations = available_locations
 
-    def _multi_location_profile_to_dict(
+    def _get_multi_location_profile_to_dict_matrix(
         self, locations_profile: MultiLocationProfileCostReport
     ) -> dict[PointSurroundings, ReinforcementProfile]:
         return dict(
@@ -41,23 +40,23 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
             for _location in locations_profile.locations
         )
 
-    def _get_matrix_for_locations_with_reinforcements(
+    def _get_list_summary_matrix_for_locations_with_reinforcements(
         self,
-    ) -> KoswatSummaryLocationMatrix:
-        _resulting_dict = defaultdict(list)
-        for _dict in map(
-            self._multi_location_profile_to_dict,
-            self.locations_profile_report_list,
-        ):
-            for key, value in _dict.items():
-                _resulting_dict[key].append(value)
-        return _resulting_dict
+    ) -> list[dict[PointSurroundings, ReinforcementProfile]]:
+        return list(
+            map(
+                self._get_multi_location_profile_to_dict_matrix,
+                self.locations_profile_report_list,
+            )
+        )
 
     def build(self) -> KoswatSummaryLocationMatrix:
         # 1. First we get all the possible reinforcements per point.
 
         logging.info("Initalizing locations-reinforcements matrix.")
-        _reinforce_loc_dict = self._get_matrix_for_locations_with_reinforcements()
+        _reinforce_matrix_dict_list = (
+            self._get_list_summary_matrix_for_locations_with_reinforcements()
+        )
 
         # 2. Then we initialize the matrix with all available locations,
         # but no reinforcements.
@@ -66,11 +65,14 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
             self.available_locations
         )
 
-        # 3. Last, we merge both dictionaries.
-        for _location in _summary_matrix.locations_matrix:
-            _location.reinforcement_list = _reinforce_loc_dict.get(
-                _location.location, []
-            )
+        # 3. Last, we merge the reinforcements dictionary into the matrix.
+        for _location in _summary_matrix.locations_matrix.keys():
+            for _reinforce_matrix_dict in _reinforce_matrix_dict_list:
+                if _location in _reinforce_matrix_dict:
+                    _summary_matrix.locations_matrix[_location].append(
+                        _reinforce_matrix_dict[_location]
+                    )
 
         logging.info("Finalized locations-reinforcements matrix.")
+
         return _summary_matrix
