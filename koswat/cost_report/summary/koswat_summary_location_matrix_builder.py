@@ -24,14 +24,6 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
     locations_profile_report_list: list[MultiLocationProfileCostReport]
     available_locations: list[PointSurroundings]
 
-    def __init__(
-        self,
-        locations_profile: list[MultiLocationProfileCostReport],
-        available_locations: list[PointSurroundings],
-    ) -> None:
-        self.locations_profile_report_list = locations_profile
-        self.available_locations = available_locations
-
     def _get_multi_location_profile_to_dict_matrix(
         self, locations_profile: MultiLocationProfileCostReport
     ) -> dict[PointSurroundings, ReinforcementProfile]:

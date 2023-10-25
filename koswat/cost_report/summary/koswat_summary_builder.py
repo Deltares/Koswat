@@ -95,12 +95,10 @@ class KoswatSummaryBuilder(BuilderProtocol):
         locations_profile_report_list: list[MultiLocationProfileCostReport],
         available_locations: list[PointSurroundings],
     ) -> dict[PointSurroundings, ReinforcementProfile]:
-        _matrix = KoswatSummaryLocationMatrixBuilder(
-            locations_profile_report_list, available_locations
-        ).build()
-
-        # TODO: `structure_buffer` and `min_space_between_structures` should come
-        # from the ini files.
+        _matrix_builder = KoswatSummaryLocationMatrixBuilder()
+        _matrix_builder.available_locations = available_locations
+        _matrix_builder.locations_profile_report_list = locations_profile_report_list
+        _matrix = _matrix_builder.build()
 
         _strategy_input = StrategyInput(
             locations_matrix=_matrix,
@@ -110,7 +108,9 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         # In theory this will become a factory (somewhere) where
         # the adequate strategy will be chosen.
-        return OrderStrategy(_strategy_input).get_locations_reinforcements()
+        return OrderStrategy.from_strategy_input(
+            _strategy_input
+        ).get_locations_reinforcements()
 
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()

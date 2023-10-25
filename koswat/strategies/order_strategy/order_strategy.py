@@ -1,10 +1,9 @@
-from collections import defaultdict
+from __future__ import annotations
 from typing import Type
 from koswat.cost_report.summary.koswat_summary_location_matrix import (
     KoswatSummaryLocationMatrix,
 )
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
@@ -30,16 +29,19 @@ class OrderStrategy:
     _structure_buffer: float
     _min_space_between_structures: float
 
-    def __init__(self, strategy_input: StrategyInput) -> None:
-        self._order_reinforcement = [
+    @classmethod
+    def from_strategy_input(cls, strategy_input: StrategyInput) -> OrderStrategy:
+        _new_cls = cls()
+        _new_cls._order_reinforcement = [
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,
             CofferdamReinforcementProfile,
         ]
-        self._location_matrix = strategy_input.locations_matrix
-        self._structure_buffer = strategy_input.structure_buffer
-        self._min_space_between_structures = strategy_input.min_space_between_structures
+        _new_cls._location_matrix = strategy_input.locations_matrix
+        _new_cls._structure_buffer = strategy_input.structure_buffer
+        _new_cls._min_space_between_structures = strategy_input.min_space_between_structures
+        return _new_cls
 
     def get_locations_reinforcements(
         self,
