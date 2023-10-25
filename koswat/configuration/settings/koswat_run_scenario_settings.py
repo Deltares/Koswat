@@ -3,12 +3,16 @@ from pathlib import Path
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
 class KoswatRunScenarioSettings(KoswatConfigProtocol):
     scenario: KoswatScenario
+    reinforcement_settings: KoswatReinforcementSettings
     surroundings: SurroundingsWrapper
     costs: KoswatCostsSettings
     output_dir: Path

@@ -21,7 +21,7 @@ class TestPipingWallInputProfileCalculation:
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
-    def test_calculate_length_stability_wall(self):
+    def test_calculate_length_piping_wall(self):
         class MockProfile(KoswatInputProfileProtocol):
             binnen_berm_breedte: float
 
@@ -29,7 +29,8 @@ class TestPipingWallInputProfileCalculation:
         _calculator = PipingWallInputProfileCalculation()
         _profile_data = MockProfile()
         _profile_data.binnen_berm_breedte = 6
-        _expected_result = 2.5
+        _profile_data.pleistoceen = -5
+        _expected_result = 2.5  # TODO
 
         # 2. Run test.
         _result = _calculator._calculate_length_piping_wall(_profile_data)
@@ -37,7 +38,7 @@ class TestPipingWallInputProfileCalculation:
         # 3. Verify Expectations.
         assert _result == _expected_result
 
-    def test_calculate_length_stability_wall(self):
+    def test_calculate_length_piping_wall(self):
         class MockProfile(KoswatInputProfileProtocol):
             kruin_hoogte: float
 

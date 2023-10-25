@@ -24,7 +24,9 @@ class StabilityWallInputProfileCalculation(
         self, base_data: KoswatInputProfileProtocol, scenario: KoswatScenario
     ) -> float:
         return (
-            (base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h) - 1 + 10
+            (base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h)
+            - 1
+            + 10  # TODO
         )
 
     def _calculate_new_kruin_hoogte(

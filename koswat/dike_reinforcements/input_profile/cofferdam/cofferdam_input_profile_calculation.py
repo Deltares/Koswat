@@ -55,7 +55,9 @@ class CofferdamInputProfileCalculation(ReinforcementInputProfileCalculationProto
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         return (
-            (base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h) - 1 + 10
+            (base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h)
+            - 1
+            + 10  # TODO
         )
 
     def _calculate_new_input_profile(

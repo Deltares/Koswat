@@ -33,7 +33,7 @@ class TestStabilityWallInputProfileCalculation:
         _input_data.binnen_maaiveld = 2
         _scenario = KoswatScenario()
         _scenario.d_h = 16
-        _expected_result = 42
+        _expected_result = 42  # TODO
 
         # 2. Run test.
         _result = _calculator._calculate_length_stability_wall(_input_data, _scenario)

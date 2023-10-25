@@ -1,4 +1,7 @@
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.input_profile import (
     CofferDamInputProfile,
@@ -46,12 +49,17 @@ _reinforcements = {
 
 class ReinforcementProfileBuilderFactory:
     base_profile: KoswatProfileBase
+    reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
 
     def __init__(
-        self, base_profile: KoswatProfileBase, scenario: KoswatScenario
+        self,
+        base_profile: KoswatProfileBase,
+        reinforcement_settings: KoswatReinforcementSettings,
+        scenario: KoswatScenario,
     ) -> None:
         self.base_profile = base_profile
+        self.reinforcement_settings = reinforcement_settings
         self.scenario = scenario
 
     def build(

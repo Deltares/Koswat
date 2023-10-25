@@ -33,9 +33,10 @@ class TestCofferdamInputProfileCalculation:
         _input_data = MockInputData()
         _input_data.kruin_hoogte = 8
         _input_data.binnen_maaiveld = 2
+        _input_data.pleistoceen = -5
         _scenario = KoswatScenario()
         _scenario.d_h = 2
-        _expected_result = 17
+        _expected_result = 17  # TODO
 
         # 2. Run test.
         _result = _calculator._calculate_new_length_coffer_dam(_input_data, _scenario)
