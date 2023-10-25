@@ -80,23 +80,24 @@ class TestAcceptance:
     ):
         # 1. Define test data.
         _test_dir = get_testcase_results_dir(request)
-        _csv_surroundings_file = (
-            test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
+        _csv_surroundings_file = test_data.joinpath(
+            "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks.csv"
         )
-        _shp_trajects_file = (
-            test_data
-            / "shp_reader"
-            / "Dijkvak"
-            / "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp"
+        _shp_trajects_file = test_data.joinpath(
+            "shp_reader",
+            "Dijkvak",
+            "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp",
         )
         assert _csv_surroundings_file.is_file()
         assert _shp_trajects_file.is_file()
 
         _surroundings_importer = KoswatSurroundingsImporter()
-        _new_csv_path = _test_dir / "10_3" / _csv_surroundings_file.name
+        _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
         _surroundings_section = SurroundingsSectionFom()
+        _surroundings_section.constructieafstand = 50
+        _surroundings_section.constructieovergang = 10
         _surroundings_section.surroundings_database_dir = _test_dir
         _surroundings_section.buitendijks = False
         _surroundings_section.bebouwing = True

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import Type
+from itertools import groupby
 from koswat.cost_report.summary.koswat_summary_location_matrix import (
     KoswatSummaryLocationMatrix,
 )
@@ -40,8 +41,67 @@ class OrderStrategy:
         ]
         _new_cls._location_matrix = strategy_input.locations_matrix
         _new_cls._structure_buffer = strategy_input.structure_buffer
-        _new_cls._min_space_between_structures = strategy_input.min_space_between_structures
+        _new_cls._min_space_between_structures = (
+            strategy_input.min_space_between_structures
+        )
         return _new_cls
+
+    def _group_by_selected_measure(
+        self, location_reinforcements: list[StrategyLocationReinforcements]
+    ) -> list[StrategyLocationReinforcements]:
+        return list(
+            (k, list(g))
+            for k, g in groupby(
+                location_reinforcements,
+                lambda x: x.selected_measure,
+            )
+        )
+
+    def _apply_buffer(
+        self, location_reinforcements: list[StrategyLocationReinforcements]
+    ) -> None:
+        _grouped = self._group_by_selected_measure(location_reinforcements)
+        _len_location_reinforcements = len(location_reinforcements)
+        _candidates_matrix = dict(
+            (_rtype, [-1] * _len_location_reinforcements)
+            for _rtype in self._order_reinforcement
+        )
+        _visited = 0
+        for _profile_type, _rgrouped in _grouped:
+            # Define indices.
+            _lower_limit = max(0, _visited - self._structure_buffer)
+            _new_visited = _visited + len(_rgrouped)
+            _upper_limit = min(
+                _new_visited + self._structure_buffer,
+                _len_location_reinforcements - _new_visited,
+            )
+            _candidate_value = self._order_reinforcement.index(_profile_type)
+
+            # Update matrices
+            _candidates_matrix[_profile_type][_lower_limit:_new_visited] = [
+                _candidate_value
+            ] * (_new_visited - _lower_limit)
+
+            _candidates_matrix[_profile_type][_visited:_upper_limit] = [
+                _candidate_value
+            ] * (_upper_limit - _visited)
+
+            # Update visited
+            _visited = _new_visited
+
+        # Combine dicts and get max value
+        _selection_mask = list(map(max, zip(*_candidates_matrix.values())))
+
+        # Apply buffer values.
+        for _idx, _location in enumerate(location_reinforcements):
+            _location.selected_measure = self._order_reinforcement[
+                _selection_mask[_idx]
+            ]
+
+    def _apply_min_distance(
+        self, location_reinforcements: list[StrategyLocationReinforcements]
+    ) -> None:
+        pass
 
     def get_locations_reinforcements(
         self,
@@ -62,5 +122,6 @@ class OrderStrategy:
                     selected_measure=_selected_reinforcement,
                 )
             )
-
+        self._apply_buffer(_strategy_reinforcements)
+        self._apply_min_distance(_strategy_reinforcements)
         return _strategy_reinforcements
