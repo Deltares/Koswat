@@ -19,7 +19,7 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         Args:
             color (str): Color code.
 
-        Riases:
+        Raises:
             ValueError: When the `KoswatLayerProtocol` material has not been registered.
         """
         _x_coords, y_coords = self.koswat_object.outer_geometry.boundary.coords.xy
