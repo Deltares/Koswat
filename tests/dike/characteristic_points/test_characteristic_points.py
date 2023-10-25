@@ -46,7 +46,7 @@ class TestCharacteristicPoints:
             ),
         ],
     )
-    def test_add_side_poitns_raises_error_when_exact_points_given(
+    def test_add_side_points_raises_error_when_exact_points_given(
         self,
         side_func: Callable,
         points_to_add: Optional[List[float]],

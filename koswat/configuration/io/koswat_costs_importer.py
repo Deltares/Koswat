@@ -8,7 +8,7 @@ from koswat.configuration.settings.costs.koswat_costs import (
     DikeProfileCostsSettings,
     InfrastructureCostsSettings,
     KoswatCostsSettings,
-    StorageCostsSettings,
+    SurtaxCostsSettings,
 )
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
@@ -42,13 +42,13 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         _costs_settings.infrastructure_costs = self._get_infrastructure_costs_settings(
             _costs_fom
         )
-        _costs_settings.storage_costs = self._get_storage_costs(
+        _costs_settings.surtax_costs = self._get_surtax_costs(
             _costs_fom,
         )
         return _costs_settings
 
-    def _get_storage_costs(self, fom_costs: KoswatCostsIniFom) -> StorageCostsSettings:
-        _settings = StorageCostsSettings()
+    def _get_surtax_costs(self, fom_costs: KoswatCostsIniFom) -> SurtaxCostsSettings:
+        _settings = SurtaxCostsSettings()
         _fom_settings = (
             fom_costs.storing_costs_incl_tax_section
             if self.include_taxes
@@ -63,9 +63,9 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         _settings.roads_easy = _fom_settings.wegen_makkelijk
         _settings.roads_normal = _fom_settings.wegen_normaal
         _settings.roads_hard = _fom_settings.wegen_moeilijk
-        _settings.ground_purchase_easy = _fom_settings.grond_makkelijk
-        _settings.ground_purchase_normal = _fom_settings.grondaankoop_normaal
-        _settings.ground_purchas_hard = _fom_settings.grondaankoop_moeilijk
+        _settings.land_purchase_easy = _fom_settings.grond_makkelijk
+        _settings.land_purchase_normal = _fom_settings.grondaankoop_normaal
+        _settings.land_purchase_hard = _fom_settings.grondaankoop_moeilijk
         return _settings
 
     def _get_infrastructure_costs_settings(
