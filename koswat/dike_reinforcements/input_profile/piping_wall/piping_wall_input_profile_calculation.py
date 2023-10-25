@@ -1,6 +1,6 @@
 from koswat.configuration.settings import KoswatScenario
-from koswat.configuration.settings.reinforcements.koswat_piping_settings import (
-    KoswatPipingSettings,
+from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
+    KoswatPipingWallSettings,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -15,7 +15,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 
 class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProtocol):
     base_profile: KoswatProfileProtocol
-    piping_settings: KoswatPipingSettings
+    piping_wall_settings: KoswatPipingWallSettings
     scenario: KoswatScenario
 
     def __init__(self) -> None:
@@ -47,7 +47,7 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
     def _calculate_length_piping_wall(
         self,
         old_data: KoswatInputProfileBase,
-        piping_settings: KoswatPipingSettings,
+        piping_wall_settings: KoswatPipingWallSettings,
         soil_binnen_berm_breedte: float,
     ) -> float:
         if soil_binnen_berm_breedte == 0:
@@ -59,9 +59,9 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
                     + (old_data.binnen_maaiveld - old_data.aquifer)
                     + 1
                 ),
-                piping_settings.max_lengte_kwelscherm,
+                piping_wall_settings.max_lengte_kwelscherm,
             ),
-            piping_settings.min_lengte_kwelscherm,
+            piping_wall_settings.min_lengte_kwelscherm,
         )
 
     def _calculate_new_kruin_hoogte(
@@ -96,7 +96,7 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
     def _calculate_new_input_profile(
         self,
         base_data: KoswatInputProfileProtocol,
-        piping_settings: KoswatPipingSettings,
+        piping_wall_settings: KoswatPipingWallSettings,
         scenario: KoswatScenario,
     ) -> PipingWallInputProfile:
         _new_data = PipingWallInputProfile()
@@ -115,13 +115,13 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
             base_data, _new_data, scenario
         )
         _new_data.length_piping_wall = self._calculate_length_piping_wall(
-            base_data, piping_settings, _soil_binnen_berm_breedte
+            base_data, piping_wall_settings, _soil_binnen_berm_breedte
         )
         return _new_data
 
     def build(self) -> PipingWallInputProfile:
         return self._calculate_new_input_profile(
             self.base_profile.input_data,
-            self.reinforcement_settings.piping_settings,
+            self.reinforcement_settings.piping_wall_settings,
             self.scenario,
         )

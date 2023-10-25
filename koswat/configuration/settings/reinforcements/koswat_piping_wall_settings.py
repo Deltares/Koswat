@@ -5,7 +5,7 @@ from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEn
 
 
 @dataclass
-class KoswatPipingSettings(KoswatConfigProtocol):
+class KoswatPipingWallSettings(KoswatConfigProtocol):
     """
     Settings related to Piping reinforcement
     """

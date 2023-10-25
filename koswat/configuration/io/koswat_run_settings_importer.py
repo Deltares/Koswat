@@ -34,8 +34,8 @@ from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
     KoswatCofferdamSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_piping_settings import (
-    KoswatPipingSettings,
+from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
+    KoswatPipingWallSettings,
 )
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
@@ -178,7 +178,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     ) -> KoswatReinforcementSettings:
         _reinforcement_settings = KoswatReinforcementSettings(
             soil_settings=KoswatSoilSettings(),
-            piping_settings=KoswatPipingSettings(
+            piping_wall_settings=KoswatPipingWallSettings(
                 **(general_settings.kwelscherm_section.__dict__)
             ),
             stability_wall_settings=KoswatStabilityWallSettings(),

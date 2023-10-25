@@ -7,8 +7,8 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
     KoswatCofferdamSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_piping_settings import (
-    KoswatPipingSettings,
+from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
+    KoswatPipingWallSettings,
 )
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
@@ -67,7 +67,7 @@ class TestKoswatSummaryBuilder:
         _settings.scenario = ScenarioCases.default
         _settings.reinforcement_settings = KoswatReinforcementSettings(
             soil_settings=KoswatSoilSettings(),
-            piping_settings=KoswatPipingSettings(),
+            piping_wall_settings=KoswatPipingWallSettings(),
             stability_wall_settings=KoswatStabilityWallSettings(),
             cofferdam_settings=KoswatCofferdamSettings(),
         )
@@ -125,7 +125,10 @@ class TestKoswatSummaryBuilder:
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
         _run_settings.reinforcement_settings = KoswatReinforcementSettings(
-            piping_settings=KoswatPipingSettings(),
+            soil_settings=KoswatSoilSettings(),
+            piping_wall_settings=KoswatPipingWallSettings(),
+            stability_wall_settings=KoswatStabilityWallSettings(),
+            cofferdam_settings=KoswatCofferdamSettings(),
         )
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.costs = KoswatCostsSettings()
