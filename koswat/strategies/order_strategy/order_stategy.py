@@ -44,7 +44,6 @@ class OrderStrategy:
     def get_locations_reinforcements(
         self,
     ) -> list[StrategyLocationReinforcements]:
-        # Ensure it's ordered
         _strategy_reinforcements = []
         for (
             _location,
