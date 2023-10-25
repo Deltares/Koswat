@@ -3,7 +3,7 @@ from __future__ import annotations
 import enum
 
 
-class StorageFactorEnum(enum.Enum):
+class SurtaxFactorEnum(enum.Enum):
     MAKKELIJK = 0
     NORMAAL = 1
     MOEILIJK = 2
