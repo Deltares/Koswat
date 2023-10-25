@@ -1,9 +1,9 @@
 from collections import defaultdict
 from typing import Type
+
 from koswat.cost_report.summary.koswat_summary_location_matrix import (
     KoswatSummaryLocationMatrix,
 )
-
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
