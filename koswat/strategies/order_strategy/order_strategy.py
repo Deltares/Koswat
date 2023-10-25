@@ -101,7 +101,29 @@ class OrderStrategy:
     def _apply_min_distance(
         self, location_reinforcements: list[StrategyLocationReinforcements]
     ) -> None:
-        pass
+        _grouped = self._group_by_selected_measure(location_reinforcements)
+        # TODO: Discuss recursivity if we leave the current value (line 111 and 122).
+        # if all(len(rg) >= self._min_space_between_structures for _, rg in _grouped):
+        #     return
+        for _idx, (_profile_type, _rgrouped) in enumerate(_grouped):
+            if len(_rgrouped) >= self._min_space_between_structures:
+                continue
+            _current_value = self._order_reinforcement.index(_profile_type)
+            _previous_value = (
+                -1
+                if _idx - 1 < 0
+                else self._order_reinforcement.index(_grouped[_idx - 1][0])
+            )
+            _next_value = (
+                -1
+                if _idx + 1 >= len(_grouped)
+                else self._order_reinforcement.index(_grouped[_idx + 1][0])
+            )
+            _selected_measure = self._order_reinforcement[
+                max(_current_value, _previous_value, _next_value)
+            ]
+            for _loc_reinf in _rgrouped:
+                _loc_reinf.selected_measure = _selected_measure
 
     def get_locations_reinforcements(
         self,
