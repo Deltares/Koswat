@@ -120,7 +120,7 @@ class OrderStrategy:
                 else self._order_reinforcement.index(_grouped[_idx + 1][0])
             )
             _selected_measure = self._order_reinforcement[
-                max(_current_value, _previous_value, _next_value)
+                max(_current_value, min(_previous_value, _next_value))
             ]
             for _loc_reinf in _rgrouped:
                 _loc_reinf.selected_measure = _selected_measure
