@@ -25,7 +25,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile impo
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.strategies.order_strategy.order_stategy import OrderStrategy
+from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 
 
