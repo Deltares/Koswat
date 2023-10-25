@@ -60,17 +60,17 @@ class OrderStrategy:
     def _apply_buffer(
         self, location_reinforcements: list[StrategyLocationReinforcements]
     ) -> None:
-        _grouped = self._group_by_selected_measure(location_reinforcements)
+        _grouped_by_measure = self._group_by_selected_measure(location_reinforcements)
         _len_location_reinforcements = len(location_reinforcements)
         _candidates_matrix = dict(
             (_rtype, [-1] * _len_location_reinforcements)
             for _rtype in self._order_reinforcement
         )
         _visited = 0
-        for _profile_type, _rgrouped in _grouped:
+        for _profile_type, _sub_group in _grouped_by_measure:
             # Define indices.
             _lower_limit = max(0, _visited - self._structure_buffer)
-            _new_visited = _visited + len(_rgrouped)
+            _new_visited = _visited + len(_sub_group)
             _upper_limit = min(
                 _new_visited + self._structure_buffer,
                 _len_location_reinforcements - _new_visited,
@@ -89,7 +89,8 @@ class OrderStrategy:
             # Update visited
             _visited = _new_visited
 
-        # Combine dicts and get max value
+        # Combine dicts and get max value as "higher values" cannot use
+        # a "lower value" buffer.
         _selection_mask = list(map(max, zip(*_candidates_matrix.values())))
 
         # Apply buffer values.
@@ -101,28 +102,28 @@ class OrderStrategy:
     def _apply_min_distance(
         self, location_reinforcements: list[StrategyLocationReinforcements]
     ) -> None:
-        _grouped = self._group_by_selected_measure(location_reinforcements)
+        _grouped_by_measure = self._group_by_selected_measure(location_reinforcements)
         # TODO: Discuss recursivity if we leave the current value (line 111 and 122).
         # if all(len(rg) >= self._min_space_between_structures for _, rg in _grouped):
         #     return
-        for _idx, (_profile_type, _rgrouped) in enumerate(_grouped):
-            if len(_rgrouped) >= self._min_space_between_structures:
+        for _idx, (_profile_type, _sub_group) in enumerate(_grouped_by_measure):
+            if len(_sub_group) >= self._min_space_between_structures:
                 continue
             _current_value = self._order_reinforcement.index(_profile_type)
             _previous_value = (
                 -1
                 if _idx - 1 < 0
-                else self._order_reinforcement.index(_grouped[_idx - 1][0])
+                else self._order_reinforcement.index(_grouped_by_measure[_idx - 1][0])
             )
             _next_value = (
                 -1
-                if _idx + 1 >= len(_grouped)
-                else self._order_reinforcement.index(_grouped[_idx + 1][0])
+                if _idx + 1 >= len(_grouped_by_measure)
+                else self._order_reinforcement.index(_grouped_by_measure[_idx + 1][0])
             )
             _selected_measure = self._order_reinforcement[
                 max(_current_value, min(_previous_value, _next_value))
             ]
-            for _loc_reinf in _rgrouped:
+            for _loc_reinf in _sub_group:
                 _loc_reinf.selected_measure = _selected_measure
 
     def get_locations_reinforcements(
