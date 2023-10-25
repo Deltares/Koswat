@@ -8,20 +8,8 @@ from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
-    CofferdamReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
-    PipingWallReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
-    SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
-    StabilityWallReinforcementProfile,
 )
 from koswat.strategies.strategy_location_matrix import StrategyLocationReinforcements
 
