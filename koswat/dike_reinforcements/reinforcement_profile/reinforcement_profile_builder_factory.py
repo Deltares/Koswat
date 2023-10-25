@@ -84,7 +84,7 @@ class ReinforcementProfileBuilderFactory:
         Args:
             reinforcement_profile_type (Type[ReinforcementProfileProtocol]): Type that requires a builder.
 
-        Surtaxs:
+        Raises:
             NotImplementedError: When there is no builder associated to the given `reinforcement_profile_type`.
 
         Returns:
