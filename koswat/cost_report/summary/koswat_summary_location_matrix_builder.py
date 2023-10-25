@@ -73,6 +73,8 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                         _reinforce_matrix_dict[_location]
                     )
 
+        _summary_matrix.sort_by_traject_order()
+
         logging.info("Finalized locations-reinforcements matrix.")
 
         return _summary_matrix

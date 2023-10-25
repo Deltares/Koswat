@@ -1,13 +1,29 @@
 import logging
 import math
 from collections import defaultdict
-from typing import Any
+from typing import Any, Type
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
+    PipingWallReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
+    SoilReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
+    StabilityWallReinforcementProfile,
+)
+from koswat.strategies.strategy_location_matrix import StrategyLocationReinforcements
 
 
 class SummaryMatrixCsvFomBuilder(BuilderProtocol):
@@ -34,7 +50,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
                 _loc_prof_report.profile_cost_report.volume_cost_parameters.__dict__,
                 _dict_of_entries,
             )
-            _dict_of_entries[_locations_key].append(_loc_prof_report.locations)
+            # _dict_of_entries[_locations_key].append(_loc_prof_report.locations)
 
         if not _dict_of_entries:
             logging.error("No entries generated for the CSV Matrix.")
@@ -48,7 +64,8 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             return row
 
         _location_rows = self._get_locations_matrix(
-            _dict_of_entries[_locations_key], self.koswat_summary.available_locations
+            # _dict_of_entries[_locations_key], self.koswat_summary.available_locations
+            self.koswat_summary.reinforcement_per_locations
         )
         _required_placeholders = (
             len(_location_rows[0])
@@ -69,18 +86,8 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
     def _get_locations_matrix(
         self,
-        suitable_locations: list[list[PointSurroundings]],
-        available_locations: list[PointSurroundings],
+        reinforcement_per_locations: list[StrategyLocationReinforcements],
     ) -> list[list[Any]]:
-        def _find_location(
-            location: PointSurroundings, locations: list[PointSurroundings]
-        ) -> PointSurroundings:
-            return next(
-                _loc
-                for _loc in locations
-                if _loc.traject_order == location.traject_order
-            )
-
         def _location_as_row(
             matrix_item: tuple[PointSurroundings, list[int]]
         ) -> list[Any]:
@@ -89,20 +96,27 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             _location_as_row.extend(_m_values)
             return _location_as_row
 
-        if not any(available_locations):
+        if not any(reinforcement_per_locations):
             logging.warning("No locations specified for the report.")
             return [[]]
 
         # Initiate locations matrix.
         _matrix = defaultdict(list)
-        for _available_loc in available_locations:
-            _matrix[_available_loc] = [0] * len(suitable_locations)
+        _summary_columns_order = [
+            SoilReinforcementProfile,
+            PipingWallReinforcementProfile,
+            StabilityWallReinforcementProfile,
+            CofferdamReinforcementProfile,
+        ]
+        for _reinforcement_per_location in reinforcement_per_locations:
+            _suitable_locations = [
+                int(_type in _reinforcement_per_location.available_measures)
+                for _type in _summary_columns_order
+            ]
+            _matrix[_reinforcement_per_location.location] = _suitable_locations + [
+                _reinforcement_per_location.selected_measure.output_name
+            ]
 
-        # Set the suitable locations.
-        for idx, _loc_list in enumerate(suitable_locations):
-            for _loc in _loc_list:
-                _available_loc = _find_location(_loc, available_locations)
-                _matrix[_available_loc][idx] = 1
         return list(
             map(
                 _location_as_row,

@@ -5,8 +5,8 @@ from koswat.cost_report.summary.koswat_summary_location_matrix import (
 )
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
-    cofferdam_reinforcement_profile,
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
     ReinforcementProfile,
@@ -21,6 +21,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
     StabilityWallReinforcementProfile,
 )
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_location_matrix import StrategyLocationReinforcements
 
 
 class OrderStrategy:
@@ -34,7 +35,7 @@ class OrderStrategy:
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,
-            cofferdam_reinforcement_profile,
+            CofferdamReinforcementProfile,
         ]
         self._location_matrix = strategy_input.locations_matrix
         self._structure_buffer = strategy_input.structure_buffer
@@ -42,18 +43,23 @@ class OrderStrategy:
 
     def get_locations_reinforcements(
         self,
-    ) -> dict[PointSurroundings, ReinforcementProfile]:
+    ) -> list[StrategyLocationReinforcements]:
         # Ensure it's ordered
-        self._location_matrix.get_order_by_location()
-
-        _first_choice = defaultdict(list)
+        _strategy_reinforcements = []
         for (
             _location,
             _reinforcements,
         ) in self._location_matrix.locations_matrix.items():
-            _first_choice[_location] = next(
+            _selected_reinforcement = next(
                 (_or for _or in self._order_reinforcement if _or in _reinforcements),
                 self._order_reinforcement[-1],
             )
+            _strategy_reinforcements.append(
+                StrategyLocationReinforcements(
+                    location=_location,
+                    available_measures=_reinforcements,
+                    selected_measure=_selected_reinforcement,
+                )
+            )
 
-        return dict(_first_choice)
+        return _strategy_reinforcements

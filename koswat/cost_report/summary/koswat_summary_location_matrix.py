@@ -12,8 +12,10 @@ class KoswatSummaryLocationMatrix:
     def __init__(self) -> None:
         self.locations_matrix = []
 
-    def get_order_by_location(self):
-        pass
+    def sort_by_traject_order(self):
+        self.locations_matrix = dict(
+            sorted(self.locations_matrix.items(), key=lambda x: x[0].traject_order)
+        )
 
     @classmethod
     def from_point_surroundings_list(cls, point_surroundings: list[PointSurroundings]):
