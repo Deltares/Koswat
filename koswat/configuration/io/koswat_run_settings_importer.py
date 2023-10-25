@@ -31,6 +31,9 @@ from koswat.configuration.settings.koswat_run_settings import (
     KoswatRunSettings,
 )
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_piping_settings import (
+    KoswatPipingSettings,
+)
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
@@ -165,7 +168,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         self, general_settings: KoswatGeneralIniFom
     ) -> KoswatReinforcementSettings:
         _reinforcement_settings = KoswatReinforcementSettings(
-            piping_settings=general_settings.kwelscherm_section
+            piping_settings=KoswatPipingSettings(
+                **(general_settings.kwelscherm_section.__dict__)
+            )
         )
         return _reinforcement_settings
 
