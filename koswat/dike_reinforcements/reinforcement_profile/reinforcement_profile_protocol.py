@@ -14,7 +14,7 @@ class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
     """
     Extension of the `KoswatProfileProtocol` to define the properties of a calculated reinforcement.
     """
-
+    output_name: str
     input_data: ReinforcementInputProfileProtocol
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol

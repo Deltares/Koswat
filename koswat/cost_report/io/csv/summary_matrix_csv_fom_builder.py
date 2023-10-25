@@ -95,22 +95,23 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             + _selected_measure_cost_rows
             + _location_rows
         )
-        
+
         _csv_fom.headers = self.dict_to_costs_row(
             _profile_type_key, _dict_of_entries[_profile_type_key]
         )
 
         return _csv_fom
 
-    def get_total_meters_per_selected_measure(
+    def _get_total_meters_per_selected_measure(
         self,
     ) -> list[tuple[Type[ReinforcementProfileProtocol], float]]:
         # We consider the distance between adjacent locations
         # ALWAYS to be of 1 meter.
+        _sorted_reinforcements = sorted(self.koswat_summary.reinforcement_per_locations, key=lambda x: x.selected_measure.output_name)
         return dict(
             (k, len(list(g)))
             for k, g in groupby(
-                self.koswat_summary.reinforcement_per_locations,
+                _sorted_reinforcements,
                 lambda x: x.selected_measure,
             )
         )
@@ -120,7 +121,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         _total_measure_meters_key = "Total measure meters"
         _selected_measures_rows = defaultdict(list)
         _total_meters_per_selected_measure = (
-            self.get_total_meters_per_selected_measure()
+            self._get_total_meters_per_selected_measure()
         )
         for _ordered_reinf in self.get_summary_reinforcement_type_column_order():
             _total_meters = _total_meters_per_selected_measure.get(_ordered_reinf, 0)
