@@ -52,13 +52,17 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
     ) -> float:
         if soil_binnen_berm_breedte == 0:
             return 0
-        _length = (
-            (soil_binnen_berm_breedte / 6)
-            + (old_data.binnen_maaiveld - old_data.aquifer)
-            + 1
+        return max(
+            min(
+                (
+                    (soil_binnen_berm_breedte / 6)
+                    + (old_data.binnen_maaiveld - old_data.aquifer)
+                    + 1
+                ),
+                piping_settings.max_lengte_kwelscherm,
+            ),
+            piping_settings.min_lengte_kwelscherm,
         )
-        _length = max(_length, piping_settings.min_lengte_kwelscherm)
-        _length = min(_length, piping_settings.max_lengte_kwelscherm)
 
     def _calculate_new_kruin_hoogte(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
@@ -117,5 +121,7 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
 
     def build(self) -> PipingWallInputProfile:
         return self._calculate_new_input_profile(
-            self.base_profile.input_data, self.piping_settings, self.scenario
+            self.base_profile.input_data,
+            self.reinforcement_settings.piping_settings,
+            self.scenario,
         )

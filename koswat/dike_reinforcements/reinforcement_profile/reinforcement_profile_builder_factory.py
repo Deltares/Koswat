@@ -69,6 +69,7 @@ class ReinforcementProfileBuilderFactory:
             raise ValueError("No specified `reinforcement_profile_type`.")
         _builder = self.get_reinforcement_builder(reinforcement_profile_type)
         _builder.base_profile = self.base_profile
+        _builder.reinforcement_settings = self.reinforcement_settings
         _builder.scenario = self.scenario
         return _builder.build()
 
