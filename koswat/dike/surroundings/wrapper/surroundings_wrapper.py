@@ -22,6 +22,9 @@ class SurroundingsWrapper:
     apply_railways: bool
     apply_waters: bool
 
+    reinforcement_min_separation: float
+    reinforcement_min_buffer: float
+
     buildings_polderside: KoswatSurroundingsPolderside
     buildings_dikeside: KoswatSurroundingsProtocol
 

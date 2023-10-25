@@ -104,8 +104,8 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         _strategy_input = StrategyInput(
             locations_matrix=_matrix,
-            structure_buffer=10,
-            min_space_between_structures=50,
+            structure_buffer=self.run_scenario_settings.surroundings.reinforcement_min_buffer,
+            min_space_between_structures=self.run_scenario_settings.surroundings.reinforcement_min_separation,
         )
 
         # In theory this will become a factory (somewhere) where
