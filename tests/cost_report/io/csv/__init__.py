@@ -1,4 +1,5 @@
 from typing import Type
+import pytest
 
 from shapely.geometry import Point
 
@@ -71,7 +72,6 @@ def _create_report(
     ]
     return _report
 
-
 def get_locations_reinforcements(
     summary: KoswatSummary, available_locations: list[PointSurroundings]
 ) -> list[StrategyLocationReinforcements]:
@@ -98,8 +98,8 @@ def get_locations_reinforcements(
         )
     return _matrix
 
-
-def get_valid_test_summary() -> KoswatSummary:
+@pytest.fixture
+def valid_mocked_summary() -> KoswatSummary:
     _required_profiles = [
         CofferdamReinforcementProfile,
         PipingWallReinforcementProfile,
