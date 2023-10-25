@@ -48,7 +48,6 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
         _profile_type_key = "Profile type"
         _cost_per_km_key = "Cost per km (€)"
-        _locations_key = "locations"
 
         _dict_of_entries = defaultdict(list)
         for _loc_prof_report in self.koswat_summary.locations_profile_report_list:
@@ -60,7 +59,6 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
                 _loc_prof_report.profile_cost_report.volume_cost_parameters.__dict__,
                 _dict_of_entries,
             )
-            # _dict_of_entries[_locations_key].append(_loc_prof_report.locations)
 
         if not _dict_of_entries:
             logging.error("No entries generated for the CSV Matrix.")
