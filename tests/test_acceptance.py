@@ -71,7 +71,7 @@ class TestAcceptance:
         LayersCases.cases,
     )
     @pytest.mark.slow
-    def test_koswat_run_as_sandbox_phased_out(
+    def test_koswat_run_as_sandbox_with_surroundings(
         self,
         input_profile_case,
         scenario_case: KoswatProfileBase,

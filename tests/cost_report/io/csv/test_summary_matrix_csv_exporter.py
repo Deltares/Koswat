@@ -32,7 +32,7 @@ class TestSummaryMatrixCsvExporter:
         assert _export_path.exists()
         _read_text = _export_path.read_text(encoding="utf-8")
         _expected_text = """;;Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand
-;;Cost per km (€);0.0;8144.4;16288.8;24433.2
+;;Cost per km (€/km);0.0;8144.4;16288.8;24433.2
 ;;Reused grass volume (volume / surface):;nan;nan;nan;nan
 ;;Reused grass volume (cost):;nan;nan;nan;nan
 ;;Aanleg grass volume (volume / surface):;nan;nan;nan;nan

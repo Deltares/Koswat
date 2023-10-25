@@ -2,6 +2,7 @@ import logging
 import math
 from collections import defaultdict
 from typing import Any, Type
+from itertools import groupby
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
@@ -22,6 +23,23 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
     def __init__(self) -> None:
         self.koswat_summary = None
+
+    @staticmethod
+    def dict_to_costs_row(key: Any, values: list[Any]) -> list[str]:
+        _placeholders = 2
+        values.insert(0, key)
+        for n in range(0, _placeholders):
+            values.insert(n, "")
+        return values
+
+    @staticmethod
+    def dict_of_dicts_to_list_of_cost_rows(
+        dict_of_dicts: list[dict],
+    ) -> list[list[str]]:
+        return [
+            SummaryMatrixCsvFomBuilder.dict_to_costs_row(_parameter_key, _param_values)
+            for _parameter_key, _param_values in dict_of_dicts.items()
+        ]
 
     def get_summary_reinforcement_type_column_order(
         self,
@@ -52,28 +70,72 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             logging.error("No entries generated for the CSV Matrix.")
             return _csv_fom
 
-        def dict_to_csv_row(key, placeholders: int) -> list[str]:
-            row = _dict_of_entries[key]
-            row.insert(0, key)
-            for n in range(0, placeholders):
-                row.insert(n, "")
-            return row
+        _cost_per_km_rows = [
+            self.dict_to_costs_row(_cost_per_km_key, _dict_of_entries[_cost_per_km_key])
+        ]
+        _volume_costs_rows = self.dict_of_dicts_to_list_of_cost_rows(
+            dict(
+                filter(
+                    lambda x: self._volume_surface_key_column in x[0]
+                    or self._cost_key_column in x[0],
+                    _dict_of_entries.items(),
+                )
+            )
+        )
+        _selected_measure_cost_rows = self.dict_of_dicts_to_list_of_cost_rows(
+            self._get_cost_per_selected_measure()
+        )
 
         _location_rows = self._get_locations_matrix(
             self.koswat_summary.reinforcement_per_locations
         )
-        _required_placeholders = 2  # Fix value.
-        _headers = dict_to_csv_row(_profile_type_key, _required_placeholders)
-        _cost_rows = [
-            dict_to_csv_row(_parameter_key, _required_placeholders)
-            for _parameter_key in _dict_of_entries.keys()
-            if self._volume_surface_key_column in _parameter_key
-            or self._cost_key_column in _parameter_key
-        ]
-        _cost_rows.insert(0, dict_to_csv_row(_cost_per_km_key, _required_placeholders))
-        _csv_fom.headers = _headers
-        _csv_fom.entries = _cost_rows + _location_rows
+        _csv_fom.entries = (
+            _cost_per_km_rows
+            + _volume_costs_rows
+            + _selected_measure_cost_rows
+            + _location_rows
+        )
+        
+        _csv_fom.headers = self.dict_to_costs_row(
+            _profile_type_key, _dict_of_entries[_profile_type_key]
+        )
+
         return _csv_fom
+
+    def get_total_meters_per_selected_measure(
+        self,
+    ) -> list[tuple[Type[ReinforcementProfileProtocol], float]]:
+        # We consider the distance between adjacent locations
+        # ALWAYS to be of 1 meter.
+        return dict(
+            (k, len(list(g)))
+            for k, g in groupby(
+                self.koswat_summary.reinforcement_per_locations,
+                lambda x: x.selected_measure,
+            )
+        )
+
+    def _get_cost_per_selected_measure(self) -> dict:
+        _total_measure_cost_key = "Total measure cost"
+        _total_measure_meters_key = "Total measure meters"
+        _selected_measures_rows = defaultdict(list)
+        _total_meters_per_selected_measure = (
+            self.get_total_meters_per_selected_measure()
+        )
+        for _ordered_reinf in self.get_summary_reinforcement_type_column_order():
+            _total_meters = _total_meters_per_selected_measure.get(_ordered_reinf, 0)
+            _selected_measures_rows[_total_measure_meters_key].append(_total_meters)
+            _total_cost = (
+                _total_meters
+                * self.koswat_summary.get_report_by_profile(_ordered_reinf).cost_per_km
+            )
+            _selected_measures_rows[_total_measure_cost_key].append(_total_cost)
+
+        _selected_measures_rows[_total_measure_cost_key].append(
+            sum(_selected_measures_rows[_total_measure_cost_key])
+        )
+
+        return dict(_selected_measures_rows)
 
     def _get_locations_matrix(
         self,

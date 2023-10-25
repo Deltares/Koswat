@@ -79,7 +79,6 @@ def get_valid_test_summary() -> KoswatSummary:
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()
-    _summary.available_locations = _available_points
     _summary.locations_profile_report_list = list(
         map(
             lambda x: _create_report(x, _available_points, _required_profiles.index(x)),
