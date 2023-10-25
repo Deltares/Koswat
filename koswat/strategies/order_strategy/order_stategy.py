@@ -20,20 +20,25 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.strategies.strategy_input import StrategyInput
 
 
 class OrderStrategy:
     _location_matrix: KoswatSummaryLocationMatrix
     _order_reinforcement: list[Type[ReinforcementProfile]]
+    _structure_buffer: float
+    _min_space_between_structures: float
 
-    def __init__(self, locations_matrix: KoswatSummaryLocationMatrix) -> None:
-        self._location_matrix = locations_matrix
+    def __init__(self, strategy_input: StrategyInput) -> None:
         self._order_reinforcement = [
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,
             cofferdam_reinforcement_profile,
         ]
+        self._location_matrix = strategy_input.locations_matrix
+        self._structure_buffer = strategy_input.structure_buffer
+        self._min_space_between_structures = strategy_input.min_space_between_structures
 
     def get_locations_reinforcements(
         self,

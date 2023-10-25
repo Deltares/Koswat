@@ -26,6 +26,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.order_strategy.order_stategy import OrderStrategy
+from koswat.strategies.strategy_input import StrategyInput
 
 
 class KoswatSummaryBuilder(BuilderProtocol):
@@ -97,7 +98,19 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _matrix = KoswatSummaryLocationMatrixBuilder(
             locations_profile_report_list, available_locations
         ).build()
-        return OrderStrategy(_matrix).get_locations_reinforcements()
+
+        # TODO: `structure_buffer` and `min_space_between_structures` should come
+        # from the ini files.
+
+        _strategy_input = StrategyInput(
+            locations_matrix=_matrix,
+            structure_buffer=10,
+            min_space_between_structures=50,
+        )
+
+        # In theory this will become a factory (somewhere) where
+        # the adequate strategy will be chosen.
+        return OrderStrategy(_strategy_input).get_locations_reinforcements()
 
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()
