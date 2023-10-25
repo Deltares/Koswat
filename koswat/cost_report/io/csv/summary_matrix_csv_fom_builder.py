@@ -35,6 +35,14 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
     def __init__(self) -> None:
         self.koswat_summary = None
 
+    def get_summary_reinforcement_type_column_order(
+        self,
+    ) -> list[Type[ReinforcementProfileProtocol]]:
+        return [
+            type(_report.profile_cost_report.reinforced_profile)
+            for _report in self.koswat_summary.locations_profile_report_list
+        ]
+
     def build(self) -> KoswatCsvFom:
         _csv_fom = KoswatCsvFom()
 
@@ -44,7 +52,9 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
         _dict_of_entries = defaultdict(list)
         for _loc_prof_report in self.koswat_summary.locations_profile_report_list:
-            _dict_of_entries[_profile_type_key].append(_loc_prof_report.profile_type)
+            _dict_of_entries[_profile_type_key].append(
+                _loc_prof_report.profile_type_name
+            )
             _dict_of_entries[_cost_per_km_key].append(_loc_prof_report.cost_per_km)
             self._get_volume_cost_parameters(
                 _loc_prof_report.profile_cost_report.volume_cost_parameters.__dict__,
@@ -64,14 +74,9 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             return row
 
         _location_rows = self._get_locations_matrix(
-            # _dict_of_entries[_locations_key], self.koswat_summary.available_locations
             self.koswat_summary.reinforcement_per_locations
         )
-        _required_placeholders = (
-            len(_location_rows[0])
-            - len(self.koswat_summary.locations_profile_report_list)
-            - 1
-        )
+        _required_placeholders = 2  # Fix value.
         _headers = dict_to_csv_row(_profile_type_key, _required_placeholders)
         _cost_rows = [
             dict_to_csv_row(_parameter_key, _required_placeholders)
@@ -102,16 +107,11 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
         # Initiate locations matrix.
         _matrix = defaultdict(list)
-        _summary_columns_order = [
-            SoilReinforcementProfile,
-            PipingWallReinforcementProfile,
-            StabilityWallReinforcementProfile,
-            CofferdamReinforcementProfile,
-        ]
+
         for _reinforcement_per_location in reinforcement_per_locations:
             _suitable_locations = [
                 int(_type in _reinforcement_per_location.available_measures)
-                for _type in _summary_columns_order
+                for _type in self.get_summary_reinforcement_type_column_order()
             ]
             _matrix[_reinforcement_per_location.location] = _suitable_locations + [
                 _reinforcement_per_location.selected_measure.output_name
