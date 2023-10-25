@@ -16,6 +16,12 @@ from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_piping_settings import (
+    KoswatPipingSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,
 )
@@ -279,6 +285,9 @@ class TestReinforcementProfileBuilderFactory:
         _reinforcement_builder.base_profile = (
             reinforcement_profile_case.koswat_input_profile_base_case
         )
+        _reinforcement_builder.reinforcement_settings = KoswatReinforcementSettings(
+            piping_settings=KoswatPipingSettings()
+        )
         _reinforcement_builder.scenario = (
             reinforcement_profile_case.koswat_scenario_case
         )
@@ -339,9 +348,13 @@ class TestReinforcementProfileBuilderFactory:
         if not scenario.kruin_breedte or math.isnan(scenario.kruin_breedte):
             scenario.kruin_breedte = input_profile.kruin_breedte
 
+        _reinforcement_settings = KoswatReinforcementSettings(
+            piping_settings=KoswatPipingSettings()
+        )
+
         # 2. Run test.
         _reinforcement_profile = ReinforcementProfileBuilderFactory(
-            _base_profile, scenario
+            _base_profile, _reinforcement_settings, scenario
         ).build(profile_type)
 
         # 3. Verify expectations.

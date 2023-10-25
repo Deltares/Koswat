@@ -4,6 +4,12 @@ from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
+from koswat.configuration.settings.reinforcements.koswat_piping_settings import (
+    KoswatPipingSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -50,6 +56,9 @@ class TestKoswatSummaryBuilder:
         _builder = KoswatSummaryBuilder()
         _settings = KoswatRunScenarioSettings()
         _settings.scenario = ScenarioCases.default
+        _settings.reinforcement_settings = KoswatReinforcementSettings(
+            piping_settings=KoswatPipingSettings(),
+        )
         _settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
@@ -103,6 +112,9 @@ class TestKoswatSummaryBuilder:
         _builder = KoswatSummaryBuilder()
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
+        _run_settings.reinforcement_settings = KoswatReinforcementSettings(
+            piping_settings=KoswatPipingSettings(),
+        )
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.costs = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()

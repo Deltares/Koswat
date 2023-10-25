@@ -71,7 +71,7 @@ reinforcement_profile_cases = [
                 binnen_berm_hoogte=0,
                 binnen_berm_breedte=0,
                 binnen_maaiveld=0,
-                length_piping_wall=4.5,
+                length_piping_wall=0,
             ),
             koswat_layers_case=LayersCases.without_layers,
             p4_x_coordinate=6,
