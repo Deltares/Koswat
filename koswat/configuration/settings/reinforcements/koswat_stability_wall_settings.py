@@ -15,8 +15,8 @@ class KoswatStabilityWallSettings(KoswatConfigProtocol):
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     versteiling_binnentalud: float = 0
     min_lengte_stabiliteitswand: float = 0
-    overgang_damwand_diepwand: float = 0
-    max_lengte_stabiliteitswand: float = 0
+    overgang_damwand_diepwand: float = 99
+    max_lengte_stabiliteitswand: float = 99
 
     def is_valid(self) -> bool:
         return True

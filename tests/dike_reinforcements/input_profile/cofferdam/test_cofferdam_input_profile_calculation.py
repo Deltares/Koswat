@@ -1,6 +1,9 @@
 import pytest
 
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
+    KoswatCofferdamSettings,
+)
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
@@ -28,18 +31,26 @@ class TestCofferdamInputProfileCalculation:
             kruin_hoogte: float
             binnen_maaiveld: float
 
+        class MockSettings(KoswatCofferdamSettings):
+            min_lengte_kistdam: float
+            max_lengte_kistdam: float
+
         # 1. Define test data.
         _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 8
-        _input_data.binnen_maaiveld = 2
         _input_data.pleistoceen = -5
-        _scenario = KoswatScenario()
-        _scenario.d_h = 2
-        _expected_result = 17  # TODO
+        _input_data.aquifer = -2
+        _cofferdam_settings = MockSettings()
+        _cofferdam_settings.min_lengte_kistdam = 0
+        _cofferdam_settings.max_lengte_kistdam = 99
+        _soil_binnen_berm_breedte = 12
+        _kruin_hoogte = 8
+        _expected_result = 13.5
 
         # 2. Run test.
-        _result = _calculator._calculate_new_length_coffer_dam(_input_data, _scenario)
+        _result = _calculator._calculate_length_coffer_dam(
+            _input_data, _cofferdam_settings, _soil_binnen_berm_breedte, _kruin_hoogte
+        )
 
         # 3. Verify expectations
         assert _result == _expected_result
@@ -114,17 +125,25 @@ class TestCofferdamInputProfileCalculation:
         class MockInputData(KoswatInputProfileProtocol):
             dike_section: str
             kruin_hoogte: float
+            binnen_berm_breedte: float
             binnen_maaiveld: float
             binnen_talud: float
             kruin_breedte: float
             buiten_berm_breedte: float
             buiten_talud: float
+            pleistoceen: float
+            aquifer: float
+
+        class MockSettings(KoswatCofferdamSettings):
+            min_lengte_kistdam: float
+            max_lengte_kistdam: float
 
         # 1. Define test data.
         _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.dike_section = "mocked_section"
         _input_data.kruin_hoogte = 30
+        _input_data.binnen_berm_breedte = 9.0
         _input_data.binnen_maaiveld = 2.3
         _input_data.binnen_talud = 4.5
         _input_data.kruin_breedte = 5.6
@@ -132,13 +151,20 @@ class TestCofferdamInputProfileCalculation:
         _input_data.buiten_berm_hoogte = 7.8
         _input_data.buiten_berm_breedte = 8.9
         _input_data.buiten_talud = 9.9
+        _input_data.pleistoceen = -6.7
+        _input_data.aquifer = -2.3
+        _cofferdam_settings = MockSettings()
+        _cofferdam_settings.min_lengte_kistdam = 0
+        _cofferdam_settings.max_lengte_kistdam = 99
         _scenario = KoswatScenario()
         _scenario.d_h = 12
         _scenario.kruin_breedte = 6.7
         _scenario.buiten_talud = 7.8
 
         # 2. Run test.
-        _result = _calculator._calculate_new_input_profile(_input_data, _scenario)
+        _result = _calculator._calculate_new_input_profile(
+            _input_data, _cofferdam_settings, _scenario
+        )
 
         # 3. Verify expectations
         assert isinstance(_result, CofferDamInputProfile)

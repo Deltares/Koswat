@@ -14,8 +14,8 @@ class KoswatPipingWallSettings(KoswatConfigProtocol):
     constructive_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     min_lengte_kwelscherm: float = 0
-    overgang_cbwand_damwand: float = 0
-    max_lengte_kwelscherm: float = 0
+    overgang_cbwand_damwand: float = 99
+    max_lengte_kwelscherm: float = 99
 
     def is_valid(self) -> bool:
         return True

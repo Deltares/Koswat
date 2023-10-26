@@ -295,7 +295,7 @@ class TestReinforcementProfileBuilderFactory:
             reinforcement_profile_case.koswat_input_profile_base_case
         )
         _reinforcement_builder.reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings,
+            soil_settings=KoswatSoilSettings(),
             piping_wall_settings=KoswatPipingWallSettings(),
             stability_wall_settings=KoswatStabilityWallSettings(),
             cofferdam_settings=KoswatCofferdamSettings(),

@@ -1,6 +1,9 @@
 import pytest
 
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
+    KoswatPipingWallSettings,
+)
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile_calculation import (
@@ -24,21 +27,34 @@ class TestPipingWallInputProfileCalculation:
     def test_calculate_length_piping_wall(self):
         class MockProfile(KoswatInputProfileProtocol):
             binnen_berm_breedte: float
+            binnen_maaiveld: float
+
+        class MockSettings(KoswatPipingWallSettings):
+            min_lengte_kwelscherm: float
+            max_lengte_kwelscherm: float
 
         # 1. Define test data.
         _calculator = PipingWallInputProfileCalculation()
         _profile_data = MockProfile()
         _profile_data.binnen_berm_breedte = 6
+        _profile_data.binnen_maaiveld = 1
         _profile_data.pleistoceen = -5
-        _expected_result = 2.5  # TODO
+        _profile_data.aquifer = -2
+        _piping_wall_settings = MockSettings()
+        _piping_wall_settings.min_lengte_kwelscherm = 0
+        _piping_wall_settings.max_lengte_kwelscherm = 99
+        _soil_binnen_berm_breedte = 12.5
+        _expected_result = 6.1
 
         # 2. Run test.
-        _result = _calculator._calculate_length_piping_wall(_profile_data)
+        _result = _calculator._calculate_length_piping_wall(
+            _profile_data, _piping_wall_settings, _soil_binnen_berm_breedte
+        )
 
         # 3. Verify Expectations.
         assert _result == _expected_result
 
-    def test_calculate_length_piping_wall(self):
+    def test_calculate_new_kruin_hoogte(self):
         class MockProfile(KoswatInputProfileProtocol):
             kruin_hoogte: float
 

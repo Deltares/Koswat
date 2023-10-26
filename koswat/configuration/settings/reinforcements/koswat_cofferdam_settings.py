@@ -13,7 +13,7 @@ class KoswatCofferdamSettings(KoswatConfigProtocol):
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     constructive_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     min_lengte_kistdam: float = 0
-    max_lengte_kistdam: float = 0
+    max_lengte_kistdam: float = 99
 
     def is_valid(self) -> bool:
         return True
