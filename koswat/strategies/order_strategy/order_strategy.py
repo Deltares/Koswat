@@ -35,7 +35,9 @@ class OrderStrategy:
         self._order_reinforcement = self.get_default_order_for_reinforcements()
 
     @staticmethod
-    def get_default_order_for_reinforcements() -> list[Type[ReinforcementProfileProtocol]]:
+    def get_default_order_for_reinforcements() -> list[
+        Type[ReinforcementProfileProtocol]
+    ]:
         return [
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
@@ -81,7 +83,7 @@ class OrderStrategy:
             _upper_limit = int(
                 min(
                     _new_visited + self._structure_buffer,
-                    _len_location_reinforcements - _new_visited,
+                    _len_location_reinforcements - 1,
                 )
             )
             _candidate_value = self._order_reinforcement.index(_profile_type)
