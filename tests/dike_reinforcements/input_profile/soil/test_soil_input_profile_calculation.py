@@ -104,9 +104,13 @@ class TestSoilInputProfileCalculation:
         _old_profile.binnen_berm_breedte = 0
         _old_profile.binnen_maaiveld = 0
         _new_profile = KoswatInputProfileBase()
-        _new_profile.binnen_talud = 3.5714
+        _new_profile.buiten_maaiveld = 0
+        _new_profile.buiten_talud = 3
         _new_profile.buiten_berm_breedte = 0
         _new_profile.kruin_breedte = 5
+        _new_profile.kruin_hoogte = 7
+        _new_profile.binnen_talud = 3.5714
+        _new_profile.binnen_maaiveld = 0
 
         # 2. Run test
         _new_binnen_berm_breedte = (
