@@ -3,7 +3,8 @@ from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_fom_builder import (
     SummaryMatrixCsvFomBuilder,
 )
-from tests.cost_report.io.csv import get_valid_test_summary
+from koswat.cost_report.summary.koswat_summary import KoswatSummary
+from tests.cost_report.io.csv import valid_mocked_summary
 
 
 class TestSummaryMatrixCsvFomBuilder:
@@ -13,10 +14,10 @@ class TestSummaryMatrixCsvFomBuilder:
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.koswat_summary
 
-    def test_build(self):
+    def test_build(self, valid_mocked_summary: KoswatSummary):
         # 1. Define test data.
         _builder = SummaryMatrixCsvFomBuilder()
-        _builder.koswat_summary = get_valid_test_summary()
+        _builder.koswat_summary = valid_mocked_summary
 
         # 2. Run test
         _matrix_csv_fom = _builder.build()

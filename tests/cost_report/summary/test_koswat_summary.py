@@ -6,4 +6,4 @@ class TestKoswatSummary:
         _summary = KoswatSummary()
         assert isinstance(_summary, KoswatSummary)
         assert not any(_summary.locations_profile_report_list)
-        assert not any(_summary.available_locations)
+        assert not any(_summary.reinforcement_per_locations)

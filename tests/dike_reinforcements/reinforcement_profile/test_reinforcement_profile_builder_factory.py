@@ -277,6 +277,7 @@ class TestReinforcementProfileBuilderFactory:
             expected_reinforcement_profile=_expected_reinforcement,
         )
 
+    @pytest.mark.slow
     def test_given_profile_and_scenario_calculate_new_geometry_without_layers(
         self,
         reinforcement_profile_case: ReinforcementProfileCase,

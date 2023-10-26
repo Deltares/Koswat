@@ -6,8 +6,9 @@ from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
 )
+from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from tests import test_results
-from tests.cost_report.io.csv import get_valid_test_summary
+from tests.cost_report.io.csv import valid_mocked_summary
 
 
 class TestSummaryMatrixCsvExporter:
@@ -16,17 +17,15 @@ class TestSummaryMatrixCsvExporter:
         assert isinstance(_exporter, SummaryMatrixCsvExporter)
         assert isinstance(_exporter, KoswatExporterProtocol)
 
-    def test_summary_matrix_csv_exporter_export(self, request: pytest.FixtureRequest):
+    def test_summary_matrix_csv_exporter_export(self, valid_mocked_summary: KoswatSummary, request: pytest.FixtureRequest):
         # 1. Define test data.
-        _test_dir = test_results / request.node.name
-        _export_path = _test_dir / "matrix_results.csv"
+        _test_dir = test_results.joinpath(request.node.name)
+        _export_path = _test_dir.joinpath("matrix_results.csv")
         if _test_dir.is_dir():
             shutil.rmtree(_test_dir)
 
-        _fom_summary = get_valid_test_summary()
-
         # 2. Run test
-        SummaryMatrixCsvExporter().export(_fom_summary, _export_path)
+        SummaryMatrixCsvExporter().export(valid_mocked_summary, _export_path)
 
         # 3. Validate results
         assert _export_path.exists()
@@ -53,8 +52,10 @@ class TestSummaryMatrixCsvExporter:
 ;;New core layer surface (cost):;nan;nan;nan;nan
 ;;New maaiveld surface (volume / surface):;nan;nan;nan;nan
 ;;New maaiveld surface (cost):;nan;nan;nan;nan
-A;0.24;0.42;0;1;1;1
-A;2.4;0.42;0;0;1;1
-A;0.24;2.4;0;0;0;1
-A;2.4;2.4;0;0;0;0"""
+;;Total measure meters;0;1;1;2
+;;Total measure cost;0.0;8144.4;16288.8;48866.4;73299.6
+A;0.24;0.42;0;1;1;1;Kwelscherm
+A;2.4;0.42;0;0;1;1;Grondmaatregel profiel
+A;0.24;2.4;0;0;0;1;Stabiliteitswand
+A;2.4;2.4;0;0;0;0;Stabiliteitswand"""
         assert _expected_text == _read_text
