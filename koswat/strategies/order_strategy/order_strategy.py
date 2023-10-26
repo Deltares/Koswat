@@ -2,15 +2,13 @@ from __future__ import annotations
 import logging
 from typing import Type
 from itertools import groupby
-from koswat.cost_report.summary.koswat_summary_location_matrix import (
-    KoswatSummaryLocationMatrix,
-)
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
@@ -28,8 +26,8 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class OrderStrategy:
-    _location_matrix: KoswatSummaryLocationMatrix
-    _order_reinforcement: list[Type[ReinforcementProfile]]
+    _location_matrix: dict[PointSurroundings, list[Type[ReinforcementProfileProtocol]]]
+    _order_reinforcement: list[Type[ReinforcementProfileProtocol]]
     _structure_buffer: float
     _min_space_between_structures: float
 
@@ -165,7 +163,7 @@ class OrderStrategy:
         for (
             _location,
             _reinforcements,
-        ) in self._location_matrix.locations_matrix.items():
+        ) in self._location_matrix.items():
             _selected_reinforcement = next(
                 (_or for _or in self._order_reinforcement if _or in _reinforcements),
                 self._order_reinforcement[-1],
