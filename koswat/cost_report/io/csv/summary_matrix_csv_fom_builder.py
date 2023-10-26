@@ -25,19 +25,20 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         self.koswat_summary = None
 
     @staticmethod
-    def dict_to_costs_row(key: Any, values: list[Any]) -> list[str]:
-        _placeholders = 2
+    def dict_to_costs_row(key: Any, values: list[Any], placeholders: int) -> list[str]:
         values.insert(0, key)
-        for n in range(0, _placeholders):
+        for n in range(0, placeholders):
             values.insert(n, "")
         return values
 
     @staticmethod
     def dict_of_dicts_to_list_of_cost_rows(
-        dict_of_dicts: list[dict],
+        dict_of_dicts: list[dict], placeholders: int
     ) -> list[list[str]]:
         return [
-            SummaryMatrixCsvFomBuilder.dict_to_costs_row(_parameter_key, _param_values)
+            SummaryMatrixCsvFomBuilder.dict_to_costs_row(
+                _parameter_key, _param_values, placeholders
+            )
             for _parameter_key, _param_values in dict_of_dicts.items()
         ]
 
@@ -70,8 +71,11 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             logging.error("No entries generated for the CSV Matrix.")
             return _csv_fom
 
+        _placeholders = 2 if any(self.koswat_summary.reinforcement_per_locations) else 0
         _cost_per_km_rows = [
-            self.dict_to_costs_row(_cost_per_km_key, _dict_of_entries[_cost_per_km_key])
+            self.dict_to_costs_row(
+                _cost_per_km_key, _dict_of_entries[_cost_per_km_key], _placeholders
+            )
         ]
         _volume_costs_rows = self.dict_of_dicts_to_list_of_cost_rows(
             dict(
@@ -80,10 +84,11 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
                     or self._cost_key_column in x[0],
                     _dict_of_entries.items(),
                 )
-            )
+            ),
+            _placeholders,
         )
         _selected_measure_cost_rows = self.dict_of_dicts_to_list_of_cost_rows(
-            self._get_cost_per_selected_measure()
+            self._get_cost_per_selected_measure(), _placeholders
         )
 
         _location_rows = self._get_locations_matrix(
@@ -97,7 +102,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         )
 
         _csv_fom.headers = self.dict_to_costs_row(
-            _profile_type_key, _dict_of_entries[_profile_type_key]
+            _profile_type_key, _dict_of_entries[_profile_type_key], _placeholders
         )
 
         return _csv_fom
@@ -107,7 +112,10 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
     ) -> list[tuple[Type[ReinforcementProfileProtocol], float]]:
         # We consider the distance between adjacent locations
         # ALWAYS to be of 1 meter.
-        _sorted_reinforcements = sorted(self.koswat_summary.reinforcement_per_locations, key=lambda x: x.selected_measure.output_name)
+        _sorted_reinforcements = sorted(
+            self.koswat_summary.reinforcement_per_locations,
+            key=lambda x: x.selected_measure.output_name,
+        )
         return dict(
             (k, len(list(g)))
             for k, g in groupby(
