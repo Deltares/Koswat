@@ -16,6 +16,9 @@ from koswat.cost_report.profile.volume_cost_parameters_calculator import (
     VolumeCostParametersCalculator,
 )
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
+    ReinforcementInputProfileProtocol,
+)
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementCoatingLayer,
     ReinforcementLayersWrapper,
@@ -90,19 +93,26 @@ class TestVolumeCostParametersBuilder:
         return _mocked_layer
 
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
+        class MockedReinforcementInput(ReinforcementInputProfileProtocol):
+            construction_length: float = 0
+
         class MockedReinforcement(StandardReinforcementProfile):
             output_name: str = "Mocked reinforcement"
+            input_data: MockedReinforcementInput
 
             @property
             def new_ground_level_surface(self) -> float:
                 return 42.0
 
-        return MockedReinforcement()
+        _reinforcement = MockedReinforcement()
+        _reinforcement.input_data = MockedReinforcementInput()
+        return _reinforcement
 
     def test__get_volume_cost_calculator_with_valid_data(self):
         # 1. Define test data.
         _builder = VolumeCostParametersBuilder()
         _builder.reinforced_profile = self._get_mocked_reinforcement()
+        _builder.reinforced_profile.input_data.construction_length = 10
 
         # Set layers wrapper
         _wrapper = ReinforcementLayersWrapper()
@@ -132,6 +142,7 @@ class TestVolumeCostParametersBuilder:
         # 1. Define test data.
         _builder = VolumeCostParametersBuilder()
         _builder.reinforced_profile = self._get_mocked_reinforcement()
+        _builder.reinforced_profile.input_data.construction_length = 10
 
         # Set layers wrapper
         _wrapper = ReinforcementLayersWrapper()
