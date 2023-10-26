@@ -126,6 +126,7 @@ class TestVolumeCostParametersBuilder:
         assert _vcp.new_grass_layer_volume == 4.8
         assert _vcp.new_grass_layer_surface == 8.4
         assert _vcp.new_maaiveld_surface == 42
+        assert _vcp.construction_length == 10
 
     def test_build_with_valid_data(self):
         # 1. Define test data.
@@ -177,3 +178,4 @@ class TestVolumeCostParametersBuilder:
         evaluate_cost_and_volume(_vcp.new_core_layer_surface, 0.6, 2.1)
         evaluate_cost_and_volume(_vcp.new_maaiveld_surface, 0.25, 42)
         evaluate_cost_and_volume(_vcp.removed_material_volume, 7.07, 1.2)
+        evaluate_cost_and_volume(_vcp.construction_length, 0, 10)  # TODO

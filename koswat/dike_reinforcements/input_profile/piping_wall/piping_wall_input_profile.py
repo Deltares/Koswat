@@ -14,3 +14,7 @@ class PipingWallInputProfile(KoswatInputProfileBase, ReinforcementInputProfilePr
     @property
     def reinforcement_domain_name(self) -> str:
         return "Kwelscherm"
+
+    @property
+    def construction_length(self) -> float:
+        return self.length_piping_wall

@@ -68,6 +68,9 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         _calculator.new_maaiveld_surface = (
             self.reinforced_profile.new_ground_level_surface
         )
+        _calculator.construction_length = (
+            self.reinforced_profile.input_data.construction_length
+        )
         return _calculator
 
     def _get_volume_cost_parameter(
@@ -115,5 +118,8 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         )
         vc_parameters.new_maaiveld_surface = self._get_volume_cost_parameter(
             _vcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
+        )
+        vc_parameters.construction_length = self._get_volume_cost_parameter(
+            _vcp.construction_length, 0  # TODO
         )
         return vc_parameters
