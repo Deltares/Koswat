@@ -69,11 +69,13 @@ class OrderStrategy:
         _visited = 0
         for _profile_type, _sub_group in _grouped_by_measure:
             # Define indices.
-            _lower_limit = max(0, _visited - self._structure_buffer)
+            _lower_limit = int(max(0, _visited - self._structure_buffer))
             _new_visited = _visited + len(_sub_group)
-            _upper_limit = min(
-                _new_visited + self._structure_buffer,
-                _len_location_reinforcements - _new_visited,
+            _upper_limit = int(
+                min(
+                    _new_visited + self._structure_buffer,
+                    _len_location_reinforcements - _new_visited,
+                )
             )
             _candidate_value = self._order_reinforcement.index(_profile_type)
 
@@ -103,9 +105,16 @@ class OrderStrategy:
         self, location_reinforcements: list[StrategyLocationReinforcements]
     ) -> None:
         _grouped_by_measure = self._group_by_selected_measure(location_reinforcements)
-        # TODO: Discuss recursivity if we leave the current value (line 111 and 122).
+
+        # TODO: Discuss recursivity. If we need to guarantee all constructions meet the
+        # requirements, then line 128 needs to be rethought and apply recursivity.
+        # As currently we only ensure no construction is replaced by a "lower" type.
         # if all(len(rg) >= self._min_space_between_structures for _, rg in _grouped):
         #     return
+        
+        # TODO: Discuss whether we need to replace a construction with a "lower" type
+        # or leaving it as it is (current approach).
+
         for _idx, (_profile_type, _sub_group) in enumerate(_grouped_by_measure):
             if len(_sub_group) >= self._min_space_between_structures:
                 continue
