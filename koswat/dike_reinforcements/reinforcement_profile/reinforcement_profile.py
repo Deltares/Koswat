@@ -12,6 +12,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 
 
 class ReinforcementProfile(ReinforcementProfileProtocol, KoswatProfileBase):
+    output_name: str
     input_data: ReinforcementInputProfileProtocol
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol

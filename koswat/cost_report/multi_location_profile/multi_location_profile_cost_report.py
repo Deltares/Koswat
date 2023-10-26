@@ -34,7 +34,7 @@ class MultiLocationProfileCostReport(CostReportProtocol):
         return self.profile_cost_report.total_volume * len(self.locations)
 
     @property
-    def profile_type(self) -> str:
+    def profile_type_name(self) -> str:
         if (
             not self.profile_cost_report
             or not self.profile_cost_report.reinforced_profile

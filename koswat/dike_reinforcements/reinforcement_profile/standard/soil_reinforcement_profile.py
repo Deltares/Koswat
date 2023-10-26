@@ -11,10 +11,11 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 
 
 class SoilReinforcementProfile(StandardReinforcementProfile):
+    output_name: str = "Grondmaatregel profiel"
     input_data: SoilInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
     def __str__(self) -> str:
-        return "Grondmaatregel profiel"
+        return self.output_name

@@ -11,10 +11,11 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 
 
 class StabilityWallReinforcementProfile(StandardReinforcementProfile):
+    output_name: str = "Stabiliteitswand"
     input_data: StabilityWallInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
     def __str__(self) -> str:
-        return "Stabiliteitswand"
+        return self.output_name

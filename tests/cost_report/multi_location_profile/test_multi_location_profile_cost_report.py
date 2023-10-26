@@ -11,7 +11,7 @@ class TestMultipleLocationProfileCostReport:
         assert isinstance(_report, MultiLocationProfileCostReport)
         assert not any(_report.locations)
         assert not _report.profile_cost_report
-        assert not _report.profile_type
+        assert not _report.profile_type_name
         assert math.isnan(_report.total_cost)
         assert math.isnan(_report.total_volume)
         assert math.isnan(_report.cost_per_km)

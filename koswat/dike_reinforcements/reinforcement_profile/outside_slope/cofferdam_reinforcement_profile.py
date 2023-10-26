@@ -11,10 +11,11 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slop
 
 
 class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
+    output_name: str = "Kistdam"
     input_data: CofferDamInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
     def __str__(self) -> str:
-        return "Kistdam"
+        return self.output_name
