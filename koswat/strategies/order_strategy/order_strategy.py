@@ -32,7 +32,11 @@ class OrderStrategy:
     _min_space_between_structures: float
 
     def __init__(self) -> None:
-        self._order_reinforcement = [
+        self._order_reinforcement = self.get_default_order_for_reinforcements()
+
+    @staticmethod
+    def get_default_order_for_reinforcements() -> list[Type[ReinforcementProfileProtocol]]:
+        return [
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,

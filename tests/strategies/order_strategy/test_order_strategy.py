@@ -8,6 +8,7 @@ class TestOrderStrategy:
         # of parameterless constructors is met.
         _strategy = OrderStrategy()
         assert isinstance(_strategy, OrderStrategy)
+        assert len(_strategy._order_reinforcement) == 4
 
     def test_from_strategy_input_sets_values(self):
         # 1. Define test data.
