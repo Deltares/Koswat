@@ -91,6 +91,8 @@ class TestVolumeCostParametersBuilder:
 
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcement(StandardReinforcementProfile):
+            output_name: str = "Mocked reinforcement"
+
             @property
             def new_ground_level_surface(self) -> float:
                 return 42.0

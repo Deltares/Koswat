@@ -77,7 +77,7 @@ class KoswatHandler:
             except Exception as e_info:
                 logging.error(
                     "Failed to export report comparison plots for {}.".format(
-                        _multi_report.profile_type
+                        _multi_report.profile_type_name
                     )
                 )
                 logging.error(e_info)

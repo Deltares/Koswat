@@ -9,12 +9,24 @@ from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.multi_location_profile import (
     MultiLocationProfileCostReportBuilder,
 )
+from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
+    MultiLocationProfileCostReport,
+)
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
+from koswat.cost_report.summary.koswat_summary_location_matrix_builder import (
+    KoswatSummaryLocationMatrixBuilder,
+)
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
+    ReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.order_strategy.order_stategy import OrderStrategy
+from koswat.strategies.strategy_input import StrategyInput
 
 
 class KoswatSummaryBuilder(BuilderProtocol):
@@ -79,6 +91,28 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _builder.koswat_costs = self.run_scenario_settings.costs
         return _builder
 
+    def _get_final_reinforcement_per_location(
+        self,
+        locations_profile_report_list: list[MultiLocationProfileCostReport],
+        available_locations: list[PointSurroundings],
+    ) -> dict[PointSurroundings, ReinforcementProfile]:
+        _matrix = KoswatSummaryLocationMatrixBuilder(
+            locations_profile_report_list, available_locations
+        ).build()
+
+        # TODO: `structure_buffer` and `min_space_between_structures` should come
+        # from the ini files.
+
+        _strategy_input = StrategyInput(
+            locations_matrix=_matrix,
+            structure_buffer=10,
+            min_space_between_structures=50,
+        )
+
+        # In theory this will become a factory (somewhere) where
+        # the adequate strategy will be chosen.
+        return OrderStrategy(_strategy_input).get_locations_reinforcements()
+
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()
         _summary.available_locations = self.run_scenario_settings.surroundings.locations
@@ -93,4 +127,10 @@ class KoswatSummaryBuilder(BuilderProtocol):
         for _calc_profile in self._get_calculated_profile_list():
             _mlpc_builder.reinforced_profile = _calc_profile
             _summary.locations_profile_report_list.append(_mlpc_builder.build())
+
+        _summary.reinforcement_per_locations = (
+            self._get_final_reinforcement_per_location(
+                _summary.locations_profile_report_list, _summary.available_locations
+            )
+        )
         return _summary
