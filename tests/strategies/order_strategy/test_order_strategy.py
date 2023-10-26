@@ -24,7 +24,7 @@ class TestOrderStrategy:
         _strategy = OrderStrategy.from_strategy_input(_strategy_input)
 
         # 3. Verify final expectations.
-        assert isinstance(_strategy_input, OrderStrategy)
+        assert isinstance(_strategy, OrderStrategy)
         
         # This is not required because they are internal properties.
         assert isinstance(_strategy._order_reinforcement, list)
