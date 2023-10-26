@@ -177,12 +177,18 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         self, general_settings: KoswatGeneralIniFom
     ) -> KoswatReinforcementSettings:
         _reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
+            soil_settings=KoswatSoilSettings(
+                **(general_settings.grondmaatregel_section.__dict__)
+            ),
             piping_wall_settings=KoswatPipingWallSettings(
                 **(general_settings.kwelscherm_section.__dict__)
             ),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
+            stability_wall_settings=KoswatStabilityWallSettings(
+                **(general_settings.stabiliteitswand_section.__dict__)
+            ),
+            cofferdam_settings=KoswatCofferdamSettings(
+                **(general_settings.kistdam_section.__dict__)
+            ),
         )
         return _reinforcement_settings
 

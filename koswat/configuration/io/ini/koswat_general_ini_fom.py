@@ -57,23 +57,25 @@ class DikeProfileSectionFom(KoswatIniFomProtocol):
 
 class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
     soil_surtax_factor: SurtaxFactorEnum
-    constructive_surtax_factor: SurtaxFactorEnum
+    constructive_surtax_factor: Optional[SurtaxFactorEnum]
     land_purchase_surtax_factor: Optional[SurtaxFactorEnum]
 
     def _set_properties_from_dict(self, properties_dict: dict) -> None:
         self.soil_surtax_factor = SurtaxFactorEnum[
             properties_dict["opslagfactor_grond"].upper()
         ]
-        self.constructive_surtax_factor = SurtaxFactorEnum[
-            properties_dict.get(
-                "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
-            ).upper()
-        ]
-        self.land_purchase_surtax_factor = SurtaxFactorEnum[
-            properties_dict.get(
-                "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
-            ).upper()
-        ]
+        try:
+            self.constructive_surtax_factor = SurtaxFactorEnum[
+                properties_dict["opslagfactor_constructief"].upper()
+            ]
+        except KeyError:
+            pass
+        try:
+            self.land_purchase_surtax_factor = SurtaxFactorEnum[
+                properties_dict["opslagfactor_grondaankoop"].upper()
+            ]
+        except KeyError:
+            pass
 
 
 class SoilReinforcementSectionFom(ReinforcementProfileSectionFomBase):
