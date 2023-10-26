@@ -316,6 +316,7 @@ class TestReinforcementProfileBuilderFactory:
     )
     @pytest.mark.parametrize("input_profile", _input_profiles)
     @pytest.mark.parametrize("scenario", _scenarios)
+    @pytest.mark.slow
     def test_generate_reinforcement_profiles_from_acceptance_data(
         self,
         profile_type: type[ReinforcementProfileProtocol],
