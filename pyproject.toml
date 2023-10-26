@@ -89,6 +89,7 @@ version_files= [
 [tool.pytest.ini_options]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "plot: marks tests as plot which generate matplotlib figures (deselect with -m \"not plot"')",
 ]
 
 [build-system]

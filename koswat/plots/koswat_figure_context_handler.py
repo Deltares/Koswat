@@ -33,7 +33,7 @@ class KoswatFigureContextHandler:
 
         Returns:
             Figure: Initialized instance from `pyplot.figure(dpi=dpi)`."""
-        self._figure = pyplot.figure(dpi=self._dpi)
+        self._figure = Figure(dpi=self._dpi)
         return self._figure
 
     def __exit__(self, *args, **kwargs) -> None:
@@ -41,4 +41,4 @@ class KoswatFigureContextHandler:
         Exit the current context and save the previously initialized `Figure`.
         """
         self._figure.savefig(self._output_path)
-        pyplot.close()
+        pyplot.close(self._figure)
