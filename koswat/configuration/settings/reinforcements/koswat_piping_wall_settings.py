@@ -7,7 +7,7 @@ from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEn
 @dataclass
 class KoswatPipingWallSettings(KoswatConfigProtocol):
     """
-    Settings related to Piping reinforcement
+    Settings related to Piping wall reinforcement
     """
 
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL

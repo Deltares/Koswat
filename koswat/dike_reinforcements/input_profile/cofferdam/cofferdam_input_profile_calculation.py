@@ -1,15 +1,25 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
+    KoswatCofferdamSettings,
+)
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
+)
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
+    ReinforcementInputProfileCalculationBase,
 )
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 
 
-class CofferdamInputProfileCalculation(ReinforcementInputProfileCalculationProtocol):
+class CofferdamInputProfileCalculation(
+    ReinforcementInputProfileCalculationBase,
+    ReinforcementInputProfileCalculationProtocol,
+):
     base_profile: KoswatProfileProtocol
     scenario: KoswatScenario
 
@@ -51,17 +61,39 @@ class CofferdamInputProfileCalculation(ReinforcementInputProfileCalculationProto
         _dividend = base_data.kruin_hoogte - base_data.buiten_maaiveld + scenario.d_h
         return _operand / _dividend
 
-    def _calculate_new_length_coffer_dam(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+    def _calculate_length_coffer_dam(
+        self,
+        old_data: KoswatInputProfileProtocol,
+        cofferdam_settings: KoswatCofferdamSettings,
+        soil_binnen_berm_breedte: float,
+        new_kruin_hoogte: float,
     ) -> float:
-        return (
-            (base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h)
-            - 1
-            + 10  # TODO
+        """
+        Identical to calculation of Stability wall
+        """
+        if soil_binnen_berm_breedte == 0:
+            return 0  # no wall needed
+        _length_piping = (
+            (soil_binnen_berm_breedte / 6) + (new_kruin_hoogte - 0.5) - old_data.aquifer
+        )
+        _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistoceen - 1)
+        return round(
+            min(
+                max(
+                    _length_piping,
+                    _length_stability,
+                    cofferdam_settings.min_lengte_kistdam,
+                ),
+                cofferdam_settings.max_lengte_kistdam,
+            ),
+            1,
         )
 
     def _calculate_new_input_profile(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+        self,
+        base_data: KoswatInputProfileBase,
+        cofferdam_settings: KoswatCofferdamSettings,
+        scenario: KoswatScenario,
     ) -> CofferDamInputProfile:
         _new_data = CofferDamInputProfile()
         _new_data.dike_section = base_data.dike_section
@@ -75,12 +107,20 @@ class CofferdamInputProfileCalculation(ReinforcementInputProfileCalculationProto
         _new_data.binnen_berm_breedte = 0
         _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
-        _new_data.length_coffer_dam = self._calculate_new_length_coffer_dam(
-            base_data, scenario
+        _soil_binnen_berm_breedte = self.calculate_soil_binnen_berm_breedte(
+            base_data, _new_data, scenario
+        )
+        _new_data.length_coffer_dam = self._calculate_length_coffer_dam(
+            base_data,
+            cofferdam_settings,
+            _soil_binnen_berm_breedte,
+            _new_data.kruin_hoogte,
         )
         return _new_data
 
     def build(self) -> CofferDamInputProfile:
         return self._calculate_new_input_profile(
-            self.base_profile.input_data, self.scenario
+            self.base_profile.input_data,
+            self.reinforcement_settings.cofferdam_settings,
+            self.scenario,
         )

@@ -1,7 +1,13 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
+    KoswatStabilityWallSettings,
+)
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
+    ReinforcementInputProfileCalculationBase,
+)
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
@@ -11,7 +17,8 @@ from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_inpu
 
 
 class StabilityWallInputProfileCalculation(
-    ReinforcementInputProfileCalculationProtocol
+    ReinforcementInputProfileCalculationBase,
+    ReinforcementInputProfileCalculationProtocol,
 ):
     base_profile: KoswatProfileProtocol
     scenario: KoswatScenario
@@ -21,12 +28,31 @@ class StabilityWallInputProfileCalculation(
         self.scenario = None
 
     def _calculate_length_stability_wall(
-        self, base_data: KoswatInputProfileProtocol, scenario: KoswatScenario
+        self,
+        old_data: KoswatInputProfileProtocol,
+        stability_wall_settings: KoswatStabilityWallSettings,
+        soil_binnen_berm_breedte: float,
+        new_kruin_hoogte: float,
     ) -> float:
-        return (
-            (base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h)
-            - 1
-            + 10  # TODO
+        """
+        Identical to calculation of Cofferdam
+        """
+        if soil_binnen_berm_breedte == 0:
+            return 0  # no wall needed
+        _length_piping = (
+            (soil_binnen_berm_breedte / 6) + (new_kruin_hoogte - 0.5) - old_data.aquifer
+        )
+        _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistoceen - 1)
+        return round(
+            min(
+                max(
+                    _length_piping,
+                    _length_stability,
+                    stability_wall_settings.min_lengte_stabiliteitswand,
+                ),
+                stability_wall_settings.max_lengte_stabiliteitswand,
+            ),
+            1,
         )
 
     def _calculate_new_kruin_hoogte(
@@ -64,7 +90,10 @@ class StabilityWallInputProfileCalculation(
         return max(2, _right_side)
 
     def _calculate_new_input_profile(
-        self, base_data: KoswatInputProfileProtocol, scenario: KoswatScenario
+        self,
+        base_data: KoswatInputProfileProtocol,
+        stability_wall_settings: KoswatStabilityWallSettings,
+        scenario: KoswatScenario,
     ) -> StabilityWallInputProfile:
         _new_data = StabilityWallInputProfile()
         _new_data.dike_section = base_data.dike_section
@@ -78,12 +107,20 @@ class StabilityWallInputProfileCalculation(
         _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
         _new_data.binnen_berm_breedte = 0
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
+        _soil_binnen_berm_breedte = self.calculate_soil_binnen_berm_breedte(
+            base_data, _new_data, scenario
+        )
         _new_data.length_stability_wall = self._calculate_length_stability_wall(
-            base_data, scenario
+            base_data,
+            stability_wall_settings,
+            _soil_binnen_berm_breedte,
+            _new_data.kruin_hoogte,
         )
         return _new_data
 
     def build(self) -> StabilityWallInputProfile:
         return self._calculate_new_input_profile(
-            self.base_profile.input_data, self.scenario
+            self.base_profile.input_data,
+            self.reinforcement_settings.stability_wall_settings,
+            self.scenario,
         )

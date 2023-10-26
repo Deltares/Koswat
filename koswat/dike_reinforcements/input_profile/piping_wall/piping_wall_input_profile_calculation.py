@@ -8,12 +8,18 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
 )
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
+    ReinforcementInputProfileCalculationBase,
+)
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
 
 
-class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProtocol):
+class PipingWallInputProfileCalculation(
+    ReinforcementInputProfileCalculationBase,
+    ReinforcementInputProfileCalculationProtocol,
+):
     base_profile: KoswatProfileProtocol
     piping_wall_settings: KoswatPipingWallSettings
     scenario: KoswatScenario
@@ -22,31 +28,6 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
         self.base_profile = None
         self.scenario = None
 
-    def _calculate_soil_binnen_berm_breedte(
-        self,
-        old_data: KoswatInputProfileBase,
-        new_data: KoswatInputProfileBase,
-        scenario: KoswatScenario,
-    ) -> float:
-        """
-        Redundant code to reproduce the new berm width that would have been calculated by soil calculation
-        """
-        _dikebase_old = (
-            (old_data.kruin_hoogte - old_data.buiten_maaiveld) * old_data.buiten_talud
-            + old_data.buiten_berm_breedte
-            + old_data.kruin_breedte
-            + old_data.binnen_berm_breedte
-            + (old_data.kruin_hoogte - old_data.binnen_maaiveld) * old_data.binnen_talud
-        )
-        _dikebase_new = (
-            (new_data.kruin_hoogte - new_data.buiten_maaiveld) * new_data.buiten_talud
-            + new_data.buiten_berm_breedte
-            + new_data.kruin_breedte
-            + (new_data.kruin_hoogte - new_data.binnen_maaiveld) * new_data.binnen_talud
-        )
-        _berm = scenario.d_p - (_dikebase_new - _dikebase_old)
-        return max(_berm, 0)
-
     def _calculate_length_piping_wall(
         self,
         old_data: KoswatInputProfileBase,
@@ -54,17 +35,21 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
         soil_binnen_berm_breedte: float,
     ) -> float:
         if soil_binnen_berm_breedte == 0:
-            return 0
-        return max(
+            return 0  # no wall needed
+        _length_piping = (
+            (soil_binnen_berm_breedte / 6)
+            + (old_data.binnen_maaiveld - old_data.aquifer)
+            + 1
+        )
+        return round(
             min(
-                (
-                    (soil_binnen_berm_breedte / 6)
-                    + (old_data.binnen_maaiveld - old_data.aquifer)
-                    + 1
+                max(
+                    _length_piping,
+                    piping_wall_settings.min_lengte_kwelscherm,
                 ),
                 piping_wall_settings.max_lengte_kwelscherm,
             ),
-            piping_wall_settings.min_lengte_kwelscherm,
+            1,
         )
 
     def _calculate_new_kruin_hoogte(
@@ -114,7 +99,7 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
         _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
         _new_data.binnen_berm_breedte = 0
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
-        _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
+        _soil_binnen_berm_breedte = self.calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
         _new_data.length_piping_wall = self._calculate_length_piping_wall(
