@@ -6,7 +6,9 @@ from koswat.cost_report.multi_location_profile import MultiLocationProfileCostRe
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.strategies.strategy_location_matrix import StrategyLocationReinforcements
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
 
 
 @dataclass
@@ -14,7 +16,7 @@ class KoswatSummary:
     locations_profile_report_list: list[MultiLocationProfileCostReport] = field(
         default_factory=lambda: []
     )
-    reinforcement_per_locations: list[StrategyLocationReinforcements] = field(
+    reinforcement_per_locations: list[StrategyLocationReinforcement] = field(
         default_factory=lambda: []
     )
 

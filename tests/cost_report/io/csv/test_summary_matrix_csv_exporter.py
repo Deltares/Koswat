@@ -17,7 +17,9 @@ class TestSummaryMatrixCsvExporter:
         assert isinstance(_exporter, SummaryMatrixCsvExporter)
         assert isinstance(_exporter, KoswatExporterProtocol)
 
-    def test_summary_matrix_csv_exporter_export(self, valid_mocked_summary: KoswatSummary, request: pytest.FixtureRequest):
+    def test_summary_matrix_csv_exporter_export(
+        self, valid_mocked_summary: KoswatSummary, request: pytest.FixtureRequest
+    ):
         # 1. Define test data.
         _test_dir = test_results.joinpath(request.node.name)
         _export_path = _test_dir.joinpath("matrix_results.csv")
@@ -53,7 +55,7 @@ class TestSummaryMatrixCsvExporter:
 ;;New maaiveld surface (volume / surface):;nan;nan;nan;nan
 ;;New maaiveld surface (cost):;nan;nan;nan;nan
 ;;Total measure meters;0;1;1;2
-;;Total measure cost;0.0;8144.4;16288.8;48866.4;73299.6
+;;Total measure cost;0.0;8.1444;16.2888;48.8664;73.2996
 A;0.24;0.42;0;1;1;1;Kwelscherm
 A;2.4;0.42;0;0;1;1;Grondmaatregel profiel
 A;0.24;2.4;0;0;0;1;Stabiliteitswand

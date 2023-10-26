@@ -21,7 +21,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard import (
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
 )
-from koswat.strategies.strategy_location_matrix import StrategyLocationReinforcements
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
 
 
 class MockSummary(MultiLocationProfileCostReport):
@@ -72,9 +74,10 @@ def _create_report(
     ]
     return _report
 
+
 def get_locations_reinforcements(
     summary: KoswatSummary, available_locations: list[PointSurroundings]
-) -> list[StrategyLocationReinforcements]:
+) -> list[StrategyLocationReinforcement]:
     _matrix = []
     _available_reinforcements = [
         type(_lp_report.profile_cost_report.reinforced_profile)
@@ -90,13 +93,14 @@ def get_locations_reinforcements(
         if any(_a_measures):
             _selected_measure = _a_measures[0]
         _matrix.append(
-            StrategyLocationReinforcements(
+            StrategyLocationReinforcement(
                 location=_location,
                 available_measures=_a_measures,
                 selected_measure=_selected_measure,
             )
         )
     return _matrix
+
 
 @pytest.fixture
 def valid_mocked_summary() -> KoswatSummary:
