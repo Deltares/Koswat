@@ -20,7 +20,7 @@ from koswat.strategies.strategy_location_reinforcement import (
 class SummaryMatrixCsvFomBuilder(BuilderProtocol):
     koswat_summary: KoswatSummary
     # Internal readonly properties.
-    _dimension_key_column = "(volume/surface/length)"
+    _volume_surface_key_column = "(volume / surface)"
     _cost_key_column = "(cost)"
 
     def __init__(self) -> None:
@@ -82,7 +82,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         _volume_costs_rows = self.dict_of_dicts_to_list_of_cost_rows(
             dict(
                 filter(
-                    lambda x: self._dimension_key_column in x[0]
+                    lambda x: self._volume_surface_key_column in x[0]
                     or self._cost_key_column in x[0],
                     _dict_of_entries.items(),
                 )
@@ -194,8 +194,8 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
             _vc_parameter,
         ) in vc_parameters.items():
             _parameter_name = _format_parameter_name(_parameter_name)
-            _dimension_key = f"{_parameter_name} {self._dimension_key_column}:"
-            csv_dictionary[_dimension_key].append(
+            _volume_key = f"{_parameter_name} {self._volume_surface_key_column}:"
+            csv_dictionary[_volume_key].append(
                 _vc_parameter.volume if _vc_parameter else math.nan
             )
 
