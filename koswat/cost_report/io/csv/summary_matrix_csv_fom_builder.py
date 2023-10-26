@@ -18,7 +18,7 @@ from koswat.strategies.strategy_location_matrix import StrategyLocationReinforce
 class SummaryMatrixCsvFomBuilder(BuilderProtocol):
     koswat_summary: KoswatSummary
     # Internal readonly properties.
-    _dimension_key_column = "(volume / surface / length)"
+    _dimension_key_column = "(volume/surface/length)"
     _cost_key_column = "(cost)"
 
     def __init__(self) -> None:
