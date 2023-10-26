@@ -72,18 +72,21 @@ class SoilInputProfileCalculation(ReinforcementInputProfileCalculationProtocol):
         new_data: KoswatInputProfileBase,
         scenario: KoswatScenario,
     ) -> float:
-        _c1 = scenario.buiten_talud + new_data.binnen_talud
-        _c2 = old_data.kruin_hoogte - old_data.binnen_maaiveld + scenario.d_h
-        _c3 = old_data.buiten_talud + old_data.binnen_talud
-        _c4 = new_data.buiten_berm_breedte - old_data.buiten_berm_breedte
-        _c5 = (
-            _c3 * (old_data.kruin_hoogte - old_data.binnen_maaiveld)
+        _dikebase_old = (
+            (old_data.kruin_hoogte - old_data.buiten_maaiveld) * old_data.buiten_talud
+            + old_data.buiten_berm_breedte
             + old_data.kruin_breedte
-            - _c4
+            + old_data.binnen_berm_breedte
+            + (old_data.kruin_hoogte - old_data.binnen_maaiveld) * old_data.binnen_talud
         )
-        _c6 = _c1 * _c2 + new_data.kruin_breedte - _c5
-        _c7 = old_data.binnen_berm_breedte + scenario.d_p - _c6
-        return max(_c7, 0)
+        _dikebase_new = (
+            (new_data.kruin_hoogte - new_data.buiten_maaiveld) * new_data.buiten_talud
+            + new_data.buiten_berm_breedte
+            + new_data.kruin_breedte
+            + (new_data.kruin_hoogte - new_data.binnen_maaiveld) * new_data.binnen_talud
+        )
+        _berm = scenario.d_p - (_dikebase_new - _dikebase_old)
+        return max(_berm, 0)
 
     def _calculate_new_kruin_hoogte(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
@@ -99,8 +102,9 @@ class SoilInputProfileCalculation(ReinforcementInputProfileCalculationProtocol):
         _new_data.buiten_talud = scenario.buiten_talud
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
         _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
-        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
         _new_data.kruin_breedte = scenario.kruin_breedte
+        _new_data.binnen_maaiveld = base_data.binnen_maaiveld
+        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
         _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
         _new_data.binnen_berm_breedte = self._calculate_new_binnen_berm_breedte(
             base_data, _new_data, scenario
@@ -108,7 +112,6 @@ class SoilInputProfileCalculation(ReinforcementInputProfileCalculationProtocol):
         _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(
             base_data, _new_data, scenario
         )
-        _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         return _new_data
 
     def build(self) -> SoilInputProfile:

@@ -24,14 +24,21 @@ class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationProt
         new_data: KoswatInputProfileBase,
         scenario: KoswatScenario,
     ) -> float:
-        _c1 = scenario.buiten_talud + new_data.binnen_talud
-        _c2 = old_data.kruin_hoogte + scenario.d_h
-        _c3 = old_data.buiten_talud + old_data.binnen_talud
-        _c4 = new_data.buiten_berm_breedte - old_data.buiten_berm_breedte
-        _c5 = _c3 * old_data.kruin_hoogte + old_data.kruin_breedte - _c4
-        _c6 = _c1 * _c2 + new_data.kruin_breedte - _c5
-        _c7 = old_data.binnen_berm_breedte + scenario.d_p - _c6
-        return max(_c7, 0)
+        _dikebase_old = (
+            (old_data.kruin_hoogte - old_data.buiten_maaiveld) * old_data.buiten_talud
+            + old_data.buiten_berm_breedte
+            + old_data.kruin_breedte
+            + old_data.binnen_berm_breedte
+            + (old_data.kruin_hoogte - old_data.binnen_maaiveld) * old_data.binnen_talud
+        )
+        _dikebase_new = (
+            (new_data.kruin_hoogte - new_data.buiten_maaiveld) * new_data.buiten_talud
+            + new_data.buiten_berm_breedte
+            + new_data.kruin_breedte
+            + (new_data.kruin_hoogte - new_data.binnen_maaiveld) * new_data.binnen_talud
+        )
+        _berm = scenario.d_p - (_dikebase_new - _dikebase_old)
+        return max(_berm, 0)
 
     def _calculate_length_piping_wall(self, soil_binnen_berm_breedte: float) -> float:
         return (soil_binnen_berm_breedte / 6) + 1.5
