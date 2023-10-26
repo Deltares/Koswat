@@ -21,7 +21,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
     StabilityWallReinforcementProfile,
 )
 from koswat.strategies.strategy_input import StrategyInput
-from koswat.strategies.strategy_location_matrix import StrategyLocationReinforcements
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
 
 
 class OrderStrategy:
@@ -43,7 +45,7 @@ class OrderStrategy:
 
     def get_locations_reinforcements(
         self,
-    ) -> list[StrategyLocationReinforcements]:
+    ) -> list[StrategyLocationReinforcement]:
         _strategy_reinforcements = []
         for (
             _location,
@@ -54,7 +56,7 @@ class OrderStrategy:
                 self._order_reinforcement[-1],
             )
             _strategy_reinforcements.append(
-                StrategyLocationReinforcements(
+                StrategyLocationReinforcement(
                     location=_location,
                     available_measures=_reinforcements,
                     selected_measure=_selected_reinforcement,

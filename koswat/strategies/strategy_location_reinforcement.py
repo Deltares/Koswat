@@ -8,7 +8,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 
 
 @dataclass
-class StrategyLocationReinforcements:
+class StrategyLocationReinforcement:
     location: PointSurroundings
     selected_measure: Type[ReinforcementProfileProtocol]
     available_measures: list[Type[ReinforcementProfileProtocol]]

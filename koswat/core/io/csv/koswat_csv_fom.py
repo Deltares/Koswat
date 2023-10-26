@@ -15,4 +15,6 @@ class KoswatCsvFom(KoswatCsvFomProtocol):
         if not self.headers or not self.entries:
             return False
         _l_header = len(self.headers)
-        return all(map(lambda x: len(x) == _l_header, self.entries))
+        
+        # A the moment, not all rows have the same length 
+        return all(map(lambda x: len(x) >= _l_header, self.entries))

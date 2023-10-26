@@ -1,4 +1,5 @@
-from typing import List, Tuple, Type
+from typing import Type
+import pytest
 
 from shapely.geometry import Point
 
@@ -7,6 +8,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
+
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
@@ -18,6 +20,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
+)
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
 )
 
 
@@ -32,10 +37,10 @@ class MockLayerReport:
     total_volume = 42
 
 
-def _create_locations() -> List[PointSurroundings]:
+def _create_locations() -> list[PointSurroundings]:
     _points = [(0.24, 0.42), (2.4, 0.42), (0.24, 2.4), (2.4, 2.4)]
 
-    def to_point(tuple_float: Tuple[float, float], order: int) -> PointSurroundings:
+    def to_point(tuple_float: tuple[float, float], order: int) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = Point(tuple_float[0], tuple_float[1])
         _ps.section = "A"
@@ -47,7 +52,7 @@ def _create_locations() -> List[PointSurroundings]:
 
 def _create_report(
     report_type: Type[ReinforcementProfileProtocol],
-    available_points: List[PointSurroundings],
+    available_points: list[PointSurroundings],
     selected_locations: int,
 ) -> MultiLocationProfileCostReport:
     def _get_layer(material: str, volume: float) -> MockLayerReport:
@@ -60,9 +65,9 @@ def _create_report(
     _report.locations = available_points[0:selected_locations]
     _required_klei = 2.4 * selected_locations
     _required_zand = 4.2 * selected_locations
-    _report.profile_type = str(report_type())
     _report.cost_per_km = (_required_klei + _required_zand) * 1234
     _report.profile_cost_report = ProfileCostReport()
+    _report.profile_cost_report.reinforced_profile = report_type()
     _report.profile_cost_report.layer_cost_reports = [
         _get_layer("Klei", _required_klei),
         _get_layer("Zand", _required_zand),
@@ -70,7 +75,35 @@ def _create_report(
     return _report
 
 
-def get_valid_test_summary() -> KoswatSummary:
+def get_locations_reinforcements(
+    summary: KoswatSummary, available_locations: list[PointSurroundings]
+) -> list[StrategyLocationReinforcement]:
+    _matrix = []
+    _available_reinforcements = [
+        type(_lp_report.profile_cost_report.reinforced_profile)
+        for _lp_report in summary.locations_profile_report_list
+    ]
+    for _location in available_locations:
+        _a_measures = list(
+            type(_lp_report.profile_cost_report.reinforced_profile)
+            for _lp_report in summary.locations_profile_report_list
+            if _location in _lp_report.locations
+        )
+        _selected_measure = _available_reinforcements[-1]
+        if any(_a_measures):
+            _selected_measure = _a_measures[0]
+        _matrix.append(
+            StrategyLocationReinforcement(
+                location=_location,
+                available_measures=_a_measures,
+                selected_measure=_selected_measure,
+            )
+        )
+    return _matrix
+
+
+@pytest.fixture
+def valid_mocked_summary() -> KoswatSummary:
     _required_profiles = [
         CofferdamReinforcementProfile,
         PipingWallReinforcementProfile,
@@ -79,11 +112,13 @@ def get_valid_test_summary() -> KoswatSummary:
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()
-    _summary.available_locations = _available_points
     _summary.locations_profile_report_list = list(
         map(
             lambda x: _create_report(x, _available_points, _required_profiles.index(x)),
             _required_profiles,
         )
+    )
+    _summary.reinforcement_per_locations = get_locations_reinforcements(
+        _summary, _available_points
     )
     return _summary
