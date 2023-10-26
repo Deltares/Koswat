@@ -1,4 +1,5 @@
 from __future__ import annotations
+import logging
 from typing import Type
 from itertools import groupby
 from koswat.cost_report.summary.koswat_summary_location_matrix import (
@@ -64,7 +65,7 @@ class OrderStrategy:
     ) -> None:
         _grouped_by_measure = self._group_by_selected_measure(location_reinforcements)
         _len_location_reinforcements = len(location_reinforcements)
-        _candidates_matrix = dict(
+        _candidates_masks = dict(
             (_rtype, [-1] * _len_location_reinforcements)
             for _rtype in self._order_reinforcement
         )
@@ -81,12 +82,12 @@ class OrderStrategy:
             )
             _candidate_value = self._order_reinforcement.index(_profile_type)
 
-            # Update matrices
-            _candidates_matrix[_profile_type][_lower_limit:_new_visited] = [
+            # Update masks
+            _candidates_masks[_profile_type][_lower_limit:_new_visited] = [
                 _candidate_value
             ] * (_new_visited - _lower_limit)
 
-            _candidates_matrix[_profile_type][_visited:_upper_limit] = [
+            _candidates_masks[_profile_type][_visited:_upper_limit] = [
                 _candidate_value
             ] * (_upper_limit - _visited)
 
@@ -95,7 +96,7 @@ class OrderStrategy:
 
         # Combine dicts and get max value as "higher values" cannot use
         # a "lower value" buffer.
-        _selection_mask = list(map(max, zip(*_candidates_matrix.values())))
+        _selection_mask = list(map(max, zip(*_candidates_masks.values())))
 
         # Apply buffer values.
         for _idx, _location in enumerate(location_reinforcements):
@@ -108,19 +109,21 @@ class OrderStrategy:
     ) -> None:
         _grouped_by_measure = self._group_by_selected_measure(location_reinforcements)
 
-        # TODO: Discuss recursivity. If we need to guarantee all constructions meet the
-        # requirements, then line 128 needs to be rethought and apply recursivity.
-        # As currently we only ensure no construction is replaced by a "lower" type.
-        # if all(len(rg) >= self._min_space_between_structures for _, rg in _grouped):
-        #     return
-        
-        # TODO: Discuss whether we need to replace a construction with a "lower" type
-        # or leaving it as it is (current approach).
+        # TODO: Discuss recursivity.
+        # We need to accept certain "exceptions" (check DESIGN decission below), but
+        # we need to guarantee that no structure is built without fulfilling the
+        # `_min_space_between_structures` requirement.
 
+        _non_compliant_groups = sum(
+            len(rg) < self._min_space_between_structures
+            for _, rg in _grouped_by_measure
+        )
+        _non_compliant_exceptions = 0
         for _idx, (_profile_type, _sub_group) in enumerate(_grouped_by_measure):
             if len(_sub_group) >= self._min_space_between_structures:
                 continue
             _current_value = self._order_reinforcement.index(_profile_type)
+
             _previous_value = (
                 -1
                 if _idx - 1 < 0
@@ -131,9 +134,25 @@ class OrderStrategy:
                 if _idx + 1 >= len(_grouped_by_measure)
                 else self._order_reinforcement.index(_grouped_by_measure[_idx + 1][0])
             )
+
+            # DESIGN / THEORY decission:
+            # We ensure no construction is replaced by a "lower" type.
+            # This means a "short" `StabilityWallReinforcementProfile` won't be
+            # replaced by a `SoilReinforcementProfile` and so on.
+
             _selected_measure = self._order_reinforcement[
                 max(_current_value, min(_previous_value, _next_value))
             ]
+
+            if _selected_measure == _current_value:
+                logging.warning(
+                    "Measure {} not corrected despite length as both sides ({}, {}) are inferior reinforcement types.".format(
+                        self._order_reinforcement[_selected_measure],
+                        self._order_reinforcement[_previous_value],
+                        self._order_reinforcement[_next_value],
+                    )
+                )
+
             for _loc_reinf in _sub_group:
                 _loc_reinf.selected_measure = _selected_measure
 
