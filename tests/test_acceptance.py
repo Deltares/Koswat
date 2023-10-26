@@ -203,6 +203,8 @@ class TestAcceptance:
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
         _run_settings.surroundings = SurroundingsWrapper()
+        _run_settings.surroundings.reinforcement_min_buffer = 10
+        _run_settings.surroundings.reinforcement_min_separation = 50
         _run_settings.costs = KoswatCostsSettings()
         _run_settings.costs.dike_profile_costs = DikeProfileCostsSettings()
 
