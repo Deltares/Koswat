@@ -57,7 +57,7 @@ class OrderStrategy:
 
     def _group_by_selected_measure(
         self, location_reinforcements: list[StrategyLocationReinforcement]
-    ) -> list[StrategyLocationReinforcement]:
+    ) -> list[tuple[type[ReinforcementProfileProtocol], StrategyLocationReinforcement]]:
         return list(
             (k, list(g))
             for k, g in groupby(
@@ -113,19 +113,69 @@ class OrderStrategy:
     def _apply_min_distance(
         self, location_reinforcements: list[StrategyLocationReinforcement]
     ) -> None:
+        """
+        Updates a location's measure type by iterating as many times as
+        measures without the minimal distance are found in an initial grouping
+        of locations per measures ('subtrajects').
+        """
         _grouped_by_measure = self._group_by_selected_measure(location_reinforcements)
+        def _get_non_compliant() -> int:
+            return sum(
+                len(rg) < self._min_space_between_structures
+                for _, rg in _grouped_by_measure
+            )
 
-        # TODO: Discuss recursivity.
-        # We need to accept certain "exceptions" (check DESIGN decission below), but
-        # we need to guarantee that no structure is built without fulfilling the
-        # `_min_space_between_structures` requirement.
-
-        _non_compliant_groups = sum(
-            len(rg) < self._min_space_between_structures
-            for _, rg in _grouped_by_measure
-        )
         _non_compliant_exceptions = 0
-        for _idx, (_profile_type, _sub_group) in enumerate(_grouped_by_measure):
+        _max_iterations = _get_non_compliant()
+        for _n in range(0, _max_iterations):
+
+            # We know we have `n` non-compliant groups,
+            # it means a maximum of `n` iterations is needed
+            # to correct the selected measures.
+            _non_compliant_exceptions = self._apply_min_distance_to_grouped_locations(
+                _grouped_by_measure
+            )
+
+            # Generate a new grouping.
+            _grouped_by_measure = self._group_by_selected_measure(
+                location_reinforcements
+            )
+
+            _non_compliant_groups = _get_non_compliant()
+
+            if (
+                _non_compliant_groups == 0
+                or _non_compliant_groups == _non_compliant_exceptions
+            ):
+                # No need to look further.
+                logging.debug(
+                    "Measures corrected after {} iterations of the `_apply_min_distance` algorithm.".format(
+                        _n
+                    )
+                )
+                break
+
+        if _non_compliant_exceptions > 0:
+            logging.warning(
+                "There are {} which could not fulfill the minimal distance of {} meters.".format(
+                    _non_compliant_exceptions, self._min_space_between_structures
+                )
+            )
+
+    def _apply_min_distance_to_grouped_locations(
+        self,
+        locations_by_measure: list[
+            tuple[type[ReinforcementProfileProtocol], StrategyLocationReinforcement]
+        ],
+    ) -> int:
+        """
+        Single iteration where we go through the 'subtrajects' that do not have a measure
+        meeting the minimal length requirement.
+        If any of its neighbors is a higher reinforcement type then it will be adapted.
+        Otherwise it will preserve its state as a 'non_compliant' exception.
+        """
+        _non_compliant_exceptions = 0
+        for _idx, (_profile_type, _sub_group) in enumerate(locations_by_measure):
             if len(_sub_group) >= self._min_space_between_structures:
                 continue
             _current_value = self._order_reinforcement.index(_profile_type)
@@ -133,34 +183,47 @@ class OrderStrategy:
             _previous_value = (
                 -1
                 if _idx - 1 < 0
-                else self._order_reinforcement.index(_grouped_by_measure[_idx - 1][0])
+                else self._order_reinforcement.index(locations_by_measure[_idx - 1][0])
             )
             _next_value = (
                 -1
-                if _idx + 1 >= len(_grouped_by_measure)
-                else self._order_reinforcement.index(_grouped_by_measure[_idx + 1][0])
+                if _idx + 1 >= len(locations_by_measure)
+                else self._order_reinforcement.index(locations_by_measure[_idx + 1][0])
             )
 
             # DESIGN / THEORY decission:
             # We ensure no construction is replaced by a "lower" type.
             # This means a "short" `StabilityWallReinforcementProfile` won't be
             # replaced by a `SoilReinforcementProfile` and so on.
+            _selected_measure_idx = max(
+                _current_value, min(_previous_value, _next_value)
+            )
+            _selected_measure = self._order_reinforcement[_selected_measure_idx]
 
-            _selected_measure = self._order_reinforcement[
-                max(_current_value, min(_previous_value, _next_value))
-            ]
-
-            if _selected_measure == _current_value:
+            if _current_value == _selected_measure_idx:
+                _non_compliant_exceptions += 1
                 logging.warning(
                     "Measure {} not corrected despite length as both sides ({}, {}) are inferior reinforcement types.".format(
-                        self._order_reinforcement[_selected_measure],
+                        self._order_reinforcement[_current_value],
                         self._order_reinforcement[_previous_value],
                         self._order_reinforcement[_next_value],
                     )
                 )
+                continue
+
+            # To avoid the next iteration wrongly setting a new measure for the next group
+            # without updating the current, we need to inject the current values there.
+            # This way the 'subtraject' is updated.
+            if _selected_measure == _next_value:
+                locations_by_measure[_idx + 1] = (
+                    locations_by_measure[_idx + 1][0],
+                    _sub_group + locations_by_measure[_idx + 1][1],
+                )
 
             for _loc_reinf in _sub_group:
                 _loc_reinf.selected_measure = _selected_measure
+
+        return _non_compliant_exceptions
 
     def get_locations_reinforcements(
         self,
