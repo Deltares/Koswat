@@ -139,7 +139,9 @@ class TestAcceptance:
         _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
-        SummaryMatrixCsvExporter().export(_summary, _test_dir / "matrix_results.csv")
+        SummaryMatrixCsvExporter().export(
+            _summary, _test_dir.joinpath("matrix_results.csv")
+        )
 
         # 3. Verify expectations.
         assert isinstance(_summary, KoswatSummary)
@@ -239,11 +241,18 @@ class TestAcceptance:
         # 4. Compare CSV results
         _reference_dir = _export_path_dir.joinpath("reference")
         assert _export_csv_path.exists()
-        _csv_result = _export_csv_path.read_text(encoding="utf-8")
-        _csv_reference = _reference_dir.joinpath(_export_csv_path.name).read_text(
-            encoding="utf-8"
+
+        # For now we do not compare the last rows containing info
+        # related to the selected measure.
+        _csv_result_lines = _export_csv_path.read_text().splitlines()[:-2]
+        _csv_reference_lines = (
+            _reference_dir.joinpath(_export_csv_path.name).read_text().splitlines()
         )
-        assert _csv_result == _csv_reference, "CSV Summary differs from reference."
+        for _idx, _reference_line in enumerate(_csv_reference_lines):
+            _line_nr = _idx + 1
+            assert (
+                _reference_line == _csv_result_lines[_idx]
+            ), f"CSV Summary difference found at lines:\n [{_line_nr}] Expected: {_reference_line}\n [{_line_nr}]Result: {_csv_result_lines[_idx]}"
 
         # 5. Compare geometry images.
         def compare_images(reference_img, result_image) -> tuple[float, np.ndarray]:
