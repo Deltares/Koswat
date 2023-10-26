@@ -12,7 +12,9 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.strategies.strategy_location_matrix import StrategyLocationReinforcements
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
 
 
 class SummaryMatrixCsvFomBuilder(BuilderProtocol):
@@ -134,11 +136,11 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         for _ordered_reinf in self.get_summary_reinforcement_type_column_order():
             _total_meters = _total_meters_per_selected_measure.get(_ordered_reinf, 0)
             _selected_measures_rows[_total_measure_meters_key].append(_total_meters)
-            _total_cost = (
+            _total_cost_per_km = (
                 _total_meters
                 * self.koswat_summary.get_report_by_profile(_ordered_reinf).cost_per_km
-            )
-            _selected_measures_rows[_total_measure_cost_key].append(_total_cost)
+            ) / 1000
+            _selected_measures_rows[_total_measure_cost_key].append(_total_cost_per_km)
 
         _selected_measures_rows[_total_measure_cost_key].append(
             sum(_selected_measures_rows[_total_measure_cost_key])
@@ -148,7 +150,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
     def _get_locations_matrix(
         self,
-        reinforcement_per_locations: list[StrategyLocationReinforcements],
+        reinforcement_per_locations: list[StrategyLocationReinforcement],
     ) -> list[list[Any]]:
         def _location_as_row(
             matrix_item: tuple[PointSurroundings, list[int]]

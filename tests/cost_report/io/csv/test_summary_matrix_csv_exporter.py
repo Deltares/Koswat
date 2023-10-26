@@ -57,7 +57,7 @@ class TestSummaryMatrixCsvExporter:
 ;;Construction length (volume/surface/length):;nan;nan;nan;nan
 ;;Construction length (cost):;nan;nan;nan;nan
 ;;Total measure meters;0;1;1;2
-;;Total measure cost;0.0;8144.4;16288.8;48866.4;73299.6
+;;Total measure cost;0.0;8.1444;16.2888;48.8664;73.2996
 A;0.24;0.42;0;1;1;1;Kwelscherm
 A;2.4;0.42;0;0;1;1;Grondmaatregel profiel
 A;0.24;2.4;0;0;0;1;Stabiliteitswand

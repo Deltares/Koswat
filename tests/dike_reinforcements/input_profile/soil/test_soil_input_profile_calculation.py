@@ -114,7 +114,6 @@ class TestSoilInputProfileCalculation:
         _new_profile.kruin_hoogte = 7
         _new_profile.binnen_talud = 3.5714
         _new_profile.binnen_maaiveld = 0
-        _soil_settings = KoswatSoilSettings()
 
         # 2. Run test
         _new_binnen_berm_breedte = (
