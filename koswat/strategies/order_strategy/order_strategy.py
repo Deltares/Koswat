@@ -30,15 +30,17 @@ class OrderStrategy:
     _structure_buffer: float
     _min_space_between_structures: float
 
-    @classmethod
-    def from_strategy_input(cls, strategy_input: StrategyInput) -> OrderStrategy:
-        _new_cls = cls()
-        _new_cls._order_reinforcement = [
+    def __init__(self) -> None:
+        self._order_reinforcement = [
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,
             CofferdamReinforcementProfile,
         ]
+
+    @classmethod
+    def from_strategy_input(cls, strategy_input: StrategyInput) -> OrderStrategy:
+        _new_cls = cls()
         _new_cls._location_matrix = strategy_input.locations_matrix
         _new_cls._structure_buffer = strategy_input.structure_buffer
         _new_cls._min_space_between_structures = (
