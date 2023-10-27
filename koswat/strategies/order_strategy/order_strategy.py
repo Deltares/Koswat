@@ -148,7 +148,8 @@ class OrderStrategy(StrategyProtocol):
         def _get_non_compliant() -> int:
             return sum(
                 len(rg) < self._structure_min_length
-                for _, rg in _reinforcement_idx_clusters
+                for r_idx, rg in _reinforcement_idx_clusters
+                if r_idx != len(self._order_reinforcement) -1
             )
 
         _non_compliant_exceptions = 0

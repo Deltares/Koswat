@@ -148,9 +148,10 @@ Given a [measure cluster](#measure-clustering), ideally done after applying [buf
 
 The strategy here is to detect _non-compliant_ reinforcement-location clusters and replace their selected reinforcement type with the "least strong" of its adjacent clusters. We do this iteratively, so we first target the lowest type of reinforcements (`SoilReinforcementProfile`) and we move up until the first to the last (the last one cannot be further strengthen).
 
-__Note__: 
+__Notes__: 
 - We define a _non-compliant_ cluster as a cluster that does not contain as many locations as defined by the minimal length requirement (`structure_min_length`).
 - We also define a _non-compliant exception_ when a cluster does not meet said requirement but the adjacent clusters are of a lower reinforcement type.
+- We do not consider the last ordered reinforcement profile as an exception, as it cannot be further strengthen.
 
 1. Do `N` iterations where `N` is the initial number of _non compliant_ clusters.
 2. For each reinforcement type _target-reinforcement_, in the strategy order:
@@ -182,40 +183,39 @@ One simplified example, based on the [buffering example](#buffering-example), an
 ]
 
 2. During iteration 1:
+    1. Target is "SoilReinforcementProfile" (idx=0)
+        1. Found in the first cluster:
+            1. Non-compliant (length=2)
+            2. New value = 2; (Current = 0, Previous = 1, Next = 2,)
+            3. Update current cluster values
+            4. Update (next) cluster:
+                [
+                    (2, []),
+                    (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005",]),
+                    (0, ["Location_006",]),
+                    (3, ["Location_007","Location_008","Location_009",]),
+                ]
+        2. Found in the third cluster:
+            1. Non-compliant (length=1)
+            2. New value = 2; (Current = 0, Previous = 2, Next = 3)
+            3. Update current cluster values
+            4. Update (previous) cluster,
+                [
+                    (2, []),
+                    (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
+                    (2, []),
+                    (3, ["Location_007","Location_008","Location_009",]),
+                ]
+    2. Target is "PipingWallReinforcementProfile" (idx=1)
+        1. All clusters are compliant.
+    3. Target is "StabilityWallReinforcementProfile" (idx=2)
+        1. All clusters are compliant.
+    4. We don't check the last target, "CofferDamReinforcementProfile" (idx=3), as it can't be further strengthen.
 
-    1. Check first cluster:
-        1. Non-compliant (length=2)
-        2. New value = 2; (Current = 0, Previous = 1, Next = 2,)
-        3. Update current cluster values
-        4. Update (next) cluster:
-            [
-                (2, []),
-                (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005",]),
-                (0, ["Location_006",]),
-                (3, ["Location_007","Location_008","Location_009",]),
-            ]
-    2. Check second cluster:
-        1. It is now compliant (length=6), move to next cluster.
-    3. Check third cluster:
-        1. Non-compliant (length=1)
-        2. New value = 2; (Current = 0, Previous = 2, Next = 3)
-        3. Update current cluster values
-        4. Update (previous) cluster,
-            [
-                (2, []),
-                (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
-                (2, []),
-                (3, ["Location_007","Location_008","Location_009",]),
-            ]
-    4. Check fourth cluster:
-        1. Non-compliant (length=3)
-        2. New value = 3; (Current = 3, Previous = 2, Next = -1)
-            - Increment exception number (1).
-    5. Return number of non-compliant exceptions (1)
 3. Get new clustering and number of non-compliants:
     [
         (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
         (3, ["Location_007","Location_008","Location_009",]),
     ]
-4. All non-compliant clusters match number of exceptions. Finish.
+4. All clusters are compliant. Finish.
 ```
