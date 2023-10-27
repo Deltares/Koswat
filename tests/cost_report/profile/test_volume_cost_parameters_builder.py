@@ -189,4 +189,5 @@ class TestVolumeCostParametersBuilder:
         evaluate_cost_and_volume(_vcp.new_core_layer_surface, 0.6, 2.1)
         evaluate_cost_and_volume(_vcp.new_maaiveld_surface, 0.25, 42)
         evaluate_cost_and_volume(_vcp.removed_material_volume, 7.07, 1.2)
-        evaluate_cost_and_volume(_vcp.construction_length, 0, 10)  # TODO #104
+        # TODO: Koswat issue #104
+        evaluate_cost_and_volume(_vcp.construction_length, 0, 10)
