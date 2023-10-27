@@ -1,8 +1,8 @@
 import logging
 import math
 from collections import defaultdict
-from typing import Any, Type
 from itertools import groupby
+from typing import Any, Type
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol

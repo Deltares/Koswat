@@ -1,6 +1,6 @@
 from typing import Type
-import pytest
 
+import pytest
 from shapely.geometry import Point
 
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
@@ -8,7 +8,6 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
