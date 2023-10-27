@@ -201,65 +201,72 @@ class OrderStrategy(StrategyProtocol):
         Otherwise it will preserve its state as a 'non_compliant' exception.
         """
         _non_compliant_exceptions = 0
-        for _idx, (_reinforcement_idx, _cluster) in enumerate(
-            reinforcement_idx_clusters
-        ):
-            if len(_cluster) >= self._structure_min_length:
-                continue
+        for _target_reinforcement_idx in range(0, len(self._order_reinforcement)):
+            # We need to increment the 'strength' of non-compliant clusters
+            # in the given order.
 
-            _previous_value = (
-                -1 if _idx - 1 < 0 else reinforcement_idx_clusters[_idx - 1][0]
-            )
-            _next_value = (
-                -1
-                if _idx + 1 >= len(reinforcement_idx_clusters)
-                else reinforcement_idx_clusters[_idx + 1][0]
-            )
+            for _idx, (_reinforcement_idx, _cluster) in enumerate(
+                reinforcement_idx_clusters
+            ):
+                if (
+                    _reinforcement_idx != _target_reinforcement_idx
+                    or len(_cluster) >= self._structure_min_length
+                ):
+                    continue
 
-            # DESIGN / THEORY decission:
-            # We ensure no construction is replaced by a "lower" type.
-            # This means a "short" `StabilityWallReinforcementProfile` won't be
-            # replaced by a `SoilReinforcementProfile` and so on.
-            _selected_measure_idx = min(
-                filter(
-                    lambda x: x > _reinforcement_idx, [_previous_value, _next_value]
-                ),
-                default=_reinforcement_idx,
-            )
+                _previous_value = (
+                    -1 if _idx - 1 < 0 else reinforcement_idx_clusters[_idx - 1][0]
+                )
+                _next_value = (
+                    -1
+                    if _idx + 1 >= len(reinforcement_idx_clusters)
+                    else reinforcement_idx_clusters[_idx + 1][0]
+                )
 
-            if _reinforcement_idx == _selected_measure_idx:
-                _non_compliant_exceptions += 1
-                logging.warning(
-                    "Measure {} not corrected despite length as both sides ({}, {}) are inferior reinforcement types.".format(
-                        self._order_reinforcement[_reinforcement_idx],
-                        self._order_reinforcement[_previous_value],
-                        self._order_reinforcement[_next_value],
+                # DESIGN / THEORY decission:
+                # We ensure no construction is replaced by a "lower" type.
+                # This means a "short" `StabilityWallReinforcementProfile` won't be
+                # replaced by a `SoilReinforcementProfile` and so on.
+                _selected_measure_idx = min(
+                    filter(
+                        lambda x: x > _reinforcement_idx, [_previous_value, _next_value]
+                    ),
+                    default=_reinforcement_idx,
+                )
+
+                if _reinforcement_idx == _selected_measure_idx:
+                    _non_compliant_exceptions += 1
+                    logging.warning(
+                        "Measure {} not corrected despite length as both sides ({}, {}) are inferior reinforcement types.".format(
+                            self._order_reinforcement[_reinforcement_idx],
+                            self._order_reinforcement[_previous_value],
+                            self._order_reinforcement[_next_value],
+                        )
                     )
-                )
-                continue
+                    continue
 
-            # Update selected measures for locations in this cluster.
-            for _loc_reinf in _cluster:
-                _loc_reinf.selected_measure = self._order_reinforcement[
-                    _selected_measure_idx
-                ]
+                # Update selected measures for locations in this cluster.
+                for _loc_reinf in _cluster:
+                    _loc_reinf.selected_measure = self._order_reinforcement[
+                        _selected_measure_idx
+                    ]
 
-            # Update clusters.
-            # We merge first towards the "next" cluster, in case both sides have the
-            # same type of reinforcement, to prevent it from being too short in the
-            # upcoming iteration, therefore going again through all this code..
+                # Update clusters.
+                # We merge first towards the "next" cluster, in case both sides have the
+                # same type of reinforcement, to prevent it from being too short in the
+                # upcoming iteration, therefore going again through all this code..
 
-            reinforcement_idx_clusters[_idx] = (_selected_measure_idx, [])
-            if _selected_measure_idx == _next_value:
-                reinforcement_idx_clusters[_idx + 1] = (
-                    reinforcement_idx_clusters[_idx + 1][0],
-                    _cluster + reinforcement_idx_clusters[_idx + 1][1],
-                )
-            else:
-                reinforcement_idx_clusters[_idx - 1] = (
-                    reinforcement_idx_clusters[_idx - 1][0],
-                    reinforcement_idx_clusters[_idx - 1][1] + _cluster,
-                )
+                reinforcement_idx_clusters[_idx] = (_selected_measure_idx, [])
+                if _selected_measure_idx == _next_value:
+                    reinforcement_idx_clusters[_idx + 1] = (
+                        reinforcement_idx_clusters[_idx + 1][0],
+                        _cluster + reinforcement_idx_clusters[_idx + 1][1],
+                    )
+                else:
+                    reinforcement_idx_clusters[_idx - 1] = (
+                        reinforcement_idx_clusters[_idx - 1][0],
+                        reinforcement_idx_clusters[_idx - 1][1] + _cluster,
+                    )
 
         return _non_compliant_exceptions
 
