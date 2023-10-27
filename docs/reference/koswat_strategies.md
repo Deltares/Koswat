@@ -19,7 +19,7 @@ By default a strategy is applied as follows:
 
 This strategy is the first an default of all defined strategies. Its criteria is based on a pre-defined ['order'](#measure-order) of each reinforcement. In steps, it can be seen as:
 
-1. Pre-selection of a location's available reinforcement based on said order.
+1. Pre-selection of a location's available reinforcement based on said order, when a location does not have any "available" reinforcement, then the last measure's order will be pre-selected.
 2. [Clustering](#measure-clustering) of all locations by their pre-selected measure.
 3. [Measure buffering](#measure-buffering) to each of the clusters.
 4. [Measure minimal distance](#measure-minimal-distance) to the resulting clusters from the previous step.
@@ -39,7 +39,7 @@ We create measure-location clusters for the whole traject.
 A cluster represents a measure that its "selected" for a series of continuous locations. This means locations that are next to each other sharing the same measure type (`Type[ReinforcementProfileProtocol]`).
 
 ##### Clustering example
-Simplified representation for a traject with 10 locations:
+Simplified representation for a traject with 10 locations. This example is also tested in the `tests.strategies.order_strategy.py` test file.
 ```json
 {
     "SoilReinforcement": [
@@ -89,7 +89,7 @@ Steps that are followed:
 
 ##### Buffering example
 
-One simplified example, based on the [clustering example](#clustering-example), and using a buffer value of "1", can be as follows:
+One simplified example, based on the [clustering example](#clustering-example), and using a buffer value of "1". This example is also tested in the `tests.strategies.order_strategy.py` test file.
 
 ```json
 1. Initialize the masks based on the provided clusters:
@@ -172,7 +172,7 @@ __Note__:
 One simplified example, based on the [buffering example](#buffering-example), and using a minimal distance of "5", can be as follows:
 
 ```json
-1. Determine initial non-compliant clusters, in our case (strcture_min_length=5), no clusters fulfill this rule, so we require a maximum of 5 iterations.
+1. Determine initial non-compliant clusters, in our case (strcture_min_length=5), no clusters fulfill this rule, so we require a maximum of 4 iterations as we have 4 clusters.
 
 2. During iteration 1:
 

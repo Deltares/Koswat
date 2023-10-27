@@ -192,10 +192,14 @@ class OrderStrategy(StrategyProtocol):
             # We ensure no construction is replaced by a "lower" type.
             # This means a "short" `StabilityWallReinforcementProfile` won't be
             # replaced by a `SoilReinforcementProfile` and so on.
-
-            _selected_measure_idx = min(
-                max(_current_value, _previous_value), max(_current_value, _next_value)
+            _candidates = list(
+                filter(lambda x: x > _current_value, [_previous_value, _next_value])
             )
+            if not _candidates:
+                _selected_measure_idx = _current_value
+            else:
+                _selected_measure_idx = max(_current_value, min(_candidates))
+
             _selected_measure = self._order_reinforcement[_selected_measure_idx]
 
             if _current_value == _selected_measure_idx:
@@ -212,7 +216,7 @@ class OrderStrategy(StrategyProtocol):
             # To avoid the next iteration wrongly setting a new measure for the next group
             # without updating the current, we need to inject the current values there.
             # This way the 'subtraject' is updated.
-            if _selected_measure == _next_value:
+            if _selected_measure_idx == _next_value:
                 locations_by_measure[_idx + 1] = (
                     locations_by_measure[_idx + 1][0],
                     _sub_group + locations_by_measure[_idx + 1][1],
@@ -223,10 +227,9 @@ class OrderStrategy(StrategyProtocol):
 
         return _non_compliant_exceptions
 
-    def apply_strategy(
-        self, strategy_input: StrategyInput
+    def _get_locations_as_strategy_reinforcements(
+        self,
     ) -> list[StrategyLocationReinforcement]:
-        self._set_strategy_input(strategy_input)
         _strategy_reinforcements = []
         for (
             _location,
@@ -243,6 +246,13 @@ class OrderStrategy(StrategyProtocol):
                     selected_measure=_selected_reinforcement,
                 )
             )
+        return _strategy_reinforcements
+
+    def apply_strategy(
+        self, strategy_input: StrategyInput
+    ) -> list[StrategyLocationReinforcement]:
+        self._set_strategy_input(strategy_input)
+        _strategy_reinforcements = self._get_locations_as_strategy_reinforcements()
         self._apply_buffer(_strategy_reinforcements)
         self._apply_min_distance(_strategy_reinforcements)
         return _strategy_reinforcements
