@@ -184,10 +184,11 @@ class TestOrderStrategy:
         _exceptions_found = _strategy._apply_min_distance_to_clusters(_input_cluster)
 
         # 3. Verify expectations.
-        assert _exceptions_found == 1
+        assert _exceptions_found == 0
         assert _input_cluster == _expected_cluster_result
 
-    def test__apply_min_distance_given_example(self,
+    def test__apply_min_distance_given_example(
+        self,
         example_strategy_input: StrategyInput,
         example_location_reinforcements_with_buffering: list[
             StrategyLocationReinforcement

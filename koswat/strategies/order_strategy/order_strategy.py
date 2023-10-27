@@ -210,6 +210,7 @@ class OrderStrategy(StrategyProtocol):
                 if (
                     _reinforcement_idx != _target_reinforcement_idx
                     or len(_cluster) >= self._structure_min_length
+                    or not any(_cluster)
                 ):
                     continue
 
