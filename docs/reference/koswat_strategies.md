@@ -162,19 +162,19 @@ __Notes__:
         3. Move the current locations to their new clusters.
             - This is done to prevent (the next cluster) it from remaing _non compliant_ if it was before the merge.
 3. Determine if clusters have been corrected:
-    * if the number of non-compliant clusters is 0, or
-    * if there are as many non-compliant as exception-clusters identified, or
-    * if there are still `N` iterations already happened, then we are done.
+    * if the number of _non-compliant_ clusters is 0, or
+    * if there are as many _non-compliant_ as exception-clusters identified, or
+    * if the `N` iterations already happened, then we are done.
     * otherwise, go back to step 2.
-4. All clusters should now meet the requirements (unless not possible)
+4. All clusters should now meet the requirements.
 
 ##### Minimal distance example
 
 One simplified example, based on the [buffering example](#buffering-example), and using a minimal distance of "5", can be as follows:
 
 ```json
-1. Determine initial non-compliant clusters, in our case (strcture_min_length=5), no clusters fulfill this rule, so we require a maximum of 4 iterations as we have 4 clusters.
-> Initial cluster:
+1. Determine initial non-compliant clusters for `structure_min_length=5`, 
+    - A total of 3 non-compliant clusters are identified.
 [
     (0, ["Location_000","Location_001",]),
     (2, ["Location_002","Location_003","Location_004","Location_005",]),
@@ -182,7 +182,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
     (3, ["Location_007","Location_008","Location_009",]),
 ]
 
-2. During iteration 1:
+2. First iteration 1:
     1. Target is "SoilReinforcementProfile" (idx=0)
         1. Found in the first cluster:
             1. Non-compliant (length=2)
@@ -210,12 +210,11 @@ One simplified example, based on the [buffering example](#buffering-example), an
         1. All clusters are compliant.
     3. Target is "StabilityWallReinforcementProfile" (idx=2)
         1. All clusters are compliant.
-    4. We don't check the last target, "CofferDamReinforcementProfile" (idx=3), as it can't be further strengthen.
-
+    4. We do not check the last target, "CofferDamReinforcementProfile" (idx=3), as it can't be further strengthen.
 3. Get new clustering and number of non-compliants:
     [
         (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
         (3, ["Location_007","Location_008","Location_009",]),
     ]
-4. All clusters are compliant. Finish.
+4. All clusters are now compliant. Finish.
 ```

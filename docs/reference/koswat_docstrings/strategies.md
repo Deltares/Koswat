@@ -1,4 +1,4 @@
-# Strategies module
+# Strategies
 
 ::: koswat.strategies.strategy_input
 ::: koswat.strategies.strategy_location_reinforcement
