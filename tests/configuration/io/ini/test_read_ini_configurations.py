@@ -4,11 +4,11 @@ from typing import Type
 import pytest
 
 from koswat.configuration.io.ini.koswat_costs_ini_fom import (
+    ConstructionCostsSectionFom,
     DikeProfileCostsSectionFom,
     InfrastructureCostsSectionFom,
     KoswatCostsIniFom,
-    SurtaxCostsExcludingTaxesSectionFom,
-    SurtaxCostsIncludingTaxesSectionFom,
+    SurtaxCostsSectionFom,
     UnitPricesSectionFom,
 )
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
@@ -196,7 +196,6 @@ class TestReadIniConfigurations:
         assert _ini_fom.infrastructuur_section.wegen_klasse7_breedte == 12
         assert _ini_fom.infrastructuur_section.wegen_onbekend_breedte == 8
 
-    def test_koswat_ini_read_costs_ini(self):
         # 1. Define test data.
         _test_file_path = test_ini_reader_data / "koswat_costs.ini"
         _ini_reader = KoswatIniReader()
@@ -245,7 +244,7 @@ class TestReadIniConfigurations:
         # KostenOpslagFactorenInclBTW
         assert isinstance(
             _ini_fom.surtax_costs_incl_tax_section,
-            SurtaxCostsIncludingTaxesSectionFom,
+            SurtaxCostsSectionFom,
         )
         assert _ini_fom.surtax_costs_incl_tax_section.grond_makkelijk == 1.714
         assert _ini_fom.surtax_costs_incl_tax_section.grond_normaal == 1.953
@@ -263,7 +262,7 @@ class TestReadIniConfigurations:
         # KostenOpslagFactorenExclBTW
         assert isinstance(
             _ini_fom.surtax_costs_excl_tax_section,
-            SurtaxCostsExcludingTaxesSectionFom,
+            SurtaxCostsSectionFom,
         )
         assert _ini_fom.surtax_costs_excl_tax_section.grond_makkelijk == 1.421
         assert _ini_fom.surtax_costs_excl_tax_section.grond_normaal == 1.621
@@ -277,6 +276,61 @@ class TestReadIniConfigurations:
         assert _ini_fom.surtax_costs_excl_tax_section.grondaankoop_makkelijk == 1.292
         assert _ini_fom.surtax_costs_excl_tax_section.grondaankoop_normaal == 1.412
         assert _ini_fom.surtax_costs_excl_tax_section.grondaankoop_moeilijk == 1.645
+
+        # KostenCBwand
+        assert isinstance(
+            _ini_fom.construction_cost_cb_wall,
+            ConstructionCostsSectionFom,
+        )
+        assert _ini_fom.construction_cost_cb_wall.c_factor == 0
+        assert _ini_fom.construction_cost_cb_wall.d_factor == 159.326
+        assert _ini_fom.construction_cost_cb_wall.z_factor == -34.794
+        assert _ini_fom.construction_cost_cb_wall.f_factor == 0
+        assert _ini_fom.construction_cost_cb_wall.g_factor == 0
+
+        # KostenDamwandOnverankerd
+        assert isinstance(
+            _ini_fom.construction_cost_damwall_unanchored,
+            ConstructionCostsSectionFom,
+        )
+        assert _ini_fom.construction_cost_damwall_unanchored.c_factor == 9.298
+        assert _ini_fom.construction_cost_damwall_unanchored.d_factor == 132.239
+        assert _ini_fom.construction_cost_damwall_unanchored.z_factor == 103.628
+        assert _ini_fom.construction_cost_damwall_unanchored.f_factor == 0
+        assert _ini_fom.construction_cost_damwall_unanchored.g_factor == 0
+
+        # KostenDamwandVerankerd
+        assert isinstance(
+            _ini_fom.construction_cost_damwall_anchored,
+            ConstructionCostsSectionFom,
+        )
+        assert _ini_fom.construction_cost_damwall_anchored.c_factor == 9.298
+        assert _ini_fom.construction_cost_damwall_anchored.d_factor == 150.449
+        assert _ini_fom.construction_cost_damwall_anchored.z_factor == 1304.455
+        assert _ini_fom.construction_cost_damwall_anchored.f_factor == 0
+        assert _ini_fom.construction_cost_damwall_anchored.g_factor == 0
+
+        # KostenDiepwand
+        assert isinstance(
+            _ini_fom.construction_cost_deep_wall,
+            ConstructionCostsSectionFom,
+        )
+        assert _ini_fom.construction_cost_deep_wall.c_factor == 0
+        assert _ini_fom.construction_cost_deep_wall.d_factor == 0
+        assert _ini_fom.construction_cost_deep_wall.z_factor == 0
+        assert _ini_fom.construction_cost_deep_wall.f_factor == 281.176
+        assert _ini_fom.construction_cost_deep_wall.g_factor == 1.205
+
+        # KostenKistdam
+        assert isinstance(
+            _ini_fom.construction_cost_cofferdam,
+            ConstructionCostsSectionFom,
+        )
+        assert _ini_fom.construction_cost_cofferdam.c_factor == 0
+        assert _ini_fom.construction_cost_cofferdam.d_factor == 680.782
+        assert _ini_fom.construction_cost_cofferdam.z_factor == -74.602
+        assert _ini_fom.construction_cost_cofferdam.f_factor == 0
+        assert _ini_fom.construction_cost_cofferdam.g_factor == 0
 
     def test_koswat_ini_read_scenario_ini(self):
         # 1. Define test data.
