@@ -69,7 +69,7 @@ Given a [measure cluster](#measure-clustering), we will create a dictionary of m
 
 __Note__: Masks' values are the position of a reinforcement type in the [measure's order list](#measure-order). So a location with`CofferDamReinforcementProfile` will have a 3 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
 
-Steps that are followed:
+__Steps breakdown__:
 
 1. Initialize the dictionary masks with all values to -1.
 
@@ -149,9 +149,12 @@ Given a [measure cluster](#measure-clustering), ideally done after applying [buf
 The strategy here is to detect _non-compliant_ reinforcement-location clusters and replace their selected reinforcement type with the "least strong" of its adjacent clusters. We do this iteratively, so we first target the lowest type of reinforcements (`SoilReinforcementProfile`) and we move up until the first to the last (the last one cannot be further strengthen).
 
 __Notes__: 
+
 - We define a _non-compliant_ cluster as a cluster that does not contain as many locations as defined by the minimal length requirement (`structure_min_length`).
 - We also define a _non-compliant exception_ when a cluster does not meet said requirement but the adjacent clusters are of a lower reinforcement type.
 - We do not consider the last ordered reinforcement profile as an exception, as it cannot be further strengthen.
+
+__Steps breakdown__:
 
 1. Do `N` iterations where `N` is the initial number of _non compliant_ clusters.
 2. For each reinforcement type _target-reinforcement_, in the strategy order:
@@ -170,11 +173,10 @@ __Notes__:
 
 ##### Minimal distance example
 
-One simplified example, based on the [buffering example](#buffering-example), and using a minimal distance of "5", can be as follows:
+One simplified example, based on the [buffering example](#buffering-example), and using a minimal distance of "5". This example is also tested in the `tests.strategies.order_strategy.py` test file.
 
 ```json
-1. Determine initial non-compliant clusters for `structure_min_length=5`, 
-    - A total of 3 non-compliant clusters are identified.
+1. A total of 3 non-compliant clusters are identified.
 [
     (0, ["Location_000","Location_001",]),
     (2, ["Location_002","Location_003","Location_004","Location_005",]),
