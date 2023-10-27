@@ -102,15 +102,13 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         _strategy_input = StrategyInput(
             locations_matrix=_matrix,
-            structure_buffer=self.run_scenario_settings.surroundings.reinforcement_min_buffer,
-            min_space_between_structures=self.run_scenario_settings.surroundings.reinforcement_min_separation,
+            structure_min_buffer=self.run_scenario_settings.surroundings.reinforcement_min_buffer,
+            structure_min_length=self.run_scenario_settings.surroundings.reinforcement_min_separation,
         )
 
         # In theory this will become a factory (somewhere) where
         # the adequate strategy will be chosen.
-        return OrderStrategy.from_strategy_input(
-            _strategy_input
-        ).get_locations_reinforcements()
+        return OrderStrategy().apply_strategy(_strategy_input)
 
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()

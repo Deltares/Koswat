@@ -10,5 +10,5 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 @dataclass
 class StrategyInput:
     locations_matrix: dict[PointSurroundings, list[Type[ReinforcementProfileProtocol]]]
-    structure_buffer: float
-    min_space_between_structures: float
+    structure_min_buffer: float
+    structure_min_length: float

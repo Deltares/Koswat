@@ -23,9 +23,10 @@ from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_protocol import StrategyProtocol
 
 
-class OrderStrategy:
+class OrderStrategy(StrategyProtocol):
     _location_matrix: dict[PointSurroundings, list[Type[ReinforcementProfileProtocol]]]
     _order_reinforcement: list[Type[ReinforcementProfileProtocol]]
     _structure_buffer: float
@@ -45,15 +46,10 @@ class OrderStrategy:
             CofferdamReinforcementProfile,
         ]
 
-    @classmethod
-    def from_strategy_input(cls, strategy_input: StrategyInput) -> OrderStrategy:
-        _new_cls = cls()
-        _new_cls._location_matrix = strategy_input.locations_matrix
-        _new_cls._structure_buffer = strategy_input.structure_buffer
-        _new_cls._min_space_between_structures = (
-            strategy_input.min_space_between_structures
-        )
-        return _new_cls
+    def _set_strategy_input(self, strategy_input: StrategyInput) -> None:
+        self._location_matrix = strategy_input.locations_matrix
+        self._structure_buffer = strategy_input.structure_min_buffer
+        self._min_space_between_structures = strategy_input.structure_min_length
 
     def _group_by_selected_measure(
         self, location_reinforcements: list[StrategyLocationReinforcement]
@@ -119,6 +115,7 @@ class OrderStrategy:
         of locations per measures ('subtrajects').
         """
         _grouped_by_measure = self._group_by_selected_measure(location_reinforcements)
+
         def _get_non_compliant() -> int:
             return sum(
                 len(rg) < self._min_space_between_structures
@@ -225,9 +222,10 @@ class OrderStrategy:
 
         return _non_compliant_exceptions
 
-    def get_locations_reinforcements(
-        self,
+    def apply_strategy(
+        self, strategy_input: StrategyInput
     ) -> list[StrategyLocationReinforcement]:
+        self._set_strategy_input(strategy_input)
         _strategy_reinforcements = []
         for (
             _location,
