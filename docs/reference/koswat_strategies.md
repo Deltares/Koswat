@@ -27,10 +27,10 @@ This strategy is the first an default of all defined strategies. Its criteria is
 #### Measure order
 The predefined (hardcoded) reinforcement's order is as follows:
 
-1. `SoilReinforcement`
-2. `PipingWallReinforcement`
-3. `StabilityWallReinforcement`
-4. `CofferDamReinforcement`
+1. `SoilReinforcementProfile`
+2. `PipingWallReinforcementProfile`
+3. `StabilityWallReinforcementProfile`
+4. `CofferDamReinforcementProfile`
 
 #### Measure clustering
 
@@ -42,21 +42,21 @@ A cluster represents a measure that its "selected" for a series of continuous lo
 Simplified representation for a traject with 10 locations. This example is also tested in the `tests.strategies.order_strategy.py` test file.
 ```json
 {
-    "SoilReinforcement": [
+    "SoilReinforcementProfile": [
         "Location_000",
         "Location_001",
         "Location_002",
     ],
-    "StabilityWallReinforcement": [
+    "StabilityWallReinforcementProfile": [
         "Location_003",
         "Location_004",
     ],
-    "SoilReinforcement": [
+    "SoilReinforcementProfile": [
         "Location_005",
         "Location_006",
         "Location_007",
     ],
-    "CofferDamReinforcement": [
+    "CofferDamReinforcementProfile": [
         "Location_008",
         "Location_009",
     ],
@@ -67,7 +67,7 @@ Simplified representation for a traject with 10 locations. This example is also 
 
 Given a [measure cluster](#measure-clustering), we will create a dictionary of masks of size `NM` where `N` (the keys) is the number of available measure types (`Type[ReinforcementProfileProtocol]`) and `M` the number of available locations. 
 
-__Note__: Masks' values are the position of a reinforcement type in the [measure's order list](#measure-order). So a location with`CofferDamReinforcement` will have a 3 at the mask's position, whilst a `SoilReinforcement` will have a 0 instead (remember in Python indexing starts with 0).
+__Note__: Masks' values are the position of a reinforcement type in the [measure's order list](#measure-order). So a location with`CofferDamReinforcementProfile` will have a 3 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
 
 Steps that are followed:
 
@@ -82,7 +82,7 @@ Steps that are followed:
     3. Add a buffer (`StrategyInput.structure_min_buffer`) by updating the adjacent's positions of this cluster with the same values as in step 1. 
 
 3. Merge all masks into a 1-dimensional array where the cell's value is the maximum between the available masks.
-    - This is done to prevent that a buffer of a "higher" demanding measure such as `CofferDamReinforcement` is replaced by a "weaker" one.
+    - This is done to prevent that a buffer of a "higher" demanding measure such as `CofferDamReinforcementProfile` is replaced by a "weaker" one.
  
 4. Update the locations with their new associated reinforcement. The resulting mask contains the index of the measure to be applied in the [measure's order](#measure-order).
 
@@ -94,25 +94,25 @@ One simplified example, based on the [clustering example](#clustering-example), 
 ```json
 1. Initialize the masks based on the provided clusters:
 {
-    "SoilReinforcement": 
+    "SoilReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "PipingWallReinforcement": 
+    "PipingWallReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "StabilityWallReinforcement": 
+    "StabilityWallReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "CofferDamReinforcement": 
+    "CofferDamReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
 }
 
 2. Iterate over the clusters and update the masks' values:
 {
-    "SoilReinforcement": 
+    "SoilReinforcementProfile": 
         [0, 0, 0, 0, 0, 0 ,0, 0, 0, -1],
-    "PipingWallReinforcement": 
+    "PipingWallReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "StabilityWallReinforcement": 
+    "StabilityWallReinforcementProfile": 
         [-1, -1, 2, 2, 2, 2 ,-1, -1, -1, -1],
-    "CofferDamReinforcement": 
+    "CofferDamReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, 3, 3, 3],
 }
 
@@ -121,20 +121,20 @@ One simplified example, based on the [clustering example](#clustering-example), 
 
 4. Update the cluster's locations:
 {
-    "SoilReinforcement": [
+    "SoilReinforcementProfile": [
         "Location_000",
         "Location_001",
     ],
-    "StabilityWallReinforcement": [
+    "StabilityWallReinforcementProfile": [
         "Location_002",
         "Location_003",
         "Location_004",
         "Location_005",
     ],
-    "SoilReinforcement": [
+    "SoilReinforcementProfile": [
         "Location_006",
     ],
-    "CofferDamReinforcement": [
+    "CofferDamReinforcementProfile": [
         "Location_007",
         "Location_008",
         "Location_009",
@@ -176,14 +176,14 @@ One simplified example, based on the [buffering example](#buffering-example), an
 
 2. During iteration 1:
 
-    1. Check first cluster ("SoilReinforcement"):
+    1. Check first cluster ("SoilReinforcementProfile"):
         0. Non-compliant (length=2)
         1. Current value = 0,
         2. Previous value = 1,
         3. Next value = 2,
         4. Determine new value = 2,
         5. Update value and next cluster:
-            "StabilityWallReinforcement": [
+            "StabilityWallReinforcementProfile": [
                 "Location_000",
                 "Location_001",
                 "Location_002",
@@ -191,7 +191,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
                 "Location_004",
                 "Location_005",
             ],
-    2. Check second cluster ("StabilityWallReinforcement"):
+    2. Check second cluster ("StabilityWallReinforcementProfile"):
         0. It is now compliant (length=6), move to next cluster.
     3. Check third cluster:
         0. Non-compliant (length=1)
@@ -200,7 +200,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
         3. Next value = 3,
         4. Determine new value = 2,
         5. Update value (but not moved to previous cluster):
-            "StabilityWallReinforcement": [
+            "StabilityWallReinforcementProfile": [
                 "Location_000",
                 "Location_001",
                 "Location_002",
@@ -208,7 +208,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
                 "Location_004",
                 "Location_005",
             ],
-            "StabilityWallReinforcement": [
+            "StabilityWallReinforcementProfile": [
                 "Location_006", 
             ],
     4. Check fourth cluster:
@@ -218,7 +218,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
         3. Next value = -1,
         4. Determine new value = 3, mark as exception.
         5. Do not update value:
-            "CofferDamReinforcement": [
+            "CofferDamReinforcementProfile": [
                 "Location_007",
                 "Location_008",
                 "Location_009",
@@ -226,7 +226,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
     5. Return number of non-compliant exceptions (1)
 3. Get new clustering and number of non-compliants:
     {
-        "StabilityWallReinforcement": [
+        "StabilityWallReinforcementProfile": [
             "Location_000",
             "Location_001",
             "Location_002",
@@ -235,7 +235,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
             "Location_005",
             "Location_006", 
         ],
-        "CofferDamReinforcement": [
+        "CofferDamReinforcementProfile": [
             "Location_007",
             "Location_008",
             "Location_009",
