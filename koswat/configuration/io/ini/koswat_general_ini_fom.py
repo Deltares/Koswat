@@ -3,7 +3,6 @@ from __future__ import annotations
 import abc
 from configparser import ConfigParser
 from pathlib import Path
-from typing import Optional
 
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
@@ -57,31 +56,18 @@ class DikeProfileSectionFom(KoswatIniFomProtocol):
 
 class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
     soil_surtax_factor: SurtaxFactorEnum
-    constructive_surtax_factor: Optional[SurtaxFactorEnum]
-    land_purchase_surtax_factor: Optional[SurtaxFactorEnum]
 
     def _set_properties_from_dict(self, properties_dict: dict) -> None:
         self.soil_surtax_factor = SurtaxFactorEnum[
             properties_dict["opslagfactor_grond"].upper()
         ]
-        try:
-            self.constructive_surtax_factor = SurtaxFactorEnum[
-                properties_dict["opslagfactor_constructief"].upper()
-            ]
-        except KeyError:
-            pass
-        try:
-            self.land_purchase_surtax_factor = SurtaxFactorEnum[
-                properties_dict["opslagfactor_grondaankoop"].upper()
-            ]
-        except KeyError:
-            pass
 
 
 class SoilReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     min_bermhoogte: float
     max_bermhoogte_factor: float
     factor_toename_bermhoogte: float
+    land_purchase_surtax_factor: SurtaxFactorEnum
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
@@ -89,9 +75,14 @@ class SoilReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         _section._set_properties_from_dict(ini_config)
         _section.min_bermhoogte = ini_config.getfloat("min_bermhoogte")
         _section.max_bermhoogte_factor = ini_config.getfloat("max_bermhoogte_factor")
-        _section.factor_toename_bermhoogte = float(
-            ini_config["factor_toename_bermhoogte"]
+        _section.factor_toename_bermhoogte = ini_config.getfloat(
+            "factor_toename_bermhoogte"
         )
+        _section.land_purchase_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
         return _section
 
 
@@ -99,6 +90,8 @@ class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     min_lengte_kwelscherm: float
     overgang_cbwand_damwand: float
     max_lengte_kwelscherm: float
+    constructive_surtax_factor: SurtaxFactorEnum
+    land_purchase_surtax_factor: SurtaxFactorEnum
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
@@ -109,6 +102,16 @@ class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
             "overgang_cbwand_damwand"
         )
         _section.max_lengte_kwelscherm = ini_config.getfloat("max_lengte_kwelscherm")
+        _section.constructive_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
+        _section.land_purchase_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
         return _section
 
 
@@ -117,6 +120,8 @@ class StabilitywallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     min_lengte_stabiliteitswand: float
     overgang_damwand_diepwand: float
     max_lengte_stabiliteitswand: float
+    constructive_surtax_factor: SurtaxFactorEnum
+    land_purchase_surtax_factor: SurtaxFactorEnum
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
@@ -125,21 +130,32 @@ class StabilitywallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         _section.versteiling_binnentalud = ini_config.getfloat(
             "versteiling_binnentalud"
         )
-        _section.min_lengte_stabiliteitswand = float(
-            ini_config["min_lengte_stabiliteitswand"]
+        _section.min_lengte_stabiliteitswand = ini_config.getfloat(
+            "min_lengte_stabiliteitswand"
         )
-        _section.overgang_damwand_diepwand = float(
-            ini_config["overgang_damwand_diepwand"]
+        _section.overgang_damwand_diepwand = ini_config.getfloat(
+            "overgang_damwand_diepwand"
         )
-        _section.max_lengte_stabiliteitswand = float(
-            ini_config["max_lengte_stabiliteitswand"]
+        _section.max_lengte_stabiliteitswand = ini_config.getfloat(
+            "max_lengte_stabiliteitswand"
         )
+        _section.constructive_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
+        _section.land_purchase_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
         return _section
 
 
 class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     min_lengte_kistdam: float
     max_lengte_kistdam: float
+    constructive_surtax_factor: SurtaxFactorEnum
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
@@ -147,6 +163,11 @@ class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         _section._set_properties_from_dict(ini_config)
         _section.min_lengte_kistdam = ini_config.getfloat("min_lengte_kistdam")
         _section.max_lengte_kistdam = ini_config.getfloat("max_lengte_kistdam")
+        _section.constructive_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
         return _section
 
 
