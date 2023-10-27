@@ -195,16 +195,15 @@ class OrderStrategy(StrategyProtocol):
         reinforcement_idx_clusters: list[int, list[StrategyLocationReinforcement]],
     ) -> int:
         """
-        Single iteration where we go through the 'subtrajects' that do not have a measure
-        meeting the minimal length requirement.
+        We iterate through the 'subtrajects' that do not have a measure meeting the
+        minimal length requirement.
+        We need to increment the 'strength' of non-compliant clusters in the strategy's
+        default order. The last type can be skipped as it cannot be futher strengthen.
         If any of its neighbors is a higher reinforcement type then it will be adapted.
-        Otherwise it will preserve its state as a 'non_compliant' exception.
+        Otherwise it will preserve its state as a 'non-compliant' exception.
         """
         _non_compliant_exceptions = 0
-        for _target_reinforcement_idx in range(0, len(self._order_reinforcement)):
-            # We need to increment the 'strength' of non-compliant clusters
-            # in the given order.
-
+        for _target_reinforcement_idx in range(0, len(self._order_reinforcement) - 1):
             for _idx, (_reinforcement_idx, _cluster) in enumerate(
                 reinforcement_idx_clusters
             ):

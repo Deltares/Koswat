@@ -146,18 +146,20 @@ One simplified example, based on the [clustering example](#clustering-example), 
 
 Given a [measure cluster](#measure-clustering), ideally done after applying [buffering](#measure-buffering), we will now proceed to change the pre-selected measure of all those clusters who contain less locations than required by the describing property. We do this by updating their type with a "stronger" one.
 
+The strategy here is to detect _non-compliant_ reinforcement-location clusters and replace their selected reinforcement type with the "least strong" of its adjacent clusters. We do this iteratively, so we first target the lowest type of reinforcements (`SoilReinforcementProfile`) and we move up until the first to the last (the last one cannot be further strengthen).
+
 __Note__: 
 - We define a _non-compliant_ cluster as a cluster that does not contain as many locations as defined by the minimal length requirement (`structure_min_length`).
 - We also define a _non-compliant exception_ when a cluster does not meet said requirement but the adjacent clusters are of a lower reinforcement type.
 
 1. Do `N` iterations where `N` is the initial number of _non compliant_ clusters.
-2. For each cluster:
-    1. If it's _non-compliant_ move to step 2.2, otherwise check the next cluster (2.1).
-    2. Get the first adjacent measures stronger than the current one, in case none present use again the current value.
-        - When using the current value we increment by one (1) the number of exceptions present in the clusters.
-    3. If the current value has changed, update the locations' selected measure.
-    4. Move the current locations to their new clusters.
-        - This is done to prevent (the next cluster) it from remaing _non compliant_ if it was before the merge.
+2. For each reinforcement type _target-reinforcement_, in the strategy order:
+    2. For each _non-compliant_ _target-reinforcment_ cluster :
+        1. Get the first adjacent measures stronger than the current one, in case none present use again the current value.
+            - When using the current value we increment by one (1) the number of exceptions present in the clusters.
+        2. If the current value has changed, update the locations' selected measure.
+        3. Move the current locations to their new clusters.
+            - This is done to prevent (the next cluster) it from remaing _non compliant_ if it was before the merge.
 3. Determine if clusters have been corrected:
     * if the number of non-compliant clusters is 0, or
     * if there are as many non-compliant as exception-clusters identified, or
