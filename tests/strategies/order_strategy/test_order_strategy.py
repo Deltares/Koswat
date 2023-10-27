@@ -73,6 +73,50 @@ class TestOrderStrategy:
             CofferdamReinforcementProfile, _reinforcements[8:]
         )
 
+    @pytest.fixture
+    def example_location_reinforcements_with_buffering(
+        self, example_strategy_input: StrategyInput
+    ) -> list[StrategyLocationReinforcement]:
+        _result_after_buffering_idx = [0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
+        _measure_order = OrderStrategy.get_default_order_for_reinforcements()
+        _location_reinforcements = []
+        for _idx, _location in enumerate(
+            example_strategy_input.locations_matrix.keys()
+        ):
+            _measure_idx = _result_after_buffering_idx[_idx]
+            _location_reinforcements.append(
+                StrategyLocationReinforcement(
+                    location=_location,
+                    selected_measure=_measure_order[_measure_idx],
+                    available_measures=[],
+                )
+            )
+
+        yield _location_reinforcements
+
+    def test__get_reinforcement_clusters_given_example(
+        self,
+        example_location_reinforcements_with_buffering: list[
+            StrategyLocationReinforcement
+        ],
+    ):
+        # 1. Define test data.
+        _strategy = OrderStrategy()
+        _expected_clusters = [
+            (0, example_location_reinforcements_with_buffering[:2]),
+            (2, example_location_reinforcements_with_buffering[2:6]),
+            (0, example_location_reinforcements_with_buffering[6:7]),
+            (3, example_location_reinforcements_with_buffering[7:]),
+        ]
+
+        # 2. Run test.
+        _result_clusters = _strategy._get_reinforcement_clusters(
+            example_location_reinforcements_with_buffering
+        )
+
+        # 3. Verify expectations.
+        assert _result_clusters == _expected_clusters
+
     def test__get_buffer_mask_given_example(
         self, example_strategy_input: StrategyInput
     ):
@@ -112,25 +156,59 @@ class TestOrderStrategy:
         )
 
     def test__apply_min_distance_to_clusters_given_example(
-        self, example_strategy_input: StrategyInput
+        self,
+        example_strategy_input: StrategyInput,
+        example_location_reinforcements_with_buffering: list[
+            StrategyLocationReinforcement
+        ],
     ):
         # 1. Define test data.
-        _measure_order = OrderStrategy.get_default_order_for_reinforcements()
-        _reinforcements = OrderStrategy.get_strategy_reinforcements(
-            example_strategy_input.locations_matrix,
-            _measure_order,
-        )
-        # Replicate the results from previous test (`test__apply_buffer_given_example`)
         _strategy = OrderStrategy()
-        _strategy._structure_min_buffer = example_strategy_input.structure_min_buffer
         _strategy._structure_min_length = example_strategy_input.structure_min_length
-        _strategy._apply_buffer(_reinforcements)
+        _input_cluster = [
+            (0, example_location_reinforcements_with_buffering[:2]),
+            (2, example_location_reinforcements_with_buffering[2:6]),
+            (0, example_location_reinforcements_with_buffering[6:7]),
+            (3, example_location_reinforcements_with_buffering[7:]),
+        ]
+        _expected_cluster_result = [
+            (2, []),
+            (2, example_location_reinforcements_with_buffering[:7]),
+            (2, []),
+            (3, example_location_reinforcements_with_buffering[7:]),
+        ]
+
+        assert _input_cluster != _expected_cluster_result
 
         # 2. Run test.
-        _exceptions_found = _strategy._apply_min_distance_to_clusters(_reinforcements)
+        _exceptions_found = _strategy._apply_min_distance_to_clusters(_input_cluster)
 
         # 3. Verify expectations.
         assert _exceptions_found == 1
+        assert _input_cluster == _expected_cluster_result
+
+    def test__apply_min_distance_given_example(self,
+        example_strategy_input: StrategyInput,
+        example_location_reinforcements_with_buffering: list[
+            StrategyLocationReinforcement
+        ],
+    ):
+        # 1. Define test data.
+        _strategy = OrderStrategy()
+        _strategy._structure_min_length = example_strategy_input.structure_min_length
+
+        # 2. Run test.
+        _strategy._apply_min_distance(example_location_reinforcements_with_buffering)
+
+        # 3. Verify expectations.
+        assert all(
+            _sr.selected_measure == StabilityWallReinforcementProfile
+            for _sr in example_location_reinforcements_with_buffering[:7]
+        )
+        assert all(
+            _sr.selected_measure == CofferdamReinforcementProfile
+            for _sr in example_location_reinforcements_with_buffering[7:]
+        )
 
     def test_apply_strategy_given_example(self, example_strategy_input: StrategyInput):
         # 1. Define test data.

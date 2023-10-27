@@ -238,20 +238,28 @@ class OrderStrategy(StrategyProtocol):
                 )
                 continue
 
-            # To avoid the next iteration wrongly setting a new measure for the next group
-            # without updating the current, we need to inject the current values there.
-            # This way the 'subtraject' is updated.
+            # Update selected measures for locations in this cluster.
+            for _loc_reinf in _cluster:
+                _loc_reinf.selected_measure = self._order_reinforcement[
+                    _selected_measure_idx
+                ]
+
+            # Update clusters.
+            # We merge first towards the "next" cluster, in case both sides have the
+            # same type of reinforcement, to prevent it from being too short in the
+            # upcoming iteration, therefore going again through all this code..
+
+            reinforcement_idx_clusters[_idx] = (_selected_measure_idx, [])
             if _selected_measure_idx == _next_value:
                 reinforcement_idx_clusters[_idx + 1] = (
                     reinforcement_idx_clusters[_idx + 1][0],
                     _cluster + reinforcement_idx_clusters[_idx + 1][1],
                 )
-
-            for _loc_reinf in _cluster:
-                # Update selected measures for locations in this cluster.
-                _loc_reinf.selected_measure = self._order_reinforcement[
-                    _selected_measure_idx
-                ]
+            else:
+                reinforcement_idx_clusters[_idx - 1] = (
+                    reinforcement_idx_clusters[_idx - 1][0],
+                    reinforcement_idx_clusters[_idx - 1][1] + _cluster,
+                )
 
         return _non_compliant_exceptions
 
