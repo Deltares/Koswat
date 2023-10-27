@@ -7,8 +7,8 @@ from koswat.configuration.io.ini.koswat_costs_ini_fom import (
     DikeProfileCostsSectionFom,
     InfrastructureCostsSectionFom,
     KoswatCostsIniFom,
-    StoringCostsExcludingTaxesSectionFom,
-    StoringCostsIncludingTaxesSectionFom,
+    SurtaxCostsExcludingTaxesSectionFom,
+    SurtaxCostsIncludingTaxesSectionFom,
     UnitPricesSectionFom,
 )
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
@@ -244,39 +244,39 @@ class TestReadIniConfigurations:
 
         # KostenOpslagFactorenInclBTW
         assert isinstance(
-            _ini_fom.storing_costs_incl_tax_section,
-            StoringCostsIncludingTaxesSectionFom,
+            _ini_fom.surtax_costs_incl_tax_section,
+            SurtaxCostsIncludingTaxesSectionFom,
         )
-        assert _ini_fom.storing_costs_incl_tax_section.grond_makkelijk == 1.714
-        assert _ini_fom.storing_costs_incl_tax_section.grond_normaal == 1.953
-        assert _ini_fom.storing_costs_incl_tax_section.grond_moeilijk == 2.177
-        assert _ini_fom.storing_costs_incl_tax_section.constructief_makkelijk == 2.097
-        assert _ini_fom.storing_costs_incl_tax_section.constructief_normaal == 2.413
-        assert _ini_fom.storing_costs_incl_tax_section.constructief_moeilijk == 2.690
-        assert _ini_fom.storing_costs_incl_tax_section.wegen_makkelijk == 2.097
-        assert _ini_fom.storing_costs_incl_tax_section.wegen_normaal == 2.413
-        assert _ini_fom.storing_costs_incl_tax_section.wegen_moeilijk == 2.690
-        assert _ini_fom.storing_costs_incl_tax_section.grondaankoop_makkelijk == 1.292
-        assert _ini_fom.storing_costs_incl_tax_section.grondaankoop_normaal == 1.412
-        assert _ini_fom.storing_costs_incl_tax_section.grondaankoop_moeilijk == 1.645
+        assert _ini_fom.surtax_costs_incl_tax_section.grond_makkelijk == 1.714
+        assert _ini_fom.surtax_costs_incl_tax_section.grond_normaal == 1.953
+        assert _ini_fom.surtax_costs_incl_tax_section.grond_moeilijk == 2.177
+        assert _ini_fom.surtax_costs_incl_tax_section.constructief_makkelijk == 2.097
+        assert _ini_fom.surtax_costs_incl_tax_section.constructief_normaal == 2.413
+        assert _ini_fom.surtax_costs_incl_tax_section.constructief_moeilijk == 2.690
+        assert _ini_fom.surtax_costs_incl_tax_section.wegen_makkelijk == 2.097
+        assert _ini_fom.surtax_costs_incl_tax_section.wegen_normaal == 2.413
+        assert _ini_fom.surtax_costs_incl_tax_section.wegen_moeilijk == 2.690
+        assert _ini_fom.surtax_costs_incl_tax_section.grondaankoop_makkelijk == 1.292
+        assert _ini_fom.surtax_costs_incl_tax_section.grondaankoop_normaal == 1.412
+        assert _ini_fom.surtax_costs_incl_tax_section.grondaankoop_moeilijk == 1.645
 
-        # KostenOpslagFactorenexclBTW
+        # KostenOpslagFactorenExclBTW
         assert isinstance(
-            _ini_fom.storing_costs_excl_tax_section,
-            StoringCostsExcludingTaxesSectionFom,
+            _ini_fom.surtax_costs_excl_tax_section,
+            SurtaxCostsExcludingTaxesSectionFom,
         )
-        assert _ini_fom.storing_costs_excl_tax_section.grond_makkelijk == 1.421
-        assert _ini_fom.storing_costs_excl_tax_section.grond_normaal == 1.621
-        assert _ini_fom.storing_costs_excl_tax_section.grond_moeilijk == 1.810
-        assert _ini_fom.storing_costs_excl_tax_section.constructief_makkelijk == 1.741
-        assert _ini_fom.storing_costs_excl_tax_section.constructief_normaal == 2.003
-        assert _ini_fom.storing_costs_excl_tax_section.constructief_moeilijk == 2.233
-        assert _ini_fom.storing_costs_excl_tax_section.wegen_makkelijk == 1.741
-        assert _ini_fom.storing_costs_excl_tax_section.wegen_normaal == 2.003
-        assert _ini_fom.storing_costs_excl_tax_section.wegen_moeilijk == 2.233
-        assert _ini_fom.storing_costs_excl_tax_section.grondaankoop_makkelijk == 1.292
-        assert _ini_fom.storing_costs_excl_tax_section.grondaankoop_normaal == 1.412
-        assert _ini_fom.storing_costs_excl_tax_section.grondaankoop_moeilijk == 1.645
+        assert _ini_fom.surtax_costs_excl_tax_section.grond_makkelijk == 1.421
+        assert _ini_fom.surtax_costs_excl_tax_section.grond_normaal == 1.621
+        assert _ini_fom.surtax_costs_excl_tax_section.grond_moeilijk == 1.810
+        assert _ini_fom.surtax_costs_excl_tax_section.constructief_makkelijk == 1.741
+        assert _ini_fom.surtax_costs_excl_tax_section.constructief_normaal == 2.003
+        assert _ini_fom.surtax_costs_excl_tax_section.constructief_moeilijk == 2.233
+        assert _ini_fom.surtax_costs_excl_tax_section.wegen_makkelijk == 1.741
+        assert _ini_fom.surtax_costs_excl_tax_section.wegen_normaal == 2.003
+        assert _ini_fom.surtax_costs_excl_tax_section.wegen_moeilijk == 2.233
+        assert _ini_fom.surtax_costs_excl_tax_section.grondaankoop_makkelijk == 1.292
+        assert _ini_fom.surtax_costs_excl_tax_section.grondaankoop_normaal == 1.412
+        assert _ini_fom.surtax_costs_excl_tax_section.grondaankoop_moeilijk == 1.645
 
     def test_koswat_ini_read_scenario_ini(self):
         # 1. Define test data.

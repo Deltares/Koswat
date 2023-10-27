@@ -80,7 +80,7 @@ class InfrastructureCostsSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class StoringCostsSectionFomBase(KoswatIniFomProtocol, abc.ABC):
+class SurtaxCostsSectionFomBase(KoswatIniFomProtocol, abc.ABC):
     grond_makkelijk: float
     grond_normaal: float
     grond_moeilijk: float
@@ -112,11 +112,11 @@ class StoringCostsSectionFomBase(KoswatIniFomProtocol, abc.ABC):
         return _section
 
 
-class StoringCostsIncludingTaxesSectionFom(StoringCostsSectionFomBase):
+class SurtaxCostsIncludingTaxesSectionFom(SurtaxCostsSectionFomBase):
     pass
 
 
-class StoringCostsExcludingTaxesSectionFom(StoringCostsSectionFomBase):
+class SurtaxCostsExcludingTaxesSectionFom(SurtaxCostsSectionFomBase):
     pass
 
 
@@ -124,8 +124,8 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
     unit_prices_section: UnitPricesSectionFom
     dike_profile_costs_section: DikeProfileCostsSectionFom
     infrastructure_costs_section: InfrastructureCostsSectionFom
-    storing_costs_incl_tax_section: StoringCostsIncludingTaxesSectionFom
-    storing_costs_excl_tax_section: StoringCostsExcludingTaxesSectionFom
+    surtax_costs_incl_tax_section: SurtaxCostsIncludingTaxesSectionFom
+    surtax_costs_excl_tax_section: SurtaxCostsExcludingTaxesSectionFom
 
     @classmethod
     def from_config(cls, ini_dict: ConfigParser) -> KoswatIniFomProtocol:
@@ -139,13 +139,13 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
         _ini_fom.infrastructure_costs_section = (
             InfrastructureCostsSectionFom.from_config(ini_dict["KostenInfrastructuur"])
         )
-        _ini_fom.storing_costs_incl_tax_section = (
-            StoringCostsIncludingTaxesSectionFom.from_config(
+        _ini_fom.surtax_costs_incl_tax_section = (
+            SurtaxCostsIncludingTaxesSectionFom.from_config(
                 ini_dict["KostenOpslagfactorenInclBTW"]
             )
         )
-        _ini_fom.storing_costs_excl_tax_section = (
-            StoringCostsExcludingTaxesSectionFom.from_config(
+        _ini_fom.surtax_costs_excl_tax_section = (
+            SurtaxCostsExcludingTaxesSectionFom.from_config(
                 ini_dict["KostenOpslagfactorenExclBTW"]
             )
         )

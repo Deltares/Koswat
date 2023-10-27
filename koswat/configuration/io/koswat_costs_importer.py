@@ -50,9 +50,9 @@ class KoswatCostsImporter(KoswatImporterProtocol):
     def _get_surtax_costs(self, fom_costs: KoswatCostsIniFom) -> SurtaxCostsSettings:
         _settings = SurtaxCostsSettings()
         _fom_settings = (
-            fom_costs.storing_costs_incl_tax_section
+            fom_costs.surtax_costs_incl_tax_section
             if self.include_taxes
-            else fom_costs.storing_costs_excl_tax_section
+            else fom_costs.surtax_costs_excl_tax_section
         )
         _settings.ground_easy = _fom_settings.grond_makkelijk
         _settings.ground_normal = _fom_settings.grond_normaal
