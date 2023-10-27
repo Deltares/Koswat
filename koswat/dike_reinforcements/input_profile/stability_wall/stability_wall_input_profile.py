@@ -18,3 +18,7 @@ class StabilityWallInputProfile(
     @property
     def reinforcement_domain_name(self) -> str:
         return "Stabiliteitswand"
+
+    @property
+    def construction_length(self) -> float:
+        return self.length_stability_wall

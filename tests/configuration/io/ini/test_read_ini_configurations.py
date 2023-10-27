@@ -111,10 +111,6 @@ class TestReadIniConfigurations:
             == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.grondmaatregel_section.constructive_surtax_factor
-            == SurtaxFactorEnum.NORMAAL
-        )
-        assert (
             _ini_fom.grondmaatregel_section.land_purchase_surtax_factor
             == SurtaxFactorEnum.NORMAAL
         )
@@ -122,6 +118,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.grondmaatregel_section.max_bermhoogte_factor == 0.4
         assert _ini_fom.grondmaatregel_section.factor_toename_bermhoogte == 0.05
 
+        # Kwelscherm section
         assert isinstance(
             _ini_fom.kwelscherm_section, PipingwallReinforcementSectionFom
         )
@@ -129,7 +126,7 @@ class TestReadIniConfigurations:
             _ini_fom.kwelscherm_section.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _ini_fom.kwelscherm_section.constructive_surtax_factor
+            _ini_fom.stabiliteitswand_section.constructive_surtax_factor
             == SurtaxFactorEnum.NORMAAL
         )
         assert (
@@ -167,10 +164,6 @@ class TestReadIniConfigurations:
         assert (
             _ini_fom.kistdam_section.constructive_surtax_factor
             == SurtaxFactorEnum.MOEILIJK
-        )
-        assert (
-            _ini_fom.kistdam_section.land_purchase_surtax_factor
-            == SurtaxFactorEnum.NORMAAL
         )
         assert _ini_fom.kistdam_section.min_lengte_kistdam == 5
         assert _ini_fom.kistdam_section.max_lengte_kistdam == 25

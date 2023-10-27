@@ -17,6 +17,8 @@ class InputProfileCases(CasesProtocol):
         binnen_berm_hoogte=0,
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
+        pleistoceen=-5,
+        aquifer=-2,
     )
 
     profile_case_2 = KoswatInputProfileBase(
@@ -31,6 +33,8 @@ class InputProfileCases(CasesProtocol):
         binnen_berm_hoogte=2.6,
         binnen_berm_breedte=54,
         binnen_maaiveld=0,
+        pleistoceen=-5,
+        aquifer=-2,
     )
 
     cases = [pytest.param(default, id="Default Input Profile")]
@@ -49,6 +53,8 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         binnen_berm_hoogte=0,
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
+        pleistoceen=-5,
+        aquifer=-2,
     )
 
     profile_dijk2 = KoswatInputProfileBase(
@@ -63,6 +69,8 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         binnen_berm_hoogte=0,
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
+        pleistoceen=-5,
+        aquifer=-2,
     )
 
     profile_dijk3 = KoswatInputProfileBase(
@@ -77,4 +85,6 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         binnen_berm_hoogte=-2,
         binnen_berm_breedte=0,
         binnen_maaiveld=-2,
+        pleistoceen=-5,
+        aquifer=-2,
     )

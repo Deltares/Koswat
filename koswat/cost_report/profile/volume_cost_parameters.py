@@ -31,6 +31,7 @@ class VolumeCostParameters:
     new_clay_layer_surface: VolumeCostParameter
     new_core_layer_surface: VolumeCostParameter
     new_maaiveld_surface: VolumeCostParameter
+    construction_length: VolumeCostParameter
 
     def __init__(self) -> None:
         self.reused_grass_volume = None
@@ -43,6 +44,7 @@ class VolumeCostParameters:
         self.new_clay_layer_surface = None
         self.new_core_layer_surface = None
         self.new_maaiveld_surface = None
+        self.construction_length = None
 
     def get_parameters(self) -> List[VolumeCostParameter]:
         return list(
@@ -127,4 +129,5 @@ class VolumeCostParameters:
         _volume_parameters.new_maaiveld_surface = _create(
             _vcp.new_maaiveld_surface, 0.25
         )
+        _volume_parameters.construction_length = _create(_vcp.construction_length, 10)
         return _volume_parameters

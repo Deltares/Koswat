@@ -11,3 +11,7 @@ class SoilInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol
     @property
     def reinforcement_domain_name(self) -> str:
         return "Grondmaatregel profiel"
+
+    @property
+    def construction_length(self) -> float:
+        return 0

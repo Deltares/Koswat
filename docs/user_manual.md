@@ -59,6 +59,8 @@ input_profile_case.binnen_talud = 3
 input_profile_case.binnen_berm_hoogte = 0
 input_profile_case.binnen_berm_breedte = 0
 input_profile_case.binnen_maaiveld = 0
+input_profile_case.pleistoceen = -5
+input_profile_case.aquifer = -2
 
 ## Define the scenario case
 scenario_case = KoswatScenario()
