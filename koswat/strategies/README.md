@@ -13,14 +13,9 @@ This modules contains the logic to choose which measure will be applied for a gi
     - available_measure (`list[Type[ReinforcementProfileProtocol]]`), which are the possible reinforcements that could be applied to the location.
 
 
-(`structure_min_buffer`) and minimal structure length (`structure_min_length`).
+## Available strategies
 
-## Available strategies.
+The following strategies are currently available, please refer to the official documentation for a more in-detail explanation of each of them
 
-### Order based (default). 
-A strategy is chosen based on a fix priority order:
-1. `SoilReinforcement`
-2. `PipingWallReinforcement`
-3. `StabilityWallReinforcement`
-4. `CofferDamReinforcement`
+- [__Default__] Order based. A strategy is chosen based on a pre-defined measure priority order.
 
