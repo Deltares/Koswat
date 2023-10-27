@@ -192,8 +192,9 @@ class OrderStrategy(StrategyProtocol):
             # We ensure no construction is replaced by a "lower" type.
             # This means a "short" `StabilityWallReinforcementProfile` won't be
             # replaced by a `SoilReinforcementProfile` and so on.
-            _selected_measure_idx = max(
-                _current_value, min(_previous_value, _next_value)
+
+            _selected_measure_idx = min(
+                max(_current_value, _previous_value), max(_current_value, _next_value)
             )
             _selected_measure = self._order_reinforcement[_selected_measure_idx]
 
