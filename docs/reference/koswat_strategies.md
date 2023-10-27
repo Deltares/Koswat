@@ -152,14 +152,12 @@ __Note__:
 
 1. Do `N` iterations where `N` is the initial number of _non compliant_ clusters.
 2. For each cluster:
-    0. If it's _non-compliant_ move to step 2.1, otherwise check the next cluster (2.0).
-    1. Determine its current value as done for the masks of [buffering](#measure-buffering).
-    2. Select the strongest measure type between the current cluster's value and the previous cluster's value (-1 if there is no previous cluster).
-    3. Select the strongest measure type between the current cluster's value and the next cluster's value (-1 if there is no next cluster).
-    4. Select the weakest measure type between the results of step 2.2 and 2.3.
-        - If the new value is the same, mark as "exception".
-    5. If the current value has changed, then update the location's selected measure. 
-        - In addition, if the new value is of the next's cluster then move the locations already to said luster to prevent it from being _non compliant_.
+    1. If it's _non-compliant_ move to step 2.2, otherwise check the next cluster (2.1).
+    2. Get the first adjacent measures stronger than the current one, in case none present use again the current value.
+        - When using the current value we increment by one (1) the number of exceptions present in the clusters.
+    3. If the current value has changed, update the locations' selected measure.
+    4. Move the current locations to their new clusters.
+        - This is done to prevent (the next cluster) it from remaing _non compliant_ if it was before the merge.
 3. Determine if clusters have been corrected:
     * if the number of non-compliant clusters is 0, or
     * if there are as many non-compliant as exception-clusters identified, or
@@ -173,73 +171,49 @@ One simplified example, based on the [buffering example](#buffering-example), an
 
 ```json
 1. Determine initial non-compliant clusters, in our case (strcture_min_length=5), no clusters fulfill this rule, so we require a maximum of 4 iterations as we have 4 clusters.
+> Initial cluster:
+[
+    (0, ["Location_000","Location_001",]),
+    (2, ["Location_002","Location_003","Location_004","Location_005",]),
+    (0, ["Location_006",]),
+    (3, ["Location_007","Location_008","Location_009",]),
+]
 
 2. During iteration 1:
 
-    1. Check first cluster ("SoilReinforcementProfile"):
-        0. Non-compliant (length=2)
-        1. Current value = 0,
-        2. Previous value = 1,
-        3. Next value = 2,
-        4. Determine new value = 2,
-        5. Update value and next cluster:
-            "StabilityWallReinforcementProfile": [
-                "Location_000",
-                "Location_001",
-                "Location_002",
-                "Location_003",
-                "Location_004",
-                "Location_005",
-            ],
-    2. Check second cluster ("StabilityWallReinforcementProfile"):
-        0. It is now compliant (length=6), move to next cluster.
+    1. Check first cluster:
+        1. Non-compliant (length=2)
+        2. New value = 2; (Current = 0, Previous = 1, Next = 2,)
+        3. Update current cluster values
+        4. Update (next) cluster:
+            [
+                (2, []),
+                (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005",]),
+                (0, ["Location_006",]),
+                (3, ["Location_007","Location_008","Location_009",]),
+            ]
+    2. Check second cluster:
+        1. It is now compliant (length=6), move to next cluster.
     3. Check third cluster:
-        0. Non-compliant (length=1)
-        1. Current value = 0,
-        2. Previous value = 2,
-        3. Next value = 3,
-        4. Determine new value = 2,
-        5. Update value (but not moved to previous cluster):
-            "StabilityWallReinforcementProfile": [
-                "Location_000",
-                "Location_001",
-                "Location_002",
-                "Location_003",
-                "Location_004",
-                "Location_005",
-            ],
-            "StabilityWallReinforcementProfile": [
-                "Location_006", 
-            ],
+        1. Non-compliant (length=1)
+        2. New value = 2; (Current = 0, Previous = 2, Next = 3)
+        3. Update current cluster values
+        4. Update (previous) cluster,
+            [
+                (2, []),
+                (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
+                (2, []),
+                (3, ["Location_007","Location_008","Location_009",]),
+            ]
     4. Check fourth cluster:
-        0. Non-compliant (length=3)
-        1. Current value = 3,
-        2. Previous value = 2,
-        3. Next value = -1,
-        4. Determine new value = 3, mark as exception.
-        5. Do not update value:
-            "CofferDamReinforcementProfile": [
-                "Location_007",
-                "Location_008",
-                "Location_009",
-            ],
+        1. Non-compliant (length=3)
+        2. New value = 3; (Current = 3, Previous = 2, Next = -1)
+            - Increment exception number (1).
     5. Return number of non-compliant exceptions (1)
 3. Get new clustering and number of non-compliants:
-    {
-        "StabilityWallReinforcementProfile": [
-            "Location_000",
-            "Location_001",
-            "Location_002",
-            "Location_003",
-            "Location_004",
-            "Location_005",
-            "Location_006", 
-        ],
-        "CofferDamReinforcementProfile": [
-            "Location_007",
-            "Location_008",
-            "Location_009",
-        ],
-    }
-4. All non-compliant clusters are exception. Finish.
+    [
+        (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
+        (3, ["Location_007","Location_008","Location_009",]),
+    ]
+4. All non-compliant clusters match number of exceptions. Finish.
 ```
