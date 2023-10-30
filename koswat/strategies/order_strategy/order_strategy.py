@@ -204,7 +204,7 @@ class OrderStrategy(StrategyProtocol):
             - The last (reinforcement) type can be skipped as it cannot be futher
             strengthen.
             - If any of the cluster's neighbors is of a higher reinforcement type
-            then it will be adapted.
+            then it will be adapted using the least restrictive of them.
             - If both cluster's neighbors are of a lower reinforcement type, then
             it will not be adapted and it is considered a 'non-compliant exception'.
             - When the first and / or last cluster are 'non-compliant' they are
@@ -249,7 +249,7 @@ class OrderStrategy(StrategyProtocol):
                     else reinforcement_idx_clusters[_idx + 1][0]
                 )
 
-                # DESIGN / THEORY decission:
+                # DESIGN / THEORY decision:
                 # We ensure no construction is replaced by a "lower" type.
                 # This means a "short" `StabilityWallReinforcementProfile` won't be
                 # replaced by a `SoilReinforcementProfile` and so on.
