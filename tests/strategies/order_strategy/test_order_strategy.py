@@ -1,6 +1,7 @@
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import PipingWallReinforcementProfile
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
@@ -25,7 +26,21 @@ class TestOrderStrategy:
         # of parameterless constructors is met.
         _strategy = OrderStrategy()
         assert isinstance(_strategy, OrderStrategy)
-        assert len(_strategy._order_reinforcement) == 4
+
+    def test_get_default_order_for_reinforcements(self):
+        # 1. Define test data.
+        _expected_result = [
+            SoilReinforcementProfile,
+            PipingWallReinforcementProfile,
+            StabilityWallReinforcementProfile,
+            CofferdamReinforcementProfile,
+        ]
+
+        # 2. Run test.
+        _result = OrderStrategy.get_default_order_for_reinforcements()
+
+        # 3. Verify expectations
+        assert _result == _expected_result
 
     def test__get_strategy_reinforcements_given_example(
         self, example_strategy_input: StrategyInput
@@ -64,7 +79,10 @@ class TestOrderStrategy:
         # 1. Define test data.
         class MockedStrategy(OrderStrategyBase):
             def __init__(self) -> None:
-                self.reinforcement_order = OrderStrategy.get_default_order_for_reinforcements()
+                self.reinforcement_order = (
+                    OrderStrategy.get_default_order_for_reinforcements()
+                )
+
             def apply(
                 self, location_reinforcements: list[StrategyLocationReinforcement]
             ) -> None:
