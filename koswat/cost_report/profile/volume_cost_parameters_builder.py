@@ -33,7 +33,7 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         if not self.reinforced_profile:
             raise ValueError("No reinforced profile provided.")
         if not self.koswat_costs_settings:
-            raise ValueError("No koswat costs setting setting provided.")
+            raise ValueError("No koswat costs settings provided.")
 
         _volume_parameters = VolumeCostParameters()
         self._set_volume_cost_parameters(

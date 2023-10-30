@@ -31,7 +31,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
             raise FileNotFoundError(_error)
         if self.include_taxes is None:
             raise ValueError("A boolean value is expected for `include_taxes`.")
-        logging.info("Importing costs setting settings from {}.".format(from_path))
+        logging.info("Importing costs settings from {}.".format(from_path))
         _costs_fom = self._get_costs_fom(from_path)
 
         _costs_settings = KoswatCostsSettings()

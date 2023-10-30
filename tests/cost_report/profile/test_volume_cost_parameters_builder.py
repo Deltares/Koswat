@@ -55,7 +55,7 @@ class TestVolumeCostParametersBuilder:
         assert str(exc_value.value) == _expected_mssg
 
     def test_no_koswat_costs_raises(self):
-        _expected_mssg = "No koswat costs setting setting provided."
+        _expected_mssg = "No koswat costs settings provided."
         with pytest.raises(ValueError) as exc_value:
             _builder = VolumeCostParametersBuilder()
             _builder.koswat_costs_settings = None
@@ -154,7 +154,7 @@ class TestVolumeCostParametersBuilder:
         _grass_layer = self._get_mocked_layer(KoswatMaterialType.GRASS, 4.8, 8.4)
         _wrapper.coating_layers = [_clay_layer, _grass_layer]
 
-        # Set default dike profile costs setting setting.
+        # Set default dike profile costs settings.
         _costs_settings = KoswatCostsSettings()
         _builder.koswat_costs_settings = _costs_settings
 
