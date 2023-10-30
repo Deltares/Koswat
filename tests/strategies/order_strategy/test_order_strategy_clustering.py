@@ -62,6 +62,45 @@ class TestOrderStrategyClustering:
             for _sr in example_location_reinforcements_with_buffering[7:]
         )
 
+    def test_apply_given_cluster_with_lower_type(
+        self,
+        example_location_reinforcements_with_buffering: list[
+            StrategyLocationReinforcement
+        ],
+    ):
+        # 1. Define test data.
+        _strategy = OrderStrategyClustering()
+        _strategy.reinforcement_min_length = 2
+        _strategy.reinforcement_order = (
+            OrderStrategy.get_default_order_for_reinforcements()
+        )
+
+        _location_reinforcements = example_location_reinforcements_with_buffering
+
+        # Set all locations to the lowest type:
+        for location_reinforcement in _location_reinforcements:
+            location_reinforcement.selected_measure = _strategy.reinforcement_order[0]
+
+        # Create an isolated cluster in the middle.
+        _mid_cluster = len(_location_reinforcements) // 2
+        _location_reinforcements[
+            _mid_cluster
+        ].selected_measure = _strategy.reinforcement_order[1]
+
+        # 2. Run test.
+        _strategy.apply(example_location_reinforcements_with_buffering)
+
+        # 3. Verify expectations.
+        assert (
+            _location_reinforcements[_mid_cluster].selected_measure
+            == _strategy.reinforcement_order[1]
+        )
+        assert all(
+            _sr.selected_measure == _strategy.reinforcement_order[0]
+            for _sr in _location_reinforcements[0:_mid_cluster]
+            + _location_reinforcements[_mid_cluster + 1 :]
+        )
+
     def test__get_reinforcement_order_clusters(
         self,
         example_strategy_input: StrategyInput,

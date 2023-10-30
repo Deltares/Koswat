@@ -106,9 +106,14 @@ class OrderCluster:
             # It is a bordering cluster, it is always compliant.
             return True
 
-        # It fulfills the required length,
-        # or it is already the strongest reinforcement possible.
-        return (
+        if (
             len(self.location_reinforcements) >= min_length
             or self.reinforcement_idx == strongest_reinforcement
-        )
+        ):
+            # It fulfills the required length,
+            # or it is already the strongest reinforcement possible.
+            return True
+
+        # If there are no stronger neighbors,
+        # it is also considered compliant (as an exception).
+        return self.get_stronger_cluster() == self

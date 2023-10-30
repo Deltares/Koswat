@@ -40,6 +40,19 @@ class OrderStrategyClustering(OrderStrategyBase):
             _added_clusters.append(_last_added)
         return _added_clusters
 
+    def _get_non_compliant_clusters(
+        self, target_reinforcement_idx: int, available_clusters: list[OrderCluster]
+    ) -> list[OrderCluster]:
+        return list(
+            filter(
+                lambda x: not x.is_compliant(
+                    self.reinforcement_min_length, self.reinforcement_order[-1]
+                )
+                and x.reinforcement_idx == target_reinforcement_idx,
+                available_clusters,
+            )
+        )
+
     def apply(
         self, location_reinforcements: list[StrategyLocationReinforcement]
     ) -> None:
@@ -47,41 +60,23 @@ class OrderStrategyClustering(OrderStrategyBase):
             location_reinforcements
         )
         _reinforcements_order_max_idx = len(self.reinforcement_order)
-        for _target_reinforcement_idx in range(0, _reinforcements_order_max_idx - 1):
-            _target_non_compliant_clusters = list(
-                filter(
-                    lambda x: not x.is_compliant(
-                        self.reinforcement_min_length, self.reinforcement_order[-1]
-                    )
-                    and x.reinforcement_idx == _target_reinforcement_idx,
-                    _available_clusters,
+        for _target_idx, _reinforcement_type in enumerate(
+            self.reinforcement_order[:-1]
+        ):
+            _non_compliant_clusters = self._get_non_compliant_clusters(
+                _target_idx, _available_clusters
+            )
+            logging.info(
+                "Non-compliant clusters found for {}: {}".format(
+                    _reinforcement_type.output_name, len(_non_compliant_clusters)
                 )
             )
-            if not any(_target_non_compliant_clusters):
-                continue
-
-            for _cluster in _target_non_compliant_clusters:
+            for _cluster in _non_compliant_clusters:
                 if _cluster.is_compliant(
                     self.reinforcement_min_length, _reinforcements_order_max_idx
                 ):
                     continue
-
                 _stronger_cluster = _cluster.get_stronger_cluster()
-                if _stronger_cluster == _cluster:
-                    logging.warning(
-                        "Cluster for {} not merged despite length at traject order {} - {}, as both sides ({}, {}) are inferior reinforcement types.".format(
-                            self.reinforcement_order[_cluster.reinforcement_idx],
-                            _cluster.location_reinforcements[0].location.traject_order,
-                            _cluster.location_reinforcements[-1].location.traject_order,
-                            self.reinforcement_order[
-                                _cluster.left_neighbor.reinforcement_idx
-                            ],
-                            self.reinforcement_order[
-                                _cluster.right_neighbor.reinforcement_idx
-                            ],
-                        )
-                    )
-                    continue
                 # Update selected measures for locations in this cluster.
                 _stronger_cluster.extend_cluster(_cluster)
                 _available_clusters.pop(_available_clusters.index(_cluster))
