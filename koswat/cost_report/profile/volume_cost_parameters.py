@@ -94,9 +94,7 @@ class VolumeCostParameters:
             return _vp
 
         _volume_parameters = cls()
-        _vcp = VolumeCostParametersCalculator.from_reinforced_profile(
-            reinforced_profile
-        )
+        _vcp = VolumeCostParameters.from_reinforced_profile(reinforced_profile)
         if not _vcp:
             return _volume_parameters
         _volume_parameters.reused_grass_volume = _create(
@@ -129,5 +127,6 @@ class VolumeCostParameters:
         _volume_parameters.new_maaiveld_surface = _create(
             _vcp.new_maaiveld_surface, 0.25
         )
+        # TODO: KOSWAT issue # 104
         _volume_parameters.construction_length = _create(_vcp.construction_length, 10)
         return _volume_parameters
