@@ -95,9 +95,9 @@ class OrderCluster:
 
         Args:
             min_length (float): Minimal length a reinforcement measure is required
-            for a cluster.
+                for a cluster.
             strongest_reinforcement (int): What is the reinforcement index which cannot
-            be futher 'strengthen'.
+                be futher 'strengthen'.
 
         Returns:
             bool: if the cluster is compliant within its neighbors context.
