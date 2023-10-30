@@ -148,17 +148,18 @@ Given a [measure cluster](#measure-clustering), ideally done after applying [buf
 
 The strategy here is to detect _non-compliant_ reinforcement-location clusters and replace their selected reinforcement type with the "least strong" of its adjacent clusters. We do this iteratively, so we first target the lowest type of reinforcements (`SoilReinforcementProfile`) and we move up until the first to the last (the last one cannot be further strengthen).
 
-__Notes__: 
+__Conditions__: 
 
 - We define a _non-compliant_ cluster as a cluster that does not contain as many locations as defined by the minimal length requirement (`structure_min_length`).
-- We also define a _non-compliant exception_ when a cluster does not meet said requirement but the adjacent clusters are of a lower reinforcement type.
-- We do not consider the last ordered reinforcement profile as an exception, as it cannot be further strengthen.
+- We also define a _non-compliant exception_ when a cluster does not meet said requirement but the adjacent clusters are of a lower reinforcement type. Therefore retaining their initial reinforcement type.
+- The first and last clusters, if identified as _non-compliant_ exception they are __always__ exceptions. Therefore they keep their initial reinforcement type.
+- All _non-compliant_ clusters whose type is placed as the last reinforcement in the [order](#measure-order), are skipped and not considered as an exception, as they cannot be further strengthen.
 
 __Steps breakdown__:
 
 1. Do `N` iterations where `N` is the initial number of _non compliant_ clusters.
 2. For each reinforcement type _target-reinforcement_, in the strategy order:
-    2. For each _non-compliant_ _target-reinforcment_ cluster :
+    2. For each _non-compliant_ _target-reinforcement_ cluster :
         1. Get the first adjacent measures stronger than the current one, in case none present use again the current value.
             - When using the current value we increment by one (1) the number of exceptions present in the clusters.
         2. If the current value has changed, update the locations' selected measure.

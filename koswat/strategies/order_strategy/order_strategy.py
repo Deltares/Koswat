@@ -149,7 +149,7 @@ class OrderStrategy(StrategyProtocol):
             return sum(
                 len(rg) < self._structure_min_length
                 for r_idx, rg in _reinforcement_idx_clusters
-                if r_idx != len(self._order_reinforcement) -1
+                if r_idx != len(self._order_reinforcement) - 1
             )
 
         _non_compliant_exceptions = 0
@@ -199,22 +199,47 @@ class OrderStrategy(StrategyProtocol):
         We iterate through the 'subtrajects' that do not have a measure meeting the
         minimal length requirement.
         We need to increment the 'strength' of non-compliant clusters in the strategy's
-        default order. The last type can be skipped as it cannot be futher strengthen.
-        If any of its neighbors is a higher reinforcement type then it will be adapted.
-        Otherwise it will preserve its state as a 'non-compliant' exception.
+        default order.
+        Conditions:
+            - The last (reinforcement) type can be skipped as it cannot be futher
+            strengthen.
+            - If any of the cluster's neighbors is of a higher reinforcement type
+            then it will be adapted.
+            - If both cluster's neighbors are of a lower reinforcement type, then
+            it will not be adapted and it is considered a 'non-compliant exception'.
+            - When the first and / or last cluster are 'non-compliant' they are
+            automatically considered an 'exception', therefore conserving their initial
+            reinforcement type.
         """
         _non_compliant_exceptions = 0
-        for _target_reinforcement_idx in range(0, len(self._order_reinforcement) - 1):
-            for _idx, (_reinforcement_idx, _cluster) in enumerate(
-                reinforcement_idx_clusters
-            ):
-                if (
-                    _reinforcement_idx != _target_reinforcement_idx
-                    or len(_cluster) >= self._structure_min_length
-                    or not any(_cluster)
-                ):
-                    continue
 
+        def can_be_skipped(
+            _target_idx: int,
+            reinforcement_cluster: tuple[int, list[StrategyLocationReinforcement]],
+        ) -> bool:
+            _not_reinforcement_target = _target_idx != reinforcement_cluster[0]
+            _compliant_cluster = (
+                len(reinforcement_cluster[1]) >= self._structure_min_length
+            )
+            _empty_cluster = not any(reinforcement_cluster[1])
+
+            # First and last clusters are considered always exceptions.
+            _bordering_cluster = (
+                reinforcement_cluster == reinforcement_idx_clusters[0]
+                or reinforcement_cluster == reinforcement_idx_clusters[-1]
+            )
+            return (
+                _not_reinforcement_target
+                or _compliant_cluster
+                or _empty_cluster
+                or _bordering_cluster
+            )
+
+        for _target_reinforcement_idx in range(0, len(self._order_reinforcement) - 1):
+            for _idx, _reinforcement_cluster in enumerate(reinforcement_idx_clusters):
+                if can_be_skipped(_target_reinforcement_idx, _reinforcement_cluster):
+                    continue
+                _reinforcement_idx, _cluster = _reinforcement_cluster
                 _previous_value = (
                     -1 if _idx - 1 < 0 else reinforcement_idx_clusters[_idx - 1][0]
                 )
