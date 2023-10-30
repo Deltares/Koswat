@@ -8,17 +8,17 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class OrderStrategyBuffering(OrderStrategyBase):
-    order_reinforcement: list[ReinforcementProfileProtocol]
+    reinforcement_order: list[ReinforcementProfileProtocol]
     reinforcement_min_buffer: float
 
     @classmethod
     def with_strategy(
         cls,
-        order_reinforcement: list[ReinforcementProfileProtocol],
+        reinforcement_order: list[ReinforcementProfileProtocol],
         reinforcement_min_buffer: float,
     ):
         _this = cls()
-        _this.order_reinforcement = order_reinforcement
+        _this.reinforcement_order = reinforcement_order
         _this.reinforcement_min_buffer = reinforcement_min_buffer
         return _this
 
@@ -31,7 +31,7 @@ class OrderStrategyBuffering(OrderStrategyBase):
         _len_location_reinforcements = len(location_reinforcements)
         _candidates_masks = dict(
             (_r_idx, [-1] * _len_location_reinforcements)
-            for _r_idx in range(0, len(self.order_reinforcement))
+            for _r_idx in range(0, len(self.reinforcement_order))
         )
         _visited = 0
         for _reinforcement_idx, _sub_group in _grouped_location_reinforcements:
@@ -69,4 +69,4 @@ class OrderStrategyBuffering(OrderStrategyBase):
 
         # Apply buffer values.
         for _idx, _location in enumerate(location_reinforcements):
-            _location.selected_measure = self.order_reinforcement[_result_mask[_idx]]
+            _location.selected_measure = self.reinforcement_order[_result_mask[_idx]]

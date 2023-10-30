@@ -10,17 +10,17 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class OrderStrategyClustering(OrderStrategyBase):
-    order_reinforcement: list[ReinforcementProfileProtocol]
+    reinforcement_order: list[ReinforcementProfileProtocol]
     reinforcement_min_length: float
 
     @classmethod
     def with_strategy(
         cls,
-        order_reinforcement: list[ReinforcementProfileProtocol],
+        reinforcement_order: list[ReinforcementProfileProtocol],
         reinforcement_min_length: float,
     ):
         _this = cls()
-        _this.order_reinforcement = order_reinforcement
+        _this.reinforcement_order = reinforcement_order
         _this.reinforcement_min_length = reinforcement_min_length
         return _this
 
@@ -46,12 +46,12 @@ class OrderStrategyClustering(OrderStrategyBase):
         _available_clusters = self._get_reinforcement_order_clusters(
             location_reinforcements
         )
-        _reinforcements_order_max_idx = len(self.order_reinforcement)
+        _reinforcements_order_max_idx = len(self.reinforcement_order)
         for _target_reinforcement_idx in range(0, _reinforcements_order_max_idx - 1):
             _target_non_compliant_clusters = list(
                 filter(
                     lambda x: not x.is_compliant(
-                        self.reinforcement_min_length, self.order_reinforcement[-1]
+                        self.reinforcement_min_length, self.reinforcement_order[-1]
                     )
                     and x.reinforcement_idx == _target_reinforcement_idx,
                     _available_clusters,
@@ -70,13 +70,13 @@ class OrderStrategyClustering(OrderStrategyBase):
                 if _stronger_cluster == _cluster:
                     logging.warning(
                         "Cluster for {} not merged despite length at traject order {} - {}, as both sides ({}, {}) are inferior reinforcement types.".format(
-                            self.order_reinforcement[_cluster.reinforcement_idx],
+                            self.reinforcement_order[_cluster.reinforcement_idx],
                             _cluster.location_reinforcements[0].location.traject_order,
                             _cluster.location_reinforcements[-1].location.traject_order,
-                            self.order_reinforcement[
+                            self.reinforcement_order[
                                 _cluster.left_neighbor.reinforcement_idx
                             ],
-                            self.order_reinforcement[
+                            self.reinforcement_order[
                                 _cluster.right_neighbor.reinforcement_idx
                             ],
                         )
