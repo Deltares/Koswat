@@ -1,9 +1,10 @@
 from __future__ import annotations
-import logging
-from typing import Type
-from itertools import groupby
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
+import logging
+from itertools import groupby
+from typing import Type
+
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )

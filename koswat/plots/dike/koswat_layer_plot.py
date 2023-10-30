@@ -1,4 +1,6 @@
 from matplotlib import pyplot
+from numpy import concatenate
+from shapely.geometry import LineString, MultiLineString
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
@@ -6,8 +8,6 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protoco
     ReinforcementLayerProtocol,
 )
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
-from shapely.geometry import MultiLineString, LineString
-from numpy import concatenate
 
 
 class KoswatLayerPlot(KoswatPlotProtocol):
@@ -21,7 +21,9 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         if isinstance(koswat_geometry, LineString):
             return koswat_geometry.coords.xy
 
-        return list(map(concatenate, zip(*map(lambda x: x.coords.xy, koswat_geometry.geoms))))
+        return list(
+            map(concatenate, zip(*map(lambda x: x.coords.xy, koswat_geometry.geoms)))
+        )
 
     def plot(self, color: str) -> None:
         """
