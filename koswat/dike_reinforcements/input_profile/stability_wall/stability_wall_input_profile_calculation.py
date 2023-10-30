@@ -107,7 +107,7 @@ class StabilityWallInputProfileCalculation(
         _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
         _new_data.binnen_berm_breedte = 0
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
-        _soil_binnen_berm_breedte = self.calculate_soil_binnen_berm_breedte(
+        _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
         _new_data.length_stability_wall = self._calculate_length_stability_wall(

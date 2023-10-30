@@ -117,7 +117,7 @@ class TestSoilInputProfileCalculation:
 
         # 2. Run test
         _new_binnen_berm_breedte = (
-            SoilInputProfileCalculation().calculate_soil_binnen_berm_breedte(
+            SoilInputProfileCalculation()._calculate_soil_binnen_berm_breedte(
                 _old_profile, _new_profile, _scenario
             )
         )
