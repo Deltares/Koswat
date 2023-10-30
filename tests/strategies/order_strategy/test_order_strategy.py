@@ -1,7 +1,9 @@
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import PipingWallReinforcementProfile
+from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
+    PipingWallReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
@@ -96,7 +98,7 @@ class TestOrderStrategy:
         ]
 
         # 2. Run test.
-        _result_clusters = MockedStrategy()._get_reinforcement_clusters(
+        _result_clusters = MockedStrategy()._get_reinforcement_groupings(
             example_location_reinforcements_with_buffering
         )
 

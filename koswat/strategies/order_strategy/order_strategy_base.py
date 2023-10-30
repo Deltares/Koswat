@@ -7,7 +7,7 @@ from koswat.strategies.strategy_location_reinforcement import StrategyLocationRe
 class OrderStrategyBase(abc.ABC):
     reinforcement_order: list[ReinforcementProfileProtocol]
 
-    def _get_reinforcement_clusters(
+    def _get_reinforcement_groupings(
         self, location_reinforcements: list[StrategyLocationReinforcement]
     ) -> list[int, StrategyLocationReinforcement]:
         return list(

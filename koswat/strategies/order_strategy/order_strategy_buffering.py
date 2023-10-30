@@ -25,7 +25,7 @@ class OrderStrategyBuffering(OrderStrategyBase):
     def _get_buffer_mask(
         self, location_reinforcements: list[StrategyLocationReinforcement]
     ) -> list[int]:
-        _grouped_location_reinforcements = self._get_reinforcement_clusters(
+        _grouped_location_reinforcements = self._get_reinforcement_groupings(
             location_reinforcements
         )
         _len_location_reinforcements = len(location_reinforcements)

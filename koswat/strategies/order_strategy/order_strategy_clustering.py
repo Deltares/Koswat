@@ -29,7 +29,7 @@ class OrderStrategyClustering(OrderStrategyBase):
         location_reinforcements: list[StrategyLocationReinforcement],
     ) -> list[OrderCluster]:
         _added_clusters = []
-        for _cluster in self._get_reinforcement_clusters(location_reinforcements):
+        for _cluster in self._get_reinforcement_groupings(location_reinforcements):
             _last_added = OrderCluster(
                 reinforcement_idx=_cluster[0],
                 location_reinforcements=_cluster[1],
@@ -58,7 +58,7 @@ class OrderStrategyClustering(OrderStrategyBase):
                 )
             )
             if not any(_target_non_compliant_clusters):
-                break
+                continue
 
             for _cluster in _target_non_compliant_clusters:
                 if _cluster.is_compliant(

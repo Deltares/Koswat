@@ -32,7 +32,7 @@ def example_strategy_input() -> StrategyInput:
         PointSurroundings(traject_order=9): [],
     }
     yield StrategyInput(
-        locations_matrix=_matrix, structure_min_buffer=1, structure_min_length=5
+        locations_matrix=_matrix, reinforcement_min_buffer=1, reinforcement_min_length=5
     )
 
 

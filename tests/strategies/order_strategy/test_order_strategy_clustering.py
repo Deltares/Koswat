@@ -38,7 +38,9 @@ class TestOrderStrategyClustering:
     ):
         # 1. Define test data.
         _strategy = OrderStrategyClustering()
-        _strategy.reinforcement_min_length = example_strategy_input.structure_min_length
+        _strategy.reinforcement_min_length = (
+            example_strategy_input.reinforcement_min_length
+        )
         _strategy.reinforcement_order = (
             OrderStrategy.get_default_order_for_reinforcements()
         )
@@ -69,7 +71,9 @@ class TestOrderStrategyClustering:
     ):
         # 1. Define test data.
         _strategy = OrderStrategyClustering()
-        _strategy.reinforcement_min_length = example_strategy_input.structure_min_length
+        _strategy.reinforcement_min_length = (
+            example_strategy_input.reinforcement_min_length
+        )
         _strategy.reinforcement_order = (
             OrderStrategy.get_default_order_for_reinforcements()
         )
