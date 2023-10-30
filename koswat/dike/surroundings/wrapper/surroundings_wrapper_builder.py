@@ -52,6 +52,13 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         _surroundings.traject = self.trajects_fom.dike_traject
         _surroundings.subtraject = self.trajects_fom.dike_subtraject
 
+        _surroundings.reinforcement_min_separation = (
+            self.surroundings_section.constructieafstand
+        )
+        _surroundings.reinforcement_min_buffer = (
+            self.surroundings_section.constructieovergang
+        )
+
         _surroundings.apply_waterside = self.surroundings_section.buitendijks
         _surroundings.apply_buildings = self.surroundings_section.bebouwing
         _surroundings.apply_railways = self.surroundings_section.spoorwegen

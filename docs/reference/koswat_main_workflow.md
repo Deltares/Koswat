@@ -6,7 +6,16 @@ When using the latter unfortunately we will only have one available call, in thi
 
 First of all, let's write the workflow as a pipeline:
 
-`CLI call -> Import of ini files -> Run scenarios -> [Generate reinforcement profiles -> Calculate costs -> Export results]`
+```
+CLI call 
+-> Import of ini files 
+-> Run scenarios 
+    -> Generate reinforcement profiles 
+    -> Calculate reinforcement costs 
+        -> Apply measure selection strategy 
+        -> Calculate total costs
+    -> Export results
+```
 
 |![General Workflow](./imgs/general_workflow.png)|
 |:--:|
@@ -30,9 +39,15 @@ To do so, a specific `KoswatProfileBase` will be created based on the conditions
 ## Generate reinforcement profiles
 All reinforcement profiles will be calculated for the scenario `KoswatProfileBase` profile. 
 
-## Calculate costs
+## Calculate reinforcement costs
 For this step, we will be creating a [cost report](koswat_cost_report.md)
-For each of the reinforcement profiles we will calculate their associated costs only when the surroundings allow it.
+For each of the reinforcement profiles we will calculate their associated costs if they were to be applied at all the available traject points where the surroundings allow it.
+
+## Apply measure selection strategy
+Based on the available locations and the reinforcements that can be applied to it, a [selection strategy](koswat_strategies.md) finds which construction should be done at each location based on the strategy's criteria.
+
+## Calculate total costs
+Once `Koswat` knows which measure will be applied to each location, and with the previously calculated [reinforcement costs](#calculate-reinforcement-costs), it will estimate the total meters required of each reinforcement and their total cost in euros (€).
 
 ## Export results
 Once the costs reports are generate each of the summaries is exported to a `*.csv` file whilst the reinforcement profiles 'layers' are also exported into different `*.png` files.
