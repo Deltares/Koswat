@@ -99,6 +99,36 @@ class TestOrderCluster:
             _min_length, _strongest_idx
         )
 
+    def test_is_compliant_given_its_stronger_than_neighbors_return_true(
+        self, order_cluster_with_neighbors: OrderCluster
+    ):
+        # 1. Define test data.
+        _min_length = len(order_cluster_with_neighbors.location_reinforcements) + 1
+        _strongest_idx = order_cluster_with_neighbors.reinforcement_idx - 1
+        order_cluster_with_neighbors.left_neighbor.reinforcement_idx = (
+            _strongest_idx - 1
+        )
+        order_cluster_with_neighbors.right_neighbor.reinforcement_idx = (
+            _strongest_idx - 1
+        )
+
+        # 2. Run test.
+        assert order_cluster_with_neighbors.is_compliant(_min_length, _strongest_idx)
+
+    def test_is_compliant_given_its_weaker_than_neighbors_returns_false(
+        self, order_cluster_with_neighbors: OrderCluster
+    ):
+        # 1. Define test data.
+        _min_length = len(order_cluster_with_neighbors.location_reinforcements) + 1
+        _strongest_idx = order_cluster_with_neighbors.reinforcement_idx + 1
+        order_cluster_with_neighbors.left_neighbor.reinforcement_idx = _strongest_idx
+        order_cluster_with_neighbors.right_neighbor.reinforcement_idx = _strongest_idx
+
+        # 2. Run test.
+        assert not order_cluster_with_neighbors.is_compliant(
+            _min_length, _strongest_idx
+        )
+
     def test_get_stronger_without_neighbors_returns_self(
         self, basic_order_cluster: OrderCluster
     ):
