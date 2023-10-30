@@ -106,12 +106,7 @@ class TestAcceptance:
         assert _csv_surroundings_file.is_file()
         assert _shp_trajects_file.is_file()
 
-        _reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _reinforcement_settings = KoswatReinforcementSettings()
         _surroundings_importer = KoswatSurroundingsImporter()
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
@@ -222,12 +217,7 @@ class TestAcceptance:
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
-        _run_settings.reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _run_settings.reinforcement_settings = KoswatReinforcementSettings()
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.costs = KoswatCostsSettings()
         _run_settings.costs.dike_profile_costs = DikeProfileCostsSettings()

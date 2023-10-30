@@ -65,12 +65,7 @@ class TestKoswatSummaryBuilder:
         _builder = KoswatSummaryBuilder()
         _settings = KoswatRunScenarioSettings()
         _settings.scenario = ScenarioCases.default
-        _settings.reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _settings.reinforcement_settings = KoswatReinforcementSettings()
         _settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
@@ -124,12 +119,7 @@ class TestKoswatSummaryBuilder:
         _builder = KoswatSummaryBuilder()
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
-        _run_settings.reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _run_settings.reinforcement_settings = KoswatReinforcementSettings()
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.costs = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()

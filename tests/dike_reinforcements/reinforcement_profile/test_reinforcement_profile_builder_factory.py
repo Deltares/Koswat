@@ -295,12 +295,7 @@ class TestReinforcementProfileBuilderFactory:
         _reinforcement_builder.base_profile = (
             reinforcement_profile_case.koswat_input_profile_base_case
         )
-        _reinforcement_builder.reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _reinforcement_builder.reinforcement_settings = KoswatReinforcementSettings()
         _reinforcement_builder.scenario = (
             reinforcement_profile_case.koswat_scenario_case
         )
@@ -361,12 +356,7 @@ class TestReinforcementProfileBuilderFactory:
         if not scenario.kruin_breedte or math.isnan(scenario.kruin_breedte):
             scenario.kruin_breedte = input_profile.kruin_breedte
 
-        _reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _reinforcement_settings = KoswatReinforcementSettings()
 
         # 2. Run test.
         _reinforcement_profile = ReinforcementProfileBuilderFactory(
