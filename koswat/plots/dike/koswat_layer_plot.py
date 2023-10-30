@@ -6,11 +6,22 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protoco
     ReinforcementLayerProtocol,
 )
 from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
+from shapely.geometry import MultiLineString, LineString
+from numpy import concatenate
 
 
 class KoswatLayerPlot(KoswatPlotProtocol):
     koswat_object: KoswatLayerProtocol
     subplot: pyplot.axes
+
+    @staticmethod
+    def _get_xy_line_coords(
+        koswat_geometry: LineString | MultiLineString,
+    ) -> tuple[list[float], list[float]]:
+        if isinstance(koswat_geometry, LineString):
+            return koswat_geometry.coords.xy
+
+        return list(map(concatenate, zip(*map(lambda x: x.coords.xy, koswat_geometry.geoms))))
 
     def plot(self, color: str) -> None:
         """
@@ -19,7 +30,9 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         Args:
             color (str): Color code.
 
-        Raises:
+        return list(
+            map(concatenate, zip(*map(lambda x: x.coords.xy, koswat_geometry.geoms)))
+        )
             ValueError: When the `KoswatLayerProtocol` material has not been registered.
         """
         _x_coords, y_coords = self.koswat_object.outer_geometry.boundary.coords.xy
@@ -39,7 +52,9 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         self.subplot.scatter(_x_points, _y_points)
 
         if isinstance(self.koswat_object, ReinforcementLayerProtocol):
-            _surface_x, _surface_y = self.koswat_object.new_layer_surface.coords.xy
+            _surface_x, _surface_y = self._get_xy_line_coords(
+                self.koswat_object.new_layer_surface
+            )
             self.subplot.plot(
                 _surface_x,
                 _surface_y,

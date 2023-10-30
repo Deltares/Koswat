@@ -13,7 +13,6 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
-from tests import test_data
 
 
 class TestSurroundingsWrapperBuilder:
@@ -58,6 +57,8 @@ class TestSurroundingsWrapperBuilder:
         _surroundings_section.bebouwing = True
         _surroundings_section.spoorwegen = False
         _surroundings_section.water = False
+        _surroundings_section.constructieafstand = 4.2
+        _surroundings_section.constructieovergang = 2.4
 
         # Traject wrapper
         _koswat_shp_fom = KoswatDikeLocationsShpFom()

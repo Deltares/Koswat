@@ -1,23 +1,19 @@
+from dataclasses import dataclass, field
 import math
 
 from shapely.geometry import Point
 
 
+@dataclass
 class PointSurroundings:
     """
     Object representing a `meter` with `x`, `y` coordinates in a polder (or else).
     """
 
-    section: str
-    traject_order: int
-    location: Point
-    distance_to_surroundings: list[float]
-
-    def __init__(self) -> None:
-        self.section = ""
-        self.location = None
-        self.traject_order = -1
-        self.distance_to_surroundings = []
+    section: str = ""
+    traject_order: int = -1
+    location: Point | None = None
+    distance_to_surroundings: list[float] = field(default_factory=lambda: [])
 
     def __hash__(self) -> int:
         """

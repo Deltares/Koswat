@@ -22,6 +22,9 @@ class SurroundingsWrapper:
     apply_railways: bool
     apply_waters: bool
 
+    reinforcement_min_separation: float
+    reinforcement_min_buffer: float
+
     buildings_polderside: KoswatSurroundingsPolderside
     buildings_dikeside: KoswatSurroundingsProtocol
 
@@ -47,6 +50,9 @@ class SurroundingsWrapper:
         self.dike_section = ""
         self.traject = ""
         self.subtraject = ""
+
+        self.reinforcement_min_separation = float("nan")
+        self.reinforcement_min_buffer = float("nan")
 
         self.apply_waterside = None
         self.apply_buildings = None
