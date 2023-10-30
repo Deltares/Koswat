@@ -119,7 +119,8 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         vc_parameters.new_maaiveld_surface = self._get_volume_cost_parameter(
             _vcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
         )
+        # TODO: KOSWAT issue #104
         vc_parameters.construction_length = self._get_volume_cost_parameter(
-            _vcp.construction_length, 0  # TODO #104
+            _vcp.construction_length, 0
         )
         return vc_parameters

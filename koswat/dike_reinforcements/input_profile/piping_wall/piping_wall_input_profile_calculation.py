@@ -35,7 +35,8 @@ class PipingWallInputProfileCalculation(
         soil_binnen_berm_breedte: float,
     ) -> float:
         if soil_binnen_berm_breedte == 0:
-            return 0  # no wall needed
+            # No wall is needed.
+            return 0
         _length_piping = (
             (soil_binnen_berm_breedte / 6)
             + (old_data.binnen_maaiveld - old_data.aquifer)
