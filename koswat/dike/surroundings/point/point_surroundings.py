@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field
 import math
+from dataclasses import dataclass, field
 
 from shapely.geometry import Point
 
