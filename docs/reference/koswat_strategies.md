@@ -177,7 +177,7 @@ __Steps breakdown__:
 One simplified example, based on the [buffering example](#buffering-example), and using a minimal distance of "5". This example is also tested in the `tests.strategies.order_strategy.py` test file.
 
 ```json
-1. A total of 1 non-compliant clusters are identified.
+1. A total of 2 non-compliant clusters are identified.
 [
     (0, ["Location_000","Location_001",]),
     (2, ["Location_002","Location_003","Location_004","Location_005",]),
@@ -197,7 +197,6 @@ One simplified example, based on the [buffering example](#buffering-example), an
             [
                 (0, ["Location_000","Location_001",]),
                 (2, ["Location_002","Location_003","Location_004","Location_005","Location_006"]),
-                (2, []),
                 (3, ["Location_007","Location_008","Location_009",]),
             ]
     2. Target is "PipingWallReinforcementProfile" (idx=1)

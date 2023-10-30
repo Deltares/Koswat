@@ -21,7 +21,6 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
 )
 from koswat.strategies.order_strategy.order_cluster import (
     OrderCluster,
-    OrderClusterWithNeighbors,
 )
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -93,42 +92,18 @@ class OrderStrategy(StrategyProtocol):
 
     def _get_reinforcement_order_clusters(
         self, location_reinforcements: list[StrategyLocationReinforcement]
-    ) -> list[OrderClusterWithNeighbors]:
-        _order_clusters = list(
-            OrderCluster(
-                reinforcement_idx=self._order_reinforcement.index(k),
-                location_reinforcements=list(g),
+    ) -> list[OrderCluster]:
+        _added_clusters = []
+        for _cluster in self._get_reinforcement_clusters(location_reinforcements):
+            _last_added = OrderCluster(
+                reinforcement_idx=_cluster[0],
+                location_reinforcements=_cluster[1],
+                left_neighbor=_added_clusters[-1] if any(_added_clusters) else None,
             )
-            for k, g in groupby(
-                location_reinforcements,
-                lambda x: x.selected_measure,
-            )
-        )
-        _last_idx = len(_order_clusters) - 1
-        _clusters_with_neighbors_list = []
-        for _idx, _cluster in enumerate(_order_clusters):
-            _cluster_with_neighbors = OrderClusterWithNeighbors(
-                cluster=_cluster,
-                left_neighbor=None if _idx == 0 else _order_clusters[_idx - 1],
-                right_neighbor=None if _idx == _last_idx else _order_clusters[_idx + 1],
-            )
-            _clusters_with_neighbors_list.append(_cluster_with_neighbors)
-        return _clusters_with_neighbors_list
-
-    def _get_non_compliant_reinforcement_order_clusters(
-        self, location_reinforcements: list[StrategyLocationReinforcement]
-    ) -> list[OrderClusterWithNeighbors]:
-        _available_clusters = self._get_reinforcement_order_clusters(
-            location_reinforcements
-        )
-        return list(
-            filter(
-                lambda x: not x.is_compliant(
-                    self._structure_min_length, self._order_reinforcement[-1]
-                ),
-                _available_clusters,
-            )
-        )
+            if isinstance(_last_added.left_neighbor, OrderCluster):
+                _last_added.left_neighbor.right_neighbor = _last_added
+            _added_clusters.append(_last_added)
+        return _added_clusters
 
     def _get_buffer_mask(
         self, location_reinforcements: list[StrategyLocationReinforcement]
@@ -167,7 +142,7 @@ class OrderStrategy(StrategyProtocol):
         # a "lower value" buffer.
         return list(map(max, zip(*_candidates_masks.values())))
 
-    def _apply_buffer(
+    def _apply_buffering(
         self, location_reinforcements: list[StrategyLocationReinforcement]
     ) -> None:
         _result_mask = self._get_buffer_mask(location_reinforcements)
@@ -176,7 +151,7 @@ class OrderStrategy(StrategyProtocol):
         for _idx, _location in enumerate(location_reinforcements):
             _location.selected_measure = self._order_reinforcement[_result_mask[_idx]]
 
-    def _apply_min_distance(
+    def _apply_clustering(
         self, location_reinforcements: list[StrategyLocationReinforcement]
     ) -> None:
         """
@@ -184,160 +159,47 @@ class OrderStrategy(StrategyProtocol):
         measures without the minimal distance are found in an initial grouping
         of locations per measures ('subtrajects').
         """
-        _reinforcement_idx_clusters = self._get_reinforcement_clusters(
+        _available_clusters = self._get_reinforcement_order_clusters(
             location_reinforcements
         )
-
-        def _get_non_compliant() -> int:
-            return sum(
-                len(rg) < self._structure_min_length
-                for r_idx, rg in _reinforcement_idx_clusters
-                if r_idx != len(self._order_reinforcement) - 1
-            )
-
-        _non_compliant_exceptions = 0
-        _max_iterations = _get_non_compliant()
-
-        # We know we have `n` non-compliant groups,
-        # it means a maximum of `n` iterations is needed
-        # to correct the selected measures.
-
-        for _n in range(0, _max_iterations):
-
-            _non_compliant_exceptions = self._apply_min_distance_to_clusters(
-                _reinforcement_idx_clusters
-            )
-
-            # Generate a new grouping.
-            _reinforcement_idx_clusters = self._get_reinforcement_clusters(
-                location_reinforcements
-            )
-
-            _non_compliant_groups = _get_non_compliant()
-
-            if (
-                _non_compliant_groups == 0
-                or _non_compliant_groups == _non_compliant_exceptions
-            ):
-                # No need to look further.
-                logging.debug(
-                    "Measures corrected after {} iterations of the `_apply_min_distance` algorithm.".format(
-                        _n
-                    )
+        _reinforcements_order_max_idx = len(self._order_reinforcement)
+        for _target_reinforcement_idx in range(0, _reinforcements_order_max_idx):
+            _target_non_compliant_clusters = list(filter(
+                    lambda x: not x.is_compliant(
+                        self._structure_min_length, self._order_reinforcement[-1]
+                    ) and x.reinforcement_idx == _target_reinforcement_idx,
+                    _available_clusters,
                 )
+            )
+            if not any(_target_non_compliant_clusters):
                 break
 
-        if _non_compliant_exceptions > 0:
-            logging.warning(
-                "There are {} which could not fulfill the minimal distance of {} meters.".format(
-                    _non_compliant_exceptions, self._structure_min_length
-                )
-            )
-
-    def _apply_min_distance_to_clusters(
-        self,
-        reinforcement_idx_clusters: list[int, list[StrategyLocationReinforcement]],
-    ) -> int:
-        """
-        We iterate through the 'subtrajects' that do not have a measure meeting the
-        minimal length requirement.
-        We need to increment the 'strength' of non-compliant clusters in the strategy's
-        default order.
-        Conditions:
-            - The last (reinforcement) type can be skipped as it cannot be futher
-            strengthen.
-            - If any of the cluster's neighbors is of a higher reinforcement type
-            then it will be adapted.
-            - If both cluster's neighbors are of a lower reinforcement type, then
-            it will not be adapted and it is considered a 'non-compliant exception'.
-            - When the first and / or last cluster are 'non-compliant' they are
-            automatically considered an 'exception', therefore conserving their initial
-            reinforcement type.
-        """
-        _non_compliant_exceptions = 0
-
-        def can_be_skipped(
-            _target_idx: int,
-            reinforcement_cluster: tuple[int, list[StrategyLocationReinforcement]],
-        ) -> bool:
-            _not_reinforcement_target = _target_idx != reinforcement_cluster[0]
-            _compliant_cluster = (
-                len(reinforcement_cluster[1]) >= self._structure_min_length
-            )
-            _empty_cluster = not any(reinforcement_cluster[1])
-
-            # First and last clusters are considered always exceptions.
-            _bordering_cluster = (
-                reinforcement_cluster == reinforcement_idx_clusters[0]
-                or reinforcement_cluster == reinforcement_idx_clusters[-1]
-            )
-            return (
-                _not_reinforcement_target
-                or _compliant_cluster
-                or _empty_cluster
-                or _bordering_cluster
-            )
-
-        for _target_reinforcement_idx in range(0, len(self._order_reinforcement) - 1):
-            for _idx, _reinforcement_cluster in enumerate(reinforcement_idx_clusters):
-                if can_be_skipped(_target_reinforcement_idx, _reinforcement_cluster):
+            for _cluster in _target_non_compliant_clusters:
+                if _cluster.is_compliant(
+                    self._structure_min_length, _reinforcements_order_max_idx
+                ):
                     continue
-                _reinforcement_idx, _cluster = _reinforcement_cluster
-                _previous_value = (
-                    -1 if _idx - 1 < 0 else reinforcement_idx_clusters[_idx - 1][0]
-                )
-                _next_value = (
-                    -1
-                    if _idx + 1 >= len(reinforcement_idx_clusters)
-                    else reinforcement_idx_clusters[_idx + 1][0]
-                )
 
-                # DESIGN / THEORY decission:
-                # We ensure no construction is replaced by a "lower" type.
-                # This means a "short" `StabilityWallReinforcementProfile` won't be
-                # replaced by a `SoilReinforcementProfile` and so on.
-                _selected_measure_idx = min(
-                    filter(
-                        lambda x: x > _reinforcement_idx, [_previous_value, _next_value]
-                    ),
-                    default=_reinforcement_idx,
-                )
-
-                if _reinforcement_idx == _selected_measure_idx:
-                    _non_compliant_exceptions += 1
+                _stronger_cluster = _cluster.get_stronger_cluster()
+                if _stronger_cluster == _cluster:
                     logging.warning(
-                        "Measure {} not corrected despite length as both sides ({}, {}) are inferior reinforcement types.".format(
-                            self._order_reinforcement[_reinforcement_idx],
-                            self._order_reinforcement[_previous_value],
-                            self._order_reinforcement[_next_value],
+                        "Cluster for {} not merged despite length at traject order {} - {}, as both sides ({}, {}) are inferior reinforcement types.".format(
+                            self._order_reinforcement[_cluster.reinforcement_idx],
+                            _cluster.location_reinforcements[0].location.traject_order,
+                            _cluster.location_reinforcements[-1].location.traject_order,
+                            self._order_reinforcement[
+                                _cluster.left_neighbor.reinforcement_idx
+                            ],
+                            self._order_reinforcement[
+                                _cluster.right_neighbor.reinforcement_idx
+                            ],
                         )
                     )
                     continue
 
                 # Update selected measures for locations in this cluster.
-                for _loc_reinf in _cluster:
-                    _loc_reinf.selected_measure = self._order_reinforcement[
-                        _selected_measure_idx
-                    ]
-
-                # Update clusters.
-                # We merge first towards the "next" cluster, in case both sides have the
-                # same type of reinforcement, to prevent it from being too short in the
-                # upcoming iteration, therefore going again through all this code..
-
-                reinforcement_idx_clusters[_idx] = (_selected_measure_idx, [])
-                if _selected_measure_idx == _next_value:
-                    reinforcement_idx_clusters[_idx + 1] = (
-                        reinforcement_idx_clusters[_idx + 1][0],
-                        _cluster + reinforcement_idx_clusters[_idx + 1][1],
-                    )
-                else:
-                    reinforcement_idx_clusters[_idx - 1] = (
-                        reinforcement_idx_clusters[_idx - 1][0],
-                        reinforcement_idx_clusters[_idx - 1][1] + _cluster,
-                    )
-
-        return _non_compliant_exceptions
+                _stronger_cluster.merge_cluster(_cluster)
+                _available_clusters.pop(_available_clusters.index(_cluster))
 
     def apply_strategy(
         self, strategy_input: StrategyInput
@@ -346,6 +208,6 @@ class OrderStrategy(StrategyProtocol):
         _strategy_reinforcements = self.get_strategy_reinforcements(
             self._location_matrix, self.get_default_order_for_reinforcements()
         )
-        self._apply_buffer(_strategy_reinforcements)
-        self._apply_min_distance(_strategy_reinforcements)
+        self._apply_buffering(_strategy_reinforcements)
+        self._apply_clustering(_strategy_reinforcements)
         return _strategy_reinforcements

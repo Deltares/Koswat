@@ -11,7 +11,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
 )
 from koswat.strategies.order_strategy.order_cluster import (
     OrderCluster,
-    OrderClusterWithNeighbors,
+    OrderCluster,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
@@ -151,45 +151,13 @@ class TestOrderStrategy:
         _expected_result = list(map(lambda x: _measure_order[x], _expected_result_idx))
 
         # 2. Run test.
-        _strategy._apply_buffer(_reinforcements)
+        _strategy._apply_buffering(_reinforcements)
 
         # 3. Verify expectations.
         assert all(
             _r.selected_measure == _expected_result[_r_idx]
             for _r_idx, _r in enumerate(_reinforcements)
         )
-
-    def test__apply_min_distance_to_clusters_given_example(
-        self,
-        example_strategy_input: StrategyInput,
-        example_location_reinforcements_with_buffering: list[
-            StrategyLocationReinforcement
-        ],
-    ):
-        # 1. Define test data.
-        _strategy = OrderStrategy()
-        _strategy._structure_min_length = example_strategy_input.structure_min_length
-        _input_cluster = [
-            (0, example_location_reinforcements_with_buffering[:2]),
-            (2, example_location_reinforcements_with_buffering[2:6]),
-            (0, example_location_reinforcements_with_buffering[6:7]),
-            (3, example_location_reinforcements_with_buffering[7:]),
-        ]
-        _expected_cluster_result = [
-            (0, example_location_reinforcements_with_buffering[:2]),
-            (2, example_location_reinforcements_with_buffering[2:7]),
-            (2, []),
-            (3, example_location_reinforcements_with_buffering[7:]),
-        ]
-
-        assert _input_cluster != _expected_cluster_result
-
-        # 2. Run test.
-        _exceptions_found = _strategy._apply_min_distance_to_clusters(_input_cluster)
-
-        # 3. Verify expectations.
-        assert _exceptions_found == 0
-        assert _input_cluster == _expected_cluster_result
 
     def test__apply_min_distance_given_example(
         self,
@@ -203,7 +171,7 @@ class TestOrderStrategy:
         _strategy._structure_min_length = example_strategy_input.structure_min_length
 
         # 2. Run test.
-        _strategy._apply_min_distance(example_location_reinforcements_with_buffering)
+        _strategy._apply_clustering(example_location_reinforcements_with_buffering)
 
         # 3. Verify expectations.
         assert all(
@@ -238,37 +206,13 @@ class TestOrderStrategy:
         # 3. Verify expectations.
         assert len(_order_clusters) == 4
 
-        def assert_valid_cluster(cluster: OrderClusterWithNeighbors) -> bool:
-            assert isinstance(cluster, OrderClusterWithNeighbors)
-            assert isinstance(cluster.cluster, OrderCluster)
-
-        for _cluster in _order_clusters:
-            assert_valid_cluster(_cluster)
-
-    def test__get_non_compliant_reinforcement_orer_clusters(
-        self,
-        example_strategy_input: StrategyInput,
-        example_location_reinforcements_with_buffering: list[
-            StrategyLocationReinforcement
-        ],
-    ):
-        # 1. Define test data.
-        _strategy = OrderStrategy()
-        _strategy._structure_min_length = example_strategy_input.structure_min_length
-
-        # 2. Run test.
-        _order_clusters = _strategy._get_non_compliant_reinforcement_order_clusters(
-            example_location_reinforcements_with_buffering
-        )
-
-        # 3. Verify expectations.
-        assert len(_order_clusters) == 2
-
-        def assert_valid_cluster(cluster: OrderClusterWithNeighbors) -> bool:
-            assert isinstance(cluster, OrderClusterWithNeighbors)
-            assert isinstance(cluster.cluster, OrderCluster)
-            assert isinstance(cluster.left_neighbor, OrderCluster)
-            assert isinstance(cluster.left_neighbor, OrderCluster)
+        def assert_valid_cluster(cluster: OrderCluster) -> bool:
+            assert isinstance(cluster, OrderCluster)
+            assert any(cluster.location_reinforcements)
+            assert isinstance(cluster.reinforcement_idx, int)
+            assert isinstance(cluster.left_neighbor, OrderCluster) or isinstance(
+                cluster.right_neighbor, OrderCluster
+            )
 
         for _cluster in _order_clusters:
             assert_valid_cluster(_cluster)
