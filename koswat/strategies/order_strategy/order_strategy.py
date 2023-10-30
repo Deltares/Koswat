@@ -19,6 +19,10 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.strategies.order_strategy.order_cluster import (
+    OrderCluster,
+    OrderClusterWithNeighbors,
+)
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -84,6 +88,45 @@ class OrderStrategy(StrategyProtocol):
             for k, g in groupby(
                 location_reinforcements,
                 lambda x: x.selected_measure,
+            )
+        )
+
+    def _get_reinforcement_order_clusters(
+        self, location_reinforcements: list[StrategyLocationReinforcement]
+    ) -> list[OrderClusterWithNeighbors]:
+        _order_clusters = list(
+            OrderCluster(
+                reinforcement_idx=self._order_reinforcement.index(k),
+                location_reinforcements=list(g),
+            )
+            for k, g in groupby(
+                location_reinforcements,
+                lambda x: x.selected_measure,
+            )
+        )
+        _last_idx = len(_order_clusters) - 1
+        _clusters_with_neighbors_list = []
+        for _idx, _cluster in enumerate(_order_clusters):
+            _cluster_with_neighbors = OrderClusterWithNeighbors(
+                cluster=_cluster,
+                left_neighbor=None if _idx == 0 else _order_clusters[_idx - 1],
+                right_neighbor=None if _idx == _last_idx else _order_clusters[_idx + 1],
+            )
+            _clusters_with_neighbors_list.append(_cluster_with_neighbors)
+        return _clusters_with_neighbors_list
+
+    def _get_non_compliant_reinforcement_order_clusters(
+        self, location_reinforcements: list[StrategyLocationReinforcement]
+    ) -> list[OrderClusterWithNeighbors]:
+        _available_clusters = self._get_reinforcement_order_clusters(
+            location_reinforcements
+        )
+        return list(
+            filter(
+                lambda x: not x.is_compliant(
+                    self._structure_min_length, self._order_reinforcement[-1]
+                ),
+                _available_clusters,
             )
         )
 

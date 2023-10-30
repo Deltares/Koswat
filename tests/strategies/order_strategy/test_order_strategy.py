@@ -9,6 +9,10 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.strategies.order_strategy.order_cluster import (
+    OrderCluster,
+    OrderClusterWithNeighbors,
+)
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -215,6 +219,60 @@ class TestOrderStrategy:
             for _sr in example_location_reinforcements_with_buffering[7:]
         )
 
+    def test__get_reinforcement_order_clusters(
+        self,
+        example_strategy_input: StrategyInput,
+        example_location_reinforcements_with_buffering: list[
+            StrategyLocationReinforcement
+        ],
+    ):
+        # 1. Define test data.
+        _strategy = OrderStrategy()
+        _strategy._structure_min_length = example_strategy_input.structure_min_length
+
+        # 2. Run test.
+        _order_clusters = _strategy._get_reinforcement_order_clusters(
+            example_location_reinforcements_with_buffering
+        )
+
+        # 3. Verify expectations.
+        assert len(_order_clusters) == 4
+
+        def assert_valid_cluster(cluster: OrderClusterWithNeighbors) -> bool:
+            assert isinstance(cluster, OrderClusterWithNeighbors)
+            assert isinstance(cluster.cluster, OrderCluster)
+
+        for _cluster in _order_clusters:
+            assert_valid_cluster(_cluster)
+
+    def test__get_non_compliant_reinforcement_orer_clusters(
+        self,
+        example_strategy_input: StrategyInput,
+        example_location_reinforcements_with_buffering: list[
+            StrategyLocationReinforcement
+        ],
+    ):
+        # 1. Define test data.
+        _strategy = OrderStrategy()
+        _strategy._structure_min_length = example_strategy_input.structure_min_length
+
+        # 2. Run test.
+        _order_clusters = _strategy._get_non_compliant_reinforcement_order_clusters(
+            example_location_reinforcements_with_buffering
+        )
+
+        # 3. Verify expectations.
+        assert len(_order_clusters) == 2
+
+        def assert_valid_cluster(cluster: OrderClusterWithNeighbors) -> bool:
+            assert isinstance(cluster, OrderClusterWithNeighbors)
+            assert isinstance(cluster.cluster, OrderCluster)
+            assert isinstance(cluster.left_neighbor, OrderCluster)
+            assert isinstance(cluster.left_neighbor, OrderCluster)
+
+        for _cluster in _order_clusters:
+            assert_valid_cluster(_cluster)
+
     def test_apply_strategy_given_example(self, example_strategy_input: StrategyInput):
         # 1. Define test data.
         assert isinstance(example_strategy_input, StrategyInput)
@@ -230,7 +288,7 @@ class TestOrderStrategy:
         assert all(
             isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
         )
-        
+
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
             _sr.selected_measure == SoilReinforcementProfile
