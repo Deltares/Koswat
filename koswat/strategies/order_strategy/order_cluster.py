@@ -22,7 +22,14 @@ class OrderCluster:
         )
 
     def get_stronger_cluster(self) -> OrderCluster:
-        # DESIGN / THEORY decission:
+        """
+        Gets the neighbor with the lowest reinforcement type value greater
+        than the current cluster's value (`self.reinforcement_idx`).
+
+        Returns:
+            OrderCluster: Neighbor with a stronger `ReinforcementProfileProtocol`.
+        """
+        # DESIGN / THEORY decision:
         # We ensure no construction is replaced by a "lower" type.
         # This means a "short" `StabilityWallReinforcementProfile` won't be
         # replaced by a `SoilReinforcementProfile` and so on.
@@ -36,7 +43,7 @@ class OrderCluster:
             )
 
         # Selection criteria:
-        # We merge first towards the "next" cluster, in case both sides have the
+        # We favor first towards the "next" cluster, in case both sides have the
         # same type of reinforcement, to prevent it from being too short as we
         # assume clusters are being checked "left" to "right".
 
@@ -49,7 +56,22 @@ class OrderCluster:
             default=self,
         )
 
-    def merge_cluster(self, other: OrderCluster):
+    def extend_cluster(self, other: OrderCluster):
+        """
+        Extends the current cluster with the reinforcements
+        (`list[StrategyLocationReinforcemetn]`) from another cluster.
+        Modifies the `selected_measure` property of those measures being merged but it
+        does not remove them from their source cluster.
+
+        Args:
+            other (OrderCluster): Cluster whose contents will be used to extend `self`.
+
+        Raises:
+            ValueError: When trying to extend from an unrelated cluster.
+        """
+        if self.left_neighbor != other and self.right_neighbor != other:
+            raise ValueError("Trying to extend cluster from an unrelated one.")
+
         _new_profile_type = self.location_reinforcements[0].selected_measure
         for _lr in other.location_reinforcements:
             _lr.selected_measure = _new_profile_type
@@ -63,7 +85,7 @@ class OrderCluster:
             self.location_reinforcements = (
                 self.location_reinforcements + other.location_reinforcements
             )
-            self.right_neighbor = other.left_neighbor
+            self.right_neighbor = other.right_neighbor
 
     def is_compliant(self, min_length: float, strongest_reinforcement: int) -> bool:
         """

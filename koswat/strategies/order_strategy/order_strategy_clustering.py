@@ -83,5 +83,5 @@ class OrderStrategyClustering(OrderStrategyBase):
                     )
                     continue
                 # Update selected measures for locations in this cluster.
-                _stronger_cluster.merge_cluster(_cluster)
+                _stronger_cluster.extend_cluster(_cluster)
                 _available_clusters.pop(_available_clusters.index(_cluster))

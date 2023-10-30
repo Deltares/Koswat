@@ -61,11 +61,19 @@ class TestOrderCluster:
             location_reinforcements=[],
         )
         _dummy_right = OrderCluster(
-            reinforcement_idx=basic_order_cluster.reinforcement_idx + 2,
+            reinforcement_idx=_dummy_left.reinforcement_idx + 2,
             location_reinforcements=[],
         )
+
+        # Just a triangle :)
         basic_order_cluster.left_neighbor = _dummy_left
         basic_order_cluster.right_neighbor = _dummy_right
+
+        _dummy_left.right_neighbor = basic_order_cluster
+        _dummy_left.left_neighbor = _dummy_right
+
+        _dummy_right.left_neighbor = basic_order_cluster
+        _dummy_right.right_neighbor = _dummy_left
 
         yield basic_order_cluster
 
@@ -87,4 +95,113 @@ class TestOrderCluster:
         _strongest_idx = order_cluster_with_neighbors.reinforcement_idx + 1
 
         # 2. Run test.
-        assert not order_cluster_with_neighbors.is_compliant(_min_length, _strongest_idx)
+        assert not order_cluster_with_neighbors.is_compliant(
+            _min_length, _strongest_idx
+        )
+
+    def test_get_stronger_without_neighbors_returns_self(
+        self, basic_order_cluster: OrderCluster
+    ):
+        # 1. Define test data.
+        assert basic_order_cluster.left_neighbor is None
+        assert basic_order_cluster.right_neighbor is None
+
+        # 2. Run test.
+        assert basic_order_cluster.get_stronger_cluster() == basic_order_cluster
+
+    def test_get_stronger_with_neighbors_returns_min_of_them(
+        self, order_cluster_with_neighbors: OrderCluster
+    ):
+        # 1. Define test data.
+        assert isinstance(order_cluster_with_neighbors.left_neighbor, OrderCluster)
+        assert isinstance(order_cluster_with_neighbors.right_neighbor, OrderCluster)
+        assert (
+            order_cluster_with_neighbors.left_neighbor.reinforcement_idx
+            < order_cluster_with_neighbors.right_neighbor.reinforcement_idx
+        )
+
+        # 2. Verify expectations
+        assert (
+            order_cluster_with_neighbors.get_stronger_cluster()
+            == order_cluster_with_neighbors.left_neighbor
+        )
+
+    def test_extend_cluster_updates_values_to_the_left(
+        self, order_cluster_with_neighbors: OrderCluster
+    ):
+        # 1. Define test data.
+        _selected_measure_value = "NotAMeasureDoesNotMatter"
+        _merging_to = order_cluster_with_neighbors.left_neighbor
+        _single_location = StrategyLocationReinforcement(
+            location=PointSurroundings(),
+            selected_measure=_selected_measure_value,
+            available_measures=[],
+        )
+        _merging_to.location_reinforcements = [_single_location]
+
+        # 2. Run test.
+        order_cluster_with_neighbors.left_neighbor.extend_cluster(
+            order_cluster_with_neighbors
+        )
+
+        # 3. Verify expectations
+        assert all(
+            lr.selected_measure == _selected_measure_value
+            for lr in order_cluster_with_neighbors.location_reinforcements
+        )
+        assert _merging_to.right_neighbor == order_cluster_with_neighbors.right_neighbor
+        assert _merging_to.location_reinforcements.index(_single_location) == 0
+        assert (
+            _merging_to.location_reinforcements[1:]
+            == order_cluster_with_neighbors.location_reinforcements
+        )
+
+    def test_extend_cluster_updates_values_to_the_right(
+        self, order_cluster_with_neighbors: OrderCluster
+    ):
+        # 1. Define test data.
+        _selected_measure_value = "NotAMeasureDoesNotMatter"
+        _merging_to = order_cluster_with_neighbors.right_neighbor
+        _single_location = StrategyLocationReinforcement(
+            location=PointSurroundings(),
+            selected_measure=_selected_measure_value,
+            available_measures=[],
+        )
+        _merging_to.location_reinforcements = [_single_location]
+
+        # 2. Run test.
+        order_cluster_with_neighbors.right_neighbor.extend_cluster(
+            order_cluster_with_neighbors
+        )
+
+        # 3. Verify expectations
+        assert all(
+            lr.selected_measure == _selected_measure_value
+            for lr in order_cluster_with_neighbors.location_reinforcements
+        )
+        assert _merging_to.left_neighbor == order_cluster_with_neighbors.left_neighbor
+        assert (
+            _merging_to.location_reinforcements.index(_single_location)
+            == len(_merging_to.location_reinforcements) - 1
+        )
+        assert (
+            _merging_to.location_reinforcements[:-1]
+            == order_cluster_with_neighbors.location_reinforcements
+        )
+
+    def test_extend_cluster_given_unrelated_cluster_raises_error(
+        self, order_cluster_with_neighbors: OrderCluster
+    ):
+        # 1. Define test data.
+        _unrelated_cluster = OrderCluster(
+            reinforcement_idx=42, location_reinforcements=[]
+        )
+        assert _unrelated_cluster.left_neighbor is None
+        assert _unrelated_cluster.right_neighbor is None
+
+        # 2. Run test.
+        with pytest.raises(ValueError) as exc_err:
+            _unrelated_cluster.extend_cluster(order_cluster_with_neighbors)
+
+        # 3. Verify expectations.
+        assert str(exc_err.value) == "Trying to extend cluster from an unrelated one."
