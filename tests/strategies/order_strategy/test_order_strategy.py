@@ -14,7 +14,8 @@ from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 from tests.strategies.order_strategy.order_strategy_fixtures import (
-    example_strategy_input, example_location_reinforcements_with_buffering
+    example_strategy_input,
+    example_location_reinforcements_with_buffering,
 )
 
 
@@ -26,7 +27,7 @@ class TestOrderStrategy:
         assert isinstance(_strategy, OrderStrategy)
         assert len(_strategy._order_reinforcement) == 4
 
-    def test_get_strategy_reinforcements_given_example(
+    def test__get_strategy_reinforcements_given_example(
         self, example_strategy_input: StrategyInput
     ):
         # 1. Define test data.
@@ -62,9 +63,13 @@ class TestOrderStrategy:
     ):
         # 1. Define test data.
         class MockedStrategy(OrderStrategyBase):
-            pass
+            def __init__(self) -> None:
+                self.reinforcement_order = OrderStrategy.get_default_order_for_reinforcements()
+            def apply(
+                self, location_reinforcements: list[StrategyLocationReinforcement]
+            ) -> None:
+                pass
 
-        _strategy = MockedStrategy()
         _expected_clusters = [
             (0, example_location_reinforcements_with_buffering[:2]),
             (2, example_location_reinforcements_with_buffering[2:6]),
@@ -73,7 +78,7 @@ class TestOrderStrategy:
         ]
 
         # 2. Run test.
-        _result_clusters = _strategy._get_reinforcement_clusters(
+        _result_clusters = MockedStrategy()._get_reinforcement_clusters(
             example_location_reinforcements_with_buffering
         )
 
