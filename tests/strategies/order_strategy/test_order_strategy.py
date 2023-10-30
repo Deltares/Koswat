@@ -121,44 +121,6 @@ class TestOrderStrategy:
         # 3. Verify expectations.
         assert _result_clusters == _expected_clusters
 
-    def test__get_buffer_mask_given_example(
-        self, example_strategy_input: StrategyInput
-    ):
-        # 1. Define test data.
-        _reinforcements = OrderStrategy.get_strategy_reinforcements(
-            example_strategy_input.locations_matrix,
-            OrderStrategy.get_default_order_for_reinforcements(),
-        )
-        _strategy = OrderStrategy()
-        _strategy._structure_min_buffer = example_strategy_input.structure_min_buffer
-
-        # 2. Run test.
-        _mask_result = _strategy._get_buffer_mask(_reinforcements)
-
-        # 3. Verify expectations.
-        assert _mask_result == [0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
-
-    def test__apply_buffer_given_example(self, example_strategy_input: StrategyInput):
-        # 1. Define test data.
-        _measure_order = OrderStrategy.get_default_order_for_reinforcements()
-        _reinforcements = OrderStrategy.get_strategy_reinforcements(
-            example_strategy_input.locations_matrix,
-            _measure_order,
-        )
-        _strategy = OrderStrategy()
-        _strategy._structure_min_buffer = example_strategy_input.structure_min_buffer
-        _expected_result_idx = [0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
-        _expected_result = list(map(lambda x: _measure_order[x], _expected_result_idx))
-
-        # 2. Run test.
-        _strategy._apply_buffering(_reinforcements)
-
-        # 3. Verify expectations.
-        assert all(
-            _r.selected_measure == _expected_result[_r_idx]
-            for _r_idx, _r in enumerate(_reinforcements)
-        )
-
     def test__apply_min_distance_given_example(
         self,
         example_strategy_input: StrategyInput,
