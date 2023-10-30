@@ -17,7 +17,7 @@ By default a strategy is applied as follows:
 
 ### Order based (default)
 
-This strategy is the first an default of all defined strategies. Its criteria is based on a pre-defined ['order'](#measure-order) of each reinforcement. In steps, it can be seen as:
+This strategy is the first and default of all defined strategies. Its criteria is based on a pre-defined ['order'](#measure-order) of each reinforcement. In steps, it can be seen as:
 
 1. Pre-selection of a location's available reinforcement based on said order, when a location does not have any "available" reinforcement, then the last measure's order will be pre-selected.
 2. [Clustering](#measure-clustering) of all locations by their pre-selected measure.
@@ -25,7 +25,7 @@ This strategy is the first an default of all defined strategies. Its criteria is
 4. [Measure minimal distance](#measure-minimal-distance) to the resulting clusters from the previous step.
 
 #### Measure order
-The predefined (hardcoded) reinforcement's order is as follows:
+The predefined (hardcoded) reinforcement's order, from least to most restrictive, is as follows:
 
 1. `SoilReinforcementProfile`
 2. `PipingWallReinforcementProfile`
@@ -36,7 +36,7 @@ The predefined (hardcoded) reinforcement's order is as follows:
 
 We create measure-location clusters for the whole traject.
 
-A cluster represents a measure that its "selected" for a series of continuous locations. This means locations that are next to each other sharing the same measure type (`Type[ReinforcementProfileProtocol]`).
+A cluster represents a measure that is "selected" for a series of continuous locations. This means locations that are next to each other sharing the same measure type (`Type[ReinforcementProfileProtocol]`).
 
 ##### Clustering example
 Simplified representation for a traject with 10 locations. This example is also tested in the `tests.strategies.order_strategy.py` test file.

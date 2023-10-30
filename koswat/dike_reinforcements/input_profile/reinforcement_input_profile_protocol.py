@@ -15,3 +15,9 @@ class ReinforcementInputProfileProtocol(KoswatInputProfileProtocol, Protocol):
         Returns the representative name in the "real" world of this reinforcement.
         """
         pass
+
+    @property
+    def construction_length(self) -> float:
+        """
+        Returns the construction length of this reinforcement.
+        """

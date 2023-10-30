@@ -37,7 +37,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
     @staticmethod
     def _get_corrected_koswat_scenario(
-        orignial_scenario: KoswatScenario, input_profile_base: KoswatInputProfileBase
+        original_scenario: KoswatScenario, input_profile_base: KoswatInputProfileBase
     ) -> KoswatScenario:
         """
         Get a koswat scenario (`KoswatScenario`) whose values are not `math.nan`.
@@ -50,7 +50,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         Returns:
             KoswatScenario: Valid scenario to be used in reinforcements.
         """
-        _new_koswat_scenario = KoswatScenario(**orignial_scenario.__dict__)
+        _new_koswat_scenario = KoswatScenario(**original_scenario.__dict__)
         if math.isnan(_new_koswat_scenario.kruin_breedte):
             _new_koswat_scenario.kruin_breedte = input_profile_base.kruin_breedte
         if math.isnan(_new_koswat_scenario.buiten_talud):
@@ -62,6 +62,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _calculated_profiles = []
         _factory_builder = ReinforcementProfileBuilderFactory(
             base_profile=self.run_scenario_settings.input_profile_case,
+            reinforcement_settings=self.run_scenario_settings.reinforcement_settings,
             scenario=self._get_corrected_koswat_scenario(
                 self.run_scenario_settings.scenario,
                 self.run_scenario_settings.input_profile_case.input_data,

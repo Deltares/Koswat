@@ -54,6 +54,8 @@ class TestSummaryMatrixCsvExporter:
 ;;New core layer surface (cost):;nan;nan;nan;nan
 ;;New maaiveld surface (volume / surface):;nan;nan;nan;nan
 ;;New maaiveld surface (cost):;nan;nan;nan;nan
+;;Construction length (volume / surface):;nan;nan;nan;nan
+;;Construction length (cost):;nan;nan;nan;nan
 ;;Total measure meters;0;1;1;2
 ;;Total measure cost;0.0;8.1444;16.2888;48.8664;73.2996
 A;0.24;0.42;0;1;1;1;Kwelscherm

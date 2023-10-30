@@ -14,3 +14,7 @@ class CofferDamInputProfile(KoswatInputProfileBase, ReinforcementInputProfilePro
     @property
     def reinforcement_domain_name(self) -> str:
         return "Kistdam"
+
+    @property
+    def construction_length(self) -> float:
+        return self.length_coffer_dam

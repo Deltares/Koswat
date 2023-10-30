@@ -19,6 +19,21 @@ from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
+from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
+    KoswatCofferdamSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
+    KoswatPipingWallSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
+    KoswatSoilSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
+    KoswatStabilityWallSettings,
+)
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
     SummaryMatrixCsvExporter,
@@ -91,6 +106,12 @@ class TestAcceptance:
         assert _csv_surroundings_file.is_file()
         assert _shp_trajects_file.is_file()
 
+        _reinforcement_settings = KoswatReinforcementSettings(
+            soil_settings=KoswatSoilSettings(),
+            piping_wall_settings=KoswatPipingWallSettings(),
+            stability_wall_settings=KoswatStabilityWallSettings(),
+            cofferdam_settings=KoswatCofferdamSettings(),
+        )
         _surroundings_importer = KoswatSurroundingsImporter()
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
@@ -117,6 +138,7 @@ class TestAcceptance:
 
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = scenario_case
+        _run_settings.reinforcement_settings = _reinforcement_settings
         _run_settings.surroundings = _surroundings
         _run_settings.input_profile_case = _base_koswat_profile
         _costs = KoswatCostsSettings()
@@ -202,6 +224,12 @@ class TestAcceptance:
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
+        _run_settings.reinforcement_settings = KoswatReinforcementSettings(
+            soil_settings=KoswatSoilSettings(),
+            piping_wall_settings=KoswatPipingWallSettings(),
+            stability_wall_settings=KoswatStabilityWallSettings(),
+            cofferdam_settings=KoswatCofferdamSettings(),
+        )
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.surroundings.reinforcement_min_buffer = 10
         _run_settings.surroundings.reinforcement_min_separation = 50

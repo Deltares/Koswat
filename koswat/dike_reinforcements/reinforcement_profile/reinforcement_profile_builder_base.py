@@ -2,6 +2,9 @@ import logging
 from abc import abstractmethod
 
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
@@ -26,6 +29,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 
 class ReinforcementProfileBuilderBase(ReinforcementProfileBuilderProtocol):
     base_profile: KoswatProfileBase
+    reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
     reinforcement_profile_type: type[StandardReinforcementProfile]
 
@@ -51,6 +55,7 @@ class ReinforcementProfileBuilderBase(ReinforcementProfileBuilderProtocol):
     def _get_reinforcement_profile_input(self) -> ReinforcementInputProfileProtocol:
         _calculator = self.get_input_profile_calculator(self.reinforcement_profile_type)
         _calculator.base_profile = self.base_profile
+        _calculator.reinforcement_settings = self.reinforcement_settings
         _calculator.scenario = self.scenario
         return _calculator.build()
 

@@ -31,6 +31,21 @@ from koswat.configuration.settings.koswat_run_settings import (
     KoswatRunSettings,
 )
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
+    KoswatCofferdamSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
+    KoswatPipingWallSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
+    KoswatSoilSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
+    KoswatStabilityWallSettings,
+)
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
@@ -65,18 +80,19 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _general_settings.analyse_section_fom.scenarios_ini_file,
             _dike_selected_sections,
         )
-
         _surroundings_fom = self._import_surroundings(
             _general_settings.surroundings_section,
             _general_settings.analyse_section_fom.dike_section_location_shp_file,
             [_s.scenario_dike_section for _s in _scenario_fom_list],
         )
+        _reinforcement_settings = self._get_reinforcement_settings(_general_settings)
 
         logging.info("Importing INI configuration completed.")
 
         # Then convert to DOM
         logging.info("Mapping data to Koswat Settings")
         _run_settings = self._get_run_settings(
+            _reinforcement_settings,
             _input_profile_cases,
             _scenario_fom_list,
             _dike_costs,
@@ -89,12 +105,13 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
     def _get_run_settings(
         self,
+        reinforcement_settings: KoswatReinforcementSettings,
         input_profiles: list[KoswatProfileBase],
         fom_scenario_list: list[KoswatSectionScenariosIniFom],
         costs_settings: KoswatCostsSettings,
         surroundings_fom: list[SurroundingsWrapper],
         output_dir: Path,
-    ) -> None:
+    ) -> KoswatRunSettings:
         _run_settings = KoswatRunSettings()
         _run_settings.output_dir = output_dir
         for _ip in input_profiles:
@@ -134,6 +151,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 _run_scenario = KoswatRunScenarioSettings()
                 _run_scenario.input_profile_case = _ip
                 _run_scenario.scenario = self._get_koswat_scenario(_sub_scenario, _ip)
+                _run_scenario.reinforcement_settings = reinforcement_settings
                 _run_scenario.surroundings = _surrounding
                 _run_scenario.costs = costs_settings
                 _run_scenario.output_dir = _dike_output_dir / (
@@ -154,6 +172,25 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         reader = KoswatIniReader()
         reader.koswat_ini_fom_type = KoswatGeneralIniFom
         return reader.read(ini_config_file)
+
+    def _get_reinforcement_settings(
+        self, general_settings: KoswatGeneralIniFom
+    ) -> KoswatReinforcementSettings:
+        _reinforcement_settings = KoswatReinforcementSettings(
+            soil_settings=KoswatSoilSettings(
+                **(general_settings.grondmaatregel_section.__dict__)
+            ),
+            piping_wall_settings=KoswatPipingWallSettings(
+                **(general_settings.kwelscherm_section.__dict__)
+            ),
+            stability_wall_settings=KoswatStabilityWallSettings(
+                **(general_settings.stabiliteitswand_section.__dict__)
+            ),
+            cofferdam_settings=KoswatCofferdamSettings(
+                **(general_settings.kistdam_section.__dict__)
+            ),
+        )
+        return _reinforcement_settings
 
     def _get_layers_info(self, section_fom: DikeProfileSectionFom) -> dict:
         return dict(
@@ -234,7 +271,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         surroundings_section: SurroundingsSectionFom,
         traject_shp_file: Path,
         dike_selections: list[str],
-    ) -> Any:
+    ) -> list[SurroundingsWrapper]:
         _importer = KoswatSurroundingsImporter()
         _importer.traject_loc_shp_file = traject_shp_file
         _importer.selected_locations = dike_selections

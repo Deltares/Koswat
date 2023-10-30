@@ -164,10 +164,12 @@ class OrderStrategy(StrategyProtocol):
         )
         _reinforcements_order_max_idx = len(self._order_reinforcement)
         for _target_reinforcement_idx in range(0, _reinforcements_order_max_idx):
-            _target_non_compliant_clusters = list(filter(
+            _target_non_compliant_clusters = list(
+                filter(
                     lambda x: not x.is_compliant(
                         self._structure_min_length, self._order_reinforcement[-1]
-                    ) and x.reinforcement_idx == _target_reinforcement_idx,
+                    )
+                    and x.reinforcement_idx == _target_reinforcement_idx,
                     _available_clusters,
                 )
             )
