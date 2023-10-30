@@ -111,7 +111,7 @@ class CofferdamInputProfileCalculation(
         _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
-        _new_data.length_coffer_dam = self._calculate_length_coffer_dam(
+        _new_data.construction_length = self._calculate_length_coffer_dam(
             base_data,
             cofferdam_settings,
             _soil_binnen_berm_breedte,

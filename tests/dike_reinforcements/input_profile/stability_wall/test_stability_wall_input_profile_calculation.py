@@ -1,4 +1,5 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
     KoswatStabilityWallSettings,
 )
@@ -47,10 +48,10 @@ class TestStabilityWallInputProfileCalculation:
         _stability_wall_settings.max_lengte_stabiliteitswand = 99
         _soil_binnen_berm_breedte = 12
         _new_kruin_hoogte = 16
-        _expected_result = 22.5
+        _expected_result = (22.5, ConstructionTypeEnum.DAMWAND_VERANKERD)
 
         # 2. Run test.
-        _result = _calculator._calculate_length_stability_wall(
+        _result = _calculator._calculate_stability_wall(
             _input_data,
             _stability_wall_settings,
             _soil_binnen_berm_breedte,

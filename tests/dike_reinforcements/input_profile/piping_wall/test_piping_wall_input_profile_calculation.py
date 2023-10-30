@@ -1,6 +1,7 @@
 import pytest
 
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
     KoswatPipingWallSettings,
 )
@@ -44,10 +45,10 @@ class TestPipingWallInputProfileCalculation:
         _piping_wall_settings.min_lengte_kwelscherm = 0
         _piping_wall_settings.max_lengte_kwelscherm = 99
         _soil_binnen_berm_breedte = 12.5
-        _expected_result = 6.1
+        _expected_result = (6.1, ConstructionTypeEnum.CB_DAMWAND)
 
         # 2. Run test.
-        _result = _calculator._calculate_length_piping_wall(
+        _result = _calculator._calculate_piping_wall(
             _profile_data, _piping_wall_settings, _soil_binnen_berm_breedte
         )
 

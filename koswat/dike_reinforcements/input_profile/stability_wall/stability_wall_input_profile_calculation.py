@@ -1,4 +1,5 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
     KoswatStabilityWallSettings,
 )
@@ -27,13 +28,13 @@ class StabilityWallInputProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
-    def _calculate_length_stability_wall(
+    def _calculate_stability_wall(
         self,
         old_data: KoswatInputProfileProtocol,
         stability_wall_settings: KoswatStabilityWallSettings,
         soil_binnen_berm_breedte: float,
         new_kruin_hoogte: float,
-    ) -> float:
+    ) -> (float, ConstructionTypeEnum):
         """
         Identical to calculation of Cofferdam
         """
@@ -43,7 +44,7 @@ class StabilityWallInputProfileCalculation(
             (soil_binnen_berm_breedte / 6) + (new_kruin_hoogte - 0.5) - old_data.aquifer
         )
         _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistoceen - 1)
-        return round(
+        _new_length = round(
             min(
                 max(
                     _length_piping,
@@ -54,6 +55,12 @@ class StabilityWallInputProfileCalculation(
             ),
             1,
         )
+        if _new_length <= stability_wall_settings.overgang_damwand_diepwand:
+            _construction_type = ConstructionTypeEnum.DAMWAND_VERANKERD
+        else:
+            _construction_type = ConstructionTypeEnum.DIEPWAND
+
+        return (_new_length, _construction_type)
 
     def _calculate_new_kruin_hoogte(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
@@ -110,7 +117,10 @@ class StabilityWallInputProfileCalculation(
         _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
-        _new_data.length_stability_wall = self._calculate_length_stability_wall(
+        (
+            _new_data.construction_length,
+            _new_data.construction_type,
+        ) = self._calculate_stability_wall(
             base_data,
             stability_wall_settings,
             _soil_binnen_berm_breedte,

@@ -1,6 +1,7 @@
 import math
 from dataclasses import dataclass
 
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
@@ -9,12 +10,9 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 
 @dataclass
 class PipingWallInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol):
-    length_piping_wall: float = math.nan
+    construction_length: float = math.nan
+    construction_type: ConstructionTypeEnum = None
 
     @property
     def reinforcement_domain_name(self) -> str:
         return "Kwelscherm"
-
-    @property
-    def construction_length(self) -> float:
-        return self.length_piping_wall
