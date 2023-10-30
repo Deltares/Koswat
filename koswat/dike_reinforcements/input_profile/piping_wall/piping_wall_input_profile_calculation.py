@@ -34,7 +34,7 @@ class PipingWallInputProfileCalculation(
         old_data: KoswatInputProfileBase,
         piping_wall_settings: KoswatPipingWallSettings,
         soil_binnen_berm_breedte: float,
-    ) -> (float, ConstructionTypeEnum):
+    ) -> tuple[float, ConstructionTypeEnum]:
         if soil_binnen_berm_breedte == 0:
             # No wall is needed.
             return 0
@@ -58,7 +58,7 @@ class PipingWallInputProfileCalculation(
         else:
             _construction_type = ConstructionTypeEnum.DAMWAND_ONVERANKERD
 
-        return (_new_length, _construction_type)
+        return _new_length, _construction_type
 
     def _calculate_new_kruin_hoogte(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario

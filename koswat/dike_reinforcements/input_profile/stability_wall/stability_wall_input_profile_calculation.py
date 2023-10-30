@@ -34,7 +34,7 @@ class StabilityWallInputProfileCalculation(
         stability_wall_settings: KoswatStabilityWallSettings,
         soil_binnen_berm_breedte: float,
         new_kruin_hoogte: float,
-    ) -> (float, ConstructionTypeEnum):
+    ) -> tuple[float, ConstructionTypeEnum]:
         """
         Identical to calculation of Cofferdam
         """
@@ -60,7 +60,7 @@ class StabilityWallInputProfileCalculation(
         else:
             _construction_type = ConstructionTypeEnum.DIEPWAND
 
-        return (_new_length, _construction_type)
+        return _new_length, _construction_type
 
     def _calculate_new_kruin_hoogte(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
