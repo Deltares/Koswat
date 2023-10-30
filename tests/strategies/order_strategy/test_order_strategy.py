@@ -172,8 +172,8 @@ class TestOrderStrategy:
             (3, example_location_reinforcements_with_buffering[7:]),
         ]
         _expected_cluster_result = [
-            (2, []),
-            (2, example_location_reinforcements_with_buffering[:7]),
+            (0, example_location_reinforcements_with_buffering[:2]),
+            (2, example_location_reinforcements_with_buffering[2:7]),
             (2, []),
             (3, example_location_reinforcements_with_buffering[7:]),
         ]
@@ -203,8 +203,12 @@ class TestOrderStrategy:
 
         # 3. Verify expectations.
         assert all(
+            _sr.selected_measure == SoilReinforcementProfile
+            for _sr in example_location_reinforcements_with_buffering[0:2]
+        )
+        assert all(
             _sr.selected_measure == StabilityWallReinforcementProfile
-            for _sr in example_location_reinforcements_with_buffering[:7]
+            for _sr in example_location_reinforcements_with_buffering[2:7]
         )
         assert all(
             _sr.selected_measure == CofferdamReinforcementProfile
@@ -214,7 +218,6 @@ class TestOrderStrategy:
     def test_apply_strategy_given_example(self, example_strategy_input: StrategyInput):
         # 1. Define test data.
         assert isinstance(example_strategy_input, StrategyInput)
-        _expected_cofferdam = 3
 
         # 2. Run test.
         _strategy_result = OrderStrategy().apply_strategy(example_strategy_input)
@@ -227,11 +230,17 @@ class TestOrderStrategy:
         assert all(
             isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
         )
+        
+        # Basically the same checks as in `test__apply_min_distance_given_example`.
+        assert all(
+            _sr.selected_measure == SoilReinforcementProfile
+            for _sr in _strategy_result[0:2]
+        )
         assert all(
             _sr.selected_measure == StabilityWallReinforcementProfile
-            for _sr in _strategy_result[:-_expected_cofferdam]
+            for _sr in _strategy_result[2:7]
         )
         assert all(
             _sr.selected_measure == CofferdamReinforcementProfile
-            for _sr in _strategy_result[-_expected_cofferdam:]
+            for _sr in _strategy_result[7:]
         )

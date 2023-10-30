@@ -177,7 +177,7 @@ __Steps breakdown__:
 One simplified example, based on the [buffering example](#buffering-example), and using a minimal distance of "5". This example is also tested in the `tests.strategies.order_strategy.py` test file.
 
 ```json
-1. A total of 3 non-compliant clusters are identified.
+1. A total of 1 non-compliant clusters are identified.
 [
     (0, ["Location_000","Location_001",]),
     (2, ["Location_002","Location_003","Location_004","Location_005",]),
@@ -188,27 +188,18 @@ One simplified example, based on the [buffering example](#buffering-example), an
 2. First iteration 1:
     1. Target is "SoilReinforcementProfile" (idx=0)
         1. Found in the first cluster:
-            1. Non-compliant (length=2)
-            2. New value = 2; (Current = 0, Previous = 1, Next = 2,)
-            3. Update current cluster values
-            4. Update (next) cluster:
-                [
-                    (2, []),
-                    (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005",]),
-                    (0, ["Location_006",]),
-                    (3, ["Location_007","Location_008","Location_009",]),
-                ]
+            1. Skipped because it is a 'bordering' cluster.
         2. Found in the third cluster:
             1. Non-compliant (length=1)
             2. New value = 2; (Current = 0, Previous = 2, Next = 3)
             3. Update current cluster values
             4. Update (previous) cluster,
-                [
-                    (2, []),
-                    (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
-                    (2, []),
-                    (3, ["Location_007","Location_008","Location_009",]),
-                ]
+            [
+                (0, ["Location_000","Location_001",]),
+                (2, ["Location_002","Location_003","Location_004","Location_005","Location_006"]),
+                (2, []),
+                (3, ["Location_007","Location_008","Location_009",]),
+            ]
     2. Target is "PipingWallReinforcementProfile" (idx=1)
         1. All clusters are compliant.
     3. Target is "StabilityWallReinforcementProfile" (idx=2)
@@ -216,7 +207,8 @@ One simplified example, based on the [buffering example](#buffering-example), an
     4. We do not check the last target, "CofferDamReinforcementProfile" (idx=3), as it can't be further strengthen.
 3. Get new clustering and number of non-compliants:
     [
-        (2, ["Location_000","Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
+        (0, ["Location_000","Location_001",]),
+        (2, ["Location_002","Location_003","Location_004","Location_005","Location_006"]),
         (3, ["Location_007","Location_008","Location_009",]),
     ]
 4. All clusters are now compliant. Finish.
