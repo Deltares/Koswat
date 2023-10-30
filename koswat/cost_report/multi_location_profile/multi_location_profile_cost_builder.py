@@ -1,4 +1,6 @@
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
@@ -15,12 +17,12 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 class MultiLocationProfileCostReportBuilder(BuilderProtocol):
     surroundings: SurroundingsWrapper
     reinforced_profile: ReinforcementProfileProtocol
-    koswat_costs: KoswatCostsSettings
+    koswat_costs_settings: KoswatCostsSettings
 
     def __init__(self) -> None:
         self.surroundings = None
         self.reinforced_profile = None
-        self.koswat_costs = None
+        self.koswat_costs_settings = None
 
     def build(self) -> MultiLocationProfileCostReport:
         _multiple_location_cost_report = MultiLocationProfileCostReport()
@@ -31,7 +33,7 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
         )
         _profile_cost_report_builder = ProfileCostReportBuilder()
         _profile_cost_report_builder.reinforced_profile = self.reinforced_profile
-        _profile_cost_report_builder.koswat_costs = self.koswat_costs
+        _profile_cost_report_builder.koswat_costs_settings = self.koswat_costs_settings
         _multiple_location_cost_report.profile_cost_report = (
             _profile_cost_report_builder.build()
         )

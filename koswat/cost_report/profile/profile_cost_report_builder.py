@@ -1,6 +1,8 @@
 from typing import List
 
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.profile.layer_cost_report import LayerCostReport
 from koswat.cost_report.profile.profile_cost_report import (
@@ -18,11 +20,11 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 
 class ProfileCostReportBuilder(BuilderProtocol):
     reinforced_profile: ReinforcementProfileProtocol
-    koswat_costs: KoswatCostsSettings
+    koswat_costs_settings: KoswatCostsSettings
 
     def __init__(self) -> None:
         self.reinforced_profile = None
-        self.koswat_costs = None
+        self.koswat_costs_settings = None
 
     def _get_layers_report(
         self, cost_parameters: List[VolumeCostParameters]
@@ -44,7 +46,7 @@ class ProfileCostReportBuilder(BuilderProtocol):
         _report = ProfileCostReport()
         _vcp_builder = VolumeCostParametersBuilder()
         _vcp_builder.reinforced_profile = self.reinforced_profile
-        _vcp_builder.koswat_costs = self.koswat_costs
+        _vcp_builder.koswat_costs_settings = self.koswat_costs_settings
         _report.volume_cost_parameters = _vcp_builder.build()
         _report.reinforced_profile = self.reinforced_profile
         _report.layer_cost_reports = self._get_layers_report(

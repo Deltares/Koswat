@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 
 from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
-from koswat.configuration.settings.costs.koswat_costs import (
+from koswat.configuration.settings.costs.koswat_costs_settings import (
     DikeProfileCostsSettings,
     InfrastructureCostsSettings,
     KoswatCostsSettings,
@@ -31,7 +31,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
             raise FileNotFoundError(_error)
         if self.include_taxes is None:
             raise ValueError("A boolean value is expected for `include_taxes`.")
-        logging.info("Importing costs from {}.".format(from_path))
+        logging.info("Importing costs setting settings from {}.".format(from_path))
         _costs_fom = self._get_costs_fom(from_path)
 
         _costs_settings = KoswatCostsSettings()

@@ -94,7 +94,9 @@ class VolumeCostParameters:
             return _vp
 
         _volume_parameters = cls()
-        _vcp = VolumeCostParameters.from_reinforced_profile(reinforced_profile)
+        _vcp = VolumeCostParametersCalculator.from_reinforced_profile(
+            reinforced_profile
+        )
         if not _vcp:
             return _volume_parameters
         _volume_parameters.reused_grass_volume = _create(

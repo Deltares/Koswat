@@ -25,7 +25,9 @@ from koswat.configuration.io.koswat_surroundings_importer import (
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.configuration.settings.koswat_run_settings import (
     KoswatRunScenarioSettings,
     KoswatRunSettings,
@@ -153,7 +155,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 _run_scenario.scenario = self._get_koswat_scenario(_sub_scenario, _ip)
                 _run_scenario.reinforcement_settings = reinforcement_settings
                 _run_scenario.surroundings = _surrounding
-                _run_scenario.costs = costs_settings
+                _run_scenario.costs_setting = costs_settings
                 _run_scenario.output_dir = _dike_output_dir / (
                     "scenario_" + _sub_scenario.scenario_name.lower()
                 )

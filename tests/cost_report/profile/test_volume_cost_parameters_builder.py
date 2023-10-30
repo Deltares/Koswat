@@ -3,7 +3,9 @@ import pytest
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
     VolumeCostParameter,
@@ -40,23 +42,23 @@ class TestVolumeCostParametersBuilder:
         assert isinstance(_builder, VolumeCostParametersBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert _builder.reinforced_profile is None
-        assert _builder.koswat_costs is None
+        assert _builder.koswat_costs_settings is None
 
     def test_no_reinforced_profile_raises(self):
         _expected_mssg = "No reinforced profile provided."
         with pytest.raises(ValueError) as exc_value:
             _builder = VolumeCostParametersBuilder()
-            _builder.koswat_costs = None
+            _builder.koswat_costs_settings = None
             _builder.reinforced_profile = None
             _builder.build()
 
         assert str(exc_value.value) == _expected_mssg
 
     def test_no_koswat_costs_raises(self):
-        _expected_mssg = "No koswat costs provided."
+        _expected_mssg = "No koswat costs setting setting provided."
         with pytest.raises(ValueError) as exc_value:
             _builder = VolumeCostParametersBuilder()
-            _builder.koswat_costs = None
+            _builder.koswat_costs_settings = None
             _builder.reinforced_profile = 42
             _builder.build()
 
@@ -152,21 +154,21 @@ class TestVolumeCostParametersBuilder:
         _grass_layer = self._get_mocked_layer(KoswatMaterialType.GRASS, 4.8, 8.4)
         _wrapper.coating_layers = [_clay_layer, _grass_layer]
 
-        # Set default dike profile costs.
-        _costs = KoswatCostsSettings()
-        _builder.koswat_costs = _costs
+        # Set default dike profile costs setting setting.
+        _costs_settings = KoswatCostsSettings()
+        _builder.koswat_costs_settings = _costs_settings
 
-        _costs.dike_profile_costs = DikeProfileCostsSettings()
-        _costs.dike_profile_costs.added_layer_grass_m3 = 12.44
-        _costs.dike_profile_costs.added_layer_clay_m3 = 18.05
-        _costs.dike_profile_costs.added_layer_sand_m3 = 10.98
-        _costs.dike_profile_costs.reused_layer_grass_m3 = 6.04
-        _costs.dike_profile_costs.reused_layer_core_m3 = 4.67
-        _costs.dike_profile_costs.disposed_material_m3 = 7.07
-        _costs.dike_profile_costs.profiling_layer_grass_m2 = 0.88
-        _costs.dike_profile_costs.profiling_layer_clay_m2 = 0.65
-        _costs.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _costs.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.dike_profile_costs = DikeProfileCostsSettings()
+        _costs_settings.dike_profile_costs.added_layer_grass_m3 = 12.44
+        _costs_settings.dike_profile_costs.added_layer_clay_m3 = 18.05
+        _costs_settings.dike_profile_costs.added_layer_sand_m3 = 10.98
+        _costs_settings.dike_profile_costs.reused_layer_grass_m3 = 6.04
+        _costs_settings.dike_profile_costs.reused_layer_core_m3 = 4.67
+        _costs_settings.dike_profile_costs.disposed_material_m3 = 7.07
+        _costs_settings.dike_profile_costs.profiling_layer_grass_m2 = 0.88
+        _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
+        _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
+        _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
 
         # 2. Run test
         _vcp = _builder.build()

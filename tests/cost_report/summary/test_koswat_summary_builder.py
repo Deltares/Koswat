@@ -1,6 +1,8 @@
 from shapely.geometry import Point
 
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -97,7 +99,7 @@ class TestKoswatSummaryBuilder:
         _builder = KoswatSummaryBuilder()
         _settings = KoswatRunScenarioSettings()
         _settings.surroundings = SurroundingsWrapper()
-        _settings.costs = KoswatCostsSettings()
+        _settings.costs_setting = KoswatCostsSettings()
         _builder.run_scenario_settings = _settings
 
         # 2. Run test.
@@ -121,7 +123,7 @@ class TestKoswatSummaryBuilder:
         _run_settings.scenario = ScenarioCases.default
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
         _run_settings.surroundings = SurroundingsWrapper()
-        _run_settings.costs = KoswatCostsSettings()
+        _run_settings.costs_setting = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_surroundings = []
         _p_surrounding.location = Point(2.4, 4.2)
