@@ -277,7 +277,7 @@ class TestReinforcementProfileBuilderFactory:
             expected_reinforcement_profile=_expected_reinforcement,
         )
 
-    @pytest.mark.slow
+    @pytest.mark.plot
     def test_given_profile_and_scenario_calculate_new_geometry_without_layers(
         self,
         reinforcement_profile_case: ReinforcementProfileCase,
@@ -332,6 +332,7 @@ class TestReinforcementProfileBuilderFactory:
     )
     @pytest.mark.parametrize("input_profile", _input_profiles)
     @pytest.mark.parametrize("scenario", _scenarios)
+    @pytest.mark.plot
     def test_generate_reinforcement_profiles_from_acceptance_data(
         self,
         profile_type: type[ReinforcementProfileProtocol],
@@ -378,6 +379,7 @@ class TestReinforcementProfileBuilderFactory:
         reinforced_profile: ReinforcementProfileProtocol,
         output_dir: Path,
     ):
+        # TODO: Most likely this is the culprit of making tests fail.
         _plot_filename = output_dir.joinpath(
             reinforced_profile.input_data.reinforcement_domain_name
         )

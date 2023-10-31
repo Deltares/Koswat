@@ -114,6 +114,8 @@ class TestAcceptance:
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
         _surroundings_section = SurroundingsSectionFom()
+        _surroundings_section.constructieafstand = 50
+        _surroundings_section.constructieovergang = 10
         _surroundings_section.surroundings_database_dir = _test_dir
         _surroundings_section.buitendijks = False
         _surroundings_section.bebouwing = True
@@ -222,6 +224,8 @@ class TestAcceptance:
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
         _run_settings.surroundings = SurroundingsWrapper()
+        _run_settings.surroundings.reinforcement_min_buffer = 10
+        _run_settings.surroundings.reinforcement_min_separation = 50
         _run_settings.costs_setting = KoswatCostsSettings()
         _run_settings.costs_setting.dike_profile_costs = DikeProfileCostsSettings()
 
