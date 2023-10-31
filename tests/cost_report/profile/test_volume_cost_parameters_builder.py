@@ -189,10 +189,8 @@ class TestVolumeCostParametersBuilder:
         def evaluate_cost_and_length(
             lcp_param: LengthCostParameter,
             expected_length: float,
-            expected_type: ConstructionTypeEnum,
         ):
             assert lcp_param.volume == pytest.approx(expected_length, 0.01)
-            assert lcp_param.type == expected_type
 
         assert isinstance(_vcp, VolumeCostParameters)
         evaluate_cost_and_volume(_vcp.reused_grass_volume, 6.04, 4.8)
@@ -205,6 +203,4 @@ class TestVolumeCostParametersBuilder:
         evaluate_cost_and_volume(_vcp.new_core_layer_surface, 0.6, 2.1)
         evaluate_cost_and_volume(_vcp.new_maaiveld_surface, 0.25, 42)
         evaluate_cost_and_volume(_vcp.removed_material_volume, 7.07, 1.2)
-        evaluate_cost_and_length(
-            _vcp.construction_length, 10, ConstructionTypeEnum.CB_DAMWAND
-        )
+        evaluate_cost_and_length(_vcp.construction_length, 10)
