@@ -27,7 +27,7 @@ class ProfileCostReportBuilder(BuilderProtocol):
         self.koswat_costs_settings = None
 
     def _get_layers_report(
-        self, cost_parameters: List[VolumeCostParameters]
+        self, cost_parameters: VolumeCostParameters
     ) -> List[LayerCostReport]:
         _reports = []
         for _layer in self.reinforced_profile.layers_wrapper.layers:

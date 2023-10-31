@@ -7,8 +7,7 @@ from typing import Any, Type
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
-    LengthCostParameter,
-    VolumeCostParameter,
+    CostParameterProtocol,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -188,7 +187,7 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
 
     def _get_volume_cost_parameters(
         self,
-        vc_parameters: dict[str, VolumeCostParameter | LengthCostParameter],
+        vc_parameters: dict[str, CostParameterProtocol],
         csv_dictionary: dict,
     ):
         def _format_parameter_name(dict_name: str) -> str:

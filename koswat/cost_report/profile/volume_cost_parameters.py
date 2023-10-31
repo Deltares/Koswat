@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from typing import Protocol, runtime_checkable
 
 from koswat.configuration.settings.costs.construction_costs_settings import (
     ConstructionFactors,
@@ -8,18 +9,35 @@ from koswat.configuration.settings.costs.construction_costs_settings import (
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 
-class VolumeCostParameter:
+@runtime_checkable
+class CostParameterProtocol(Protocol):
+    cost: float
+
+    def get_quantity(self) -> float:
+        pass
+
+    def get_total_cost(self) -> float:
+        pass
+
+
+class VolumeCostParameter(CostParameterProtocol):
     volume: float
     cost: float
+
+    def get_quantity(self) -> float:
+        return self.volume
 
     def total_cost(self) -> float:
         return self.volume * self.cost
 
 
-class LengthCostParameter:
+class LengthCostParameter(CostParameterProtocol):
     # TODO rename volume to quantity
     volume: float
     factors: ConstructionFactors | None
+
+    def get_quantity(self) -> float:
+        return self.volume
 
     def total_cost(self) -> float:
         if not self.factors:
@@ -34,17 +52,17 @@ class LengthCostParameter:
 
 
 class VolumeCostParameters:
-    reused_grass_volume: VolumeCostParameter
-    aanleg_grass_volume: VolumeCostParameter
-    aanleg_clay_volume: VolumeCostParameter
-    reused_core_volume: VolumeCostParameter
-    aanleg_core_volume: VolumeCostParameter
-    removed_material_volume: VolumeCostParameter
-    new_grass_layer_surface: VolumeCostParameter
-    new_clay_layer_surface: VolumeCostParameter
-    new_core_layer_surface: VolumeCostParameter
-    new_maaiveld_surface: VolumeCostParameter
-    construction_length: LengthCostParameter
+    reused_grass_volume: CostParameterProtocol
+    aanleg_grass_volume: CostParameterProtocol
+    aanleg_clay_volume: CostParameterProtocol
+    reused_core_volume: CostParameterProtocol
+    aanleg_core_volume: CostParameterProtocol
+    removed_material_volume: CostParameterProtocol
+    new_grass_layer_surface: CostParameterProtocol
+    new_clay_layer_surface: CostParameterProtocol
+    new_core_layer_surface: CostParameterProtocol
+    new_maaiveld_surface: CostParameterProtocol
+    construction_length: CostParameterProtocol
 
     def __init__(self) -> None:
         self.reused_grass_volume = None
@@ -59,10 +77,10 @@ class VolumeCostParameters:
         self.new_maaiveld_surface = None
         self.construction_length = None
 
-    def get_parameters(self) -> list[VolumeCostParameter | LengthCostParameter]:
+    def get_parameters(self) -> list[CostParameterProtocol]:
         return list(
             filter(
-                lambda x: isinstance(x, VolumeCostParameter | LengthCostParameter),
+                lambda x: isinstance(x, CostParameterProtocol),
                 self.__dict__.values(),
             )
         )

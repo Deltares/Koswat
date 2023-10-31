@@ -1,5 +1,4 @@
 import logging
-from typing import Union
 
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
@@ -45,7 +44,7 @@ class VolumeCostParametersBuilder(BuilderProtocol):
 
     def _get_volume_cost_calculator(
         self,
-    ) -> Union[VolumeCostParametersCalculator, None]:
+    ) -> VolumeCostParametersCalculator | None:
         _calculator = VolumeCostParametersCalculator()
         if len(self.reinforced_profile.layers_wrapper.layers) != 3:
             logging.error(
