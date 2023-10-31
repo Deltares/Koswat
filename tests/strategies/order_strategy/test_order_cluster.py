@@ -1,6 +1,6 @@
 import pytest
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.strategies.order_strategy.order_cluster import OrderCluster
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,

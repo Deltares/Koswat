@@ -1,4 +1,5 @@
 import pytest
+
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
@@ -7,7 +8,6 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
     StabilityWallReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
-
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,

@@ -18,9 +18,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
-from koswat.strategies.order_strategy.order_cluster import (
-    OrderCluster,
-)
+from koswat.strategies.order_strategy.order_cluster import OrderCluster
 from koswat.strategies.order_strategy.order_strategy_buffering import (
     OrderStrategyBuffering,
 )

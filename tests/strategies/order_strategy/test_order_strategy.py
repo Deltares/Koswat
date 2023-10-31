@@ -17,8 +17,8 @@ from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 from tests.strategies.order_strategy.order_strategy_fixtures import (
-    example_strategy_input,
     example_location_reinforcements_with_buffering,
+    example_strategy_input,
 )
 
 

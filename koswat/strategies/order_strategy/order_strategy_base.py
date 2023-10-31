@@ -1,5 +1,6 @@
 import abc
 from itertools import groupby
+
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )

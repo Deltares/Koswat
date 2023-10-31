@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import logging
+from dataclasses import dataclass
+
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
