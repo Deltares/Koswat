@@ -1,3 +1,6 @@
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
+
+
 class VolumeCostParametersCalculator:
     grass_layer_removal_volume: float
     clay_layer_removal_volume: float
@@ -9,6 +12,7 @@ class VolumeCostParametersCalculator:
     new_grass_layer_surface: float
     new_maaiveld_surface: float
     construction_length: float
+    construction_type: ConstructionTypeEnum | None
 
     def get_reused_grass_volume(self) -> float:
         return min(self.grass_layer_removal_volume, self.new_grass_layer_volume)

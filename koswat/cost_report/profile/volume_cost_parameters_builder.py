@@ -7,8 +7,10 @@ from koswat.configuration.settings.costs.dike_profile_costs_settings import (
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
+    LengthCostParameter,
     VolumeCostParameter,
     VolumeCostParameters,
 )
@@ -73,6 +75,9 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         _calculator.construction_length = (
             self.reinforced_profile.input_data.construction_length
         )
+        _calculator.construction_type = (
+            self.reinforced_profile.input_data.construction_type
+        )
         return _calculator
 
     def _get_volume_cost_parameter(
@@ -82,6 +87,30 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         _vp.volume = volume
         _vp.cost = cost
         return _vp
+
+    def _get_construction_cost_parameter(
+        self, length: float, construction_type: ConstructionTypeEnum
+    ) -> LengthCostParameter:
+        _lp = LengthCostParameter()
+        _lp.volume = length
+        if construction_type == ConstructionTypeEnum.CB_DAMWAND:
+            _lp.factors = self.koswat_costs_settings.construction_costs.cb_damwand
+        elif construction_type == ConstructionTypeEnum.DAMWAND_ONVERANKERD:
+            _lp.factors = (
+                self.koswat_costs_settings.construction_costs.damwand_onverankerd
+            )
+        elif construction_type == ConstructionTypeEnum.DAMWAND_VERANKERD:
+            _lp.factors = (
+                self.koswat_costs_settings.construction_costs.damwand_verankerd
+            )
+        elif construction_type == ConstructionTypeEnum.DIEPWAND:
+            _lp.factors = self.koswat_costs_settings.construction_costs.diepwand
+        elif construction_type == ConstructionTypeEnum.KISTDAM:
+            _lp.factors = self.koswat_costs_settings.construction_costs.kistdam
+        else:
+            _lp.factors = None
+
+        return _lp
 
     def _set_volume_cost_parameters(
         self,
@@ -121,8 +150,7 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         vc_parameters.new_maaiveld_surface = self._get_volume_cost_parameter(
             _vcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
         )
-        # TODO: KOSWAT issue #104
-        vc_parameters.construction_length = self._get_volume_cost_parameter(
-            _vcp.construction_length, 0
+        vc_parameters.construction_length = self._get_construction_cost_parameter(
+            _vcp.construction_length, _vcp.construction_type
         )
         return vc_parameters

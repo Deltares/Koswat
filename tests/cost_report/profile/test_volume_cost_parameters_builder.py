@@ -6,8 +6,10 @@ from koswat.configuration.settings.costs.dike_profile_costs_settings import (
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
+    LengthCostParameter,
     VolumeCostParameter,
     VolumeCostParameters,
 )
@@ -97,6 +99,7 @@ class TestVolumeCostParametersBuilder:
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcementInput(ReinforcementInputProfileProtocol):
             construction_length: float = 0
+            construction_type: ConstructionTypeEnum = None
 
         class MockedReinforcement(StandardReinforcementProfile):
             output_name: str = "Mocked reinforcement"
@@ -145,6 +148,9 @@ class TestVolumeCostParametersBuilder:
         _builder = VolumeCostParametersBuilder()
         _builder.reinforced_profile = self._get_mocked_reinforcement()
         _builder.reinforced_profile.input_data.construction_length = 10
+        _builder.reinforced_profile.input_data.construction_type = (
+            ConstructionTypeEnum.CB_DAMWAND
+        )
 
         # Set layers wrapper
         _wrapper = ReinforcementLayersWrapper()
@@ -180,6 +186,14 @@ class TestVolumeCostParametersBuilder:
             assert vcp_param.cost == pytest.approx(expected_cost, 0.01)
             assert vcp_param.volume == pytest.approx(expected_volume, 0.01)
 
+        def evaluate_cost_and_length(
+            lcp_param: LengthCostParameter,
+            expected_length: float,
+            expected_type: ConstructionTypeEnum,
+        ):
+            assert lcp_param.volume == pytest.approx(expected_length, 0.01)
+            assert lcp_param.type == expected_type
+
         assert isinstance(_vcp, VolumeCostParameters)
         evaluate_cost_and_volume(_vcp.reused_grass_volume, 6.04, 4.8)
         evaluate_cost_and_volume(_vcp.aanleg_grass_volume, 12.44, 0)
@@ -191,5 +205,6 @@ class TestVolumeCostParametersBuilder:
         evaluate_cost_and_volume(_vcp.new_core_layer_surface, 0.6, 2.1)
         evaluate_cost_and_volume(_vcp.new_maaiveld_surface, 0.25, 42)
         evaluate_cost_and_volume(_vcp.removed_material_volume, 7.07, 1.2)
-        # TODO: Koswat issue #104
-        evaluate_cost_and_volume(_vcp.construction_length, 0, 10)
+        evaluate_cost_and_length(
+            _vcp.construction_length, 10, ConstructionTypeEnum.CB_DAMWAND
+        )

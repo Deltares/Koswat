@@ -34,6 +34,7 @@ class ProfileCostReportBuilder(BuilderProtocol):
             _lcr = LayerCostReport()
             _reports.append(_lcr)
             _lcr.layer = _layer
+            # TODO How does this work without cost_parameters[0]
             (
                 _lcr.total_volume,
                 _lcr.total_cost,
@@ -52,5 +53,4 @@ class ProfileCostReportBuilder(BuilderProtocol):
         _report.layer_cost_reports = self._get_layers_report(
             _report.volume_cost_parameters
         )
-
         return _report

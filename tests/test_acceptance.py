@@ -150,6 +150,7 @@ class TestAcceptance:
         _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.construction_costs.cb_damwand = None
 
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
