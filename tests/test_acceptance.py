@@ -35,8 +35,8 @@ from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings
     KoswatStabilityWallSettings,
 )
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
-    SummaryMatrixCsvExporter,
+from koswat.cost_report.io.csv.koswat_summary_exporter import (
+    KoswatSummaryExporter,
 )
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
@@ -161,9 +161,7 @@ class TestAcceptance:
         _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
         _summary = _multi_loc_multi_prof_cost_builder.build()
 
-        SummaryMatrixCsvExporter().export(
-            _summary, _test_dir.joinpath("matrix_results.csv")
-        )
+        KoswatSummaryExporter().export(_summary, _test_dir)
 
         # 3. Verify expectations.
         assert isinstance(_summary, KoswatSummary)
@@ -259,7 +257,7 @@ class TestAcceptance:
         assert isinstance(_summary, KoswatSummary)
 
         # Export results
-        SummaryMatrixCsvExporter().export(_summary, _export_csv_path)
+        KoswatSummaryExporter().export(_summary, _export_path_dir)
         for _multi_report in _summary.locations_profile_report_list:
             _mlp_plot = MultiLocationProfileComparisonPlotExporter()
             _mlp_plot.cost_report = _multi_report

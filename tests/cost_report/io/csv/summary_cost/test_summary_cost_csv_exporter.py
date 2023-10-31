@@ -19,7 +19,7 @@ class TestSummaryCostCsvExporter:
         assert isinstance(_exporter, SummaryCostCsvExporter)
         assert isinstance(_exporter, KoswatExporterProtocol)
 
-    def test_summary_matrix_csv_exporter_export(
+    def test_summary_cost_csv_exporter_export(
         self, valid_mocked_summary: KoswatSummary, request: pytest.FixtureRequest
     ):
         # 1. Define test data.
