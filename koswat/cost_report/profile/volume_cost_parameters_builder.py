@@ -92,7 +92,9 @@ class VolumeCostParametersBuilder(BuilderProtocol):
     ) -> LengthCostParameter:
         _lp = LengthCostParameter()
         _lp.volume = length
-        if construction_type == ConstructionTypeEnum.CB_DAMWAND:
+        if not self.koswat_costs_settings.construction_costs:
+            _lp.factors = None
+        elif construction_type == ConstructionTypeEnum.CB_DAMWAND:
             _lp.factors = self.koswat_costs_settings.construction_costs.cb_damwand
         elif construction_type == ConstructionTypeEnum.DAMWAND_ONVERANKERD:
             _lp.factors = (
