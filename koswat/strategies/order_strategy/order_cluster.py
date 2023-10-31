@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import logging
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
@@ -70,11 +71,12 @@ class OrderCluster:
             ValueError: When trying to extend from an unrelated cluster.
         """
         if self.left_neighbor != other and self.right_neighbor != other:
-            raise ValueError("Trying to extend cluster from an unrelated one.")
+            logging.warning("Trying to extend cluster from an unrelated one.")
 
-        _new_profile_type = self.location_reinforcements[0].selected_measure
-        for _lr in other.location_reinforcements:
-            _lr.selected_measure = _new_profile_type
+        if any(self.location_reinforcements):
+            _new_profile_type = self.location_reinforcements[0].selected_measure
+            for _lr in other.location_reinforcements:
+                _lr.selected_measure = _new_profile_type
 
         if self.left_neighbor == other:
             self.location_reinforcements = (

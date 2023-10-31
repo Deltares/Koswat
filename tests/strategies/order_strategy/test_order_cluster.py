@@ -219,7 +219,7 @@ class TestOrderCluster:
             == order_cluster_with_neighbors.location_reinforcements
         )
 
-    def test_extend_cluster_given_unrelated_cluster_raises_error(
+    def test_extend_cluster_given_unrelated_cluster_does_not_raise(
         self, order_cluster_with_neighbors: OrderCluster
     ):
         # 1. Define test data.
@@ -230,8 +230,10 @@ class TestOrderCluster:
         assert _unrelated_cluster.right_neighbor is None
 
         # 2. Run test.
-        with pytest.raises(ValueError) as exc_err:
-            _unrelated_cluster.extend_cluster(order_cluster_with_neighbors)
+        _unrelated_cluster.extend_cluster(order_cluster_with_neighbors)
 
         # 3. Verify expectations.
-        assert str(exc_err.value) == "Trying to extend cluster from an unrelated one."
+        assert (
+            _unrelated_cluster.location_reinforcements
+            == order_cluster_with_neighbors.location_reinforcements
+        )
