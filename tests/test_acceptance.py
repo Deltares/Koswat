@@ -160,11 +160,13 @@ class TestAcceptance:
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
         _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
         _summary = _multi_loc_multi_prof_cost_builder.build()
+        assert isinstance(_summary, KoswatSummary)
 
         KoswatSummaryExporter().export(_summary, _test_dir)
+        assert _test_dir.joinpath("summary_costs.csv").exists()
+        assert _test_dir.joinpath("summary_locations.csv").exists()
 
         # 3. Verify expectations.
-        assert isinstance(_summary, KoswatSummary)
         assert any(_summary.locations_profile_report_list)
         for (
             _reinforcement_profile
@@ -243,10 +245,18 @@ class TestAcceptance:
     ):
         # 1. Define test data
         _run_scenario, _export_path_dir = sandbox_acceptance_case
-        _export_csv_path = _export_path_dir.joinpath("matrix_results.csv")
-        _export_figures_path = _export_path_dir.joinpath("figures")
         assert isinstance(_run_scenario, KoswatRunScenarioSettings)
-        assert not _export_csv_path.exists()
+
+        _export_summary_costs_path = _export_path_dir.joinpath("summary_costs.csv")
+        assert not _export_summary_costs_path.exists()
+
+        _export_summary_locations_path = _export_path_dir.joinpath(
+            "summary_locations.csv"
+        )
+        assert not _export_summary_locations_path.exists()
+
+        _export_figures_path = _export_path_dir.joinpath("figures")
+        assert not _export_figures_path.exists()
 
         # 2. Run test.
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
@@ -268,19 +278,23 @@ class TestAcceptance:
 
         # 4. Compare CSV results
         _reference_dir = _export_path_dir.joinpath("reference")
-        assert _export_csv_path.exists()
+        assert _export_summary_costs_path.exists()
 
         # For now we do not compare the last rows containing info
         # related to the selected measure.
-        _csv_result_lines = _export_csv_path.read_text().splitlines()[:-2]
+        _csv_summary_costs_lines = _export_summary_costs_path.read_text().splitlines()[
+            :-2
+        ]
         _csv_reference_lines = (
-            _reference_dir.joinpath(_export_csv_path.name).read_text().splitlines()
+            _reference_dir.joinpath(_export_summary_costs_path.name)
+            .read_text()
+            .splitlines()
         )
         for _idx, _reference_line in enumerate(_csv_reference_lines):
             _line_nr = _idx + 1
             assert (
-                _reference_line == _csv_result_lines[_idx]
-            ), f"CSV Summary difference found at lines:\n [{_line_nr}] Expected: {_reference_line}\n [{_line_nr}]Result: {_csv_result_lines[_idx]}"
+                _reference_line == _csv_summary_costs_lines[_idx]
+            ), f"CSV Summary difference found at lines:\n [{_line_nr}] Expected: {_reference_line}\n [{_line_nr}]Result: {_csv_summary_costs_lines[_idx]}"
 
         # 5. Compare geometry images.
         def compare_images(reference_img, result_image) -> tuple[float, np.ndarray]:
