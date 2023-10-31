@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import logging
-from itertools import groupby
 from typing import Type
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings

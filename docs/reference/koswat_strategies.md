@@ -82,7 +82,7 @@ __Steps breakdown__:
     3. Add a buffer (`StrategyInput.reinforcement_min_buffer`) by updating the adjacent's positions of this grouping with the same values as in step 1. 
 
 3. Merge all masks into a 1-dimensional array where the cell's value is the maximum between the available masks.
-    - This is done to prevent that a buffer of a "higher" demanding reinforcement such as `CofferDamReinforcementProfile` is replaced by a "weaker" one.
+    - This is done to prevent that a buffer of a "stronger" demanding reinforcement such as `CofferDamReinforcementProfile` is replaced by a "weaker" one.
  
 4. Update the locations with their new associated reinforcement. The resulting mask contains the index of the reinforcement to be applied in the [reinforcement's order](#reinforcement-order).
 
@@ -144,16 +144,16 @@ One simplified example, based on the [grouping example](#grouping-example), and 
 
 #### Reinforcement clustering
 
-Given a [reinforcement grouping](#reinforcement-grouping), ideally done after applying [buffering](#reinforcement-buffering), we will now proceed to change the pre-selected reinforcement of all those groupings who contain less locations than required by the describing property. We do this by updating their type with the one of a "stronger" adjacent grouping, on this section called "clusters". These clusters are internally represented by the class `OrderCluster`.
+Given a [reinforcement grouping](#reinforcement-grouping), ideally done after applying [buffering](#reinforcement-buffering), we will now proceed to change the pre-selected reinforcement of all those groupings that contain less locations than required by the describing property. We do this by updating their type with the one of a "stronger" adjacent grouping, on this section called "clusters". These clusters are internally represented by the class `OrderCluster`.
 
-The strategy here is to detect _non-compliant_ reinforcement-location clusters and replace their selected reinforcement type with the "least strong" of its adjacent clusters. We do this iteratively, so we first target the lowest type of reinforcements (`SoilReinforcementProfile`) and we move up until the first to the last (the last one cannot be further strengthen).
+The strategy here is to detect _non-compliant_ reinforcement-location clusters and replace their selected reinforcement type with the "least strong" of its adjacent clusters. We do this iteratively, so we first target the lowest type of reinforcements (`SoilReinforcementProfile`) and we move up until the first to the last (the last one cannot be further strengthened).
 
 __Conditions__: 
 
 - We define a _non-compliant_ cluster as a cluster that does not contain as many locations as defined by the minimal length requirement (`reinforcement_min_length`).
 - We also define a _non-compliant exception_ when a cluster does not meet said requirement but the adjacent clusters are of a lower reinforcement type. Therefore retaining their initial reinforcement type.
 - The first and last clusters, are __always considered compliant__. Therefore they retain their initial reinforcement type.
-- Clusters whose reinforcement type is placed the last in the strategy's [order](#reinforcement-order), are skipped and __always considered compliant__, as they cannot be further strengthen.
+- Clusters whose reinforcement type is placed the last in the strategy's [order](#reinforcement-order), are skipped and __always considered compliant__, as they cannot be further strengthened.
 
 __Steps breakdown__:
 
@@ -166,7 +166,7 @@ __Steps breakdown__:
         2. Get a stronger cluster among the neighbors. Selects the neighbor with the
         "weakest", yet greater than the actual, reinforcement type value.
             - If both neighbors are "weaker" than the current reinforcement type,
-            then it is considered an "exception" as it cannot be further strengthen.
+            then it is considered an "exception" as it cannot be further strengthened.
             We therefore move to the next _non-compliant_ cluster.
         3. Move the current cluster's locations to the stronger reinforcement cluster.
         4. Remove the cluster from the "available clusters" list as it is integrated in
