@@ -33,7 +33,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         _csv_fom = KoswatCsvFom()
 
         _profile_type_key = "Profile type"
-        _cost_per_km_key = "Cost per km (€)"
+        _cost_per_km_key = "Cost per km (Euro/km)"
 
         _dict_of_entries = defaultdict(list)
         for _loc_prof_report in self.koswat_summary.locations_profile_report_list:
