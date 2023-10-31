@@ -37,7 +37,7 @@ class PipingWallInputProfileCalculation(
     ) -> tuple[float, ConstructionTypeEnum]:
         if soil_binnen_berm_breedte == 0:
             # No wall is needed.
-            return 0
+            return (0, None)
         _length_piping = (
             (soil_binnen_berm_breedte / 6)
             + (old_data.binnen_maaiveld - old_data.aquifer)
