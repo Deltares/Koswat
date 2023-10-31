@@ -1,6 +1,6 @@
 # Strategies
 
-This modules contains the logic to choose which measure will be applied for a given dike traject. A strategy follows the `StraetgyProtocol` and it's applied with the method `apply_strategy`, which expects a strategy input (`StrategyInput`) and returns a mapping (`StrategyLocationReinforcement`) between a location(`PointSurroundings`) and the selected reinforcement (`ReinforcementProtocol`) .
+This modules contains the logic to choose which measure will be applied for a given dike traject. A strategy follows the `StrategyProtocol` and it's applied with the method `apply_strategy`, which expects a strategy input (`StrategyInput`) and returns a mapping (`StrategyLocationReinforcement`) between a location(`PointSurroundings`) and the selected reinforcement (`ReinforcementProtocol`) .
 
 - `StrategyInput`, wraps all required properties to apply a strategy: 
     - locations_matrix (`dict[PointSurroundings, list[Type[ReinforcementProfileProtocol]]]`), contains all the available reinforcements that can be applied at each location.
