@@ -1,5 +1,9 @@
 import pytest
 
+from koswat.configuration.settings.costs.construction_costs_settings import (
+    ConstructionCostsSettings,
+    ConstructionFactors,
+)
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
@@ -175,6 +179,13 @@ class TestVolumeCostParametersBuilder:
         _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.construction_costs = ConstructionCostsSettings()
+        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
+        _costs_settings.construction_costs.cb_damwand.c_factor = 0
+        _costs_settings.construction_costs.cb_damwand.d_factor = 0
+        _costs_settings.construction_costs.cb_damwand.z_factor = 999
+        _costs_settings.construction_costs.cb_damwand.f_factor = 0
+        _costs_settings.construction_costs.cb_damwand.g_factor = 0
 
         # 2. Run test
         _vcp = _builder.build()
@@ -188,8 +199,10 @@ class TestVolumeCostParametersBuilder:
 
         def evaluate_cost_and_length(
             lcp_param: LengthCostParameter,
+            expected_cost: float,
             expected_length: float,
         ):
+            assert lcp_param.total_cost() == pytest.approx(expected_cost, 0.01)
             assert lcp_param.volume == pytest.approx(expected_length, 0.01)
 
         assert isinstance(_vcp, VolumeCostParameters)
@@ -203,4 +216,4 @@ class TestVolumeCostParametersBuilder:
         evaluate_cost_and_volume(_vcp.new_core_layer_surface, 0.6, 2.1)
         evaluate_cost_and_volume(_vcp.new_maaiveld_surface, 0.25, 42)
         evaluate_cost_and_volume(_vcp.removed_material_volume, 7.07, 1.2)
-        evaluate_cost_and_length(_vcp.construction_length, 10)
+        evaluate_cost_and_length(_vcp.construction_length, 999, 10)

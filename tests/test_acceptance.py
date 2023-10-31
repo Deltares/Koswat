@@ -12,6 +12,10 @@ from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.costs.construction_costs_settings import (
+    ConstructionCostsSettings,
+    ConstructionFactors,
+)
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
@@ -152,7 +156,13 @@ class TestAcceptance:
         _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
-        _costs_settings.construction_costs.cb_damwand = None
+        _costs_settings.construction_costs = ConstructionCostsSettings()
+        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
+        _costs_settings.construction_costs.cb_damwand.c_factor = 0
+        _costs_settings.construction_costs.cb_damwand.d_factor = 0
+        _costs_settings.construction_costs.cb_damwand.z_factor = 999
+        _costs_settings.construction_costs.cb_damwand.f_factor = 0
+        _costs_settings.construction_costs.cb_damwand.g_factor = 0
 
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()

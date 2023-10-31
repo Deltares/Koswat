@@ -27,7 +27,7 @@ class KoswatCostsSettings(KoswatConfigProtocol):
         self.dike_profile_costs = None
         self.infrastructure_costs = None
         self.surtax_costs = None
-        self.construction_costs = ConstructionCostsSettings()
+        self.construction_costs = None
 
     def is_valid(self) -> bool:
         return (
