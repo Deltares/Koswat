@@ -13,7 +13,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
-class SummaryCostCsvFomBuilder(BuilderProtocol):
+class SummaryCostsCsvFomBuilder(BuilderProtocol):
     koswat_summary: KoswatSummary
     # Internal readonly properties.
     _volume_surface_key_column = "(volume / surface)"
