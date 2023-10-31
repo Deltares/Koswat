@@ -3,8 +3,8 @@ import shutil
 import pytest
 
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
-from koswat.cost_report.io.csv.summary_cost.summary_cost_csv_exporter import (
-    SummaryCostCsvExporter,
+from koswat.cost_report.io.csv.summary_costs.summary_costs_csv_exporter import (
+    SummaryCostsCsvExporter,
 )
 
 
@@ -13,10 +13,10 @@ from tests import test_results
 from tests.cost_report.io.csv import valid_mocked_summary
 
 
-class TestSummaryCostCsvExporter:
+class TestSummaryCostsCsvExporter:
     def test_initialize(self):
-        _exporter = SummaryCostCsvExporter()
-        assert isinstance(_exporter, SummaryCostCsvExporter)
+        _exporter = SummaryCostsCsvExporter()
+        assert isinstance(_exporter, SummaryCostsCsvExporter)
         assert isinstance(_exporter, KoswatExporterProtocol)
 
     def test_summary_cost_csv_exporter_export(
@@ -29,7 +29,7 @@ class TestSummaryCostCsvExporter:
             shutil.rmtree(_test_dir)
 
         # 2. Run test
-        SummaryCostCsvExporter().export(valid_mocked_summary, _export_path)
+        SummaryCostsCsvExporter().export(valid_mocked_summary, _export_path)
 
         # 3. Validate results
         assert _export_path.exists()

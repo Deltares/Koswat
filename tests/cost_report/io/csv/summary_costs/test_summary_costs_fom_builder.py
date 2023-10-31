@@ -1,7 +1,7 @@
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.io.csv.summary_cost.summary_cost_csv_fom_builder import (
-    SummaryCostCsvFomBuilder,
+from koswat.cost_report.io.csv.summary_costs.summary_costs_csv_fom_builder import (
+    SummaryCostsCsvFomBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from tests.cost_report.io.csv import valid_mocked_summary
@@ -9,14 +9,14 @@ from tests.cost_report.io.csv import valid_mocked_summary
 
 class TestSummaryCostCsvFomBuilder:
     def test_initialize(self):
-        _builder = SummaryCostCsvFomBuilder()
-        assert isinstance(_builder, SummaryCostCsvFomBuilder)
+        _builder = SummaryCostsCsvFomBuilder()
+        assert isinstance(_builder, SummaryCostsCsvFomBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.koswat_summary
 
     def test_build(self, valid_mocked_summary: KoswatSummary):
         # 1. Define test data.
-        _builder = SummaryCostCsvFomBuilder()
+        _builder = SummaryCostsCsvFomBuilder()
         _builder.koswat_summary = valid_mocked_summary
 
         # 2. Run test
