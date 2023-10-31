@@ -60,7 +60,7 @@ class OrderCluster:
     def extend_cluster(self, other: OrderCluster):
         """
         Extends the current cluster with the reinforcements
-        (`list[StrategyLocationReinforcemetn]`) from another cluster.
+        (`list[StrategyLocationReinforcement]`) from another cluster.
         Modifies the `selected_measure` property of those measures being merged but it
         does not remove them from their source cluster.
 

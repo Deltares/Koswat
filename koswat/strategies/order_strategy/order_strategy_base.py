@@ -1,7 +1,11 @@
 import abc
 from itertools import groupby
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import ReinforcementProfileProtocol
-from koswat.strategies.strategy_location_reinforcement import StrategyLocationReinforcement
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
 
 
 class OrderStrategyBase(abc.ABC):
@@ -17,7 +21,9 @@ class OrderStrategyBase(abc.ABC):
                 lambda x: x.selected_measure,
             )
         )
-    
+
     @abc.abstractmethod
-    def apply(self, location_reinforcements: list[StrategyLocationReinforcement]) -> None:
+    def apply(
+        self, location_reinforcements: list[StrategyLocationReinforcement]
+    ) -> None:
         pass
