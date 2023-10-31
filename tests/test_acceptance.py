@@ -280,11 +280,7 @@ class TestAcceptance:
         _reference_dir = _export_path_dir.joinpath("reference")
         assert _export_summary_costs_path.exists()
 
-        # For now we do not compare the last rows containing info
-        # related to the selected measure.
-        _csv_summary_costs_lines = _export_summary_costs_path.read_text().splitlines()[
-            :-2
-        ]
+        _csv_summary_costs_lines = _export_summary_costs_path.read_text().splitlines()
         _csv_reference_lines = (
             _reference_dir.joinpath(_export_summary_costs_path.name)
             .read_text()
