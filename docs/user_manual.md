@@ -31,6 +31,7 @@ from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
+from koswat.cost_report.io.summary.koswat_summary_exporter import KoswatSummaryExporter
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
 )
@@ -106,7 +107,7 @@ _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
 _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
 _summary = _multi_loc_multi_prof_cost_builder.build()
 
-SummaryMatrixCsvExporter().export(_summary, _output_dir / "matrix_results.csv")
+KoswatSummaryExporter().export(_summary, _output_dir)
 
 # 3. Generate plots
 assert isinstance(_summary, KoswatSummary)
