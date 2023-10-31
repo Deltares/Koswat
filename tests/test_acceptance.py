@@ -35,7 +35,7 @@ from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings
     KoswatStabilityWallSettings,
 )
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.cost_report.io.csv.koswat_summary_exporter import (
+from koswat.cost_report.io.summary.koswat_summary_exporter import (
     KoswatSummaryExporter,
 )
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (

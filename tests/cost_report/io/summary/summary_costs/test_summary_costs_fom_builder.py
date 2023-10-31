@@ -1,10 +1,10 @@
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.io.csv.summary_costs.summary_costs_csv_fom_builder import (
+from koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder import (
     SummaryCostsCsvFomBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-from tests.cost_report.io.csv import valid_mocked_summary
+from tests.cost_report.io.summary import valid_mocked_summary
 
 
 class TestSummaryCostCsvFomBuilder:

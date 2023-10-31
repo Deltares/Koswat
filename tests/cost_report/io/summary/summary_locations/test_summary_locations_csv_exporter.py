@@ -3,12 +3,12 @@ import shutil
 import pytest
 
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
-from koswat.cost_report.io.csv.summary_locations.summary_locations_csv_exporter import (
+from koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter import (
     SummaryLocationsCsvExporter,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from tests import test_results
-from tests.cost_report.io.csv import valid_mocked_summary
+from tests.cost_report.io.summary import valid_mocked_summary
 
 
 class TestSummaryLocationsCsvExporter:
