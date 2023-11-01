@@ -140,7 +140,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
 
             _cost_key = f"{_parameter_name} {self._cost_key_column}:"
             csv_dictionary[_cost_key].append(
-                round(_vc_parameter.total_cost(), self._decimals)
+                round(_vc_parameter.total_cost, self._decimals)
                 if _vc_parameter
                 else math.nan
             )

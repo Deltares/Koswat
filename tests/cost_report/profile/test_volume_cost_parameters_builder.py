@@ -202,7 +202,7 @@ class TestVolumeCostParametersBuilder:
             expected_cost: float,
             expected_length: float,
         ):
-            assert lcp_param.total_cost() == pytest.approx(expected_cost, 0.01)
+            assert lcp_param.total_cost == pytest.approx(expected_cost, 0.01)
             assert lcp_param.volume == pytest.approx(expected_length, 0.01)
 
         assert isinstance(_vcp, VolumeCostParameters)
