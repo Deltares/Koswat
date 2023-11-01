@@ -11,11 +11,13 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protoco
 class LayerCostReport(CostReportProtocol):
     layer: ReinforcementLayerProtocol
     total_cost: float
+    total_cost_with_surtax: float
     total_volume: float
 
     def __init__(self) -> None:
         self.layer = None
         self.total_cost = math.nan
+        self.total_cost_with_surtax = math.nan
         self.total_volume = math.nan
 
     @property

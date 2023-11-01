@@ -18,7 +18,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
     # Internal readonly properties.
     _quantity_key_column = "(quantity)"
     _cost_key_column = "(cost)"
-    _cost_with_surtax_key_column = "(cost incl. surtax)"
+    _cost_with_surtax_key_column = "(cost incl surtax)"
     _decimals = 2
 
     def __init__(self) -> None:
@@ -36,6 +36,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
 
         _profile_type_key = "Profile type"
         _cost_per_km_key = "Cost per km (Euro/km)"
+        _cost_per_km_incl_surtax_key = "Cost per km incl surtax (Euro/km)"
 
         _dict_of_entries = defaultdict(list)
         for _loc_prof_report in self.koswat_summary.locations_profile_report_list:
@@ -43,6 +44,9 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
                 _loc_prof_report.profile_type_name
             )
             _dict_of_entries[_cost_per_km_key].append(_loc_prof_report.cost_per_km)
+            _dict_of_entries[_cost_per_km_incl_surtax_key].append(
+                _loc_prof_report.cost_with_surtax_per_km
+            )
             self._get_volume_cost_parameters(
                 _loc_prof_report.profile_cost_report.volume_cost_parameters.__dict__,
                 _dict_of_entries,
@@ -52,7 +56,11 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             logging.error("No entries generated for the CSV Matrix.")
             return _csv_fom
 
-        _cost_per_km_rows = [[_cost_per_km_key] + _dict_of_entries[_cost_per_km_key]]
+        _cost_per_km_rows = [
+            [_cost_per_km_key] + _dict_of_entries[_cost_per_km_key],
+            [_cost_per_km_incl_surtax_key]
+            + _dict_of_entries[_cost_per_km_incl_surtax_key],
+        ]
         _quantity_costs_rows = self.dict_to_csv_row(
             dict(
                 filter(
@@ -148,6 +156,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _vc_parameter,
         ) in vc_parameters.items():
             _parameter_name = _format_parameter_name(_parameter_name)
+
             _volume_key = f"{_parameter_name} {self._quantity_key_column}:"
             csv_dictionary[_volume_key].append(
                 round(_vc_parameter.volume, self._decimals)

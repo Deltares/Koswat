@@ -25,20 +25,8 @@ from koswat.configuration.settings.costs.koswat_costs_settings import (
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
-    KoswatCofferdamSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
-    KoswatPipingWallSettings,
-)
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
-    KoswatSoilSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
 )
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (

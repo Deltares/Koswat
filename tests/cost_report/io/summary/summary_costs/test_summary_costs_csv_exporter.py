@@ -34,28 +34,41 @@ class TestSummaryCostsCsvExporter:
         _read_text = _export_path.read_text()
         _expected_text = """Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand
 Cost per km (Euro/km);0.0;8144.4;16288.8;24433.2
+Cost per km incl surtax (Euro/km);0.0;12216.599999999999;24433.199999999997;36649.8
+New grass volume (quantity):;nan;nan;nan;nan
+New grass volume (cost):;nan;nan;nan;nan
+New grass volume (cost incl surtax):;nan;nan;nan;nan
+New clay volume (quantity):;nan;nan;nan;nan
+New clay volume (cost):;nan;nan;nan;nan
+New clay volume (cost incl surtax):;nan;nan;nan;nan
+New core volume (quantity):;nan;nan;nan;nan
+New core volume (cost):;nan;nan;nan;nan
+New core volume (cost incl surtax):;nan;nan;nan;nan
 Reused grass volume (quantity):;nan;nan;nan;nan
 Reused grass volume (cost):;nan;nan;nan;nan
-Aanleg grass volume (quantity):;nan;nan;nan;nan
-Aanleg grass volume (cost):;nan;nan;nan;nan
-Aanleg clay volume (quantity):;nan;nan;nan;nan
-Aanleg clay volume (cost):;nan;nan;nan;nan
+Reused grass volume (cost incl surtax):;nan;nan;nan;nan
 Reused core volume (quantity):;nan;nan;nan;nan
 Reused core volume (cost):;nan;nan;nan;nan
-Aanleg core volume (quantity):;nan;nan;nan;nan
-Aanleg core volume (cost):;nan;nan;nan;nan
+Reused core volume (cost incl surtax):;nan;nan;nan;nan
 Removed material volume (quantity):;nan;nan;nan;nan
 Removed material volume (cost):;nan;nan;nan;nan
+Removed material volume (cost incl surtax):;nan;nan;nan;nan
 New grass layer surface (quantity):;nan;nan;nan;nan
 New grass layer surface (cost):;nan;nan;nan;nan
+New grass layer surface (cost incl surtax):;nan;nan;nan;nan
 New clay layer surface (quantity):;nan;nan;nan;nan
 New clay layer surface (cost):;nan;nan;nan;nan
+New clay layer surface (cost incl surtax):;nan;nan;nan;nan
 New core layer surface (quantity):;nan;nan;nan;nan
 New core layer surface (cost):;nan;nan;nan;nan
+New core layer surface (cost incl surtax):;nan;nan;nan;nan
 New maaiveld surface (quantity):;nan;nan;nan;nan
 New maaiveld surface (cost):;nan;nan;nan;nan
+New maaiveld surface (cost incl surtax):;nan;nan;nan;nan
 Construction length (quantity):;nan;nan;nan;nan
 Construction length (cost):;nan;nan;nan;nan
+Construction length (cost incl surtax):;nan;nan;nan;nan
 Total measure meters;0;1;1;2
-Total measure cost;0.0;8.1444;16.2888;48.8664;73.2996"""
+Total measure cost;0.0;8.1444;16.2888;48.8664;73.2996
+Total measure cost incl surtax;0.0;12.216599999999998;24.433199999999996;73.29960000000001;109.9494"""
         assert _expected_text == _read_text

@@ -27,8 +27,10 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 class MockSummary(MultiLocationProfileCostReport):
     total_cost = 42000
+    total_cost_with_surtax = 63000
     profile_type: str = ""
     cost_per_km = 42
+    cost_with_surtax_per_km = 63
 
 
 class MockLayerReport:
@@ -65,6 +67,7 @@ def _create_report(
     _required_klei = 2.4 * selected_locations
     _required_zand = 4.2 * selected_locations
     _report.cost_per_km = (_required_klei + _required_zand) * 1234
+    _report.cost_with_surtax_per_km = _report.cost_per_km * 1.5
     _report.profile_cost_report = ProfileCostReport()
     _report.profile_cost_report.reinforced_profile = report_type()
     _report.profile_cost_report.layer_cost_reports = [
