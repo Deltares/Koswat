@@ -15,6 +15,7 @@ class ProfileCostReport(CostReportProtocol):
     reinforced_profile: ReinforcementProfileProtocol
     volume_cost_parameters: VolumeCostParameters
     layer_cost_reports: List[LayerCostReport]
+    _decimals = 2
 
     def __init__(self) -> None:
         self.reinforced_profile = None
@@ -26,8 +27,11 @@ class ProfileCostReport(CostReportProtocol):
     def total_cost(self) -> float:
         if not self.volume_cost_parameters:
             return math.nan
-        return sum(
-            vcp.total_cost() for vcp in self.volume_cost_parameters.get_parameters()
+        return round(
+            sum(
+                vcp.total_cost() for vcp in self.volume_cost_parameters.get_parameters()
+            ),
+            self._decimals,
         )
 
     @property
@@ -35,4 +39,7 @@ class ProfileCostReport(CostReportProtocol):
         if not self.volume_cost_parameters:
             return math.nan
         # TODO: This is most likely wrong. Need to be refined (or perhaps removed indeed not needed).
-        return sum(vcp.volume for vcp in self.volume_cost_parameters.get_parameters())
+        return round(
+            sum(vcp.volume for vcp in self.volume_cost_parameters.get_parameters()),
+            self._decimals,
+        )

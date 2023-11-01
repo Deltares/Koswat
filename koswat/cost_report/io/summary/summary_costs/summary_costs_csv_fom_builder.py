@@ -16,8 +16,9 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 class SummaryCostsCsvFomBuilder(BuilderProtocol):
     koswat_summary: KoswatSummary
     # Internal readonly properties.
-    _volume_surface_key_column = "(volume / surface)"
+    _volume_surface_key_column = "(quantity)"
     _cost_key_column = "(cost)"
+    _decimals = 2
 
     def __init__(self) -> None:
         self.koswat_summary = None
@@ -132,10 +133,14 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _parameter_name = _format_parameter_name(_parameter_name)
             _volume_key = f"{_parameter_name} {self._volume_surface_key_column}:"
             csv_dictionary[_volume_key].append(
-                _vc_parameter.volume if _vc_parameter else math.nan
+                round(_vc_parameter.volume, self._decimals)
+                if _vc_parameter
+                else math.nan
             )
 
             _cost_key = f"{_parameter_name} {self._cost_key_column}:"
             csv_dictionary[_cost_key].append(
-                _vc_parameter.total_cost() if _vc_parameter else math.nan
+                round(_vc_parameter.total_cost(), self._decimals)
+                if _vc_parameter
+                else math.nan
             )
