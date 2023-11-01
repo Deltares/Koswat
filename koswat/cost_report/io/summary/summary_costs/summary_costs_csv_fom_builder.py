@@ -72,7 +72,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
 
     def _get_total_meters_per_selected_measure(
         self,
-    ) -> list[tuple[Type[ReinforcementProfileProtocol], float]]:
+    ) -> dict[ReinforcementProfileProtocol, int]:
         # We consider the distance between adjacent locations
         # ALWAYS to be of 1 meter.
         _sorted_reinforcements = sorted(

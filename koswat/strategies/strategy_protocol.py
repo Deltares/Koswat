@@ -8,6 +8,7 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 class StrategyProtocol(Protocol):
     def apply_strategy(
+        self,
         strategy_input: StrategyInput,
     ) -> list[StrategyLocationReinforcement]:
         """
