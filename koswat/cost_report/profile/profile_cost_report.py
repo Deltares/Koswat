@@ -28,9 +28,7 @@ class ProfileCostReport(CostReportProtocol):
         if not self.volume_cost_parameters:
             return math.nan
         return round(
-            sum(
-                vcp.total_cost() for vcp in self.volume_cost_parameters.get_parameters()
-            ),
+            sum(vcp.total_cost for vcp in self.volume_cost_parameters.get_parameters()),
             self._decimals,
         )
 
