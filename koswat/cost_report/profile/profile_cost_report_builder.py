@@ -1,14 +1,7 @@
-from typing import List
-
-from koswat.configuration.settings.costs.koswat_costs_settings import (
-    KoswatCostsSettings,
-)
+from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.profile.layer_cost_report import LayerCostReport
-from koswat.cost_report.profile.profile_cost_report import (
-    LayerCostReport,
-    ProfileCostReport,
-)
+from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameters
 from koswat.cost_report.profile.volume_cost_parameters_builder import (
     VolumeCostParametersBuilder,
@@ -28,7 +21,7 @@ class ProfileCostReportBuilder(BuilderProtocol):
 
     def _get_layers_report(
         self, cost_parameters: VolumeCostParameters
-    ) -> List[LayerCostReport]:
+    ) -> list[LayerCostReport]:
         _reports = []
         for _layer in self.reinforced_profile.layers_wrapper.layers:
             _lcr = LayerCostReport()
