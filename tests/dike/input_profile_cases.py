@@ -14,6 +14,9 @@ default_case = KoswatInputProfileBase.from_dict(
         binnen_berm_hoogte=0,
         binnen_berm_breedte=0,
         binnen_maaiveld=0,
+        grondprijs_bebouwd=150,
+        grondprijs_onbebouwd=10,
+        factor_zetting=1.2,
         pleistoceen=-5,
         aquifer=-2,
     )
