@@ -1,4 +1,3 @@
-import abc
 from configparser import ConfigParser
 
 from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
@@ -80,7 +79,7 @@ class InfrastructureCostsSectionFom(KoswatIniFomProtocol):
         return _section
 
 
-class StoringCostsSectionFomBase(KoswatIniFomProtocol, abc.ABC):
+class SurtaxCostsSectionFom(KoswatIniFomProtocol):
     grond_makkelijk: float
     grond_normaal: float
     grond_moeilijk: float
@@ -112,20 +111,35 @@ class StoringCostsSectionFomBase(KoswatIniFomProtocol, abc.ABC):
         return _section
 
 
-class StoringCostsIncludingTaxesSectionFom(StoringCostsSectionFomBase):
-    pass
+class ConstructionCostsSectionFom(KoswatIniFomProtocol):
+    c_factor: float
+    d_factor: float
+    z_factor: float
+    f_factor: float
+    g_factor: float
 
-
-class StoringCostsExcludingTaxesSectionFom(StoringCostsSectionFomBase):
-    pass
+    @classmethod
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+        _section = cls()
+        _section.c_factor = ini_config.getfloat("c")
+        _section.d_factor = ini_config.getfloat("d")
+        _section.z_factor = ini_config.getfloat("z")
+        _section.f_factor = ini_config.getfloat("f")
+        _section.g_factor = ini_config.getfloat("g")
+        return _section
 
 
 class KoswatCostsIniFom(KoswatIniFomProtocol):
     unit_prices_section: UnitPricesSectionFom
     dike_profile_costs_section: DikeProfileCostsSectionFom
     infrastructure_costs_section: InfrastructureCostsSectionFom
-    storing_costs_incl_tax_section: StoringCostsIncludingTaxesSectionFom
-    storing_costs_excl_tax_section: StoringCostsExcludingTaxesSectionFom
+    surtax_costs_incl_tax_section: SurtaxCostsSectionFom
+    surtax_costs_excl_tax_section: SurtaxCostsSectionFom
+    construction_cost_cb_wall: ConstructionCostsSectionFom
+    construction_cost_damwall_unanchored: ConstructionCostsSectionFom
+    construction_cost_damwall_anchored: ConstructionCostsSectionFom
+    construction_cost_deep_wall: ConstructionCostsSectionFom
+    construction_cost_cofferdam: ConstructionCostsSectionFom
 
     @classmethod
     def from_config(cls, ini_dict: ConfigParser) -> KoswatIniFomProtocol:
@@ -139,14 +153,27 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
         _ini_fom.infrastructure_costs_section = (
             InfrastructureCostsSectionFom.from_config(ini_dict["KostenInfrastructuur"])
         )
-        _ini_fom.storing_costs_incl_tax_section = (
-            StoringCostsIncludingTaxesSectionFom.from_config(
-                ini_dict["KostenOpslagfactorenInclBTW"]
+        _ini_fom.surtax_costs_incl_tax_section = SurtaxCostsSectionFom.from_config(
+            ini_dict["KostenOpslagfactorenInclBTW"]
+        )
+        _ini_fom.surtax_costs_excl_tax_section = SurtaxCostsSectionFom.from_config(
+            ini_dict["KostenOpslagfactorenExclBTW"]
+        )
+        _ini_fom.construction_cost_cb_wall = ConstructionCostsSectionFom.from_config(
+            ini_dict["KostenCBwand"]
+        )
+        _ini_fom.construction_cost_damwall_unanchored = (
+            ConstructionCostsSectionFom.from_config(
+                ini_dict["KostenDamwandOnverankerd"]
             )
         )
-        _ini_fom.storing_costs_excl_tax_section = (
-            StoringCostsExcludingTaxesSectionFom.from_config(
-                ini_dict["KostenOpslagfactorenExclBTW"]
-            )
+        _ini_fom.construction_cost_damwall_anchored = (
+            ConstructionCostsSectionFom.from_config(ini_dict["KostenDamwandVerankerd"])
+        )
+        _ini_fom.construction_cost_deep_wall = ConstructionCostsSectionFom.from_config(
+            ini_dict["KostenDiepwand"]
+        )
+        _ini_fom.construction_cost_cofferdam = ConstructionCostsSectionFom.from_config(
+            ini_dict["KostenKistdam"]
         )
         return _ini_fom

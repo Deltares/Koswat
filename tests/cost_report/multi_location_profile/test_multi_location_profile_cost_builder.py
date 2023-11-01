@@ -1,6 +1,8 @@
 from shapely.geometry import Point
 
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
 )
@@ -32,7 +34,7 @@ class TestMultiLocationProfileCostReportBuilder:
         # 1. Define test data.
         _builder = MultiLocationProfileCostReportBuilder()
         _builder.surroundings = SurroundingsWrapper()
-        _builder.koswat_costs = KoswatCostsSettings()
+        _builder.koswat_costs_settings = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_surroundings = []
         _p_surrounding.location = Point(2.4, 4.2)

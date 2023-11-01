@@ -1,11 +1,19 @@
 import pytest
 
+from koswat.configuration.settings.costs.construction_costs_settings import (
+    ConstructionCostsSettings,
+    ConstructionFactors,
+)
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
+    LengthCostParameter,
     VolumeCostParameter,
     VolumeCostParameters,
 )
@@ -40,23 +48,23 @@ class TestVolumeCostParametersBuilder:
         assert isinstance(_builder, VolumeCostParametersBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert _builder.reinforced_profile is None
-        assert _builder.koswat_costs is None
+        assert _builder.koswat_costs_settings is None
 
     def test_no_reinforced_profile_raises(self):
         _expected_mssg = "No reinforced profile provided."
         with pytest.raises(ValueError) as exc_value:
             _builder = VolumeCostParametersBuilder()
-            _builder.koswat_costs = None
+            _builder.koswat_costs_settings = None
             _builder.reinforced_profile = None
             _builder.build()
 
         assert str(exc_value.value) == _expected_mssg
 
     def test_no_koswat_costs_raises(self):
-        _expected_mssg = "No koswat costs provided."
+        _expected_mssg = "No koswat costs settings provided."
         with pytest.raises(ValueError) as exc_value:
             _builder = VolumeCostParametersBuilder()
-            _builder.koswat_costs = None
+            _builder.koswat_costs_settings = None
             _builder.reinforced_profile = 42
             _builder.build()
 
@@ -95,6 +103,7 @@ class TestVolumeCostParametersBuilder:
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcementInput(ReinforcementInputProfileProtocol):
             construction_length: float = 0
+            construction_type: ConstructionTypeEnum = None
 
         class MockedReinforcement(StandardReinforcementProfile):
             output_name: str = "Mocked reinforcement"
@@ -143,6 +152,9 @@ class TestVolumeCostParametersBuilder:
         _builder = VolumeCostParametersBuilder()
         _builder.reinforced_profile = self._get_mocked_reinforcement()
         _builder.reinforced_profile.input_data.construction_length = 10
+        _builder.reinforced_profile.input_data.construction_type = (
+            ConstructionTypeEnum.CB_DAMWAND
+        )
 
         # Set layers wrapper
         _wrapper = ReinforcementLayersWrapper()
@@ -152,21 +164,28 @@ class TestVolumeCostParametersBuilder:
         _grass_layer = self._get_mocked_layer(KoswatMaterialType.GRASS, 4.8, 8.4)
         _wrapper.coating_layers = [_clay_layer, _grass_layer]
 
-        # Set default dike profile costs.
-        _costs = KoswatCostsSettings()
-        _builder.koswat_costs = _costs
+        # Set default dike profile costs settings.
+        _costs_settings = KoswatCostsSettings()
+        _builder.koswat_costs_settings = _costs_settings
 
-        _costs.dike_profile_costs = DikeProfileCostsSettings()
-        _costs.dike_profile_costs.added_layer_grass_m3 = 12.44
-        _costs.dike_profile_costs.added_layer_clay_m3 = 18.05
-        _costs.dike_profile_costs.added_layer_sand_m3 = 10.98
-        _costs.dike_profile_costs.reused_layer_grass_m3 = 6.04
-        _costs.dike_profile_costs.reused_layer_core_m3 = 4.67
-        _costs.dike_profile_costs.disposed_material_m3 = 7.07
-        _costs.dike_profile_costs.profiling_layer_grass_m2 = 0.88
-        _costs.dike_profile_costs.profiling_layer_clay_m2 = 0.65
-        _costs.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _costs.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.dike_profile_costs = DikeProfileCostsSettings()
+        _costs_settings.dike_profile_costs.added_layer_grass_m3 = 12.44
+        _costs_settings.dike_profile_costs.added_layer_clay_m3 = 18.05
+        _costs_settings.dike_profile_costs.added_layer_sand_m3 = 10.98
+        _costs_settings.dike_profile_costs.reused_layer_grass_m3 = 6.04
+        _costs_settings.dike_profile_costs.reused_layer_core_m3 = 4.67
+        _costs_settings.dike_profile_costs.disposed_material_m3 = 7.07
+        _costs_settings.dike_profile_costs.profiling_layer_grass_m2 = 0.88
+        _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
+        _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
+        _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.construction_costs = ConstructionCostsSettings()
+        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
+        _costs_settings.construction_costs.cb_damwand.c_factor = 0
+        _costs_settings.construction_costs.cb_damwand.d_factor = 0
+        _costs_settings.construction_costs.cb_damwand.z_factor = 999
+        _costs_settings.construction_costs.cb_damwand.f_factor = 0
+        _costs_settings.construction_costs.cb_damwand.g_factor = 0
 
         # 2. Run test
         _vcp = _builder.build()
@@ -177,6 +196,14 @@ class TestVolumeCostParametersBuilder:
         ):
             assert vcp_param.cost == pytest.approx(expected_cost, 0.01)
             assert vcp_param.volume == pytest.approx(expected_volume, 0.01)
+
+        def evaluate_cost_and_length(
+            lcp_param: LengthCostParameter,
+            expected_cost: float,
+            expected_length: float,
+        ):
+            assert lcp_param.total_cost() == pytest.approx(expected_cost, 0.01)
+            assert lcp_param.volume == pytest.approx(expected_length, 0.01)
 
         assert isinstance(_vcp, VolumeCostParameters)
         evaluate_cost_and_volume(_vcp.reused_grass_volume, 6.04, 4.8)
@@ -189,5 +216,4 @@ class TestVolumeCostParametersBuilder:
         evaluate_cost_and_volume(_vcp.new_core_layer_surface, 0.6, 2.1)
         evaluate_cost_and_volume(_vcp.new_maaiveld_surface, 0.25, 42)
         evaluate_cost_and_volume(_vcp.removed_material_volume, 7.07, 1.2)
-        # TODO: Koswat issue #104
-        evaluate_cost_and_volume(_vcp.construction_length, 0, 10)
+        evaluate_cost_and_length(_vcp.construction_length, 999, 10)

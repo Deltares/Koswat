@@ -1,8 +1,9 @@
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from koswat.core.protocols.data_object_model_protocol import DataObjectModelProtocol
 
 
+@runtime_checkable
 class KoswatConfigProtocol(DataObjectModelProtocol, Protocol):
     def is_valid(self) -> bool:
         """

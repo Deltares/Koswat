@@ -1,12 +1,15 @@
 import logging
-from typing import Union
 
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
+    LengthCostParameter,
     VolumeCostParameter,
     VolumeCostParameters,
 )
@@ -21,27 +24,27 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 
 class VolumeCostParametersBuilder(BuilderProtocol):
     reinforced_profile: ReinforcementProfileProtocol
-    koswat_costs: KoswatCostsSettings
+    koswat_costs_settings: KoswatCostsSettings
 
     def __init__(self) -> None:
         self.reinforced_profile = None
-        self.koswat_costs = None
+        self.koswat_costs_settings = None
 
     def build(self) -> VolumeCostParameters:
         if not self.reinforced_profile:
             raise ValueError("No reinforced profile provided.")
-        if not self.koswat_costs:
-            raise ValueError("No koswat costs provided.")
+        if not self.koswat_costs_settings:
+            raise ValueError("No koswat costs settings provided.")
 
         _volume_parameters = VolumeCostParameters()
         self._set_volume_cost_parameters(
-            _volume_parameters, self.koswat_costs.dike_profile_costs
+            _volume_parameters, self.koswat_costs_settings.dike_profile_costs
         )
         return _volume_parameters
 
     def _get_volume_cost_calculator(
         self,
-    ) -> Union[VolumeCostParametersCalculator, None]:
+    ) -> VolumeCostParametersCalculator | None:
         _calculator = VolumeCostParametersCalculator()
         if len(self.reinforced_profile.layers_wrapper.layers) != 3:
             logging.error(
@@ -71,6 +74,9 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         _calculator.construction_length = (
             self.reinforced_profile.input_data.construction_length
         )
+        _calculator.construction_type = (
+            self.reinforced_profile.input_data.construction_type
+        )
         return _calculator
 
     def _get_volume_cost_parameter(
@@ -80,6 +86,22 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         _vp.volume = volume
         _vp.cost = cost
         return _vp
+
+    def _get_construction_cost_parameter(
+        self, length: float, construction_type: ConstructionTypeEnum
+    ) -> LengthCostParameter:
+        _lp = LengthCostParameter()
+        _lp.volume = length
+        if not self.koswat_costs_settings.construction_costs:
+            _lp.factors = None
+        else:
+            _lp.factors = (
+                self.koswat_costs_settings.construction_costs.get_construction_factors(
+                    construction_type
+                )
+            )
+
+        return _lp
 
     def _set_volume_cost_parameters(
         self,
@@ -119,8 +141,7 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         vc_parameters.new_maaiveld_surface = self._get_volume_cost_parameter(
             _vcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
         )
-        # TODO: KOSWAT issue #104
-        vc_parameters.construction_length = self._get_volume_cost_parameter(
-            _vcp.construction_length, 0
+        vc_parameters.construction_length = self._get_construction_cost_parameter(
+            _vcp.construction_length, _vcp.construction_type
         )
         return vc_parameters

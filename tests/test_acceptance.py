@@ -12,10 +12,16 @@ from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
 )
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.costs.construction_costs_settings import (
+    ConstructionCostsSettings,
+    ConstructionFactors,
+)
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -106,12 +112,7 @@ class TestAcceptance:
         assert _csv_surroundings_file.is_file()
         assert _shp_trajects_file.is_file()
 
-        _reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _reinforcement_settings = KoswatReinforcementSettings()
         _surroundings_importer = KoswatSurroundingsImporter()
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
@@ -141,20 +142,27 @@ class TestAcceptance:
         _run_settings.reinforcement_settings = _reinforcement_settings
         _run_settings.surroundings = _surroundings
         _run_settings.input_profile_case = _base_koswat_profile
-        _costs = KoswatCostsSettings()
-        _run_settings.costs = _costs
-        # Set default dike profile costs.
-        _costs.dike_profile_costs = DikeProfileCostsSettings()
-        _costs.dike_profile_costs.added_layer_grass_m3 = 12.44
-        _costs.dike_profile_costs.added_layer_clay_m3 = 18.05
-        _costs.dike_profile_costs.added_layer_sand_m3 = 10.98
-        _costs.dike_profile_costs.reused_layer_grass_m3 = 6.04
-        _costs.dike_profile_costs.reused_layer_core_m3 = 4.67
-        _costs.dike_profile_costs.disposed_material_m3 = 7.07
-        _costs.dike_profile_costs.profiling_layer_grass_m2 = 0.88
-        _costs.dike_profile_costs.profiling_layer_clay_m2 = 0.65
-        _costs.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _costs.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings = KoswatCostsSettings()
+        _run_settings.costs_setting = _costs_settings
+        # Set default dike profile costs_setting.
+        _costs_settings.dike_profile_costs = DikeProfileCostsSettings()
+        _costs_settings.dike_profile_costs.added_layer_grass_m3 = 12.44
+        _costs_settings.dike_profile_costs.added_layer_clay_m3 = 18.05
+        _costs_settings.dike_profile_costs.added_layer_sand_m3 = 10.98
+        _costs_settings.dike_profile_costs.reused_layer_grass_m3 = 6.04
+        _costs_settings.dike_profile_costs.reused_layer_core_m3 = 4.67
+        _costs_settings.dike_profile_costs.disposed_material_m3 = 7.07
+        _costs_settings.dike_profile_costs.profiling_layer_grass_m2 = 0.88
+        _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
+        _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
+        _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.construction_costs = ConstructionCostsSettings()
+        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
+        _costs_settings.construction_costs.cb_damwand.c_factor = 0
+        _costs_settings.construction_costs.cb_damwand.d_factor = 0
+        _costs_settings.construction_costs.cb_damwand.z_factor = 999
+        _costs_settings.construction_costs.cb_damwand.f_factor = 0
+        _costs_settings.construction_costs.cb_damwand.g_factor = 0
 
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
@@ -224,17 +232,12 @@ class TestAcceptance:
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
-        _run_settings.reinforcement_settings = KoswatReinforcementSettings(
-            soil_settings=KoswatSoilSettings(),
-            piping_wall_settings=KoswatPipingWallSettings(),
-            stability_wall_settings=KoswatStabilityWallSettings(),
-            cofferdam_settings=KoswatCofferdamSettings(),
-        )
+        _run_settings.reinforcement_settings = KoswatReinforcementSettings()
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.surroundings.reinforcement_min_buffer = 10
         _run_settings.surroundings.reinforcement_min_separation = 50
-        _run_settings.costs = KoswatCostsSettings()
-        _run_settings.costs.dike_profile_costs = DikeProfileCostsSettings()
+        _run_settings.costs_setting = KoswatCostsSettings()
+        _run_settings.costs_setting.dike_profile_costs = DikeProfileCostsSettings()
 
         # 2. Run acceptance test case.
         yield _run_settings, _output_dir
