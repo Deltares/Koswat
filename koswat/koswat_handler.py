@@ -11,12 +11,10 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
 from koswat.core.koswat_logger import KoswatLogger
-from koswat.cost_report.io.csv.summary_matrix_csv_exporter import (
-    SummaryMatrixCsvExporter,
-)
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
 )
+from koswat.cost_report.io.summary.koswat_summary_exporter import KoswatSummaryExporter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 
@@ -57,9 +55,8 @@ class KoswatHandler:
             logging.error("No summary was genarted for {}".format(settings.name))
             return
         # Export analysis csv.
-        _export_path = settings.output_dir / "matrix_results.csv"
-        SummaryMatrixCsvExporter().export(summary, _export_path)
-        logging.info("Exported matrix results to: {}".format(_export_path))
+        KoswatSummaryExporter().export(summary, settings.output_dir)
+        logging.info("Exported summary results to: {}".format(settings.output_dir))
 
     def _generate_plots(
         self, settings: KoswatRunScenarioSettings, summary: KoswatSummary

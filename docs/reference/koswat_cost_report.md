@@ -22,7 +22,10 @@ After running a Koswat analysis, several files and directories will be generated
 - Dike section: The selected dike section being analyzed.
 - Generated files: A combination of images and a 'csv' matrix result.
     - Images: Visual description of each of the possible reinforcements being applied.
-    - matrix_result.csv: A csv file containing all the information of the Summary report (and therefore the location, profile and layer report).
+    - summary_costs.csv: A csv file containing all the costs information of the summary.
+        - Represents the Summary, Profile and Layer report.
+    - summary_locations.csv: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
+        - Represents the Location report.
 
 Example using a summarized view of the output tree directory when running the acceptance test `test_main.test_given_valid_input_succeeds`: 
 ```
@@ -35,7 +38,8 @@ acceptance
 |   |   |   |   Grondmaatregel profiel.png
 |   |   |   |   Kistdam.png
 |   |   |   |   Kwelscherm.png
-|   |   |   |   matrix_results.csv
+|   |   |   |   summary_costs.csv
+|   |   |   |   summary_locations.csv
 |   |   |   |   Stabiliteitswand.png
 |   |   |   |
 |   |   |   +-- Grondmaatregel profiel
