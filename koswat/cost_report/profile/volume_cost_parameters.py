@@ -16,7 +16,7 @@ class CostParameterProtocol(Protocol):
     def get_quantity(self) -> float:
         pass
 
-    def get_total_cost(self) -> float:
+    def total_cost(self) -> float:
         pass
 
 

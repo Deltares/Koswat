@@ -1,4 +1,6 @@
-from koswat.configuration.settings.costs.koswat_costs import KoswatCostsSettings
+from koswat.configuration.settings.costs.koswat_costs_settings import (
+    KoswatCostsSettings,
+)
 from koswat.core.protocols import BuilderProtocol
 from koswat.cost_report.profile.layer_cost_report import LayerCostReport
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
