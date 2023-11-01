@@ -6,7 +6,9 @@ from typing import Any, Type
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.profile.volume_cost_parameters import VolumeCostParameter
+from koswat.cost_report.profile.volume_cost_parameters import (
+    CostParameterProtocol,
+)
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -184,7 +186,9 @@ class SummaryMatrixCsvFomBuilder(BuilderProtocol):
         )
 
     def _get_volume_cost_parameters(
-        self, vc_parameters: dict[str, VolumeCostParameter], csv_dictionary: dict
+        self,
+        vc_parameters: dict[str, CostParameterProtocol],
+        csv_dictionary: dict,
     ):
         def _format_parameter_name(dict_name: str) -> str:
             return dict_name.replace("_", " ").capitalize().strip()

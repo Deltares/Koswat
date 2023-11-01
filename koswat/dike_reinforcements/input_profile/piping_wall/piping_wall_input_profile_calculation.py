@@ -1,6 +1,10 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
     KoswatPipingWallSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -21,7 +25,7 @@ class PipingWallInputProfileCalculation(
     ReinforcementInputProfileCalculationProtocol,
 ):
     base_profile: KoswatProfileProtocol
-    piping_wall_settings: KoswatPipingWallSettings
+    reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
 
     def __init__(self) -> None:
@@ -82,6 +86,16 @@ class PipingWallInputProfileCalculation(
         ) / _dividend
         return max(base_data.binnen_talud, _right_side)
 
+    def _determine_construction_type(
+        self, overgang: float, construction_length: float
+    ) -> ConstructionTypeEnum | None:
+        if construction_length == 0:
+            return None
+        elif construction_length <= overgang:
+            return ConstructionTypeEnum.CB_DAMWAND
+        else:
+            return ConstructionTypeEnum.DAMWAND_ONVERANKERD
+
     def _calculate_new_input_profile(
         self,
         base_data: KoswatInputProfileProtocol,
@@ -100,11 +114,14 @@ class PipingWallInputProfileCalculation(
         _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
         _new_data.binnen_berm_breedte = 0
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
-        _soil_binnen_berm_breedte = self.calculate_soil_binnen_berm_breedte(
+        _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
-        _new_data.length_piping_wall = self._calculate_length_piping_wall(
+        _new_data.construction_length = self._calculate_length_piping_wall(
             base_data, piping_wall_settings, _soil_binnen_berm_breedte
+        )
+        _new_data.construction_type = self._determine_construction_type(
+            piping_wall_settings.overgang_cbwand_damwand, _new_data.construction_length
         )
         return _new_data
 

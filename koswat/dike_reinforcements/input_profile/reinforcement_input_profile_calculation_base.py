@@ -9,7 +9,7 @@ class ReinforcementInputProfileCalculationBase(ABC):
     Abstract class to provide common functions to child classes
     """
 
-    def calculate_soil_binnen_berm_breedte(
+    def _calculate_soil_binnen_berm_breedte(
         self,
         old_data: KoswatInputProfileBase,
         new_data: KoswatInputProfileBase,

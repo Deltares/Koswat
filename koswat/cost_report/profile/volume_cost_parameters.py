@@ -1,37 +1,68 @@
 from __future__ import annotations
 
 import math
-from typing import List, Tuple
+from typing import Protocol, runtime_checkable
 
-from koswat.cost_report.profile.volume_cost_parameters_calculator import (
-    VolumeCostParametersCalculator,
+from koswat.configuration.settings.costs.construction_costs_settings import (
+    ConstructionFactors,
 )
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 
 
-class VolumeCostParameter:
+@runtime_checkable
+class CostParameterProtocol(Protocol):
+    cost: float
+
+    def get_quantity(self) -> float:
+        pass
+
+    def get_total_cost(self) -> float:
+        pass
+
+
+class VolumeCostParameter(CostParameterProtocol):
     volume: float
     cost: float
+
+    def get_quantity(self) -> float:
+        return self.volume
 
     def total_cost(self) -> float:
         return self.volume * self.cost
 
 
+class LengthCostParameter(CostParameterProtocol):
+    # TODO rename volume to quantity
+    volume: float
+    factors: ConstructionFactors | None
+
+    def get_quantity(self) -> float:
+        return self.volume
+
+    def total_cost(self) -> float:
+        if not self.factors:
+            return 0
+        # f(x) = cx^2 + dx + z + f*x^g
+        return (
+            self.factors.c_factor * pow(self.volume, 2)
+            + self.factors.d_factor * self.volume
+            + self.factors.z_factor
+            + self.factors.f_factor * pow(self.volume, self.factors.g_factor)
+        )
+
+
 class VolumeCostParameters:
-    reused_grass_volume: VolumeCostParameter
-    aanleg_grass_volume: VolumeCostParameter
-    aanleg_clay_volume: VolumeCostParameter
-    reused_core_volume: VolumeCostParameter
-    aanleg_core_volume: VolumeCostParameter
-    removed_material_volume: VolumeCostParameter
-    new_grass_layer_surface: VolumeCostParameter
-    new_clay_layer_surface: VolumeCostParameter
-    new_core_layer_surface: VolumeCostParameter
-    new_maaiveld_surface: VolumeCostParameter
-    construction_length: VolumeCostParameter
+    reused_grass_volume: CostParameterProtocol
+    aanleg_grass_volume: CostParameterProtocol
+    aanleg_clay_volume: CostParameterProtocol
+    reused_core_volume: CostParameterProtocol
+    aanleg_core_volume: CostParameterProtocol
+    removed_material_volume: CostParameterProtocol
+    new_grass_layer_surface: CostParameterProtocol
+    new_clay_layer_surface: CostParameterProtocol
+    new_core_layer_surface: CostParameterProtocol
+    new_maaiveld_surface: CostParameterProtocol
+    construction_length: CostParameterProtocol
 
     def __init__(self) -> None:
         self.reused_grass_volume = None
@@ -46,14 +77,17 @@ class VolumeCostParameters:
         self.new_maaiveld_surface = None
         self.construction_length = None
 
-    def get_parameters(self) -> List[VolumeCostParameter]:
+    def get_parameters(self) -> list[CostParameterProtocol]:
         return list(
-            filter(lambda x: isinstance(x, VolumeCostParameter), self.__dict__.values())
+            filter(
+                lambda x: isinstance(x, CostParameterProtocol),
+                self.__dict__.values(),
+            )
         )
 
     def get_material_total_volume_parameters(
         self, material_type: KoswatMaterialType
-    ) -> Tuple[float, float]:
+    ) -> tuple[float, float]:
         if material_type == KoswatMaterialType.SAND:
             if not self.aanleg_core_volume:
                 return math.nan, math.nan
@@ -72,62 +106,3 @@ class VolumeCostParameters:
                     material_type.name.capitalize()
                 )
             )
-
-    @classmethod
-    def from_reinforced_profile(
-        cls, reinforced_profile: ReinforcementProfileProtocol
-    ) -> VolumeCostParameters:
-        """
-        Generates a valid instance of `VolumeCostParameters` based on the provided instance of a `ReinforcementProfileProtocol`.
-
-        Args:
-            reinforced_profile (ReinforcementProfileProtocol): Instance containing the base information to be used.
-
-        Returns:
-            VolumeCostParameters: Instance with initialized valid parameters.
-        """
-
-        def _create(volume: float, cost: float) -> VolumeCostParameter:
-            _vp = VolumeCostParameter()
-            _vp.volume = volume
-            _vp.cost = cost
-            return _vp
-
-        _volume_parameters = cls()
-        _vcp = VolumeCostParametersCalculator.from_reinforced_profile(
-            reinforced_profile
-        )
-        if not _vcp:
-            return _volume_parameters
-        _volume_parameters.reused_grass_volume = _create(
-            _vcp.get_reused_grass_volume(), 6.04
-        )
-        _volume_parameters.aanleg_grass_volume = _create(
-            _vcp.get_aanleg_grass_volume(), 12.44
-        )
-        _volume_parameters.aanleg_clay_volume = _create(
-            _vcp.get_aanleg_clay_volume(), 18.05
-        )
-        _volume_parameters.reused_core_volume = _create(
-            _vcp.get_reused_core_volume(), 4.67
-        )
-        _volume_parameters.aanleg_core_volume = _create(
-            _vcp.get_aanleg_core_volume(), 10.98
-        )
-        _volume_parameters.removed_material_volume = _create(
-            _vcp.get_removed_material_volume(), 7.07
-        )
-        _volume_parameters.new_grass_layer_surface = _create(
-            _vcp.new_grass_layer_surface, 0.88
-        )
-        _volume_parameters.new_clay_layer_surface = _create(
-            _vcp.new_clay_layer_surface, 0.65
-        )
-        _volume_parameters.new_core_layer_surface = _create(
-            _vcp.new_core_layer_surface, 0.6
-        )
-        _volume_parameters.new_maaiveld_surface = _create(
-            _vcp.new_maaiveld_surface, 0.25
-        )
-        _volume_parameters.construction_length = _create(_vcp.construction_length, 10)
-        return _volume_parameters
