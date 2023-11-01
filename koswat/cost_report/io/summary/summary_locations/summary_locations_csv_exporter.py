@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
-from koswat.core.io.csv.koswat_csv_writer import KoswatCsvWriter
 
+from koswat.core.io.csv.koswat_csv_writer import KoswatCsvWriter
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder import (
     SummaryLocationsCsvFomBuilder,

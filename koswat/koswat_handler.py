@@ -11,12 +11,10 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
 from koswat.core.koswat_logger import KoswatLogger
-from koswat.cost_report.io.summary.koswat_summary_exporter import (
-    KoswatSummaryExporter,
-)
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
 )
+from koswat.cost_report.io.summary.koswat_summary_exporter import KoswatSummaryExporter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 

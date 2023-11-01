@@ -6,8 +6,6 @@ from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter import (
     SummaryCostsCsvExporter,
 )
-
-
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from tests import test_results
 from tests.cost_report.io.summary import valid_mocked_summary
