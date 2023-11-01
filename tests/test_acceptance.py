@@ -236,6 +236,16 @@ class TestAcceptance:
         _run_settings.surroundings.reinforcement_min_separation = 50
         _run_settings.costs_setting = KoswatCostsSettings()
         _run_settings.costs_setting.dike_profile_costs = DikeProfileCostsSettings()
+        _run_settings.costs_setting.dike_profile_costs.added_layer_grass_m3 = 12.44
+        _run_settings.costs_setting.dike_profile_costs.added_layer_clay_m3 = 18.05
+        _run_settings.costs_setting.dike_profile_costs.added_layer_sand_m3 = 10.98
+        _run_settings.costs_setting.dike_profile_costs.reused_layer_grass_m3 = 6.04
+        _run_settings.costs_setting.dike_profile_costs.reused_layer_core_m3 = 4.67
+        _run_settings.costs_setting.dike_profile_costs.disposed_material_m3 = 7.07
+        _run_settings.costs_setting.dike_profile_costs.profiling_layer_grass_m2 = 0.88
+        _run_settings.costs_setting.dike_profile_costs.profiling_layer_clay_m2 = 0.65
+        _run_settings.costs_setting.dike_profile_costs.profiling_layer_sand_m2 = 0.60
+        _run_settings.costs_setting.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
 
         # 2. Run acceptance test case.
         yield _run_settings, _output_dir
