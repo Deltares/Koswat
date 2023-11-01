@@ -94,22 +94,12 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         _lp.volume = length
         if not self.koswat_costs_settings.construction_costs:
             _lp.factors = None
-        elif construction_type == ConstructionTypeEnum.CB_DAMWAND:
-            _lp.factors = self.koswat_costs_settings.construction_costs.cb_damwand
-        elif construction_type == ConstructionTypeEnum.DAMWAND_ONVERANKERD:
-            _lp.factors = (
-                self.koswat_costs_settings.construction_costs.damwand_onverankerd
-            )
-        elif construction_type == ConstructionTypeEnum.DAMWAND_VERANKERD:
-            _lp.factors = (
-                self.koswat_costs_settings.construction_costs.damwand_verankerd
-            )
-        elif construction_type == ConstructionTypeEnum.DIEPWAND:
-            _lp.factors = self.koswat_costs_settings.construction_costs.diepwand
-        elif construction_type == ConstructionTypeEnum.KISTDAM:
-            _lp.factors = self.koswat_costs_settings.construction_costs.kistdam
         else:
-            _lp.factors = None
+            _lp.factors = (
+                self.koswat_costs_settings.construction_costs.get_construction_factors(
+                    construction_type
+                )
+            )
 
         return _lp
 

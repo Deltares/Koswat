@@ -1,4 +1,7 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
@@ -17,6 +20,7 @@ class SoilInputProfileCalculation(
     ReinforcementInputProfileCalculationProtocol,
 ):
     base_profile: KoswatProfileProtocol
+    reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
 
     def __init__(self) -> None:

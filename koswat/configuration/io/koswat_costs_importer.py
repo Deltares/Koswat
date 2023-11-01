@@ -3,7 +3,10 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from koswat.configuration.io.ini.koswat_costs_ini_fom import KoswatCostsIniFom
+from koswat.configuration.io.ini.koswat_costs_ini_fom import (
+    ConstructionCostsSectionFom,
+    KoswatCostsIniFom,
+)
 from koswat.configuration.settings.costs.construction_costs_settings import (
     ConstructionFactors,
 )
@@ -148,25 +151,32 @@ class KoswatCostsImporter(KoswatImporterProtocol):
     def _get_construction_costs(
         self, fom_costs: KoswatCostsIniFom
     ) -> ConstructionCostsSettings:
+        def _construction_fom_to_construction_factor(
+            ini_fom: ConstructionCostsSectionFom,
+        ) -> ConstructionFactors:
+            _construction_factors = ConstructionFactors()
+            _construction_factors.c_factor = ini_fom.c_factor
+            _construction_factors.d_factor = ini_fom.d_factor
+            _construction_factors.z_factor = ini_fom.z_factor
+            _construction_factors.f_factor = ini_fom.f_factor
+            _construction_factors.g_factor = ini_fom.g_factor
+            return _construction_factors
+
         _settings = ConstructionCostsSettings()
-        _settings.cb_damwand = ConstructionFactors()
-        _settings.cb_damwand.__dict__.update(
-            fom_costs.construction_cost_cb_wall.__dict__
+        _settings.cb_damwand = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_cb_wall
         )
-        _settings.damwand_onverankerd = ConstructionFactors()
-        _settings.damwand_onverankerd.__dict__.update(
-            fom_costs.construction_cost_damwall_unanchored.__dict__
+        _settings.damwand_onverankerd = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_cb_wall
         )
-        _settings.damwand_verankerd = ConstructionFactors()
-        _settings.damwand_verankerd.__dict__.update(
-            fom_costs.construction_cost_damwall_anchored.__dict__
+        _settings.damwand_verankerd = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_damwall_anchored
         )
-        _settings.diepwand = ConstructionFactors()
-        _settings.diepwand.__dict__.update(
-            fom_costs.construction_cost_deep_wall.__dict__
+        _settings.diepwand = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_deep_wall
         )
-        _settings.kistdam = ConstructionFactors()
-        _settings.kistdam.__dict__.update(
-            fom_costs.construction_cost_cofferdam.__dict__
+        _settings.kistdam = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_cofferdam
         )
+
         return _settings

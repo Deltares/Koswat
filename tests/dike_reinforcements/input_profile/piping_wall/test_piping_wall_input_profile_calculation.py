@@ -25,7 +25,7 @@ class TestPipingWallInputProfileCalculation:
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
-    def test_calculate_length_piping_wall(self):
+    def test_calculate_length_type_piping_wall(self):
         class MockProfile(KoswatInputProfileProtocol):
             binnen_berm_breedte: float
             binnen_maaiveld: float
@@ -44,13 +44,18 @@ class TestPipingWallInputProfileCalculation:
         _piping_wall_settings = MockSettings()
         _piping_wall_settings.min_lengte_kwelscherm = 0
         _piping_wall_settings.max_lengte_kwelscherm = 99
+        _piping_wall_settings.overgang_cbwand_damwand = 15
         _soil_binnen_berm_breedte = 12.5
         _expected_result = (6.1, ConstructionTypeEnum.CB_DAMWAND)
 
         # 2. Run test.
-        _result = _calculator._calculate_piping_wall(
+        _length = _calculator._calculate_length_piping_wall(
             _profile_data, _piping_wall_settings, _soil_binnen_berm_breedte
         )
+        _type = _calculator._determine_construction_type(
+            _piping_wall_settings.overgang_cbwand_damwand, _length
+        )
+        _result = (_length, _type)
 
         # 3. Verify Expectations.
         assert _result == _expected_result

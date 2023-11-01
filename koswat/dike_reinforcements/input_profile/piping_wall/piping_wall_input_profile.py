@@ -11,7 +11,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 @dataclass
 class PipingWallInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol):
     construction_length: float = math.nan
-    construction_type: ConstructionTypeEnum = None
+    construction_type: ConstructionTypeEnum | None = None
 
     @property
     def reinforcement_domain_name(self) -> str:

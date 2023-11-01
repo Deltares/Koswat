@@ -10,7 +10,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 @dataclass
 class SoilInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol):
     construction_length: float = 0
-    construction_type: ConstructionTypeEnum = None
+    construction_type: ConstructionTypeEnum | None = None
 
     @property
     def reinforcement_domain_name(self) -> str:

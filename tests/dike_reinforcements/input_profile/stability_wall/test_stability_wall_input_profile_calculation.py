@@ -25,7 +25,7 @@ class TestStabilityWallInputProfileCalculation:
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
-    def test_calculate_length_stability_wall(self):
+    def test_calculate_length_type_stability_wall(self):
         class MockInputData(KoswatInputProfileProtocol):
             kruin_hoogte: float
             binnen_maaiveld: float
@@ -46,17 +46,22 @@ class TestStabilityWallInputProfileCalculation:
         _stability_wall_settings = MockSettings()
         _stability_wall_settings.min_lengte_stabiliteitswand = 0
         _stability_wall_settings.max_lengte_stabiliteitswand = 99
+        _stability_wall_settings.overgang_damwand_diepwand = 15
         _soil_binnen_berm_breedte = 12
         _new_kruin_hoogte = 16
-        _expected_result = (22.5, ConstructionTypeEnum.DAMWAND_VERANKERD)
+        _expected_result = (22.5, ConstructionTypeEnum.DIEPWAND)
 
         # 2. Run test.
-        _result = _calculator._calculate_stability_wall(
+        _length = _calculator._calculate_length_stability_wall(
             _input_data,
             _stability_wall_settings,
             _soil_binnen_berm_breedte,
             _new_kruin_hoogte,
         )
+        _type = _calculator._determine_construction_type(
+            _stability_wall_settings.overgang_damwand_diepwand, _length
+        )
+        _result = (_length, _type)
 
         # 3. Verify expectations
         assert _result == _expected_result

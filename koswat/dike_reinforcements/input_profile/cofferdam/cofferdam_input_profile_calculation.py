@@ -1,6 +1,10 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
     KoswatCofferdamSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -21,6 +25,7 @@ class CofferdamInputProfileCalculation(
     ReinforcementInputProfileCalculationProtocol,
 ):
     base_profile: KoswatProfileProtocol
+    reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
 
     def __init__(self) -> None:
@@ -90,6 +95,15 @@ class CofferdamInputProfileCalculation(
             1,
         )
 
+    def _determine_construction_type(
+        self,
+        construction_length: float,
+    ) -> ConstructionTypeEnum | None:
+        if construction_length == 0:
+            return None
+        else:
+            return ConstructionTypeEnum.KISTDAM
+
     def _calculate_new_input_profile(
         self,
         base_data: KoswatInputProfileBase,
@@ -116,6 +130,9 @@ class CofferdamInputProfileCalculation(
             cofferdam_settings,
             _soil_binnen_berm_breedte,
             _new_data.kruin_hoogte,
+        )
+        _new_data.construction_type = self._determine_construction_type(
+            _new_data.construction_length
         )
         return _new_data
 

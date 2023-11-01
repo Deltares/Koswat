@@ -15,7 +15,7 @@ class StabilityWallInputProfile(
     KoswatInputProfileBase, ReinforcementInputProfileProtocol
 ):
     construction_length: float = math.nan
-    construction_type: ConstructionTypeEnum = None
+    construction_type: ConstructionTypeEnum | None = None
 
     @property
     def reinforcement_domain_name(self) -> str:

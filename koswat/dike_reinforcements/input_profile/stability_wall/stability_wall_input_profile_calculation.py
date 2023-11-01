@@ -1,5 +1,8 @@
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
     KoswatStabilityWallSettings,
 )
@@ -22,30 +25,31 @@ class StabilityWallInputProfileCalculation(
     ReinforcementInputProfileCalculationProtocol,
 ):
     base_profile: KoswatProfileProtocol
+    reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
 
     def __init__(self) -> None:
         self.base_profile = None
         self.scenario = None
 
-    def _calculate_stability_wall(
+    def _calculate_length_stability_wall(
         self,
         old_data: KoswatInputProfileProtocol,
         stability_wall_settings: KoswatStabilityWallSettings,
         soil_binnen_berm_breedte: float,
         new_kruin_hoogte: float,
-    ) -> tuple[float, ConstructionTypeEnum]:
+    ) -> float:
         """
         Identical to calculation of Cofferdam
         """
         if soil_binnen_berm_breedte == 0:
             # No wall is needed.
-            return (0, None)
+            return 0
         _length_piping = (
             (soil_binnen_berm_breedte / 6) + (new_kruin_hoogte - 0.5) - old_data.aquifer
         )
         _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistoceen - 1)
-        _new_length = round(
+        return round(
             min(
                 max(
                     _length_piping,
@@ -56,12 +60,6 @@ class StabilityWallInputProfileCalculation(
             ),
             1,
         )
-        if _new_length <= stability_wall_settings.overgang_damwand_diepwand:
-            _construction_type = ConstructionTypeEnum.DAMWAND_VERANKERD
-        else:
-            _construction_type = ConstructionTypeEnum.DIEPWAND
-
-        return _new_length, _construction_type
 
     def _calculate_new_kruin_hoogte(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
@@ -97,6 +95,18 @@ class StabilityWallInputProfileCalculation(
         _right_side = _operand / _dividend
         return max(2, _right_side)
 
+    def _determine_construction_type(
+        self,
+        overgang: float,
+        construction_length: float,
+    ) -> ConstructionTypeEnum | None:
+        if construction_length == 0:
+            return None
+        elif construction_length <= overgang:
+            return ConstructionTypeEnum.DAMWAND_VERANKERD
+        else:
+            return ConstructionTypeEnum.DIEPWAND
+
     def _calculate_new_input_profile(
         self,
         base_data: KoswatInputProfileProtocol,
@@ -118,14 +128,15 @@ class StabilityWallInputProfileCalculation(
         _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
-        (
-            _new_data.construction_length,
-            _new_data.construction_type,
-        ) = self._calculate_stability_wall(
+        _new_data.construction_length = self._calculate_length_stability_wall(
             base_data,
             stability_wall_settings,
             _soil_binnen_berm_breedte,
             _new_data.kruin_hoogte,
+        )
+        _new_data.construction_type = self._determine_construction_type(
+            stability_wall_settings.overgang_damwand_diepwand,
+            _new_data.construction_length,
         )
         return _new_data
 
