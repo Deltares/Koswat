@@ -19,5 +19,8 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     binnen_berm_hoogte: float = math.nan
     binnen_berm_breedte: float = math.nan
     binnen_maaiveld: float = math.nan
+    grondprijs_bebouwd: float = math.nan
+    grondprijs_onbebouwd: float = math.nan
+    factor_zetting: float = math.nan
     pleistoceen: float = math.nan
     aquifer: float = math.nan

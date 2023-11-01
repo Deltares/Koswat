@@ -18,5 +18,8 @@ class KoswatInputProfileProtocol(DataObjectModelProtocol, Protocol):
     binnen_berm_hoogte: float
     binnen_berm_breedte: float
     binnen_maaiveld: float
+    grondprijs_bebouwd: float
+    grondprijs_onbebouwd: float
+    factor_zetting: float
     pleistoceen: float
     aquifer: float
