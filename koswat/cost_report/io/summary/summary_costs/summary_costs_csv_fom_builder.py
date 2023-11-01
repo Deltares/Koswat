@@ -16,7 +16,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 class SummaryCostsCsvFomBuilder(BuilderProtocol):
     koswat_summary: KoswatSummary
     # Internal readonly properties.
-    _volume_surface_key_column = "(quantity)"
+    _quantity_key_column = "(quantity)"
     _cost_key_column = "(cost)"
     _decimals = 2
 
@@ -55,7 +55,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         _volume_costs_rows = self.dict_to_csv_row(
             dict(
                 filter(
-                    lambda x: self._volume_surface_key_column in x[0]
+                    lambda x: self._quantity_key_column in x[0]
                     or self._cost_key_column in x[0],
                     _dict_of_entries.items(),
                 )
@@ -131,7 +131,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _vc_parameter,
         ) in vc_parameters.items():
             _parameter_name = _format_parameter_name(_parameter_name)
-            _volume_key = f"{_parameter_name} {self._volume_surface_key_column}:"
+            _volume_key = f"{_parameter_name} {self._quantity_key_column}:"
             csv_dictionary[_volume_key].append(
                 round(_vc_parameter.volume, self._decimals)
                 if _vc_parameter
