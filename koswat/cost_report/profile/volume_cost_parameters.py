@@ -55,11 +55,11 @@ class LengthCostParameter(CostParameterProtocol):
 
 
 class VolumeCostParameters:
+    new_grass_volume: CostParameterProtocol
+    new_clay_volume: CostParameterProtocol
+    new_core_volume: CostParameterProtocol
     reused_grass_volume: CostParameterProtocol
-    aanleg_grass_volume: CostParameterProtocol
-    aanleg_clay_volume: CostParameterProtocol
     reused_core_volume: CostParameterProtocol
-    aanleg_core_volume: CostParameterProtocol
     removed_material_volume: CostParameterProtocol
     new_grass_layer_surface: CostParameterProtocol
     new_clay_layer_surface: CostParameterProtocol
@@ -68,11 +68,11 @@ class VolumeCostParameters:
     construction_length: CostParameterProtocol
 
     def __init__(self) -> None:
+        self.new_grass_volume = None
+        self.new_clay_volume = None
+        self.new_core_volume = None
         self.reused_grass_volume = None
-        self.aanleg_grass_volume = None
-        self.aanleg_clay_volume = None
         self.reused_core_volume = None
-        self.aanleg_core_volume = None
         self.removed_material_volume = None
         self.new_grass_layer_surface = None
         self.new_clay_layer_surface = None
@@ -92,17 +92,17 @@ class VolumeCostParameters:
         self, material_type: KoswatMaterialType
     ) -> tuple[float, float]:
         if material_type == KoswatMaterialType.SAND:
-            if not self.aanleg_core_volume:
+            if not self.new_core_volume:
                 return math.nan, math.nan
-            return self.aanleg_core_volume.volume, self.aanleg_core_volume.total_cost
+            return self.new_core_volume.volume, self.new_core_volume.total_cost
         elif material_type == KoswatMaterialType.CLAY:
-            if not self.aanleg_clay_volume:
+            if not self.new_clay_volume:
                 return math.nan, math.nan
-            return self.aanleg_clay_volume.volume, self.aanleg_clay_volume.total_cost
+            return self.new_clay_volume.volume, self.new_clay_volume.total_cost
         elif material_type == KoswatMaterialType.GRASS:
-            if not self.aanleg_grass_volume:
+            if not self.new_grass_volume:
                 return math.nan, math.nan
-            return self.aanleg_grass_volume.volume, self.aanleg_grass_volume.total_cost
+            return self.new_grass_volume.volume, self.new_grass_volume.total_cost
         else:
             raise ValueError(
                 "Material {} currently not supported.".format(

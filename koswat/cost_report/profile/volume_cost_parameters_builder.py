@@ -114,16 +114,16 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         vc_parameters.reused_grass_volume = self._get_volume_cost_parameter(
             _vcp.get_reused_grass_volume(), dike_profile_costs.reused_layer_grass_m3
         )
-        vc_parameters.aanleg_grass_volume = self._get_volume_cost_parameter(
+        vc_parameters.new_grass_volume = self._get_volume_cost_parameter(
             _vcp.get_aanleg_grass_volume(), dike_profile_costs.added_layer_grass_m3
         )
-        vc_parameters.aanleg_clay_volume = self._get_volume_cost_parameter(
+        vc_parameters.new_clay_volume = self._get_volume_cost_parameter(
             _vcp.get_aanleg_clay_volume(), dike_profile_costs.added_layer_clay_m3
         )
         vc_parameters.reused_core_volume = self._get_volume_cost_parameter(
             _vcp.get_reused_core_volume(), dike_profile_costs.reused_layer_core_m3
         )
-        vc_parameters.aanleg_core_volume = self._get_volume_cost_parameter(
+        vc_parameters.new_core_volume = self._get_volume_cost_parameter(
             _vcp.get_aanleg_core_volume(), dike_profile_costs.added_layer_sand_m3
         )
         vc_parameters.removed_material_volume = self._get_volume_cost_parameter(
