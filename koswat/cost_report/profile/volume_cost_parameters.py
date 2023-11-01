@@ -16,6 +16,7 @@ class CostParameterProtocol(Protocol):
     def get_quantity(self) -> float:
         pass
 
+    @property
     def total_cost(self) -> float:
         pass
 
@@ -27,6 +28,7 @@ class VolumeCostParameter(CostParameterProtocol):
     def get_quantity(self) -> float:
         return self.volume
 
+    @property
     def total_cost(self) -> float:
         return self.volume * self.cost
 
@@ -39,6 +41,7 @@ class LengthCostParameter(CostParameterProtocol):
     def get_quantity(self) -> float:
         return self.volume
 
+    @property
     def total_cost(self) -> float:
         if not self.factors:
             return 0
