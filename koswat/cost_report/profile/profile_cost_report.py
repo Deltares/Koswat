@@ -33,6 +33,18 @@ class ProfileCostReport(CostReportProtocol):
         )
 
     @property
+    def total_cost_with_surtax(self) -> float:
+        if not self.volume_cost_parameters:
+            return math.nan
+        return round(
+            sum(
+                vcp.total_cost_with_surtax
+                for vcp in self.volume_cost_parameters.get_parameters()
+            ),
+            self._decimals,
+        )
+
+    @property
     def total_volume(self) -> float:
         if not self.volume_cost_parameters:
             return math.nan

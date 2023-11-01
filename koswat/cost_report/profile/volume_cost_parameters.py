@@ -20,6 +20,10 @@ class CostParameterProtocol(Protocol):
     def total_cost(self) -> float:
         pass
 
+    @property
+    def total_cost_with_surtax(self) -> float:
+        pass
+
 
 class VolumeCostParameter(CostParameterProtocol):
     volume: float
@@ -31,6 +35,10 @@ class VolumeCostParameter(CostParameterProtocol):
     @property
     def total_cost(self) -> float:
         return self.volume * self.cost
+
+    @property
+    def total_cost_with_surtax(self) -> float:
+        return self.total_cost  # TODO
 
 
 class LengthCostParameter(CostParameterProtocol):
@@ -52,6 +60,10 @@ class LengthCostParameter(CostParameterProtocol):
             + self.factors.z_factor
             + self.factors.f_factor * pow(self.volume, self.factors.g_factor)
         )
+
+    @property
+    def total_cost_with_surtax(self) -> float:
+        return self.total_cost  # TODO
 
 
 class VolumeCostParameters:

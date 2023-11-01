@@ -22,10 +22,22 @@ class MultiLocationProfileCostReport(CostReportProtocol):
         return self.profile_cost_report.total_cost * 1000
 
     @property
+    def cost_with_surtax_per_km(self) -> float:
+        if not self.profile_cost_report or not self.locations:
+            return math.nan
+        return self.profile_cost_report.total_cost_with_surtax * 1000
+
+    @property
     def total_cost(self) -> float:
         if not self.profile_cost_report or not self.locations:
             return math.nan
         return self.profile_cost_report.total_cost * len(self.locations)
+
+    @property
+    def total_cost_with_surtax(self) -> float:
+        if not self.profile_cost_report or not self.locations:
+            return math.nan
+        return self.profile_cost_report.total_cost_with_surtax * len(self.locations)
 
     @property
     def total_volume(self) -> float:

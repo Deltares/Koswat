@@ -18,6 +18,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
     # Internal readonly properties.
     _quantity_key_column = "(quantity)"
     _cost_key_column = "(cost)"
+    _cost_with_surtax_key_column = "(cost incl. surtax)"
     _decimals = 2
 
     def __init__(self) -> None:
@@ -52,11 +53,12 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             return _csv_fom
 
         _cost_per_km_rows = [[_cost_per_km_key] + _dict_of_entries[_cost_per_km_key]]
-        _volume_costs_rows = self.dict_to_csv_row(
+        _quantity_costs_rows = self.dict_to_csv_row(
             dict(
                 filter(
                     lambda x: self._quantity_key_column in x[0]
-                    or self._cost_key_column in x[0],
+                    or self._cost_key_column in x[0]
+                    or self._cost_with_surtax_key_column in x[0],
                     _dict_of_entries.items(),
                 )
             ),
@@ -67,7 +69,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
 
         _csv_fom.headers = [_profile_type_key] + _dict_of_entries[_profile_type_key]
         _csv_fom.entries = (
-            _cost_per_km_rows + _volume_costs_rows + _selected_measure_cost_rows
+            _cost_per_km_rows + _quantity_costs_rows + _selected_measure_cost_rows
         )
         return _csv_fom
 
@@ -97,8 +99,9 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         ]
 
     def _get_cost_per_selected_measure(self) -> dict:
-        _total_measure_cost_key = "Total measure cost"
         _total_measure_meters_key = "Total measure meters"
+        _total_measure_cost_key = "Total measure cost"
+        _total_measure_cost_incl_surtax_key = "Total measure cost incl surtax"
         _selected_measures_rows = defaultdict(list)
         _total_meters_per_selected_measure = (
             self._get_total_meters_per_selected_measure()
@@ -106,14 +109,28 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         for _ordered_reinf in self._get_summary_reinforcement_type_column_order():
             _total_meters = _total_meters_per_selected_measure.get(_ordered_reinf, 0)
             _selected_measures_rows[_total_measure_meters_key].append(_total_meters)
+
             _total_cost_per_km = (
                 _total_meters
                 * self.koswat_summary.get_report_by_profile(_ordered_reinf).cost_per_km
             ) / 1000
             _selected_measures_rows[_total_measure_cost_key].append(_total_cost_per_km)
 
+            _total_cost_with_surtax_per_km = (
+                _total_meters
+                * self.koswat_summary.get_report_by_profile(
+                    _ordered_reinf
+                ).cost_with_surtax_per_km
+            ) / 1000
+            _selected_measures_rows[_total_measure_cost_incl_surtax_key].append(
+                _total_cost_with_surtax_per_km
+            )
+
         _selected_measures_rows[_total_measure_cost_key].append(
             sum(_selected_measures_rows[_total_measure_cost_key])
+        )
+        _selected_measures_rows[_total_measure_cost_incl_surtax_key].append(
+            sum(_selected_measures_rows[_total_measure_cost_incl_surtax_key])
         )
 
         return dict(_selected_measures_rows)
@@ -141,6 +158,15 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _cost_key = f"{_parameter_name} {self._cost_key_column}:"
             csv_dictionary[_cost_key].append(
                 round(_vc_parameter.total_cost, self._decimals)
+                if _vc_parameter
+                else math.nan
+            )
+
+            _cost_with_surtax_key = (
+                f"{_parameter_name} {self._cost_with_surtax_key_column}:"
+            )
+            csv_dictionary[_cost_with_surtax_key].append(
+                round(_vc_parameter.total_cost_with_surtax, self._decimals)
                 if _vc_parameter
                 else math.nan
             )
