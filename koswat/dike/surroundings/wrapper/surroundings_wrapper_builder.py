@@ -29,7 +29,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
     def _get_surroundings_from_fom(
         self, csv_fom: KoswatTrajectSurroundingsWrapperCsvFom
-    ) -> KoswatSurroundingsPolderside:
+    ) -> KoswatSurroundingsPolderside | None:
         _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_shp_fom = self.trajects_fom
         _builder.koswat_csv_fom = csv_fom
