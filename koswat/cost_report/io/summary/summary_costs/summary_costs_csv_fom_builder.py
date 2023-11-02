@@ -157,9 +157,9 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         ) in vc_parameters.items():
             _parameter_name = _format_parameter_name(_parameter_name)
 
-            _volume_key = f"{_parameter_name} {self._quantity_key_column}:"
-            csv_dictionary[_volume_key].append(
-                round(_vc_parameter.volume, self._decimals)
+            _quantity_key = f"{_parameter_name} {self._quantity_key_column}:"
+            csv_dictionary[_quantity_key].append(
+                round(_vc_parameter.quantity, self._decimals)
                 if _vc_parameter
                 else math.nan
             )

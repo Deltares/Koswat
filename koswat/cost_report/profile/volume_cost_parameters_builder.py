@@ -79,19 +79,41 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         )
         return _calculator
 
+    def _get_surtaxes(self) -> tuple[float, float, float]:
+        _soil_surtax = self.koswat_costs_settings.surtax_costs.get_soil_surtax(
+            self.reinforced_profile.input_data.soil_surtax_factor
+        )
+        _constructive_surtax = (
+            self.koswat_costs_settings.surtax_costs.get_constructive_surtax(
+                self.reinforced_profile.input_data.constructive_surtax_factor
+            )
+        )
+        _land_purchase_surtax = (
+            self.koswat_costs_settings.surtax_costs.get_land_purchase_surtax(
+                self.reinforced_profile.input_data.land_purchase_surtax_factor
+            )
+        )
+        return (_soil_surtax, _constructive_surtax, _land_purchase_surtax)
+
     def _get_volume_cost_parameter(
         self, volume: float, cost: float
     ) -> VolumeCostParameter:
         _vp = VolumeCostParameter()
         _vp.volume = volume
         _vp.cost = cost
+        (
+            _vp.soil_surtax,
+            _vp.constructive_surtax,
+            _vp.land_purchase_surtax,
+        ) = self._get_surtaxes()
+
         return _vp
 
-    def _get_construction_cost_parameter(
-        self, length: float, construction_type: ConstructionTypeEnum
+    def _get_length_cost_parameter(
+        self, length: float, construction_type: ConstructionTypeEnum | None
     ) -> LengthCostParameter:
         _lp = LengthCostParameter()
-        _lp.volume = length
+        _lp.length = length
         if not self.koswat_costs_settings.construction_costs:
             _lp.factors = None
         else:
@@ -100,6 +122,11 @@ class VolumeCostParametersBuilder(BuilderProtocol):
                     construction_type
                 )
             )
+        (
+            _lp.soil_surtax,
+            _lp.constructive_surtax,
+            _lp.land_purchase_surtax,
+        ) = self._get_surtaxes()
 
         return _lp
 
@@ -141,7 +168,7 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         vc_parameters.new_maaiveld_surface = self._get_volume_cost_parameter(
             _vcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
         )
-        vc_parameters.construction_length = self._get_construction_cost_parameter(
+        vc_parameters.construction_length = self._get_length_cost_parameter(
             _vcp.construction_length, _vcp.construction_type
         )
         return vc_parameters

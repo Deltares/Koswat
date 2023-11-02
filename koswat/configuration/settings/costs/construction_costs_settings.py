@@ -33,8 +33,10 @@ class ConstructionCostsSettings(KoswatConfigProtocol):
     kistdam: ConstructionFactors = None
 
     def get_construction_factors(
-        self, construction_type: ConstructionTypeEnum
-    ) -> ConstructionFactors:
+        self, construction_type: ConstructionTypeEnum | None
+    ) -> ConstructionFactors | None:
+        if not construction_type:
+            return None
         if construction_type == ConstructionTypeEnum.CB_DAMWAND:
             return self.cb_damwand
         elif construction_type == ConstructionTypeEnum.DAMWAND_ONVERANKERD:

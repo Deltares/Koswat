@@ -9,7 +9,7 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layer_protoco
 
 
 class LayerCostReport(CostReportProtocol):
-    layer: ReinforcementLayerProtocol
+    layer: ReinforcementLayerProtocol | None
     total_cost: float
     total_cost_with_surtax: float
     total_volume: float

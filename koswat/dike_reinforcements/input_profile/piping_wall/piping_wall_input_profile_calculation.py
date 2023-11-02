@@ -98,7 +98,7 @@ class PipingWallInputProfileCalculation(
 
     def _calculate_new_input_profile(
         self,
-        base_data: KoswatInputProfileProtocol,
+        base_data: KoswatInputProfileBase,
         piping_wall_settings: KoswatPipingWallSettings,
         scenario: KoswatScenario,
     ) -> PipingWallInputProfile:
@@ -122,6 +122,13 @@ class PipingWallInputProfileCalculation(
         )
         _new_data.construction_type = self._determine_construction_type(
             piping_wall_settings.overgang_cbwand_damwand, _new_data.construction_length
+        )
+        _new_data.soil_surtax_factor = piping_wall_settings.soil_surtax_factor
+        _new_data.constructive_surtax_factor = (
+            piping_wall_settings.constructive_surtax_factor
+        )
+        _new_data.land_purchase_surtax_factor = (
+            piping_wall_settings.land_purchase_surtax_factor
         )
         return _new_data
 

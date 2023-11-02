@@ -1,6 +1,7 @@
 import math
 
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
+from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 
 
 def _valid_float_prop(config_property: float) -> bool:
@@ -8,9 +9,9 @@ def _valid_float_prop(config_property: float) -> bool:
 
 
 class SurtaxCostsSettings(KoswatConfigProtocol):
-    ground_easy: float
-    ground_normal: float
-    ground_hard: float
+    soil_easy: float
+    soil_normal: float
+    soil_hard: float
     construction_easy: float
     construction_normal: float
     construction_hard: float
@@ -21,10 +22,41 @@ class SurtaxCostsSettings(KoswatConfigProtocol):
     land_purchase_normal: float
     land_purchase_hard: float
 
+    def _get_surtax(
+        self, surtax_type: str, surtax_factor: SurtaxFactorEnum | None
+    ) -> float:
+        if not surtax_factor:
+            return 0
+        if surtax_factor == SurtaxFactorEnum.MAKKELIJK:
+            level = "easy"
+        elif surtax_factor == SurtaxFactorEnum.NORMAAL:
+            level = "normal"
+        elif surtax_factor == SurtaxFactorEnum.MOEILIJK:
+            level = "hard"
+        return getattr(self, f"{surtax_type}_{level}")
+
+    def get_soil_surtax(
+        self,
+        surtax_factor: SurtaxFactorEnum,
+    ) -> float:
+        return self._get_surtax("soil", surtax_factor)
+
+    def get_constructive_surtax(
+        self,
+        surtax_factor: SurtaxFactorEnum | None,
+    ) -> float:
+        return self._get_surtax("construction", surtax_factor)
+
+    def get_land_purchase_surtax(
+        self,
+        surtax_factor: SurtaxFactorEnum | None,
+    ) -> float:
+        return self._get_surtax("land_purchase", surtax_factor)
+
     def __init__(self) -> None:
-        self.ground_easy = math.nan
-        self.ground_normal = math.nan
-        self.ground_hard = math.nan
+        self.soil_easy = math.nan
+        self.soil_normal = math.nan
+        self.soil_hard = math.nan
         self.construction_easy = math.nan
         self.construction_normal = math.nan
         self.construction_hard = math.nan

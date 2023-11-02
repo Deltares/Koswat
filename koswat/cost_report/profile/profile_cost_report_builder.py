@@ -32,6 +32,7 @@ class ProfileCostReportBuilder(BuilderProtocol):
             (
                 _lcr.total_volume,
                 _lcr.total_cost,
+                _lcr.total_cost_with_surtax,
             ) = cost_parameters.get_material_total_volume_parameters(
                 _layer.material_type
             )

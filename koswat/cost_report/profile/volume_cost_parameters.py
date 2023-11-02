@@ -11,9 +11,12 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 @runtime_checkable
 class CostParameterProtocol(Protocol):
-    cost: float
+    soil_surtax: float
+    constructive_surtax: float
+    land_purchase_surtax: float
 
-    def get_quantity(self) -> float:
+    @property
+    def quantity(self) -> float:
         pass
 
     @property
@@ -26,10 +29,14 @@ class CostParameterProtocol(Protocol):
 
 
 class VolumeCostParameter(CostParameterProtocol):
+    soil_surtax: float
+    constructive_surtax: float
+    land_purchase_surtax: float
     volume: float
     cost: float
 
-    def get_quantity(self) -> float:
+    @property
+    def quantity(self) -> float:
         return self.volume
 
     @property
@@ -38,32 +45,35 @@ class VolumeCostParameter(CostParameterProtocol):
 
     @property
     def total_cost_with_surtax(self) -> float:
-        return self.total_cost  # TODO
+        return self.total_cost * self.soil_surtax
 
 
 class LengthCostParameter(CostParameterProtocol):
-    # TODO rename volume to quantity
-    volume: float
+    soil_surtax: float
+    constructive_surtax: float
+    land_purchase_surtax: float
+    length: float
     factors: ConstructionFactors | None
 
-    def get_quantity(self) -> float:
-        return self.volume
+    @property
+    def quantity(self) -> float:
+        return self.length
 
     @property
     def total_cost(self) -> float:
         if not self.factors:
             return 0
-        # f(x) = cx^2 + dx + z + f*x^g
+        # Applied formula: f(x) = cx^2 + dx + z + f*x^g
         return (
-            self.factors.c_factor * pow(self.volume, 2)
-            + self.factors.d_factor * self.volume
+            self.factors.c_factor * pow(self.length, 2)
+            + self.factors.d_factor * self.length
             + self.factors.z_factor
-            + self.factors.f_factor * pow(self.volume, self.factors.g_factor)
+            + self.factors.f_factor * pow(self.length, self.factors.g_factor)
         )
 
     @property
     def total_cost_with_surtax(self) -> float:
-        return self.total_cost  # TODO
+        return self.total_cost * self.constructive_surtax
 
 
 class VolumeCostParameters:
@@ -102,19 +112,31 @@ class VolumeCostParameters:
 
     def get_material_total_volume_parameters(
         self, material_type: KoswatMaterialType
-    ) -> tuple[float, float]:
+    ) -> tuple[float, float, float]:
         if material_type == KoswatMaterialType.SAND:
             if not self.new_core_volume:
-                return math.nan, math.nan
-            return self.new_core_volume.volume, self.new_core_volume.total_cost
+                return math.nan, math.nan, math.nan
+            return (
+                self.new_core_volume.quantity,
+                self.new_core_volume.total_cost,
+                self.new_core_volume.total_cost_with_surtax,
+            )
         elif material_type == KoswatMaterialType.CLAY:
             if not self.new_clay_volume:
-                return math.nan, math.nan
-            return self.new_clay_volume.volume, self.new_clay_volume.total_cost
+                return math.nan, math.nan, math.nan
+            return (
+                self.new_clay_volume.quantity,
+                self.new_clay_volume.total_cost,
+                self.new_clay_volume.total_cost_with_surtax,
+            )
         elif material_type == KoswatMaterialType.GRASS:
             if not self.new_grass_volume:
-                return math.nan, math.nan
-            return self.new_grass_volume.volume, self.new_grass_volume.total_cost
+                return math.nan, math.nan, math.nan
+            return (
+                self.new_grass_volume.quantity,
+                self.new_grass_volume.total_cost,
+                self.new_grass_volume.total_cost_with_surtax,
+            )
         else:
             raise ValueError(
                 "Material {} currently not supported.".format(

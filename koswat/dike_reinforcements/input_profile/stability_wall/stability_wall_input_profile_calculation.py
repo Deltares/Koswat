@@ -1,5 +1,8 @@
 from koswat.configuration.settings import KoswatScenario
-from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
+from koswat.configuration.settings.koswat_general_settings import (
+    ConstructionTypeEnum,
+    SurtaxFactorEnum,
+)
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
@@ -137,6 +140,13 @@ class StabilityWallInputProfileCalculation(
         _new_data.construction_type = self._determine_construction_type(
             stability_wall_settings.overgang_damwand_diepwand,
             _new_data.construction_length,
+        )
+        _new_data.soil_surtax_factor = stability_wall_settings.soil_surtax_factor
+        _new_data.constructive_surtax_factor = (
+            stability_wall_settings.constructive_surtax_factor
+        )
+        _new_data.land_purchase_surtax_factor = (
+            stability_wall_settings.land_purchase_surtax_factor
         )
         return _new_data
 

@@ -10,6 +10,9 @@ from koswat.configuration.settings.costs.dike_profile_costs_settings import (
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
+from koswat.configuration.settings.costs.surtax_costs_settings import (
+    SurtaxCostsSettings,
+)
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
@@ -186,6 +189,7 @@ class TestVolumeCostParametersBuilder:
         _costs_settings.construction_costs.cb_damwand.z_factor = 999
         _costs_settings.construction_costs.cb_damwand.f_factor = 0
         _costs_settings.construction_costs.cb_damwand.g_factor = 0
+        _costs_settings.surtax_costs = SurtaxCostsSettings()
 
         # 2. Run test
         _vcp = _builder.build()

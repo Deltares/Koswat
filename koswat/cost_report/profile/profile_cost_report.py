@@ -50,6 +50,6 @@ class ProfileCostReport(CostReportProtocol):
             return math.nan
         # TODO: This is most likely wrong. Need to be refined (or perhaps removed indeed not needed).
         return round(
-            sum(vcp.volume for vcp in self.volume_cost_parameters.get_parameters()),
+            sum(vcp.quantity for vcp in self.volume_cost_parameters.get_parameters()),
             self._decimals,
         )

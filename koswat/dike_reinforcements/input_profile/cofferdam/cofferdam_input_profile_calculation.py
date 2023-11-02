@@ -134,6 +134,11 @@ class CofferdamInputProfileCalculation(
         _new_data.construction_type = self._determine_construction_type(
             _new_data.construction_length
         )
+        _new_data.soil_surtax_factor = cofferdam_settings.soil_surtax_factor
+        _new_data.constructive_surtax_factor = (
+            cofferdam_settings.constructive_surtax_factor
+        )
+        _new_data.land_purchase_surtax_factor = None
         return _new_data
 
     def build(self) -> CofferDamInputProfile:
