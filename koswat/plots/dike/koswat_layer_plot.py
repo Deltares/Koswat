@@ -17,7 +17,7 @@ class KoswatLayerPlot(KoswatPlotProtocol):
     @staticmethod
     def _get_xy_line_coords(
         koswat_geometry: LineString | MultiLineString,
-    ) -> list[list[float], list[float]]:
+    ) -> tuple[list[float], list[float]]:
         if isinstance(koswat_geometry, LineString):
             return tuple(map(list, koswat_geometry.coords.xy))
 
