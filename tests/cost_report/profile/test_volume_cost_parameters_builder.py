@@ -19,8 +19,8 @@ from koswat.configuration.settings.koswat_general_settings import (
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
-    LengthCostParameter,
-    VolumeCostParameter,
+    ConstructionCostParameter,
+    SoilCostParameter,
     VolumeCostParameters,
 )
 from koswat.cost_report.profile.volume_cost_parameters_builder import (
@@ -32,6 +32,9 @@ from koswat.cost_report.profile.volume_cost_parameters_calculator import (
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.input_profile.soil.soil_input_profile import (
+    SoilInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementCoatingLayer,
@@ -80,8 +83,10 @@ class TestVolumeCostParametersBuilder:
         _builder = VolumeCostParametersBuilder()
         _builder.koswat_costs_settings = KoswatCostsSettings()
         _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
-        _vc_parameter = _builder._get_volume_cost_parameter(4.2, 2.4)
-        assert isinstance(_vc_parameter, VolumeCostParameter)
+        _builder.reinforced_profile = SoilReinforcementProfile()
+        _builder.reinforced_profile.input_data = SoilInputProfile()
+        _vc_parameter = _builder._get_soil_cost_parameter(4.2, 2.4)
+        assert isinstance(_vc_parameter, SoilCostParameter)
         assert _vc_parameter.volume == 4.2
         assert _vc_parameter.cost == 2.4
 
@@ -110,6 +115,8 @@ class TestVolumeCostParametersBuilder:
 
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcementInput(ReinforcementInputProfileProtocol):
+            grondprijs_bebouwd: float = 0
+            grondprijs_onbebouwd: float = 0
             construction_length: float = 0
             construction_type: ConstructionTypeEnum | None = None
             soil_surtax_factor: SurtaxFactorEnum = None
@@ -204,13 +211,13 @@ class TestVolumeCostParametersBuilder:
 
         # 3. Verify expectations.
         def evaluate_cost_and_volume(
-            vcp_param: VolumeCostParameter, expected_cost: float, expected_volume: float
+            vcp_param: SoilCostParameter, expected_cost: float, expected_volume: float
         ):
             assert vcp_param.cost == pytest.approx(expected_cost, 0.01)
             assert vcp_param.volume == pytest.approx(expected_volume, 0.01)
 
         def evaluate_cost_and_length(
-            lcp_param: LengthCostParameter,
+            lcp_param: ConstructionCostParameter,
             expected_cost: float,
             expected_length: float,
         ):

@@ -9,9 +9,6 @@ from koswat.dike_reinforcements.input_profile import (
     SoilInputProfile,
     StabilityWallInputProfile,
 )
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
-    ReinforcementInputProfileProtocol,
-)
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
 )

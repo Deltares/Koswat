@@ -97,8 +97,8 @@ class SoilInputProfileCalculation(
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
         _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
         _new_data.kruin_breedte = scenario.kruin_breedte
-        _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
+        _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
         _new_data.binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
@@ -106,6 +106,11 @@ class SoilInputProfileCalculation(
         _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(
             base_data, _new_data, scenario
         )
+        _new_data.grondprijs_bebouwd = base_data.grondprijs_bebouwd
+        _new_data.grondprijs_onbebouwd = base_data.grondprijs_onbebouwd
+        _new_data.factor_zetting = base_data.factor_zetting
+        _new_data.pleistoceen = base_data.pleistoceen
+        _new_data.aquifer = base_data.aquifer
         _new_data.soil_surtax_factor = soil_settings.soil_surtax_factor
         _new_data.constructive_surtax_factor = None
         _new_data.land_purchase_surtax_factor = (

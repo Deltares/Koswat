@@ -65,6 +65,9 @@ New core layer surface (cost incl surtax):;nan;nan;nan;nan
 New maaiveld surface (quantity):;nan;nan;nan;nan
 New maaiveld surface (cost):;nan;nan;nan;nan
 New maaiveld surface (cost incl surtax):;nan;nan;nan;nan
+Land purchase surface (quantity):;nan;nan;nan;nan
+Land purchase surface (cost):;nan;nan;nan;nan
+Land purchase surface (cost incl surtax):;nan;nan;nan;nan
 Construction length (quantity):;nan;nan;nan;nan
 Construction length (cost):;nan;nan;nan;nan
 Construction length (cost incl surtax):;nan;nan;nan;nan

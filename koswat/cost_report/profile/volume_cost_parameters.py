@@ -11,9 +11,7 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 
 @runtime_checkable
 class CostParameterProtocol(Protocol):
-    soil_surtax: float
-    constructive_surtax: float
-    land_purchase_surtax: float
+    surtax: float
 
     @property
     def quantity(self) -> float:
@@ -28,10 +26,8 @@ class CostParameterProtocol(Protocol):
         pass
 
 
-class VolumeCostParameter(CostParameterProtocol):
-    soil_surtax: float
-    constructive_surtax: float
-    land_purchase_surtax: float
+class SoilCostParameter(CostParameterProtocol):
+    surtax: float
     volume: float
     cost: float
 
@@ -45,13 +41,11 @@ class VolumeCostParameter(CostParameterProtocol):
 
     @property
     def total_cost_with_surtax(self) -> float:
-        return self.total_cost * self.soil_surtax
+        return self.total_cost * self.surtax
 
 
-class LengthCostParameter(CostParameterProtocol):
-    soil_surtax: float
-    constructive_surtax: float
-    land_purchase_surtax: float
+class ConstructionCostParameter(CostParameterProtocol):
+    surtax: float
     length: float
     factors: ConstructionFactors | None
 
@@ -73,7 +67,7 @@ class LengthCostParameter(CostParameterProtocol):
 
     @property
     def total_cost_with_surtax(self) -> float:
-        return self.total_cost * self.constructive_surtax
+        return self.total_cost * self.surtax
 
 
 class VolumeCostParameters:
@@ -87,6 +81,7 @@ class VolumeCostParameters:
     new_clay_layer_surface: CostParameterProtocol
     new_core_layer_surface: CostParameterProtocol
     new_maaiveld_surface: CostParameterProtocol
+    land_purchase_surface: CostParameterProtocol
     construction_length: CostParameterProtocol
 
     def __init__(self) -> None:
@@ -100,6 +95,7 @@ class VolumeCostParameters:
         self.new_clay_layer_surface = None
         self.new_core_layer_surface = None
         self.new_maaiveld_surface = None
+        self.land_purchase_surface = None
         self.construction_length = None
 
     def get_parameters(self) -> list[CostParameterProtocol]:
