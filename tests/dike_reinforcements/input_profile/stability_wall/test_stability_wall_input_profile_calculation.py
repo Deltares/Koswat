@@ -120,6 +120,9 @@ class TestStabilityWallInputProfileCalculation:
             kruin_breedte: float
             buiten_berm_breedte: float
             buiten_talud: float
+            grondprijs_bebouwd: float
+            grondprijs_onbebouwd: float
+            factor_zetting: float
             pleistoceen: float
             aquifer: float
 
@@ -140,6 +143,9 @@ class TestStabilityWallInputProfileCalculation:
         _input_data.buiten_berm_hoogte = 7.8
         _input_data.buiten_berm_breedte = 8.9
         _input_data.buiten_talud = 3.4
+        _input_data.grondprijs_bebouwd = 150
+        _input_data.grondprijs_onbebouwd = 10
+        _input_data.factor_zetting = 1.2
         _input_data.pleistoceen = -6.7
         _input_data.aquifer = -2.3
         _stability_wall_settings = MockSettings()
