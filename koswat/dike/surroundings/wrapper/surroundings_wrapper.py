@@ -90,7 +90,7 @@ class SurroundingsWrapper:
         def _match_locations(
             point1: PointSurroundings, point2: PointSurroundings
         ) -> list[float]:
-            if not point1.location == point2.location:
+            if point1.location != point2.location:
                 logging.warning(
                     f"Mismatching railway polderside location {point2.location}"
                 )

@@ -19,9 +19,9 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         koswat_geometry: LineString | MultiLineString,
     ) -> tuple[list[float], list[float]]:
         if isinstance(koswat_geometry, LineString):
-            return koswat_geometry.coords.xy
+            return tuple(map(list, koswat_geometry.coords.xy))
 
-        return list(
+        return tuple(
             map(concatenate, zip(*map(lambda x: x.coords.xy, koswat_geometry.geoms)))
         )
 
