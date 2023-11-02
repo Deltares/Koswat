@@ -26,11 +26,11 @@ class ConstructionFactors:
 
 @dataclass
 class ConstructionCostsSettings(KoswatConfigProtocol):
-    cb_damwand: ConstructionFactors = None
-    damwand_onverankerd: ConstructionFactors = None
-    damwand_verankerd: ConstructionFactors = None
-    diepwand: ConstructionFactors = None
-    kistdam: ConstructionFactors = None
+    cb_damwand: ConstructionFactors | None = None
+    damwand_onverankerd: ConstructionFactors | None = None
+    damwand_verankerd: ConstructionFactors | None = None
+    diepwand: ConstructionFactors | None = None
+    kistdam: ConstructionFactors | None = None
 
     def get_construction_factors(
         self, construction_type: ConstructionTypeEnum | None
