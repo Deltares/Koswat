@@ -13,7 +13,10 @@ from koswat.configuration.settings.costs.koswat_costs_settings import (
 from koswat.configuration.settings.costs.surtax_costs_settings import (
     SurtaxCostsSettings,
 )
-from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
+from koswat.configuration.settings.koswat_general_settings import (
+    ConstructionTypeEnum,
+    SurtaxFactorEnum,
+)
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.profile.volume_cost_parameters import (
     LengthCostParameter,
@@ -75,6 +78,8 @@ class TestVolumeCostParametersBuilder:
 
     def test__get_volume_cost_parameter(self):
         _builder = VolumeCostParametersBuilder()
+        _builder.koswat_costs_settings = KoswatCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
         _vc_parameter = _builder._get_volume_cost_parameter(4.2, 2.4)
         assert isinstance(_vc_parameter, VolumeCostParameter)
         assert _vc_parameter.volume == 4.2
@@ -106,7 +111,10 @@ class TestVolumeCostParametersBuilder:
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcementInput(ReinforcementInputProfileProtocol):
             construction_length: float = 0
-            construction_type: ConstructionTypeEnum = None
+            construction_type: ConstructionTypeEnum | None = None
+            soil_surtax_factor: SurtaxFactorEnum = None
+            constructive_surtax_factor: SurtaxFactorEnum | None = None
+            land_purchase_surtax_factor: SurtaxFactorEnum | None = None
 
         class MockedReinforcement(StandardReinforcementProfile):
             output_name: str = "Mocked reinforcement"

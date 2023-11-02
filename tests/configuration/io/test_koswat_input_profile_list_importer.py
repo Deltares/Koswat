@@ -28,7 +28,7 @@ class TestKoswatInputProfileListImporter:
             "binnen_maaiveld": "0.0",
             "grondprijs_bebouwd": "111",
             "grondprijs_onbebouwd": "11",
-            "factor_zetting": "1.1",
+            "factorzetting": "1.1",
             "pleistoceen": "-1.1",
             "aquifer": "-2.2",
         }

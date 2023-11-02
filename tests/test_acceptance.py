@@ -22,6 +22,9 @@ from koswat.configuration.settings.costs.dike_profile_costs_settings import (
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
+from koswat.configuration.settings.costs.surtax_costs_settings import (
+    SurtaxCostsSettings,
+)
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -149,6 +152,7 @@ class TestAcceptance:
         _costs_settings.construction_costs.cb_damwand.z_factor = 999
         _costs_settings.construction_costs.cb_damwand.f_factor = 0
         _costs_settings.construction_costs.cb_damwand.g_factor = 0
+        _costs_settings.surtax_costs = SurtaxCostsSettings()
 
         # 2. Run test
         _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
@@ -234,6 +238,7 @@ class TestAcceptance:
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _run_settings.costs_setting.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _run_settings.costs_setting.surtax_costs = SurtaxCostsSettings()
 
         # 2. Run acceptance test case.
         yield _run_settings, _output_dir

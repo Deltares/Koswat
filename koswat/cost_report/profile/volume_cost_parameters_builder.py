@@ -80,6 +80,8 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         return _calculator
 
     def _get_surtaxes(self) -> tuple[float, float, float]:
+        if not self.reinforced_profile:
+            return (0, 0, 0)
         _soil_surtax = self.koswat_costs_settings.surtax_costs.get_soil_surtax(
             self.reinforced_profile.input_data.soil_surtax_factor
         )
