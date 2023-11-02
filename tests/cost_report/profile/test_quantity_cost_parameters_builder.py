@@ -79,16 +79,81 @@ class TestQuantityCostParametersBuilder:
 
         assert str(exc_value.value) == _expected_mssg
 
-    def test__get_quantity_cost_parameter(self):
+    def test__get_soil_cost_parameter(self):
+        # 1. Define test data
         _builder = QuantityCostParametersBuilder()
         _builder.koswat_costs_settings = KoswatCostsSettings()
         _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs.soil_normal = 2.0
         _builder.reinforced_profile = SoilReinforcementProfile()
         _builder.reinforced_profile.input_data = SoilInputProfile()
+        _builder.reinforced_profile.input_data.soil_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+
+        # 2. Run test
         _vc_parameter = _builder._get_soil_cost_parameter(4.2, 2.4)
+
+        # 3. Validate results
         assert isinstance(_vc_parameter, SoilCostParameter)
         assert _vc_parameter.quantity == 4.2
         assert _vc_parameter.cost == 2.4
+        assert _vc_parameter.total_cost == 10.08
+        assert _vc_parameter.total_cost_with_surtax == 20.16
+
+    def test__get_land_purchase_cost_parameter(self):
+        # 1. Define test data
+        _builder = QuantityCostParametersBuilder()
+        _builder.koswat_costs_settings = KoswatCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs.land_purchase_normal = 2.0
+        _builder.reinforced_profile = SoilReinforcementProfile()
+        _builder.reinforced_profile.input_data = SoilInputProfile()
+        _builder.reinforced_profile.input_data.grondprijs_onbebouwd = 10
+        _builder.reinforced_profile.input_data.land_purchase_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+
+        # 2. Run test
+        _vc_parameter = _builder._get_land_purchase_cost_parameter(
+            4.2, _builder.reinforced_profile.input_data
+        )
+
+        # 3. Validate results
+        assert isinstance(_vc_parameter, SoilCostParameter)
+        assert _vc_parameter.quantity == 4.2
+        assert _vc_parameter.cost == 10
+        assert _vc_parameter.total_cost == 42
+        assert _vc_parameter.total_cost_with_surtax == 84
+
+    def test__get_construction_cost_parameter(self):
+        # 1. Define test data
+        _builder = QuantityCostParametersBuilder()
+        _builder.koswat_costs_settings = KoswatCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs.construction_normal = 2.0
+        _builder.koswat_costs_settings.construction_costs = ConstructionCostsSettings()
+        _builder.koswat_costs_settings.construction_costs.cb_damwand = (
+            ConstructionFactors(
+                c_factor=0, d_factor=10, z_factor=0, f_factor=0, g_factor=0
+            )
+        )
+        _builder.reinforced_profile = SoilReinforcementProfile()
+        _builder.reinforced_profile.input_data = SoilInputProfile()
+        _builder.reinforced_profile.input_data.constructive_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+
+        # 2. Run test
+        _vc_parameter = _builder._get_construction_cost_parameter(
+            4.2, ConstructionTypeEnum.CB_DAMWAND
+        )
+
+        # 3. Validate results
+        assert isinstance(_vc_parameter, ConstructionCostParameter)
+        assert _vc_parameter.quantity == 4.2
+        assert _vc_parameter.total_cost == 42
+        assert _vc_parameter.total_cost_with_surtax == 84
 
     def test__get_quantity_cost_calculator_no_reinforced_profile_returns_none(self):
         _builder = QuantityCostParametersBuilder()
