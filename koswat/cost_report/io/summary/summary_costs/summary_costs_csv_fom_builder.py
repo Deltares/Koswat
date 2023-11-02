@@ -45,7 +45,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             )
             _dict_of_entries[_cost_per_km_key].append(_loc_prof_report.cost_per_km)
             _dict_of_entries[_cost_per_km_incl_surtax_key].append(
-                _loc_prof_report.cost_with_surtax_per_km
+                _loc_prof_report.cost_per_km_with_surtax
             )
             self._get_quantity_cost_parameters(
                 _loc_prof_report.profile_cost_report.quantity_cost_parameters.__dict__,
@@ -118,20 +118,17 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _total_meters = _total_meters_per_selected_measure.get(_ordered_reinf, 0)
             _selected_measures_rows[_total_measure_meters_key].append(_total_meters)
 
-            _total_cost_per_km = (
-                _total_meters
-                * self.koswat_summary.get_report_by_profile(_ordered_reinf).cost_per_km
-            ) / 1000
-            _selected_measures_rows[_total_measure_cost_key].append(_total_cost_per_km)
+            _report_by_profile = self.koswat_summary.get_report_by_profile(
+                _ordered_reinf
+            )
+            _total_cost = _total_meters * _report_by_profile.cost_per_km / 1000
+            _selected_measures_rows[_total_measure_cost_key].append(_total_cost)
 
-            _total_cost_with_surtax_per_km = (
-                _total_meters
-                * self.koswat_summary.get_report_by_profile(
-                    _ordered_reinf
-                ).cost_with_surtax_per_km
-            ) / 1000
+            _total_cost_with_surtax = (
+                _total_meters * _report_by_profile.cost_per_km_with_surtax / 1000
+            )
             _selected_measures_rows[_total_measure_cost_incl_surtax_key].append(
-                _total_cost_with_surtax_per_km
+                _total_cost_with_surtax
             )
 
         _selected_measures_rows[_total_measure_cost_key].append(

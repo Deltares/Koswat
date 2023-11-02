@@ -20,6 +20,9 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
+from koswat.dike_reinforcements.input_profile.soil.soil_input_profile import (
+    SoilInputProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -82,24 +85,6 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         )
         return _calculator
 
-    def _get_surtaxes(self) -> tuple[float, float, float]:
-        if not self.reinforced_profile:
-            return (1, 1, 1)
-        _soil_surtax = self.koswat_costs_settings.surtax_costs.get_soil_surtax(
-            self.reinforced_profile.input_data.soil_surtax_factor
-        )
-        _constructive_surtax = (
-            self.koswat_costs_settings.surtax_costs.get_constructive_surtax(
-                self.reinforced_profile.input_data.constructive_surtax_factor
-            )
-        )
-        _land_purchase_surtax = (
-            self.koswat_costs_settings.surtax_costs.get_land_purchase_surtax(
-                self.reinforced_profile.input_data.land_purchase_surtax_factor
-            )
-        )
-        return (_soil_surtax, _constructive_surtax, _land_purchase_surtax)
-
     def _get_soil_cost_parameter(
         self, quantity: float, cost: float
     ) -> SoilCostParameter:
@@ -117,7 +102,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
     ) -> SoilCostParameter:
         _lpcp = SoilCostParameter()
         _lpcp.quantity = quantity
-        if input_data.reinforcement_domain_name == "Grondmaatregel profiel":
+        if isinstance(input_data, SoilInputProfile):
             _lpcp.cost = input_data.grondprijs_onbebouwd
         else:
             _lpcp.cost = input_data.grondprijs_bebouwd

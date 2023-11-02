@@ -22,7 +22,7 @@ class MultiLocationProfileCostReport(CostReportProtocol):
         return self.profile_cost_report.total_cost * 1000
 
     @property
-    def cost_with_surtax_per_km(self) -> float:
+    def cost_per_km_with_surtax(self) -> float:
         if not self.profile_cost_report:
             return math.nan
         return self.profile_cost_report.total_cost_with_surtax * 1000
