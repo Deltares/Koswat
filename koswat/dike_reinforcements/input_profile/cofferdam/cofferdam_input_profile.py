@@ -15,7 +15,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 class CofferDamInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol):
     construction_length: float = math.nan
     construction_type: ConstructionTypeEnum | None = None
-    soil_surtax_factor: SurtaxFactorEnum = None
+    soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     constructive_surtax_factor: SurtaxFactorEnum | None = None
     land_purchase_surtax_factor: SurtaxFactorEnum | None = None
 

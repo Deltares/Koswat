@@ -19,7 +19,7 @@ class StabilityWallInputProfile(
 ):
     construction_length: float = math.nan
     construction_type: ConstructionTypeEnum | None = None
-    soil_surtax_factor: SurtaxFactorEnum = None
+    soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     constructive_surtax_factor: SurtaxFactorEnum | None = None
     land_purchase_surtax_factor: SurtaxFactorEnum | None = None
 

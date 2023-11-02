@@ -15,14 +15,23 @@ class CostParameterProtocol(Protocol):
 
     @property
     def quantity(self) -> float:
+        """
+        The quantity (volume/surface/length)
+        """
         pass
 
     @property
     def total_cost(self) -> float:
+        """
+        The total cost (quantity * unit cost)
+        """
         pass
 
     @property
     def total_cost_with_surtax(self) -> float:
+        """
+        The total cost including surtaxes
+        """
         pass
 
 
