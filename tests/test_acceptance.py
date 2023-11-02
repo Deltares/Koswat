@@ -239,6 +239,15 @@ class TestAcceptance:
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _run_settings.costs_setting.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
         _run_settings.costs_setting.surtax_costs = SurtaxCostsSettings()
+        _run_settings.costs_setting.surtax_costs.soil_easy = 1.714
+        _run_settings.costs_setting.surtax_costs.soil_normal = 1.953
+        _run_settings.costs_setting.surtax_costs.soil_hard = 2.177
+        _run_settings.costs_setting.surtax_costs.construction_easy = 2.097
+        _run_settings.costs_setting.surtax_costs.construction_normal = 2.413
+        _run_settings.costs_setting.surtax_costs.construction_hard = 2.690
+        _run_settings.costs_setting.surtax_costs.land_purchase_easy = 1.292
+        _run_settings.costs_setting.surtax_costs.land_purchase_normal = 1.412
+        _run_settings.costs_setting.surtax_costs.land_purchase_hard = 1.645
 
         # 2. Run acceptance test case.
         yield _run_settings, _output_dir
