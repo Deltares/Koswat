@@ -1,7 +1,7 @@
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 
 
-class VolumeCostParametersCalculator:
+class QuantityCostParametersCalculator:
     grass_layer_removal_volume: float
     clay_layer_removal_volume: float
     new_core_layer_volume: float

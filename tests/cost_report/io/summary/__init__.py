@@ -35,7 +35,7 @@ class MockSummary(MultiLocationProfileCostReport):
 
 class MockLayerReport:
     material = ""
-    total_volume = 42
+    total_quantity = 42
 
 
 def _create_locations() -> list[PointSurroundings]:
@@ -56,10 +56,10 @@ def _create_report(
     available_points: list[PointSurroundings],
     selected_locations: int,
 ) -> MultiLocationProfileCostReport:
-    def _get_layer(material: str, volume: float) -> MockLayerReport:
+    def _get_layer(material: str, quantity: float) -> MockLayerReport:
         _layer_report = MockLayerReport()
         _layer_report.material = material
-        _layer_report.total_volume = volume
+        _layer_report.total_quantity = quantity
         return _layer_report
 
     _report = MockSummary()

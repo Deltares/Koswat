@@ -6,7 +6,7 @@ from typing import Any, Type
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.profile.volume_cost_parameters import SoilCostParameter
+from koswat.cost_report.profile.quantity_cost_parameters import SoilCostParameter
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (

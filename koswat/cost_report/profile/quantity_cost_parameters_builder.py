@@ -8,13 +8,13 @@ from koswat.configuration.settings.costs.koswat_costs_settings import (
 )
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.core.protocols import BuilderProtocol
-from koswat.cost_report.profile.volume_cost_parameters import (
+from koswat.cost_report.profile.quantity_cost_parameters import (
     ConstructionCostParameter,
+    QuantityCostParameters,
     SoilCostParameter,
-    VolumeCostParameters,
 )
-from koswat.cost_report.profile.volume_cost_parameters_calculator import (
-    VolumeCostParametersCalculator,
+from koswat.cost_report.profile.quantity_cost_parameters_calculator import (
+    QuantityCostParametersCalculator,
 )
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
@@ -25,7 +25,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
-class VolumeCostParametersBuilder(BuilderProtocol):
+class QuantityCostParametersBuilder(BuilderProtocol):
     reinforced_profile: ReinforcementProfileProtocol
     koswat_costs_settings: KoswatCostsSettings
 
@@ -33,22 +33,22 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         self.reinforced_profile = None
         self.koswat_costs_settings = None
 
-    def build(self) -> VolumeCostParameters:
+    def build(self) -> QuantityCostParameters:
         if not self.reinforced_profile:
             raise ValueError("No reinforced profile provided.")
         if not self.koswat_costs_settings:
             raise ValueError("No koswat costs settings provided.")
 
-        _volume_parameters = VolumeCostParameters()
-        self._set_volume_cost_parameters(
-            _volume_parameters, self.koswat_costs_settings.dike_profile_costs
+        _quantity_parameters = QuantityCostParameters()
+        self._set_quantity_cost_parameters(
+            _quantity_parameters, self.koswat_costs_settings.dike_profile_costs
         )
-        return _volume_parameters
+        return _quantity_parameters
 
-    def _get_volume_cost_calculator(
+    def _get_quantity_cost_calculator(
         self,
-    ) -> VolumeCostParametersCalculator | None:
-        _calculator = VolumeCostParametersCalculator()
+    ) -> QuantityCostParametersCalculator | None:
+        _calculator = QuantityCostParametersCalculator()
         if len(self.reinforced_profile.layers_wrapper.layers) != 3:
             logging.error(
                 "Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass)."
@@ -100,9 +100,11 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         )
         return (_soil_surtax, _constructive_surtax, _land_purchase_surtax)
 
-    def _get_soil_cost_parameter(self, volume: float, cost: float) -> SoilCostParameter:
+    def _get_soil_cost_parameter(
+        self, quantity: float, cost: float
+    ) -> SoilCostParameter:
         _scp = SoilCostParameter()
-        _scp.volume = volume
+        _scp.quantity = quantity
         _scp.cost = cost
         _scp.surtax = self.koswat_costs_settings.surtax_costs.get_soil_surtax(
             self.reinforced_profile.input_data.soil_surtax_factor
@@ -111,10 +113,10 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         return _scp
 
     def _get_land_purchase_cost_parameter(
-        self, volume: float, input_data: ReinforcementInputProfileProtocol
+        self, quantity: float, input_data: ReinforcementInputProfileProtocol
     ) -> SoilCostParameter:
         _lpcp = SoilCostParameter()
-        _lpcp.volume = volume
+        _lpcp.quantity = quantity
         if input_data.reinforcement_domain_name == "Grondmaatregel profiel":
             _lpcp.cost = input_data.grondprijs_onbebouwd
         else:
@@ -129,7 +131,7 @@ class VolumeCostParametersBuilder(BuilderProtocol):
         self, length: float, construction_type: ConstructionTypeEnum | None
     ) -> ConstructionCostParameter:
         _ccp = ConstructionCostParameter()
-        _ccp.length = length
+        _ccp.quantity = length
         if not self.koswat_costs_settings.construction_costs:
             _ccp.factors = None
         else:
@@ -144,47 +146,47 @@ class VolumeCostParametersBuilder(BuilderProtocol):
 
         return _ccp
 
-    def _set_volume_cost_parameters(
+    def _set_quantity_cost_parameters(
         self,
-        vc_parameters: VolumeCostParameters,
+        qc_parameters: QuantityCostParameters,
         dike_profile_costs: DikeProfileCostsSettings,
     ) -> None:
-        _vcp = self._get_volume_cost_calculator()
-        if not _vcp:
+        _qcp = self._get_quantity_cost_calculator()
+        if not _qcp:
             return
-        vc_parameters.reused_grass_volume = self._get_soil_cost_parameter(
-            _vcp.get_reused_grass_volume(), dike_profile_costs.reused_layer_grass_m3
+        qc_parameters.reused_grass_volume = self._get_soil_cost_parameter(
+            _qcp.get_reused_grass_volume(), dike_profile_costs.reused_layer_grass_m3
         )
-        vc_parameters.new_grass_volume = self._get_soil_cost_parameter(
-            _vcp.get_aanleg_grass_volume(), dike_profile_costs.added_layer_grass_m3
+        qc_parameters.new_grass_volume = self._get_soil_cost_parameter(
+            _qcp.get_aanleg_grass_volume(), dike_profile_costs.added_layer_grass_m3
         )
-        vc_parameters.new_clay_volume = self._get_soil_cost_parameter(
-            _vcp.get_aanleg_clay_volume(), dike_profile_costs.added_layer_clay_m3
+        qc_parameters.new_clay_volume = self._get_soil_cost_parameter(
+            _qcp.get_aanleg_clay_volume(), dike_profile_costs.added_layer_clay_m3
         )
-        vc_parameters.reused_core_volume = self._get_soil_cost_parameter(
-            _vcp.get_reused_core_volume(), dike_profile_costs.reused_layer_core_m3
+        qc_parameters.reused_core_volume = self._get_soil_cost_parameter(
+            _qcp.get_reused_core_volume(), dike_profile_costs.reused_layer_core_m3
         )
-        vc_parameters.new_core_volume = self._get_soil_cost_parameter(
-            _vcp.get_aanleg_core_volume(), dike_profile_costs.added_layer_sand_m3
+        qc_parameters.new_core_volume = self._get_soil_cost_parameter(
+            _qcp.get_aanleg_core_volume(), dike_profile_costs.added_layer_sand_m3
         )
-        vc_parameters.removed_material_volume = self._get_soil_cost_parameter(
-            _vcp.get_removed_material_volume(), dike_profile_costs.disposed_material_m3
+        qc_parameters.removed_material_volume = self._get_soil_cost_parameter(
+            _qcp.get_removed_material_volume(), dike_profile_costs.disposed_material_m3
         )
-        vc_parameters.new_grass_layer_surface = self._get_soil_cost_parameter(
-            _vcp.new_grass_layer_surface, dike_profile_costs.profiling_layer_grass_m2
+        qc_parameters.new_grass_layer_surface = self._get_soil_cost_parameter(
+            _qcp.new_grass_layer_surface, dike_profile_costs.profiling_layer_grass_m2
         )
-        vc_parameters.new_clay_layer_surface = self._get_soil_cost_parameter(
-            _vcp.new_clay_layer_surface, dike_profile_costs.profiling_layer_clay_m2
+        qc_parameters.new_clay_layer_surface = self._get_soil_cost_parameter(
+            _qcp.new_clay_layer_surface, dike_profile_costs.profiling_layer_clay_m2
         )
-        vc_parameters.new_core_layer_surface = self._get_soil_cost_parameter(
-            _vcp.new_core_layer_surface, dike_profile_costs.profiling_layer_sand_m2
+        qc_parameters.new_core_layer_surface = self._get_soil_cost_parameter(
+            _qcp.new_core_layer_surface, dike_profile_costs.profiling_layer_sand_m2
         )
-        vc_parameters.new_maaiveld_surface = self._get_soil_cost_parameter(
-            _vcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
+        qc_parameters.new_maaiveld_surface = self._get_soil_cost_parameter(
+            _qcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
         )
-        vc_parameters.land_purchase_surface = self._get_land_purchase_cost_parameter(
-            _vcp.new_maaiveld_surface, self.reinforced_profile.input_data
+        qc_parameters.land_purchase_surface = self._get_land_purchase_cost_parameter(
+            _qcp.new_maaiveld_surface, self.reinforced_profile.input_data
         )
-        vc_parameters.construction_length = self._get_construction_cost_parameter(
-            _vcp.construction_length, _vcp.construction_type
+        qc_parameters.construction_length = self._get_construction_cost_parameter(
+            _qcp.construction_length, _qcp.construction_type
         )

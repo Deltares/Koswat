@@ -18,16 +18,16 @@ from koswat.configuration.settings.koswat_general_settings import (
     SurtaxFactorEnum,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.profile.volume_cost_parameters import (
+from koswat.cost_report.profile.quantity_cost_parameters import (
     ConstructionCostParameter,
+    QuantityCostParameters,
     SoilCostParameter,
-    VolumeCostParameters,
 )
-from koswat.cost_report.profile.volume_cost_parameters_builder import (
-    VolumeCostParametersBuilder,
+from koswat.cost_report.profile.quantity_cost_parameters_builder import (
+    QuantityCostParametersBuilder,
 )
-from koswat.cost_report.profile.volume_cost_parameters_calculator import (
-    VolumeCostParametersCalculator,
+from koswat.cost_report.profile.quantity_cost_parameters_calculator import (
+    QuantityCostParametersCalculator,
 )
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
@@ -51,10 +51,10 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 )
 
 
-class TestVolumeCostParametersBuilder:
+class TestQuantityCostParametersBuilder:
     def test_initialize(self):
-        _builder = VolumeCostParametersBuilder()
-        assert isinstance(_builder, VolumeCostParametersBuilder)
+        _builder = QuantityCostParametersBuilder()
+        assert isinstance(_builder, QuantityCostParametersBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert _builder.reinforced_profile is None
         assert _builder.koswat_costs_settings is None
@@ -62,7 +62,7 @@ class TestVolumeCostParametersBuilder:
     def test_no_reinforced_profile_raises(self):
         _expected_mssg = "No reinforced profile provided."
         with pytest.raises(ValueError) as exc_value:
-            _builder = VolumeCostParametersBuilder()
+            _builder = QuantityCostParametersBuilder()
             _builder.koswat_costs_settings = None
             _builder.reinforced_profile = None
             _builder.build()
@@ -72,29 +72,29 @@ class TestVolumeCostParametersBuilder:
     def test_no_koswat_costs_raises(self):
         _expected_mssg = "No koswat costs settings provided."
         with pytest.raises(ValueError) as exc_value:
-            _builder = VolumeCostParametersBuilder()
+            _builder = QuantityCostParametersBuilder()
             _builder.koswat_costs_settings = None
             _builder.reinforced_profile = 42
             _builder.build()
 
         assert str(exc_value.value) == _expected_mssg
 
-    def test__get_volume_cost_parameter(self):
-        _builder = VolumeCostParametersBuilder()
+    def test__get_quantity_cost_parameter(self):
+        _builder = QuantityCostParametersBuilder()
         _builder.koswat_costs_settings = KoswatCostsSettings()
         _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
         _builder.reinforced_profile = SoilReinforcementProfile()
         _builder.reinforced_profile.input_data = SoilInputProfile()
         _vc_parameter = _builder._get_soil_cost_parameter(4.2, 2.4)
         assert isinstance(_vc_parameter, SoilCostParameter)
-        assert _vc_parameter.volume == 4.2
+        assert _vc_parameter.quantity == 4.2
         assert _vc_parameter.cost == 2.4
 
-    def test__get_volume_cost_calculator_no_reinforced_profile_returns_none(self):
-        _builder = VolumeCostParametersBuilder()
+    def test__get_quantity_cost_calculator_no_reinforced_profile_returns_none(self):
+        _builder = QuantityCostParametersBuilder()
         _builder.reinforced_profile = SoilReinforcementProfile()
         _builder.reinforced_profile.layers_wrapper = ReinforcementLayersWrapper()
-        _calculator = _builder._get_volume_cost_calculator()
+        _calculator = _builder._get_quantity_cost_calculator()
         assert _calculator is None
 
     def _get_mocked_layer(
@@ -135,9 +135,9 @@ class TestVolumeCostParametersBuilder:
         _reinforcement.input_data = MockedReinforcementInput()
         return _reinforcement
 
-    def test__get_volume_cost_calculator_with_valid_data(self):
+    def test__get_quantity_cost_calculator_with_valid_data(self):
         # 1. Define test data.
-        _builder = VolumeCostParametersBuilder()
+        _builder = QuantityCostParametersBuilder()
         _builder.reinforced_profile = self._get_mocked_reinforcement()
         _builder.reinforced_profile.input_data.construction_length = 10
 
@@ -150,24 +150,24 @@ class TestVolumeCostParametersBuilder:
         _wrapper.coating_layers = [_clay_layer, _grass_layer]
 
         # 2. Run test
-        _vcp = _builder._get_volume_cost_calculator()
+        _qcp = _builder._get_quantity_cost_calculator()
 
         # 3. Verify expectations.
-        assert isinstance(_vcp, VolumeCostParametersCalculator)
-        assert _vcp.grass_layer_removal_volume == 4.8
-        assert _vcp.clay_layer_removal_volume == 2.4
-        assert _vcp.new_core_layer_volume == 1.2
-        assert _vcp.new_core_layer_surface == 2.1
-        assert _vcp.new_clay_layer_volume == 2.4
-        assert _vcp.new_clay_layer_surface == 4.2
-        assert _vcp.new_grass_layer_volume == 4.8
-        assert _vcp.new_grass_layer_surface == 8.4
-        assert _vcp.new_maaiveld_surface == 42
-        assert _vcp.construction_length == 10
+        assert isinstance(_qcp, QuantityCostParametersCalculator)
+        assert _qcp.grass_layer_removal_volume == 4.8
+        assert _qcp.clay_layer_removal_volume == 2.4
+        assert _qcp.new_core_layer_volume == 1.2
+        assert _qcp.new_core_layer_surface == 2.1
+        assert _qcp.new_clay_layer_volume == 2.4
+        assert _qcp.new_clay_layer_surface == 4.2
+        assert _qcp.new_grass_layer_volume == 4.8
+        assert _qcp.new_grass_layer_surface == 8.4
+        assert _qcp.new_maaiveld_surface == 42
+        assert _qcp.construction_length == 10
 
     def test_build_with_valid_data(self):
         # 1. Define test data.
-        _builder = VolumeCostParametersBuilder()
+        _builder = QuantityCostParametersBuilder()
         _builder.reinforced_profile = self._get_mocked_reinforcement()
         _builder.reinforced_profile.input_data.construction_length = 10
         _builder.reinforced_profile.input_data.construction_type = (
@@ -207,14 +207,14 @@ class TestVolumeCostParametersBuilder:
         _costs_settings.surtax_costs = SurtaxCostsSettings()
 
         # 2. Run test
-        _vcp = _builder.build()
+        _qcp = _builder.build()
 
         # 3. Verify expectations.
-        def evaluate_cost_and_volume(
-            vcp_param: SoilCostParameter, expected_cost: float, expected_volume: float
+        def evaluate_cost_and_quantity(
+            qcp_param: SoilCostParameter, expected_cost: float, expected_quantity: float
         ):
-            assert vcp_param.cost == pytest.approx(expected_cost, 0.01)
-            assert vcp_param.volume == pytest.approx(expected_volume, 0.01)
+            assert qcp_param.cost == pytest.approx(expected_cost, 0.01)
+            assert qcp_param.quantity == pytest.approx(expected_quantity, 0.01)
 
         def evaluate_cost_and_length(
             lcp_param: ConstructionCostParameter,
@@ -222,17 +222,17 @@ class TestVolumeCostParametersBuilder:
             expected_length: float,
         ):
             assert lcp_param.total_cost == pytest.approx(expected_cost, 0.01)
-            assert lcp_param.length == pytest.approx(expected_length, 0.01)
+            assert lcp_param.quantity == pytest.approx(expected_length, 0.01)
 
-        assert isinstance(_vcp, VolumeCostParameters)
-        evaluate_cost_and_volume(_vcp.new_grass_volume, 12.44, 0)
-        evaluate_cost_and_volume(_vcp.new_clay_volume, 18.05, 2.4)
-        evaluate_cost_and_volume(_vcp.new_core_volume, 10.98, 0)
-        evaluate_cost_and_volume(_vcp.reused_grass_volume, 6.04, 4.8)
-        evaluate_cost_and_volume(_vcp.reused_core_volume, 4.67, 1.2)
-        evaluate_cost_and_volume(_vcp.new_grass_layer_surface, 0.88, 8.4)
-        evaluate_cost_and_volume(_vcp.new_clay_layer_surface, 0.65, 4.2)
-        evaluate_cost_and_volume(_vcp.new_core_layer_surface, 0.6, 2.1)
-        evaluate_cost_and_volume(_vcp.new_maaiveld_surface, 0.25, 42)
-        evaluate_cost_and_volume(_vcp.removed_material_volume, 7.07, 1.2)
-        evaluate_cost_and_length(_vcp.construction_length, 999, 10)
+        assert isinstance(_qcp, QuantityCostParameters)
+        evaluate_cost_and_quantity(_qcp.new_grass_volume, 12.44, 0)
+        evaluate_cost_and_quantity(_qcp.new_clay_volume, 18.05, 2.4)
+        evaluate_cost_and_quantity(_qcp.new_core_volume, 10.98, 0)
+        evaluate_cost_and_quantity(_qcp.reused_grass_volume, 6.04, 4.8)
+        evaluate_cost_and_quantity(_qcp.reused_core_volume, 4.67, 1.2)
+        evaluate_cost_and_quantity(_qcp.new_grass_layer_surface, 0.88, 8.4)
+        evaluate_cost_and_quantity(_qcp.new_clay_layer_surface, 0.65, 4.2)
+        evaluate_cost_and_quantity(_qcp.new_core_layer_surface, 0.6, 2.1)
+        evaluate_cost_and_quantity(_qcp.new_maaiveld_surface, 0.25, 42)
+        evaluate_cost_and_quantity(_qcp.removed_material_volume, 7.07, 1.2)
+        evaluate_cost_and_length(_qcp.construction_length, 999, 10)

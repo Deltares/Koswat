@@ -6,7 +6,7 @@ from typing import Type
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.profile.volume_cost_parameters import CostParameterProtocol
+from koswat.cost_report.profile.quantity_cost_parameters import CostParameterProtocol
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -47,8 +47,8 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _dict_of_entries[_cost_per_km_incl_surtax_key].append(
                 _loc_prof_report.cost_with_surtax_per_km
             )
-            self._get_volume_cost_parameters(
-                _loc_prof_report.profile_cost_report.volume_cost_parameters.__dict__,
+            self._get_quantity_cost_parameters(
+                _loc_prof_report.profile_cost_report.quantity_cost_parameters.__dict__,
                 _dict_of_entries,
             )
 
@@ -143,7 +143,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
 
         return dict(_selected_measures_rows)
 
-    def _get_volume_cost_parameters(
+    def _get_quantity_cost_parameters(
         self,
         vc_parameters: dict[str, CostParameterProtocol],
         csv_dictionary: dict,

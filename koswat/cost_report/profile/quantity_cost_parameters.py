@@ -12,13 +12,7 @@ from koswat.dike.material.koswat_material_type import KoswatMaterialType
 @runtime_checkable
 class CostParameterProtocol(Protocol):
     surtax: float
-
-    @property
-    def quantity(self) -> float:
-        """
-        The quantity (volume/surface/length)
-        """
-        pass
+    quantity: float
 
     @property
     def total_cost(self) -> float:
@@ -37,16 +31,12 @@ class CostParameterProtocol(Protocol):
 
 class SoilCostParameter(CostParameterProtocol):
     surtax: float
-    volume: float
+    quantity: float
     cost: float
 
     @property
-    def quantity(self) -> float:
-        return self.volume
-
-    @property
     def total_cost(self) -> float:
-        return self.volume * self.cost
+        return self.quantity * self.cost
 
     @property
     def total_cost_with_surtax(self) -> float:
@@ -55,12 +45,8 @@ class SoilCostParameter(CostParameterProtocol):
 
 class ConstructionCostParameter(CostParameterProtocol):
     surtax: float
-    length: float
+    quantity: float
     factors: ConstructionFactors | None
-
-    @property
-    def quantity(self) -> float:
-        return self.length
 
     @property
     def total_cost(self) -> float:
@@ -68,10 +54,10 @@ class ConstructionCostParameter(CostParameterProtocol):
             return 0
         # Applied formula: f(x) = cx^2 + dx + z + f*x^g
         return (
-            self.factors.c_factor * pow(self.length, 2)
-            + self.factors.d_factor * self.length
+            self.factors.c_factor * pow(self.quantity, 2)
+            + self.factors.d_factor * self.quantity
             + self.factors.z_factor
-            + self.factors.f_factor * pow(self.length, self.factors.g_factor)
+            + self.factors.f_factor * pow(self.quantity, self.factors.g_factor)
         )
 
     @property
@@ -79,7 +65,7 @@ class ConstructionCostParameter(CostParameterProtocol):
         return self.total_cost * self.surtax
 
 
-class VolumeCostParameters:
+class QuantityCostParameters:
     new_grass_volume: CostParameterProtocol
     new_clay_volume: CostParameterProtocol
     new_core_volume: CostParameterProtocol
@@ -115,7 +101,7 @@ class VolumeCostParameters:
             )
         )
 
-    def get_material_total_volume_parameters(
+    def get_material_total_quantity_parameters(
         self, material_type: KoswatMaterialType
     ) -> tuple[float, float, float]:
         if material_type == KoswatMaterialType.SAND:

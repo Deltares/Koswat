@@ -2,9 +2,9 @@
 
 ::: koswat.cost_report.cost_report_protocol
 
-## Volume cost parameters calculator
-::: koswat.cost_report.profile.volume_cost_parameters_calculator
-::: koswat.cost_report.profile.volume_cost_parameters
+## Quantity cost parameters calculator
+::: koswat.cost_report.profile.quantity_cost_parameters_calculator
+::: koswat.cost_report.profile.quantity_cost_parameters
 
 ## IO
 

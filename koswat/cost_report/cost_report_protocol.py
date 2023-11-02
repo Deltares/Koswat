@@ -9,4 +9,4 @@ class CostReportProtocol(Protocol):
 
     total_cost: float
     total_cost_with_surtax: float
-    total_volume: float
+    total_quantity: float
