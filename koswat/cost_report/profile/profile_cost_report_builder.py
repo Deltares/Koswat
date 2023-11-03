@@ -30,7 +30,6 @@ class ProfileCostReportBuilder(BuilderProtocol):
             _reports.append(_lcr)
             _lcr.layer = _layer
             (
-                _lcr.total_quantity,
                 _lcr.total_cost,
                 _lcr.total_cost_with_surtax,
             ) = cost_parameters.get_material_total_quantity_parameters(

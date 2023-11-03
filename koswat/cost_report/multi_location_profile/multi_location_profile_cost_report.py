@@ -40,12 +40,6 @@ class MultiLocationProfileCostReport(CostReportProtocol):
         return self.profile_cost_report.total_cost_with_surtax * len(self.locations)
 
     @property
-    def total_quantity(self) -> float:
-        if not self.profile_cost_report or not self.locations:
-            return math.nan
-        return self.profile_cost_report.total_quantity * len(self.locations)
-
-    @property
     def profile_type_name(self) -> str:
         if (
             not self.profile_cost_report

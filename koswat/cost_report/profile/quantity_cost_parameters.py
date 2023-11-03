@@ -103,28 +103,25 @@ class QuantityCostParameters:
 
     def get_material_total_quantity_parameters(
         self, material_type: KoswatMaterialType
-    ) -> tuple[float, float, float]:
+    ) -> tuple[float, float]:
         if material_type == KoswatMaterialType.SAND:
             if not self.new_core_volume:
-                return math.nan, math.nan, math.nan
+                return math.nan, math.nan
             return (
-                self.new_core_volume.quantity,
                 self.new_core_volume.total_cost,
                 self.new_core_volume.total_cost_with_surtax,
             )
         elif material_type == KoswatMaterialType.CLAY:
             if not self.new_clay_volume:
-                return math.nan, math.nan, math.nan
+                return math.nan, math.nan
             return (
-                self.new_clay_volume.quantity,
                 self.new_clay_volume.total_cost,
                 self.new_clay_volume.total_cost_with_surtax,
             )
         elif material_type == KoswatMaterialType.GRASS:
             if not self.new_grass_volume:
-                return math.nan, math.nan, math.nan
+                return math.nan, math.nan
             return (
-                self.new_grass_volume.quantity,
                 self.new_grass_volume.total_cost,
                 self.new_grass_volume.total_cost_with_surtax,
             )

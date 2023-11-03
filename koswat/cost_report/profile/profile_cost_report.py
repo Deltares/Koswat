@@ -45,13 +45,3 @@ class ProfileCostReport(CostReportProtocol):
             ),
             self._decimals,
         )
-
-    @property
-    def total_quantity(self) -> float:
-        if not self.quantity_cost_parameters:
-            return math.nan
-        # TODO: This is most likely wrong. Need to be refined (or perhaps removed indeed not needed).
-        return round(
-            sum(qcp.quantity for qcp in self.quantity_cost_parameters.get_parameters()),
-            self._decimals,
-        )
