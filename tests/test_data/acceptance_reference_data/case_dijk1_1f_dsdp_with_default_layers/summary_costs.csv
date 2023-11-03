@@ -1,26 +1,42 @@
 Profile type;Grondmaatregel profiel;Kwelscherm;Stabiliteitswand;Kistdam
-Cost per km (Euro/km);nan;nan;nan;nan
-Reused grass volume (volume / surface):;7.34999999999998;7.34999999999998;0.0;0.0
-Reused grass volume (cost):;nan;nan;nan;nan
-Aanleg grass volume (volume / surface):;7.75500000000002;1.755000000000006;0.0;0.0
-Aanleg grass volume (cost):;nan;nan;nan;nan
-Aanleg clay volume (volume / surface):;23.77500000000001;13.775000000000013;0.0;0.0
-Aanleg clay volume (cost):;nan;nan;nan;nan
-Reused core volume (volume / surface):;11.726000000000013;11.726000000000013;0.0;0.0
-Reused core volume (cost):;nan;nan;nan;nan
-Aanleg core volume (volume / surface):;5.955199999999998;1.9551999999999907;0.0;0.0
-Aanleg core volume (cost):;nan;nan;nan;nan
-Removed material volume (volume / surface):;0;0;0.0;0.0
-Removed material volume (cost):;nan;nan;nan;nan
-New grass layer surface (volume / surface):;52.26845588184067;32.268455881840666;0.0;0.0
-New grass layer surface (cost):;nan;nan;nan;nan
-New clay layer surface (volume / surface):;50.082840896104855;30.082840896104855;0.0;0.0
-New clay layer surface (cost):;nan;nan;nan;nan
-New core layer surface (volume / surface):;41.471149253211834;21.471149253211834;0.0;0.0
-New core layer surface (cost):;nan;nan;nan;nan
-New maaiveld surface (volume / surface):;26.0;6.0;0.0;0.0
-New maaiveld surface (cost):;nan;nan;nan;nan
-Construction length (volume / surface):;0;6.3;11.8;11.8
-Construction length (cost):;0;0;0;0
+Cost per km (Euro/km);1060090.0;2322390.0;4374410.0;7958630.0
+Cost per km incl surtax (Euro/km);2374540.0;5230060.0;12738270.0;26223670.0
+New grass volume (quantity):;7.76;1.76;0.0;0.0
+New grass volume (cost):;96.47;21.83;0.0;0.0
+New grass volume (cost incl surtax):;242.05;54.78;0.0;0.0
+New clay volume (quantity):;23.78;13.78;0.0;0.0
+New clay volume (cost):;429.14;248.64;0.0;0.0
+New clay volume (cost incl surtax):;1076.71;623.83;0.0;0.0
+New core volume (quantity):;5.96;1.96;0.0;0.0
+New core volume (cost):;65.39;21.47;0.0;0.0
+New core volume (cost incl surtax):;164.06;53.86;0.0;0.0
+Reused grass volume (quantity):;7.35;7.35;0.0;0.0
+Reused grass volume (cost):;44.39;44.39;0.0;0.0
+Reused grass volume (cost incl surtax):;111.38;111.38;0.0;0.0
+Reused core volume (quantity):;11.73;11.73;0.0;0.0
+Reused core volume (cost):;54.76;54.76;0.0;0.0
+Reused core volume (cost incl surtax):;137.39;137.39;0.0;0.0
+Removed material volume (quantity):;0;0;0.0;0.0
+Removed material volume (cost):;0.0;0.0;0.0;0.0
+Removed material volume (cost incl surtax):;0.0;0.0;0.0;0.0
+New grass layer surface (quantity):;52.27;32.27;0.0;0.0
+New grass layer surface (cost):;46.0;28.4;0.0;0.0
+New grass layer surface (cost incl surtax):;115.4;71.25;0.0;0.0
+New clay layer surface (quantity):;50.08;30.08;0.0;0.0
+New clay layer surface (cost):;32.55;19.55;0.0;0.0
+New clay layer surface (cost incl surtax):;81.68;49.06;0.0;0.0
+New core layer surface (quantity):;41.47;21.47;0.0;0.0
+New core layer surface (cost):;24.88;12.88;0.0;0.0
+New core layer surface (cost incl surtax):;62.43;32.32;0.0;0.0
+New maaiveld surface (quantity):;26.0;6.0;0.0;0.0
+New maaiveld surface (cost):;6.5;1.5;0.0;0.0
+New maaiveld surface (cost incl surtax):;16.31;3.76;0.0;0.0
+Land purchase surface (quantity):;26.0;6.0;0.0;0.0
+Land purchase surface (cost):;260.0;900.0;0.0;0.0
+Land purchase surface (cost incl surtax):;367.12;1270.8;0.0;0.0
+Construction length (quantity):;0;6.3;11.8;11.8
+Construction length (cost):;0;968.96;4374.41;7958.63
+Construction length (cost incl surtax):;0;2821.61;12738.27;26223.67
 Total measure meters;0;0;0;0
-Total measure cost;nan;nan;nan;nan;nan
+Total measure cost;0.0;0.0;0.0;0.0;0.0
+Total measure cost incl surtax;0.0;0.0;0.0;0.0;0.0
