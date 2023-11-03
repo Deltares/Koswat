@@ -136,10 +136,13 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             )
 
         _selected_measures_rows[_total_measure_cost_key].append(
-            sum(_selected_measures_rows[_total_measure_cost_key])
+            round(sum(_selected_measures_rows[_total_measure_cost_key]), self._decimals)
         )
         _selected_measures_rows[_total_measure_cost_incl_surtax_key].append(
-            sum(_selected_measures_rows[_total_measure_cost_incl_surtax_key])
+            round(
+                sum(_selected_measures_rows[_total_measure_cost_incl_surtax_key]),
+                self._decimals,
+            )
         )
 
         return dict(_selected_measures_rows)
