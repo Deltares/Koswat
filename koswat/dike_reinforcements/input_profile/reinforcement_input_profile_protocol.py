@@ -1,6 +1,9 @@
 from typing import Protocol, runtime_checkable
 
-from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
+from koswat.configuration.settings.koswat_general_settings import (
+    ConstructionTypeEnum,
+    SurtaxFactorEnum,
+)
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 
@@ -12,6 +15,9 @@ class ReinforcementInputProfileProtocol(KoswatInputProfileProtocol, Protocol):
 
     construction_length: float
     construction_type: ConstructionTypeEnum | None
+    soil_surtax_factor: SurtaxFactorEnum
+    constructive_surtax_factor: SurtaxFactorEnum | None
+    land_purchase_surtax_factor: SurtaxFactorEnum | None
 
     @property
     def reinforcement_domain_name(self) -> str:

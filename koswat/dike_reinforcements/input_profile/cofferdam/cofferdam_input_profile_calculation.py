@@ -125,6 +125,11 @@ class CofferdamInputProfileCalculation(
         _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
+        _new_data.grondprijs_bebouwd = base_data.grondprijs_bebouwd
+        _new_data.grondprijs_onbebouwd = base_data.grondprijs_onbebouwd
+        _new_data.factor_zetting = base_data.factor_zetting
+        _new_data.pleistoceen = base_data.pleistoceen
+        _new_data.aquifer = base_data.aquifer
         _new_data.construction_length = self._calculate_length_coffer_dam(
             base_data,
             cofferdam_settings,
@@ -134,6 +139,11 @@ class CofferdamInputProfileCalculation(
         _new_data.construction_type = self._determine_construction_type(
             _new_data.construction_length
         )
+        _new_data.soil_surtax_factor = cofferdam_settings.soil_surtax_factor
+        _new_data.constructive_surtax_factor = (
+            cofferdam_settings.constructive_surtax_factor
+        )
+        _new_data.land_purchase_surtax_factor = None
         return _new_data
 
     def build(self) -> CofferDamInputProfile:

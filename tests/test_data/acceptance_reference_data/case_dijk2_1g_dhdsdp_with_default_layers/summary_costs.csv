@@ -1,26 +1,42 @@
 Profile type;Grondmaatregel profiel;Kwelscherm;Stabiliteitswand;Kistdam
-Cost per km (Euro/km);nan;nan;nan;nan
-Reused grass volume (volume / surface):;7.34999999999998;7.34999999999998;7.34999999999998;13.829999999999984
-Reused grass volume (cost):;nan;nan;nan;nan
-Aanleg grass volume (volume / surface):;8.805000000000007;2.8049999999999997;0.020769230769255742;0.018325791855218654
-Aanleg grass volume (cost):;nan;nan;nan;nan
-Aanleg clay volume (volume / surface):;25.524999999999977;15.524999999999974;11.176923076923085;23.825024208144782
-Aanleg clay volume (cost):;nan;nan;nan;nan
-Reused core volume (volume / surface):;11.726000000000012;11.726000000000012;11.099100000000004;12.618650000000002
-Reused core volume (cost):;nan;nan;nan;nan
-Aanleg core volume (volume / surface):;27.415699999999987;23.415699999999987;0;0
-Aanleg core volume (cost):;nan;nan;nan;nan
-Removed material volume (volume / surface):;0;0;0.626900000000008;10.843350000000015
-Removed material volume (cost):;nan;nan;nan;nan
-New grass layer surface (volume / surface):;55.911147524733686;35.911147524733686;26.845108809187092;49.59841332195267
-New grass layer surface (cost):;nan;nan;nan;nan
-New clay layer surface (volume / surface):;53.725532538997875;33.725532538997875;25.077926379553432;47.81652189203031
-New clay layer surface (cost):;nan;nan;nan;nan
-New core layer surface (volume / surface):;49.853840896104856;29.853840896104856;21.85133803148333;44.56883880824221
-New core layer surface (cost):;nan;nan;nan;nan
-New maaiveld surface (volume / surface):;29.5;9.5;0.0;0.0
-New maaiveld surface (cost):;nan;nan;nan;nan
-Construction length (volume / surface):;0;6.3;12.9;12.9
-Construction length (cost):;0;0.0;0.0;0.0
+Cost per km (Euro/km);1386849.97;3139149.77;5148223.24;9458348.89
+Cost per km incl surtax (Euro/km);3155991.57;6703392.56;14943607.12;30776312.5
+New grass volume (quantity):;8.81;2.8;0.02;0.02
+New grass volume (cost):;109.53;34.89;0.26;0.23
+New grass volume (cost incl surtax):;274.82;87.55;0.72;0.63
+New clay volume (quantity):;25.52;15.52;11.18;23.83
+New clay volume (cost):;460.73;280.23;201.74;430.04
+New clay volume (cost incl surtax):;1155.96;703.09;560.24;1194.23
+New core volume (quantity):;27.42;23.42;0;0
+New core volume (cost):;301.02;257.1;0.0;0.0
+New core volume (cost incl surtax):;755.27;645.07;0.0;0.0
+Reused grass volume (quantity):;7.35;7.35;7.35;13.83
+Reused grass volume (cost):;44.39;44.39;44.39;83.53
+Reused grass volume (cost incl surtax):;111.38;111.38;123.28;231.97
+Reused core volume (quantity):;11.73;11.73;11.1;12.62
+Reused core volume (cost):;54.76;54.76;51.83;58.93
+Reused core volume (cost incl surtax):;137.39;137.39;143.94;163.65
+Removed material volume (quantity):;0;0;0.63;10.84
+Removed material volume (cost):;0.0;0.0;4.43;76.66
+Removed material volume (cost incl surtax):;0.0;0.0;12.31;212.89
+New grass layer surface (quantity):;55.91;35.91;26.85;49.6
+New grass layer surface (cost):;49.2;31.6;23.62;43.65
+New grass layer surface (cost incl surtax):;123.45;79.29;65.6;121.21
+New clay layer surface (quantity):;53.73;33.73;25.08;47.82
+New clay layer surface (cost):;34.92;21.92;16.3;31.08
+New clay layer surface (cost incl surtax):;87.62;55.0;45.27;86.31
+New core layer surface (quantity):;49.85;29.85;21.85;44.57
+New core layer surface (cost):;29.91;17.91;13.11;26.74
+New core layer surface (cost incl surtax):;75.05;44.94;36.41;74.26
+New maaiveld surface (quantity):;29.5;9.5;0.0;0.0
+New maaiveld surface (cost):;7.38;2.38;0.0;0.0
+New maaiveld surface (cost incl surtax):;18.5;5.96;0.0;0.0
+Land purchase surface (quantity):;29.5;9.5;0.0;0.0
+Land purchase surface (cost):;295.0;1425.0;0.0;0.0
+Land purchase surface (cost incl surtax):;416.54;2012.1;0.0;0.0
+Construction length (quantity):;0;6.3;12.9;12.9
+Construction length (cost):;0;968.96;4792.53;8707.49
+Construction length (cost incl surtax):;0;2821.61;13955.84;28691.17
 Total measure meters;0;0;0;0
-Total measure cost;nan;nan;nan;nan;nan
+Total measure cost;0.0;0.0;0.0;0.0;0.0
+Total measure cost incl surtax;0.0;0.0;0.0;0.0;0.0

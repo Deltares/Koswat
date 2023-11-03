@@ -26,6 +26,9 @@ class TestKoswatInputProfileListImporter:
             "binnen_berm_hoogte": "8.8",
             "binnen_berm_lengte": "9.9",
             "binnen_maaiveld": "0.0",
+            "grondprijs_bebouwd": "111",
+            "grondprijs_onbebouwd": "11",
+            "factorzetting": "1.1",
             "pleistoceen": "-1.1",
             "aquifer": "-2.2",
         }
@@ -46,5 +49,8 @@ class TestKoswatInputProfileListImporter:
         assert _input_profile_base.binnen_berm_hoogte == 8.8
         assert _input_profile_base.binnen_berm_breedte == 9.9
         assert _input_profile_base.binnen_maaiveld == 0.0
+        assert _input_profile_base.grondprijs_bebouwd == 111
+        assert _input_profile_base.grondprijs_onbebouwd == 11
+        assert _input_profile_base.factor_zetting == 1.1
         assert _input_profile_base.pleistoceen == -1.1
         assert _input_profile_base.aquifer == -2.2

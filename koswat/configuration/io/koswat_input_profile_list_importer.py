@@ -22,6 +22,9 @@ class KoswatInputProfileListImporter(KoswatImporterProtocol):
         _input_profile.binnen_berm_hoogte = float(fom_dict["binnen_berm_hoogte"])
         _input_profile.binnen_berm_breedte = float(fom_dict["binnen_berm_lengte"])
         _input_profile.binnen_maaiveld = float(fom_dict["binnen_maaiveld"])
+        _input_profile.grondprijs_bebouwd = float(fom_dict["grondprijs_bebouwd"])
+        _input_profile.grondprijs_onbebouwd = float(fom_dict["grondprijs_onbebouwd"])
+        _input_profile.factor_zetting = float(fom_dict["factorzetting"])
         _input_profile.pleistoceen = float(fom_dict["pleistoceen"])
         _input_profile.aquifer = float(fom_dict["aquifer"])
         return _input_profile

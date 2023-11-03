@@ -134,9 +134,9 @@ class KoswatCostsImporter(KoswatImporterProtocol):
             if self.include_taxes
             else fom_costs.surtax_costs_excl_tax_section
         )
-        _settings.ground_easy = _fom_settings.grond_makkelijk
-        _settings.ground_normal = _fom_settings.grond_normaal
-        _settings.ground_hard = _fom_settings.grond_moeilijk
+        _settings.soil_easy = _fom_settings.grond_makkelijk
+        _settings.soil_normal = _fom_settings.grond_normaal
+        _settings.soil_hard = _fom_settings.grond_moeilijk
         _settings.construction_easy = _fom_settings.constructief_makkelijk
         _settings.construction_normal = _fom_settings.constructief_normaal
         _settings.construction_hard = _fom_settings.constructief_moeilijk
