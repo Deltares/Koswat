@@ -15,7 +15,6 @@ class ProfileCostReport(CostReportProtocol):
     reinforced_profile: ReinforcementProfileProtocol
     quantity_cost_parameters: QuantityCostParameters
     layer_cost_reports: List[LayerCostReport]
-    _decimals = 2
 
     def __init__(self) -> None:
         self.reinforced_profile = None
@@ -27,21 +26,15 @@ class ProfileCostReport(CostReportProtocol):
     def total_cost(self) -> float:
         if not self.quantity_cost_parameters:
             return math.nan
-        return round(
-            sum(
-                qcp.total_cost for qcp in self.quantity_cost_parameters.get_parameters()
-            ),
-            self._decimals,
+        return sum(
+            qcp.total_cost for qcp in self.quantity_cost_parameters.get_parameters()
         )
 
     @property
     def total_cost_with_surtax(self) -> float:
         if not self.quantity_cost_parameters:
             return math.nan
-        return round(
-            sum(
-                qcp.total_cost_with_surtax
-                for qcp in self.quantity_cost_parameters.get_parameters()
-            ),
-            self._decimals,
+        return sum(
+            qcp.total_cost_with_surtax
+            for qcp in self.quantity_cost_parameters.get_parameters()
         )

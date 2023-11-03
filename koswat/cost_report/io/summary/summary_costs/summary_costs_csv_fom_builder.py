@@ -43,9 +43,11 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _dict_of_entries[_profile_type_key].append(
                 _loc_prof_report.profile_type_name
             )
-            _dict_of_entries[_cost_per_km_key].append(_loc_prof_report.cost_per_km)
+            _dict_of_entries[_cost_per_km_key].append(
+                round(_loc_prof_report.cost_per_km, self._decimals)
+            )
             _dict_of_entries[_cost_per_km_incl_surtax_key].append(
-                _loc_prof_report.cost_per_km_with_surtax
+                round(_loc_prof_report.cost_per_km_with_surtax, self._decimals)
             )
             self._get_quantity_cost_parameters(
                 _loc_prof_report.profile_cost_report.quantity_cost_parameters.__dict__,
@@ -122,20 +124,25 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
                 _ordered_reinf
             )
             _total_cost = _total_meters * _report_by_profile.cost_per_km / 1000
-            _selected_measures_rows[_total_measure_cost_key].append(_total_cost)
+            _selected_measures_rows[_total_measure_cost_key].append(
+                round(_total_cost, self._decimals)
+            )
 
             _total_cost_with_surtax = (
                 _total_meters * _report_by_profile.cost_per_km_with_surtax / 1000
             )
             _selected_measures_rows[_total_measure_cost_incl_surtax_key].append(
-                _total_cost_with_surtax
+                round(_total_cost_with_surtax, self._decimals)
             )
 
         _selected_measures_rows[_total_measure_cost_key].append(
-            sum(_selected_measures_rows[_total_measure_cost_key])
+            round(sum(_selected_measures_rows[_total_measure_cost_key]), self._decimals)
         )
         _selected_measures_rows[_total_measure_cost_incl_surtax_key].append(
-            sum(_selected_measures_rows[_total_measure_cost_incl_surtax_key])
+            round(
+                sum(_selected_measures_rows[_total_measure_cost_incl_surtax_key]),
+                self._decimals,
+            )
         )
 
         return dict(_selected_measures_rows)
