@@ -25,6 +25,7 @@ from koswat.configuration.settings.costs.koswat_costs_settings import (
 from koswat.configuration.settings.costs.surtax_costs_settings import (
     SurtaxCostsSettings,
 )
+from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -223,6 +224,36 @@ class TestAcceptance:
         _run_settings.input_profile_case = _acceptance_test_scenario.profile_case
         _run_settings.scenario = _acceptance_test_scenario.scenario_case
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
+        _run_settings.reinforcement_settings.soil_settings.soil_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.soil_settings.land_purchase_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.piping_wall_settings.soil_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.piping_wall_settings.constructive_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.piping_wall_settings.land_purchase_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.stability_wall_settings.soil_surtax_factor = (
+            SurtaxFactorEnum.MOEILIJK
+        )
+        _run_settings.reinforcement_settings.stability_wall_settings.constructive_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.stability_wall_settings.land_purchase_surtax_factor = (
+            SurtaxFactorEnum.MOEILIJK
+        )
+        _run_settings.reinforcement_settings.cofferdam_settings.soil_surtax_factor = (
+            SurtaxFactorEnum.MOEILIJK
+        )
+        _run_settings.reinforcement_settings.cofferdam_settings.constructive_surtax_factor = (
+            SurtaxFactorEnum.MOEILIJK
+        )
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.surroundings.reinforcement_min_buffer = 10
         _run_settings.surroundings.reinforcement_min_separation = 50
@@ -238,13 +269,62 @@ class TestAcceptance:
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _run_settings.costs_setting.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _run_settings.costs_setting.construction_costs = ConstructionCostsSettings()
+        _run_settings.costs_setting.construction_costs.cb_damwand = (
+            ConstructionFactors()
+        )
+        _run_settings.costs_setting.construction_costs.cb_damwand.c_factor = 0
+        _run_settings.costs_setting.construction_costs.cb_damwand.d_factor = 159.326
+        _run_settings.costs_setting.construction_costs.cb_damwand.z_factor = -34.794
+        _run_settings.costs_setting.construction_costs.cb_damwand.f_factor = 0
+        _run_settings.costs_setting.construction_costs.cb_damwand.g_factor = 0
+        _run_settings.costs_setting.construction_costs.damwand_onverankerd = (
+            ConstructionFactors()
+        )
+        _run_settings.costs_setting.construction_costs.damwand_onverankerd.c_factor = (
+            9.298
+        )
+        _run_settings.costs_setting.construction_costs.damwand_onverankerd.d_factor = (
+            132.239
+        )
+        _run_settings.costs_setting.construction_costs.damwand_onverankerd.z_factor = (
+            103.628
+        )
+        _run_settings.costs_setting.construction_costs.damwand_onverankerd.f_factor = 0
+        _run_settings.costs_setting.construction_costs.damwand_onverankerd.g_factor = 0
+        _run_settings.costs_setting.construction_costs.damwand_verankerd = (
+            ConstructionFactors()
+        )
+        _run_settings.costs_setting.construction_costs.damwand_verankerd.c_factor = (
+            9.298
+        )
+        _run_settings.costs_setting.construction_costs.damwand_verankerd.d_factor = (
+            150.449
+        )
+        _run_settings.costs_setting.construction_costs.damwand_verankerd.z_factor = (
+            1304.455
+        )
+        _run_settings.costs_setting.construction_costs.damwand_verankerd.f_factor = 0
+        _run_settings.costs_setting.construction_costs.damwand_verankerd.g_factor = 0
+        _run_settings.costs_setting.construction_costs.diepwand = ConstructionFactors()
+        _run_settings.costs_setting.construction_costs.diepwand.c_factor = 0
+        _run_settings.costs_setting.construction_costs.diepwand.d_factor = 0
+        _run_settings.costs_setting.construction_costs.diepwand.z_factor = 0
+        _run_settings.costs_setting.construction_costs.diepwand.f_factor = 281.176
+        _run_settings.costs_setting.construction_costs.diepwand.g_factor = 1.205
+        _run_settings.costs_setting.construction_costs.kistdam = ConstructionFactors()
+        _run_settings.costs_setting.construction_costs.kistdam.c_factor = 0
+        _run_settings.costs_setting.construction_costs.kistdam.d_factor = 680.782
+        _run_settings.costs_setting.construction_costs.kistdam.z_factor = -74.602
+        _run_settings.costs_setting.construction_costs.kistdam.f_factor = 0
+        _run_settings.costs_setting.construction_costs.kistdam.g_factor = 0
         _run_settings.costs_setting.surtax_costs = SurtaxCostsSettings()
-        _run_settings.costs_setting.surtax_costs.soil_easy = 1.714
-        _run_settings.costs_setting.surtax_costs.soil_normal = 1.953
-        _run_settings.costs_setting.surtax_costs.soil_hard = 2.177
-        _run_settings.costs_setting.surtax_costs.construction_easy = 2.097
-        _run_settings.costs_setting.surtax_costs.construction_normal = 2.413
-        _run_settings.costs_setting.surtax_costs.construction_hard = 2.690
+        _run_settings.costs_setting.surtax_costs.soil_easy = 2.258
+        _run_settings.costs_setting.surtax_costs.soil_normal = 2.509
+        _run_settings.costs_setting.surtax_costs.soil_hard = 2.777
+        _run_settings.costs_setting.surtax_costs.construction_easy = 2.561
+        _run_settings.costs_setting.surtax_costs.construction_normal = 2.912
+        _run_settings.costs_setting.surtax_costs.construction_hard = 3.295
         _run_settings.costs_setting.surtax_costs.land_purchase_easy = 1.292
         _run_settings.costs_setting.surtax_costs.land_purchase_normal = 1.412
         _run_settings.costs_setting.surtax_costs.land_purchase_hard = 1.645
