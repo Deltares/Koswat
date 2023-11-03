@@ -30,7 +30,7 @@ class MockSummary(MultiLocationProfileCostReport):
     total_cost_with_surtax = 63000
     profile_type: str = ""
     cost_per_km = 42
-    cost_with_surtax_per_km = 63
+    cost_per_km_with_surtax = 63
 
 
 class MockLayerReport:
