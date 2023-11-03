@@ -269,55 +269,40 @@ class TestAcceptance:
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _run_settings.costs_setting.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
-        _run_settings.costs_setting.construction_costs = ConstructionCostsSettings()
-        _run_settings.costs_setting.construction_costs.cb_damwand = (
-            ConstructionFactors()
-        )
-        _run_settings.costs_setting.construction_costs.cb_damwand.c_factor = 0
-        _run_settings.costs_setting.construction_costs.cb_damwand.d_factor = 159.326
-        _run_settings.costs_setting.construction_costs.cb_damwand.z_factor = -34.794
-        _run_settings.costs_setting.construction_costs.cb_damwand.f_factor = 0
-        _run_settings.costs_setting.construction_costs.cb_damwand.g_factor = 0
-        _run_settings.costs_setting.construction_costs.damwand_onverankerd = (
-            ConstructionFactors()
-        )
-        _run_settings.costs_setting.construction_costs.damwand_onverankerd.c_factor = (
-            9.298
-        )
-        _run_settings.costs_setting.construction_costs.damwand_onverankerd.d_factor = (
-            132.239
-        )
-        _run_settings.costs_setting.construction_costs.damwand_onverankerd.z_factor = (
-            103.628
-        )
-        _run_settings.costs_setting.construction_costs.damwand_onverankerd.f_factor = 0
-        _run_settings.costs_setting.construction_costs.damwand_onverankerd.g_factor = 0
-        _run_settings.costs_setting.construction_costs.damwand_verankerd = (
-            ConstructionFactors()
-        )
-        _run_settings.costs_setting.construction_costs.damwand_verankerd.c_factor = (
-            9.298
-        )
-        _run_settings.costs_setting.construction_costs.damwand_verankerd.d_factor = (
-            150.449
-        )
-        _run_settings.costs_setting.construction_costs.damwand_verankerd.z_factor = (
-            1304.455
-        )
-        _run_settings.costs_setting.construction_costs.damwand_verankerd.f_factor = 0
-        _run_settings.costs_setting.construction_costs.damwand_verankerd.g_factor = 0
-        _run_settings.costs_setting.construction_costs.diepwand = ConstructionFactors()
-        _run_settings.costs_setting.construction_costs.diepwand.c_factor = 0
-        _run_settings.costs_setting.construction_costs.diepwand.d_factor = 0
-        _run_settings.costs_setting.construction_costs.diepwand.z_factor = 0
-        _run_settings.costs_setting.construction_costs.diepwand.f_factor = 281.176
-        _run_settings.costs_setting.construction_costs.diepwand.g_factor = 1.205
-        _run_settings.costs_setting.construction_costs.kistdam = ConstructionFactors()
-        _run_settings.costs_setting.construction_costs.kistdam.c_factor = 0
-        _run_settings.costs_setting.construction_costs.kistdam.d_factor = 680.782
-        _run_settings.costs_setting.construction_costs.kistdam.z_factor = -74.602
-        _run_settings.costs_setting.construction_costs.kistdam.f_factor = 0
-        _run_settings.costs_setting.construction_costs.kistdam.g_factor = 0
+
+        _construction_costs = ConstructionCostsSettings()
+        _construction_costs.cb_damwand = ConstructionFactors()
+        _construction_costs.cb_damwand.c_factor = 0
+        _construction_costs.cb_damwand.d_factor = 159.326
+        _construction_costs.cb_damwand.z_factor = -34.794
+        _construction_costs.cb_damwand.f_factor = 0
+        _construction_costs.cb_damwand.g_factor = 0
+        _construction_costs.damwand_onverankerd = ConstructionFactors()
+        _construction_costs.damwand_onverankerd.c_factor = 9.298
+        _construction_costs.damwand_onverankerd.d_factor = 132.239
+        _construction_costs.damwand_onverankerd.z_factor = 103.628
+        _construction_costs.damwand_onverankerd.f_factor = 0
+        _construction_costs.damwand_onverankerd.g_factor = 0
+        _construction_costs.damwand_verankerd = ConstructionFactors()
+        _construction_costs.damwand_verankerd.c_factor = 9.298
+        _construction_costs.damwand_verankerd.d_factor = 150.449
+        _construction_costs.damwand_verankerd.z_factor = 1304.455
+        _construction_costs.damwand_verankerd.f_factor = 0
+        _construction_costs.damwand_verankerd.g_factor = 0
+        _construction_costs.diepwand = ConstructionFactors()
+        _construction_costs.diepwand.c_factor = 0
+        _construction_costs.diepwand.d_factor = 0
+        _construction_costs.diepwand.z_factor = 0
+        _construction_costs.diepwand.f_factor = 281.176
+        _construction_costs.diepwand.g_factor = 1.205
+        _construction_costs.kistdam = ConstructionFactors()
+        _construction_costs.kistdam.c_factor = 0
+        _construction_costs.kistdam.d_factor = 680.782
+        _construction_costs.kistdam.z_factor = -74.602
+        _construction_costs.kistdam.f_factor = 0
+        _construction_costs.kistdam.g_factor = 0
+        _run_settings.costs_setting.construction_costs = _construction_costs
+
         _run_settings.costs_setting.surtax_costs = SurtaxCostsSettings()
         _run_settings.costs_setting.surtax_costs.soil_easy = 2.258
         _run_settings.costs_setting.surtax_costs.soil_normal = 2.509
