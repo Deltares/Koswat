@@ -16,9 +16,9 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 class SummaryCostsCsvFomBuilder(BuilderProtocol):
     koswat_summary: KoswatSummary
     # Internal readonly properties.
-    _quantity_key_column = "(quantity)"
-    _cost_key_column = "(cost)"
-    _cost_with_surtax_key_column = "(cost incl surtax)"
+    _quantity_key = "(quantity)"
+    _cost_key = "(cost)"
+    _cost_with_surtax_key = "(cost incl surtax)"
     _decimals = 2
 
     def __init__(self) -> None:
@@ -64,9 +64,9 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         _quantity_costs_rows = self.dict_to_csv_row(
             dict(
                 filter(
-                    lambda x: self._quantity_key_column in x[0]
-                    or self._cost_key_column in x[0]
-                    or self._cost_with_surtax_key_column in x[0],
+                    lambda x: self._quantity_key in x[0]
+                    or self._cost_key in x[0]
+                    or self._cost_with_surtax_key in x[0],
                     _dict_of_entries.items(),
                 )
             ),
@@ -154,23 +154,21 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         ) in vc_parameters.items():
             _parameter_name = _format_parameter_name(_parameter_name)
 
-            _quantity_key = f"{_parameter_name} {self._quantity_key_column}:"
+            _quantity_key = f"{_parameter_name} {self._quantity_key}:"
             csv_dictionary[_quantity_key].append(
                 round(_vc_parameter.quantity, self._decimals)
                 if _vc_parameter
                 else math.nan
             )
 
-            _cost_key = f"{_parameter_name} {self._cost_key_column}:"
+            _cost_key = f"{_parameter_name} {self._cost_key}:"
             csv_dictionary[_cost_key].append(
                 round(_vc_parameter.total_cost, self._decimals)
                 if _vc_parameter
                 else math.nan
             )
 
-            _cost_with_surtax_key = (
-                f"{_parameter_name} {self._cost_with_surtax_key_column}:"
-            )
+            _cost_with_surtax_key = f"{_parameter_name} {self._cost_with_surtax_key}:"
             csv_dictionary[_cost_with_surtax_key].append(
                 round(_vc_parameter.total_cost_with_surtax, self._decimals)
                 if _vc_parameter
