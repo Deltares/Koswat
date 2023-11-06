@@ -4,7 +4,7 @@ from shutil import copy2
 
 _test_data_path = Path(getcwd()).joinpath(r"tests\test_data\acceptance_reference_data")
 _test_results_path = Path(getcwd()).joinpath(
-    r"tests\test_results\\sandbox_acceptance_case"
+    r"tests\test_results\sandbox_acceptance_case"
 )
 _costs_filename = "summary_costs.csv"
 _locations_filename = "summary_locations.csv"
