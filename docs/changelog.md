@@ -33,6 +33,43 @@
 - docu corrections
 - docu corrections
 
+## v0.14.1 (2023-11-08)
+
+## v0.14.0 (2023-11-07)
+
+### Feat
+
+- Added order_strategy submodule for determining reinforcement features across a dike traject based on default order
+- Added new class to better handle / generate the location-reinforcement matrix
+
+### Fix
+
+- improve rounding
+- improve rounding
+- improve rounding
+- show cost per km if no locations present
+- add @property to total_cost
+- add @property to total_cost
+- add @property to total_cost
+- test on presence of construction costs
+- correct return type
+- Added logic to plot new layer surfaces when they are either a `LineString` or a `MultiLineString`
+- corrected berm width calculations (#114)
+- corrected berm width calculations
+- merge leftovers
+- rename "raise" to "surtax" throughout KOSWAT
+- rename "raise" to "surtax" throughout KOSWAT
+- correct symbol name
+- correct symbol name
+- typo comment
+- typo comment
+- Added logic to avoid creating added / removed layers geometries when there were no modifications
+- Added default values as math.nan for koswatscenario
+- We now replace not-provided values from a KoswatScenario when calculating new reinforcements
+- docu corrections
+- docu corrections
+- docu corrections
+
 ## v0.13.0 (2023-01-31)
 
 ### Feat
