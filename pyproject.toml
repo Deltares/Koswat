@@ -7,7 +7,6 @@ maintainers = ["Peter de Grave <peter.degrave@deltares.nl>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 repository = "https://github.com/Deltares/koswat"
-documentation = ""
 packages = [
   {include="koswat"},
 ]
