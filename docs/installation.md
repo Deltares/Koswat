@@ -17,7 +17,12 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 ```
 | You can also do the above with a commit-hash for development branches (e.g.:`@0504c06`)
 
-
+3. Using [docker](https://www.docker.com/) (requires checking the repository in a directory):
+```bash
+cd <your koswat checked out directory>
+docker build -t koswat:latest -f Dockerimage .
+docker run -it koswat bash
+```
 
 ## For developers
 1. Checkout the code from github in a directory of your choice. You can either do this by downloading the source zip or (better) using git, for instance:
@@ -29,7 +34,7 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 
 2. Navigate to your Koswat repository and then install the koswat package with your preferred step:
 
-    1. With [Anaconda](https://www.anaconda.com/) (our recommendation):    
+    1. With [Miniforge](https://conda-forge.org/miniforge/) (our recommendation):    
         ```bash
         cd C:\repos\koswat
         conda env create -f .conf\environment.yml
