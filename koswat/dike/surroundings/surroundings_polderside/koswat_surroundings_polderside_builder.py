@@ -23,7 +23,7 @@ class KoswatSurroundingsPoldersideBuilder(BuilderProtocol):
 
     def _find_polderside_point_idx(self, limit_point: Point) -> int:
         for _ps_idx, ps in enumerate(self.koswat_csv_fom.points_surroundings_list):
-            if limit_point.almost_equals(ps.location, 0.001):
+            if limit_point.equals_exact(ps.location, 0.01):
                 return _ps_idx
         raise ValueError(
             "No point fromt the *.shp file matches the ones in the *.csv file."

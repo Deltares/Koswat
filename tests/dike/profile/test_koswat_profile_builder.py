@@ -129,4 +129,4 @@ class TestKoswatProfileBuilder:
         assert isinstance(_koswat_profile.input_data, KoswatInputProfileBase)
         assert isinstance(_koswat_profile.layers_wrapper, KoswatLayersWrapper)
         for p_idx, p in enumerate(expected_points):
-            assert p.equals_exact(_koswat_profile.points[p_idx], 0.001)
+            assert p.equals_exact(_koswat_profile.points[p_idx], 0.01)

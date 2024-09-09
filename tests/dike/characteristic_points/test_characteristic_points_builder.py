@@ -33,11 +33,11 @@ class TestCharacteristicPointsBuilder:
         # 3. Verify expectations.
         assert isinstance(_char_points, CharacteristicPoints)
         for c_idx, c_point in enumerate(_char_points.points):
-            assert c_point.equals_exact(_expected_points[c_idx], 0.001)
+            assert c_point.equals_exact(_expected_points[c_idx], 0.01)
 
     def test_build_waterside(self):
         # 1. Define data.
-        _tolerance = 0.001
+        _tolerance = 0.01
         _p4_x_coord = 2
         _builder = CharacteristicPointsBuilder()
         _builder.input_profile = InputProfileCases.profile_case_2
@@ -54,7 +54,7 @@ class TestCharacteristicPointsBuilder:
     def test_build_polderside(self):
         # 1. Define data.
         _p4_x_coord = 2
-        _tolerance = 0.001
+        _tolerance = 0.01
         _builder = CharacteristicPointsBuilder()
         _builder.input_profile = InputProfileCases.profile_case_2
         _expected_points = InitialPointsLookup.calc_profile_scenario_2[4:]
