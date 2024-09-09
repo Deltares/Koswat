@@ -33,7 +33,7 @@ class TestCharacteristicPointsBuilder:
         # 3. Verify expectations.
         assert isinstance(_char_points, CharacteristicPoints)
         for c_idx, c_point in enumerate(_char_points.points):
-            assert c_point.almost_equals(_expected_points[c_idx])
+            assert c_point.equals_exact(_expected_points[c_idx], 0.001)
 
     def test_build_waterside(self):
         # 1. Define data.
@@ -49,7 +49,7 @@ class TestCharacteristicPointsBuilder:
         # 3. Verify expectations.
         assert _char_points
         for c_idx, c_point in enumerate(_char_points):
-            assert c_point.almost_equals(_expected_points[c_idx], _tolerance)
+            assert c_point.equals_exact(_expected_points[c_idx], _tolerance)
 
     def test_build_polderside(self):
         # 1. Define data.
@@ -65,7 +65,7 @@ class TestCharacteristicPointsBuilder:
         # 3. Verify expectations.
         assert _char_points
         for c_idx, c_point in enumerate(_char_points):
-            assert c_point.almost_equals(_expected_points[c_idx], _tolerance)
+            assert c_point.equals_exact(_expected_points[c_idx], _tolerance)
 
     def test_build_without_input_data_raises_value_error(self):
         with pytest.raises(ValueError) as exc_err:
