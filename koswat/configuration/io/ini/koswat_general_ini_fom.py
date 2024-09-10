@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import abc
 from configparser import ConfigParser
+from dataclasses import dataclass
 from pathlib import Path
 
 from koswat.configuration.settings.koswat_general_settings import (
@@ -171,6 +172,7 @@ class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         return _section
 
 
+@dataclass
 class SurroundingsSectionFom(KoswatIniFomProtocol):
     surroundings_database_dir: Path
     constructieafstand: float
@@ -182,14 +184,15 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
-        _section = cls()
-        _section.surroundings_database_dir = Path(ini_config["omgevingsdatabases"])
-        _section.constructieafstand = ini_config.getfloat("constructieafstand")
-        _section.constructieovergang = ini_config.getfloat("constructieovergang")
-        _section.buitendijks = ini_config.getboolean("buitendijks")
-        _section.bebouwing = ini_config.getboolean("bebouwing")
-        _section.spoorwegen = ini_config.getboolean("spoorwegen")
-        _section.water = ini_config.getboolean("water")
+        _section = cls(
+            surroundings_database_dir=Path(ini_config["omgevingsdatabases"]),
+            constructieafstand=ini_config.getfloat("constructieafstand"),
+            constructieovergang=ini_config.getfloat("constructieovergang"),
+            buitendijks=ini_config.getboolean("buitendijks"),
+            bebouwing=ini_config.getboolean("bebouwing"),
+            spoorwegen=ini_config.getboolean("spoorwegen"),
+            water=ini_config.getboolean("water"),
+        )
         return _section
 
 
