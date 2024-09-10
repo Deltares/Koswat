@@ -232,7 +232,7 @@ class TestAcceptance:
         _run_settings.reinforcement_settings.vps_settings.soil_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
-        _run_settings.reinforcement_settings.vps_settings.construction_surtax_factor = (
+        _run_settings.reinforcement_settings.vps_settings.constructive_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
         _run_settings.reinforcement_settings.vps_settings.land_purchase_surtax_factor = (

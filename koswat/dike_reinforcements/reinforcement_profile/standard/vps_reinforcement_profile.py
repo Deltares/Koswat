@@ -11,7 +11,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 
 
 class VPSReinforcementProfile(StandardReinforcementProfile):
-    output_name: str = "Verticale piping oplossing profiel"
+    output_name: str = "Verticale piping oplossing"
     input_data: VPSInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
