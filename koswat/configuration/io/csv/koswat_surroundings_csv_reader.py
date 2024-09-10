@@ -44,11 +44,10 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
             traject_order=entry[0],
             section=entry[1],
             location=(float(entry[2]), float(entry[3])),
-            distance_to_surroundings=[
-                distances_list[e_idx]
+            surroundings_matrix={
+                distances_list[e_idx]: float(e_val)
                 for e_idx, e_val in enumerate(entry[4:])
-                if e_val == "1"
-            ],
+            },
         )
         _builder = PointSurroundingsBuilder()
         _builder.point_surroundings_data = _point_dict

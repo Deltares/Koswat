@@ -11,11 +11,17 @@ class PointSurroundingsBuilder(BuilderProtocol):
         self.point_surroundings_data = {}
 
     def build(self) -> PointSurroundings:
-        _point = PointSurroundings()
-        _point.section = self.point_surroundings_data.get("section", "")
-        _point.traject_order = self.point_surroundings_data.get("traject_order", -1)
-        _point.location = Point(self.point_surroundings_data["location"])
-        _point.distance_to_surroundings = self.point_surroundings_data.get(
-            "distance_to_surroundings", []
+        _surroundings_matrix: dict[float, float] = self.point_surroundings_data.get(
+            "surroundings_matrix", {}
         )
-        return _point
+
+        return PointSurroundings(
+            section=self.point_surroundings_data.get("section", ""),
+            traject_order=self.point_surroundings_data.get("traject_order", -1),
+            location=Point(self.point_surroundings_data["location"]),
+            distance_to_surroundings_dict={
+                _distance: _occurences
+                for _distance, _occurences in sorted(_surroundings_matrix.items())
+                if _occurences > 0
+            },
+        )

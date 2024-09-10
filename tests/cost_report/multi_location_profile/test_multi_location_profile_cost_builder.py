@@ -19,7 +19,6 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_re
     CofferdamReinforcementProfile,
 )
 from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
-from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
 from tests.acceptance_scenarios.layers_cases import LayersCases
 
 
@@ -36,7 +35,7 @@ class TestMultiLocationProfileCostReportBuilder:
         _builder.surroundings = SurroundingsWrapper()
         _builder.koswat_costs_settings = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
-        _p_surrounding.distance_to_surroundings = []
+        _p_surrounding.distance_to_surroundings_dict = {}
         _p_surrounding.location = Point(2.4, 4.2)
         _builder.surroundings.buildings_polderside = KoswatSurroundingsPolderside()
         _builder.surroundings.buildings_polderside.points = [_p_surrounding]

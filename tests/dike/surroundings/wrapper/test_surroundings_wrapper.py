@@ -15,12 +15,12 @@ class TestSurroundingsWrapper:
         assert not _surroundings.locations
 
     def _to_surrounding_point(
-        self, location: Point, distance: str
+        self, location: Point, distance: list[float]
     ) -> PointSurroundings:
         _ps = PointSurroundings()
         _ps.location = location
-        if distance:
-            _ps.distance_to_surroundings += distance
+        for _distance in distance:
+            _ps.distance_to_surroundings_dict[_distance] = 1
         return _ps
 
     def test_set_buildings_polderside(self):
@@ -70,16 +70,17 @@ class TestSurroundingsWrapper:
         _waters_polderside.points = list(
             map(self._to_surrounding_point, _locations, _distances[2])
         )
-        _surroundings = SurroundingsWrapper()
+        _surroundings = SurroundingsWrapper(
+            buildings_polderside=_buildings_polderside,
+            railways_polderside=_railways_polderside,
+            waters_polderside=_waters_polderside,
+            apply_buildings=True,
+            apply_railways=True,
+            apply_waters=False,
+        )
         assert isinstance(_surroundings, SurroundingsWrapper)
 
         # 2. Run test.
-        _surroundings.buildings_polderside = _buildings_polderside
-        _surroundings.railways_polderside = _railways_polderside
-        _surroundings.waters_polderside = _waters_polderside
-        _surroundings.apply_buildings = True
-        _surroundings.apply_railways = True
-        _surroundings.apply_waters = False
         _safe_points = _surroundings.get_locations_after_distance(12)
 
         # 3. Verify expectations.

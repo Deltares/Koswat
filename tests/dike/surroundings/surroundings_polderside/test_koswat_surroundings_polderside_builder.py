@@ -1,3 +1,5 @@
+from typing import Callable
+
 import pytest
 from shapely.geometry import Point
 
@@ -33,14 +35,6 @@ class TestKoswatSurroundingsPoldersideBuilder:
         assert not _builder.koswat_shp_fom
         assert not _builder.koswat_csv_fom
 
-    def _as_surrounding_point(
-        self, location: Point, distances: list[float]
-    ) -> PointSurroundings:
-        _ps = PointSurroundings()
-        _ps.location = location
-        _ps.distance_to_surroundings = distances
-        return _ps
-
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):
         # 1. Define test data.
         _builder = KoswatSurroundingsPoldersideBuilder()
@@ -64,15 +58,19 @@ class TestKoswatSurroundingsPoldersideBuilder:
             pytest.param(Point(2.401, 4.201), id="With some decimals"),
         ],
     )
-    def test_find_conflicting_point_idx_returns_value(self, limit_point: Point):
+    def test_find_conflicting_point_idx_returns_value(
+        self,
+        limit_point: Point,
+        surroundings_point_builder: Callable[[Point, list[float]], PointSurroundings],
+    ):
         # 1. Define test data.
         _builder = KoswatSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
-            self._as_surrounding_point(Point(2.4, 2.4), []),
-            self._as_surrounding_point(Point(4.2, 2.4), []),
-            self._as_surrounding_point(Point(2.4, 4.2), []),
-            self._as_surrounding_point(Point(4.2, 4.2), []),
+            surroundings_point_builder(Point(2.4, 2.4), []),
+            surroundings_point_builder(Point(4.2, 2.4), []),
+            surroundings_point_builder(Point(2.4, 4.2), []),
+            surroundings_point_builder(Point(4.2, 4.2), []),
         ]
 
         # 2. Run test.
@@ -111,7 +109,10 @@ class TestKoswatSurroundingsPoldersideBuilder:
         # 3. Verify expectations.
         assert _found_points == _expected_points
 
-    def test_build_given_valid_data_then_returns_koswat_building_polderside(self):
+    def test_build_given_valid_data_then_returns_koswat_building_polderside(
+        self,
+        surroundings_point_builder: Callable[[Point, list[float]], PointSurroundings],
+    ):
         # 1. Define test data
         _end_point = Point(4.2, 4.2)
         _start_point = Point(4.2, 2.4)
@@ -121,13 +122,14 @@ class TestKoswatSurroundingsPoldersideBuilder:
             _end_point,
         ]
         _builder = KoswatSurroundingsPoldersideBuilder()
-        _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
-        _builder.koswat_csv_fom.points_surroundings_list = [
-            self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
-            self._as_surrounding_point(_start_point, [2.4]),
-            self._as_surrounding_point(Point(2.4, 4.2), [2.4]),
-            self._as_surrounding_point(_end_point, [2.4]),
-        ]
+        _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom(
+            points_surroundings_list=[
+                surroundings_point_builder(Point(2.4, 2.4), [2.4]),
+                surroundings_point_builder(_start_point, [2.4]),
+                surroundings_point_builder(Point(2.4, 4.2), [2.4]),
+                surroundings_point_builder(_end_point, [2.4]),
+            ]
+        )
         assert _builder.koswat_csv_fom.is_valid()
         _builder.koswat_shp_fom = KoswatDikeLocationsShpFom()
         _builder.koswat_shp_fom.end_point = _end_point
@@ -143,14 +145,14 @@ class TestKoswatSurroundingsPoldersideBuilder:
 
     def test_from_files_then_build_returns_expected_model(self):
         # 1. Define test data.
-        _csv_test_file = (
-            test_data / "csv_reader" / "Omgeving" / "T_10_3_bebouwing_binnendijks.csv"
+        _csv_test_file = test_data.joinpath(
+            "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks.csv"
         )
-        _shp_test_file = (
-            test_data
-            / "shp_reader"
-            / "Dijkvak"
-            / "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp"
+
+        _shp_test_file = test_data.joinpath(
+            "shp_reader",
+            "Dijkvak",
+            "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp",
         )
         assert _csv_test_file.is_file()
         assert _shp_test_file.is_file()

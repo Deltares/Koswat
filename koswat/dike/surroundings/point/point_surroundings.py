@@ -1,5 +1,6 @@
 import math
 from dataclasses import dataclass, field
+from xml.sax.handler import property_encoding
 
 from shapely.geometry import Point
 
@@ -13,7 +14,9 @@ class PointSurroundings:
     section: str = ""
     traject_order: int = -1
     location: Point | None = None
-    distance_to_surroundings: list[float] = field(default_factory=lambda: [])
+    distance_to_surroundings_dict: dict[float, float] = field(
+        default_factory=lambda: {}
+    )
 
     def __hash__(self) -> int:
         """
@@ -42,6 +45,16 @@ class PointSurroundings:
         )
 
     @property
+    def surroundings_distances(self) -> list[float]:
+        """
+        Returns the ordered list of distances where a surrounding of any type appears.
+
+        Returns:
+            list[float]: List of distances to a surrounding.
+        """
+        return list(sorted(self.distance_to_surroundings_dict.keys()))
+
+    @property
     def closest_surrounding(self) -> float:
         """
         Distance to the closest surrounding (building/railway/water). When no surroundings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
@@ -49,4 +62,4 @@ class PointSurroundings:
         Returns:
             float: Distance to the closest surrounding.
         """
-        return min(self.distance_to_surroundings, default=math.nan)
+        return min(self.distance_to_surroundings_dict.keys(), default=math.nan)

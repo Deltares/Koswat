@@ -1,6 +1,7 @@
 import copy
 import logging
 import math
+from collections import defaultdict
 from dataclasses import dataclass
 
 from shapely.geometry import Point
@@ -61,12 +62,15 @@ class SurroundingsWrapper:
 
         def _match_locations(
             point1: PointSurroundings, point2: PointSurroundings
-        ) -> list[float]:
+        ) -> dict[float, float]:
             if point1.location != point2.location:
                 logging.warning(
                     f"Mismatching railway polderside location {point2.location}"
                 )
-            return point2.distance_to_surroundings + point1.distance_to_surroundings
+            _matched_locations_dict = defaultdict(lambda: 0)
+            for _key, _value in point1.distance_to_surroundings_dict.items():
+                _matched_locations_dict[_key] += _value
+            return _matched_locations_dict
 
         if not self.buildings_polderside:
             return []
@@ -75,15 +79,15 @@ class SurroundingsWrapper:
 
         for _p, _point in enumerate(_points):
             if not self.apply_buildings:
-                _points[_p].distance_to_surroundings = []
+                _points[_p].distance_to_surroundings_dict = {}
 
             if self.apply_railways and self.railways_polderside:
-                _points[_p].distance_to_surroundings = _match_locations(
+                _points[_p].distance_to_surroundings_dict = _match_locations(
                     _point, self.railways_polderside.points[_p]
                 )
 
             if self.apply_waters and self.waters_polderside:
-                _points[_p].distance_to_surroundings = _match_locations(
+                _points[_p].distance_to_surroundings_dict = _match_locations(
                     _point, self.waters_polderside.points[_p]
                 )
 

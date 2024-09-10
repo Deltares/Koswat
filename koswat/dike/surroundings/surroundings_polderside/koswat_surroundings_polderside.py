@@ -17,7 +17,10 @@ class KoswatSurroundingsPolderside(KoswatSurroundingsProtocol):
 
     @property
     def conflicting_points(self) -> list[PointSurroundings]:
-        return [_cf for _cf in self.points if any(_cf.distance_to_surroundings)]
+        """
+        TODO: Seems unused, remove when possible
+        """
+        return [_cf for _cf in self.points if any(_cf.surroundings_distances)]
 
     def get_classify_surroundings(self) -> dict[float, list[PointSurroundings]]:
         """

@@ -132,7 +132,7 @@ class TestKoswatSurroundingsImporter:
             surroundings_section_fom_fixture
         )
 
-        # 3. Verify expectations (specific for the caes present in the test data).
+        # 3. Verify expectations (specific for the case present in the test data).
         assert len(_surroundings_wrapper_list) == 2
         for _sw in _surroundings_wrapper_list:
             assert isinstance(_sw, SurroundingsWrapper)

@@ -1,4 +1,5 @@
 import math
+from dataclasses import dataclass, field
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
@@ -7,13 +8,10 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
 )
 
 
+@dataclass
 class MultiLocationProfileCostReport(CostReportProtocol):
-    locations: list[PointSurroundings]
-    profile_cost_report: ProfileCostReport
-
-    def __init__(self) -> None:
-        self.locations = []
-        self.profile_cost_report = None
+    locations: list[PointSurroundings] = field(default_factory=lambda: [])
+    profile_cost_report: ProfileCostReport = None
 
     @property
     def cost_per_km(self) -> float:

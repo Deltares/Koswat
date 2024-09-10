@@ -125,7 +125,7 @@ class TestKoswatSummaryBuilder:
         _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.costs_setting = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
-        _p_surrounding.distance_to_surroundings = []
+        _p_surrounding.distance_to_surroundings_dict = []
         _p_surrounding.location = Point(2.4, 4.2)
         _run_settings.surroundings.buildings_polderside = KoswatSurroundingsPolderside()
         _run_settings.surroundings.buildings_polderside.points = [_p_surrounding]
