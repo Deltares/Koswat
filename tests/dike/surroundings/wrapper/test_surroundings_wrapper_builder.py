@@ -65,13 +65,15 @@ class TestSurroundingsWrapperBuilder:
         _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
         _surroundings_wrapper.buildings_polderside = _surroundings_csv_fom
 
-        _surroundings_section = SurroundingsSectionFom()
-        _surroundings_section.buitendijks = False
-        _surroundings_section.bebouwing = True
-        _surroundings_section.spoorwegen = False
-        _surroundings_section.water = False
-        _surroundings_section.constructieafstand = 4.2
-        _surroundings_section.constructieovergang = 2.4
+        _surroundings_section = SurroundingsSectionFom(
+            surroundings_database_dir=None,
+            buitendijks=False,
+            bebouwing=True,
+            spoorwegen=False,
+            water=False,
+            constructieafstand=4.2,
+            constructieovergang=2.4,
+        )
 
         # Traject wrapper
         _koswat_shp_fom = KoswatDikeLocationsShpFom()
