@@ -16,8 +16,9 @@ class InfraCostsEnum(enum.Enum):
 
 
 class ConstructionTypeEnum(enum.Enum):
-    CB_DAMWAND = 0
-    DAMWAND_ONVERANKERD = 1
-    DAMWAND_VERANKERD = 2
-    DIEPWAND = 3
-    KISTDAM = 4
+    VZG = 1
+    CB_DAMWAND = 2
+    DAMWAND_ONVERANKERD = 3
+    DAMWAND_VERANKERD = 4
+    DIEPWAND = 5
+    KISTDAM = 6

@@ -13,6 +13,9 @@ from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
     KoswatStabilityWallSettings,
 )
+from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
+    KoswatVPSSettings,
+)
 
 
 @dataclass
@@ -24,6 +27,7 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     soil_settings: KoswatSoilSettings = field(
         default_factory=lambda: KoswatSoilSettings()
     )
+    vps_settings: KoswatVPSSettings = field(default_factory=lambda: KoswatVPSSettings())
     piping_wall_settings: KoswatPipingWallSettings = field(
         default_factory=lambda: KoswatPipingWallSettings()
     )

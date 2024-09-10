@@ -166,8 +166,11 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         _settings.cb_damwand = _construction_fom_to_construction_factor(
             fom_costs.construction_cost_cb_wall
         )
+        _settings.vzg = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_vzg
+        )
         _settings.damwand_onverankerd = _construction_fom_to_construction_factor(
-            fom_costs.construction_cost_cb_wall
+            fom_costs.construction_cost_damwall_unanchored
         )
         _settings.damwand_verankerd = _construction_fom_to_construction_factor(
             fom_costs.construction_cost_damwall_anchored
