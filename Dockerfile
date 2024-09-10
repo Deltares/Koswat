@@ -1,0 +1,20 @@
+# To build this docker run:
+# `docker build -t koswat`
+
+FROM python:3.10
+
+RUN apt-get update
+
+# Copy the directories with the local koswat.
+WORKDIR /koswat_src
+COPY README.md LICENSE pyproject.toml poetry.lock /koswat_src/
+COPY koswat /koswat_src/koswat
+
+# Install the required packages
+RUN pip install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install --without dev,docs
+RUN apt-get clean autoclean
+
+# Define the endpoint
+CMD ["python3"]
