@@ -116,9 +116,15 @@ class TestKoswatSurroundingsImporter:
         _importer = KoswatSurroundingsImporter()
         _importer.traject_loc_shp_file = _shp_file
         _importer.selected_locations = [
+            # For traject 10-1
             "10-1-3-C-1-D-1",
-            "10-1-4-C-1-B",
             "10-1-3-C-1-A",
+            # For traject 10-2
+            "10-1-4-C-1-B",
+            "10-1-4-B-1-B-1",
+            # For traject 10-3
+            "10-1-2-A-1-A",
+            "10-1-1-A-1-A",
         ]
 
         # 2. Run test.
@@ -127,11 +133,12 @@ class TestKoswatSurroundingsImporter:
         )
 
         # 3. Verify expectations (specific for the caes present in the test data).
-        assert any(_surroundings_wrapper_list)
+        assert len(_surroundings_wrapper_list) == 2
         for _sw in _surroundings_wrapper_list:
             assert isinstance(_sw, SurroundingsWrapper)
             assert isinstance(_sw.buildings_polderside, KoswatSurroundingsPolderside)
-            assert isinstance(_sw.railways_polderside, KoswatSurroundingsPolderside)
+            if _sw.traject != "10-2":
+                assert isinstance(_sw.railways_polderside, KoswatSurroundingsPolderside)
             assert isinstance(_sw.waters_polderside, KoswatSurroundingsPolderside)
             assert isinstance(
                 _sw.roads_class_2_polderside, KoswatSurroundingsPolderside
