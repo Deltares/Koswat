@@ -11,6 +11,7 @@ class KoswatVPSSettings(KoswatConfigProtocol):
     """
 
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
+    construction_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     binnen_berm_breedte_vps: float = 0
 
