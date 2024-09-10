@@ -111,23 +111,22 @@ class QuantityCostParameters:
                 self.new_core_volume.total_cost,
                 self.new_core_volume.total_cost_with_surtax,
             )
-        elif material_type == KoswatMaterialType.CLAY:
+        if material_type == KoswatMaterialType.CLAY:
             if not self.new_clay_volume:
                 return math.nan, math.nan
             return (
                 self.new_clay_volume.total_cost,
                 self.new_clay_volume.total_cost_with_surtax,
             )
-        elif material_type == KoswatMaterialType.GRASS:
+        if material_type == KoswatMaterialType.GRASS:
             if not self.new_grass_volume:
                 return math.nan, math.nan
             return (
                 self.new_grass_volume.total_cost,
                 self.new_grass_volume.total_cost_with_surtax,
             )
-        else:
-            raise ValueError(
-                "Material {} currently not supported.".format(
-                    material_type.name.capitalize()
-                )
+        raise ValueError(
+            "Material {} currently not supported.".format(
+                material_type.name.capitalize()
             )
+        )
