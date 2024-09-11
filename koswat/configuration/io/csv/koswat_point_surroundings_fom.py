@@ -1,4 +1,3 @@
-import math
 from dataclasses import dataclass, field
 
 from shapely.geometry import Point

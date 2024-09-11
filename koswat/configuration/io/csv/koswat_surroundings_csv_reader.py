@@ -1,6 +1,8 @@
 import re
 from pathlib import Path
 
+from shapely import Point
+
 from koswat.configuration.io.csv.koswat_point_surroundings_fom import (
     KoswatPointSurroundingsFom,
 )
@@ -54,6 +56,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
             for e_idx, e_val in enumerate(csv_columns):
                 _float_eval = float(e_val)
                 if _float_eval == 0:
+                    # We are not interested in 'cells' without 'value'.
                     continue
                 _surroundings_matrix[distances_list[e_idx]] = _float_eval
             return _surroundings_matrix
@@ -61,6 +64,6 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
         return KoswatPointSurroundingsFom(
             section=entry[1],
             traject_order=entry[0],
-            location=(float(entry[2]), float(entry[3])),
+            location=Point(float(entry[2]), float(entry[3])),
             surroundings_matrix=csv_column_to_dict(entry[4:]),
         )

@@ -13,7 +13,7 @@ class PointSurroundings:
     section: str = ""
     traject_order: int = -1
     location: Point | None = None
-    distance_to_surroundings: list[float] = field(default_factory=lambda: [])
+    surroundings_matrix: dict[float, float] = field(default_factory=dict)
 
     def __hash__(self) -> int:
         """
@@ -44,9 +44,18 @@ class PointSurroundings:
     @property
     def closest_surrounding(self) -> float:
         """
-        Distance to the closest surrounding (building/railway/water). When no surroundings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
+        Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
 
         Returns:
             float: Distance to the closest surrounding.
         """
-        return min(self.distance_to_surroundings, default=math.nan)
+
+        return min(
+            (
+                _s_key
+                for _s_key, _s_value in self.surroundings_matrix.items()
+                # Ensure we do return a key which actually has a surrounding.
+                if _s_value > 0
+            ),
+            default=math.nan,
+        )

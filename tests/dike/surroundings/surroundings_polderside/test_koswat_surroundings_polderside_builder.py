@@ -20,15 +20,15 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
     PointSurroundings,
 )
 from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside_builder import (
-    KoswatSurroundingsPoldersideBuilder,
+    KoswatPointSurroundingsPoldersideBuilder,
 )
 from tests import test_data
 
 
 class TestKoswatSurroundingsPoldersideBuilder:
     def test_initialize_builder(self):
-        _builder = KoswatSurroundingsPoldersideBuilder()
-        assert isinstance(_builder, KoswatSurroundingsPoldersideBuilder)
+        _builder = KoswatPointSurroundingsPoldersideBuilder()
+        assert isinstance(_builder, KoswatPointSurroundingsPoldersideBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.koswat_shp_fom
         assert not _builder.koswat_csv_fom
@@ -43,7 +43,7 @@ class TestKoswatSurroundingsPoldersideBuilder:
 
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):
         # 1. Define test data.
-        _builder = KoswatSurroundingsPoldersideBuilder()
+        _builder = KoswatPointSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = []
 
@@ -66,7 +66,7 @@ class TestKoswatSurroundingsPoldersideBuilder:
     )
     def test_find_conflicting_point_idx_returns_value(self, limit_point: Point):
         # 1. Define test data.
-        _builder = KoswatSurroundingsPoldersideBuilder()
+        _builder = KoswatPointSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), []),
@@ -91,7 +91,7 @@ class TestKoswatSurroundingsPoldersideBuilder:
     def test_get_conflicting_points_regardless_of_index_order(
         self, start_idx: int, end_idx: int
     ):
-        _builder = KoswatSurroundingsPoldersideBuilder()
+        _builder = KoswatPointSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             Point(2.4, 2.4),
@@ -120,7 +120,7 @@ class TestKoswatSurroundingsPoldersideBuilder:
             Point(2.4, 4.2),
             _end_point,
         ]
-        _builder = KoswatSurroundingsPoldersideBuilder()
+        _builder = KoswatPointSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _builder.koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
@@ -160,7 +160,7 @@ class TestKoswatSurroundingsPoldersideBuilder:
         _koswat_wrapper_shp_fom = _shp_fom_builder.read(_shp_test_file)
 
         # 2. Run test
-        _builder = KoswatSurroundingsPoldersideBuilder()
+        _builder = KoswatPointSurroundingsPoldersideBuilder()
         _builder.koswat_csv_fom = KoswatSurroundingsCsvReader().read(_csv_test_file)
         _builder.koswat_shp_fom = _koswat_wrapper_shp_fom[0]
         _buildings = _builder.build()

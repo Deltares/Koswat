@@ -120,9 +120,9 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
         self,
         csv_dir: Path,
     ) -> KoswatTrajectSurroundingsWrapperCsvFom:
-        _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
-        _surroundings_wrapper.traject = csv_dir.stem
+        _surroundings_wrapper_fom = KoswatTrajectSurroundingsWrapperCsvFom()
+        _surroundings_wrapper_fom.traject = csv_dir.stem
         for _csv_file in csv_dir.glob("*.csv"):
             _type, _csv_fom = self._csv_file_to_fom(_csv_file, csv_dir.stem)
-            setattr(_surroundings_wrapper, _type, _csv_fom)
-        return _surroundings_wrapper
+            setattr(_surroundings_wrapper_fom, _type, _csv_fom)
+        return _surroundings_wrapper_fom

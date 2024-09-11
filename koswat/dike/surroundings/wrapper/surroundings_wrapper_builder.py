@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Type
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsWrapperCsvFom,
@@ -10,11 +11,15 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols import BuilderProtocol
+from koswat.dike.surroundings.koswat_surroundings_protocol import (
+    KoswatSurroundingsProtocol,
+)
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
     KoswatSurroundingsPolderside,
 )
 from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside_builder import (
-    KoswatSurroundingsPoldersideBuilder,
+    KoswatPointSurroundingsPoldersideBuilder,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
@@ -29,14 +34,15 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     surroundings_fom: KoswatTrajectSurroundingsWrapperCsvFom
     surroundings_section: SurroundingsSectionFom
 
-    def _get_surroundings_from_fom(
+    def _get_polderside_surroundings_from_fom(
         self, csv_fom: KoswatTrajectSurroundingsWrapperCsvFom
-    ) -> KoswatSurroundingsPolderside | None:
-        _builder = KoswatSurroundingsPoldersideBuilder()
-        _builder.koswat_shp_fom = self.trajects_fom
-        _builder.koswat_csv_fom = csv_fom
+    ) -> list[PointSurroundings]:
+        _builder = KoswatPointSurroundingsPoldersideBuilder(
+            koswat_shp_fom=self.trajects_fom,
+            koswat_csv_fom=csv_fom,
+        )
         if not _builder.koswat_csv_fom:
-            return None
+            return []
         return _builder.build()
 
     def build(self) -> SurroundingsWrapper:
@@ -49,58 +55,70 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
                 "A KoswatTrajectSurroundingsWrapperCsvFom needs to be specified."
             )
 
-        _surroundings = SurroundingsWrapper()
-        _surroundings.dike_section = self.trajects_fom.dike_section
-        _surroundings.traject = self.trajects_fom.dike_traject
-        _surroundings.subtraject = self.trajects_fom.dike_subtraject
-
-        _surroundings.reinforcement_min_separation = (
-            self.surroundings_section.constructieafstand
+        _surroundings = SurroundingsWrapper(
+            dike_section=self.trajects_fom.dike_section,
+            traject=self.trajects_fom.dike_traject,
+            subtraject=self.trajects_fom.dike_subtraject,
+            reinforcement_min_separation=self.surroundings_section.constructieafstand,
+            reinforcement_min_buffer=self.surroundings_section.constructieovergang,
+            apply_waterside=self.surroundings_section.buitendijks,
+            apply_buildings=self.surroundings_section.bebouwing,
+            apply_railways=self.surroundings_section.spoorwegen,
+            apply_waters=self.surroundings_section.water,
         )
-        _surroundings.reinforcement_min_buffer = (
-            self.surroundings_section.constructieovergang
-        )
-
-        _surroundings.apply_waterside = self.surroundings_section.buitendijks
-        _surroundings.apply_buildings = self.surroundings_section.bebouwing
-        _surroundings.apply_railways = self.surroundings_section.spoorwegen
-        _surroundings.apply_waters = self.surroundings_section.water
 
         # For now we only include:
         # buildings_polderside (mandatory)
-        _surroundings.buildings_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.buildings_polderside
+        _surroundings.buildings_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.buildings_polderside
+            )
         )
         if not _surroundings.buildings_polderside:
             raise ValueError(
-                "Building surroundings CSV not provided or formatted well."
+                "Building surroundings CSV not provided or well formatted."
             )
+
         # railway_polderside (optional)
-        _surroundings.railways_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.railways_polderside
+        _surroundings.railways_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.railways_polderside
+            )
         )
 
         # water_polderside (optional)
-        _surroundings.waters_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.waters_polderside
+        _surroundings.waters_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.waters_polderside
+            )
         )
 
         # roads (optional)
-        _surroundings.roads_class_2_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.roads_class_2_polderside
+        _surroundings.roads_class_2_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.roads_class_2_polderside
+            )
         )
-        _surroundings.roads_class_7_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.roads_class_7_polderside
+        _surroundings.roads_class_7_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.roads_class_7_polderside
+            )
         )
 
-        _surroundings.roads_class_24_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.roads_class_24_polderside
+        _surroundings.roads_class_24_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.roads_class_24_polderside
+            )
         )
-        _surroundings.roads_class_47_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.roads_class_47_polderside
+        _surroundings.roads_class_47_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.roads_class_47_polderside
+            )
         )
-        _surroundings.roads_class_unknown_polderside = self._get_surroundings_from_fom(
-            self.surroundings_fom.roads_class_unknown_polderside
+        _surroundings.roads_class_unknown_polderside.points = (
+            self._get_polderside_surroundings_from_fom(
+                self.surroundings_fom.roads_class_unknown_polderside
+            )
         )
 
         return _surroundings
