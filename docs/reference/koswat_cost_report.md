@@ -61,7 +61,6 @@ acceptance
 |   |   |   +-- Verticale piping oplossing
 |   |   |       |   ...
 |   |   |
-
 |   |   +-- scenario_scenario2
 |   |       |   ...
 ```
