@@ -1,8 +1,5 @@
 from koswat.configuration.settings import KoswatScenario
-from koswat.configuration.settings.koswat_general_settings import (
-    ConstructionTypeEnum,
-    SurtaxFactorEnum,
-)
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )

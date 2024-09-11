@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 from matplotlib import pyplot
-from matplotlib.figure import Figure
 
 
 def get_cmap(n_colors: int, name="hsv"):
