@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsWrapperCsvFom,
 )
@@ -17,15 +19,15 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
+@dataclass
 class SurroundingsWrapperBuilder(BuilderProtocol):
+    """
+    Dataclass to wrapp all required properties to generate a `Surroundings` instance.
+    """
+
     trajects_fom: KoswatDikeLocationsShpFom
     surroundings_fom: KoswatTrajectSurroundingsWrapperCsvFom
     surroundings_section: SurroundingsSectionFom
-
-    def __init__(self) -> None:
-        self.trajects_fom = None
-        self.surroundings_fom = None
-        self.surroundings_section = None
 
     def _get_surroundings_from_fom(
         self, csv_fom: KoswatTrajectSurroundingsWrapperCsvFom
@@ -64,7 +66,8 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         _surroundings.apply_railways = self.surroundings_section.spoorwegen
         _surroundings.apply_waters = self.surroundings_section.water
 
-        # For now we only include buildings_polderside(mandatory)/railway_polderside(optional)/water_polderside(optional)
+        # For now we only include:
+        # buildings_polderside (mandatory)
         _surroundings.buildings_polderside = self._get_surroundings_from_fom(
             self.surroundings_fom.buildings_polderside
         )
@@ -72,11 +75,32 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             raise ValueError(
                 "Building surroundings CSV not provided or formatted well."
             )
+        # railway_polderside (optional)
         _surroundings.railways_polderside = self._get_surroundings_from_fom(
             self.surroundings_fom.railways_polderside
         )
+
+        # water_polderside (optional)
         _surroundings.waters_polderside = self._get_surroundings_from_fom(
             self.surroundings_fom.waters_polderside
+        )
+
+        # roads (optional)
+        _surroundings.roads_class_2_polderside = self._get_surroundings_from_fom(
+            self.surroundings_fom.roads_class_2_polderside
+        )
+        _surroundings.roads_class_7_polderside = self._get_surroundings_from_fom(
+            self.surroundings_fom.roads_class_7_polderside
+        )
+
+        _surroundings.roads_class_24_polderside = self._get_surroundings_from_fom(
+            self.surroundings_fom.roads_class_24_polderside
+        )
+        _surroundings.roads_class_47_polderside = self._get_surroundings_from_fom(
+            self.surroundings_fom.roads_class_47_polderside
+        )
+        _surroundings.roads_class_unknown_polderside = self._get_surroundings_from_fom(
+            self.surroundings_fom.roads_class_unknown_polderside
         )
 
         return _surroundings
