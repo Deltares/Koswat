@@ -19,10 +19,10 @@ from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside_builder import (
+from koswat.dike.surroundings.point.koswat_point_surroundings_polderside_builder import (
     KoswatPointSurroundingsPoldersideBuilder,
 )
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests import test_data
 
 
