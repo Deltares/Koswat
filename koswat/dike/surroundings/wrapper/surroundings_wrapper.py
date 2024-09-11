@@ -123,7 +123,7 @@ class SurroundingsWrapper:
         """
         _surroundings = {
             _prop: _value
-            for _prop, _value in self.__dict__
+            for _prop, _value in self.__dict__.items()
             if isinstance(_value, KoswatSurroundingsProtocol)
         }
 
