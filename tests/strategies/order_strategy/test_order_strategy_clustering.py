@@ -7,6 +7,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
+    VPSReinforcementProfile,
+)
 from koswat.strategies.order_strategy.order_cluster import OrderCluster
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.order_strategy.order_strategy_base import OrderStrategyBase
@@ -51,11 +54,11 @@ class TestOrderStrategyClustering:
         # 3. Verify expectations.
         assert all(
             _sr.selected_measure == SoilReinforcementProfile
-            for _sr in example_location_reinforcements_with_buffering[0:2]
+            for _sr in example_location_reinforcements_with_buffering[0:1]
         )
         assert all(
             _sr.selected_measure == StabilityWallReinforcementProfile
-            for _sr in example_location_reinforcements_with_buffering[2:7]
+            for _sr in example_location_reinforcements_with_buffering[1:7]
         )
         assert all(
             _sr.selected_measure == CofferdamReinforcementProfile
@@ -123,7 +126,7 @@ class TestOrderStrategyClustering:
         )
 
         # 3. Verify expectations.
-        assert len(_order_clusters) == 4
+        assert len(_order_clusters) == 5
 
         def assert_valid_cluster(cluster: OrderCluster) -> bool:
             assert isinstance(cluster, OrderCluster)

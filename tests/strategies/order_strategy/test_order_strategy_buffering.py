@@ -27,7 +27,7 @@ class TestOrderStrategyBuffering:
         _strategy.reinforcement_min_buffer = (
             example_strategy_input.reinforcement_min_buffer
         )
-        _expected_result_idx = [0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
+        _expected_result_idx = [0, 1, 3, 3, 3, 3, 0, 4, 4, 4]
         _expected_result = list(
             map(lambda x: _reinforcement_order[x], _expected_result_idx)
         )
@@ -60,4 +60,4 @@ class TestOrderStrategyBuffering:
         _mask_result = _strategy._get_buffer_mask(_reinforcements)
 
         # 3. Verify expectations.
-        assert _mask_result == [0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
+        assert _mask_result == [0, 1, 3, 3, 3, 3, 0, 4, 4, 4]

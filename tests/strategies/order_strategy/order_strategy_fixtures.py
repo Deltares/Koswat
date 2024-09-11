@@ -7,6 +7,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
+    VPSReinforcementProfile,
+)
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -21,7 +24,7 @@ def example_strategy_input() -> StrategyInput:
     _matrix = {
         PointSurroundings(traject_order=0): [SoilReinforcementProfile],
         PointSurroundings(traject_order=1): [SoilReinforcementProfile],
-        PointSurroundings(traject_order=2): [SoilReinforcementProfile],
+        PointSurroundings(traject_order=2): [VPSReinforcementProfile],
         PointSurroundings(traject_order=3): [StabilityWallReinforcementProfile],
         PointSurroundings(traject_order=4): [StabilityWallReinforcementProfile],
         PointSurroundings(traject_order=5): [SoilReinforcementProfile],
@@ -40,7 +43,7 @@ def example_strategy_input() -> StrategyInput:
 def example_location_reinforcements_with_buffering(
     example_strategy_input: StrategyInput,
 ) -> list[StrategyLocationReinforcement]:
-    _result_after_buffering_idx = [0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
+    _result_after_buffering_idx = [0, 1, 3, 3, 3, 3, 0, 4, 4, 4]
     _measure_order = OrderStrategy.get_default_order_for_reinforcements()
     _location_reinforcements = []
     for _idx, _location in enumerate(example_strategy_input.locations_matrix.keys()):
