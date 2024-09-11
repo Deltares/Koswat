@@ -119,7 +119,7 @@ class TestReadIniConfigurations:
         assert _ini_fom.grondmaatregel_section.max_bermhoogte_factor == 0.4
         assert _ini_fom.grondmaatregel_section.factor_toename_bermhoogte == 0.05
 
-        # Verticale piping solution section
+        # Verticale piping oplossing section
         assert isinstance(_ini_fom.vps_section, VPSReinforcementSectionFom)
         assert _ini_fom.vps_section.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
         assert (
