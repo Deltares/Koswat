@@ -16,7 +16,6 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
-from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
@@ -40,8 +39,8 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
     def import_from(
         self, surroundings_section: SurroundingsSectionFom
     ) -> list[SurroundingsWrapper]:
-        from_path = surroundings_section.surroundings_database_dir
-        if not isinstance(from_path, Path):
+        _from_path = surroundings_section.surroundings_database_dir
+        if not isinstance(_from_path, Path):
             raise ValueError("No surroundings csv directory path given.")
         if not isinstance(self.traject_loc_shp_file, Path):
             raise ValueError("No traject shp file path given.")
@@ -54,7 +53,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
             _dike_location_shp, lambda x: x.dike_traject
         ):
             _csv_traject = _shp_traject.replace("-", "_").strip()
-            _csv_dir = from_path / _csv_traject
+            _csv_dir = _from_path.joinpath(_csv_traject)
             if not _csv_dir.is_dir():
                 logging.warning(
                     "No surroundings files found for traject {}".format(_shp_traject)
@@ -63,12 +62,14 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
 
             _surroudings_fom = self._csv_dir_to_fom(_csv_dir)
             for _location in _location_list:
-                _builder = SurroundingsWrapperBuilder()
-                _builder.trajects_fom = _location
-                _builder.surroundings_fom = _surroudings_fom
-                _builder.surroundings_section = surroundings_section
                 try:
-                    _surroundings_wrappers.append(_builder.build())
+                    _surroundings_wrappers.append(
+                        SurroundingsWrapperBuilder(
+                            trajects_fom=_location,
+                            surroundings_fom=_surroudings_fom,
+                            surroundings_section=surroundings_section,
+                        ).build()
+                    )
                 except Exception as e_info:
                     logging.error(
                         "Could not load surroundings for dike section {}. Detailed error: {}".format(
