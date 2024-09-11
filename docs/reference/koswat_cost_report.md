@@ -41,6 +41,7 @@ acceptance
 |   |   |   |   summary_costs.csv
 |   |   |   |   summary_locations.csv
 |   |   |   |   Stabiliteitswand.png
+|   |   |   |   Verticale piping oplossing.png
 |   |   |   |
 |   |   |   +-- Grondmaatregel profiel
 |   |   |       |   added_Grondmaatregelprofiel_CLAY.png
@@ -57,6 +58,10 @@ acceptance
 |   |   |   +-- Stabiliteitswand
 |   |   |       |   ...
 |   |   |
+|   |   |   +-- Verticale piping oplossing
+|   |   |       |   ...
+|   |   |
+
 |   |   +-- scenario_scenario2
 |   |       |   ...
 ```

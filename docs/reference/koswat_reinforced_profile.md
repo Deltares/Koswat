@@ -17,6 +17,6 @@ A reinforcement profile implements the `ReinforcementProfileProtocol`, which is 
 We have two main different sort of reinfocements which contain also subtypes for said reinforcements: 
 
 - __Outside slope reinforcement__: Cofferdam (_kistdam_), based on the `OutsideSlopeReinforcementProfile`.
-- __Standard reinforcement__: Piping wall (_kwelscherm_), soil (_grondmaatregel profiel_), stability wall (_stabiliteitswand_). The previous being based on the `StandardReinforcementProfile`.
+- __Standard reinforcement__: Piping wall (_kwelscherm_), soil (_grondmaatregel profiel_), stability wall (_stabiliteitswand_), vertical piping solution (_verticale piping oplossing_). The previous being based on the `StandardReinforcementProfile`.
 
 In addition, the above mentioned reinforcements can also implement their own `ReinforcementInputProfileProtocol`, which are after all extensions of the `KoswatInputProfileBase` with extra properties.

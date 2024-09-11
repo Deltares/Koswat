@@ -28,9 +28,10 @@ This strategy is the first and default of all defined strategies. Its criteria i
 The predefined (hardcoded) reinforcement's order, from least to most restrictive, is as follows:
 
 1. `SoilReinforcementProfile`
-2. `PipingWallReinforcementProfile`
-3. `StabilityWallReinforcementProfile`
-4. `CofferDamReinforcementProfile`
+2. `VPSReinforcementProfile`
+3. `PipingWallReinforcementProfile`
+4. `StabilityWallReinforcementProfile`
+5. `CofferDamReinforcementProfile`
 
 #### Reinforcement grouping
 
@@ -45,6 +46,8 @@ Simplified representation for a traject with 10 locations. This example is also 
     "SoilReinforcementProfile": [
         "Location_000",
         "Location_001",
+    ],
+    "VSPReinforcementProfile": [
         "Location_002",
     ],
     "StabilityWallReinforcementProfile": [
@@ -67,7 +70,7 @@ Simplified representation for a traject with 10 locations. This example is also 
 
 Given a [reinforcement grouping](#reinforcement-grouping), we will create a dictionary of masks of size `NM` where `N` (the keys) is the number of available reinforcement types (`Type[ReinforcementProfileProtocol]`) and `M` the number of available locations. 
 
-__Note__: Masks' values are the position of a reinforcement type in the [reinforcement's order list](#reinforcment-order). So a location with`CofferDamReinforcementProfile` will have a 3 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
+__Note__: Masks' values are the position of a reinforcement type in the [reinforcement's order list](#reinforcment-order). So a location with `CofferDamReinforcementProfile` will have a 4 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
 
 __Steps breakdown__:
 
@@ -96,6 +99,8 @@ One simplified example, based on the [grouping example](#grouping-example), and 
 {
     "SoilReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+    "VPSReinforcementProfile": 
+        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
     "PipingWallReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
     "StabilityWallReinforcementProfile": 
@@ -107,22 +112,26 @@ One simplified example, based on the [grouping example](#grouping-example), and 
 2. Iterate over the clusters and update the masks' values:
 {
     "SoilReinforcementProfile": 
-        [0, 0, 0, 0, 0, 0 ,0, 0, 0, -1],
+        [ 0,  0,  0, -1,  0,  0 , 0,  0,  0, -1],
+    "VPSReinforcementProfile": 
+        [-1,  1,  1,  1, -1, -1 ,-1, -1, -1, -1],
     "PipingWallReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     "StabilityWallReinforcementProfile": 
-        [-1, -1, 2, 2, 2, 2 ,-1, -1, -1, -1],
+        [-1, -1,  3,  3,  3,  3, -1, -1, -1, -1],
     "CofferDamReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, 3, 3, 3],
+        [-1, -1, -1, -1, -1, -1 ,-1,  4,  4,  4],
 }
 
 3. Merge all masks and select their maximum value:
-[0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
+[0, 1, 3, 3, 3, 3, 0, 4, 4, 4]
 
 4. Update the cluster's locations:
 {
     "SoilReinforcementProfile": [
         "Location_000",
+    ],
+    "VPSReinforcementProfile": [
         "Location_001",
     ],
     "StabilityWallReinforcementProfile": [
@@ -180,10 +189,11 @@ One simplified example, based on the [buffering example](#buffering-example), an
 ```json
 1. List of unmerged clusters:
 [
-    (0, ["Location_000","Location_001",]),
-    (2, ["Location_002","Location_003","Location_004","Location_005",]),
+    (0, ["Location_000",]),
+    (1, ["Location_001",]),
+    (3, ["Location_002","Location_003","Location_004","Location_005",]),
     (0, ["Location_006",]),
-    (3, ["Location_007","Location_008","Location_009",]),
+    (4, ["Location_007","Location_008","Location_009",]),
 ]
 
 2. Iterate over each reinforcement type:
@@ -193,27 +203,41 @@ One simplified example, based on the [buffering example](#buffering-example), an
     ]
     2.1.1. Length = 1.
     2.1.2. Get a stronger neighbor,
-        - Left-neighbor reinforcement type = 2, 
-        - Right-neighbor reinforcement type = 3,
+        - Left-neighbor reinforcement type = 3,
+        - Right-neighbor reinforcement type = 4,
         - Left-neighbor is selected.
     2.1.3. Move locations to stronger neighbor.
     [
-        (2, ["Location_002", ... ,"Location_006"]),
+        (3, ["Location_002", ... ,"Location_006",]),
         (0, ["Location_006",]),
     ]
     2.1.4. Remove the current cluster from the available list.
-
-2.2. Target is "PipingWallReinforcementProfile" (idx=2), 
+2.2. Target is "VPSReinforcementProfile" (idx=1),
+    [
+        (1, ["Location_001",]),
+    ]
+    2.2.1. Length = 1
+    2.2.2. Get a stronger neighbor,
+        - Left-neighbor reinforcement type = 0
+        - Right-neighbor reinforcement type = 3
+        - Right-neighbor is selected
+    2.2.3. Move locations to stronger neighbor.
+    [
+        (1, ["Location_001",]),
+        (3, ["Location_001","Location_002","Location_003","Location_004","Location_005",]),
+    ]
+    2.2.4. Remove the current cluster from the available list.
+2.3. Target is "PipingWallReinforcementProfile" (idx=2), 
     - All clusters are compliant at this point.
-2.3. Target is "StabilityWallReinforcementProfile" (idx=3),
+2.4. Target is "StabilityWallReinforcementProfile" (idx=3),
     - All clusters are compliant at this point.
-2.4. "CofferDamReinforcementProfile" won't be checked as it's the last
+2.5. "CofferDamReinforcementProfile" won't be checked as it's the last
 reinforcement profile type, therefore the strongest.
 
 Resulting cluster:
     [
-        (0, ["Location_000","Location_001",]),
-        (2, ["Location_002","Location_003","Location_004","Location_005","Location_006"]),
-        (3, ["Location_007","Location_008","Location_009",]),
+        (0, ["Location_000",]),
+        (3, ["Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
+        (4, ["Location_007","Location_008","Location_009",]),
     ]
 ```
