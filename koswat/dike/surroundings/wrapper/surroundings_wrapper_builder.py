@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Type
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsWrapperCsvFom,
@@ -11,13 +10,7 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.koswat_surroundings_protocol import (
-    KoswatSurroundingsProtocol,
-)
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    KoswatSurroundingsPolderside,
-)
 from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside_builder import (
     KoswatPointSurroundingsPoldersideBuilder,
 )

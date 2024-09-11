@@ -16,9 +16,6 @@ from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    KoswatSurroundingsPolderside,
-)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
     KoswatSurroundingsInfrastructure,
     KoswatSurroundingsObstacle,

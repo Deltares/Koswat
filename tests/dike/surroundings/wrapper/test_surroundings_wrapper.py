@@ -1,10 +1,10 @@
 from shapely.geometry import Point
 
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    KoswatSurroundingsPolderside,
-    PointSurroundings,
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
+    KoswatSurroundingsObstacle,
+    SurroundingsWrapper,
 )
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
 class TestSurroundingsWrapper:
@@ -12,7 +12,7 @@ class TestSurroundingsWrapper:
         _surroundings = SurroundingsWrapper()
         assert isinstance(_surroundings, SurroundingsWrapper)
         assert not _surroundings.buildings_polderside
-        assert not _surroundings.locations
+        assert not _surroundings.obstacle_locations
 
     def _to_surrounding_point(
         self, location: Point, distance: str
@@ -20,12 +20,12 @@ class TestSurroundingsWrapper:
         _ps = PointSurroundings()
         _ps.location = location
         if distance:
-            _ps.distance_to_surroundings += distance
+            _ps.surroundings_matrix[distance] = 1
         return _ps
 
     def test_set_buildings_polderside(self):
         # 1. Define test data.
-        _buildings_polderside = KoswatSurroundingsPolderside()
+        _buildings_polderside = KoswatSurroundingsObstacle()
         _locations = [
             Point(4.2, 2.4),
             Point(4.2, 4.2),
@@ -42,15 +42,15 @@ class TestSurroundingsWrapper:
 
         # 3. Verify expectations.
         assert isinstance(
-            _surroundings.buildings_polderside, KoswatSurroundingsPolderside
+            _surroundings.buildings_polderside, KoswatSurroundingsObstacle
         )
-        assert [x.location for x in _surroundings.locations] == _locations
+        assert [x.location for x in _surroundings.obstacle_locations] == _locations
 
     def test_get_safe_locations(self):
         # 1. Define test data.
-        _buildings_polderside = KoswatSurroundingsPolderside()
-        _railways_polderside = KoswatSurroundingsPolderside()
-        _waters_polderside = KoswatSurroundingsPolderside()
+        _buildings_polderside = KoswatSurroundingsObstacle()
+        _railways_polderside = KoswatSurroundingsObstacle()
+        _waters_polderside = KoswatSurroundingsObstacle()
         _locations = [
             Point(4.2, 2.4),
             Point(4.2, 4.2),
