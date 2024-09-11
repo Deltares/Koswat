@@ -26,7 +26,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests import test_data
 
 
-class TestKoswatSurroundingsPoldersideBuilder:
+class TestKoswatPointSurroundingsPoldersideBuilder:
     def test_initialize_builder(self):
         _builder = KoswatPointSurroundingsPoldersideBuilder(None, None)
         assert isinstance(_builder, KoswatPointSurroundingsPoldersideBuilder)
