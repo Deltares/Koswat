@@ -1,4 +1,5 @@
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
@@ -54,8 +55,9 @@ class VPSInputProfileCalculation(
         _new_data.factor_zetting = base_data.factor_zetting
         _new_data.pleistoceen = base_data.pleistoceen
         _new_data.aquifer = base_data.aquifer
+        _new_data.construction_type = ConstructionTypeEnum.VZG
         _new_data.soil_surtax_factor = vps_settings.soil_surtax_factor
-        _new_data.constructive_surtax_factor = None
+        _new_data.constructive_surtax_factor = vps_settings.constructive_surtax_factor
         _new_data.land_purchase_surtax_factor = vps_settings.land_purchase_surtax_factor
         return _new_data
 
