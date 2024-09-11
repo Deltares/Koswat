@@ -20,6 +20,7 @@ coverage.xml
 
 # Koswat ignore
 tests/test_results/
+site/
 
-# Lcoal configurations files covered in pyproject.toml
+# Local configurations files covered in pyproject.toml
 pytest.ini 
