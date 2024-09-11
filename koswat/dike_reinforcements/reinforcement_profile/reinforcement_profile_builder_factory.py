@@ -9,6 +9,9 @@ from koswat.dike_reinforcements.input_profile import (
     SoilInputProfile,
     StabilityWallInputProfile,
 )
+from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input_profile import (
+    VPSInputProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
 )
@@ -35,9 +38,13 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile_builder import (
     StandardReinforcementProfileBuilder,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
+    VPSReinforcementProfile,
+)
 
 _reinforcements = {
     SoilReinforcementProfile: SoilInputProfile,
+    VPSReinforcementProfile: VPSInputProfile,
     PipingWallReinforcementProfile: PipingWallInputProfile,
     StabilityWallReinforcementProfile: StabilityWallInputProfile,
     CofferdamReinforcementProfile: CofferDamInputProfile,

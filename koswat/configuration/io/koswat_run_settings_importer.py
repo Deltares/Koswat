@@ -48,6 +48,9 @@ from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
     KoswatStabilityWallSettings,
 )
+from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
+    KoswatVPSSettings,
+)
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
@@ -182,6 +185,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             soil_settings=KoswatSoilSettings(
                 **(general_settings.grondmaatregel_section.__dict__)
             ),
+            vps_settings=KoswatVPSSettings(**(general_settings.vps_section.__dict__)),
             piping_wall_settings=KoswatPipingWallSettings(
                 **(general_settings.kwelscherm_section.__dict__)
             ),

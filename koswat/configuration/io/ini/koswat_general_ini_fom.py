@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import abc
 from configparser import ConfigParser
-from dataclasses import dataclass
 from pathlib import Path
 
 from koswat.configuration.settings.koswat_general_settings import (
@@ -79,6 +78,31 @@ class SoilReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         _section.factor_toename_bermhoogte = ini_config.getfloat(
             "factor_toename_bermhoogte"
         )
+        _section.land_purchase_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
+        return _section
+
+
+class VPSReinforcementSectionFom(ReinforcementProfileSectionFomBase):
+    binnen_berm_breedte_vps: float
+    constructive_surtax_factor: float
+    land_purchase_surtax_factor: SurtaxFactorEnum
+
+    @classmethod
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+        _section = cls()
+        _section._set_properties_from_dict(ini_config)
+        _section.binnen_berm_breedte_vps = ini_config.getfloat(
+            "binnen_berm_breedte_vps"
+        )
+        _section.constructive_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
         _section.land_purchase_surtax_factor = SurtaxFactorEnum[
             ini_config.get(
                 "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
@@ -172,7 +196,6 @@ class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         return _section
 
 
-@dataclass
 class SurroundingsSectionFom(KoswatIniFomProtocol):
     surroundings_database_dir: Path
     constructieafstand: float
@@ -184,15 +207,14 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
-        _section = cls(
-            surroundings_database_dir=Path(ini_config["omgevingsdatabases"]),
-            constructieafstand=ini_config.getfloat("constructieafstand"),
-            constructieovergang=ini_config.getfloat("constructieovergang"),
-            buitendijks=ini_config.getboolean("buitendijks"),
-            bebouwing=ini_config.getboolean("bebouwing"),
-            spoorwegen=ini_config.getboolean("spoorwegen"),
-            water=ini_config.getboolean("water"),
-        )
+        _section = cls()
+        _section.surroundings_database_dir = Path(ini_config["omgevingsdatabases"])
+        _section.constructieafstand = ini_config.getfloat("constructieafstand")
+        _section.constructieovergang = ini_config.getfloat("constructieovergang")
+        _section.buitendijks = ini_config.getboolean("buitendijks")
+        _section.bebouwing = ini_config.getboolean("bebouwing")
+        _section.spoorwegen = ini_config.getboolean("spoorwegen")
+        _section.water = ini_config.getboolean("water")
         return _section
 
 
@@ -228,6 +250,7 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
     analyse_section_fom: AnalysisSectionFom
     dike_profile_section_fom: DikeProfileSectionFom
     grondmaatregel_section: SoilReinforcementSectionFom
+    vps_section: VPSReinforcementSectionFom
     kwelscherm_section: PipingwallReinforcementSectionFom
     stabiliteitswand_section: StabilitywallReinforcementSectionFom
     kistdam_section: CofferdamReinforcementSectionFom
@@ -246,6 +269,9 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
         )
         _general_ini.grondmaatregel_section = SoilReinforcementSectionFom.from_config(
             ini_config["Grondmaatregel"]
+        )
+        _general_ini.vps_section = VPSReinforcementSectionFom.from_config(
+            ini_config["VerticalePipingOplossing"]
         )
         _general_ini.kwelscherm_section = PipingwallReinforcementSectionFom.from_config(
             ini_config["Kwelscherm"]
