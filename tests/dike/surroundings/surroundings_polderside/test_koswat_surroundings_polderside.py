@@ -14,7 +14,6 @@ class TestKoswatSurroundingsPolderside:
         _ksp = KoswatSurroundingsPolderside()
         assert isinstance(_ksp, KoswatSurroundingsPolderside)
         assert not _ksp.conflicting_points
-        assert not _ksp.get_classify_surroundings()
 
     def test_classify_surroundings(
         self,

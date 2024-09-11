@@ -14,6 +14,11 @@ from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polder
 
 
 class KoswatSurroundingsPoldersideBuilder(BuilderProtocol):
+    """
+    TODO: This builder seems virtually valid for dikeside as well
+    (although is not yet required).
+    """
+
     koswat_shp_fom: KoswatDikeLocationsShpFom
     koswat_csv_fom: KoswatTrajectSurroundingsCsvFom
 

@@ -13,6 +13,9 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
     KoswatSurroundingsPolderside,
 )
+from koswat.dike.surroundings.wrapper.surroundings_matrix import (
+    PointSurroundingsTypeMatrix,
+)
 
 
 @dataclass
@@ -37,11 +40,11 @@ class SurroundingsWrapper:
     waters_polderside: KoswatSurroundingsPolderside = None
     waters_dikeside: KoswatSurroundingsProtocol = None
 
-    roads_class_2_polderside: KoswatSurroundingsProtocol = None
-    roads_class_7_polderside: KoswatSurroundingsProtocol = None
-    roads_class_24_polderside: KoswatSurroundingsProtocol = None
-    roads_class_47_polderside: KoswatSurroundingsProtocol = None
-    roads_class_unknown_polderside: KoswatSurroundingsProtocol = None
+    roads_class_2_polderside: KoswatSurroundingsPolderside = None
+    roads_class_7_polderside: KoswatSurroundingsPolderside = None
+    roads_class_24_polderside: KoswatSurroundingsPolderside = None
+    roads_class_47_polderside: KoswatSurroundingsPolderside = None
+    roads_class_unknown_polderside: KoswatSurroundingsPolderside = None
 
     roads_class_2_dikeside: KoswatSurroundingsProtocol = None
     roads_class_7_dikeside: KoswatSurroundingsProtocol = None
@@ -110,3 +113,21 @@ class SurroundingsWrapper:
             return distance < point_surroundings.closest_surrounding
 
         return list(filter(_is_at_safe_distance, self.locations))
+
+    def generate_polderside_surroundings_matrix(self) -> PointSurroundingsTypeMatrix:
+        return PointSurroundingsTypeMatrix(
+            buildings=self.buildings_polderside.conflicting_points
+            if self.apply_buildings
+            else defaultdict(lambda: 0),
+            railways=self.railways_polderside.conflicting_points
+            if self.apply_railways
+            else defaultdict(lambda: 0),
+            waters=self.waters_polderside.conflicting_points
+            if self.apply_waters
+            else defaultdict(lambda: 0),
+            roads_class_2=self.roads_class_2_polderside.conflicting_points,
+            roads_class_7=self.roads_class_7_polderside.conflicting_points,
+            roads_class_24=self.roads_class_24_polderside.conflicting_points,
+            roads_class_47=self.roads_class_47_polderside.conflicting_points,
+            roads_class_unknown=self.roads_class_unknown_polderside.conflicting_points,
+        )

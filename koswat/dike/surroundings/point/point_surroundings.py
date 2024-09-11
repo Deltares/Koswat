@@ -1,6 +1,5 @@
 import math
 from dataclasses import dataclass, field
-from xml.sax.handler import property_encoding
 
 from shapely.geometry import Point
 
@@ -45,7 +44,7 @@ class PointSurroundings:
         )
 
     @property
-    def surroundings_distances(self) -> list[float]:
+    def distance_to_surroundings(self) -> list[float]:
         """
         Returns the ordered list of distances where a surrounding of any type appears.
 
