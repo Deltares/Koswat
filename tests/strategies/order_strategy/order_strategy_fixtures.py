@@ -40,7 +40,7 @@ def example_strategy_input() -> StrategyInput:
 def example_location_reinforcements_with_buffering(
     example_strategy_input: StrategyInput,
 ) -> list[StrategyLocationReinforcement]:
-    _result_after_buffering_idx = [0, 0, 2, 2, 2, 2, 0, 3, 3, 3]
+    _result_after_buffering_idx = [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
     _measure_order = OrderStrategy.get_default_order_for_reinforcements()
     _location_reinforcements = []
     for _idx, _location in enumerate(example_strategy_input.locations_matrix.keys()):
