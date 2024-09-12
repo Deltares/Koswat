@@ -27,9 +27,6 @@ class VPSInputProfileCalculation(
     reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
 
-    def __init__(self) -> None:
-        super().__init__()
-
     def _calculate_new_input_profile(
         self,
         base_data: KoswatInputProfileBase,

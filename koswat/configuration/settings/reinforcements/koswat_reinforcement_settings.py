@@ -24,18 +24,16 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     Wrapper of all settings per reinforcement.
     """
 
-    soil_settings: KoswatSoilSettings = field(
-        default_factory=lambda: KoswatSoilSettings()
-    )
-    vps_settings: KoswatVPSSettings = field(default_factory=lambda: KoswatVPSSettings())
+    soil_settings: KoswatSoilSettings = field(default_factory=KoswatSoilSettings)
+    vps_settings: KoswatVPSSettings = field(default_factory=KoswatVPSSettings)
     piping_wall_settings: KoswatPipingWallSettings = field(
-        default_factory=lambda: KoswatPipingWallSettings()
+        default_factory=KoswatPipingWallSettings
     )
     stability_wall_settings: KoswatStabilityWallSettings = field(
-        default_factory=lambda: KoswatStabilityWallSettings()
+        default_factory=KoswatStabilityWallSettings
     )
     cofferdam_settings: KoswatCofferdamSettings = field(
-        default_factory=lambda: KoswatCofferdamSettings()
+        default_factory=KoswatCofferdamSettings
     )
 
     def is_valid(self) -> bool:

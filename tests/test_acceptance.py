@@ -107,14 +107,15 @@ class TestAcceptance:
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
-        _surroundings_section = SurroundingsSectionFom()
-        _surroundings_section.constructieafstand = 50
-        _surroundings_section.constructieovergang = 10
-        _surroundings_section.surroundings_database_dir = _test_dir
-        _surroundings_section.buitendijks = False
-        _surroundings_section.bebouwing = True
-        _surroundings_section.spoorwegen = False
-        _surroundings_section.water = False
+        _surroundings_section = SurroundingsSectionFom(
+            constructieafstand=50,
+            constructieovergang=10,
+            surroundings_database_dir=_test_dir,
+            buitendijks=False,
+            bebouwing=True,
+            spoorwegen=False,
+            water=False,
+        )
         _surroundings_importer.traject_loc_shp_file = _shp_trajects_file
         _surroundings = _surroundings_importer.import_from(_surroundings_section)[0]
 

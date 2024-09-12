@@ -17,11 +17,24 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
 
 class TestSurroundingsWrapperBuilder:
     def test_initialize_builder(self):
-        _builder = SurroundingsWrapperBuilder()
+        # 1. Define test data.
+        _surroundings_fom = None
+        _surroundings_section = None
+        _trajects_fom = None
+
+        # 2. Run test.
+        _builder = SurroundingsWrapperBuilder(
+            surroundings_section=_surroundings_section,
+            surroundings_fom=_surroundings_fom,
+            trajects_fom=_trajects_fom,
+        )
+
+        # 3. Verify expectations
         assert isinstance(_builder, SurroundingsWrapperBuilder)
         assert isinstance(_builder, BuilderProtocol)
-        assert not _builder.trajects_fom
-        assert not _builder.surroundings_fom
+        assert _builder.trajects_fom == _trajects_fom
+        assert _builder.surroundings_fom == _surroundings_fom
+        assert _builder.surroundings_section == _surroundings_section
 
     def _as_surrounding_point(
         self, location: Point, distances: list[float]
@@ -52,13 +65,15 @@ class TestSurroundingsWrapperBuilder:
         _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
         _surroundings_wrapper.buildings_polderside = _surroundings_csv_fom
 
-        _surroundings_section = SurroundingsSectionFom()
-        _surroundings_section.buitendijks = False
-        _surroundings_section.bebouwing = True
-        _surroundings_section.spoorwegen = False
-        _surroundings_section.water = False
-        _surroundings_section.constructieafstand = 4.2
-        _surroundings_section.constructieovergang = 2.4
+        _surroundings_section = SurroundingsSectionFom(
+            surroundings_database_dir=None,
+            buitendijks=False,
+            bebouwing=True,
+            spoorwegen=False,
+            water=False,
+            constructieafstand=4.2,
+            constructieovergang=2.4,
+        )
 
         # Traject wrapper
         _koswat_shp_fom = KoswatDikeLocationsShpFom()
@@ -66,11 +81,11 @@ class TestSurroundingsWrapperBuilder:
         _koswat_shp_fom.end_point = _end_point
 
         # 2. Run test.
-        _builder = SurroundingsWrapperBuilder()
-        _builder.trajects_fom = _koswat_shp_fom
-        _builder.surroundings_fom = _surroundings_wrapper
-        _builder.surroundings_section = _surroundings_section
-        _surroundings = _builder.build()
+        _surroundings = SurroundingsWrapperBuilder(
+            trajects_fom=_koswat_shp_fom,
+            surroundings_fom=_surroundings_wrapper,
+            surroundings_section=_surroundings_section,
+        ).build()
 
         assert [
             _point.location for _point in _surroundings.buildings_polderside.points

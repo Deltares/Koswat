@@ -58,15 +58,15 @@ def _compare_koswat_input_profile(
 def _compare_koswat_layers(
     new_layers: ReinforcementLayersWrapper, expected_layers: ReinforcementLayersWrapper
 ) -> list[str]:
-    _tolerance = 0.001
-    if not new_layers.base_layer.outer_geometry.almost_equals(
+    _tolerance = 0.01
+    if not new_layers.base_layer.outer_geometry.equals_exact(
         expected_layers.base_layer.outer_geometry, _tolerance
     ):
         return [f"Geometries differ for base_layer."]
     _layers_errors = []
     for _idx, _c_layer in enumerate(expected_layers.coating_layers):
         _new_layer = new_layers.coating_layers[_idx]
-        if not _new_layer.outer_geometry.almost_equals(
+        if not _new_layer.outer_geometry.equals_exact(
             Polygon(_c_layer.outer_geometry), _tolerance
         ):
             _layers_errors.append(

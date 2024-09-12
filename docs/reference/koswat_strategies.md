@@ -112,19 +112,19 @@ One simplified example, based on the [grouping example](#grouping-example), and 
 2. Iterate over the clusters and update the masks' values:
 {
     "SoilReinforcementProfile": 
-        [ 0,  0,  0, -1,  0,  0 , 0,  0,  0, -1],
+        [ 0,  0,  0,  0,  0,  0,  0,  0,  0, -1],
     "VPSReinforcementProfile": 
-        [-1,  1,  1,  1, -1, -1 ,-1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
     "PipingWallReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     "StabilityWallReinforcementProfile": 
-        [-1, -1,  3,  3,  3,  3, -1, -1, -1, -1],
+        [-1, -1,  3,  3,  3,  3 ,-1, -1, -1, -1],
     "CofferDamReinforcementProfile": 
         [-1, -1, -1, -1, -1, -1 ,-1,  4,  4,  4],
 }
 
 3. Merge all masks and select their maximum value:
-[0, 1, 3, 3, 3, 3, 0, 4, 4, 4]
+[0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
 
 4. Update the cluster's locations:
 {
@@ -189,8 +189,7 @@ One simplified example, based on the [buffering example](#buffering-example), an
 ```json
 1. List of unmerged clusters:
 [
-    (0, ["Location_000",]),
-    (1, ["Location_001",]),
+    (0, ["Location_000","Location_001",]),
     (3, ["Location_002","Location_003","Location_004","Location_005",]),
     (0, ["Location_006",]),
     (4, ["Location_007","Location_008","Location_009",]),
@@ -208,36 +207,22 @@ One simplified example, based on the [buffering example](#buffering-example), an
         - Left-neighbor is selected.
     2.1.3. Move locations to stronger neighbor.
     [
-        (3, ["Location_002", ... ,"Location_006",]),
+        (2, ["Location_002", ... ,"Location_006",]),
         (0, ["Location_006",]),
     ]
     2.1.4. Remove the current cluster from the available list.
-2.2. Target is "VPSReinforcementProfile" (idx=1),
-    [
-        (1, ["Location_001",]),
-    ]
-    2.2.1. Length = 1
-    2.2.2. Get a stronger neighbor,
-        - Left-neighbor reinforcement type = 0
-        - Right-neighbor reinforcement type = 3
-        - Right-neighbor is selected
-    2.2.3. Move locations to stronger neighbor.
-    [
-        (1, ["Location_001",]),
-        (3, ["Location_001","Location_002","Location_003","Location_004","Location_005",]),
-    ]
-    2.2.4. Remove the current cluster from the available list.
-2.3. Target is "PipingWallReinforcementProfile" (idx=2), 
+
+2.2. Target is "PipingWallReinforcementProfile" (idx=3), 
     - All clusters are compliant at this point.
-2.4. Target is "StabilityWallReinforcementProfile" (idx=3),
+2.3. Target is "StabilityWallReinforcementProfile" (idx=4),
     - All clusters are compliant at this point.
 2.5. "CofferDamReinforcementProfile" won't be checked as it's the last
 reinforcement profile type, therefore the strongest.
 
 Resulting cluster:
     [
-        (0, ["Location_000",]),
-        (3, ["Location_001","Location_002","Location_003","Location_004","Location_005","Location_006"]),
+        (0, ["Location_000","Location_001",]),
+        (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",]),
         (4, ["Location_007","Location_008","Location_009",]),
     ]
 ```
