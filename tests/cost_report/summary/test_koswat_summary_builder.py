@@ -107,18 +107,19 @@ class TestKoswatSummaryBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
+        _p_surrounding = PointSurroundings(
+            surroundings_matrix=[], location=Point(2.4, 4.2)
+        )
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
-        _run_settings.surroundings = SurroundingsWrapper()
+        _run_settings.surroundings = SurroundingsWrapper(
+            reinforcement_min_buffer=10,
+            reinforcement_min_separation=50,
+            apply_buildings=True,
+            buildings_polderside=SurroundingsObstacle(points=[_p_surrounding]),
+        )
         _run_settings.costs_setting = KoswatCostsSettings()
-        _p_surrounding = PointSurroundings()
-        _p_surrounding.distance_to_surroundings = []
-        _p_surrounding.location = Point(2.4, 4.2)
-        _run_settings.surroundings.buildings_polderside = SurroundingsObstacle()
-        _run_settings.surroundings.buildings_polderside.points = [_p_surrounding]
-        _run_settings.surroundings.reinforcement_min_buffer = 10
-        _run_settings.surroundings.reinforcement_min_separation = 50
         _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
