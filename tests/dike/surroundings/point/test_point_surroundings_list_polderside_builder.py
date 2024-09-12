@@ -16,13 +16,10 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.koswat_surroundings_protocol import (
-    KoswatSurroundingsProtocol,
-)
-from koswat.dike.surroundings.point.koswat_point_surroundings_polderside_builder import (
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder import (
     PointSurroundingsListPoldersideBuilder,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests import test_data
 
 

@@ -10,10 +10,10 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.point.koswat_point_surroundings_polderside_builder import (
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder import (
     PointSurroundingsListPoldersideBuilder,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 
 
