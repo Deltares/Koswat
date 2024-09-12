@@ -34,7 +34,7 @@ class TestPointSurroundingsListPoldersideBuilder:
         assert not _builder.koswat_shp_fom
         assert not _builder.koswat_csv_fom
 
-    def _as_surrounding_point(
+    def _as_surrounding_point_fom(
         self, location: Point, distances: list[float]
     ) -> PointSurroundings:
         _ps = PointSurroundings()
@@ -64,10 +64,10 @@ class TestPointSurroundingsListPoldersideBuilder:
     ) -> Iterator[PointSurroundingsListPoldersideBuilder]:
         _koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _koswat_csv_fom.points_surroundings_list = [
-            self._as_surrounding_point(Point(2.4, 2.4), []),
-            self._as_surrounding_point(Point(4.2, 2.4), []),
-            self._as_surrounding_point(Point(2.4, 4.2), []),
-            self._as_surrounding_point(Point(4.2, 4.2), []),
+            self._as_surrounding_point_fom(Point(2.4, 2.4), []),
+            self._as_surrounding_point_fom(Point(4.2, 2.4), []),
+            self._as_surrounding_point_fom(Point(2.4, 4.2), []),
+            self._as_surrounding_point_fom(Point(4.2, 4.2), []),
         ]
         yield PointSurroundingsListPoldersideBuilder(
             koswat_csv_fom=_koswat_csv_fom, koswat_shp_fom=None
@@ -131,10 +131,10 @@ class TestPointSurroundingsListPoldersideBuilder:
         ]
         _koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _koswat_csv_fom.points_surroundings_list = [
-            self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
-            self._as_surrounding_point(_start_point, [2.4]),
-            self._as_surrounding_point(Point(2.4, 4.2), [2.4]),
-            self._as_surrounding_point(_end_point, [2.4]),
+            self._as_surrounding_point_fom(Point(2.4, 2.4), [2.4]),
+            self._as_surrounding_point_fom(_start_point, [2.4]),
+            self._as_surrounding_point_fom(Point(2.4, 4.2), [2.4]),
+            self._as_surrounding_point_fom(_end_point, [2.4]),
         ]
         assert _koswat_csv_fom.is_valid()
         _koswat_shp_fom = KoswatDikeLocationsShpFom()

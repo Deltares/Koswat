@@ -3,14 +3,12 @@ from pathlib import Path
 
 from shapely import Point
 
-from koswat.configuration.io.csv.koswat_point_surroundings_fom import (
-    KoswatPointSurroundingsFom,
-)
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatTrajectSurroundingsCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
@@ -40,7 +38,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
     def _build_points_surroundings_list(
         self, distances_list: list[float], entries: list[list[str]]
-    ) -> list[KoswatPointSurroundingsFom]:
+    ) -> list[PointSurroundings]:
         _point_list = []
         for idx, _point_entry in enumerate(entries):
             _point_entry.insert(0, idx)
@@ -50,7 +48,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
     def _build_point_surroundings(
         self, entry: list[str], distances_list: list[float]
-    ) -> KoswatPointSurroundingsFom:
+    ) -> PointSurroundings:
         def csv_column_to_dict(csv_columns: list[str]) -> dict:
             _surroundings_matrix = {}
             for e_idx, e_val in enumerate(csv_columns):
@@ -61,7 +59,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
                 _surroundings_matrix[distances_list[e_idx]] = _float_eval
             return _surroundings_matrix
 
-        return KoswatPointSurroundingsFom(
+        return PointSurroundings(
             section=entry[1],
             traject_order=entry[0],
             location=Point(float(entry[2]), float(entry[3])),

@@ -1,14 +1,12 @@
 from dataclasses import dataclass, field
 
-from koswat.configuration.io.csv.koswat_point_surroundings_fom import (
-    KoswatPointSurroundingsFom,
-)
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 @dataclass
 class KoswatTrajectSurroundingsCsvFom(KoswatCsvFomProtocol):
-    points_surroundings_list: list[KoswatPointSurroundingsFom] = field(
+    points_surroundings_list: list[PointSurroundings] = field(
         default_factory=lambda: []
     )
     distances_list: list[float] = field(default_factory=lambda: [])
