@@ -32,7 +32,7 @@ class TestSummaryCostsCsvExporter:
         # 3. Validate results
         assert _export_path.exists()
         _read_text = _export_path.read_text()
-        _expected_text = """Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand
+        _expected_text = """Profile type;Kistdam;Kwelscherm;Grondmaatregel_profiel;Stabiliteitswand
 Cost per km (Euro/km);0.0;8144.4;16288.8;24433.2
 Cost per km incl surtax (Euro/km);0.0;12216.6;24433.2;36649.8
 New grass volume (quantity):;nan;nan;nan;nan
