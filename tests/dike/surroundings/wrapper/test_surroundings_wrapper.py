@@ -91,7 +91,15 @@ class TestSurroundingsWrapper:
 
         # 3. Verify expectations.
         assert isinstance(_surroundings.buildings_polderside, SurroundingsObstacle)
-        assert [_ol.location for _ol in _surroundings.obstacle_locations] == _locations
+
+        # Doing it like this because sorting requires setting up a sorting key.
+        _explored = []
+        assert len(set(_surroundings.obstacle_locations)) == len(_locations)
+        for _sp in _surroundings.obstacle_locations:
+            assert _sp.location in _locations
+            # Check there are no repeated points, thus invalidating the test.
+            assert _sp not in _explored
+            _explored.append(_sp)
 
     @pytest.fixture(name="surroundings_with_obstacle_builder")
     def _get_surroundings_with_obstacle_builder_fixture(
