@@ -2,9 +2,7 @@ import math
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    PointSurroundings,
-)
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class MultiLocationProfileCostReport(CostReportProtocol):

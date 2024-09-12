@@ -7,9 +7,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    PointSurroundings,
-)
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
