@@ -20,16 +20,16 @@ from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
 from koswat.dike.surroundings.point.koswat_point_surroundings_polderside_builder import (
-    KoswatPointSurroundingsPoldersideBuilder,
+    PointSurroundingsListPoldersideBuilder,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests import test_data
 
 
-class TestKoswatPointSurroundingsPoldersideBuilder:
+class TestPointSurroundingsListPoldersideBuilder:
     def test_initialize_builder(self):
-        _builder = KoswatPointSurroundingsPoldersideBuilder(None, None)
-        assert isinstance(_builder, KoswatPointSurroundingsPoldersideBuilder)
+        _builder = PointSurroundingsListPoldersideBuilder(None, None)
+        assert isinstance(_builder, PointSurroundingsListPoldersideBuilder)
         assert isinstance(_builder, BuilderProtocol)
         assert not _builder.koswat_shp_fom
         assert not _builder.koswat_csv_fom
@@ -44,7 +44,7 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
 
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):
         # 1. Define test data.
-        _builder = KoswatPointSurroundingsPoldersideBuilder(
+        _builder = PointSurroundingsListPoldersideBuilder(
             koswat_csv_fom=KoswatTrajectSurroundingsCsvFom(), koswat_shp_fom=None
         )
 
@@ -61,7 +61,7 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
     @pytest.fixture(name="valid_builder")
     def _get_valid_koswat_point_surroundings_polderside_builder(
         self,
-    ) -> Iterator[KoswatPointSurroundingsPoldersideBuilder]:
+    ) -> Iterator[PointSurroundingsListPoldersideBuilder]:
         _koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _koswat_csv_fom.points_surroundings_list = [
             self._as_surrounding_point(Point(2.4, 2.4), []),
@@ -69,7 +69,7 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
             self._as_surrounding_point(Point(2.4, 4.2), []),
             self._as_surrounding_point(Point(4.2, 4.2), []),
         ]
-        yield KoswatPointSurroundingsPoldersideBuilder(
+        yield PointSurroundingsListPoldersideBuilder(
             koswat_csv_fom=_koswat_csv_fom, koswat_shp_fom=None
         )
 
@@ -83,10 +83,10 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
     def test_find_conflicting_point_idx_returns_value(
         self,
         limit_point: Point,
-        valid_builder: KoswatPointSurroundingsPoldersideBuilder,
+        valid_builder: PointSurroundingsListPoldersideBuilder,
     ):
         # 1. Define test data.
-        assert isinstance(valid_builder, KoswatPointSurroundingsPoldersideBuilder)
+        assert isinstance(valid_builder, PointSurroundingsListPoldersideBuilder)
 
         # 2. Run test.
         _idx_found = valid_builder._find_polderside_point_idx(limit_point)
@@ -105,9 +105,9 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
         self,
         start_idx: int,
         end_idx: int,
-        valid_builder: KoswatPointSurroundingsPoldersideBuilder,
+        valid_builder: PointSurroundingsListPoldersideBuilder,
     ):
-        assert isinstance(valid_builder, KoswatPointSurroundingsPoldersideBuilder)
+        assert isinstance(valid_builder, PointSurroundingsListPoldersideBuilder)
         _expected_points = [
             Point(4.2, 2.4),
             Point(2.4, 4.2),
@@ -118,7 +118,7 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
         _found_points = valid_builder._get_polderside_points(start_idx, end_idx)
 
         # 3. Verify expectations.
-        assert _found_points == _expected_points
+        assert [_fp.location for _fp in _found_points] == _expected_points
 
     def test_build_given_valid_data_then_returns_koswat_building_polderside(self):
         # 1. Define test data
@@ -143,13 +143,19 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
         assert _koswat_shp_fom.is_valid()
 
         # 2. Run test.
-        _kbp = KoswatPointSurroundingsPoldersideBuilder(
+        _point_surroundings_list = PointSurroundingsListPoldersideBuilder(
             koswat_csv_fom=_koswat_csv_fom, koswat_shp_fom=_koswat_shp_fom
         ).build()
 
         # 3. Verify expectations.
-        assert isinstance(_kbp, KoswatSurroundingsProtocol)
-        assert len(_kbp.conflicting_points) == len(_expected_points)
+        assert isinstance(_point_surroundings_list, list)
+        assert len(_point_surroundings_list) == len(_expected_points)
+        _explored_locations = []
+        for _spl in _point_surroundings_list:
+            assert isinstance(_spl, PointSurroundings)
+            assert _spl.location in _expected_points
+            assert _spl.location not in _explored_locations
+            _expected_points.append(_spl.location)
 
     def test_from_files_then_build_returns_expected_model(self):
         # 1. Define test data.
@@ -169,12 +175,12 @@ class TestKoswatPointSurroundingsPoldersideBuilder:
         _koswat_wrapper_shp_fom = _shp_fom_builder.read(_shp_test_file)
 
         # 2. Run test
-        _buildings = KoswatPointSurroundingsPoldersideBuilder(
+        _point_surroundings = PointSurroundingsListPoldersideBuilder(
             koswat_csv_fom=KoswatSurroundingsCsvReader().read(_csv_test_file),
             koswat_shp_fom=_koswat_wrapper_shp_fom[0],
         ).build()
 
         # 3. Verify expectations.
-        assert isinstance(_buildings, KoswatSurroundingsProtocol)
-        assert len(_buildings.points) == 3728
-        assert _buildings.conflicting_points
+        assert isinstance(_point_surroundings, list)
+        assert len(_point_surroundings) == 3728
+        assert all(isinstance(_ps, PointSurroundings) for _ps in _point_surroundings)

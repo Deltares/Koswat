@@ -13,7 +13,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 @dataclass
-class KoswatPointSurroundingsPoldersideBuilder(BuilderProtocol):
+class PointSurroundingsListPoldersideBuilder(BuilderProtocol):
     koswat_shp_fom: KoswatDikeLocationsShpFom
     koswat_csv_fom: KoswatTrajectSurroundingsCsvFom
 

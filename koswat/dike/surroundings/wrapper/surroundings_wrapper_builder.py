@@ -11,7 +11,7 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
 )
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.point.koswat_point_surroundings_polderside_builder import (
-    KoswatPointSurroundingsPoldersideBuilder,
+    PointSurroundingsListPoldersideBuilder,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
@@ -30,7 +30,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     def _get_polderside_surroundings_from_fom(
         self, csv_fom: KoswatTrajectSurroundingsWrapperCsvFom
     ) -> list[PointSurroundings]:
-        _builder = KoswatPointSurroundingsPoldersideBuilder(
+        _builder = PointSurroundingsListPoldersideBuilder(
             koswat_shp_fom=self.trajects_fom,
             koswat_csv_fom=csv_fom,
         )
