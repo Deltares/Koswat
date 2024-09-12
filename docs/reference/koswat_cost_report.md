@@ -35,20 +35,20 @@ acceptance
 +-- results_output
 |   +-- dike_10-1-1-A-1-A
 |   |   +-- scenario_scenario1
-|   |   |   |   Grondmaatregel profiel.png
+|   |   |   |   Grondmaatregel_profiel.png
 |   |   |   |   Kistdam.png
 |   |   |   |   Kwelscherm.png
 |   |   |   |   summary_costs.csv
 |   |   |   |   summary_locations.csv
 |   |   |   |   Stabiliteitswand.png
-|   |   |   |   Verticale piping oplossing.png
+|   |   |   |   Verticale_piping_oplossing.png
 |   |   |   |
-|   |   |   +-- Grondmaatregel profiel
-|   |   |       |   added_Grondmaatregelprofiel_CLAY.png
-|   |   |       |   added_Grondmaatregelprofiel_GRASS.png
-|   |   |       |   added_Grondmaatregelprofiel_SAND.png
-|   |   |       |   removed_Grondmaatregelprofiel_CLAY.png
-|   |   |       |   removed_Grondmaatregelprofiel_GRASS.png
+|   |   |   +-- Grondmaatregel_profiel
+|   |   |       |   added_Grondmaatregel_profiel_CLAY.png
+|   |   |       |   added_Grondmaatregel_profiel_GRASS.png
+|   |   |       |   added_Grondmaatregel_profiel_SAND.png
+|   |   |       |   removed_Grondmaatregel_profiel_CLAY.png
+|   |   |       |   removed_Grondmaatregel_profiel_GRASS.png
 |   |   |   +-- Kistdam
 |   |   |       |   ...
 |   |   |
@@ -58,7 +58,7 @@ acceptance
 |   |   |   +-- Stabiliteitswand
 |   |   |       |   ...
 |   |   |
-|   |   |   +-- Verticale piping oplossing
+|   |   |   +-- Verticale_piping_oplossing
 |   |   |       |   ...
 |   |   |
 |   |   +-- scenario_scenario2
