@@ -186,14 +186,16 @@ class TestSurroundingsWrapper:
         assert isinstance(_surroundings, SurroundingsWrapper)
 
         # 2. Run test.
-        _safe_points = _surroundings.get_locations_after_distance(12)
+        _safe_points = _surroundings.get_locations_at_safe_distance(12)
 
         # 3. Verify expectations.
         # Doing it like this because sorting requires setting up a sorting key.
+        assert all(map(lambda x: isinstance(x, PointSurroundings), _safe_points))
+
         _explored = []
         assert len(set(_safe_points)) == len(_locations)
         for _sp in _safe_points:
-            assert _sp in _locations
+            assert _sp.location in _locations
             # Check there are no repeated points, thus invalidating the test.
             assert _sp not in _explored
             _explored.append(_sp)

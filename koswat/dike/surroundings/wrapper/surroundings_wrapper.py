@@ -185,15 +185,17 @@ class SurroundingsWrapper:
                 _ps_copy.surroundings_matrix[_matched_ps.closest_surrounding] = 1
         return _obstacle_locations
 
-    def get_locations_after_distance(self, distance: float) -> list[Point]:
+    def get_locations_at_safe_distance(
+        self, distance: float
+    ) -> list[PointSurroundings]:
         """
-        Gets all locations which are safe from surroundings (building/railway/water) in a radius of `distance`.
+        Gets all locations which are safe from obstacle surroundings in a radius of `distance`.
 
         Args:
             distance (float): Radius from each point that should be free of surroundings.
 
         Returns:
-            List[Point]: List of safe locations (points).
+            List[PointSurroundings]: List of safe locations (points with surroundings).
         """
 
         def _is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
@@ -201,7 +203,4 @@ class SurroundingsWrapper:
                 return True
             return distance < point_surroundings.closest_surrounding
 
-        return list(
-            _ol.location
-            for _ol in filter(_is_at_safe_distance, self.obstacle_locations)
-        )
+        return list(filter(_is_at_safe_distance, self.obstacle_locations))
