@@ -68,7 +68,7 @@ Simplified representation for a traject with 10 locations. This example is also 
 
 Given a [reinforcement grouping](#reinforcement-grouping), we will create a dictionary of masks of size `NM` where `N` (the keys) is the number of available reinforcement types (`Type[ReinforcementProfileProtocol]`) and `M` the number of available locations. 
 
-__Note__: Masks' values are the position of a reinforcement type in the [reinforcement's order list](#reinforcment-order). So a location with`CofferDamReinforcementProfile` will have a 3 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
+__Note__: Masks' values are the position of a reinforcement type in the [reinforcement's order list](#reinforcment-order). So a location with`CofferDamReinforcementProfile` will have a 4 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
 
 __Steps breakdown__:
 
@@ -112,13 +112,13 @@ One simplified example, based on the [grouping example](#grouping-example), and 
     "SoilReinforcementProfile": 
         [ 0,  0,  0,  0,  0,  0,  0,  0,  0, -1],
     "VPSReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     "PipingWallReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     "StabilityWallReinforcementProfile": 
-        [-1, -1,  3,  3,  3,  3 ,-1, -1, -1, -1],
+        [-1, -1,  3,  3,  3,  3, -1, -1, -1, -1],
     "CofferDamReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1,  4,  4,  4],
+        [-1, -1, -1, -1, -1, -1, -1,  4,  4,  4],
 }
 
 3. Merge all masks and select their maximum value:
