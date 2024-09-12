@@ -14,7 +14,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 @dataclass
-class KoswatSurroundingsObstacle(KoswatSurroundingsProtocol):
+class SurroundingsObstacle(KoswatSurroundingsProtocol):
     """
     Defines surroundings point collections that cannot be removed.
     """
@@ -55,7 +55,7 @@ class KoswatSurroundingsObstacle(KoswatSurroundingsProtocol):
 
 
 @dataclass
-class KoswatSurroundingsInfrastructure(KoswatSurroundingsProtocol):
+class SurroundingsInfrastructure(KoswatSurroundingsProtocol):
     """
     Defines surroundings point collections that can be removed or reworked.
     """
@@ -80,34 +80,34 @@ class SurroundingsWrapper:
     reinforcement_min_buffer: float = float("nan")
 
     buildings_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsObstacle
+        default_factory=SurroundingsObstacle
     )
     buildings_dikeside: KoswatSurroundingsProtocol = None
 
     railways_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsObstacle
+        default_factory=SurroundingsObstacle
     )
     railways_dikeside: KoswatSurroundingsProtocol = None
 
     waters_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsObstacle
+        default_factory=SurroundingsObstacle
     )
     waters_dikeside: KoswatSurroundingsProtocol = None
 
     roads_class_2_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsInfrastructure
+        default_factory=SurroundingsInfrastructure
     )
     roads_class_7_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsInfrastructure
+        default_factory=SurroundingsInfrastructure
     )
     roads_class_24_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsInfrastructure
+        default_factory=SurroundingsInfrastructure
     )
     roads_class_47_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsInfrastructure
+        default_factory=SurroundingsInfrastructure
     )
     roads_class_unknown_polderside: KoswatSurroundingsProtocol = field(
-        default_factory=KoswatSurroundingsInfrastructure
+        default_factory=SurroundingsInfrastructure
     )
 
     roads_class_2_dikeside: KoswatSurroundingsProtocol = None
@@ -158,7 +158,7 @@ class SurroundingsWrapper:
 
         _surroundings_obstacles = list(
             filter(
-                lambda x: isinstance(x, KoswatSurroundingsObstacle),
+                lambda x: isinstance(x, SurroundingsObstacle),
                 self.surroundings_collection,
             )
         )

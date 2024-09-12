@@ -17,8 +17,8 @@ from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
-    KoswatSurroundingsInfrastructure,
-    KoswatSurroundingsObstacle,
+    SurroundingsInfrastructure,
+    SurroundingsObstacle,
     SurroundingsWrapper,
 )
 from tests import get_fixturerequest_case_name, test_data, test_results
@@ -149,24 +149,20 @@ class TestKoswatSurroundingsImporter:
 
         for _sw in _surroundings_wrapper_list:
             assert isinstance(_sw, SurroundingsWrapper)
-            check_surroundings(_sw.buildings_polderside, KoswatSurroundingsObstacle)
+            check_surroundings(_sw.buildings_polderside, SurroundingsObstacle)
             if _sw.traject != "10-2":
-                check_surroundings(_sw.railways_polderside, KoswatSurroundingsObstacle)
-            check_surroundings(_sw.waters_polderside, KoswatSurroundingsObstacle)
+                check_surroundings(_sw.railways_polderside, SurroundingsObstacle)
+            check_surroundings(_sw.waters_polderside, SurroundingsObstacle)
+            check_surroundings(_sw.roads_class_2_polderside, SurroundingsInfrastructure)
+            check_surroundings(_sw.roads_class_7_polderside, SurroundingsInfrastructure)
             check_surroundings(
-                _sw.roads_class_2_polderside, KoswatSurroundingsInfrastructure
+                _sw.roads_class_24_polderside, SurroundingsInfrastructure
             )
             check_surroundings(
-                _sw.roads_class_7_polderside, KoswatSurroundingsInfrastructure
+                _sw.roads_class_47_polderside, SurroundingsInfrastructure
             )
             check_surroundings(
-                _sw.roads_class_24_polderside, KoswatSurroundingsInfrastructure
-            )
-            check_surroundings(
-                _sw.roads_class_47_polderside, KoswatSurroundingsInfrastructure
-            )
-            check_surroundings(
-                _sw.roads_class_unknown_polderside, KoswatSurroundingsInfrastructure
+                _sw.roads_class_unknown_polderside, SurroundingsInfrastructure
             )
 
     @pytest.mark.parametrize(

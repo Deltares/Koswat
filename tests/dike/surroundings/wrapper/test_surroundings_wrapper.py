@@ -6,8 +6,8 @@ from shapely.geometry import Point
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
-    KoswatSurroundingsInfrastructure,
-    KoswatSurroundingsObstacle,
+    SurroundingsInfrastructure,
+    SurroundingsObstacle,
     SurroundingsWrapper,
 )
 
@@ -18,34 +18,32 @@ class TestSurroundingsWrapper:
         assert isinstance(_surroundings, SurroundingsWrapper)
         assert any(_surroundings.surroundings_collection)
         assert all(
-            isinstance(_s, KoswatSurroundingsInfrastructure)
+            isinstance(_s, SurroundingsInfrastructure)
             for _s in _surroundings.surroundings_collection
         )
         assert not _surroundings.obstacle_locations
 
         # Mapped as obstacle
-        assert isinstance(
-            _surroundings.buildings_polderside, KoswatSurroundingsObstacle
-        )
-        assert isinstance(_surroundings.railways_polderside, KoswatSurroundingsObstacle)
-        assert isinstance(_surroundings.waters_polderside, KoswatSurroundingsObstacle)
+        assert isinstance(_surroundings.buildings_polderside, SurroundingsObstacle)
+        assert isinstance(_surroundings.railways_polderside, SurroundingsObstacle)
+        assert isinstance(_surroundings.waters_polderside, SurroundingsObstacle)
 
         # Mapped as infrastructure
         assert isinstance(
-            _surroundings.roads_class_2_polderside, KoswatSurroundingsInfrastructure
+            _surroundings.roads_class_2_polderside, SurroundingsInfrastructure
         )
         assert isinstance(
-            _surroundings.roads_class_7_polderside, KoswatSurroundingsInfrastructure
+            _surroundings.roads_class_7_polderside, SurroundingsInfrastructure
         )
         assert isinstance(
-            _surroundings.roads_class_24_polderside, KoswatSurroundingsInfrastructure
+            _surroundings.roads_class_24_polderside, SurroundingsInfrastructure
         )
         assert isinstance(
-            _surroundings.roads_class_47_polderside, KoswatSurroundingsInfrastructure
+            _surroundings.roads_class_47_polderside, SurroundingsInfrastructure
         )
         assert isinstance(
             _surroundings.roads_class_unknown_polderside,
-            KoswatSurroundingsInfrastructure,
+            SurroundingsInfrastructure,
         )
 
         # Unmapped (not supported yet)
@@ -73,7 +71,7 @@ class TestSurroundingsWrapper:
     )
     def test_set_obstacles_polderside(self, obstacle_name: str):
         # 1. Define test data.
-        _obstacles_polderside = KoswatSurroundingsObstacle()
+        _obstacles_polderside = SurroundingsObstacle()
         _locations = [
             Point(4.2, 2.4),
             Point(4.2, 4.2),
@@ -92,9 +90,7 @@ class TestSurroundingsWrapper:
         )
 
         # 3. Verify expectations.
-        assert isinstance(
-            _surroundings.buildings_polderside, KoswatSurroundingsObstacle
-        )
+        assert isinstance(_surroundings.buildings_polderside, SurroundingsObstacle)
         assert [_ol.location for _ol in _surroundings.obstacle_locations] == _locations
 
     @pytest.fixture(name="surroundings_with_obstacle_builder")
@@ -104,9 +100,9 @@ class TestSurroundingsWrapper:
         def create_surroundings_wrapper(
             point_list: list[Point], distance_list: list[float]
         ):
-            _buildings_polderside = KoswatSurroundingsObstacle()
-            _railways_polderside = KoswatSurroundingsObstacle()
-            _waters_polderside = KoswatSurroundingsObstacle()
+            _buildings_polderside = SurroundingsObstacle()
+            _railways_polderside = SurroundingsObstacle()
+            _waters_polderside = SurroundingsObstacle()
             _buildings_polderside.points = list(
                 map(self._to_surrounding_point, point_list, distance_list[0])
             )

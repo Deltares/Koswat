@@ -21,7 +21,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
-    KoswatSurroundingsObstacle,
+    SurroundingsObstacle,
     SurroundingsWrapper,
 )
 from koswat.dike_reinforcements.reinforcement_profile import (
@@ -115,7 +115,7 @@ class TestKoswatSummaryBuilder:
         _p_surrounding = PointSurroundings()
         _p_surrounding.distance_to_surroundings = []
         _p_surrounding.location = Point(2.4, 4.2)
-        _run_settings.surroundings.buildings_polderside = KoswatSurroundingsObstacle()
+        _run_settings.surroundings.buildings_polderside = SurroundingsObstacle()
         _run_settings.surroundings.buildings_polderside.points = [_p_surrounding]
         _run_settings.surroundings.reinforcement_min_buffer = 10
         _run_settings.surroundings.reinforcement_min_separation = 50
