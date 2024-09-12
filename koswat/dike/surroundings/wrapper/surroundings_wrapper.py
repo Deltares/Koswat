@@ -1,7 +1,10 @@
 import math
 from collections import defaultdict
+from copy import deepcopy
 from dataclasses import dataclass, field
+from itertools import chain, groupby
 
+from click import group
 from shapely.geometry import Point
 
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
@@ -128,8 +131,8 @@ class SurroundingsWrapper:
         }
 
         def exclude_surrounding(property_name: str):
-            _surroundings.pop(property_name + "_polderside", default=None)
-            _surroundings.pop(property_name + "_dikeside", default=None)
+            _surroundings.pop(property_name + "_polderside", None)
+            _surroundings.pop(property_name + "_dikeside", None)
 
         if not self.apply_buildings:
             exclude_surrounding("buildings")
@@ -143,18 +146,15 @@ class SurroundingsWrapper:
         return list(_surroundings.values())
 
     @property
-    def obstacle_locations(self) -> dict[Point, float]:
+    def obstacle_locations(self) -> list[PointSurroundings]:
         """
         Overlay of locations of the different `ObstacleSurroundings` that are present.
         Buildings need to be present as input (leading for location coordinates).
         Each location represents 1 meter in a real scale map.
 
         Returns:
-            dict[Point, float]: Dictionary of (location) points and their distance to an obstacle.
+            list[PointSurroundings]: List of locations with only the closest distance to obstacle(s).
         """
-
-        if not self.buildings_polderside:
-            return []
 
         _surroundings_obstacles = list(
             filter(
@@ -163,14 +163,27 @@ class SurroundingsWrapper:
             )
         )
 
-        _points_dict = defaultdict(lambda: math.inf)
-        for _sob in _surroundings_obstacles:
-            for _p in _sob.points:
-                if _p.closest_surrounding < _points_dict[_p.location]:
-                    # We only care for the distance to the closest surrounding.
-                    _points_dict[_p.location] = _p.closest_surrounding
+        def ps_sorting_key(ps_to_sort: PointSurroundings) -> int:
+            return ps_to_sort.__hash__()
 
-        return _points_dict
+        _ps_keyfunc = ps_sorting_key
+        _point_surroundings = sorted(
+            chain(*list(map(lambda x: x.points, _surroundings_obstacles))),
+            key=_ps_keyfunc,
+        )
+        _obstacle_locations = []
+        for _, _matches in groupby(_point_surroundings, key=_ps_keyfunc):
+            _lmatches = list(_matches)
+            if not any(_lmatches):
+                continue
+            _ps_copy = _lmatches[0]
+            _ps_copy.surroundings_matrix = {}
+            _obstacle_locations.append(_ps_copy)
+            for _matched_ps in _lmatches:
+                if math.isnan(_matched_ps.closest_surrounding):
+                    continue
+                _ps_copy.surroundings_matrix[_matched_ps.closest_surrounding] = 1
+        return _obstacle_locations
 
     def get_locations_after_distance(self, distance: float) -> list[Point]:
         """
@@ -188,4 +201,7 @@ class SurroundingsWrapper:
                 return True
             return distance < point_surroundings.closest_surrounding
 
-        return list(filter(_is_at_safe_distance, self.obstacle_locations))
+        return list(
+            _ol.location
+            for _ol in filter(_is_at_safe_distance, self.obstacle_locations)
+        )
