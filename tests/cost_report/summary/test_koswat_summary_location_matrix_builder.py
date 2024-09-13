@@ -52,7 +52,7 @@ class TestKoswatSummaryLocationMatrixBuilder:
         ]
 
         _profile_report = MultiLocationProfileCostReport()
-        _profile_report.locations = _locations[:1]
+        _profile_report.obstacle_locations = _locations[:1]
         _profile_report.profile_cost_report = ProfileCostReport()
         _profile_report.profile_cost_report.reinforced_profile = (
             MyMockedReinforcementProfile()

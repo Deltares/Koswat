@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
@@ -13,13 +15,10 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
+@dataclass
 class ProfileCostReportBuilder(BuilderProtocol):
-    reinforced_profile: ReinforcementProfileProtocol
-    koswat_costs_settings: KoswatCostsSettings
-
-    def __init__(self) -> None:
-        self.reinforced_profile = None
-        self.koswat_costs_settings = None
+    reinforced_profile: ReinforcementProfileProtocol = None
+    koswat_costs_settings: KoswatCostsSettings = None
 
     def _get_layers_report(
         self, cost_parameters: QuantityCostParameters

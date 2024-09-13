@@ -51,5 +51,8 @@ class TestMultiLocationProfileCostReportBuilder:
 
         # 3. Verify expectations.
         assert isinstance(_profile_cost_report, MultiLocationProfileCostReport)
-        assert any(_profile_cost_report.locations)
-        assert _profile_cost_report.locations[0].location == _p_surrounding.location
+        assert any(_profile_cost_report.obstacle_locations)
+        assert (
+            _profile_cost_report.obstacle_locations[0].location
+            == _p_surrounding.location
+        )

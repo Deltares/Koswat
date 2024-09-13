@@ -207,3 +207,54 @@ class TestSurroundingsWrapper:
             # Check there are no repeated points, thus invalidating the test.
             assert _sp not in _explored
             _explored.append(_sp)
+
+    @pytest.mark.parametrize(
+        "obstacles_distance_list",
+        [
+            pytest.param([24], id="Surroundings WITH obstacles at distance 24"),
+            pytest.param([], id="Surroundings WITHOUT obstacles"),
+        ],
+    )
+    def test_when_get_locations_at_safe_distance_given_safe_obstacles_returns_surrounding_point(
+        self,
+        obstacles_distance_list: list[float],
+        surroundings_with_obstacle_builder: Callable[
+            [list[Point], list[list[float]]], SurroundingsWrapper
+        ],
+    ):
+        # 1. Define test data.
+        _safe_distance = min(obstacles_distance_list, default=0) - 1
+        _wrapper = surroundings_with_obstacle_builder(
+            [Point(2.4, 2.4)], [[obstacles_distance_list]] * 3
+        )
+
+        # 2. Run test.
+        _classified_surroundings = _wrapper.get_locations_at_safe_distance(
+            _safe_distance
+        )
+
+        # 3. Verify expectations.
+        assert isinstance(_classified_surroundings, list)
+        assert len(_classified_surroundings) == 1
+        assert _classified_surroundings[0] == _wrapper.obstacle_locations[0]
+
+    def test_when_get_locations_after_distance_given_unsafe_obstacles_returns_nothing(
+        self,
+        surroundings_with_obstacle_builder: Callable[
+            [list[Point], list[list[float]]], SurroundingsWrapper
+        ],
+    ):
+        # 1. Define test data.
+        _obstacles_distance_list = [24]
+        _wrapper = surroundings_with_obstacle_builder(
+            [Point(2.4, 2.4)], [[_obstacles_distance_list]] * 3
+        )
+
+        # 2. Run test.
+        _classified_surroundings = _wrapper.get_locations_at_safe_distance(
+            min(_obstacles_distance_list) + 1
+        )
+
+        # 3. Verify expectations.
+        assert isinstance(_classified_surroundings, list)
+        assert not any(_classified_surroundings)

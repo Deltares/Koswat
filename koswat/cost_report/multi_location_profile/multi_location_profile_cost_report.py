@@ -1,17 +1,17 @@
 import math
+from dataclasses import dataclass, field
+from typing import Any
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
+@dataclass
 class MultiLocationProfileCostReport(CostReportProtocol):
-    locations: list[PointSurroundings]
-    profile_cost_report: ProfileCostReport
-
-    def __init__(self) -> None:
-        self.locations = []
-        self.profile_cost_report = None
+    obstacle_locations: list[PointSurroundings] = field(default_factory=lambda: [])
+    infrastructure_matrix: Any = None
+    profile_cost_report: ProfileCostReport = None
 
     @property
     def cost_per_km(self) -> float:
@@ -27,15 +27,17 @@ class MultiLocationProfileCostReport(CostReportProtocol):
 
     @property
     def total_cost(self) -> float:
-        if not self.profile_cost_report or not self.locations:
+        if not self.profile_cost_report or not self.obstacle_locations:
             return math.nan
-        return self.profile_cost_report.total_cost * len(self.locations)
+        return self.profile_cost_report.total_cost * len(self.obstacle_locations)
 
     @property
     def total_cost_with_surtax(self) -> float:
-        if not self.profile_cost_report or not self.locations:
+        if not self.profile_cost_report or not self.obstacle_locations:
             return math.nan
-        return self.profile_cost_report.total_cost_with_surtax * len(self.locations)
+        return self.profile_cost_report.total_cost_with_surtax * len(
+            self.obstacle_locations
+        )
 
     @property
     def profile_type_name(self) -> str:

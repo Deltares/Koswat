@@ -25,16 +25,17 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
         self.koswat_costs_settings = None
 
     def build(self) -> MultiLocationProfileCostReport:
-        _multiple_location_cost_report = MultiLocationProfileCostReport()
-        _multiple_location_cost_report.locations = (
-            self.surroundings.get_locations_at_safe_distance(
+
+        # Profile cost report builder
+        _profile_cost_report_builder = ProfileCostReportBuilder(
+            reinforced_profile=self.reinforced_profile,
+            koswat_costs_settings=self.koswat_costs_settings,
+        )
+
+        # Multi-location profile cost report
+        return MultiLocationProfileCostReport(
+            obstacle_locations=self.surroundings.get_locations_at_safe_distance(
                 self.reinforced_profile.profile_width
-            )
+            ),
+            profile_cost_report=_profile_cost_report_builder.build(),
         )
-        _profile_cost_report_builder = ProfileCostReportBuilder()
-        _profile_cost_report_builder.reinforced_profile = self.reinforced_profile
-        _profile_cost_report_builder.koswat_costs_settings = self.koswat_costs_settings
-        _multiple_location_cost_report.profile_cost_report = (
-            _profile_cost_report_builder.build()
-        )
-        return _multiple_location_cost_report

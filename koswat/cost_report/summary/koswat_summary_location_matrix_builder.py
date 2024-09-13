@@ -28,7 +28,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
     ) -> dict[PointSurroundings, Type[ReinforcementProfileProtocol]]:
         return dict(
             (_location, type(locations_profile.profile_cost_report.reinforced_profile))
-            for _location in locations_profile.locations
+            for _location in locations_profile.obstacle_locations
         )
 
     def _get_list_summary_matrix_for_locations_with_reinforcements(
