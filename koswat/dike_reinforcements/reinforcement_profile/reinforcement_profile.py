@@ -23,4 +23,4 @@ class ReinforcementProfile(ReinforcementProfileProtocol, KoswatProfileBase):
         return self.profile_width - self.old_profile.profile_width
 
     def __str__(self) -> str:
-        return self.output_name.replace(" ", "_")
+        return self.output_name

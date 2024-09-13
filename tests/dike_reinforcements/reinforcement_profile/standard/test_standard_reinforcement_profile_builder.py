@@ -33,9 +33,10 @@ class TestStandardReinforcementProfileBuilder:
         assert isinstance(_builder, ReinforcementProfileBuilderProtocol)
 
     def test_get_standard_reinforcement_calculator_raises_for_unknown_type(self):
-        class MockClass:
+        class MockClass(StandardReinforcementProfile):
             pass
 
+        assert issubclass(MockClass, StandardReinforcementProfile)
         with pytest.raises(NotImplementedError):
             StandardReinforcementProfileBuilder.get_input_profile_calculator(MockClass)
 

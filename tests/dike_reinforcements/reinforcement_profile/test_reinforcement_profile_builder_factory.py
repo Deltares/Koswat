@@ -391,7 +391,7 @@ class TestReinforcementProfileBuilderFactory:
     ):
         # TODO: Most likely this is the culprit of making tests fail.
         _plot_filename = output_dir.joinpath(
-            reinforced_profile.input_data.reinforcement_domain_name
+            reinforced_profile.input_data.reinforcement_domain_name.replace(" ", "_")
         )
         with KoswatFigureContextHandler(
             _plot_filename.with_suffix(".png"), 250

@@ -18,7 +18,9 @@ class ReinforcedProfilePlotExporter(PlotExporterProtocol):
     reinforced_profile: ReinforcementProfileProtocol
 
     def export(self) -> None:
-        _export_path: Path = self.export_dir / str(self.reinforced_profile)
+        _export_path = self.export_dir.joinpath(
+            str(self.reinforced_profile).replace(" ", "_")
+        )
         _export_path.mkdir(parents=True, exist_ok=True)
         self._displaying_layers(self.reinforced_profile, _export_path)
 
@@ -32,13 +34,13 @@ class ReinforcedProfilePlotExporter(PlotExporterProtocol):
         for _reinf_layer in reinforced_profile.layers_wrapper.layers:
             _base_name = f"{reinforced_profile}_{_reinf_layer.material_type.name}"
             self._export_layers(
-                export_path / f"added_{_base_name}",
+                export_path.joinpath(f"added_{_base_name}".replace(" ", "_")),
                 _reinf_layer.new_layer_geometry,
                 _layers_to_plot,
             )
             if isinstance(_reinf_layer, ReinforcementCoatingLayer):
                 self._export_layers(
-                    export_path / f"removed_{_base_name}",
+                    export_path.joinpath(f"removed_{_base_name}".replace(" ", "_")),
                     _reinf_layer.removal_layer_geometry,
                     _layers_to_plot,
                 )
