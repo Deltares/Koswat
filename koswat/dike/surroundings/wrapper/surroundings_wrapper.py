@@ -127,9 +127,9 @@ class SurroundingsWrapper:
             _ps_copy.surroundings_matrix = {}
             _obstacle_locations.append(_ps_copy)
             for _matched_ps in _lmatches:
-                if math.isnan(_matched_ps.closest_surrounding):
+                if math.isnan(_matched_ps.closest_obstacle):
                     continue
-                _ps_copy.surroundings_matrix[_matched_ps.closest_surrounding] = 1
+                _ps_copy.surroundings_matrix[_matched_ps.closest_obstacle] = 1
         return _obstacle_locations
 
     def get_locations_at_safe_distance(
@@ -146,8 +146,8 @@ class SurroundingsWrapper:
         """
 
         def _is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
-            if math.isnan(point_surroundings.closest_surrounding):
+            if math.isnan(point_surroundings.closest_obstacle):
                 return True
-            return distance < point_surroundings.closest_surrounding
+            return distance < point_surroundings.closest_obstacle
 
         return list(filter(_is_at_safe_distance, self.obstacle_locations))

@@ -42,7 +42,7 @@ class PointSurroundings:
         )
 
     @property
-    def closest_surrounding(self) -> float:
+    def closest_obstacle(self) -> float:
         """
         Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
 

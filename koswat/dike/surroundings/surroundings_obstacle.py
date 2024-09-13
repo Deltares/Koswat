@@ -32,8 +32,8 @@ class SurroundingsObstacle(KoswatSurroundingsProtocol):
         """
 
         def _is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
-            if math.isnan(point_surroundings.closest_surrounding):
+            if math.isnan(point_surroundings.closest_obstacle):
                 return True
-            return distance < point_surroundings.closest_surrounding
+            return distance < point_surroundings.closest_obstacle
 
         return list(filter(_is_at_safe_distance, self.points))

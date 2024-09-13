@@ -10,9 +10,9 @@ class TestPointSurroundings:
         assert not _p_s.section
         assert not _p_s.location
         assert not _p_s.surroundings_matrix
-        assert math.isnan(_p_s.closest_surrounding)
+        assert math.isnan(_p_s.closest_obstacle)
 
     def test_closest_building_returns_min_value(self):
         _p_s = PointSurroundings()
         _p_s.surroundings_matrix = {42: 1, 24: 1, 2.4: 0}
-        assert _p_s.closest_surrounding == 24
+        assert _p_s.closest_obstacle == 24
