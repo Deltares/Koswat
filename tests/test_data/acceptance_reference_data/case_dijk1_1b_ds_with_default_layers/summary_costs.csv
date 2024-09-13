@@ -1,6 +1,6 @@
 Profile type;Grondmaatregel profiel;Verticale piping oplossing;Kwelscherm;Stabiliteitswand;Kistdam
-Cost per km (Euro/km);513426.24;1353426.24;1353426.24;0.0;0.0
-Cost per km incl surtax (Euro/km);1222366.44;2408446.44;2408446.44;0.0;0.0
+Cost per km (Euro/km);513426.24;1853426.24;1353426.24;0.0;0.0
+Cost per km incl surtax (Euro/km);1222366.44;3864446.44;2408446.44;0.0;0.0
 New grass volume (quantity):;1.76;1.76;1.76;0.0;0.0
 New grass volume (cost):;21.83;21.83;21.83;0.0;0.0
 New grass volume (cost incl surtax):;54.78;54.78;54.78;0.0;0.0
@@ -35,8 +35,8 @@ Land purchase surface (quantity):;6.0;6.0;6.0;0.0;0.0
 Land purchase surface (cost):;60.0;900.0;900.0;0.0;0.0
 Land purchase surface (cost incl surtax):;84.72;1270.8;1270.8;0.0;0.0
 Construction length (quantity):;0;0;0;0;0
-Construction length (cost):;0;0;0;0;0
-Construction length (cost incl surtax):;0;0.0;0.0;0.0;0.0
+Construction length (cost):;0;500;0;0;0
+Construction length (cost incl surtax):;0;1456.0;0.0;0.0;0.0
 Total measure meters;0;0;0;0;0
 Total measure cost;0.0;0.0;0.0;0.0;0.0;0.0
 Total measure cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0
