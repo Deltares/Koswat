@@ -18,4 +18,3 @@ class SurroundingsInfrastructure(KoswatSurroundingsProtocol):
 
     points: list[PointSurroundings] = field(default_factory=lambda: [])
 
-    pass
