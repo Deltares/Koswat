@@ -5,6 +5,9 @@ from dataclasses import dataclass
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsWrapperCsvFom,
 )
+from koswat.configuration.io.csv.koswat_traject_surroundings_csv_fom import (
+    KoswatSurroundingsCsvFom,
+)
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -28,7 +31,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     surroundings_section: SurroundingsSectionFom
 
     def _get_polderside_surroundings_from_fom(
-        self, csv_fom: KoswatSurroundingsWrapperCsvFom
+        self, csv_fom: KoswatSurroundingsCsvFom
     ) -> list[PointSurroundings]:
         _builder = PointSurroundingsListPoldersideBuilder(
             koswat_shp_fom=self.trajects_fom,
