@@ -50,6 +50,18 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
     def get_input_profile_calculator(
         reinforcement_type: type[StandardReinforcementProfile],
     ) -> ReinforcementInputProfileCalculationProtocol:
+        """
+        Get the input profile calculator for the given reinforcement type.
+
+        Args:
+            reinforcement_type (type[StandardReinforcementProfile]): The reinforcement type.
+
+        Raises:
+            NotImplementedError: The given reinforcement type is not supported.
+
+        Returns:
+            ReinforcementInputProfileCalculationProtocol: The input profile calculator.
+        """
         if issubclass(reinforcement_type, SoilReinforcementProfile):
             return SoilInputProfileCalculation()
         if issubclass(reinforcement_type, VPSReinforcementProfile):

@@ -16,6 +16,3 @@ class VPSReinforcementProfile(StandardReinforcementProfile):
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
-
-    def __str__(self) -> str:
-        return self.output_name
