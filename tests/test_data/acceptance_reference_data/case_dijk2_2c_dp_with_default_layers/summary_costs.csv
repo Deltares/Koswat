@@ -1,42 +1,42 @@
-Profile type;Grondmaatregel profiel;Kwelscherm;Stabiliteitswand;Kistdam
-Cost per km (Euro/km);2354288.79;1765589.8;6002701.92;10681753.6
-Cost per km incl surtax (Euro/km);5358410.59;5141397.5;17479867.99;35196378.11
-New grass volume (quantity):;15.0;0.0;0.0;0.0
-New grass volume (cost):;186.6;0.0;0.0;0.0
-New grass volume (cost incl surtax):;468.18;0.0;0.0;0.0
-New clay volume (quantity):;36.05;0.0;0.0;0.0
-New clay volume (cost):;650.7;0.0;0.0;0.0
-New clay volume (cost incl surtax):;1632.61;0.0;0.0;0.0
-New core volume (quantity):;68.27;0.0;0.0;0.0
-New core volume (cost):;749.65;0.0;0.0;0.0
-New core volume (cost incl surtax):;1880.87;0.0;0.0;0.0
-Reused grass volume (quantity):;7.35;0.0;0.0;0.0
-Reused grass volume (cost):;44.39;0.0;0.0;0.0
-Reused grass volume (cost incl surtax):;111.38;0.0;0.0;0.0
-Reused core volume (quantity):;11.73;0.0;0.0;0.0
-Reused core volume (cost):;54.76;0.0;0.0;0.0
-Reused core volume (cost incl surtax):;137.39;0.0;0.0;0.0
-Removed material volume (quantity):;0;0.0;0.0;0.0
-Removed material volume (cost):;0.0;0.0;0.0;0.0
-Removed material volume (cost incl surtax):;0.0;0.0;0.0;0.0
-New grass layer surface (quantity):;76.5;0.0;0.0;0.0
-New grass layer surface (cost):;67.32;0.0;0.0;0.0
-New grass layer surface (cost incl surtax):;168.91;0.0;0.0;0.0
-New clay layer surface (quantity):;74.61;0.0;0.0;0.0
-New clay layer surface (cost):;48.49;0.0;0.0;0.0
-New clay layer surface (cost incl surtax):;121.67;0.0;0.0;0.0
-New core layer surface (quantity):;66.44;0.0;0.0;0.0
-New core layer surface (cost):;39.87;0.0;0.0;0.0
-New core layer surface (cost incl surtax):;100.02;0.0;0.0;0.0
-New maaiveld surface (quantity):;50.0;0.0;0.0;0.0
-New maaiveld surface (cost):;12.5;0.0;0.0;0.0
-New maaiveld surface (cost incl surtax):;31.36;0.0;0.0;0.0
-Land purchase surface (quantity):;50.0;0.0;0.0;0.0
-Land purchase surface (cost):;500.0;0.0;0.0;0.0
-Land purchase surface (cost incl surtax):;706.0;0.0;0.0;0.0
-Construction length (quantity):;0;11.3;15.8;15.8
-Construction length (cost):;0;1765.59;6002.7;10681.75
-Construction length (cost incl surtax):;0;5141.4;17479.87;35196.38
-Total measure meters;0;0;0;0
-Total measure cost;0.0;0.0;0.0;0.0;0.0
-Total measure cost incl surtax;0.0;0.0;0.0;0.0;0.0
+Profile type;Grondmaatregel profiel;Verticale piping oplossing;Kwelscherm;Stabiliteitswand;Kistdam
+Cost per km (Euro/km);2354288.79;500000.0;1765589.8;6002701.92;10681753.6
+Cost per km incl surtax (Euro/km);5358410.59;1456000.0;5141397.5;17479867.99;35196378.11
+New grass volume (quantity):;15.0;0.0;0.0;0.0;0.0
+New grass volume (cost):;186.6;0.0;0.0;0.0;0.0
+New grass volume (cost incl surtax):;468.18;0.0;0.0;0.0;0.0
+New clay volume (quantity):;36.05;0.0;0.0;0.0;0.0
+New clay volume (cost):;650.7;0.0;0.0;0.0;0.0
+New clay volume (cost incl surtax):;1632.61;0.0;0.0;0.0;0.0
+New core volume (quantity):;68.27;0.0;0.0;0.0;0.0
+New core volume (cost):;749.65;0.0;0.0;0.0;0.0
+New core volume (cost incl surtax):;1880.87;0.0;0.0;0.0;0.0
+Reused grass volume (quantity):;7.35;0.0;0.0;0.0;0.0
+Reused grass volume (cost):;44.39;0.0;0.0;0.0;0.0
+Reused grass volume (cost incl surtax):;111.38;0.0;0.0;0.0;0.0
+Reused core volume (quantity):;11.73;0.0;0.0;0.0;0.0
+Reused core volume (cost):;54.76;0.0;0.0;0.0;0.0
+Reused core volume (cost incl surtax):;137.39;0.0;0.0;0.0;0.0
+Removed material volume (quantity):;0;0.0;0.0;0.0;0.0
+Removed material volume (cost):;0.0;0.0;0.0;0.0;0.0
+Removed material volume (cost incl surtax):;0.0;0.0;0.0;0.0;0.0
+New grass layer surface (quantity):;76.5;0.0;0.0;0.0;0.0
+New grass layer surface (cost):;67.32;0.0;0.0;0.0;0.0
+New grass layer surface (cost incl surtax):;168.91;0.0;0.0;0.0;0.0
+New clay layer surface (quantity):;74.61;0.0;0.0;0.0;0.0
+New clay layer surface (cost):;48.49;0.0;0.0;0.0;0.0
+New clay layer surface (cost incl surtax):;121.67;0.0;0.0;0.0;0.0
+New core layer surface (quantity):;66.44;0.0;0.0;0.0;0.0
+New core layer surface (cost):;39.87;0.0;0.0;0.0;0.0
+New core layer surface (cost incl surtax):;100.02;0.0;0.0;0.0;0.0
+New maaiveld surface (quantity):;50.0;0.0;0.0;0.0;0.0
+New maaiveld surface (cost):;12.5;0.0;0.0;0.0;0.0
+New maaiveld surface (cost incl surtax):;31.36;0.0;0.0;0.0;0.0
+Land purchase surface (quantity):;50.0;0.0;0.0;0.0;0.0
+Land purchase surface (cost):;500.0;0.0;0.0;0.0;0.0
+Land purchase surface (cost incl surtax):;706.0;0.0;0.0;0.0;0.0
+Construction length (quantity):;0;0;11.3;15.8;15.8
+Construction length (cost):;0;500;1765.59;6002.7;10681.75
+Construction length (cost incl surtax):;0;1456.0;5141.4;17479.87;35196.38
+Total measure meters;0;0;0;0;0
+Total measure cost;0.0;0.0;0.0;0.0;0.0;0.0
+Total measure cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0
