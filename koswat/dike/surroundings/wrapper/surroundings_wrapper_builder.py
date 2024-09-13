@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsWrapperCsvFom,
+    KoswatSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
@@ -24,11 +24,11 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     """
 
     trajects_fom: KoswatDikeLocationsShpFom
-    surroundings_fom: KoswatTrajectSurroundingsWrapperCsvFom
+    surroundings_fom: KoswatSurroundingsWrapperCsvFom
     surroundings_section: SurroundingsSectionFom
 
     def _get_polderside_surroundings_from_fom(
-        self, csv_fom: KoswatTrajectSurroundingsWrapperCsvFom
+        self, csv_fom: KoswatSurroundingsWrapperCsvFom
     ) -> list[PointSurroundings]:
         _builder = PointSurroundingsListPoldersideBuilder(
             koswat_shp_fom=self.trajects_fom,
@@ -40,12 +40,12 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
     def build(self) -> SurroundingsWrapper:
         if not isinstance(self.trajects_fom, KoswatDikeLocationsShpFom):
-            raise ValueError("A KoswatDikeLocationShpFom needs to be specified.")
-        if not isinstance(
-            self.surroundings_fom, KoswatTrajectSurroundingsWrapperCsvFom
-        ):
             raise ValueError(
-                "A KoswatTrajectSurroundingsWrapperCsvFom needs to be specified."
+                f"A {KoswatDikeLocationsShpFom.__name__} needs to be specified."
+            )
+        if not isinstance(self.surroundings_fom, KoswatSurroundingsWrapperCsvFom):
+            raise ValueError(
+                f"A {KoswatSurroundingsWrapperCsvFom.__name__} needs to be specified."
             )
 
         _surroundings = SurroundingsWrapper(

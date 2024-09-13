@@ -6,7 +6,7 @@ from typing import Iterator
 import pytest
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsWrapperCsvFom,
+    KoswatSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.koswat_surroundings_importer import (
@@ -185,6 +185,4 @@ class TestKoswatSurroundingsImporter:
         )
 
         # 3. Verify expectations.
-        assert isinstance(
-            _surroundings_wrapper_fom, KoswatTrajectSurroundingsWrapperCsvFom
-        )
+        assert isinstance(_surroundings_wrapper_fom, KoswatSurroundingsWrapperCsvFom)
