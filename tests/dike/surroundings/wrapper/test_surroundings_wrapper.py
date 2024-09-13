@@ -58,18 +58,17 @@ class TestSurroundingsWrapper:
         assert not _surroundings.roads_class_47_dikeside
         assert not _surroundings.roads_class_unknown_dikeside
 
-    def _to_surrounding_point(
-        self, location: Point, distances_list: list[float]
-    ) -> PointSurroundings:
-        return PointSurroundings(
-            location=location, surroundings_matrix={_d: 1 for _d in distances_list}
-        )
-
     @pytest.mark.parametrize(
         "obstacle_name",
         [pytest.param("buildings"), pytest.param("railways"), pytest.param("waters")],
     )
-    def test_set_obstacles_polderside(self, obstacle_name: str):
+    def test_set_obstacles_polderside(
+        self,
+        obstacle_name: str,
+        distances_to_surrounding_point_builder: Callable[
+            [Point, list[float]], PointSurroundings
+        ],
+    ):
         # 1. Define test data.
         _obstacles_polderside = SurroundingsObstacle()
         _locations = [
@@ -78,7 +77,7 @@ class TestSurroundingsWrapper:
             Point(2.4, 2.4),
         ]
         _obstacles_polderside.points = list(
-            map(self._to_surrounding_point, _locations, [[0], [2], [24]])
+            map(distances_to_surrounding_point_builder, _locations, [[0], [2], [24]])
         )
 
         # 2. Run test.
@@ -104,6 +103,9 @@ class TestSurroundingsWrapper:
     @pytest.fixture(name="surroundings_with_obstacle_builder")
     def _get_surroundings_with_obstacle_builder_fixture(
         self,
+        distances_to_surrounding_point_builder: Callable[
+            [Point, list[float]], PointSurroundings
+        ],
     ) -> Iterator[Callable[[list[Point], list[list[float]]], SurroundingsWrapper]]:
         def create_surroundings_wrapper(
             point_list: list[Point], distance_list: list[float]
@@ -112,13 +114,19 @@ class TestSurroundingsWrapper:
             _railways_polderside = SurroundingsObstacle()
             _waters_polderside = SurroundingsObstacle()
             _buildings_polderside.points = list(
-                map(self._to_surrounding_point, point_list, distance_list[0])
+                map(
+                    distances_to_surrounding_point_builder, point_list, distance_list[0]
+                )
             )
             _railways_polderside.points = list(
-                map(self._to_surrounding_point, point_list, distance_list[1])
+                map(
+                    distances_to_surrounding_point_builder, point_list, distance_list[1]
+                )
             )
             _waters_polderside.points = list(
-                map(self._to_surrounding_point, point_list, distance_list[2])
+                map(
+                    distances_to_surrounding_point_builder, point_list, distance_list[2]
+                )
             )
 
             # Yield wrapper

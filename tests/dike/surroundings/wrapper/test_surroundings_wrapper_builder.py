@@ -1,3 +1,5 @@
+from typing import Callable
+
 from shapely.geometry import Point
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
@@ -34,15 +36,12 @@ class TestSurroundingsWrapperBuilder:
         assert _builder.surroundings_fom == _surroundings_fom
         assert _builder.surroundings_section == _surroundings_section
 
-    def _as_surrounding_point(
-        self, location: Point, distances: list[float]
-    ) -> PointSurroundings:
-        _ps = PointSurroundings()
-        _ps.location = location
-        _ps.distance_to_surroundings = distances
-        return _ps
-
-    def test_given_valid_data_build_returns_surroundings(self):
+    def test_given_valid_data_build_returns_surroundings(
+        self,
+        distances_to_surrounding_point_builder: Callable[
+            [Point, list[float]], PointSurroundings
+        ],
+    ):
         # 1. Define test data.
         _end_point = Point(4.2, 4.2)
         _start_point = Point(4.2, 2.4)
@@ -53,13 +52,14 @@ class TestSurroundingsWrapperBuilder:
         ]
 
         # Surroundings wrapper
-        _surroundings_csv_fom = KoswatTrajectSurroundingsCsvFom()
-        _surroundings_csv_fom.points_surroundings_list = [
-            self._as_surrounding_point(Point(2.4, 2.4), [2.4]),
-            self._as_surrounding_point(_start_point, [2.4]),
-            self._as_surrounding_point(Point(2.4, 4.2), [2.4]),
-            self._as_surrounding_point(_end_point, [2.4]),
-        ]
+        _surroundings_csv_fom = KoswatTrajectSurroundingsCsvFom(
+            points_surroundings_list=[
+                distances_to_surrounding_point_builder(Point(2.4, 2.4), [2.4]),
+                distances_to_surrounding_point_builder(_start_point, [2.4]),
+                distances_to_surrounding_point_builder(Point(2.4, 4.2), [2.4]),
+                distances_to_surrounding_point_builder(_end_point, [2.4]),
+            ]
+        )
         _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
         _surroundings_wrapper.buildings_polderside = _surroundings_csv_fom
 

@@ -1,4 +1,4 @@
-from typing import Iterator
+from typing import Callable, Iterator
 
 import pytest
 from shapely.geometry import Point
@@ -31,14 +31,6 @@ class TestPointSurroundingsListPoldersideBuilder:
         assert not _builder.koswat_shp_fom
         assert not _builder.koswat_csv_fom
 
-    def _as_surrounding_point_fom(
-        self, location: Point, distances: list[float]
-    ) -> PointSurroundings:
-        _ps = PointSurroundings()
-        _ps.location = location
-        _ps.distance_to_surroundings = distances
-        return _ps
-
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):
         # 1. Define test data.
         _builder = PointSurroundingsListPoldersideBuilder(
@@ -58,13 +50,16 @@ class TestPointSurroundingsListPoldersideBuilder:
     @pytest.fixture(name="valid_builder")
     def _get_valid_koswat_point_surroundings_polderside_builder(
         self,
+        distances_to_surrounding_point_builder: Callable[
+            [Point, list[float]], PointSurroundings
+        ],
     ) -> Iterator[PointSurroundingsListPoldersideBuilder]:
         _koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _koswat_csv_fom.points_surroundings_list = [
-            self._as_surrounding_point_fom(Point(2.4, 2.4), []),
-            self._as_surrounding_point_fom(Point(4.2, 2.4), []),
-            self._as_surrounding_point_fom(Point(2.4, 4.2), []),
-            self._as_surrounding_point_fom(Point(4.2, 4.2), []),
+            distances_to_surrounding_point_builder(Point(2.4, 2.4), []),
+            distances_to_surrounding_point_builder(Point(4.2, 2.4), []),
+            distances_to_surrounding_point_builder(Point(2.4, 4.2), []),
+            distances_to_surrounding_point_builder(Point(4.2, 4.2), []),
         ]
         yield PointSurroundingsListPoldersideBuilder(
             koswat_csv_fom=_koswat_csv_fom, koswat_shp_fom=None
@@ -117,7 +112,12 @@ class TestPointSurroundingsListPoldersideBuilder:
         # 3. Verify expectations.
         assert [_fp.location for _fp in _found_points] == _expected_points
 
-    def test_build_given_valid_data_then_returns_koswat_building_polderside(self):
+    def test_build_given_valid_data_then_returns_koswat_building_polderside(
+        self,
+        distances_to_surrounding_point_builder: Callable[
+            [Point, list[float]], PointSurroundings
+        ],
+    ):
         # 1. Define test data
         _end_point = Point(4.2, 4.2)
         _start_point = Point(4.2, 2.4)
@@ -128,10 +128,10 @@ class TestPointSurroundingsListPoldersideBuilder:
         ]
         _koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
         _koswat_csv_fom.points_surroundings_list = [
-            self._as_surrounding_point_fom(Point(2.4, 2.4), [2.4]),
-            self._as_surrounding_point_fom(_start_point, [2.4]),
-            self._as_surrounding_point_fom(Point(2.4, 4.2), [2.4]),
-            self._as_surrounding_point_fom(_end_point, [2.4]),
+            distances_to_surrounding_point_builder(Point(2.4, 2.4), [2.4]),
+            distances_to_surrounding_point_builder(_start_point, [2.4]),
+            distances_to_surrounding_point_builder(Point(2.4, 4.2), [2.4]),
+            distances_to_surrounding_point_builder(_end_point, [2.4]),
         ]
         assert _koswat_csv_fom.is_valid()
         _koswat_shp_fom = KoswatDikeLocationsShpFom()
