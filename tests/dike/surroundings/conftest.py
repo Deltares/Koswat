@@ -10,6 +10,14 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 def get_distances_as_surrounding_point_builder() -> Iterator[
     Callable[[Point, list[float]], PointSurroundings]
 ]:
+    """
+    Gets a builder to generate `PointSurroundings` with a location and a valid
+    `surroundings_matrix` which could relate to an `ObstacleSurrounding`.
+
+    Yields:
+        Iterator[ Callable[[Point, list[float]], PointSurroundings] ]: Yields a builder of `PointSurroundings`.
+    """
+
     def build_point_surroundings(
         location: Point, distances_list: list[float]
     ) -> PointSurroundings:
