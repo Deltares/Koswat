@@ -13,4 +13,4 @@ class KoswatTrajectSurroundingsCsvFom(KoswatCsvFomProtocol):
     traject: str = ""
 
     def is_valid(self) -> bool:
-        return self.points_surroundings_list and any(self.points_surroundings_list)
+        return any(self.points_surroundings_list)
