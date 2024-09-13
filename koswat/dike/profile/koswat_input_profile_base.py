@@ -24,3 +24,7 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     factor_zetting: float = math.nan
     pleistoceen: float = math.nan
     aquifer: float = math.nan
+
+    @property
+    def grondprijs(self) -> float:
+        return self.grondprijs_bebouwd
