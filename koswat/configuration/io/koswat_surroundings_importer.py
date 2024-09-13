@@ -3,8 +3,8 @@ from itertools import groupby
 from pathlib import Path
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
-    KoswatTrajectSurroundingsWrapperCsvFom,
+    KoswatSurroundingsCsvFom,
+    KoswatSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
@@ -108,7 +108,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
 
     def _csv_file_to_fom(
         self, csv_file: Path, traject_name: str
-    ) -> tuple[str, KoswatTrajectSurroundingsCsvFom]:
+    ) -> tuple[str, KoswatSurroundingsCsvFom]:
         _surrounding_csv_fom = KoswatSurroundingsCsvReader().read(csv_file)
         _surrounding_csv_fom.traject = traject_name
         _surrounding_type = self._map_surrounding_type(
@@ -119,10 +119,10 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
     def _csv_dir_to_fom(
         self,
         csv_dir: Path,
-    ) -> KoswatTrajectSurroundingsWrapperCsvFom:
-        _surroundings_wrapper = KoswatTrajectSurroundingsWrapperCsvFom()
-        _surroundings_wrapper.traject = csv_dir.stem
+    ) -> KoswatSurroundingsWrapperCsvFom:
+        _surroundings_wrapper_fom = KoswatSurroundingsWrapperCsvFom()
+        _surroundings_wrapper_fom.traject = csv_dir.stem
         for _csv_file in csv_dir.glob("*.csv"):
             _type, _csv_fom = self._csv_file_to_fom(_csv_file, csv_dir.stem)
-            setattr(_surroundings_wrapper, _type, _csv_fom)
-        return _surroundings_wrapper
+            setattr(_surroundings_wrapper_fom, _type, _csv_fom)
+        return _surroundings_wrapper_fom

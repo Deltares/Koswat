@@ -6,17 +6,21 @@ from typing import Iterator
 import pytest
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsWrapperCsvFom,
+    KoswatSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.koswat_surroundings_importer import (
     KoswatSurroundingsImporter,
 )
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    KoswatSurroundingsPolderside,
+from koswat.dike.surroundings.koswat_surroundings_protocol import (
+    KoswatSurroundingsProtocol,
 )
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
+    SurroundingsInfrastructure,
+    SurroundingsObstacle,
+    SurroundingsWrapper,
+)
 from tests import get_fixturerequest_case_name, test_data, test_results
 
 
@@ -134,26 +138,31 @@ class TestKoswatSurroundingsImporter:
 
         # 3. Verify expectations (specific for the caes present in the test data).
         assert len(_surroundings_wrapper_list) == 2
+
+        def check_surroundings(
+            surrounding_property: KoswatSurroundingsProtocol,
+            expected_type: type[KoswatSurroundingsProtocol],
+        ):
+            assert isinstance(surrounding_property, KoswatSurroundingsProtocol)
+            assert isinstance(surrounding_property, expected_type)
+            assert any(surrounding_property.points)
+
         for _sw in _surroundings_wrapper_list:
             assert isinstance(_sw, SurroundingsWrapper)
-            assert isinstance(_sw.buildings_polderside, KoswatSurroundingsPolderside)
+            check_surroundings(_sw.buildings_polderside, SurroundingsObstacle)
             if _sw.traject != "10-2":
-                assert isinstance(_sw.railways_polderside, KoswatSurroundingsPolderside)
-            assert isinstance(_sw.waters_polderside, KoswatSurroundingsPolderside)
-            assert isinstance(
-                _sw.roads_class_2_polderside, KoswatSurroundingsPolderside
+                check_surroundings(_sw.railways_polderside, SurroundingsObstacle)
+            check_surroundings(_sw.waters_polderside, SurroundingsObstacle)
+            check_surroundings(_sw.roads_class_2_polderside, SurroundingsInfrastructure)
+            check_surroundings(_sw.roads_class_7_polderside, SurroundingsInfrastructure)
+            check_surroundings(
+                _sw.roads_class_24_polderside, SurroundingsInfrastructure
             )
-            assert isinstance(
-                _sw.roads_class_7_polderside, KoswatSurroundingsPolderside
+            check_surroundings(
+                _sw.roads_class_47_polderside, SurroundingsInfrastructure
             )
-            assert isinstance(
-                _sw.roads_class_24_polderside, KoswatSurroundingsPolderside
-            )
-            assert isinstance(
-                _sw.roads_class_47_polderside, KoswatSurroundingsPolderside
-            )
-            assert isinstance(
-                _sw.roads_class_unknown_polderside, KoswatSurroundingsPolderside
+            check_surroundings(
+                _sw.roads_class_unknown_polderside, SurroundingsInfrastructure
             )
 
     @pytest.mark.parametrize(
@@ -176,6 +185,4 @@ class TestKoswatSurroundingsImporter:
         )
 
         # 3. Verify expectations.
-        assert isinstance(
-            _surroundings_wrapper_fom, KoswatTrajectSurroundingsWrapperCsvFom
-        )
+        assert isinstance(_surroundings_wrapper_fom, KoswatSurroundingsWrapperCsvFom)

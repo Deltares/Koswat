@@ -6,20 +6,8 @@ from koswat.configuration.settings.costs.koswat_costs_settings import (
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
-    KoswatCofferdamSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
-    KoswatPipingWallSettings,
-)
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
-    KoswatSoilSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_builder import (
     MultiLocationProfileCostReportBuilder,
@@ -31,11 +19,11 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    KoswatSurroundingsPolderside,
-    PointSurroundings,
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
+    SurroundingsObstacle,
+    SurroundingsWrapper,
 )
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -119,18 +107,19 @@ class TestKoswatSummaryBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
+        _p_surrounding = PointSurroundings(
+            surroundings_matrix=[], location=Point(2.4, 4.2)
+        )
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
-        _run_settings.surroundings = SurroundingsWrapper()
+        _run_settings.surroundings = SurroundingsWrapper(
+            reinforcement_min_buffer=10,
+            reinforcement_min_separation=50,
+            apply_buildings=True,
+            buildings_polderside=SurroundingsObstacle(points=[_p_surrounding]),
+        )
         _run_settings.costs_setting = KoswatCostsSettings()
-        _p_surrounding = PointSurroundings()
-        _p_surrounding.distance_to_surroundings = []
-        _p_surrounding.location = Point(2.4, 4.2)
-        _run_settings.surroundings.buildings_polderside = KoswatSurroundingsPolderside()
-        _run_settings.surroundings.buildings_polderside.points = [_p_surrounding]
-        _run_settings.surroundings.reinforcement_min_buffer = 10
-        _run_settings.surroundings.reinforcement_min_separation = 50
         _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.default,
