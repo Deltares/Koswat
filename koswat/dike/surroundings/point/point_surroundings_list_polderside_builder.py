@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from shapely.geometry import Point
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
 )
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.core.protocols import BuilderProtocol
@@ -14,8 +14,14 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 @dataclass
 class PointSurroundingsListPoldersideBuilder(BuilderProtocol):
+    """
+    Builds a collection of points (`list[PointSurroundings]`) given the dike locations
+    (`KoswatDikeLocationsShpFom`) and the surroundings around it
+    (`KoswatSurroundingsCsvFom`).
+    """
+
     koswat_shp_fom: KoswatDikeLocationsShpFom
-    koswat_csv_fom: KoswatTrajectSurroundingsCsvFom
+    koswat_csv_fom: KoswatSurroundingsCsvFom
 
     def _find_polderside_point_idx(self, limit_point: Point) -> int:
         for _ps_idx, ps in enumerate(self.koswat_csv_fom.points_surroundings_list):

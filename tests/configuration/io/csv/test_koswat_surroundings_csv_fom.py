@@ -1,5 +1,5 @@
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
     KoswatTrajectSurroundingsWrapperCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
@@ -7,8 +7,8 @@ from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 
 class TestKoswatTrajectSurroundingsCsvFom:
     def test_initialize(self):
-        _csv_fom = KoswatTrajectSurroundingsCsvFom()
-        assert isinstance(_csv_fom, KoswatTrajectSurroundingsCsvFom)
+        _csv_fom = KoswatSurroundingsCsvFom()
+        assert isinstance(_csv_fom, KoswatSurroundingsCsvFom)
         assert isinstance(_csv_fom, KoswatCsvFomProtocol)
         assert _csv_fom.points_surroundings_list == []
         assert _csv_fom.distances_list == []

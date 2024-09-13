@@ -3,7 +3,7 @@ from itertools import groupby
 from pathlib import Path
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
     KoswatTrajectSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
@@ -108,7 +108,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
 
     def _csv_file_to_fom(
         self, csv_file: Path, traject_name: str
-    ) -> tuple[str, KoswatTrajectSurroundingsCsvFom]:
+    ) -> tuple[str, KoswatSurroundingsCsvFom]:
         _surrounding_csv_fom = KoswatSurroundingsCsvReader().read(csv_file)
         _surrounding_csv_fom.traject = traject_name
         _surrounding_type = self._map_surrounding_type(

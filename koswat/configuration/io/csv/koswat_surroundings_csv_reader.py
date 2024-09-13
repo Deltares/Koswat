@@ -4,7 +4,7 @@ from pathlib import Path
 from shapely import Point
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
@@ -12,11 +12,11 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
-    def read(self, file_path: Path) -> KoswatTrajectSurroundingsCsvFom:
+    def read(self, file_path: Path) -> KoswatSurroundingsCsvFom:
         _csv_fom = KoswatCsvReader().read(file_path)
 
         # First three columns are section x and y coordinate.
-        _koswat_fom = KoswatTrajectSurroundingsCsvFom()
+        _koswat_fom = KoswatSurroundingsCsvFom()
         _koswat_fom.distances_list = self._get_surroundings_distances(
             _csv_fom.headers[3:]
         )

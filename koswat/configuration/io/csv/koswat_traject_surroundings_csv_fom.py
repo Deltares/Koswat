@@ -5,7 +5,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 @dataclass
-class KoswatTrajectSurroundingsCsvFom(KoswatCsvFomProtocol):
+class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
     points_surroundings_list: list[PointSurroundings] = field(
         default_factory=lambda: []
     )

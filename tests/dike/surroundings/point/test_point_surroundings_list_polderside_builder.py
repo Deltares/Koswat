@@ -4,7 +4,7 @@ import pytest
 from shapely.geometry import Point
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
@@ -34,7 +34,7 @@ class TestPointSurroundingsListPoldersideBuilder:
     def test_find_conflicting_point_idx_raises_error_if_not_found(self):
         # 1. Define test data.
         _builder = PointSurroundingsListPoldersideBuilder(
-            koswat_csv_fom=KoswatTrajectSurroundingsCsvFom(), koswat_shp_fom=None
+            koswat_csv_fom=KoswatSurroundingsCsvFom(), koswat_shp_fom=None
         )
 
         # 2. Run test
@@ -54,7 +54,7 @@ class TestPointSurroundingsListPoldersideBuilder:
             [Point, list[float]], PointSurroundings
         ],
     ) -> Iterator[PointSurroundingsListPoldersideBuilder]:
-        _koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
+        _koswat_csv_fom = KoswatSurroundingsCsvFom()
         _koswat_csv_fom.points_surroundings_list = [
             distances_to_surrounding_point_builder(Point(2.4, 2.4), []),
             distances_to_surrounding_point_builder(Point(4.2, 2.4), []),
@@ -126,7 +126,7 @@ class TestPointSurroundingsListPoldersideBuilder:
             Point(2.4, 4.2),
             _end_point,
         ]
-        _koswat_csv_fom = KoswatTrajectSurroundingsCsvFom()
+        _koswat_csv_fom = KoswatSurroundingsCsvFom()
         _koswat_csv_fom.points_surroundings_list = [
             distances_to_surrounding_point_builder(Point(2.4, 2.4), [2.4]),
             distances_to_surrounding_point_builder(_start_point, [2.4]),

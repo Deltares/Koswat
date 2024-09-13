@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from koswat.configuration.io.csv.koswat_traject_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 
@@ -9,26 +9,26 @@ from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 @dataclass
 class KoswatTrajectSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
     traject: str = ""
-    buildings_polderside: KoswatTrajectSurroundingsCsvFom = None
-    buildings_dikeside: KoswatTrajectSurroundingsCsvFom = None
+    buildings_polderside: KoswatSurroundingsCsvFom = None
+    buildings_dikeside: KoswatSurroundingsCsvFom = None
 
-    railways_polderside: KoswatTrajectSurroundingsCsvFom = None
-    railways_dikeside: KoswatTrajectSurroundingsCsvFom = None
+    railways_polderside: KoswatSurroundingsCsvFom = None
+    railways_dikeside: KoswatSurroundingsCsvFom = None
 
-    waters_polderside: KoswatTrajectSurroundingsCsvFom = None
-    waters_dikeside: KoswatTrajectSurroundingsCsvFom = None
+    waters_polderside: KoswatSurroundingsCsvFom = None
+    waters_dikeside: KoswatSurroundingsCsvFom = None
 
-    roads_class_2_polderside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_7_polderside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_24_polderside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_47_polderside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_unknown_polderside: KoswatTrajectSurroundingsCsvFom = None
+    roads_class_2_polderside: KoswatSurroundingsCsvFom = None
+    roads_class_7_polderside: KoswatSurroundingsCsvFom = None
+    roads_class_24_polderside: KoswatSurroundingsCsvFom = None
+    roads_class_47_polderside: KoswatSurroundingsCsvFom = None
+    roads_class_unknown_polderside: KoswatSurroundingsCsvFom = None
 
-    roads_class_2_dikeside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_7_dikeside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_24_dikeside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_47_dikeside: KoswatTrajectSurroundingsCsvFom = None
-    roads_class_unknown_dikeside: KoswatTrajectSurroundingsCsvFom = None
+    roads_class_2_dikeside: KoswatSurroundingsCsvFom = None
+    roads_class_7_dikeside: KoswatSurroundingsCsvFom = None
+    roads_class_24_dikeside: KoswatSurroundingsCsvFom = None
+    roads_class_47_dikeside: KoswatSurroundingsCsvFom = None
+    roads_class_unknown_dikeside: KoswatSurroundingsCsvFom = None
 
     def is_valid(self) -> bool:
         _surroundings = [

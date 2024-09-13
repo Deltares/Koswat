@@ -1,5 +1,5 @@
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
@@ -26,5 +26,5 @@ class TestKoswatSurroundingsCsvReader:
         _csv_fom = _reader.read(_test_file)
 
         # 3. Verify expectations.
-        assert isinstance(_csv_fom, KoswatTrajectSurroundingsCsvFom)
+        assert isinstance(_csv_fom, KoswatSurroundingsCsvFom)
         assert _csv_fom.is_valid()

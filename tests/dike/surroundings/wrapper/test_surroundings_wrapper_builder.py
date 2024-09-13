@@ -3,7 +3,7 @@ from typing import Callable
 from shapely.geometry import Point
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
     KoswatTrajectSurroundingsWrapperCsvFom,
 )
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
@@ -52,7 +52,7 @@ class TestSurroundingsWrapperBuilder:
         ]
 
         # Surroundings wrapper
-        _surroundings_csv_fom = KoswatTrajectSurroundingsCsvFom(
+        _surroundings_csv_fom = KoswatSurroundingsCsvFom(
             points_surroundings_list=[
                 distances_to_surrounding_point_builder(Point(2.4, 2.4), [2.4]),
                 distances_to_surrounding_point_builder(_start_point, [2.4]),
