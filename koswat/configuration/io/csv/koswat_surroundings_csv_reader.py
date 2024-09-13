@@ -1,23 +1,22 @@
 import re
 from pathlib import Path
 
+from shapely import Point
+
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatTrajectSurroundingsCsvFom,
+    KoswatSurroundingsCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.point.point_surroundings_builder import (
-    PointSurroundingsBuilder,
-)
 
 
 class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
-    def read(self, file_path: Path) -> KoswatTrajectSurroundingsCsvFom:
+    def read(self, file_path: Path) -> KoswatSurroundingsCsvFom:
         _csv_fom = KoswatCsvReader().read(file_path)
 
         # First three columns are section x and y coordinate.
-        _koswat_fom = KoswatTrajectSurroundingsCsvFom()
+        _koswat_fom = KoswatSurroundingsCsvFom()
         _koswat_fom.distances_list = self._get_surroundings_distances(
             _csv_fom.headers[3:]
         )
@@ -37,23 +36,6 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
         return list(map(to_distance_float, distance_list))
 
-    def _build_point_surroundings(
-        self, entry: list[str], distances_list: list[float]
-    ) -> PointSurroundings:
-        _point_dict = dict(
-            traject_order=entry[0],
-            section=entry[1],
-            location=(float(entry[2]), float(entry[3])),
-            distance_to_surroundings=[
-                distances_list[e_idx]
-                for e_idx, e_val in enumerate(entry[4:])
-                if e_val == "1"
-            ],
-        )
-        _builder = PointSurroundingsBuilder()
-        _builder.point_surroundings_data = _point_dict
-        return _builder.build()
-
     def _build_points_surroundings_list(
         self, distances_list: list[float], entries: list[list[str]]
     ) -> list[PointSurroundings]:
@@ -63,3 +45,23 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
             _ps = self._build_point_surroundings(_point_entry, distances_list)
             _point_list.append(_ps)
         return _point_list
+
+    def _build_point_surroundings(
+        self, entry: list[str], distances_list: list[float]
+    ) -> PointSurroundings:
+        def csv_column_to_dict(csv_columns: list[str]) -> dict:
+            _surroundings_matrix = {}
+            for e_idx, e_val in enumerate(csv_columns):
+                _float_eval = float(e_val)
+                if _float_eval == 0:
+                    # We are not interested in 'cells' without 'value'.
+                    continue
+                _surroundings_matrix[distances_list[e_idx]] = _float_eval
+            return _surroundings_matrix
+
+        return PointSurroundings(
+            section=entry[1],
+            traject_order=entry[0],
+            location=Point(float(entry[2]), float(entry[3])),
+            surroundings_matrix=csv_column_to_dict(entry[4:]),
+        )

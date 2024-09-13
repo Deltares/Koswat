@@ -128,7 +128,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _summary.reinforcement_per_locations = (
             self._get_final_reinforcement_per_location(
                 _summary.locations_profile_report_list,
-                self.run_scenario_settings.surroundings.locations,
+                self.run_scenario_settings.surroundings.obstacle_locations,
             )
         )
         return _summary

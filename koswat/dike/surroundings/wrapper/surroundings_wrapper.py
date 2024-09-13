@@ -1,17 +1,15 @@
-import copy
-import logging
 import math
-from dataclasses import dataclass
-
-from shapely.geometry import Point
+from dataclasses import dataclass, field
+from itertools import chain, groupby
 
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside import (
-    KoswatSurroundingsPolderside,
+from koswat.dike.surroundings.surroundings_infrastructure import (
+    SurroundingsInfrastructure,
 )
+from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 
 
 @dataclass
@@ -19,6 +17,7 @@ class SurroundingsWrapper:
     dike_section: str = ""
     traject: str = ""
     subtraject: str = ""
+
     apply_waterside: bool = False
     apply_buildings: bool = False
     apply_railways: bool = False
@@ -27,20 +26,36 @@ class SurroundingsWrapper:
     reinforcement_min_separation: float = float("nan")
     reinforcement_min_buffer: float = float("nan")
 
-    buildings_polderside: KoswatSurroundingsPolderside = None
+    buildings_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsObstacle
+    )
     buildings_dikeside: KoswatSurroundingsProtocol = None
 
-    railways_polderside: KoswatSurroundingsPolderside = None
+    railways_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsObstacle
+    )
     railways_dikeside: KoswatSurroundingsProtocol = None
 
-    waters_polderside: KoswatSurroundingsPolderside = None
+    waters_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsObstacle
+    )
     waters_dikeside: KoswatSurroundingsProtocol = None
 
-    roads_class_2_polderside: KoswatSurroundingsProtocol = None
-    roads_class_7_polderside: KoswatSurroundingsProtocol = None
-    roads_class_24_polderside: KoswatSurroundingsProtocol = None
-    roads_class_47_polderside: KoswatSurroundingsProtocol = None
-    roads_class_unknown_polderside: KoswatSurroundingsProtocol = None
+    roads_class_2_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsInfrastructure
+    )
+    roads_class_7_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsInfrastructure
+    )
+    roads_class_24_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsInfrastructure
+    )
+    roads_class_47_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsInfrastructure
+    )
+    roads_class_unknown_polderside: KoswatSurroundingsProtocol = field(
+        default_factory=SurroundingsInfrastructure
+    )
 
     roads_class_2_dikeside: KoswatSurroundingsProtocol = None
     roads_class_7_dikeside: KoswatSurroundingsProtocol = None
@@ -49,60 +64,90 @@ class SurroundingsWrapper:
     roads_class_unknown_dikeside: KoswatSurroundingsProtocol = None
 
     @property
-    def locations(self) -> list[PointSurroundings]:
+    def surroundings_collection(self) -> list[KoswatSurroundingsProtocol]:
         """
-        Overlay of locations of the different surroundings that are present.
+        The collection of `KoswatSurroundingsProtocol` objects that are considered for a scenario analysis.
+
+        Returns:
+            list[KoswatSurroundingsProtocol]: Collection of surroundings to include in analysis.
+        """
+        _surroundings = {
+            _prop: _value
+            for _prop, _value in self.__dict__.items()
+            if isinstance(_value, KoswatSurroundingsProtocol)
+        }
+
+        def exclude_surrounding(property_name: str):
+            _surroundings.pop(property_name + "_polderside", None)
+            _surroundings.pop(property_name + "_dikeside", None)
+
+        if not self.apply_buildings:
+            exclude_surrounding("buildings")
+
+        if not self.apply_railways:
+            exclude_surrounding("railways")
+
+        if not self.apply_waters:
+            exclude_surrounding("waters")
+
+        return list(_surroundings.values())
+
+    @property
+    def obstacle_locations(self) -> list[PointSurroundings]:
+        """
+        Overlay of locations of the different `ObstacleSurroundings` that are present.
         Buildings need to be present as input (leading for location coordinates).
         Each location represents 1 meter in a real scale map.
 
         Returns:
-            List[PointSurroundings]: List of points along the polderside.
+            list[PointSurroundings]: List of locations with only the closest distance to obstacle(s).
         """
 
-        def _match_locations(
-            point1: PointSurroundings, point2: PointSurroundings
-        ) -> list[float]:
-            if point1.location != point2.location:
-                logging.warning(
-                    f"Mismatching railway polderside location {point2.location}"
-                )
-            return point2.distance_to_surroundings + point1.distance_to_surroundings
+        _surroundings_obstacles = list(
+            filter(
+                lambda x: isinstance(x, SurroundingsObstacle),
+                self.surroundings_collection,
+            )
+        )
 
-        if not self.buildings_polderside:
-            return []
+        def ps_sorting_key(ps_to_sort: PointSurroundings) -> int:
+            return ps_to_sort.__hash__()
 
-        _points = copy.deepcopy(self.buildings_polderside.points)
+        _ps_keyfunc = ps_sorting_key
+        _point_surroundings = sorted(
+            chain(*list(map(lambda x: x.points, _surroundings_obstacles))),
+            key=_ps_keyfunc,
+        )
+        _obstacle_locations = []
+        for _, _matches in groupby(_point_surroundings, key=_ps_keyfunc):
+            _lmatches = list(_matches)
+            if not any(_lmatches):
+                continue
+            _ps_copy = _lmatches[0]
+            _ps_copy.surroundings_matrix = {}
+            _obstacle_locations.append(_ps_copy)
+            for _matched_ps in _lmatches:
+                if math.isnan(_matched_ps.closest_obstacle):
+                    continue
+                _ps_copy.surroundings_matrix[_matched_ps.closest_obstacle] = 1
+        return _obstacle_locations
 
-        for _p, _point in enumerate(_points):
-            if not self.apply_buildings:
-                _points[_p].distance_to_surroundings = []
-
-            if self.apply_railways and self.railways_polderside:
-                _points[_p].distance_to_surroundings = _match_locations(
-                    _point, self.railways_polderside.points[_p]
-                )
-
-            if self.apply_waters and self.waters_polderside:
-                _points[_p].distance_to_surroundings = _match_locations(
-                    _point, self.waters_polderside.points[_p]
-                )
-
-        return _points
-
-    def get_locations_after_distance(self, distance: float) -> list[Point]:
+    def get_locations_at_safe_distance(
+        self, distance: float
+    ) -> list[PointSurroundings]:
         """
-        Gets all locations which are safe from surroundings (building/railway/water) in a radius of `distance`.
+        Gets all locations which are safe from obstacle surroundings in a radius of `distance`.
 
         Args:
             distance (float): Radius from each point that should be free of surroundings.
 
         Returns:
-            List[Point]: List of safe locations (points).
+            List[PointSurroundings]: List of safe locations (points with surroundings).
         """
 
         def _is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
-            if math.isnan(point_surroundings.closest_surrounding):
+            if math.isnan(point_surroundings.closest_obstacle):
                 return True
-            return distance < point_surroundings.closest_surrounding
+            return distance < point_surroundings.closest_obstacle
 
-        return list(filter(_is_at_safe_distance, self.locations))
+        return list(filter(_is_at_safe_distance, self.obstacle_locations))

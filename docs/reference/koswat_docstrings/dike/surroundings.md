@@ -2,11 +2,9 @@
 
 ::: koswat.dike.surroundings.koswat_surroundings_protocol
 
-## Surroundings polderside
-::: koswat.dike.surroundings.surroundings_polderside.koswat_surroundings_polderside
-
 ## Point
 ::: koswat.dike.surroundings.point.point_surroundings
+::: koswat.dike.surroundings.point.point_surroundings_list_polderside_builder
 
 ## Wrapper
 ::: koswat.dike.surroundings.wrapper.surroundings_wrapper
