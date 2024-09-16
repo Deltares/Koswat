@@ -18,10 +18,10 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     infrastructures_considered: bool = True
 
     # opslagfactor_wegen
-    upkeeping_costs: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
+    storage_cost_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
 
     # infrakosten_0dh
-    non_rising_dike_costs: InfraCostsEnum = InfraCostsEnum.GEEN
+    non_rising_dike_costs_factor: InfraCostsEnum = InfraCostsEnum.GEEN
 
     # Polderside infrastructures
     roads_class_2_polderside: SurroundingsInfrastructure = field(

@@ -76,8 +76,8 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     ) -> InfrastructureSurroundingsWrapper:
         _infra_wrapper = InfrastructureSurroundingsWrapper(
             infrastructures_considered=self.infrastructure_section_fom.infrastructuur,
-            upkeeping_costs=self.infrastructure_section_fom.opslagfactor_wegen,
-            non_rising_dike_costs=self.infrastructure_section_fom.infrakosten_0dh,
+            storage_cost_factor=self.infrastructure_section_fom.opslagfactor_wegen,
+            non_rising_dike_costs_factor=self.infrastructure_section_fom.infrakosten_0dh,
         )
 
         # Roads class 2
