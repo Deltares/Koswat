@@ -1,12 +1,14 @@
+from dataclasses import dataclass
+
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
 from koswat.core.protocols import BuilderProtocol
+from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder import (
+    MultiInfrastructureProfileCostsCalculatorBuilder,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
-)
-from koswat.cost_report.profile.infrastructure_matrix_costs_builder import (
-    InfrastructureMatrixCostsCalculatorBuilder,
 )
 from koswat.cost_report.profile.profile_cost_report_builder import (
     ProfileCostReportBuilder,
@@ -17,15 +19,11 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
+@dataclass
 class MultiLocationProfileCostReportBuilder(BuilderProtocol):
-    surroundings: SurroundingsWrapper
-    reinforced_profile: ReinforcementProfileProtocol
-    koswat_costs_settings: KoswatCostsSettings
-
-    def __init__(self) -> None:
-        self.surroundings = None
-        self.reinforced_profile = None
-        self.koswat_costs_settings = None
+    surroundings: SurroundingsWrapper = None
+    reinforced_profile: ReinforcementProfileProtocol = None
+    koswat_costs_settings: KoswatCostsSettings = None
 
     def build(self) -> MultiLocationProfileCostReport:
 
@@ -35,7 +33,7 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
             koswat_costs_settings=self.koswat_costs_settings,
         )
 
-        _infra_calculator = InfrastructureMatrixCostsCalculatorBuilder(
+        _infra_calculator = MultiInfrastructureProfileCostsCalculatorBuilder(
             infrastructure_wrapper=self.surroundings.infrastructure_surroundings_wrapper,
             cost_settings=self.koswat_costs_settings.infrastructure_costs,
             surtax_cost_settings=self.koswat_costs_settings.surtax_costs,

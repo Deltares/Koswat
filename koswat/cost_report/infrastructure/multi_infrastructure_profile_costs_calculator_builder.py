@@ -1,6 +1,5 @@
 import math
 from dataclasses import dataclass
-from typing import Any
 
 from koswat.configuration.settings.costs.infastructure_costs_settings import (
     InfrastructureCostsSettings,
@@ -10,74 +9,19 @@ from koswat.configuration.settings.costs.surtax_costs_settings import (
 )
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.dike.surroundings.surroundings_infrastructure import (
-    SurroundingsInfrastructure,
+from koswat.cost_report.infrastructure.infrastructure_costs_calculator import (
+    InfrastructureCostsCalculator,
+)
+from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
+    MultiInfrastructureProfileCostsCalculator,
 )
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 
 
 @dataclass
-class InfrastructureZoneCosts:
-    infrastructure_name: str
-    zone_a_length: float
-    zone_a_cost: float
-    zone_b_length: float
-    zone_b_cost: float
-
-
-@dataclass
-class InfrastructureCostsCalculator:
-    infrastructure: SurroundingsInfrastructure
-    removing_costs: float
-    adding_costs: float
-    storage_costs: float
-    non_rising_dike_costs: float
-    surtax_costs: float
-
-    def get_zone_a_costs(self, dike_profile) -> tuple[float, float]:
-        # returns tuple:
-        # - length of infrastructure in zone 'a'
-        # - total cost
-        pass
-
-    def get_zone_b_costs(self, dike_profile) -> tuple[float, float]:
-        # returns tuple:
-        # - length of infrastructure in zone 'b'
-        # - total cost
-        pass
-
-
-@dataclass
-class InfrastructureMultiLocationProfileCostReport(CostReportProtocol):
-    reinforced_profile: ReinforcementProfileProtocol
-
-    @property
-    def total_cost(self) -> float:
-        return math.nan
-
-    @property
-    def total_cost_with_surtax(self) -> float:
-        return math.nan
-
-
-@dataclass
-class InfrastructureMatrixCostsCalculator:
-    infrastructure_calculators: dict[str, InfrastructureCostsCalculator]
-
-    def calculate(self, profile) -> InfrastructureMultiLocationProfileCostReport:
-        _report = InfrastructureMultiLocationProfileCostReport(
-            reinforced_profile=profile
-        )
-
-
-@dataclass
-class InfrastructureMatrixCostsCalculatorBuilder(BuilderProtocol):
+class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
 
     infrastructure_wrapper: InfrastructureSurroundingsWrapper
     cost_settings: InfrastructureCostsSettings
@@ -124,13 +68,13 @@ class InfrastructureMatrixCostsCalculatorBuilder(BuilderProtocol):
             )
         return math.nan, math.nan
 
-    def build(self) -> InfrastructureMatrixCostsCalculator:
+    def build(self) -> MultiInfrastructureProfileCostsCalculator:
 
         _surtax_costs = self._get_surtax_costs()
 
         def get_infra_calculator(
-            infrastructure_tuple: tuple[str, SurroundingsInfrastructure]
-        ) -> InfrastructureCostsCalculator:
+            infrastructure_tuple: tuple[str, MultiInfrastructureProfileCostsCalculator]
+        ) -> MultiInfrastructureProfileCostsCalculator:
             _adding_costs, _removing_costs = self._get_infrastructure_costs(
                 infrastructure_tuple[0]
             )
@@ -148,6 +92,6 @@ class InfrastructureMatrixCostsCalculatorBuilder(BuilderProtocol):
             for _infra in self.infrastructure_wrapper._surroundings_collection.items()
         }
 
-        return InfrastructureMatrixCostsCalculator(
+        return MultiInfrastructureProfileCostsCalculator(
             infrastructure_calculators=_calculators
         )
