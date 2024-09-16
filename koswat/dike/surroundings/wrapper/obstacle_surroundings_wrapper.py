@@ -66,7 +66,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         _surroundings_obstacles = list(
             filter(
                 lambda x: isinstance(x, SurroundingsObstacle),
-                self._surroundings_collection.values(),
+                self.surroundings_collection.values(),
             )
         )
 

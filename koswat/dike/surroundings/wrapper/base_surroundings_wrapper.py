@@ -7,7 +7,7 @@ from koswat.dike.surroundings.koswat_surroundings_protocol import (
 
 class BaseSurroundingsWrapper(ABC):
     @property
-    def _surroundings_collection(self) -> dict[str, KoswatSurroundingsProtocol]:
+    def surroundings_collection(self) -> dict[str, KoswatSurroundingsProtocol]:
         """
         The collection of `KoswatSurroundingsProtocol` objects that are considered for a scenario analysis.
 

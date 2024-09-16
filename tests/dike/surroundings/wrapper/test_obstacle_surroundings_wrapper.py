@@ -1,9 +1,8 @@
-from typing import Callable, Iterable
+from typing import Callable
 
 import pytest
 from shapely import Point
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
     BaseSurroundingsWrapper,
@@ -34,29 +33,6 @@ class TestObstacleSurroundingsWrapper:
         assert not _wrapper.railways_dikeside
         assert not _wrapper.waters_dikeside
 
-    @pytest.fixture(name="buildings_fixture")
-    def _get_buildings_fixture(
-        self,
-    ) -> Iterable[
-        Callable[[list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper]
-    ]:
-        def build_surroundings_wrapper(
-            point_distances: list[tuple[Point, list[float]]]
-        ) -> ObstacleSurroundingsWrapper:
-            _points = [
-                PointSurroundings(
-                    location=_pd[0], surroundings_matrix={_d: 1 for _d in _pd[1]}
-                )
-                for _pd in point_distances
-            ]
-            _obstacle = SurroundingsObstacle(points=_points)
-            return ObstacleSurroundingsWrapper(
-                apply_buildings=True,
-                buildings_polderside=_obstacle,
-            )
-
-        yield build_surroundings_wrapper
-
     @pytest.mark.parametrize(
         "obstacles_distance_list",
         [
@@ -67,13 +43,15 @@ class TestObstacleSurroundingsWrapper:
     def test_when_get_locations_after_distance_given_safe_obstacles_returns_surrounding_point(
         self,
         obstacles_distance_list: list[float],
-        buildings_fixture: Callable[
+        buildings_obstacle_surroundings_fixture: Callable[
             [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
         ],
     ):
         # 1. Define test data.
         _location = Point(2.4, 2.4)
-        _wrapper = buildings_fixture([(_location, obstacles_distance_list)])
+        _wrapper = buildings_obstacle_surroundings_fixture(
+            [(_location, obstacles_distance_list)]
+        )
         _safe_distance = min(obstacles_distance_list, default=0) - 1
 
         # 2. Run test.
@@ -88,7 +66,7 @@ class TestObstacleSurroundingsWrapper:
 
     def test_when_get_locations_after_distance_given_unsafe_obstacles_returns_nothing(
         self,
-        buildings_fixture: Callable[
+        buildings_obstacle_surroundings_fixture: Callable[
             [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
         ],
     ):
@@ -96,7 +74,9 @@ class TestObstacleSurroundingsWrapper:
         _obstacles_distance_list = [24]
         _location = Point(2.4, 2.4)
 
-        _wrapper = buildings_fixture([(_location, _obstacles_distance_list)])
+        _wrapper = buildings_obstacle_surroundings_fixture(
+            [(_location, _obstacles_distance_list)]
+        )
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(

@@ -89,7 +89,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
 
         _calculators = {
             _infra[0]: get_infra_calculator(_infra)
-            for _infra in self.infrastructure_wrapper._surroundings_collection.items()
+            for _infra in self.infrastructure_wrapper.surroundings_collection.items()
         }
 
         return MultiInfrastructureProfileCostsCalculator(
