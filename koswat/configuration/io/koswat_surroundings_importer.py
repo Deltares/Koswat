@@ -52,6 +52,8 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     def _get_polderside_surroundings_from_fom(
         self, csv_fom_name: str
     ) -> list[PointSurroundings]:
+        if csv_fom_name not in self.surroundings_csv_fom_collection:
+            return []
         _builder = PointSurroundingsListPoldersideBuilder(
             koswat_shp_fom=self.location_shp_fom,
             koswat_csv_fom=self.surroundings_csv_fom_collection[csv_fom_name],
