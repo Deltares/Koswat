@@ -74,10 +74,10 @@ class TestKoswatSurroundingsWrapperImporter:
             surroundings_database_dir=_temp_dir.parent,
             constructieafstand=50,
             constructieovergang=10,
-            buitendijks=False,
+            buitendijks=True,
             bebouwing=True,
-            spoorwegen=False,
-            water=False,
+            spoorwegen=True,
+            water=True,
         )
 
         # Remove the temporary directory.
