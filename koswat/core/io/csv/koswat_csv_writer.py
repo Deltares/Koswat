@@ -17,7 +17,12 @@ class KoswatCsvWriter(KoswatWriterProtocol):
         def format_line(line: List[str]) -> str:
             return ";".join(map(str, line))
 
-        _lines = list(map(format_line, [fom_instance.headers] + fom_instance.entries))
+        if isinstance(fom_instance.headers, list):
+            _lines = list(map(format_line, fom_instance.headers + fom_instance.entries))
+        else:
+            _lines = list(
+                map(format_line, [fom_instance.headers] + fom_instance.entries)
+            )
         _text = "\n".join(_lines)
 
         to_path.write_text(_text)
