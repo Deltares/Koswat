@@ -1,3 +1,4 @@
+import copy
 import math
 from dataclasses import dataclass, field
 from itertools import chain, groupby
@@ -82,7 +83,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
             _lmatches = list(_matches)
             if not any(_lmatches):
                 continue
-            _ps_copy = _lmatches[0]
+            _ps_copy = copy.deepcopy(_lmatches[0])
             _ps_copy.surroundings_matrix = {}
             _obstacle_locations.append(_ps_copy)
             for _matched_ps in _lmatches:
