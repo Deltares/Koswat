@@ -20,10 +20,7 @@ from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuild
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
-    SurroundingsObstacle,
-    SurroundingsWrapper,
-)
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -113,12 +110,7 @@ class TestKoswatSummaryBuilder:
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
-        _run_settings.surroundings = SurroundingsWrapper(
-            reinforcement_min_buffer=10,
-            reinforcement_min_separation=50,
-            apply_buildings=True,
-            buildings_polderside=SurroundingsObstacle(points=[_p_surrounding]),
-        )
+        _run_settings.surroundings = SurroundingsWrapper()
         _run_settings.costs_setting = KoswatCostsSettings()
         _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
             dict(

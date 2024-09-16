@@ -1,4 +1,5 @@
 import logging
+from dataclasses import dataclass, field
 from itertools import groupby
 from pathlib import Path
 
@@ -16,20 +17,16 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
-from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
 )
 
 
-class KoswatSurroundingsImporter(KoswatImporterProtocol):
-    traject_loc_shp_file: Path
-    selected_locations: list[str]
-
-    def __init__(self) -> None:
-        self.traject_loc_shp_file = None
-        self.selected_locations = []
+@dataclass
+class KoswatSurroundingsImporter:
+    traject_loc_shp_file: Path = None
+    selected_locations: list[str] = field(default_factory=lambda: [])
 
     def _get_dike_locations_shp_fom(self) -> list[KoswatDikeLocationsShpFom]:
         _reader = KoswatDikeLocationsListShpReader()

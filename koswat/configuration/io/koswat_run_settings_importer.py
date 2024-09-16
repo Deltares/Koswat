@@ -82,7 +82,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _general_settings.analyse_section_fom.scenarios_ini_file,
             _dike_selected_sections,
         )
-        _surroundings_fom = self._import_surroundings(
+        _surroundings_fom = self._import_surroundings_wrapper(
             _general_settings.surroundings_section,
             _general_settings.analyse_section_fom.dike_section_location_shp_file,
             [_s.scenario_dike_section for _s in _scenario_fom_list],
@@ -268,7 +268,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _reader.dike_selection = dike_selections
         return _reader.read(scenario_dir)
 
-    def _import_surroundings(
+    def _import_surroundings_wrapper(
         self,
         surroundings_section: SurroundingsSectionFom,
         traject_shp_file: Path,

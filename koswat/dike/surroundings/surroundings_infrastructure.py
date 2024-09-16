@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass, field
 
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
@@ -17,3 +18,4 @@ class SurroundingsInfrastructure(KoswatSurroundingsProtocol):
     """
 
     points: list[PointSurroundings] = field(default_factory=lambda: [])
+    infrastructure_width: float = math.nan
