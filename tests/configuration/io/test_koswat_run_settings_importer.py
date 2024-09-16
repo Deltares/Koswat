@@ -55,7 +55,7 @@ class TestKoswatRunSettingsImporter:
 
     def test_koswat_run_settings_importer_build_from_valid_ini(self):
         # 1. Define test data.
-        _ini_file = test_data / "acceptance" / "koswat_general.ini"
+        _ini_file = test_data.joinpath("acceptance", "koswat_general.ini")
         assert _ini_file.is_file()
 
         # 2. Run test.
