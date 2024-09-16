@@ -29,12 +29,8 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                 self.koswat_summary.locations_profile_report_list,
             )
         )
-        _road_types = [
-            "Road Klasse2",
-            "Road Klasse24",
-        ]  # TODO: get road types from koswat_summary
-        _zones = ["A", "B"]
 
+        _zones = ["A", "B"]
         _zone_keys = []
         for _zone in _zones:
             _zone_keys.extend(
@@ -43,6 +39,15 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                     f"{_zone_key} {_zone} {_cost_key}",
                 ]
             )
+
+        _road_types = [
+            "Road Klasse2",
+            "Road Klasse24",
+        ]  # TODO: get road types from koswat_summary
+        _road_type_keys = []
+        for _road_type in _road_types:
+            _road_type_keys.append(_road_type)
+            _road_type_keys.extend([""] * (len(_zone_keys) - 1))
 
         # Build headers
         _headers = [
@@ -54,10 +59,8 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         for _profile_type in _ordered_profile_types:
             _headers[0].append(_profile_type)
             _headers[0].extend([""] * (len(_road_types) * len(_zone_keys) - 1))
-
+            _headers[1].extend(_road_type_keys)
             for _road_type in _road_types:
-                _headers[1].append(_road_type)
-                _headers[1].extend([""] * (len(_zone_keys) - 1))
                 _headers[2].extend(_zone_keys)
 
         return _headers
