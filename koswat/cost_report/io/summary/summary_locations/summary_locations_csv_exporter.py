@@ -10,9 +10,7 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 
 
 class SummaryLocationsCsvExporter(KoswatExporterProtocol):
-    def export(
-        self, koswat_summary: KoswatSummary, export_path: Path, **kwargs
-    ) -> None:
+    def export(self, koswat_summary: KoswatSummary, export_path: Path) -> None:
         if not isinstance(koswat_summary, KoswatSummary):
             raise ValueError("No 'KoswatSummary' object provided.")
         if not isinstance(export_path, Path):
