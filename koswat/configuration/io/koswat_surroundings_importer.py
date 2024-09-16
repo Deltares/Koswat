@@ -54,13 +54,10 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     ) -> list[PointSurroundings]:
         if csv_fom_name not in self.surroundings_csv_fom_collection:
             return []
-        _builder = PointSurroundingsListPoldersideBuilder(
+        return PointSurroundingsListPoldersideBuilder(
             koswat_shp_fom=self.location_shp_fom,
             koswat_csv_fom=self.surroundings_csv_fom_collection[csv_fom_name],
-        )
-        if not _builder.koswat_csv_fom:
-            return []
-        return _builder.build()
+        ).build()
 
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
         _obs_wrapper = ObstacleSurroundingsWrapper(
