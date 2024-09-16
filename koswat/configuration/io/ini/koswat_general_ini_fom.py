@@ -196,6 +196,7 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
         return _section
 
 
+@dataclass
 class InfrastructureSectionFom(KoswatIniFomProtocol):
     infrastructuur: bool
     opslagfactor_wegen: SurtaxFactorEnum

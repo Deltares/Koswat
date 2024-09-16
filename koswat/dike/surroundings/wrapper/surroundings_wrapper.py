@@ -18,11 +18,6 @@ class SurroundingsWrapper:
     traject: str = ""
     subtraject: str = ""
 
-    apply_waterside: bool = False
-    apply_buildings: bool = False
-    apply_railways: bool = False
-    apply_waters: bool = False
-
     reinforcement_min_separation: float = float("nan")
     reinforcement_min_buffer: float = float("nan")
 
@@ -76,19 +71,6 @@ class SurroundingsWrapper:
             for _prop, _value in self.__dict__.items()
             if isinstance(_value, KoswatSurroundingsProtocol)
         }
-
-        def exclude_surrounding(property_name: str):
-            _surroundings.pop(property_name + "_polderside", None)
-            _surroundings.pop(property_name + "_dikeside", None)
-
-        if not self.apply_buildings:
-            exclude_surrounding("buildings")
-
-        if not self.apply_railways:
-            exclude_surrounding("railways")
-
-        if not self.apply_waters:
-            exclude_surrounding("waters")
 
         return list(_surroundings.values())
 

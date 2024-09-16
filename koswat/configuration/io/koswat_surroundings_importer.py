@@ -9,7 +9,10 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
 )
-from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
+from koswat.configuration.io.ini.koswat_general_ini_fom import (
+    InfrastructureSectionFom,
+    SurroundingsSectionFom,
+)
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
@@ -37,7 +40,9 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
         return _reader.read(self.traject_loc_shp_file)
 
     def import_from(
-        self, surroundings_section: SurroundingsSectionFom
+        self,
+        surroundings_section: SurroundingsSectionFom,
+        infrastructure_section: InfrastructureSectionFom,
     ) -> list[SurroundingsWrapper]:
         _from_path = surroundings_section.surroundings_database_dir
         if not isinstance(_from_path, Path):
@@ -68,6 +73,7 @@ class KoswatSurroundingsImporter(KoswatImporterProtocol):
                             trajects_fom=_location,
                             surroundings_fom=_surroudings_fom,
                             surroundings_section=surroundings_section,
+                            infrastructure_section=infrastructure_section,
                         ).build()
                     )
                 except Exception as e_info:

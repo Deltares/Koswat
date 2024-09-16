@@ -1,9 +1,11 @@
-from math import dist
 from typing import Callable, Iterator
 
 import pytest
 from shapely.geometry import Point
 
+from koswat.dike.surroundings.koswat_surroundings_protocol import (
+    KoswatSurroundingsProtocol,
+)
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
     SurroundingsInfrastructure,
@@ -18,7 +20,7 @@ class TestSurroundingsWrapper:
         assert isinstance(_surroundings, SurroundingsWrapper)
         assert any(_surroundings.surroundings_collection)
         assert all(
-            isinstance(_s, SurroundingsInfrastructure)
+            isinstance(_s, KoswatSurroundingsProtocol)
             for _s in _surroundings.surroundings_collection
         )
         assert not _surroundings.obstacle_locations
@@ -83,7 +85,6 @@ class TestSurroundingsWrapper:
         # 2. Run test.
         _surroundings = SurroundingsWrapper(
             **{
-                f"apply_{obstacle_name}": True,
                 f"{obstacle_name}_polderside": _obstacles_polderside,
             }
         )
@@ -123,20 +124,13 @@ class TestSurroundingsWrapper:
                     distances_to_surrounding_point_builder, point_list, distance_list[1]
                 )
             )
-            _waters_polderside.points = list(
-                map(
-                    distances_to_surrounding_point_builder, point_list, distance_list[2]
-                )
-            )
+            _waters_polderside.points = []
 
             # Yield wrapper
             return SurroundingsWrapper(
                 buildings_polderside=_buildings_polderside,
                 railways_polderside=_railways_polderside,
                 waters_polderside=_waters_polderside,
-                apply_buildings=True,
-                apply_railways=True,
-                apply_waters=False,
             )
 
         yield create_surroundings_wrapper

@@ -1,13 +1,21 @@
 from typing import Callable
 
+import pytest
 from shapely.geometry import Point
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
     KoswatSurroundingsWrapperCsvFom,
 )
-from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
+from koswat.configuration.io.ini.koswat_general_ini_fom import (
+    InfrastructureSectionFom,
+    SurroundingsSectionFom,
+)
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
+from koswat.configuration.settings.koswat_general_settings import (
+    InfraCostsEnum,
+    SurtaxFactorEnum,
+)
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
@@ -18,15 +26,17 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
 class TestSurroundingsWrapperBuilder:
     def test_initialize_builder(self):
         # 1. Define test data.
+        _trajects_fom = None
         _surroundings_fom = None
         _surroundings_section = None
-        _trajects_fom = None
+        _infrastructure_section = None
 
         # 2. Run test.
         _builder = SurroundingsWrapperBuilder(
-            surroundings_section=_surroundings_section,
-            surroundings_fom=_surroundings_fom,
             trajects_fom=_trajects_fom,
+            surroundings_fom=_surroundings_fom,
+            surroundings_section=_surroundings_section,
+            infrastructure_section=_infrastructure_section,
         )
 
         # 3. Verify expectations
@@ -35,6 +45,24 @@ class TestSurroundingsWrapperBuilder:
         assert _builder.trajects_fom == _trajects_fom
         assert _builder.surroundings_fom == _surroundings_fom
         assert _builder.surroundings_section == _surroundings_section
+        assert _builder.infrastructure_section == _infrastructure_section
+
+    def test_builder_always_reads_buildings(self):
+        pass
+
+    @pytest.mark.parametrize("import_railways", [True, False])
+    @pytest.mark.parametrize("import_waters", [True, False])
+    @pytest.mark.parametrize("import_infrastructure", [True, False])
+    def test_given_valid_data_build_imports_selected_surroundings(
+        self,
+        distances_to_surrounding_point_builder: Callable[
+            [Point, list[float]], PointSurroundings
+        ],
+        import_railways: bool,
+        import_waters: bool,
+        import_infrastructure: bool,
+    ):
+        pass
 
     def test_given_valid_data_build_returns_surroundings(
         self,
@@ -65,12 +93,24 @@ class TestSurroundingsWrapperBuilder:
 
         _surroundings_section = SurroundingsSectionFom(
             surroundings_database_dir=None,
+            constructieafstand=4.2,
+            constructieovergang=2.4,
             buitendijks=False,
             bebouwing=True,
             spoorwegen=False,
             water=False,
-            constructieafstand=4.2,
-            constructieovergang=2.4,
+        )
+
+        _infrastructure_section = InfrastructureSectionFom(
+            infrastructuur=True,
+            opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,
+            infrakosten_0dh=InfraCostsEnum.HERSTEL,
+            buffer_buitendijks=10.0,
+            wegen_klasse2_breedte=2.0,
+            wegen_klasse24_breedte=2.4,
+            wegen_klasse47_breedte=4.7,
+            wegen_klasse7_breedte=7.0,
+            wegen_onbekend_breedte=5.4,
         )
 
         # Traject wrapper
@@ -83,6 +123,7 @@ class TestSurroundingsWrapperBuilder:
             trajects_fom=_koswat_shp_fom,
             surroundings_fom=_surroundings_wrapper,
             surroundings_section=_surroundings_section,
+            infrastructure_section=_infrastructure_section,
         ).build()
 
         assert [

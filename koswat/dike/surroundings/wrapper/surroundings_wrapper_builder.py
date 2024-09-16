@@ -8,7 +8,10 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 from koswat.configuration.io.csv.koswat_traject_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
-from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
+from koswat.configuration.io.ini.koswat_general_ini_fom import (
+    InfrastructureSectionFom,
+    SurroundingsSectionFom,
+)
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
@@ -29,15 +32,16 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     trajects_fom: KoswatDikeLocationsShpFom
     surroundings_fom: KoswatSurroundingsWrapperCsvFom
     surroundings_section: SurroundingsSectionFom
+    infrastructure_section: InfrastructureSectionFom
 
     def _get_polderside_surroundings_from_fom(
-        self, csv_fom: KoswatSurroundingsCsvFom
+        self, import_surroundings: bool, csv_fom: KoswatSurroundingsCsvFom
     ) -> list[PointSurroundings]:
         _builder = PointSurroundingsListPoldersideBuilder(
             koswat_shp_fom=self.trajects_fom,
             koswat_csv_fom=csv_fom,
         )
-        if not _builder.koswat_csv_fom:
+        if not import_surroundings or not _builder.koswat_csv_fom:
             return []
         return _builder.build()
 
@@ -57,17 +61,13 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             subtraject=self.trajects_fom.dike_subtraject,
             reinforcement_min_separation=self.surroundings_section.constructieafstand,
             reinforcement_min_buffer=self.surroundings_section.constructieovergang,
-            apply_waterside=self.surroundings_section.buitendijks,
-            apply_buildings=self.surroundings_section.bebouwing,
-            apply_railways=self.surroundings_section.spoorwegen,
-            apply_waters=self.surroundings_section.water,
         )
 
         # For now we only include:
         # buildings_polderside (mandatory)
         _surroundings.buildings_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.buildings_polderside
+                True, self.surroundings_fom.buildings_polderside
             )
         )
         if not _surroundings.buildings_polderside:
@@ -78,42 +78,48 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         # railway_polderside (optional)
         _surroundings.railways_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.railways_polderside
+                self.surroundings_section.spoorwegen,
+                self.surroundings_fom.railways_polderside,
             )
         )
 
         # water_polderside (optional)
         _surroundings.waters_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.waters_polderside
+                self.surroundings_section.water, self.surroundings_fom.waters_polderside
             )
         )
 
         # roads (optional)
         _surroundings.roads_class_2_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.roads_class_2_polderside
+                self.infrastructure_section.infrastructuur,
+                self.surroundings_fom.roads_class_2_polderside,
             )
         )
         _surroundings.roads_class_7_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.roads_class_7_polderside
+                self.infrastructure_section.infrastructuur,
+                self.surroundings_fom.roads_class_7_polderside,
             )
         )
 
         _surroundings.roads_class_24_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.roads_class_24_polderside
+                self.infrastructure_section.infrastructuur,
+                self.surroundings_fom.roads_class_24_polderside,
             )
         )
         _surroundings.roads_class_47_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.roads_class_47_polderside
+                self.infrastructure_section.infrastructuur,
+                self.surroundings_fom.roads_class_47_polderside,
             )
         )
         _surroundings.roads_class_unknown_polderside.points = (
             self._get_polderside_surroundings_from_fom(
-                self.surroundings_fom.roads_class_unknown_polderside
+                self.infrastructure_section.infrastructuur,
+                self.surroundings_fom.roads_class_unknown_polderside,
             )
         )
 
