@@ -30,6 +30,9 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     surtax_cost_settings: SurtaxCostsSettings
 
     def _get_surtax_costs(self) -> float:
+        if not self.surtax_cost_settings:
+            return math.nan
+
         if self.infrastructure_wrapper.storage_cost_factor == SurtaxFactorEnum.NORMAAL:
             return self.surtax_cost_settings.roads_normal
 
@@ -41,6 +44,8 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     def _get_infrastructure_costs(
         self, infrastructure_name: str
     ) -> tuple[float, float]:
+        if not self.cost_settings:
+            return (math.nan, math.nan)
         if "_class_2_" in infrastructure_name:
             return (
                 self.cost_settings.adding_roads_klasse2,

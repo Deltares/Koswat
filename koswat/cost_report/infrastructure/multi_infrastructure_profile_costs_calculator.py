@@ -42,6 +42,8 @@ class ProfileZoneCalculator:
 
     def calculate(self) -> tuple[float, float]:
         _new_height = self.reinforced_profile.profile_height
+        if not self.reinforced_profile.old_profile:
+            return (math.nan, math.nan)
         _old_height = self.reinforced_profile.old_profile.profile_height
         if _new_height > _old_height and not math.isclose(_new_height, _old_height):
             return self._calculate_zone_b()

@@ -109,7 +109,7 @@ class TestKoswatSummaryBuilder:
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
         _p_surrounding = PointSurroundings(
-            surroundings_matrix=[], location=Point(2.4, 4.2)
+            surroundings_matrix={}, location=Point(2.4, 4.2)
         )
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default

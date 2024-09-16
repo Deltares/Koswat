@@ -46,6 +46,7 @@ class TestMultiLocationProfileCostReportBuilder:
                 reinforcement_type=CofferdamReinforcementProfile,
             )
         ).build()
+        _builder.reinforced_profile.old_profile = None
 
         # 2. Run test.
         _profile_cost_report = _builder.build()
