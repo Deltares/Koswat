@@ -8,14 +8,13 @@ from koswat.configuration.io.ini.koswat_general_ini_fom import (
     InfrastructureSectionFom,
     SurroundingsSectionFom,
 )
-from koswat.configuration.io.koswat_surroundings_importer import (
+from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
 )

@@ -20,7 +20,7 @@ from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
-from koswat.configuration.io.koswat_surroundings_importer import (
+from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (

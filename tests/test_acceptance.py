@@ -8,7 +8,7 @@ import numpy as np
 import pytest
 
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
-from koswat.configuration.io.koswat_surroundings_importer import (
+from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
 from koswat.configuration.settings import KoswatScenario
