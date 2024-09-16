@@ -46,3 +46,8 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     roads_class_24_dikeside: SurroundingsInfrastructure = None
     roads_class_47_dikeside: SurroundingsInfrastructure = None
     roads_class_unknown_dikeside: SurroundingsInfrastructure = None
+
+    def _exclude_surroundings(self, surroundings_dict: dict) -> dict:
+        if not self.infrastructures_considered:
+            return {}
+        return surroundings_dict

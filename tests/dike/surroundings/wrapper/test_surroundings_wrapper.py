@@ -6,7 +6,7 @@ from shapely.geometry import Point
 
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.koswat_surroundings_importer import (
-    KoswatSurroundingsImporter,
+    KoswatSurroundingsWrapperCollectionBuilder,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
@@ -258,7 +258,7 @@ class TestSurroundingsWrapper:
         )
 
         # Generate wrapper
-        _importer = KoswatSurroundingsImporter()
+        _importer = KoswatSurroundingsWrapperCollectionBuilder()
         _importer.selected_locations = "10-1-3-C-1-D-1"
         _importer.traject_loc_shp_file = _shp_file
         _surroundings_wrapper_list = _importer.import_from(_surroundings_settings)

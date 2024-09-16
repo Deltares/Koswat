@@ -20,7 +20,7 @@ from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
 from koswat.configuration.io.koswat_surroundings_importer import (
-    KoswatSurroundingsImporter,
+    KoswatSurroundingsWrapperCollectionBuilder,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
@@ -274,7 +274,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         traject_shp_file: Path,
         dike_selections: list[str],
     ) -> list[SurroundingsWrapper]:
-        _importer = KoswatSurroundingsImporter()
+        _importer = KoswatSurroundingsWrapperCollectionBuilder()
         _importer.traject_loc_shp_file = traject_shp_file
         _importer.selected_locations = dike_selections
         return _importer.import_from(surroundings_section)
