@@ -89,20 +89,45 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             upkeeping_costs=self.infrastructure_section_fom.opslagfactor_wegen,
             non_rising_dike_costs=self.infrastructure_section_fom.infrakosten_0dh,
         )
+
+        # Roads class 2
         _infra_wrapper.roads_class_2_polderside.points = (
             self._get_polderside_surroundings_from_fom("roads_class_2_polderside")
         )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse2_breedte
+        )
+
+        # Roads class 7
         _infra_wrapper.roads_class_7_polderside.points = (
             self._get_polderside_surroundings_from_fom("roads_class_7_polderside")
         )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse7_breedte
+        )
+
+        # Roads class 24
         _infra_wrapper.roads_class_24_polderside.points = (
             self._get_polderside_surroundings_from_fom("roads_class_24_polderside")
         )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse24_breedte
+        )
+
+        # Rodas class 47
         _infra_wrapper.roads_class_47_polderside.points = (
             self._get_polderside_surroundings_from_fom("roads_class_47_polderside")
         )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse47_breedte
+        )
+
+        # Roads class unknown
         _infra_wrapper.roads_class_unknown_polderside.points = (
             self._get_polderside_surroundings_from_fom("roads_class_unknown_polderside")
+        )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_onbekend_breedte
         )
 
         return _infra_wrapper
