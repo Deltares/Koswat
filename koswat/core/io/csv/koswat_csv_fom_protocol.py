@@ -1,12 +1,12 @@
-from typing import List, Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable
 
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
 @runtime_checkable
 class KoswatCsvFomProtocol(FileObjectModelProtocol, Protocol):
-    headers: List[str]
-    entries: List[List[str]]
+    headers: list[str] | list[list[str]]
+    entries: list[list[str]]
 
     def is_valid(self) -> bool:
         """
