@@ -239,6 +239,7 @@ class TestAcceptance:
         _run_settings.reinforcement_settings.vps_settings.land_purchase_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
+        _run_settings.reinforcement_settings.vps_settings.binnen_berm_breedte_vps = 10
         _run_settings.reinforcement_settings.piping_wall_settings.soil_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
