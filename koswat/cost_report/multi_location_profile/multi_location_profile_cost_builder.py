@@ -38,5 +38,5 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
                 self.reinforced_profile.profile_width
             ),
             profile_cost_report=_profile_cost_report_builder.build(),
-            infrastructure_matrix=self.surroundings.get_infrastructure_collection(),
+            infrastructure_matrix=self.surroundings.infrastructure_surroundings_wrapper,
         )

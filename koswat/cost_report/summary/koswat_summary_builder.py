@@ -103,8 +103,8 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         _strategy_input = StrategyInput(
             locations_matrix=_matrix,
-            reinforcement_min_buffer=self.run_scenario_settings.surroundings.reinforcement_min_buffer,
-            reinforcement_min_length=self.run_scenario_settings.surroundings.reinforcement_min_separation,
+            reinforcement_min_buffer=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer,
+            reinforcement_min_length=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation,
         )
 
         # In theory this will become a factory (somewhere) where
@@ -114,21 +114,18 @@ class KoswatSummaryBuilder(BuilderProtocol):
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()
         logging.info(
-            "Creating analysis for {} - scenario {} - {}".format(
-                self.run_scenario_settings.input_profile_case.input_data.dike_section,
-                self.run_scenario_settings.scenario.scenario_section,
-                self.run_scenario_settings.scenario.scenario_name,
-            )
+            "Creating analysis for %s - scenario %s - %s",
+            self.run_scenario_settings.input_profile_case.input_data.dike_section,
+            self.run_scenario_settings.scenario.scenario_section,
+            self.run_scenario_settings.scenario.scenario_name,
         )
         _mlpc_builder = self._get_multi_location_profile_cost_builder()
         for _calc_profile in self._get_calculated_profile_list():
             _mlpc_builder.reinforced_profile = _calc_profile
             _summary.locations_profile_report_list.append(_mlpc_builder.build())
 
-        _summary.reinforcement_per_locations = (
-            self._get_final_reinforcement_per_location(
-                _summary.locations_profile_report_list,
-                self.run_scenario_settings.surroundings.obstacle_locations,
-            )
+        _summary.reinforcement_per_locations = self._get_final_reinforcement_per_location(
+            _summary.locations_profile_report_list,
+            self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.obstacle_locations,
         )
         return _summary

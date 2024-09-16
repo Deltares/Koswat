@@ -5,12 +5,17 @@ from typing import Any
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
+    InfrastructureSurroundingsWrapper,
+)
 
 
 @dataclass
 class MultiLocationProfileCostReport(CostReportProtocol):
     obstacle_locations: list[PointSurroundings] = field(default_factory=lambda: [])
-    infrastructure_matrix: Any = None
+    infrastructure_matrix: InfrastructureSurroundingsWrapper = field(
+        default_factory=InfrastructureSurroundingsWrapper
+    )
     profile_cost_report: ProfileCostReport = None
 
     @property
