@@ -10,11 +10,15 @@ from koswat.configuration.settings.costs.surtax_costs_settings import (
 )
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 from koswat.core.protocols.builder_protocol import BuilderProtocol
+from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
 )
 
 
@@ -50,15 +54,30 @@ class InfrastructureCostsCalculator:
 
 
 @dataclass
-class InfrastructureMatrixCostsCalculator:
-    infrastructure_calculators: dict[str, InfrastructureCostsCalculator]
+class InfrastructureMultiLocationProfileCostReport(CostReportProtocol):
+    reinforced_profile: ReinforcementProfileProtocol
 
-    def calculate(self, profile) -> list[InfrastructureZoneCosts]:
-        pass
+    @property
+    def total_cost(self) -> float:
+        return math.nan
+
+    @property
+    def total_cost_with_surtax(self) -> float:
+        return math.nan
 
 
 @dataclass
-class InfrastructureMatrixCostsBuilder(BuilderProtocol):
+class InfrastructureMatrixCostsCalculator:
+    infrastructure_calculators: dict[str, InfrastructureCostsCalculator]
+
+    def calculate(self, profile) -> InfrastructureMultiLocationProfileCostReport:
+        _report = InfrastructureMultiLocationProfileCostReport(
+            reinforced_profile=profile
+        )
+
+
+@dataclass
+class InfrastructureMatrixCostsCalculatorBuilder(BuilderProtocol):
 
     infrastructure_wrapper: InfrastructureSurroundingsWrapper
     cost_settings: InfrastructureCostsSettings
@@ -105,7 +124,7 @@ class InfrastructureMatrixCostsBuilder(BuilderProtocol):
             )
         return math.nan, math.nan
 
-    def build(self) -> Any:
+    def build(self) -> InfrastructureMatrixCostsCalculator:
 
         _surtax_costs = self._get_surtax_costs()
 

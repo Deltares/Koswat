@@ -108,9 +108,7 @@ class TestSurroundingsWrapper:
     def test_when_get_locations_at_safe_distance_given_safe_obstacles_returns_surrounding_point(
         self,
         obstacles_distance_list: list[float],
-        surroundings_with_obstacle_builder: Callable[
-            [list[Point], list[list[float]]], SurroundingsWrapper
-        ],
+        acceptance_surroundings_wrapper_fixture: SurroundingsWrapper,
     ):
         pytest.fail("Needs to be moved to `TestObstacleSurroundingsWrapper`.")
         # 1. Define test data.

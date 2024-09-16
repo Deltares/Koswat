@@ -76,9 +76,9 @@ class KoswatSummaryBuilder(BuilderProtocol):
                 _calculated_profiles.append(_calc_profile)
             except Exception as e_info:
                 logging.error(
-                    "Error calculating reinforcement: {}. Detailed error: {}".format(
-                        _reinforcement_profile_type(), e_info
-                    )
+                    "Error calculating reinforcement: %s. Detailed error: %s",
+                    _reinforcement_profile_type(),
+                    e_info,
                 )
 
         return _calculated_profiles
