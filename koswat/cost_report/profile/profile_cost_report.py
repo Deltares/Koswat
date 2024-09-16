@@ -17,7 +17,7 @@ class ProfileCostReport(CostReportProtocol):
     quantity_cost_parameters: QuantityCostParameters = field(
         default_factory=QuantityCostParameters
     )
-    layer_cost_reports: list[LayerCostReport] = field(default_factory=[])
+    layer_cost_reports: list[LayerCostReport] = field(default_factory=lambda: [])
 
     @property
     def total_cost(self) -> float:

@@ -51,7 +51,7 @@ class KoswatProfileBase(KoswatProfileProtocol):
         return self.points[-1].x - self.points[0].x
 
     @property
-    def profile_hegiht(self) -> float:
+    def profile_height(self) -> float:
         """
         The profile highest point (largest y-coordinate).
 

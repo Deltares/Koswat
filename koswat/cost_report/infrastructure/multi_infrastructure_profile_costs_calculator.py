@@ -58,6 +58,7 @@ class MultiInfrastructureProfileCostsCalculator:
         _length_zone_a, _length_zone_b = ProfileZoneCalculator(
             reinforced_profile=reinforced_profile
         ).calculate()
+
         _report = InfrastructureProfileCostReport(reinforced_profile=reinforced_profile)
 
         return _report

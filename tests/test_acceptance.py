@@ -7,7 +7,10 @@ import cv2
 import numpy as np
 import pytest
 
-from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
+from koswat.configuration.io.ini.koswat_general_ini_fom import (
+    InfrastructureSectionFom,
+    SurroundingsSectionFom,
+)
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
@@ -25,7 +28,10 @@ from koswat.configuration.settings.costs.koswat_costs_settings import (
 from koswat.configuration.settings.costs.surtax_costs_settings import (
     SurtaxCostsSettings,
 )
-from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
+from koswat.configuration.settings.koswat_general_settings import (
+    InfraCostsEnum,
+    SurtaxFactorEnum,
+)
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
@@ -103,10 +109,11 @@ class TestAcceptance:
         assert _shp_trajects_file.is_file()
 
         _reinforcement_settings = KoswatReinforcementSettings()
-        _surroundings_importer = SurroundingsWrapperCollectionImporter()
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
+
+        # Surroundings wrapper
         _surroundings_section = SurroundingsSectionFom(
             constructieafstand=50,
             constructieovergang=10,
@@ -116,8 +123,25 @@ class TestAcceptance:
             spoorwegen=False,
             water=False,
         )
-        _surroundings_importer.traject_loc_shp_file = _shp_trajects_file
-        _surroundings = _surroundings_importer.import_from(_surroundings_section)[0]
+
+        _infrastructure_section = InfrastructureSectionFom(
+            infrastructuur=False,
+            opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,
+            infrakosten_0dh=InfraCostsEnum.GEEN,
+            buffer_buitendijks=0,
+            wegen_klasse2_breedte=2,
+            wegen_klasse24_breedte=5,
+            wegen_klasse47_breedte=8,
+            wegen_klasse7_breedte=12,
+            wegen_onbekend_breedte=8,
+        )
+
+        _surroundings = SurroundingsWrapperCollectionImporter(
+            infrastructure_section_fom=_infrastructure_section,
+            surroundings_section_fom=_surroundings_section,
+            traject_loc_shp_file=_shp_trajects_file,
+            selected_locations=[],
+        ).build()[0]
 
         assert isinstance(scenario_case, KoswatScenario)
         _base_koswat_profile = KoswatProfileBuilder.with_data(

@@ -26,4 +26,4 @@ class TestKoswatProfile:
         )
 
         # 2. Run test and verify expectations.
-        assert _base_profile.profile_hegiht == _max_value
+        assert _base_profile.profile_height == _max_value
