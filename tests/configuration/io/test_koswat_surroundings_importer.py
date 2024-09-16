@@ -8,7 +8,7 @@ from koswat.configuration.io.ini.koswat_general_ini_fom import (
     SurroundingsSectionFom,
 )
 from koswat.configuration.io.koswat_surroundings_importer import (
-    KoswatSurroundingsWrapperCollectionBuilder,
+    SurroundingsWrapperCollectionImporter,
 )
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
@@ -35,7 +35,7 @@ _surroundings_test_cases = [
 class TestKoswatSurroundingsWrapperImporter:
     def test_initialize(self):
         # !. Define dummy importer.
-        _importer = KoswatSurroundingsWrapperCollectionBuilder(
+        _importer = SurroundingsWrapperCollectionImporter(
             infrastructure_section_fom=None,
             surroundings_section_fom=None,
             traject_loc_shp_file=None,
@@ -43,7 +43,7 @@ class TestKoswatSurroundingsWrapperImporter:
         )
 
         # 2. Validate expectations.
-        assert isinstance(_importer, KoswatSurroundingsWrapperCollectionBuilder)
+        assert isinstance(_importer, SurroundingsWrapperCollectionImporter)
         assert isinstance(_importer, BuilderProtocol)
         assert not _importer.traject_loc_shp_file
         assert not _importer.selected_locations
@@ -108,7 +108,7 @@ class TestKoswatSurroundingsWrapperImporter:
         _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
         assert _shp_file.is_file()
 
-        _builder = KoswatSurroundingsWrapperCollectionBuilder(
+        _builder = SurroundingsWrapperCollectionImporter(
             surroundings_section_fom=surroundings_section_fom_fixture,
             infrastructure_section_fom=infrastructure_section_fom_fixture,
             traject_loc_shp_file=_shp_file,

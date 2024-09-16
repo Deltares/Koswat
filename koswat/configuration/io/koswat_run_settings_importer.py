@@ -21,7 +21,7 @@ from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
 from koswat.configuration.io.koswat_surroundings_importer import (
-    KoswatSurroundingsWrapperCollectionBuilder,
+    SurroundingsWrapperCollectionImporter,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
@@ -277,7 +277,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         traject_shp_file: Path,
         dike_selections: list[str],
     ) -> list[SurroundingsWrapper]:
-        _builder = KoswatSurroundingsWrapperCollectionBuilder(
+        _builder = SurroundingsWrapperCollectionImporter(
             infrastructure_section_fom=infrastructure_section,
             traject_loc_shp_file=traject_shp_file,
             selected_locations=dike_selections,

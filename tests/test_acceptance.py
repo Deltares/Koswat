@@ -9,7 +9,7 @@ import pytest
 
 from koswat.configuration.io.ini.koswat_general_ini_fom import SurroundingsSectionFom
 from koswat.configuration.io.koswat_surroundings_importer import (
-    KoswatSurroundingsWrapperCollectionBuilder,
+    SurroundingsWrapperCollectionImporter,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.costs.construction_costs_settings import (
@@ -103,7 +103,7 @@ class TestAcceptance:
         assert _shp_trajects_file.is_file()
 
         _reinforcement_settings = KoswatReinforcementSettings()
-        _surroundings_importer = KoswatSurroundingsWrapperCollectionBuilder()
+        _surroundings_importer = SurroundingsWrapperCollectionImporter()
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
