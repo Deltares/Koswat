@@ -15,7 +15,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
     """
     NOTE: Although this 'problem' could be easily solved with `pandas`
     or `numpy`, I prefer not to include external (heavy) dependencies unless
-    strictily necessary.
+    strictly necessary.
     If / when performance would become a problem, then this builder could (perhaps)
     benefit from using the aforementioned libraries.
     """
