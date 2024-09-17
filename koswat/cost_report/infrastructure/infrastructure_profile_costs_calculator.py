@@ -1,7 +1,9 @@
 import math
 from dataclasses import dataclass
 
-from koswat.cost_report.cost_report_protocol import CostReportProtocol
+from koswat.cost_report.infrastructure.infrastructure_location_costs import (
+    InfrastructureLocationCosts,
+)
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -9,27 +11,24 @@ from koswat.dike.surroundings.surroundings_infrastructure import (
 
 
 @dataclass
-class InfrastructureLocationCosts:
-    location: PointSurroundings
-    zone_a: float = math.nan
-    zone_a_costs: float = math.nan
-
-    zone_b: float = math.nan
-    zone_b_costs: float = math.nan
-    surtax_costs: float = math.nan
-
-
-@dataclass
 class InfrastructureProfileCostsCalculator:
-    infrastructure: SurroundingsInfrastructure
-    surtax_costs: float
-    zone_a_costs: float
-    zone_b_costs: float
+    infrastructure: SurroundingsInfrastructure = None
+    surtax_costs: float = math.nan
+    zone_a_costs: float = math.nan
+    zone_b_costs: float = math.nan
 
     def calculate(
         self, zone_a_width: float, zone_b_width: float
     ) -> list[InfrastructureLocationCosts]:
-        return (math.nan, math.nan)
+
+        return [
+            self._calculate_at_location(
+                zone_a_width=zone_a_width,
+                zone_b_width=zone_b_width,
+                location=_location,
+            )
+            for _location in self.infrastructure.points
+        ]
 
     def _calculate_at_location(
         self, zone_a_width: float, zone_b_width: float, location: PointSurroundings
