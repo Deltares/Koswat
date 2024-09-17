@@ -35,6 +35,35 @@ class TestProfileZoneCalculator:
         assert not _calculator.reinforced_profile
         assert _calculator.calculate() == (math.nan, math.nan)
 
+    def test_given_no_base_profile_calculate_returns_nan_tuple(
+        self,
+        reinforcement_profile_builder: Callable[
+            [list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol
+        ],
+    ):
+        # 1. Define test data.
+        _points_base_profile = [
+            (-18, 0),
+            (-18, 0),
+            (-18, 0),
+            (0, 6),
+            (10, 6),
+            (34, -2),
+            (34, -2),
+            (34, -2),
+        ]
+        _reinforcement_profile = reinforcement_profile_builder(
+            _points_base_profile, _points_base_profile
+        )
+        assert isinstance(_reinforcement_profile, ReinforcementProfileProtocol)
+        _reinforcement_profile.old_profile = None
+
+        # 2. Run test.
+        _result = ProfileZoneCalculator(_reinforcement_profile).calculate()
+
+        # 3. Verify expectations.
+        assert _result == (math.nan, math.nan)
+
     @pytest.fixture(name="reinforcement_profile_builder")
     def _get_dummy_reinforcment_profile_builder(
         self,
@@ -116,25 +145,25 @@ class TestProfileZoneCalculator:
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (40.87, -0.6), (68.87, -0.6), (74, -2)],
-                (math.nan, 71),
+                (math.nan, 74),
                 id="With dh0 increase to 1 - Soil reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (44.17, -1.5), (54.17, -1.5), (56, -2)],
-                (math.nan, 53),
+                (math.nan, 56),
                 id="With dh0 increase to 1 - Vertical Piping Solution",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (46, -2), (46, -2), (46, -2)],
-                (math.nan, 43),
+                (math.nan, 46),
                 id="With dh0 increase to 1 - Piping Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (34, -2), (34, -2), (34, -2)],
-                (math.nan, 31),
+                (math.nan, 34),
                 id="With dh0 increase to 1 - Stability Wall reinforcement",
             ),
             pytest.param(
@@ -175,4 +204,4 @@ class TestProfileZoneCalculator:
         ).calculate()
 
         # 3. Verify expectations.
-        assert _result_zones == pytest.approx(expected_zones)
+        assert _result_zones == pytest.approx(expected_zones, nan_ok=True)

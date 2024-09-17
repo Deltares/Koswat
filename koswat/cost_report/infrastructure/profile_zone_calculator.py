@@ -9,6 +9,12 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 
 @dataclass
 class ProfileZoneCalculator:
+    """
+    Calculator to determine the width of zones `A` and `B` of a reinforced
+    profile (`ReinforcementProfileProtocol`). It requires its original base
+    profile to be in its definition.
+    """
+
     reinforced_profile: ReinforcementProfileProtocol
 
     def _get_profile_upper_x_coords(
@@ -35,6 +41,16 @@ class ProfileZoneCalculator:
         return (math.nan, _b_length)
 
     def calculate(self) -> tuple[float, float]:
+        """
+        Calculates the width of zones `A` and `B` for the defined instance of
+        `ReinforcementProfileProtocol`. The calculation is as follows:
+        - When `dh0` has not varied in respect to the base profile, then zones
+        `A` and `B` are calculated.
+        - When `dh0` has increased then only zone `B` is calculated.
+
+        Returns:
+            tuple[float, float]: Calculated zone `A` and `B` respectively.
+        """
         if not self.reinforced_profile or not self.reinforced_profile.old_profile:
             return (math.nan, math.nan)
 
