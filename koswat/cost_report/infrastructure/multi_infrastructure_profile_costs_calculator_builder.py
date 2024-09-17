@@ -33,10 +33,10 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         if not self.surtax_cost_settings:
             return math.nan
 
-        if self.infrastructure_wrapper.storage_cost_factor == SurtaxFactorEnum.NORMAAL:
+        if self.infrastructure_wrapper.surtax_cost_factor == SurtaxFactorEnum.NORMAAL:
             return self.surtax_cost_settings.roads_normal
 
-        if self.infrastructure_wrapper.storage_cost_factor == SurtaxFactorEnum.MOEILIJK:
+        if self.infrastructure_wrapper.surtax_cost_factor == SurtaxFactorEnum.MOEILIJK:
             return self.surtax_cost_settings.roads_hard
 
         return self.surtax_cost_settings.roads_easy
@@ -88,7 +88,6 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
                 removing_costs=_removing_costs,
                 adding_costs=_adding_costs,
                 surtax_costs=_surtax_costs,
-                storage_costs=self.infrastructure_wrapper.storage_cost_factor,
                 non_rising_dike_costs=self.infrastructure_wrapper.non_rising_dike_costs_factor,
             )
 
