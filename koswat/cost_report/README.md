@@ -2,7 +2,9 @@
 
 This module contains all possible definitions concerning the generation of a cost-report (`CostReportProtocol`).
 
-A cost report is generated given a `KoswatRunScenarioSettings` instance. Said report will only consider the `ReinforcementProfileProtocol` instances which are suitable for the provided surroundings (`SurroundingsWrapper`)
+A cost report is generated given a `KoswatRunScenarioSettings` instance. Said report will only consider the `ReinforcementProfileProtocol` instances which are suitable for the provided surroundings (`SurroundingsWrapper`).
+
+In addition to the cost report, an infrastructure report will be added based on the `InfrastructureSurroundingsWrapper` which will determine additional costs depending on whether the infrastructures need to be replaced or repaired.
 
 The defined hierarchy is such as: 
 - `KoswatSummary`: Wrapper of all multi-location-profile-cost-reports `MultiLocationProfileCostReport`.
