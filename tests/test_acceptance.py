@@ -230,6 +230,16 @@ class TestAcceptance:
         _run_settings.reinforcement_settings.soil_settings.land_purchase_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
+        _run_settings.reinforcement_settings.vps_settings.soil_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.vps_settings.constructive_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.vps_settings.land_purchase_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.vps_settings.binnen_berm_breedte_vps = 10
         _run_settings.reinforcement_settings.piping_wall_settings.soil_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
@@ -271,6 +281,12 @@ class TestAcceptance:
         _run_settings.costs_setting.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
 
         _construction_costs = ConstructionCostsSettings()
+        _construction_costs.vzg = ConstructionFactors()
+        _construction_costs.vzg.c_factor = 0
+        _construction_costs.vzg.d_factor = 0
+        _construction_costs.vzg.z_factor = 500
+        _construction_costs.vzg.f_factor = 0
+        _construction_costs.vzg.g_factor = 0
         _construction_costs.cb_damwand = ConstructionFactors()
         _construction_costs.cb_damwand.c_factor = 0
         _construction_costs.cb_damwand.d_factor = 159.326

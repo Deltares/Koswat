@@ -87,6 +87,31 @@ class SoilReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         return _section
 
 
+class VPSReinforcementSectionFom(ReinforcementProfileSectionFomBase):
+    binnen_berm_breedte_vps: float
+    constructive_surtax_factor: float
+    land_purchase_surtax_factor: SurtaxFactorEnum
+
+    @classmethod
+    def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+        _section = cls()
+        _section._set_properties_from_dict(ini_config)
+        _section.binnen_berm_breedte_vps = ini_config.getfloat(
+            "binnen_berm_breedte_vps"
+        )
+        _section.constructive_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
+        _section.land_purchase_surtax_factor = SurtaxFactorEnum[
+            ini_config.get(
+                "opslagfactor_grondaankoop", SurtaxFactorEnum.NORMAAL.name
+            ).upper()
+        ]
+        return _section
+
+
 class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     min_lengte_kwelscherm: float
     overgang_cbwand_damwand: float
@@ -228,6 +253,7 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
     analyse_section_fom: AnalysisSectionFom
     dike_profile_section_fom: DikeProfileSectionFom
     grondmaatregel_section: SoilReinforcementSectionFom
+    vps_section: VPSReinforcementSectionFom
     kwelscherm_section: PipingwallReinforcementSectionFom
     stabiliteitswand_section: StabilitywallReinforcementSectionFom
     kistdam_section: CofferdamReinforcementSectionFom
@@ -246,6 +272,9 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
         )
         _general_ini.grondmaatregel_section = SoilReinforcementSectionFom.from_config(
             ini_config["Grondmaatregel"]
+        )
+        _general_ini.vps_section = VPSReinforcementSectionFom.from_config(
+            ini_config["VerticalePipingOplossing"]
         )
         _general_ini.kwelscherm_section = PipingwallReinforcementSectionFom.from_config(
             ini_config["Kwelscherm"]
