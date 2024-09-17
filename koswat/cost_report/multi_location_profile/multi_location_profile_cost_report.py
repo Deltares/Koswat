@@ -2,8 +2,8 @@ import math
 from dataclasses import dataclass, field
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.cost_report.infrastructure.infrastructure_profile_cost_report import (
-    InfrastructureProfileCostReport,
+from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
+    InfrastructureLocationProfileCostReport,
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -12,7 +12,9 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 @dataclass
 class MultiLocationProfileCostReport(CostReportProtocol):
     obstacle_locations: list[PointSurroundings] = field(default_factory=lambda: [])
-    infra_multilocation_profile_cost_report: InfrastructureProfileCostReport = None
+    infra_multilocation_profile_cost_report: InfrastructureLocationProfileCostReport = (
+        None
+    )
     profile_cost_report: ProfileCostReport = None
 
     @property

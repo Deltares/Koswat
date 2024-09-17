@@ -25,19 +25,29 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
 
     # Polderside infrastructures
     roads_class_2_polderside: SurroundingsInfrastructure = field(
-        default_factory=SurroundingsInfrastructure
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name="roads_class_2_polderside"
+        )
     )
     roads_class_7_polderside: SurroundingsInfrastructure = field(
-        default_factory=SurroundingsInfrastructure
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name="roads_class_7_polderside"
+        )
     )
     roads_class_24_polderside: SurroundingsInfrastructure = field(
-        default_factory=SurroundingsInfrastructure
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name="roads_class_24_polderside"
+        )
     )
     roads_class_47_polderside: SurroundingsInfrastructure = field(
-        default_factory=SurroundingsInfrastructure
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name="roads_class_47_polderside"
+        )
     )
     roads_class_unknown_polderside: SurroundingsInfrastructure = field(
-        default_factory=SurroundingsInfrastructure
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name="roads_class_unknown_polderside"
+        )
     )
 
     # Dikeside infrastructures (not supported yet)
