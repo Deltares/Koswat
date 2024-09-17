@@ -9,10 +9,7 @@ from koswat.dike.surroundings.surroundings_infrastructure import (
 @dataclass
 class InfrastructureCostsCalculator:
     infrastructure: SurroundingsInfrastructure
-    removing_costs: float
-    adding_costs: float
-    # non_rising_dike_costs: float
-    # surtax_costs: float
+    surtax_costs: float
     zone_a_costs: float
     zone_b_costs: float
 

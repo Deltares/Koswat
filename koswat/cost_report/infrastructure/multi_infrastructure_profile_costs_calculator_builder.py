@@ -1,3 +1,4 @@
+import logging
 import math
 from dataclasses import dataclass
 
@@ -7,7 +8,10 @@ from koswat.configuration.settings.costs.infastructure_costs_settings import (
 from koswat.configuration.settings.costs.surtax_costs_settings import (
     SurtaxCostsSettings,
 )
-from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
+from koswat.configuration.settings.koswat_general_settings import (
+    InfraCostsEnum,
+    SurtaxFactorEnum,
+)
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.infrastructure.infrastructure_costs_calculator import (
     InfrastructureCostsCalculator,
@@ -73,6 +77,30 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             )
         return math.nan, math.nan
 
+    def _get_zone_a_costs(self, adding_costs: float, removing_costs: float) -> float:
+        _dh0_factor = self.infrastructure_wrapper.non_rising_dike_costs_factor
+        if _dh0_factor == InfraCostsEnum.GEEN:
+            return 0
+        elif _dh0_factor == InfraCostsEnum.HERSTEL:
+            return adding_costs
+        elif _dh0_factor == InfraCostsEnum.VERVANG:
+            return adding_costs + removing_costs
+
+        logging.error("`dh0` factor %s not supported.", _dh0_factor)
+        return math.nan
+
+    def _get_zone_b_costs(self, adding_costs: float, removing_costs: float) -> float:
+        return adding_costs + removing_costs
+
+    def _get_zone_a_b_costs(self, infrastructure_name: str) -> tuple[float, float]:
+        _adding_costs, _removing_costs = self._get_infrastructure_costs(
+            infrastructure_name
+        )
+        return (
+            self._get_zone_a_costs(_adding_costs, _removing_costs),
+            self._get_zone_b_costs(_adding_costs, _removing_costs),
+        )
+
     def build(self) -> MultiInfrastructureProfileCostsCalculator:
 
         _surtax_costs = self._get_surtax_costs()
@@ -80,15 +108,12 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         def get_infra_calculator(
             infrastructure_tuple: tuple[str, MultiInfrastructureProfileCostsCalculator]
         ) -> MultiInfrastructureProfileCostsCalculator:
-            _adding_costs, _removing_costs = self._get_infrastructure_costs(
-                infrastructure_tuple[0]
-            )
+            _costs_a, _costs_b = self._get_zone_a_b_costs(infrastructure_tuple[0])
             return InfrastructureCostsCalculator(
                 infrastructure=infrastructure_tuple[1],
-                removing_costs=_removing_costs,
-                adding_costs=_adding_costs,
                 surtax_costs=_surtax_costs,
-                non_rising_dike_costs=self.infrastructure_wrapper.non_rising_dike_costs_factor,
+                zone_a_costs=_costs_a,
+                zone_b_costs=_costs_b,
             )
 
         _calculators = {
