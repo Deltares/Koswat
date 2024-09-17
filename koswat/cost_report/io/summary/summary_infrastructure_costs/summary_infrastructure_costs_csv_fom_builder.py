@@ -1,4 +1,4 @@
-from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
+from koswat.core.io.csv.koswat_csv_multi_header_fom import KoswatCsvMultiHeaderFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 
@@ -9,8 +9,8 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
     def __init__(self) -> None:
         self.koswat_summary = None
 
-    def build(self) -> KoswatCsvFom:
-        _csv_fom = KoswatCsvFom()
+    def build(self) -> KoswatCsvMultiHeaderFom:
+        _csv_fom = KoswatCsvMultiHeaderFom()
         _csv_fom.headers = self._get_headers()
         _csv_fom.entries.append([0] * len(_csv_fom.headers[0]))  # TODO: get entries
 
