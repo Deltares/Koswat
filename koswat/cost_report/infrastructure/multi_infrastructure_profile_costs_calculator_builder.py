@@ -14,7 +14,7 @@ from koswat.configuration.settings.koswat_general_settings import (
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.infrastructure.infrastructure_costs_calculator import (
-    InfrastructureCostsCalculator,
+    InfrastructureProfileCostsCalculator,
 )
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
@@ -109,7 +109,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             infrastructure_tuple: tuple[str, MultiInfrastructureProfileCostsCalculator]
         ) -> MultiInfrastructureProfileCostsCalculator:
             _costs_a, _costs_b = self._get_zone_a_b_costs(infrastructure_tuple[0])
-            return InfrastructureCostsCalculator(
+            return InfrastructureProfileCostsCalculator(
                 infrastructure=infrastructure_tuple[1],
                 surtax_costs=_surtax_costs,
                 zone_a_costs=_costs_a,

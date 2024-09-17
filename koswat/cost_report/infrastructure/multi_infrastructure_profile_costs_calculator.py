@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from koswat.cost_report.infrastructure.infrastructure_costs_calculator import (
-    InfrastructureCostsCalculator,
+    InfrastructureProfileCostsCalculator,
 )
 from koswat.cost_report.infrastructure.infrastructure_profile_cost_report import (
     InfrastructureProfileCostReport,
@@ -16,7 +16,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 
 @dataclass
 class MultiInfrastructureProfileCostsCalculator:
-    infrastructure_calculators: dict[str, InfrastructureCostsCalculator]
+    infrastructure_calculators: dict[str, InfrastructureProfileCostsCalculator]
 
     def calculate(
         self, reinforced_profile: ReinforcementProfileProtocol

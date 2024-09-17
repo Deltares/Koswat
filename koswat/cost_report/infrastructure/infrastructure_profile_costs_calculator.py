@@ -7,7 +7,7 @@ from koswat.dike.surroundings.surroundings_infrastructure import (
 
 
 @dataclass
-class InfrastructureCostsCalculator:
+class InfrastructureProfileCostsCalculator:
     infrastructure: SurroundingsInfrastructure
     surtax_costs: float
     zone_a_costs: float
