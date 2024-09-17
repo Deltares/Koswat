@@ -99,5 +99,5 @@ class TestInfrastructureProfileCostsCalculator:
         assert _location_cost.surtax_costs == _surtax_costs
         assert _location_cost.zone_a_costs == _zone_a_costs
         assert _location_cost.zone_b_costs == _zone_b_costs
-        assert _location_cost.zone_a == math.nan
-        assert _location_cost.zone_b == math.nan
+        assert _location_cost.zone_a == expected_total_widths[0]
+        assert _location_cost.zone_b == expected_total_widths[1]

@@ -60,11 +60,11 @@ class PointSurroundings:
             default=math.nan,
         )
 
-    def get_total_infrastructure_length(
+    def get_total_infrastructure_width(
         self, from_limit: float, to_limit: float
     ) -> float:
         """
-        Calculates what is the total length of infrastructures found between two distances
+        Calculates what is the total width of infrastructures found between two distances
         `from_limit` and `to_limit`.
 
         Args:
@@ -75,17 +75,11 @@ class PointSurroundings:
             float: The total length of infrastructures found between two points.
         """
 
-        def distance_in_limits(distance: float) -> bool:
-            if distance < to_limit or distance > from_limit:
-                # Distance is between limits.
-                return True
-            if math.isclose(distance, from_limit) or math.isclose(distance, to_limit):
-                # Distance is at either limit.
-                return True
-            return False
+        _total_width = 0
+        for k, v in sorted(self.surroundings_matrix.items(), key=lambda item: item[0]):
+            if k > from_limit or math.isclose(k, from_limit):
+                _total_width += v
+                if k > to_limit or math.isclose(k, to_limit):
+                    break
 
-        return sum(
-            _sm_weight
-            for _sm_distance, _sm_weight in self.surroundings_matrix.items()
-            if distance_in_limits(_sm_distance)
-        )
+        return _total_width
