@@ -34,7 +34,7 @@ class TestInfrastructureProfileCostsCalculator:
     ) -> Iterable[SurroundingsInfrastructure]:
         yield SurroundingsInfrastructure(
             infrastructure_name="dummy infrastructure",
-            infrastructure_width=2.4,
+            infrastructure_width=2,
             points=[
                 PointSurroundings(
                     location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
@@ -42,13 +42,41 @@ class TestInfrastructureProfileCostsCalculator:
             ],
         )
 
+    @pytest.mark.parametrize(
+        "zone_a_width, zone_b_width, expected_total_widths",
+        [
+            pytest.param(4, 4, (3, 6), id="'A' [0, 4], 'B' [4, 8]"),
+            pytest.param(5, 4, (3, 6), id="'A' [0, 5], 'B' [5, 9]"),
+            pytest.param(4, 10, (3, 6), id="'A' [0, 4], 'B' [4, 14]"),
+            pytest.param(5, 10, (3, 18), id="'A' [0, 5], 'B' [5, 15]"),
+        ],
+    )
     def test_given_infrastructure_fixture_calculates_costs(
-        self, surroundings_infrastructure_fixture: SurroundingsInfrastructure
+        self,
+        zone_a_width: float,
+        zone_b_width: float,
+        expected_total_widths: tuple[float, float],
+        surroundings_infrastructure_fixture: SurroundingsInfrastructure,
     ):
+        """
+        This test validates that the matrix costs (e.g.: {0: a, 5: b, 10: c})
+        will be used so that based on the width of the `zone_a` we round up its value
+        until a key match is found.
+        For instance if `zone_a = 4` then the costs will be
+        the addition of all values between `0` and `5`, both included,
+        therefore `zone_a_costs = a + b`.
+        For `zone_b` we ignore those keys already taken
+        by `zone_a`. So if `zone_b = 1` then we look for the range `[zone_a, zone_a+zone_b]`
+        which translates to `[4, 5]`, thus taking keys `0`, `5`, and `10`. Because the
+        first two were claimed by `zone_a` we simply calculate `zone_b_costs = c`.
+
+        TODO: What happens when the strategy costs for zone a are either `GEEN` or `HERSTEL`?
+        """
         # 1. Define test data.
+        # Set costs to 1 for easy comparisons.
         _surtax_costs = 1.0
-        _zone_a_costs = 2.0
-        _zone_b_costs = 3.0
+        _zone_a_costs = 1.0
+        _zone_b_costs = 1.0
         _calculator = InfrastructureProfileCostsCalculator(
             infrastructure=surroundings_infrastructure_fixture,
             surtax_costs=_surtax_costs,
@@ -57,7 +85,7 @@ class TestInfrastructureProfileCostsCalculator:
         )
 
         # 2. Run test.
-        _locations_costs = _calculator.calculate(4.2, 42)
+        _locations_costs = _calculator.calculate(zone_a_width, zone_b_width)
 
         # 3. Verify expectations.
         assert isinstance(_locations_costs, list)
@@ -65,7 +93,7 @@ class TestInfrastructureProfileCostsCalculator:
         assert isinstance(_locations_costs[0], InfrastructureLocationCosts)
         _location_cost = _locations_costs[0]
         assert (
-            _location_cost.location
+            _location_cost.location.location
             == surroundings_infrastructure_fixture.points[0].location
         )
         assert _location_cost.surtax_costs == _surtax_costs
