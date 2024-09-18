@@ -10,6 +10,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
+    VPSReinforcementProfile,
+)
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.order_strategy.order_strategy_base import OrderStrategyBase
 from koswat.strategies.strategy_input import StrategyInput
@@ -33,6 +36,7 @@ class TestOrderStrategy:
         # 1. Define test data.
         _expected_result = [
             SoilReinforcementProfile,
+            VPSReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,
             CofferdamReinforcementProfile,
@@ -92,9 +96,9 @@ class TestOrderStrategy:
 
         _expected_clusters = [
             (0, example_location_reinforcements_with_buffering[:2]),
-            (2, example_location_reinforcements_with_buffering[2:6]),
+            (3, example_location_reinforcements_with_buffering[2:6]),
             (0, example_location_reinforcements_with_buffering[6:7]),
-            (3, example_location_reinforcements_with_buffering[7:]),
+            (4, example_location_reinforcements_with_buffering[7:]),
         ]
 
         # 2. Run test.

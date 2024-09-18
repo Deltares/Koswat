@@ -14,7 +14,7 @@ class MultiLocationProfileCostReport(CostReportProtocol):
     obstacle_locations: list[PointSurroundings] = field(default_factory=lambda: [])
     infra_multilocation_profile_cost_report: list[
         InfrastructureLocationProfileCostReport
-    ] = field(default_factory=list)
+    ] = field(default_factory=lambda: [])
     profile_cost_report: ProfileCostReport = None
 
     @property
@@ -50,4 +50,4 @@ class MultiLocationProfileCostReport(CostReportProtocol):
             or not self.profile_cost_report.reinforced_profile
         ):
             return ""
-        return str(self.profile_cost_report.reinforced_profile)
+        return self.profile_cost_report.reinforced_profile.output_name

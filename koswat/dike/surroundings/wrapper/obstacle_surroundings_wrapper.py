@@ -102,7 +102,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
             distance (float): Radius from each point that should be free of surroundings.
 
         Returns:
-            List[PointSurroundings]: List of safe locations (points with surroundings).
+            list[PointSurroundings]: List of safe locations (points with surroundings).
         """
 
         def _is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:

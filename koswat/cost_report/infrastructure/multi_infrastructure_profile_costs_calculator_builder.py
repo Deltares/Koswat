@@ -29,6 +29,11 @@ from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import
 
 @dataclass
 class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
+    """
+    Builder to set up "fix" information such as costs derived from the koswat
+    settings (`InfraCostsEnum`, `SurtaxFactorEnum`) which directly determines the
+    zone `A` and/or `B` costs that will be applied for each infrastructure.
+    """
 
     infrastructure_wrapper: InfrastructureSurroundingsWrapper
     cost_settings: InfrastructureCostsSettings
