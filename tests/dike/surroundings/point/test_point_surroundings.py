@@ -1,8 +1,10 @@
 import math
+from typing import Callable
 
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from tests.conftest import PointSurroundingsTestCase
 
 
 class TestPointSurroundings:
@@ -19,22 +21,25 @@ class TestPointSurroundings:
         _p_s.surroundings_matrix = {42: 1, 24: 1, 2.4: 0}
         assert _p_s.closest_obstacle == 24
 
-    @pytest.mark.parametrize(
-        "zone_a_width, zone_b_width, expected_total_widths",
-        [
-            pytest.param(4, 4, (1.5, 3), id="'A' [0, 4], 'B' [4, 8]"),
-            pytest.param(5, 4, (1.5, 3), id="'A' [0, 5], 'B' [5, 9]"),
-            pytest.param(4, 10, (1.5, 9), id="'A' [0, 4], 'B' [4, 14]"),
-            pytest.param(5, 10, (1.5, 9), id="'A' [0, 5], 'B' [5, 15]"),
-            pytest.param(0, 8, (0, 4.5), id="'B' [0, 8]"),
-            pytest.param(0, 10, (0, 4.5), id="'B' [0, 10]"),
-            pytest.param(0, 12, (0, 10.5), id="'B' [0, 12]"),
-        ],
-    )
     def test_get_total_infrastructure_per_zone_with_costs_calculator_case(
         self,
-        zone_a_width: float,
-        zone_b_width: float,
-        expected_total_widths: tuple[float, float],
+        point_surroundings_for_zones_builder_fixture: tuple[
+            Callable[[], PointSurroundings], PointSurroundingsTestCase
+        ],
     ):
-        pass
+        # 1. Define test data.
+        (
+            _point_surroundings_builder,
+            _point_surroundings_case,
+        ) = point_surroundings_for_zones_builder_fixture
+        _ps = _point_surroundings_builder()
+        assert isinstance(_ps, PointSurroundings)
+
+        # 2. Run test.
+        _result = _ps.get_total_infrastructure_per_zone(
+            _point_surroundings_case.zone_a_limits,
+            _point_surroundings_case.zone_b_limits,
+        )
+
+        # 3. Verify expectations.
+        assert _result == _point_surroundings_case.expected_total_widths

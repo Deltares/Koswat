@@ -1,5 +1,5 @@
 import math
-from typing import Iterable
+from typing import Callable, Iterable
 
 import pytest
 from shapely import Point
@@ -14,6 +14,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
+from tests.conftest import PointSurroundingsTestCase
 
 
 class TestInfrastructureProfileCostsCalculator:
@@ -31,36 +32,23 @@ class TestInfrastructureProfileCostsCalculator:
     @pytest.fixture(name="surroundings_infrastructure_fixture")
     def _get_surroundings_infrastructure_fixture(
         self,
+        point_surroundings_for_zones_builder_fixture: tuple[
+            Callable[[], PointSurroundings], PointSurroundingsTestCase
+        ],
     ) -> Iterable[SurroundingsInfrastructure]:
+        _builder, test_case = point_surroundings_for_zones_builder_fixture
         yield SurroundingsInfrastructure(
             infrastructure_name="dummy infrastructure",
             # To simplify A / B total areas, we just set it to `1`.
             infrastructure_width=1,
-            points=[
-                PointSurroundings(
-                    location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
-                )
-            ],
-        )
+            points=[_builder()],
+        ), test_case
 
-    @pytest.mark.parametrize(
-        "zone_a_width, zone_b_width, expected_total_widths",
-        [
-            pytest.param(4, 4, (1.5, 3), id="'A' [0, 4], 'B' [4, 8]"),
-            pytest.param(5, 4, (1.5, 3), id="'A' [0, 5], 'B' [5, 9]"),
-            pytest.param(4, 10, (1.5, 9), id="'A' [0, 4], 'B' [4, 14]"),
-            pytest.param(5, 10, (1.5, 9), id="'A' [0, 5], 'B' [5, 15]"),
-            pytest.param(0, 8, (0, 4.5), id="'B' [0, 8]"),
-            pytest.param(0, 10, (0, 4.5), id="'B' [0, 10]"),
-            pytest.param(0, 12, (0, 10.5), id="'B' [0, 12]"),
-        ],
-    )
     def test_given_infrastructure_fixture_calculates_costs(
         self,
-        zone_a_width: float,
-        zone_b_width: float,
-        expected_total_widths: tuple[float, float],
-        surroundings_infrastructure_fixture: SurroundingsInfrastructure,
+        surroundings_infrastructure_fixture: tuple[
+            SurroundingsInfrastructure, PointSurroundingsTestCase
+        ],
     ):
         """
         This test validates that the matrix costs (e.g.: {0: a, 5: b, 10: c})
@@ -81,15 +69,21 @@ class TestInfrastructureProfileCostsCalculator:
         _surtax_costs = 1.0
         _zone_a_costs = 1.0
         _zone_b_costs = 1.0
+        (
+            _infrastructure_fixture,
+            _point_surroundings_case,
+        ) = surroundings_infrastructure_fixture
         _calculator = InfrastructureProfileCostsCalculator(
-            infrastructure=surroundings_infrastructure_fixture,
+            infrastructure=_infrastructure_fixture,
             surtax_costs=_surtax_costs,
             zone_a_costs=_zone_a_costs,
             zone_b_costs=_zone_b_costs,
         )
 
         # 2. Run test.
-        _locations_costs = _calculator.calculate(zone_a_width, zone_b_width)
+        _locations_costs = _calculator.calculate(
+            _point_surroundings_case.zone_a_width, _point_surroundings_case.zone_b_width
+        )
 
         # 3. Verify expectations.
         assert isinstance(_locations_costs, list)
@@ -98,10 +92,20 @@ class TestInfrastructureProfileCostsCalculator:
         _location_cost = _locations_costs[0]
         assert (
             _location_cost.location.location
-            == surroundings_infrastructure_fixture.points[0].location
+            == _infrastructure_fixture.points[0].location
         )
         assert _location_cost.surtax_costs == _surtax_costs
-        assert _location_cost.zone_a_costs == _zone_a_costs * expected_total_widths[0]
-        assert _location_cost.zone_b_costs == _zone_b_costs * expected_total_widths[1]
-        assert _location_cost.zone_a == expected_total_widths[0]
-        assert _location_cost.zone_b == expected_total_widths[1]
+        assert (
+            _location_cost.zone_a_costs
+            == _zone_a_costs * _point_surroundings_case.expected_total_widths[0]
+        )
+        assert (
+            _location_cost.zone_b_costs
+            == _zone_b_costs * _point_surroundings_case.expected_total_widths[1]
+        )
+        assert (
+            _location_cost.zone_a == _point_surroundings_case.expected_total_widths[0]
+        )
+        assert (
+            _location_cost.zone_b == _point_surroundings_case.expected_total_widths[1]
+        )
