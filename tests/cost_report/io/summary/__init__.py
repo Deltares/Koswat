@@ -1,14 +1,24 @@
+from copy import deepcopy
 from typing import Type
 
 import pytest
 from shapely.geometry import Point
 
+from koswat.cost_report.infrastructure.infrastructure_location_costs import (
+    InfrastructureLocationCosts,
+)
+from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
+    InfrastructureLocationProfileCostReport,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.surroundings_infrastructure import (
+    SurroundingsInfrastructure,
+)
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
 )
@@ -50,6 +60,33 @@ def _create_locations() -> list[PointSurroundings]:
     return list(map(to_point, _points, range(0, 4)))
 
 
+def _create_infra_reports(
+    report_type: Type[ReinforcementProfileProtocol],
+    available_points: list[PointSurroundings],
+) -> list[InfrastructureLocationProfileCostReport]:
+    _infra_reports = []
+    for i, _point in enumerate(available_points):
+        _infra_report1 = InfrastructureLocationProfileCostReport(
+            reinforced_profile=report_type(),
+            infrastructure=SurroundingsInfrastructure(infrastructure_name="TestInfra1"),
+            infrastructure_location_costs=InfrastructureLocationCosts(
+                location=_point,
+                zone_a=i,
+                zone_a_costs=i * 1.1,
+                zone_b=i * 2,
+                zone_b_costs=i * 2.2,
+                surtax_costs=i * 3,
+            ),
+        )
+        _infra_reports.append(_infra_report1)
+        _infra_report2 = deepcopy(_infra_report1)
+        _infra_report2.infrastructure = SurroundingsInfrastructure(
+            infrastructure_name="TestInfra2"
+        )
+        _infra_reports.append(_infra_report2)
+    return _infra_reports
+
+
 def _create_report(
     report_type: Type[ReinforcementProfileProtocol],
     available_points: list[PointSurroundings],
@@ -62,6 +99,9 @@ def _create_report(
 
     _report = MockSummary()
     _report.obstacle_locations = available_points[0:selected_locations]
+    _report.infra_multilocation_profile_cost_report = _create_infra_reports(
+        report_type, available_points
+    )
     _required_klei = 2.4 * selected_locations
     _required_zand = 4.2 * selected_locations
     _report.cost_per_km = (_required_klei + _required_zand) * 1234
