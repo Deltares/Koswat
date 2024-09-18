@@ -55,3 +55,18 @@ def _get_dummy_reinforcment_profile_builder() -> Iterable[
         )
 
     yield reinforcement_profile_builder
+
+    @pytest.fixture(name="surroundings_infrastructure_fixture")
+    def _get_surroundings_infrastructure_fixture(
+        self,
+    ) -> Iterable[SurroundingsInfrastructure]:
+        yield SurroundingsInfrastructure(
+            infrastructure_name="dummy infrastructure",
+            # To simplify A / B total areas, we just set it to `1`.
+            infrastructure_width=1,
+            points=[
+                PointSurroundings(
+                    location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
+                )
+            ],
+        )

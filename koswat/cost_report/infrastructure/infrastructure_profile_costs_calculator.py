@@ -40,6 +40,7 @@ class InfrastructureProfileCostsCalculator:
         )
 
         return InfrastructureLocationCosts(
+            infrastructure=self.infrastructure,
             location=location,
             surtax_costs=self.surtax_costs,
             zone_a=_total_zone_a * self.infrastructure.infrastructure_width,
