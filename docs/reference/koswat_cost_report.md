@@ -4,7 +4,6 @@ A Koswat report is divided in different parts:
 
 - __Summary report__: A summary containing all 'location reports'.
 - __Location report__: Which profile reinforcements can be applied to each location based on their surroundings and reinforcement properties (`MultiLocationProfileCostReport`). 
-- __Infrastructure report__: Costs related to applying all calculated reinforcement profiles at the locations where infrastructures are present.
 - __Profile report__: (`ProfileCostReport`), what are the (material) volume costs associated when applying a given [reinforced profile](./koswat_reinforced_profile.md#possible-reinforcements) .
 - __Layer report__: A sub report of the 'profile report' which breaks down the different costs of each one of the layers. This can be seen in _Image 1 Volume costs_.
 
@@ -36,20 +35,19 @@ acceptance
 +-- results_output
 |   +-- dike_10-1-1-A-1-A
 |   |   +-- scenario_scenario1
-|   |   |   |   Grondmaatregel_profiel.png
+|   |   |   |   Grondmaatregel profiel.png
 |   |   |   |   Kistdam.png
 |   |   |   |   Kwelscherm.png
 |   |   |   |   summary_costs.csv
 |   |   |   |   summary_locations.csv
 |   |   |   |   Stabiliteitswand.png
-|   |   |   |   Verticale_piping_oplossing.png
 |   |   |   |
-|   |   |   +-- Grondmaatregel_profiel
-|   |   |       |   added_Grondmaatregel_profiel_CLAY.png
-|   |   |       |   added_Grondmaatregel_profiel_GRASS.png
-|   |   |       |   added_Grondmaatregel_profiel_SAND.png
-|   |   |       |   removed_Grondmaatregel_profiel_CLAY.png
-|   |   |       |   removed_Grondmaatregel_profiel_GRASS.png
+|   |   |   +-- Grondmaatregel profiel
+|   |   |       |   added_Grondmaatregelprofiel_CLAY.png
+|   |   |       |   added_Grondmaatregelprofiel_GRASS.png
+|   |   |       |   added_Grondmaatregelprofiel_SAND.png
+|   |   |       |   removed_Grondmaatregelprofiel_CLAY.png
+|   |   |       |   removed_Grondmaatregelprofiel_GRASS.png
 |   |   |   +-- Kistdam
 |   |   |       |   ...
 |   |   |
@@ -57,9 +55,6 @@ acceptance
 |   |   |       |   ...
 |   |   |
 |   |   |   +-- Stabiliteitswand
-|   |   |       |   ...
-|   |   |
-|   |   |   +-- Verticale_piping_oplossing
 |   |   |       |   ...
 |   |   |
 |   |   +-- scenario_scenario2

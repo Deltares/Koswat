@@ -136,7 +136,6 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
     surtax_costs_incl_tax_section: SurtaxCostsSectionFom
     surtax_costs_excl_tax_section: SurtaxCostsSectionFom
     construction_cost_cb_wall: ConstructionCostsSectionFom
-    construction_cost_vzg: ConstructionCostsSectionFom
     construction_cost_damwall_unanchored: ConstructionCostsSectionFom
     construction_cost_damwall_anchored: ConstructionCostsSectionFom
     construction_cost_deep_wall: ConstructionCostsSectionFom
@@ -159,9 +158,6 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
         )
         _ini_fom.surtax_costs_excl_tax_section = SurtaxCostsSectionFom.from_config(
             ini_dict["KostenOpslagfactorenExclBTW"]
-        )
-        _ini_fom.construction_cost_vzg = ConstructionCostsSectionFom.from_config(
-            ini_dict["KostenVerticaalZanddichtGeotextiel"]
         )
         _ini_fom.construction_cost_cb_wall = ConstructionCostsSectionFom.from_config(
             ini_dict["KostenCBwand"]

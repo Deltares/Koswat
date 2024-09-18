@@ -21,7 +21,3 @@ class SoilInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol
     @property
     def reinforcement_domain_name(self) -> str:
         return "Grondmaatregel profiel"
-
-    @property
-    def grondprijs(self) -> float:
-        return self.grondprijs_onbebouwd

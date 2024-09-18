@@ -17,6 +17,5 @@ class SurroundingsInfrastructure(KoswatSurroundingsProtocol):
     how long that infrastructure is.
     """
 
-    infrastructure_name: str = ""
-    infrastructure_width: float = math.nan
     points: list[PointSurroundings] = field(default_factory=lambda: [])
+    infrastructure_width: float = math.nan

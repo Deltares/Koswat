@@ -15,9 +15,6 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder import (
     PointSurroundingsListPoldersideBuilder,
 )
-from koswat.dike.surroundings.surroundings_infrastructure import (
-    SurroundingsInfrastructure,
-)
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
 )
@@ -74,22 +71,6 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
         return _obs_wrapper
 
-    def _get_polderside_surroundings_infrastructure(
-        self, name: str
-    ) -> SurroundingsInfrastructure:
-        _mapped_name = (
-            name.replace("_polderside", "")
-            .replace("roads_class_unknown", "wegen_onbekend")
-            .replace("roads_class_", "wegen_klasse")
-        )
-        return SurroundingsInfrastructure(
-            infrastructure_name=name,
-            points=self._get_polderside_surroundings_from_fom(name),
-            infrastructure_width=getattr(
-                self.infrastructure_section_fom, _mapped_name + "_breedte"
-            ),
-        )
-
     def _get_infrastructure_surroundings_wrapper(
         self,
     ) -> InfrastructureSurroundingsWrapper:
@@ -97,20 +78,46 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             infrastructures_considered=self.infrastructure_section_fom.infrastructuur,
             surtax_cost_factor=self.infrastructure_section_fom.opslagfactor_wegen,
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrakosten_0dh,
-            roads_class_2_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_2_polderside"
-            ),
-            roads_class_7_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_7_polderside"
-            ),
-            roads_class_24_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_24_polderside"
-            ),
-            roads_class_47_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_47_polderside"
-            ),
-            roads_class_unknown_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_unknown_polderside"
-            ),
         )
+
+        # Roads class 2
+        _infra_wrapper.roads_class_2_polderside.points = (
+            self._get_polderside_surroundings_from_fom("roads_class_2_polderside")
+        )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse2_breedte
+        )
+
+        # Roads class 7
+        _infra_wrapper.roads_class_7_polderside.points = (
+            self._get_polderside_surroundings_from_fom("roads_class_7_polderside")
+        )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse7_breedte
+        )
+
+        # Roads class 24
+        _infra_wrapper.roads_class_24_polderside.points = (
+            self._get_polderside_surroundings_from_fom("roads_class_24_polderside")
+        )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse24_breedte
+        )
+
+        # Rodas class 47
+        _infra_wrapper.roads_class_47_polderside.points = (
+            self._get_polderside_surroundings_from_fom("roads_class_47_polderside")
+        )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_klasse47_breedte
+        )
+
+        # Roads class unknown
+        _infra_wrapper.roads_class_unknown_polderside.points = (
+            self._get_polderside_surroundings_from_fom("roads_class_unknown_polderside")
+        )
+        _infra_wrapper.roads_class_2_polderside.infrastructure_width = (
+            self.infrastructure_section_fom.wegen_onbekend_breedte
+        )
+
         return _infra_wrapper

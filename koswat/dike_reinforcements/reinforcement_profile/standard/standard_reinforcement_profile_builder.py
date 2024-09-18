@@ -8,7 +8,6 @@ from koswat.dike_reinforcements.input_profile import (
     PipingWallInputProfileCalculation,
     SoilInputProfileCalculation,
     StabilityWallInputProfileCalculation,
-    VPSInputProfileCalculation,
 )
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
@@ -36,9 +35,6 @@ from koswat.dike_reinforcements.reinforcement_profile.standard import (
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
-    VPSReinforcementProfile,
-)
 
 
 class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
@@ -50,25 +46,11 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
     def get_input_profile_calculator(
         reinforcement_type: type[StandardReinforcementProfile],
     ) -> ReinforcementInputProfileCalculationProtocol:
-        """
-        Get the input profile calculator for the given reinforcement type.
-
-        Args:
-            reinforcement_type (type[StandardReinforcementProfile]): The reinforcement type.
-
-        Raises:
-            NotImplementedError: The given reinforcement type is not supported.
-
-        Returns:
-            ReinforcementInputProfileCalculationProtocol: The input profile calculator.
-        """
-        if issubclass(reinforcement_type, SoilReinforcementProfile):
-            return SoilInputProfileCalculation()
-        if issubclass(reinforcement_type, VPSReinforcementProfile):
-            return VPSInputProfileCalculation()
         if issubclass(reinforcement_type, PipingWallReinforcementProfile):
             return PipingWallInputProfileCalculation()
-        if issubclass(reinforcement_type, StabilityWallReinforcementProfile):
+        elif issubclass(reinforcement_type, SoilReinforcementProfile):
+            return SoilInputProfileCalculation()
+        elif issubclass(reinforcement_type, StabilityWallReinforcementProfile):
             return StabilityWallInputProfileCalculation()
         raise NotImplementedError(f"Type {reinforcement_type} not supported.")
 

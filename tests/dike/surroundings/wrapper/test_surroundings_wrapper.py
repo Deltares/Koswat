@@ -115,7 +115,3 @@ class TestSurroundingsWrapper:
         _infra = _wrapper.infrastructure_surroundings_wrapper
         assert isinstance(_infra, InfrastructureSurroundingsWrapper)
         assert any(_infra.surroundings_collection)
-        assert all(
-            _sw.infrastructure_name != ""
-            for _sw in _infra.surroundings_collection.values()
-        )

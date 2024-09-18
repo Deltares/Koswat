@@ -29,8 +29,8 @@ class ProfileZoneCalculator:
         _left_limit, _right_limit = self._get_profile_upper_x_coords(
             self.reinforced_profile.old_profile
         )
-        _zone_a = _right_limit - _left_limit
-        _zone_b = self.reinforced_profile.points[-1].x - _right_limit
+        _zone_a = abs(_right_limit - _left_limit)
+        _zone_b = abs(self.reinforced_profile.points[-1].x - _right_limit)
         return (_zone_a, _zone_b)
 
     def _calculate_zone_b(self) -> tuple[float, float]:

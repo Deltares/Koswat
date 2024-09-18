@@ -8,10 +8,6 @@ from shapely import Point
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_infrastructure import (
-    SurroundingsInfrastructure,
-)
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
@@ -21,7 +17,6 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from tests.conftest import PointSurroundingsTestCase
 
 
 @pytest.fixture(name="reinforcement_profile_builder")
@@ -60,18 +55,3 @@ def _get_dummy_reinforcment_profile_builder() -> Iterable[
         )
 
     yield reinforcement_profile_builder
-
-
-@pytest.fixture(name="surroundings_infrastructure_fixture")
-def _get_surroundings_infrastructure_fixture(
-    point_surroundings_for_zones_builder_fixture: tuple[
-        Callable[[], PointSurroundings], PointSurroundingsTestCase
-    ],
-) -> Iterable[SurroundingsInfrastructure]:
-    _builder, test_case = point_surroundings_for_zones_builder_fixture
-    yield SurroundingsInfrastructure(
-        infrastructure_name="dummy infrastructure",
-        # To simplify A / B total areas, we just set it to `1`.
-        infrastructure_width=1,
-        points=[_builder()],
-    ), test_case

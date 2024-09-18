@@ -21,7 +21,6 @@ from koswat.configuration.io.ini.koswat_general_ini_fom import (
     SoilReinforcementSectionFom,
     StabilitywallReinforcementSectionFom,
     SurroundingsSectionFom,
-    VPSReinforcementSectionFom,
 )
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
@@ -118,18 +117,6 @@ class TestReadIniConfigurations:
         assert _ini_fom.grondmaatregel_section.min_bermhoogte == 0.5
         assert _ini_fom.grondmaatregel_section.max_bermhoogte_factor == 0.4
         assert _ini_fom.grondmaatregel_section.factor_toename_bermhoogte == 0.05
-
-        # Verticale piping oplossing section
-        assert isinstance(_ini_fom.vps_section, VPSReinforcementSectionFom)
-        assert _ini_fom.vps_section.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
-        assert (
-            _ini_fom.vps_section.constructive_surtax_factor == SurtaxFactorEnum.NORMAAL
-        )
-        assert (
-            _ini_fom.grondmaatregel_section.land_purchase_surtax_factor
-            == SurtaxFactorEnum.NORMAAL
-        )
-        assert _ini_fom.vps_section.binnen_berm_breedte_vps == 10
 
         # Kwelscherm section
         assert isinstance(

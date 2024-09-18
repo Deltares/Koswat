@@ -7,6 +7,3 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
-    VPSReinforcementProfile,
-)
