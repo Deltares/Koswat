@@ -1,7 +1,4 @@
 import math
-from typing import Callable, Iterable
-
-import pytest
 
 from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
@@ -9,7 +6,6 @@ from koswat.cost_report.infrastructure.infrastructure_location_costs import (
 from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator import (
     InfrastructureProfileCostsCalculator,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -27,21 +23,6 @@ class TestInfrastructureProfileCostsCalculator:
         assert math.isnan(_calculator.surtax_costs)
         assert math.isnan(_calculator.zone_a_costs)
         assert math.isnan(_calculator.zone_b_costs)
-
-    @pytest.fixture(name="surroundings_infrastructure_fixture")
-    def _get_surroundings_infrastructure_fixture(
-        self,
-        point_surroundings_for_zones_builder_fixture: tuple[
-            Callable[[], PointSurroundings], PointSurroundingsTestCase
-        ],
-    ) -> Iterable[SurroundingsInfrastructure]:
-        _builder, test_case = point_surroundings_for_zones_builder_fixture
-        yield SurroundingsInfrastructure(
-            infrastructure_name="dummy infrastructure",
-            # To simplify A / B total areas, we just set it to `1`.
-            infrastructure_width=1,
-            points=[_builder()],
-        ), test_case
 
     def test_given_infrastructure_fixture_calculates_costs(
         self,
