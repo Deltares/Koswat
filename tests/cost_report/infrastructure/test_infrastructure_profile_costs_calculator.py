@@ -54,15 +54,13 @@ class TestInfrastructureProfileCostsCalculator:
         This test validates that the matrix costs (e.g.: {0: a, 5: b, 10: c})
         will be used so that based on the width of the `zone_a` we round up its value
         until a key match is found.
-        For instance if `zone_a = 4` then the costs will be
-        the addition of all values between `0` and `5`, both included,
-        therefore `zone_a_costs = a + b`.
-        For `zone_b` we ignore those keys already taken
-        by `zone_a`. So if `zone_b = 1` then we look for the range `[zone_a, zone_a+zone_b]`
-        which translates to `[4, 5]`, thus taking keys `0`, `5`, and `10`. Because the
-        first two were claimed by `zone_a` we simply calculate `zone_b_costs = c`.
-
-        TODO: What happens when the strategy costs for zone a are either `GEEN` or `HERSTEL`?
+        Example given:
+            - if `zone_a = 4` then range is `[0, 4]` and:
+                - matrix keys `0` an `5`, both included,
+                - `zone_a_width = a + b`.
+            - if `zone_b = 1` then range `[4, 5]` and:
+                - matrix keys `10` as `0` and `5` were claimed by `zone_a`.
+                - `zone_b_width = c`.
         """
         # 1. Define test data.
         # Set costs to 1 for easy comparisons.
