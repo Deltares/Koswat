@@ -84,7 +84,7 @@ class TestKoswatSurroundingsWrapperImporter:
         shutil.rmtree(_temp_dir)
 
     @pytest.fixture(name="infrastructure_section_fom_fixture")
-    def _get_infrastructure_seciton_fom(self) -> Iterator[InfrastructureSectionFom]:
+    def _get_infrastructure_section_fom(self) -> Iterator[InfrastructureSectionFom]:
         yield InfrastructureSectionFom(
             infrastructuur=True,
             opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,

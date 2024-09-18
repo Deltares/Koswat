@@ -44,7 +44,7 @@ class ProfileZoneCalculator:
         """
         Calculates the width of zones `A` and `B` for the defined instance of
         `ReinforcementProfileProtocol`. The calculation is as follows:
-        - When `dh0` has not varied in respect to the base profile, then zones
+        - When `dh0` has not varied with respect to the base profile, then zones
         `A` and `B` are calculated.
         - When `dh0` has increased then only zone `B` is calculated.
 
