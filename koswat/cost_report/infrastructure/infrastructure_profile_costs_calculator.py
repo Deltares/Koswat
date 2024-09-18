@@ -33,10 +33,12 @@ class InfrastructureProfileCostsCalculator:
     def _calculate_at_location(
         self, zone_a_width: float, zone_b_width: float, location: PointSurroundings
     ) -> InfrastructureLocationCosts:
-        _total_zone_a = location.get_total_infrastructure_width(0, zone_a_width)
-        _total_zone_b = location.get_total_infrastructure_width(
-            zone_a_width, zone_b_width
+        _zone_a_limits = (0, zone_a_width)
+        _zone_b_limits = (zone_a_width, zone_a_width + zone_b_width)
+        _total_zone_a, _total_zone_b = location.get_total_infrastructure_per_zone(
+            _zone_a_limits, _zone_b_limits
         )
+
         return InfrastructureLocationCosts(
             location=location,
             surtax_costs=self.surtax_costs,

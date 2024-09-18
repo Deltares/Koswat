@@ -34,7 +34,8 @@ class TestInfrastructureProfileCostsCalculator:
     ) -> Iterable[SurroundingsInfrastructure]:
         yield SurroundingsInfrastructure(
             infrastructure_name="dummy infrastructure",
-            infrastructure_width=2,
+            # To simplify A / B total areas, we just set it to `1`.
+            infrastructure_width=1,
             points=[
                 PointSurroundings(
                     location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
@@ -45,10 +46,13 @@ class TestInfrastructureProfileCostsCalculator:
     @pytest.mark.parametrize(
         "zone_a_width, zone_b_width, expected_total_widths",
         [
-            pytest.param(4, 4, (3, 6), id="'A' [0, 4], 'B' [4, 8]"),
-            pytest.param(5, 4, (3, 6), id="'A' [0, 5], 'B' [5, 9]"),
-            pytest.param(4, 10, (3, 6), id="'A' [0, 4], 'B' [4, 14]"),
-            pytest.param(5, 10, (3, 18), id="'A' [0, 5], 'B' [5, 15]"),
+            pytest.param(4, 4, (1.5, 3), id="'A' [0, 4], 'B' [4, 8]"),
+            pytest.param(5, 4, (1.5, 3), id="'A' [0, 5], 'B' [5, 9]"),
+            pytest.param(4, 10, (1.5, 9), id="'A' [0, 4], 'B' [4, 14]"),
+            pytest.param(5, 10, (1.5, 9), id="'A' [0, 5], 'B' [5, 15]"),
+            pytest.param(0, 8, (0, 4.5), id="'B' [0, 8]"),
+            pytest.param(0, 10, (0, 4.5), id="'B' [0, 10]"),
+            pytest.param(0, 12, (0, 10.5), id="'B' [0, 12]"),
         ],
     )
     def test_given_infrastructure_fixture_calculates_costs(
@@ -97,7 +101,7 @@ class TestInfrastructureProfileCostsCalculator:
             == surroundings_infrastructure_fixture.points[0].location
         )
         assert _location_cost.surtax_costs == _surtax_costs
-        assert _location_cost.zone_a_costs == _zone_a_costs
-        assert _location_cost.zone_b_costs == _zone_b_costs
+        assert _location_cost.zone_a_costs == _zone_a_costs * expected_total_widths[0]
+        assert _location_cost.zone_b_costs == _zone_b_costs * expected_total_widths[1]
         assert _location_cost.zone_a == expected_total_widths[0]
         assert _location_cost.zone_b == expected_total_widths[1]

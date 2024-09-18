@@ -1,5 +1,6 @@
 import math
 from dataclasses import dataclass, field
+from inspect import isclass
 
 from shapely.geometry import Point
 
@@ -60,26 +61,57 @@ class PointSurroundings:
             default=math.nan,
         )
 
-    def get_total_infrastructure_width(
-        self, from_limit: float, to_limit: float
-    ) -> float:
+    def get_total_infrastructure_per_zone(
+        self, *zone_limit_collection: tuple[float, float]
+    ) -> list[float]:
         """
-        Calculates what is the total width of infrastructures found between two distances
-        `from_limit` and `to_limit`.
+        Gets the total infrastructure width at each of the provided zones
+        `zone_limit_collection` (`tuple[float, float]`).
+        The zone limits are matched by rounding up their upper limit to the
+        `surroundings_matrix` keys (distances to the `location` in the real world).
+        When two zones have overlapping limits (as expected) the lower one will
+        "claim" the corresponding surrounding distance.
 
-        Args:
-            from_limit (float): Lower limit from where we can start looking for infrastructures.
-            to_limit (float): Upper limit from where we can finish looking for infrastructures.
+        Example:
+            - `zone_limit_collection` = (0, 4), (4, 11)
+            - `surroundings_matrix` = {5: 1.5, 10: 3, 15: 6}
+            - "Taken" distances per zone:
+                - `(0, 4)` takes key `5`.
+                - `(4, 11)` takes key(s) `10` and `15` because `5` was already taken.
+            - Total infrastructure width at zones = `(1.5, 9)`
 
         Returns:
-            float: The total length of infrastructures found between two points.
+            list[float]: list with total width corresponding to each provided zone.
         """
 
-        _total_width = 0
-        for k, v in sorted(self.surroundings_matrix.items(), key=lambda item: item[0]):
-            if k > from_limit or math.isclose(k, from_limit):
-                _total_width += v
-                if k > to_limit or math.isclose(k, to_limit):
-                    break
+        # Prepare data.
+        _sorted_matrix_array = sorted(
+            self.surroundings_matrix.items(), key=lambda item: item[0]
+        )
 
-        return _total_width
+        _taken_keys = []
+
+        def matrix_idx_for_limits(limits: tuple[float, float]) -> float:
+            _lower_limit, _upper_limit = limits
+            if math.isclose(_upper_limit, 0):
+                return 0
+            _total_width = 0
+            for _matrix_distance, value in _sorted_matrix_array:
+                if _matrix_distance < _lower_limit and not math.isclose(
+                    _matrix_distance, _lower_limit
+                ):
+                    return 0
+                if _matrix_distance in _taken_keys:
+                    continue
+                # _matrix_distance >= lower_limit
+                _total_width += value
+                _taken_keys.append(_matrix_distance)
+                if _matrix_distance > _upper_limit or math.isclose(
+                    _matrix_distance, _upper_limit
+                ):
+                    # We include the first value above the `upper_limit`,
+                    # then we stop. (Design decission taken with PO).
+                    break
+            return _total_width
+
+        return list(map(matrix_idx_for_limits, zone_limit_collection))
