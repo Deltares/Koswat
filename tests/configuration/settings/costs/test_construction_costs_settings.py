@@ -26,6 +26,9 @@ class TestConstructionCostsSettings:
 
         # 1. Define test data
         _construction_costs_settings = ConstructionCostsSettings()
+        _construction_costs_settings.vzg = _populate_construction_factors(
+            list(range(5))
+        )
         _construction_costs_settings.cb_damwand = _populate_construction_factors(
             list(range(5))
         )

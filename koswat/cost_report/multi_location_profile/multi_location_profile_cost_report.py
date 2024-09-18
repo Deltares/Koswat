@@ -50,4 +50,4 @@ class MultiLocationProfileCostReport(CostReportProtocol):
             or not self.profile_cost_report.reinforced_profile
         ):
             return ""
-        return str(self.profile_cost_report.reinforced_profile)
+        return self.profile_cost_report.reinforced_profile.output_name
