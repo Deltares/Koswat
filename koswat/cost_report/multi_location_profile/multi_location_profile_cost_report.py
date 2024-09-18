@@ -12,9 +12,9 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 @dataclass
 class MultiLocationProfileCostReport(CostReportProtocol):
     obstacle_locations: list[PointSurroundings] = field(default_factory=lambda: [])
-    infra_multilocation_profile_cost_report: InfrastructureLocationProfileCostReport = (
-        None
-    )
+    infra_multilocation_profile_cost_report: list[
+        InfrastructureLocationProfileCostReport
+    ] = field(default_factory=list)
     profile_cost_report: ProfileCostReport = None
 
     @property
