@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
@@ -24,7 +24,9 @@ class MultiInfrastructureProfileCostsCalculator:
     (`ReinforcementProfileProtocol`) to determine all infrastructures' costs.
     """
 
-    infrastructure_calculators: list[InfrastructureProfileCostsCalculator]
+    infrastructure_calculators: list[InfrastructureProfileCostsCalculator] = field(
+        default_factory=lambda: []
+    )
 
     def calculate(
         self, reinforced_profile: ReinforcementProfileProtocol

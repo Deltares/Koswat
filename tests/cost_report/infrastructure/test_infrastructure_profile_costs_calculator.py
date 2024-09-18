@@ -2,7 +2,6 @@ import math
 from typing import Callable, Iterable
 
 import pytest
-from shapely import Point
 
 from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,

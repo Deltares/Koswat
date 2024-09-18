@@ -43,6 +43,18 @@ class PointSurroundingsTestCase:
         return (self.zone_a_width, self.zone_b_width + self.zone_a_width)
 
 
+@pytest.fixture(name="basic_point_surroundings_builder")
+def _get_basic_point_surroundings_builder_fixture() -> Iterable[
+    Callable[[], PointSurroundings]
+]:
+    def build() -> PointSurroundings:
+        return PointSurroundings(
+            location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
+        )
+
+    yield build
+
+
 @pytest.fixture(
     name="point_surroundings_for_zones_builder_fixture",
     params=[_psc.values for _psc in _point_surroundings_cases],
@@ -50,6 +62,7 @@ class PointSurroundingsTestCase:
 )
 def _get_point_surroundings_for_zones_builder_fixture(
     request: pytest.FixtureRequest,
+    basic_point_surroundings_builder: Callable[[], PointSurroundings],
 ) -> Iterable[tuple[Callable[[], PointSurroundings], PointSurroundingsTestCase]]:
     """
     Simple fixture that can be used as an example on how infrastructure widths are determined
@@ -58,12 +71,7 @@ def _get_point_surroundings_for_zones_builder_fixture(
     sub-projects we required having this fixture at the top-most test level.
     """
 
-    def build_point_surroundings() -> PointSurroundings:
-        return PointSurroundings(
-            location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
-        )
-
-    yield build_point_surroundings, PointSurroundingsTestCase(
+    yield basic_point_surroundings_builder, PointSurroundingsTestCase(
         zone_a_width=request.param[0],
         zone_b_width=request.param[1],
         expected_total_widths=list(request.param[2]),
