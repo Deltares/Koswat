@@ -92,7 +92,7 @@ class PointSurroundings:
 
         def matrix_idx_for_limits(limits: tuple[float, float]) -> float:
             _lower_limit, _upper_limit = limits
-            if math.isclose(_upper_limit, 0):
+            if math.isclose(_upper_limit, 0, abs_tol=1e-09):
                 return 0
             _total_width = 0
             for _matrix_distance, value in _sorted_matrix_array:
