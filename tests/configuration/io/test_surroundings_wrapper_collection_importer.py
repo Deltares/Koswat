@@ -32,7 +32,7 @@ _surroundings_test_cases = [
 ]
 
 
-class TestKoswatSurroundingsWrapperImporter:
+class TestSurroundingsWrapperCollectionImporter:
     def test_initialize(self):
         # !. Define dummy importer.
         _importer = SurroundingsWrapperCollectionImporter(
