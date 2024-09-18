@@ -2,6 +2,9 @@
 
 ::: koswat.cost_report.cost_report_protocol
 
+## Infrastructure cost calculator
+::: koswat.cost_report.infrastructure.profile_zone_calculator
+
 ## Quantity cost parameters calculator
 ::: koswat.cost_report.profile.quantity_cost_parameters_calculator
 ::: koswat.cost_report.profile.quantity_cost_parameters

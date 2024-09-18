@@ -18,7 +18,7 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     infrastructures_considered: bool = True
 
     # opslagfactor_wegen
-    storage_cost_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
+    surtax_cost_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
 
     # infrakosten_0dh
     non_rising_dike_costs_factor: InfraCostsEnum = InfraCostsEnum.GEEN
