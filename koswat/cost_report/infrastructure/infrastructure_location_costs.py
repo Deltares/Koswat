@@ -9,6 +9,13 @@ from koswat.dike.surroundings.surroundings_infrastructure import (
 
 @dataclass
 class InfrastructureLocationCosts:
+    """
+    Simple data structure containing the results of the costs calculations
+    for a given `ReinforcementProfileProtocol` profile.
+    The values related to `zone_a` and `zone_b` are calculated in the
+    `ProfileZoneCalculator`.
+    """
+
     infrastructure: SurroundingsInfrastructure = None
     location: PointSurroundings = None
     zone_a: float = math.nan

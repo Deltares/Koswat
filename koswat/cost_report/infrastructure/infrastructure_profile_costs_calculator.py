@@ -12,6 +12,16 @@ from koswat.dike.surroundings.surroundings_infrastructure import (
 
 @dataclass
 class InfrastructureProfileCostsCalculator:
+    """
+    Calculator to generate all `InfrastructureLocationCosts` instances
+    based on the locations of the contained infrastructure
+    (`SurroundingsInfrastructure.points`) and the width of `zone_a` and
+    `zone_b`.
+
+    Returns:
+        _type_: _description_
+    """
+
     infrastructure: SurroundingsInfrastructure = None
     surtax_costs: float = math.nan
     zone_a_costs: float = math.nan
@@ -20,6 +30,17 @@ class InfrastructureProfileCostsCalculator:
     def calculate(
         self, zone_a_width: float, zone_b_width: float
     ) -> list[InfrastructureLocationCosts]:
+        """
+        Calculates the costs affecting this instance's infrastructure
+        at all points where its present.
+
+        Args:
+            zone_a_width (float): Width of zone type `A`.
+            zone_b_width (float): Width of zone type `B .
+
+        Returns:
+            list[InfrastructureLocationCosts]: Resulting cost summaries.
+        """
 
         return [
             self._calculate_at_location(
