@@ -23,3 +23,7 @@ class KoswatInputProfileProtocol(DataObjectModelProtocol, Protocol):
     factor_zetting: float
     pleistoceen: float
     aquifer: float
+
+    @property
+    def grondprijs(self) -> float:
+        pass

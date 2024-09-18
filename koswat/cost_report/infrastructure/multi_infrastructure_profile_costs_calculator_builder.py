@@ -13,11 +13,14 @@ from koswat.configuration.settings.koswat_general_settings import (
     SurtaxFactorEnum,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.cost_report.infrastructure.infrastructure_costs_calculator import (
-    InfrastructureCostsCalculator,
+from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator import (
+    InfrastructureProfileCostsCalculator,
 )
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
+)
+from koswat.dike.surroundings.surroundings_infrastructure import (
+    SurroundingsInfrastructure,
 )
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
@@ -26,6 +29,11 @@ from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import
 
 @dataclass
 class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
+    """
+    Builder to set up "fix" information such as costs derived from the koswat
+    settings (`InfraCostsEnum`, `SurtaxFactorEnum`) which directly determines the
+    zone `A` and/or `B` costs that will be applied for each infrastructure.
+    """
 
     infrastructure_wrapper: InfrastructureSurroundingsWrapper
     cost_settings: InfrastructureCostsSettings
@@ -106,21 +114,23 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         _surtax_costs = self._get_surtax_costs()
 
         def get_infra_calculator(
-            infrastructure_tuple: tuple[str, MultiInfrastructureProfileCostsCalculator]
+            infrastructure: SurroundingsInfrastructure,
         ) -> MultiInfrastructureProfileCostsCalculator:
-            _costs_a, _costs_b = self._get_zone_a_b_costs(infrastructure_tuple[0])
-            return InfrastructureCostsCalculator(
-                infrastructure=infrastructure_tuple[1],
+            _costs_a, _costs_b = self._get_zone_a_b_costs(
+                infrastructure.infrastructure_name
+            )
+            return InfrastructureProfileCostsCalculator(
+                infrastructure=infrastructure,
                 surtax_costs=_surtax_costs,
                 zone_a_costs=_costs_a,
                 zone_b_costs=_costs_b,
             )
 
-        _calculators = {
-            _infra[0]: get_infra_calculator(_infra)
-            for _infra in self.infrastructure_wrapper.surroundings_collection.items()
-        }
-
         return MultiInfrastructureProfileCostsCalculator(
-            infrastructure_calculators=_calculators
+            infrastructure_calculators=list(
+                map(
+                    get_infra_calculator,
+                    self.infrastructure_wrapper.surroundings_collection.values(),
+                )
+            )
         )

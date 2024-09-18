@@ -1,22 +1,10 @@
-import copy
 import math
-from dataclasses import dataclass
-from typing import Callable, Iterable
+from typing import Callable
 
 import pytest
-from shapely import Point
 
 from koswat.cost_report.infrastructure.profile_zone_calculator import (
     ProfileZoneCalculator,
-)
-from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
-    ReinforcementInputProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -42,10 +30,7 @@ class TestProfileZoneCalculator:
         ],
     ):
         # 1. Define test data.
-        _points_base_profile = [
-            (-18, 0),
-            (-18, 0),
-            (-18, 0),
+        _points_base_profile = _waterside_reinforced_points + [
             (0, 6),
             (10, 6),
             (34, -2),
@@ -140,10 +125,7 @@ class TestProfileZoneCalculator:
         ],
     ):
         # 1. Define test data.
-        _points_base_profile = [
-            (-18, 0),
-            (-18, 0),
-            (-18, 0),
+        _points_base_profile = _waterside_reinforced_points + [
             (0, 6),
             (10, 6),
             (34, -2),
