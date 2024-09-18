@@ -23,7 +23,7 @@ class SummaryInfrastructureCostsCsvExporter(KoswatExporterProtocol):
             logging.error(
                 "Export of KoswatSummary failed, no FileObjectModel was generated."
             )
-            returns
+            return
 
         if not export_path.parent.is_dir():
             export_path.parent.mkdir(parents=True)
