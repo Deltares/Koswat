@@ -14,9 +14,9 @@ class ReinforcedProfileComparisonPlotExporter(PlotExporterProtocol):
 
     def export(self) -> None:
         self.export_dir.mkdir(parents=True, exist_ok=True)
-        _file_path = (self.export_dir / str(self.reinforced_profile)).with_suffix(
-            ".png"
-        )
+        _file_path = self.export_dir.joinpath(
+            str(self.reinforced_profile).replace(" ", "_")
+        ).with_suffix(".png")
 
         # Define canvas
         with KoswatFigureContextHandler(_file_path, 180) as _koswat_figure:

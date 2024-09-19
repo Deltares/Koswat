@@ -82,6 +82,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
     StandardReinforcementProfile,
     StandardReinforcementProfileBuilder,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
+    VPSReinforcementProfile,
+)
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import get_custom_testcase_results_dir, get_testcase_results_dir, test_data
@@ -148,6 +151,7 @@ class TestReinforcementProfileBuilderFactory:
     def test_get_available_reinforcements(self):
         _expected_reinforcements = [
             SoilReinforcementProfile,
+            VPSReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallReinforcementProfile,
             CofferdamReinforcementProfile,
@@ -155,7 +159,7 @@ class TestReinforcementProfileBuilderFactory:
         _available_reinforcements = (
             ReinforcementProfileBuilderFactory.get_available_reinforcements()
         )
-        assert len(_available_reinforcements) == 4
+        assert len(_available_reinforcements) == 5
         assert all(
             _reinforcement in _available_reinforcements
             for _reinforcement in _expected_reinforcements
@@ -168,6 +172,11 @@ class TestReinforcementProfileBuilderFactory:
                 SoilReinforcementProfile,
                 StandardReinforcementProfileBuilder,
                 id="[Standard] Soil reinforcement",
+            ),
+            pytest.param(
+                VPSReinforcementProfile,
+                StandardReinforcementProfileBuilder,
+                id="[Standard] VPS reinforcement",
             ),
             pytest.param(
                 PipingWallReinforcementProfile,
@@ -325,6 +334,7 @@ class TestReinforcementProfileBuilderFactory:
         "profile_type",
         [
             pytest.param(SoilReinforcementProfile, id="Groundmaatregel"),
+            pytest.param(VPSReinforcementProfile, id="Verticale piping oplossing"),
             pytest.param(PipingWallReinforcementProfile, id="Pipingwand"),
             pytest.param(StabilityWallReinforcementProfile, id="Stabiliteitswand"),
             pytest.param(CofferdamReinforcementProfile, id="Kistdam"),
@@ -381,7 +391,7 @@ class TestReinforcementProfileBuilderFactory:
     ):
         # TODO: Most likely this is the culprit of making tests fail.
         _plot_filename = output_dir.joinpath(
-            reinforced_profile.input_data.reinforcement_domain_name
+            reinforced_profile.input_data.reinforcement_domain_name.replace(" ", "_")
         )
         with KoswatFigureContextHandler(
             _plot_filename.with_suffix(".png"), 250

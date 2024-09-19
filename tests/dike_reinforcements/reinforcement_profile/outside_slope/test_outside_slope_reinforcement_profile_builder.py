@@ -6,6 +6,9 @@ from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile_
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
+    OutsideSlopeReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile_builder import (
     OutsideSlopeReinforcementProfileBuilder,
 )
@@ -21,9 +24,10 @@ class TestOutsideSlopeReinforcementProfileBuilder:
         assert isinstance(_builder, ReinforcementProfileBuilderProtocol)
 
     def test_get_outside_slope_reinforcement_calculator_raises_for_unknown_type(self):
-        class MockClass:
+        class MockClass(OutsideSlopeReinforcementProfile):
             pass
 
+        assert issubclass(MockClass, OutsideSlopeReinforcementProfile)
         with pytest.raises(NotImplementedError):
             OutsideSlopeReinforcementProfileBuilder.get_input_profile_calculator(
                 MockClass
