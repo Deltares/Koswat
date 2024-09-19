@@ -23,5 +23,8 @@ class InfrastructureLocationCosts:
 
     zone_b: float = math.nan
     zone_b_costs: float = math.nan
-
     surtax: float = math.nan
+
+    @property
+    def total_cost(self) -> float:
+        return self.zone_a_costs + self.zone_b_costs

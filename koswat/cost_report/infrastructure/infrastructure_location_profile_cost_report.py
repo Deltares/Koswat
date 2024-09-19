@@ -1,12 +1,11 @@
 import math
 from dataclasses import dataclass
 
-from shapely import Point
-
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator import (
+from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
 )
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -25,15 +24,22 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     infrastructure_location_costs: InfrastructureLocationCosts
 
     @property
-    def location(self) -> Point:
+    def location(self) -> PointSurroundings | None:
         if not self.infrastructure_location_costs:
             return None
-        return self.infrastructure_location_costs.location.location
+        return self.infrastructure_location_costs.location
 
     @property
     def total_cost(self) -> float:
-        return math.nan
+        if not self.infrastructure_location_costs:
+            return math.nan
+        return (
+            self.infrastructure_location_costs.zone_a_costs
+            + self.infrastructure_location_costs.zone_b_costs
+        )
 
     @property
     def total_cost_with_surtax(self) -> float:
-        return math.nan
+        if not self.infrastructure_location_costs:
+            return math.nan
+        return self.total_cost * self.infrastructure_location_costs.surtax

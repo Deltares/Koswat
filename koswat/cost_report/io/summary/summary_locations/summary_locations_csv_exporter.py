@@ -10,9 +10,7 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 
 
 class SummaryLocationsCsvExporter(KoswatExporterProtocol):
-    def export(
-        self, koswat_summary: KoswatSummary, export_path: Path, **kwargs
-    ) -> None:
+    def export(self, koswat_summary: KoswatSummary, export_path: Path) -> None:
         if not isinstance(koswat_summary, KoswatSummary):
             raise ValueError("No 'KoswatSummary' object provided.")
         if not isinstance(export_path, Path):
@@ -23,7 +21,8 @@ class SummaryLocationsCsvExporter(KoswatExporterProtocol):
         _csv_fom = _csv_fom_builder.build()
         if not _csv_fom:
             logging.error(
-                "Export of KoswatSummary failed, no FileObjectModel was generated."
+                "Export of %s failed; it was not possible to convert it into csv format.",
+                KoswatSummary.__name__,
             )
             return
 
