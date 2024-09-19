@@ -3,6 +3,9 @@ from typing import Any
 
 from koswat.core.io.csv.koswat_csv_multi_header_fom import KoswatCsvMultiHeaderFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
+from koswat.cost_report.infrastructure.infrastructure_location_costs import (
+    InfrastructureLocationCosts,
+)
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
 )
@@ -74,9 +77,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         def _get_details(location: PointSurroundings, profile_type: str) -> list[float]:
             _details = []
             for _infra_type in self._ordered_infra_types:
-                _ilc = _infra_cost_per_loc_dict[location][profile_type][
-                    _infra_type
-                ].infrastructure_location_costs
+                _ilc = _infra_cost_per_loc_dict[location][profile_type][_infra_type]
                 _details.extend(
                     [_ilc.zone_a, _ilc.zone_a_costs, _ilc.zone_b, _ilc.zone_b_costs]
                 )
@@ -115,11 +116,9 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
     def _get_infra_location_costs(
         self,
         locations_profile_report_list: list[MultiLocationProfileCostReport],
-    ) -> dict[
-        PointSurroundings, dict[str, dict[str, InfrastructureLocationProfileCostReport]]
-    ]:
+    ) -> dict[PointSurroundings, dict[str, dict[str, InfrastructureLocationCosts]]]:
         """
-        Create a dictionary with the infrastructure cost report per location/profile type/infra type.
+        Create a dictionary with the infrastructure cost per location/profile type/infra type.
 
         Args:
             locations_profile_report_list (list[MultiLocationProfileCostReport]):
@@ -127,19 +126,21 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
 
         Returns:
             dict[ PointSurroundings, dict[str, dict[str, InfrastructureLocationProfileCostReport]] ]:
-                Dict containing the infrastructure cost report per location/profile type/infra type.
+                Dict containing the infrastructure cost per location/profile type/infra type.
         """
         _infra_location_cost_dict: dict[
             PointSurroundings,
-            dict[str, dict[str, InfrastructureLocationProfileCostReport]],
-        ] = defaultdict(lambda: defaultdict(dict))
+            dict[str, dict[str, InfrastructureLocationCosts]],
+        ] = defaultdict(
+            lambda: defaultdict(lambda: defaultdict(InfrastructureLocationCosts))
+        )
         for _lpr in locations_profile_report_list:
             for _ilpcr in _lpr.infra_multilocation_profile_cost_report:
                 _infra_location_cost_dict[
                     _ilpcr.infrastructure_location_costs.location
                 ][_lpr.profile_type_name][
                     _ilpcr.infrastructure.infrastructure_name
-                ] = _ilpcr
+                ] = _ilpcr.infrastructure_location_costs
 
         return _infra_location_cost_dict
 
