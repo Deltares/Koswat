@@ -109,7 +109,7 @@ class PointSurroundings:
                     _matrix_distance, _upper_limit
                 ):
                     # We include the first value above the `upper_limit`,
-                    # then we stop. (Design decission taken with PO).
+                    # then we stop. (Design decision taken by PO).
                     break
             return _total_width
 
