@@ -121,7 +121,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             )
             return InfrastructureProfileCostsCalculator(
                 infrastructure=infrastructure,
-                surtax_costs=_surtax_costs,
+                surtax=_surtax_costs,
                 zone_a_costs=_costs_a,
                 zone_b_costs=_costs_b,
             )

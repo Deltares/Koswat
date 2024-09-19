@@ -20,7 +20,7 @@ By using the old and the reinforced profile's geometries, we can determine what 
 - Zone `A` represents the length of the dike old profile's crest (highest surface).
 - Zone `B` the distance between said crest and the end of the dike's reinforcement.
 
-However, in cases of a crest's height zone `A` becomes `0` and therefore `B = {profile's width from waterside crest point}`.
+However, when the crest's height of a `ReinforcementProfileProtocol` has increased in comparison to its original profile (`ReinforcementProfileProtocol.old_profile`, `KoswatProfileProtocol`) then we set zone `A = 0` and therefore `B = {profile's width from waterside crest point}`.
 
 
 ## Infrastructure's distances.
@@ -28,12 +28,11 @@ However, in cases of a crest's height zone `A` becomes `0` and therefore `B = {p
 An infrastructure (`SurroundingsInfrastructure`) can be present a different locations (`SurroundingsInfrastructure.points`), each of these locatinos (`PointSurroundings`) contains a dictionary (`surroundings_matrix: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.
 
 For instance, we could have `surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}`, which means:
-- at 5 meters from the location we will find 1.5 meters of the infrastructure,
-- at 10 meters from the location we will find 0 meters of the infrastructure,
-- at 15 meters from the location we will find 2.5 meters of the infrastructure.
+- Between `0` and `5` meters from the location we will find `1.5` meters of the infrastructure,
+- Between `5` and `10` meters from the location we will find `0` meters of the infrastructure,
+- Between `10` and `15` meters from the location we will find `2.5` meters of the infrastructure.
 
-In addition, each infrastructure has a fixed `width`, which can later be used to calculate total infrastructure surface affected by a profile.
-
+In addition, each infrastructure has a fixed width (`SurroundingsInfrastructure.infrastructure_width`), which can later be used to calculate the total surface of said infrastructure affected by the given profile. So: `affected_infra_zone_x = meters_of_infrastructure_in_zone_x * infrastructure_width`, where `meters_of_infrastructure_in_zone_x` are the values calculated from the `surroundings_matrix` and `infrastructure_width` is the infrastructure fixed width.
 
 ## Cost calculation.
 

@@ -43,7 +43,7 @@ class TestMultiInfrastructureProfileCostsCalculator:
             )
             return InfrastructureProfileCostsCalculator(
                 infrastructure=_infra,
-                surtax_costs=1.0,
+                surtax=1.0,
                 zone_a_costs=1.0,
                 zone_b_costs=1.0,
             )

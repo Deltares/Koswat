@@ -2,7 +2,7 @@ import math
 from dataclasses import dataclass
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
-from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator import (
+from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -42,4 +42,4 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     def total_cost_with_surtax(self) -> float:
         if not self.infrastructure_location_costs:
             return math.nan
-        return self.total_cost * self.infrastructure_location_costs.surtax_costs
+        return self.total_cost * self.infrastructure_location_costs.surtax

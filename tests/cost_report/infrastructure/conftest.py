@@ -62,16 +62,25 @@ def _get_dummy_reinforcment_profile_builder() -> Iterable[
     yield reinforcement_profile_builder
 
 
-@pytest.fixture(name="surroundings_infrastructure_fixture")
+@pytest.fixture(
+    name="surroundings_infrastructure_fixture",
+    params=[1, 10],
+    ids=["Infra width = 1", "Infra width = 10"],
+)
 def _get_surroundings_infrastructure_fixture(
     point_surroundings_for_zones_builder_fixture: tuple[
         Callable[[], PointSurroundings], PointSurroundingsTestCase
     ],
+    request: pytest.FixtureRequest,
 ) -> Iterable[SurroundingsInfrastructure]:
+    _infra_width = request.param
     _builder, test_case = point_surroundings_for_zones_builder_fixture
+    test_case.expected_total_widths = list(
+        x * _infra_width for x in test_case.expected_total_widths
+    )
     yield SurroundingsInfrastructure(
         infrastructure_name="dummy infrastructure",
         # To simplify A / B total areas, we just set it to `1`.
-        infrastructure_width=1,
+        infrastructure_width=_infra_width,
         points=[_builder()],
     ), test_case

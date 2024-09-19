@@ -75,7 +75,7 @@ def _create_infra_reports(
                 zone_a_costs=i * 1.1,
                 zone_b=i * 2,
                 zone_b_costs=i * 2.2,
-                surtax_costs=i * 3,
+                surtax=i * 3,
             ),
         )
         _infra_reports.append(_infra_report1)
