@@ -156,10 +156,12 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
                 _ordered_reinf
             )
             _infrastructure_rows[_infrastructure_cost_key].append(
-                _report_by_profile.infrastructure_cost
+                round(_report_by_profile.infrastructure_cost, self._decimals)
             )
             _infrastructure_rows[_infrastructure_cost_incl_surtax_key].append(
-                _report_by_profile.infrastructure_cost_with_surtax
+                round(
+                    _report_by_profile.infrastructure_cost_with_surtax, self._decimals
+                )
             )
 
         _infrastructure_rows[_infrastructure_cost_key].append(
