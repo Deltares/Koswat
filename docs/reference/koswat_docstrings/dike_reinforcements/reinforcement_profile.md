@@ -20,4 +20,3 @@
 ::: koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile
 ::: koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile
 ::: koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile_builder
-::: koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile

@@ -26,7 +26,6 @@ class ConstructionFactors:
 
 @dataclass
 class ConstructionCostsSettings(KoswatConfigProtocol):
-    vzg: ConstructionFactors | None = None
     cb_damwand: ConstructionFactors | None = None
     damwand_onverankerd: ConstructionFactors | None = None
     damwand_verankerd: ConstructionFactors | None = None
@@ -38,24 +37,24 @@ class ConstructionCostsSettings(KoswatConfigProtocol):
     ) -> ConstructionFactors | None:
         if not construction_type:
             return None
-        if construction_type == ConstructionTypeEnum.VZG:
-            return self.vzg
         if construction_type == ConstructionTypeEnum.CB_DAMWAND:
             return self.cb_damwand
-        if construction_type == ConstructionTypeEnum.DAMWAND_ONVERANKERD:
+        elif construction_type == ConstructionTypeEnum.DAMWAND_ONVERANKERD:
             return self.damwand_onverankerd
-        if construction_type == ConstructionTypeEnum.DAMWAND_VERANKERD:
+        elif construction_type == ConstructionTypeEnum.DAMWAND_VERANKERD:
             return self.damwand_verankerd
-        if construction_type == ConstructionTypeEnum.DIEPWAND:
+        elif construction_type == ConstructionTypeEnum.DIEPWAND:
             return self.diepwand
-        if construction_type == ConstructionTypeEnum.KISTDAM:
+        elif construction_type == ConstructionTypeEnum.KISTDAM:
             return self.kistdam
-        logging.warning("Unsupported construction type {}".format(construction_type))
+        else:
+            logging.warning(
+                "Unsupported construction type {}".format(construction_type)
+            )
 
     def is_valid(self):
         return (
-            self.vzg.is_valid()
-            and self.cb_damwand.is_valid()
+            self.cb_damwand.is_valid()
             and self.damwand_onverankerd.is_valid()
             and self.damwand_verankerd.is_valid()
             and self.diepwand.is_valid()
