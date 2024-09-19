@@ -30,6 +30,6 @@ class TestKoswatSummaryExporter:
 
         # 3. Validate results
         assert _expected_costs_summary.exists()
-        assert len(_expected_costs_summary.read_text().splitlines()) == 42
+        assert len(_expected_costs_summary.read_text().splitlines()) == 46
         assert _expected_locations_summary.exists()
         assert len(_expected_locations_summary.read_text().splitlines()) == 5
