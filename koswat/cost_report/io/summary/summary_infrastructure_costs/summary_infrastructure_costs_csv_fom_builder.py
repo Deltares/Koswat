@@ -36,8 +36,8 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         self._ordered_infra_types = sorted(
             list(
                 set(
-                    x.infrastructure.infrastructure_name
-                    for x in self.koswat_summary.locations_profile_report_list[
+                    _ilpcr.infrastructure.infrastructure_name
+                    for _ilpcr in self.koswat_summary.locations_profile_report_list[
                         0
                     ].infra_multilocation_profile_cost_report
                 )
@@ -57,7 +57,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         self,
         reinforcement_per_locations: list[StrategyLocationReinforcement],
         locations_profile_report_list: list[MultiLocationProfileCostReport],
-    ):
+    ) -> list[list[Any]]:
         def _get_totals(location: PointSurroundings) -> list[float]:
             _totals = []
             for _profile_type in self._ordered_profile_types:
@@ -94,10 +94,10 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             locations_profile_report_list
         )
 
-        # Initiate locations matrix.
+        # Initiate locations matrix
         _matrix = defaultdict(list)
 
-        # Totals and details for profile types
+        # Totals and details per location for profile types
         for _rpl in reinforcement_per_locations:
             _totals = _get_totals(_rpl.location)
             _details = []
@@ -118,6 +118,17 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
     ) -> dict[
         PointSurroundings, dict[str, dict[str, InfrastructureLocationProfileCostReport]]
     ]:
+        """
+        Create a dictionary with the infrastructure cost report per location/profile type/infra type.
+
+        Args:
+            locations_profile_report_list (list[MultiLocationProfileCostReport]):
+                List containing all the chosen profiles with their costs.
+
+        Returns:
+            dict[ PointSurroundings, dict[str, dict[str, InfrastructureLocationProfileCostReport]] ]:
+                Dict containing the infrastructure cost report per location/profile type/infra type.
+        """
         _infra_location_cost_dict: dict[
             PointSurroundings,
             dict[str, dict[str, InfrastructureLocationProfileCostReport]],
@@ -133,6 +144,15 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         return _infra_location_cost_dict
 
     def _get_headers(self) -> list[list[str]]:
+        """
+        Get the headers for the CSV file.
+            Line 1: Profile types
+            Line 2: Infra types
+            Line 3: Zone A and B lengths and costs
+
+        Returns:
+            list[list[str]]: Headers for the CSV file.
+        """
         _headers = []
         _zone_key = "Zone"
         _length_key = "Lengte (m)"
@@ -155,7 +175,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             _infra_type_keys.append(_infra_type)
             _infra_type_keys.extend([""] * (len(_zone_keys) - 1))
 
-        # Build headers
+        # Build headers (first 3 columns for the location)
         _headers = [
             ["", "", ""],
             ["", "", ""],
@@ -167,7 +187,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         _headers[1].extend([""] * len(self._ordered_profile_types))
         _headers[2].extend([_total_cost_key] * len(self._ordered_profile_types))
 
-        # Profile details headers per infra type and zone
+        # Cost detail headers per profile type, infra type and zone
         for _profile_type in self._ordered_profile_types:
             _headers[0].append(_profile_type)
             _headers[0].extend(
