@@ -4,7 +4,6 @@ from koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_b
     SummaryLocationsCsvFomBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-from tests.cost_report.io.summary.conftest import valid_mocked_summary
 
 
 class TestSummaryMatrixCsvFomBuilder:

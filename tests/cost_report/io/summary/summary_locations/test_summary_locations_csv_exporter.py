@@ -8,7 +8,6 @@ from koswat.cost_report.io.summary.summary_locations.summary_locations_csv_expor
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from tests import test_results
-from tests.cost_report.io.summary.conftest import valid_mocked_summary
 
 
 class TestSummaryLocationsCsvExporter:

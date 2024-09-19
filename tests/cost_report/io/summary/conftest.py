@@ -142,8 +142,8 @@ def get_locations_reinforcements(
     return _matrix
 
 
-@pytest.fixture
-def valid_mocked_summary() -> KoswatSummary:
+@pytest.fixture(name="valid_mocked_summary")
+def _get_valid_mocked_summary_fixture() -> KoswatSummary:
     _required_profiles = [
         CofferdamReinforcementProfile,
         PipingWallReinforcementProfile,
