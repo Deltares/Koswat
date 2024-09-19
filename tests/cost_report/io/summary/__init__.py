@@ -61,7 +61,7 @@ def _create_report(
         return _layer_report
 
     _report = MockSummary()
-    _report.locations = available_points[0:selected_locations]
+    _report.obstacle_locations = available_points[0:selected_locations]
     _required_klei = 2.4 * selected_locations
     _required_zand = 4.2 * selected_locations
     _report.cost_per_km = (_required_klei + _required_zand) * 1234
@@ -87,7 +87,7 @@ def get_locations_reinforcements(
         _a_measures = list(
             type(_lp_report.profile_cost_report.reinforced_profile)
             for _lp_report in summary.locations_profile_report_list
-            if _location in _lp_report.locations
+            if _location in _lp_report.obstacle_locations
         )
         _selected_measure = _available_reinforcements[-1]
         if any(_a_measures):

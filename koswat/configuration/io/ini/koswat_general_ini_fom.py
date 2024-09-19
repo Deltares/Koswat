@@ -221,6 +221,7 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
         return _section
 
 
+@dataclass
 class InfrastructureSectionFom(KoswatIniFomProtocol):
     infrastructuur: bool
     opslagfactor_wegen: SurtaxFactorEnum
@@ -234,19 +235,19 @@ class InfrastructureSectionFom(KoswatIniFomProtocol):
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
-        _section = cls()
-        _section.infrastructuur = ini_config.getboolean("infrastructuur")
-        _section.opslagfactor_wegen = SurtaxFactorEnum[
-            ini_config["opslagfactor_wegen"].upper()
-        ]
-        _section.infrakosten_0dh = InfraCostsEnum[ini_config["infrakosten_0dh"].upper()]
-        _section.buffer_buitendijks = ini_config.getfloat("buffer_buitendijks")
-        _section.wegen_klasse2_breedte = ini_config.getfloat("wegen_klasse2_breedte")
-        _section.wegen_klasse24_breedte = ini_config.getfloat("wegen_klasse24_breedte")
-        _section.wegen_klasse47_breedte = ini_config.getfloat("wegen_klasse47_breedte")
-        _section.wegen_klasse7_breedte = ini_config.getfloat("wegen_klasse7_breedte")
-        _section.wegen_onbekend_breedte = ini_config.getfloat("wegen_onbekend_breedte")
-        return _section
+        return cls(
+            infrastructuur=ini_config.getboolean("infrastructuur"),
+            opslagfactor_wegen=SurtaxFactorEnum[
+                ini_config["opslagfactor_wegen"].upper()
+            ],
+            infrakosten_0dh=InfraCostsEnum[ini_config["infrakosten_0dh"].upper()],
+            buffer_buitendijks=ini_config.getfloat("buffer_buitendijks"),
+            wegen_klasse2_breedte=ini_config.getfloat("wegen_klasse2_breedte"),
+            wegen_klasse24_breedte=ini_config.getfloat("wegen_klasse24_breedte"),
+            wegen_klasse47_breedte=ini_config.getfloat("wegen_klasse47_breedte"),
+            wegen_klasse7_breedte=ini_config.getfloat("wegen_klasse7_breedte"),
+            wegen_onbekend_breedte=ini_config.getfloat("wegen_onbekend_breedte"),
+        )
 
 
 class KoswatGeneralIniFom(KoswatIniFomProtocol):

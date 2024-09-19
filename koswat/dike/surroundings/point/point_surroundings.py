@@ -59,3 +59,58 @@ class PointSurroundings:
             ),
             default=math.nan,
         )
+
+    def get_total_infrastructure_per_zone(
+        self, *zone_limit_collection: tuple[float, float]
+    ) -> list[float]:
+        """
+        Gets the total infrastructure width at each of the provided zones
+        `zone_limit_collection` (`tuple[float, float]`).
+        The zone limits are matched by rounding up their upper limit to the
+        `surroundings_matrix` keys (distances to the `location` in the real world).
+        When two zones have overlapping limits (as expected) the lower one will
+        "claim" the corresponding surrounding distance.
+
+        Example:
+            - `zone_limit_collection` = (0, 4), (4, 11)
+            - `surroundings_matrix` = {5: 1.5, 10: 3, 15: 6}
+            - "Taken" distances per zone:
+                - `(0, 4)` takes key `5`.
+                - `(4, 11)` takes key(s) `10` and `15` because `5` was already taken.
+            - Total infrastructure width at zones = `(1.5, 9)`
+
+        Returns:
+            list[float]: list with total width corresponding to each provided zone.
+        """
+
+        # Prepare data.
+        _sorted_matrix_array = sorted(
+            self.surroundings_matrix.items(), key=lambda item: item[0]
+        )
+
+        _taken_keys = []
+
+        def matrix_idx_for_limits(limits: tuple[float, float]) -> float:
+            _lower_limit, _upper_limit = limits
+            if math.isclose(_upper_limit, 0, abs_tol=1e-09):
+                return 0
+            _total_width = 0
+            for _matrix_distance, value in _sorted_matrix_array:
+                if _matrix_distance < _lower_limit and not math.isclose(
+                    _matrix_distance, _lower_limit
+                ):
+                    return 0
+                if _matrix_distance in _taken_keys:
+                    continue
+                # _matrix_distance >= lower_limit
+                _total_width += value
+                _taken_keys.append(_matrix_distance)
+                if _matrix_distance > _upper_limit or math.isclose(
+                    _matrix_distance, _upper_limit
+                ):
+                    # We include the first value above the `upper_limit`,
+                    # then we stop. (Design decission taken with PO).
+                    break
+            return _total_width
+
+        return list(map(matrix_idx_for_limits, zone_limit_collection))

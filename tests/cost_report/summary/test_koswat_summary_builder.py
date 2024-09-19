@@ -20,10 +20,11 @@ from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuild
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.wrapper.surroundings_wrapper import (
-    SurroundingsObstacle,
-    SurroundingsWrapper,
+from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
+from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
+    ObstacleSurroundingsWrapper,
 )
+from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -108,16 +109,18 @@ class TestKoswatSummaryBuilder:
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
         _p_surrounding = PointSurroundings(
-            surroundings_matrix=[], location=Point(2.4, 4.2)
+            surroundings_matrix={}, location=Point(2.4, 4.2)
         )
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
         _run_settings.surroundings = SurroundingsWrapper(
-            reinforcement_min_buffer=10,
-            reinforcement_min_separation=50,
-            apply_buildings=True,
-            buildings_polderside=SurroundingsObstacle(points=[_p_surrounding]),
+            obstacle_surroundings_wrapper=ObstacleSurroundingsWrapper(
+                apply_buildings=True,
+                reinforcement_min_buffer=10,
+                reinforcement_min_separation=50,
+                buildings_polderside=SurroundingsObstacle(points=[_p_surrounding]),
+            )
         )
         _run_settings.costs_setting = KoswatCostsSettings()
         _run_settings.input_profile_case = KoswatProfileBuilder.with_data(
@@ -141,6 +144,6 @@ class TestKoswatSummaryBuilder:
             for lpr in _summary.locations_profile_report_list
         )
         assert (
-            _summary.locations_profile_report_list[0].locations[0].location
+            _summary.locations_profile_report_list[0].obstacle_locations[0].location
             == _p_surrounding.location
         )

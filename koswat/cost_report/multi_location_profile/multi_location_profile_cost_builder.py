@@ -1,7 +1,12 @@
+from dataclasses import dataclass
+
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
 from koswat.core.protocols import BuilderProtocol
+from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder import (
+    MultiInfrastructureProfileCostsCalculatorBuilder,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
@@ -14,27 +19,33 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
+@dataclass
 class MultiLocationProfileCostReportBuilder(BuilderProtocol):
-    surroundings: SurroundingsWrapper
-    reinforced_profile: ReinforcementProfileProtocol
-    koswat_costs_settings: KoswatCostsSettings
-
-    def __init__(self) -> None:
-        self.surroundings = None
-        self.reinforced_profile = None
-        self.koswat_costs_settings = None
+    surroundings: SurroundingsWrapper = None
+    reinforced_profile: ReinforcementProfileProtocol = None
+    koswat_costs_settings: KoswatCostsSettings = None
 
     def build(self) -> MultiLocationProfileCostReport:
-        _multiple_location_cost_report = MultiLocationProfileCostReport()
-        _multiple_location_cost_report.locations = (
-            self.surroundings.get_locations_at_safe_distance(
+
+        # Profile cost report builder
+        _profile_cost_report_builder = ProfileCostReportBuilder(
+            reinforced_profile=self.reinforced_profile,
+            koswat_costs_settings=self.koswat_costs_settings,
+        )
+
+        _infra_calculator = MultiInfrastructureProfileCostsCalculatorBuilder(
+            infrastructure_wrapper=self.surroundings.infrastructure_surroundings_wrapper,
+            cost_settings=self.koswat_costs_settings.infrastructure_costs,
+            surtax_cost_settings=self.koswat_costs_settings.surtax_costs,
+        ).build()
+
+        # Multi-location profile cost report
+        return MultiLocationProfileCostReport(
+            obstacle_locations=self.surroundings.get_locations_at_safe_distance(
                 self.reinforced_profile.profile_width
-            )
+            ),
+            profile_cost_report=_profile_cost_report_builder.build(),
+            infra_multilocation_profile_cost_report=_infra_calculator.calculate(
+                self.reinforced_profile
+            ),
         )
-        _profile_cost_report_builder = ProfileCostReportBuilder()
-        _profile_cost_report_builder.reinforced_profile = self.reinforced_profile
-        _profile_cost_report_builder.koswat_costs_settings = self.koswat_costs_settings
-        _multiple_location_cost_report.profile_cost_report = (
-            _profile_cost_report_builder.build()
-        )
-        return _multiple_location_cost_report

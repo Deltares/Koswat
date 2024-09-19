@@ -1,4 +1,4 @@
-from typing import List, Optional, Protocol, runtime_checkable
+from typing import Optional, Protocol, runtime_checkable
 
 from shapely.geometry.point import Point
 
@@ -13,5 +13,6 @@ class KoswatProfileProtocol(Protocol):
     characteristic_points: CharacteristicPoints
     layers_wrapper: KoswatLayersWrapper
     location: Optional[Point]
-    points: List[Point]
+    points: list[Point]
     profile_width: float
+    profile_height: float

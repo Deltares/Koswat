@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from typing import List
+from dataclasses import dataclass, field
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.profile.layer_cost_report import LayerCostReport
@@ -11,16 +11,13 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
+@dataclass
 class ProfileCostReport(CostReportProtocol):
-    reinforced_profile: ReinforcementProfileProtocol
-    quantity_cost_parameters: QuantityCostParameters
-    layer_cost_reports: List[LayerCostReport]
-
-    def __init__(self) -> None:
-        self.reinforced_profile = None
-        self.quantity_cost_parameters = None
-        self.layer_cost_reports = []
-        self.quantity_cost_parameters = QuantityCostParameters()
+    reinforced_profile: ReinforcementProfileProtocol = None
+    quantity_cost_parameters: QuantityCostParameters = field(
+        default_factory=QuantityCostParameters
+    )
+    layer_cost_reports: list[LayerCostReport] = field(default_factory=lambda: [])
 
     @property
     def total_cost(self) -> float:

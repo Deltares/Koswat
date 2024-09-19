@@ -29,14 +29,15 @@ class TestMultiLocationProfileCostReportBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = MultiLocationProfileCostReportBuilder()
-        _builder.surroundings = SurroundingsWrapper(
-            apply_buildings=True,
-        )
+        _builder.surroundings = SurroundingsWrapper()
         _builder.koswat_costs_settings = KoswatCostsSettings()
         _p_surrounding = PointSurroundings()
         _p_surrounding.surroundings_matrix = {}
         _p_surrounding.location = Point(2.4, 4.2)
-        _builder.surroundings.buildings_polderside.points = [_p_surrounding]
+        _builder.surroundings.obstacle_surroundings_wrapper.apply_buildings = True
+        _builder.surroundings.obstacle_surroundings_wrapper.buildings_polderside.points = [
+            _p_surrounding
+        ]
         _builder.reinforced_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=InputProfileCases.profile_case_2,
@@ -45,11 +46,15 @@ class TestMultiLocationProfileCostReportBuilder:
                 reinforcement_type=CofferdamReinforcementProfile,
             )
         ).build()
+        _builder.reinforced_profile.old_profile = None
 
         # 2. Run test.
         _profile_cost_report = _builder.build()
 
         # 3. Verify expectations.
         assert isinstance(_profile_cost_report, MultiLocationProfileCostReport)
-        assert any(_profile_cost_report.locations)
-        assert _profile_cost_report.locations[0].location == _p_surrounding.location
+        assert any(_profile_cost_report.obstacle_locations)
+        assert (
+            _profile_cost_report.obstacle_locations[0].location
+            == _p_surrounding.location
+        )

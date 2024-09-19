@@ -1,32 +1,23 @@
 from __future__ import annotations
 
-from typing import List, Tuple
+from dataclasses import dataclass
 
 from shapely.geometry import Point
 
 
+@dataclass
 class CharacteristicPoints:
-    p_1: Point
-    p_2: Point
-    p_3: Point
-    p_4: Point
-    p_5: Point
-    p_6: Point
-    p_7: Point
-    p_8: Point
-
-    def __init__(self) -> None:
-        self.p_1 = None
-        self.p_2 = None
-        self.p_3 = None
-        self.p_4 = None
-        self.p_5 = None
-        self.p_6 = None
-        self.p_7 = None
-        self.p_8 = None
+    p_1: Point = None
+    p_2: Point = None
+    p_3: Point = None
+    p_4: Point = None
+    p_5: Point = None
+    p_6: Point = None
+    p_7: Point = None
+    p_8: Point = None
 
     @property
-    def waterside(self) -> List[Point]:
+    def waterside(self) -> list[Point]:
         return [
             self.p_1,
             self.p_2,
@@ -35,7 +26,7 @@ class CharacteristicPoints:
         ]
 
     @waterside.setter
-    def waterside(self, points: List[Point]):
+    def waterside(self, points: list[Point]):
         if not points or len(points) != 4:
             raise ValueError("Exactly 4 points should be given")
         if not all(isinstance(p, Point) for p in points):
@@ -47,7 +38,7 @@ class CharacteristicPoints:
         self.p_4 = points[3]
 
     @property
-    def polderside(self) -> List[Point]:
+    def polderside(self) -> list[Point]:
         return [
             self.p_5,
             self.p_6,
@@ -56,7 +47,7 @@ class CharacteristicPoints:
         ]
 
     @polderside.setter
-    def polderside(self, points: List[Point]):
+    def polderside(self, points: list[Point]):
         if not points or len(points) != 4:
             raise ValueError("Exactly 4 points should be given")
         if not all(isinstance(p, Point) for p in points):
@@ -68,12 +59,12 @@ class CharacteristicPoints:
         self.p_8 = points[3]
 
     @property
-    def points(self) -> List[Point]:
+    def points(self) -> list[Point]:
         _points = []
         _points.extend(self.waterside)
         _points.extend(self.polderside)
         return _points
 
     @property
-    def points_data(self) -> List[Tuple[float]]:
+    def points_data(self) -> list[tuple[float]]:
         return [(p.x, p.y) for p in self.points]

@@ -6,6 +6,7 @@ from typing import Any
 from koswat.configuration.io.ini import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
     DikeProfileSectionFom,
+    InfrastructureSectionFom,
     SurroundingsSectionFom,
 )
 from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
@@ -19,8 +20,8 @@ from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
-from koswat.configuration.io.koswat_surroundings_importer import (
-    KoswatSurroundingsImporter,
+from koswat.configuration.io.surroundings_wrapper_collection_importer import (
+    SurroundingsWrapperCollectionImporter,
 )
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
@@ -85,8 +86,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _general_settings.analyse_section_fom.scenarios_ini_file,
             _dike_selected_sections,
         )
-        _surroundings_fom = self._import_surroundings(
+        _surroundings_fom = self._import_surroundings_wrapper(
             _general_settings.surroundings_section,
+            _general_settings.infrastructuur_section,
             _general_settings.analyse_section_fom.dike_section_location_shp_file,
             [_s.scenario_dike_section for _s in _scenario_fom_list],
         )
@@ -272,16 +274,20 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _reader.dike_selection = dike_selections
         return _reader.read(scenario_dir)
 
-    def _import_surroundings(
+    def _import_surroundings_wrapper(
         self,
         surroundings_section: SurroundingsSectionFom,
+        infrastructure_section: InfrastructureSectionFom,
         traject_shp_file: Path,
         dike_selections: list[str],
     ) -> list[SurroundingsWrapper]:
-        _importer = KoswatSurroundingsImporter()
-        _importer.traject_loc_shp_file = traject_shp_file
-        _importer.selected_locations = dike_selections
-        return _importer.import_from(surroundings_section)
+        _builder = SurroundingsWrapperCollectionImporter(
+            infrastructure_section_fom=infrastructure_section,
+            traject_loc_shp_file=traject_shp_file,
+            selected_locations=dike_selections,
+            surroundings_section_fom=surroundings_section,
+        )
+        return _builder.build()
 
     def _get_koswat_scenario(
         self, fom_scenario: SectionScenarioFom, base_profile: KoswatProfileBase
