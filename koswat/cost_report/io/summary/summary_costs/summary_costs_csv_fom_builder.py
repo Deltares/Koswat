@@ -53,7 +53,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
 
         if not _dict_of_entries:
             logging.error("No entries generated for the CSV Matrix.")
-            return _csv_fom
+            return KoswatCsvFom()
 
         _cost_per_km_rows = [
             [_cost_per_km_key] + _dict_of_entries[_cost_per_km_key],
@@ -70,14 +70,25 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
                 )
             ),
         )
-        _selected_measure_cost_rows = self.dict_to_csv_row(
-            self._get_cost_per_selected_measure()
+
+        _measure_cost = self._get_cost_per_selected_measure()
+        _selected_measure_cost_rows = self.dict_to_csv_row(_measure_cost)
+
+        _infrastructure_cost = self._get_infrastructure_cost()
+        _infrastructure_cost_rows = self.dict_to_csv_row(_infrastructure_cost)
+
+        _total_cost_rows = self.dict_to_csv_row(
+            self._get_total_cost(_measure_cost, _infrastructure_cost)
         )
 
         return KoswatCsvFom(
             headers=[_profile_type_key] + _dict_of_entries[_profile_type_key],
             entries=(
-                _cost_per_km_rows + _quantity_costs_rows + _selected_measure_cost_rows
+                _cost_per_km_rows
+                + _quantity_costs_rows
+                + _selected_measure_cost_rows
+                + _infrastructure_cost_rows
+                + _total_cost_rows
             ),
         )
 
@@ -106,6 +117,63 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             for _report in self.koswat_summary.locations_profile_report_list
         ]
 
+    def _get_total_cost(
+        self,
+        measure_cost: dict[str, list[float]],
+        infrastructure_cost: dict[str, list[float]],
+    ) -> dict[str, list[float]]:
+        def add_costs(measure_cost: list[float], infra_cost: list[float]):
+            def replace_nan(cost: list[float]) -> list[float]:
+                return [0 if math.isnan(x) else x for x in cost]
+
+            return [
+                x + y
+                for x, y in zip(replace_nan(measure_cost), replace_nan(infra_cost))
+            ]
+
+        _total_cost_key = "Total cost"
+        _total_cost_incl_surtax_key = "Total cost incl surtax"
+        _total_cost_rows: dict[str, list[float]] = {}
+
+        _total_cost_rows[_total_cost_key] = add_costs(
+            measure_cost["Total measure cost"],
+            infrastructure_cost["Infrastructure cost"],
+        )
+        _total_cost_rows[_total_cost_incl_surtax_key] = add_costs(
+            measure_cost["Total measure cost incl surtax"],
+            infrastructure_cost["Infrastructure cost incl surtax"],
+        )
+
+        return _total_cost_rows
+
+    def _get_infrastructure_cost(self) -> dict:
+        _infrastructure_cost_key = "Infrastructure cost"
+        _infrastructure_cost_incl_surtax_key = "Infrastructure cost incl surtax"
+        _infrastructure_rows = defaultdict(list)
+
+        for _ordered_reinf in self._get_summary_reinforcement_type_column_order():
+            _report_by_profile = self.koswat_summary.get_report_by_profile(
+                _ordered_reinf
+            )
+            _infrastructure_rows[_infrastructure_cost_key].append(
+                _report_by_profile.infrastructure_cost
+            )
+            _infrastructure_rows[_infrastructure_cost_incl_surtax_key].append(
+                _report_by_profile.infrastructure_cost_with_surtax
+            )
+
+        _infrastructure_rows[_infrastructure_cost_key].append(
+            round(sum(_infrastructure_rows[_infrastructure_cost_key]), self._decimals)
+        )
+        _infrastructure_rows[_infrastructure_cost_incl_surtax_key].append(
+            round(
+                sum(_infrastructure_rows[_infrastructure_cost_incl_surtax_key]),
+                self._decimals,
+            )
+        )
+
+        return dict(_infrastructure_rows)
+
     def _get_cost_per_selected_measure(self) -> dict:
         _total_measure_meters_key = "Total measure meters"
         _total_measure_cost_key = "Total measure cost"
@@ -121,16 +189,16 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _report_by_profile = self.koswat_summary.get_report_by_profile(
                 _ordered_reinf
             )
-            _total_cost = _total_meters * _report_by_profile.cost_per_km / 1000
+            _measure_cost = _total_meters * _report_by_profile.cost_per_km / 1000
             _selected_measures_rows[_total_measure_cost_key].append(
-                round(_total_cost, self._decimals)
+                round(_measure_cost, self._decimals)
             )
 
-            _total_cost_with_surtax = (
+            _measure_cost_with_surtax = (
                 _total_meters * _report_by_profile.cost_per_km_with_surtax / 1000
             )
             _selected_measures_rows[_total_measure_cost_incl_surtax_key].append(
-                round(_total_cost_with_surtax, self._decimals)
+                round(_measure_cost_with_surtax, self._decimals)
             )
 
         _selected_measures_rows[_total_measure_cost_key].append(
