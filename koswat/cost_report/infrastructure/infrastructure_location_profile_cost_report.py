@@ -42,4 +42,4 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     def total_cost_with_surtax(self) -> float:
         if not self.infrastructure_location_costs:
             return math.nan
-        return self.total_cost + self.infrastructure_location_costs.surtax_costs
+        return self.total_cost * self.infrastructure_location_costs.surtax_costs
