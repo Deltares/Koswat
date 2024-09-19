@@ -29,7 +29,6 @@ from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import
     InfrastructureSurroundingsWrapper,
 )
 from tests.conftest import PointSurroundingsTestCase
-from tests.cost_report import infrastructure
 
 
 class TestMultiInfrastructureProfileCostsCalculatorBuilder:
