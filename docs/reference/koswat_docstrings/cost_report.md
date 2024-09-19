@@ -22,8 +22,8 @@
 ::: koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder
 
 #### Summary infrastructure
-::: koswat.cost_report.io.summary.summary_locations.summary_infrastructure_costs_csv_exporter
-::: koswat.cost_report.io.summary.summary_locations.summary_infrastructure_costs_csv_fom_builder
+::: koswat.cost_report.io.summary.summary_infrastructure.summary_infrastructure_costs_csv_exporter
+::: koswat.cost_report.io.summary.summary_infrastructure.summary_infrastructure_costs_csv_fom_builder
 
 #### Summary locations
 ::: koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter
