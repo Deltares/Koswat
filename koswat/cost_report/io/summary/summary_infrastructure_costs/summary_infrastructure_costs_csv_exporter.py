@@ -16,12 +16,14 @@ class SummaryInfrastructureCostsCsvExporter(KoswatExporterProtocol):
         if not isinstance(export_path, Path):
             raise ValueError("No export path location provided.")
 
-        _csv_fom_builder = SummaryInfrastructureCostsCsvFomBuilder()
-        _csv_fom_builder.koswat_summary = koswat_summary
+        _csv_fom_builder = SummaryInfrastructureCostsCsvFomBuilder(
+            koswat_summary=koswat_summary
+        )
         _csv_fom = _csv_fom_builder.build()
         if not _csv_fom:
             logging.error(
-                "Export of KoswatSummary failed, no FileObjectModel was generated."
+                "Export of %s failed; it was not possible to convert it into csv format.",
+                KoswatSummary.__name__,
             )
             return
 

@@ -24,9 +24,9 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     infrastructure_location_costs: InfrastructureLocationCosts
 
     @property
-    def location(self) -> PointSurroundings:
+    def location(self) -> PointSurroundings | None:
         if not self.infrastructure_location_costs:
-            return PointSurroundings()
+            return None
         return self.infrastructure_location_costs.location
 
     @property

@@ -21,7 +21,8 @@ class SummaryCostsCsvExporter(KoswatExporterProtocol):
         _csv_fom = _csv_fom_builder.build()
         if not _csv_fom:
             logging.error(
-                "Export of KoswatSummary failed, no FileObjectModel was generated."
+                "Export of %s failed; it was not possible to convert it into csv format.",
+                KoswatSummary.__name__,
             )
             return
 

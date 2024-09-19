@@ -1,13 +1,11 @@
 from collections import defaultdict
+from dataclasses import dataclass, field
 from typing import Any
 
 from koswat.core.io.csv.koswat_csv_multi_header_fom import KoswatCsvMultiHeaderFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
-)
-from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
-    InfrastructureLocationProfileCostReport,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
@@ -19,15 +17,11 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 
 
+@dataclass
 class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
     koswat_summary: KoswatSummary
-    _ordered_profile_types: list[str]
-    _ordered_infra_types: list[str]
-
-    def __init__(self) -> None:
-        self.koswat_summary = None
-        self._ordered_profile_types = []
-        self._ordered_infra_types = []
+    _ordered_profile_types: list[str] = field(default_factory=list)
+    _ordered_infra_types: list[str] = field(default_factory=list)
 
     def build(self) -> KoswatCsvMultiHeaderFom:
         self._ordered_profile_types = list(
@@ -47,14 +41,13 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             )
         )
 
-        _csv_fom = KoswatCsvMultiHeaderFom()
-        _csv_fom.headers = self._get_headers()
-        _csv_fom.entries = self._get_locations_matrix(
-            self.koswat_summary.reinforcement_per_locations,
-            self.koswat_summary.locations_profile_report_list,
+        return KoswatCsvMultiHeaderFom(
+            headers=self._get_headers(),
+            entries=self._get_locations_matrix(
+                self.koswat_summary.reinforcement_per_locations,
+                self.koswat_summary.locations_profile_report_list,
+            ),
         )
-
-        return _csv_fom
 
     def _get_locations_matrix(
         self,
@@ -62,17 +55,15 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         locations_profile_report_list: list[MultiLocationProfileCostReport],
     ) -> list[list[Any]]:
         def _get_totals(location: PointSurroundings) -> list[float]:
-            _totals = []
-            for _profile_type in self._ordered_profile_types:
-                _totals.append(
-                    sum(
-                        _ilc.total_cost
-                        for _ilc in _infra_cost_per_loc_dict[location][
-                            _profile_type
-                        ].values()
-                    )
+            return list(
+                sum(
+                    _ilc.total_cost
+                    for _ilc in _infra_cost_per_loc_dict[location][
+                        _profile_type
+                    ].values()
                 )
-            return _totals
+                for _profile_type in self._ordered_profile_types
+            )
 
         def _get_details(location: PointSurroundings, profile_type: str) -> list[float]:
             _details = []
@@ -125,7 +116,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                 List containing all the chosen profiles with their costs.
 
         Returns:
-            dict[ PointSurroundings, dict[str, dict[str, InfrastructureLocationProfileCostReport]] ]:
+            dict[ PointSurroundings, dict[str, dict[str, InfrastructureLocationCosts]] ]:
                 Dict containing the infrastructure cost per location/profile type/infra type.
         """
         _infra_location_cost_dict: dict[
@@ -134,13 +125,23 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         ] = defaultdict(
             lambda: defaultdict(lambda: defaultdict(InfrastructureLocationCosts))
         )
+
+        def update_infra_location_cost_dict(
+            location: PointSurroundings,
+            profile_type_name: str,
+            infra_name: str,
+            costs: InfrastructureLocationCosts,
+        ):
+            _infra_location_cost_dict[location][profile_type_name][infra_name] = costs
+
         for _lpr in locations_profile_report_list:
             for _ilpcr in _lpr.infra_multilocation_profile_cost_report:
-                _infra_location_cost_dict[
-                    _ilpcr.infrastructure_location_costs.location
-                ][_lpr.profile_type_name][
-                    _ilpcr.infrastructure.infrastructure_name
-                ] = _ilpcr.infrastructure_location_costs
+                update_infra_location_cost_dict(
+                    _ilpcr.infrastructure_location_costs.location,
+                    _lpr.profile_type_name,
+                    _ilpcr.infrastructure.infrastructure_name,
+                    _ilpcr.infrastructure_location_costs,
+                )
 
         return _infra_location_cost_dict
 

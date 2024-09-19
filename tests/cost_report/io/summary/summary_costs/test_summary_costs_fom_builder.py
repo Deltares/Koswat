@@ -4,7 +4,7 @@ from koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder i
     SummaryCostsCsvFomBuilder,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-from tests.cost_report.io.summary import valid_mocked_summary
+from tests.cost_report.io.summary.conftest import valid_mocked_summary
 
 
 class TestSummaryCostCsvFomBuilder:
