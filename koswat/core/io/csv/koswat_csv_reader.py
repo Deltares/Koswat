@@ -20,7 +20,4 @@ class KoswatCsvReader(KoswatReaderProtocol):
         _csv_lines = file_path.read_text().splitlines(keepends=False)
         _csv_entries = [_line.split(self.separator) for _line in _csv_lines]
 
-        _csv_fom = KoswatCsvFom()
-        _csv_fom.headers = _csv_entries.pop(0)
-        _csv_fom.entries = _csv_entries
-        return _csv_fom
+        return KoswatCsvFom(headers=_csv_entries.pop(0), entries=_csv_entries)

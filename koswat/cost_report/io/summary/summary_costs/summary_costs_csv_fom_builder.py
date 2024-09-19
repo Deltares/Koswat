@@ -1,6 +1,7 @@
 import logging
 import math
 from collections import defaultdict
+from dataclasses import dataclass
 from itertools import groupby
 from typing import Type
 
@@ -13,16 +14,14 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
+@dataclass
 class SummaryCostsCsvFomBuilder(BuilderProtocol):
-    koswat_summary: KoswatSummary
+    koswat_summary: KoswatSummary = None
     # Internal readonly properties.
     _quantity_key = "(quantity)"
     _cost_key = "(cost)"
     _cost_with_surtax_key = "(cost incl surtax)"
     _decimals = 2
-
-    def __init__(self) -> None:
-        self.koswat_summary = None
 
     @staticmethod
     def dict_to_csv_row(csv_to_convert: dict) -> list[list[str]]:
@@ -32,8 +31,6 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         ]
 
     def build(self) -> KoswatCsvFom:
-        _csv_fom = KoswatCsvFom()
-
         _profile_type_key = "Profile type"
         _cost_per_km_key = "Cost per km (Euro/km)"
         _cost_per_km_incl_surtax_key = "Cost per km incl surtax (Euro/km)"
@@ -77,11 +74,12 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             self._get_cost_per_selected_measure()
         )
 
-        _csv_fom.headers = [_profile_type_key] + _dict_of_entries[_profile_type_key]
-        _csv_fom.entries = (
-            _cost_per_km_rows + _quantity_costs_rows + _selected_measure_cost_rows
+        return KoswatCsvFom(
+            headers=[_profile_type_key] + _dict_of_entries[_profile_type_key],
+            entries=(
+                _cost_per_km_rows + _quantity_costs_rows + _selected_measure_cost_rows
+            ),
         )
-        return _csv_fom
 
     def _get_total_meters_per_selected_measure(
         self,
