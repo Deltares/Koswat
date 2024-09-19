@@ -68,7 +68,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
         ],
     ):
         # 1. Define test data.
-        _infrastructure, _test_case_data = surroundings_infrastructure_fixture
+        _infrastructure, _ = surroundings_infrastructure_fixture
         _infra_wrapper = InfrastructureSurroundingsWrapper(
             infrastructures_considered=True,
             surtax_cost_factor=surtax_cost_factor,
@@ -118,7 +118,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             infra_calculator: InfrastructureProfileCostsCalculator,
         ) -> bool:
             assert isinstance(infra_calculator, InfrastructureProfileCostsCalculator)
-            assert infra_calculator.surtax_costs == _expected_surtax_cost
+            assert infra_calculator.surtax == _expected_surtax_cost
             if (
                 infra_calculator.infrastructure.infrastructure_name
                 != _infrastructure.infrastructure_name

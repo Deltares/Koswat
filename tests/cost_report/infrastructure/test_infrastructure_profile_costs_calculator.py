@@ -1,5 +1,7 @@
 import math
 
+import pytest
+
 from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
 )
@@ -20,7 +22,7 @@ class TestInfrastructureProfileCostsCalculator:
         # 2. Verify expectations.
         assert isinstance(_calculator, InfrastructureProfileCostsCalculator)
         assert not _calculator.infrastructure
-        assert math.isnan(_calculator.surtax_costs)
+        assert math.isnan(_calculator.surtax)
         assert math.isnan(_calculator.zone_a_costs)
         assert math.isnan(_calculator.zone_b_costs)
 
@@ -44,7 +46,7 @@ class TestInfrastructureProfileCostsCalculator:
         """
         # 1. Define test data.
         # Set costs to 1 for easy comparisons.
-        _surtax_costs = 1.0
+        _surtax = 1.0
         _zone_a_costs = 1.0
         _zone_b_costs = 1.0
         (
@@ -53,7 +55,7 @@ class TestInfrastructureProfileCostsCalculator:
         ) = surroundings_infrastructure_fixture
         _calculator = InfrastructureProfileCostsCalculator(
             infrastructure=_infrastructure_fixture,
-            surtax_costs=_surtax_costs,
+            surtax=_surtax,
             zone_a_costs=_zone_a_costs,
             zone_b_costs=_zone_b_costs,
         )
@@ -72,7 +74,7 @@ class TestInfrastructureProfileCostsCalculator:
             _location_cost.location.location
             == _infrastructure_fixture.points[0].location
         )
-        assert _location_cost.surtax_costs == _surtax_costs
+        assert _location_cost.surtax == _surtax
         assert (
             _location_cost.zone_a_costs
             == _zone_a_costs * _point_surroundings_case.expected_total_widths[0]

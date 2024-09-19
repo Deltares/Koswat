@@ -23,7 +23,7 @@ class InfrastructureProfileCostsCalculator:
     """
 
     infrastructure: SurroundingsInfrastructure = None
-    surtax_costs: float = math.nan
+    surtax: float = math.nan
     zone_a_costs: float = math.nan
     zone_b_costs: float = math.nan
 
@@ -60,12 +60,15 @@ class InfrastructureProfileCostsCalculator:
             _zone_a_limits, _zone_b_limits
         )
 
+        _surface_zone_a = _total_zone_a * self.infrastructure.infrastructure_width
+        _surface_zone_b = _total_zone_b * self.infrastructure.infrastructure_width
+
         return InfrastructureLocationCosts(
             infrastructure=self.infrastructure,
             location=location,
-            surtax_costs=self.surtax_costs,
-            zone_a=_total_zone_a * self.infrastructure.infrastructure_width,
-            zone_b=_total_zone_b * self.infrastructure.infrastructure_width,
-            zone_a_costs=_total_zone_a * self.zone_a_costs,
-            zone_b_costs=_total_zone_b * self.zone_b_costs,
+            surtax=self.surtax,
+            zone_a=_surface_zone_a,
+            zone_b=_surface_zone_b,
+            zone_a_costs=_surface_zone_a * self.zone_a_costs,
+            zone_b_costs=_surface_zone_b * self.zone_b_costs,
         )

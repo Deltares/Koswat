@@ -23,4 +23,5 @@ class InfrastructureLocationCosts:
 
     zone_b: float = math.nan
     zone_b_costs: float = math.nan
-    surtax_costs: float = math.nan
+
+    surtax: float = math.nan
