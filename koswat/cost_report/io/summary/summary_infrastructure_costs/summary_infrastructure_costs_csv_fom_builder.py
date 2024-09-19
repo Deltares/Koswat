@@ -136,8 +136,8 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         _headers = []
         _zone_key = "Zone"
         _length_key = "Lengte (m)"
-        _cost_key = "Kosten (€)"
-        _total_cost_key = "Totale kosten (€)"
+        _cost_key = "Kosten (Euro)"
+        _total_cost_key = "Totale kosten (Euro)"
 
         # Collect header fragments
         _zones = ["A", "B"]
