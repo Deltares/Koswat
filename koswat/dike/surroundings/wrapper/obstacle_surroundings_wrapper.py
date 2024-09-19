@@ -16,7 +16,6 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     apply_buildings: bool = False
     apply_railways: bool = False
     apply_waters: bool = False
-    apply_infrastructure: bool = True
 
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import shutil
 from pathlib import Path
+from typing import Iterable
 
 import cv2
 import numpy as np
@@ -49,10 +50,17 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
+from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
+    InfrastructureSurroundingsWrapper,
+)
+from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
+    ObstacleSurroundingsWrapper,
+)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from tests import (
     get_fixturerequest_case_name,
+    get_test_results_dir,
     get_testcase_results_dir,
     test_data,
     test_results,
@@ -80,6 +88,164 @@ class TestAcceptance:
             import koswat.__main__
         except ImportError as exc_err:
             pytest.fail(f"It was not possible to import required packages {exc_err}")
+
+    @pytest.fixture(
+        name="t_10_3_infrastructures_fixture",
+        params=[True, False],
+        ids=["With infrastructures", "Without infrastructures"],
+    )
+    def _get_infrastructure_surroundings_fixture(
+        self,
+        request: pytest.FixtureRequest,
+    ) -> Iterable[bool]:
+        yield request.param
+
+    @pytest.fixture(
+        name="t_10_3_obstacles_fixture",
+        params=[True, False],
+        ids=["With obstacles", "Without obstacles"],
+    )
+    def _get_obstacle_surroundings_fixture(
+        self,
+        request: pytest.FixtureRequest,
+    ) -> Iterable[bool]:
+        yield request.param
+
+    @pytest.fixture(
+        name="t_10_3_surroundings_wrapper_fixture",
+        params=[(False, False), (False, True), (True, False), (True, True)],
+        ids=[
+            "Without ANY surrounding",
+            "With Infrastructure",
+            "With Obstacles",
+            "With Infrastructure and Obstacles",
+        ],
+    )
+    def _get_surroundings_wrapper_fixture(
+        self,
+        request: pytest.FixtureRequest,
+    ) -> Iterable[list[SurroundingsWrapper]]:
+        _traject = "10_3"
+        # Shp locations file
+        _shp_file = test_data.joinpath(
+            "shp_reader",
+            "Dijkvak",
+            "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp",
+        )
+        assert _shp_file.is_file()
+
+        # Surroundings directory
+        _surroundings_analysis_path = test_data.joinpath(
+            "acceptance", "surroundings_analysis", _traject
+        )
+        assert _surroundings_analysis_path.is_dir()
+
+        # Create a dummy dir to avoid importing unnecessary data.
+        _dir_name = get_testcase_results_dir(request)
+        _temp_dir = test_results.joinpath(_dir_name, _traject)
+        if _temp_dir.exists():
+            shutil.rmtree(_temp_dir)
+        shutil.copytree(_surroundings_analysis_path, _temp_dir)
+
+        # Generate surroundings section File Object Model.
+        _include_obstacles, _include_infras = request.param
+        _surroundings_settings = SurroundingsSectionFom(
+            surroundings_database_dir=_temp_dir.parent,
+            constructieafstand=50,
+            constructieovergang=10,
+            buitendijks=False,
+            bebouwing=_include_obstacles,
+            spoorwegen=False,
+            water=False,
+        )
+
+        # Generate Infrastructures section file model
+        _infrastructure_settings = InfrastructureSectionFom(
+            infrastructuur=_include_infras,
+            opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,
+            infrakosten_0dh=InfraCostsEnum.GEEN,
+            buffer_buitendijks=0,
+            wegen_klasse2_breedte=2,
+            wegen_klasse7_breedte=5,
+            wegen_klasse24_breedte=8,
+            wegen_klasse47_breedte=12,
+            wegen_onbekend_breedte=8,
+        )
+
+        # Generate wrapper
+        _importer = SurroundingsWrapperCollectionImporter(
+            infrastructure_section_fom=_infrastructure_settings,
+            surroundings_section_fom=_surroundings_settings,
+            selected_locations=[],
+            traject_loc_shp_file=_shp_file,
+        )
+        _surroundings_wrapper_list = _importer.build()
+        assert any(_surroundings_wrapper_list)
+
+        # Yield result
+        yield _surroundings_wrapper_list[0]
+
+        # Remove temp dir
+        shutil.rmtree(_temp_dir)
+
+    @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
+    @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
+    @pytest.mark.parametrize(
+        "layers_case",
+        LayersCases.cases,
+    )
+    @pytest.mark.slow
+    def test_koswat_run_as_sandbox_with_obstacles_and_infrastructures(
+        self,
+        input_profile_case,
+        scenario_case: KoswatProfileBase,
+        layers_case,
+        t_10_3_surroundings_wrapper_fixture: SurroundingsWrapper,
+    ):
+        # 1. Define test data.
+        _run_settings = KoswatRunScenarioSettings(
+            scenario=scenario_case,
+            reinforcement_settings=KoswatReinforcementSettings(),
+            surroundings=t_10_3_surroundings_wrapper_fixture,
+            input_profile_case=KoswatProfileBuilder.with_data(
+                dict(
+                    input_profile_data=input_profile_case,
+                    layers_data=layers_case,
+                    profile_type=KoswatProfileBase,
+                )
+            ).build(),
+            costs_setting=KoswatCostsSettings(
+                # Set default dike profile costs_setting.
+                dike_profile_costs=DikeProfileCostsSettings(
+                    added_layer_grass_m3=12.44,
+                    added_layer_clay_m3=18.05,
+                    added_layer_sand_m3=10.98,
+                    reused_layer_grass_m3=6.04,
+                    reused_layer_core_m3=4.67,
+                    disposed_material_m3=7.07,
+                    profiling_layer_grass_m2=0.88,
+                    profiling_layer_clay_m2=0.65,
+                    profiling_layer_sand_m2=0.60,
+                    bewerken_maaiveld_m2=0.25,
+                ),
+                construction_costs=ConstructionCostsSettings(
+                    cb_damwand=ConstructionFactors(
+                        c_factor=0,
+                        d_factor=0,
+                        z_factor=999,
+                        f_factor=0,
+                        g_factor=0,
+                    ),
+                ),
+                surtax_costs=SurtaxCostsSettings(),
+            ),
+        )
+        # 2. Run test.
+        _summary = KoswatSummaryBuilder(run_scenario_settings=_run_settings).build()
+        assert isinstance(_summary, KoswatSummary)
+
+        # 3. Verify expectations.
+        pass
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
@@ -152,38 +318,40 @@ class TestAcceptance:
             )
         ).build()
 
-        _run_settings = KoswatRunScenarioSettings()
-        _run_settings.scenario = scenario_case
-        _run_settings.reinforcement_settings = _reinforcement_settings
-        _run_settings.surroundings = _surroundings
-        _run_settings.input_profile_case = _base_koswat_profile
-        _costs_settings = KoswatCostsSettings()
-        _run_settings.costs_setting = _costs_settings
-        # Set default dike profile costs_setting.
-        _costs_settings.dike_profile_costs = DikeProfileCostsSettings()
-        _costs_settings.dike_profile_costs.added_layer_grass_m3 = 12.44
-        _costs_settings.dike_profile_costs.added_layer_clay_m3 = 18.05
-        _costs_settings.dike_profile_costs.added_layer_sand_m3 = 10.98
-        _costs_settings.dike_profile_costs.reused_layer_grass_m3 = 6.04
-        _costs_settings.dike_profile_costs.reused_layer_core_m3 = 4.67
-        _costs_settings.dike_profile_costs.disposed_material_m3 = 7.07
-        _costs_settings.dike_profile_costs.profiling_layer_grass_m2 = 0.88
-        _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
-        _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
-        _costs_settings.construction_costs = ConstructionCostsSettings()
-        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
-        _costs_settings.construction_costs.cb_damwand.c_factor = 0
-        _costs_settings.construction_costs.cb_damwand.d_factor = 0
-        _costs_settings.construction_costs.cb_damwand.z_factor = 999
-        _costs_settings.construction_costs.cb_damwand.f_factor = 0
-        _costs_settings.construction_costs.cb_damwand.g_factor = 0
-        _costs_settings.surtax_costs = SurtaxCostsSettings()
+        _run_settings = KoswatRunScenarioSettings(
+            scenario=scenario_case,
+            reinforcement_settings=_reinforcement_settings,
+            surroundings=_surroundings,
+            input_profile_case=_base_koswat_profile,
+            costs_setting=KoswatCostsSettings(
+                # Set default dike profile costs_setting.
+                dike_profile_costs=DikeProfileCostsSettings(
+                    added_layer_grass_m3=12.44,
+                    added_layer_clay_m3=18.05,
+                    added_layer_sand_m3=10.98,
+                    reused_layer_grass_m3=6.04,
+                    reused_layer_core_m3=4.67,
+                    disposed_material_m3=7.07,
+                    profiling_layer_grass_m2=0.88,
+                    profiling_layer_clay_m2=0.65,
+                    profiling_layer_sand_m2=0.60,
+                    bewerken_maaiveld_m2=0.25,
+                ),
+                construction_costs=ConstructionCostsSettings(
+                    cb_damwand=ConstructionFactors(
+                        c_factor=0,
+                        d_factor=0,
+                        z_factor=999,
+                        f_factor=0,
+                        g_factor=0,
+                    ),
+                ),
+                surtax_costs=SurtaxCostsSettings(),
+            ),
+        )
 
         # 2. Run test
-        _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
-        _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
-        _summary = _multi_loc_multi_prof_cost_builder.build()
+        _summary = KoswatSummaryBuilder(run_scenario_settings=_run_settings).build()
         assert isinstance(_summary, KoswatSummary)
 
         KoswatSummaryExporter().export(_summary, _test_dir)

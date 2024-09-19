@@ -1,4 +1,5 @@
 import math
+from dataclasses import dataclass
 
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.costs.construction_costs_settings import (
@@ -15,19 +16,13 @@ from koswat.configuration.settings.costs.surtax_costs_settings import (
 )
 
 
+@dataclass
 class KoswatCostsSettings(KoswatConfigProtocol):
-    price_year: int
-    dike_profile_costs: DikeProfileCostsSettings
-    infrastructure_costs: InfrastructureCostsSettings
-    surtax_costs: SurtaxCostsSettings
-    construction_costs: ConstructionCostsSettings
-
-    def __init__(self) -> None:
-        self.price_year = math.nan
-        self.dike_profile_costs = None
-        self.infrastructure_costs = None
-        self.surtax_costs = None
-        self.construction_costs = None
+    price_year: int = math.nan
+    dike_profile_costs: DikeProfileCostsSettings = None
+    infrastructure_costs: InfrastructureCostsSettings = None
+    surtax_costs: SurtaxCostsSettings = None
+    construction_costs: ConstructionCostsSettings = None
 
     def is_valid(self) -> bool:
         return (
