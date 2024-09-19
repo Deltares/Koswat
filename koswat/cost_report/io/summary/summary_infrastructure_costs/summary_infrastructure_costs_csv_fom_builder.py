@@ -66,8 +66,8 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             for _profile_type in self._ordered_profile_types:
                 _totals.append(
                     sum(
-                        x.total_cost
-                        for x in _infra_cost_per_loc_dict[location][
+                        _ilc.total_cost
+                        for _ilc in _infra_cost_per_loc_dict[location][
                             _profile_type
                         ].values()
                     )
