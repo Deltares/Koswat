@@ -211,7 +211,7 @@ class TestAcceptance:
         for _multi_report in _summary.locations_profile_report_list:
             assert isinstance(_multi_report, MultiLocationProfileCostReport)
             assert isinstance(_multi_report.profile_cost_report, ProfileCostReport)
-            assert _multi_report.total_cost > 0
+            assert _multi_report.measure_cost > 0
             assert _multi_report.cost_per_km > 1000
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
             assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))

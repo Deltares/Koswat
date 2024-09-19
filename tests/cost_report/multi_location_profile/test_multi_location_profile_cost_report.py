@@ -12,5 +12,5 @@ class TestMultipleLocationProfileCostReport:
         assert not any(_report.obstacle_locations)
         assert not _report.profile_cost_report
         assert not _report.profile_type_name
-        assert math.isnan(_report.total_cost)
+        assert math.isnan(_report.measure_cost)
         assert math.isnan(_report.cost_per_km)

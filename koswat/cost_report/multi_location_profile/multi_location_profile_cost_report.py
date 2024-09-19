@@ -30,18 +30,41 @@ class MultiLocationProfileCostReport(CostReportProtocol):
         return self.profile_cost_report.total_cost_with_surtax * 1000
 
     @property
-    def total_cost(self) -> float:
+    def measure_cost(self) -> float:
         if not self.profile_cost_report or not self.obstacle_locations:
             return math.nan
         return self.profile_cost_report.total_cost * len(self.obstacle_locations)
 
     @property
-    def total_cost_with_surtax(self) -> float:
+    def measure_cost_with_surtax(self) -> float:
         if not self.profile_cost_report or not self.obstacle_locations:
             return math.nan
         return self.profile_cost_report.total_cost_with_surtax * len(
             self.obstacle_locations
         )
+
+    @property
+    def infrastructure_cost(self) -> float:
+        if not self.infra_multilocation_profile_cost_report:
+            return math.nan
+        return sum(x.total_cost for x in self.infra_multilocation_profile_cost_report)
+
+    @property
+    def infrastructure_cost_with_surtax(self) -> float:
+        if not self.infra_multilocation_profile_cost_report:
+            return math.nan
+        return sum(
+            x.total_cost_with_surtax
+            for x in self.infra_multilocation_profile_cost_report
+        )
+
+    @property
+    def total_cost(self) -> float:
+        return self.measure_cost + self.infrastructure_cost
+
+    @property
+    def total_cost_with_surtax(self) -> float:
+        return self.measure_cost_with_surtax + self.infrastructure_cost_with_surtax
 
     @property
     def profile_type_name(self) -> str:
