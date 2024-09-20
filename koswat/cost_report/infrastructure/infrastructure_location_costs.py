@@ -18,10 +18,10 @@ class InfrastructureLocationCosts:
 
     infrastructure: SurroundingsInfrastructure = None
     location: PointSurroundings = None
-    zone_a: float = math.nan
+    zone_a: float = 0
     zone_a_costs: float = 0
 
-    zone_b: float = math.nan
+    zone_b: float = 0
     zone_b_costs: float = 0
     surtax: float = 0
 
