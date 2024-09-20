@@ -23,6 +23,9 @@ from koswat.configuration.settings.costs.construction_costs_settings import (
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
+from koswat.configuration.settings.costs.infastructure_costs_settings import (
+    InfrastructureCostsSettings,
+)
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
@@ -224,7 +227,37 @@ class TestAcceptance:
                         g_factor=0,
                     ),
                 ),
-                surtax_costs=SurtaxCostsSettings(),
+                infrastructure_costs=InfrastructureCostsSettings(
+                    # Using the data from `koswat_costs.ini`
+                    # in `acceptance\surroundings_analysis`
+                    removing_roads_klasse2=7.40,
+                    removing_roads_klasse24=9.64,
+                    removing_roads_klasse47=23.99,
+                    removing_roads_klasse7=38.77,
+                    removing_roads_unknown=9.64,
+                    adding_roads_klasse2=24.31,
+                    adding_roads_klasse24=32.30,
+                    adding_roads_klasse47=31.85,
+                    adding_roads_klasse7=36.64,
+                    adding_roads_unknown=32.30,
+                ),
+                surtax_costs=SurtaxCostsSettings(
+                    # Using the data from `koswat_costs.ini`
+                    # in `acceptance\surroundings_analysis`
+                    # Including BTW in the `.ini` example.
+                    soil_easy=1.714,
+                    soil_normal=1.953,
+                    soil_hard=2.177,
+                    construction_easy=2.097,
+                    construction_normal=2.413,
+                    construction_hard=2.690,
+                    roads_easy=2.097,
+                    roads_normal=2.413,
+                    roads_hard=2.690,
+                    land_purchase_easy=1.292,
+                    land_purchase_normal=1.412,
+                    land_purchase_hard=1.645,
+                ),
             ),
         )
 

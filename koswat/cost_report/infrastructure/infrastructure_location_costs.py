@@ -19,12 +19,17 @@ class InfrastructureLocationCosts:
     infrastructure: SurroundingsInfrastructure = None
     location: PointSurroundings = None
     zone_a: float = math.nan
-    zone_a_costs: float = math.nan
+    zone_a_costs: float = 0
 
     zone_b: float = math.nan
-    zone_b_costs: float = math.nan
-    surtax: float = math.nan
+    zone_b_costs: float = 0
+    surtax: float = 0
 
     @property
     def total_cost(self) -> float:
-        return self.zone_a_costs + self.zone_b_costs
+        def valid_cost(cost: float) -> float:
+            if math.isnan(cost):
+                return 0
+            return cost
+
+        return valid_cost(self.zone_a_costs) + valid_cost(self.zone_b_costs)
