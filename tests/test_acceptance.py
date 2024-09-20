@@ -40,6 +40,9 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
     KoswatReinforcementSettings,
 )
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
+from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
+    InfrastructureLocationProfileCostReport,
+)
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
 )
@@ -90,28 +93,6 @@ class TestAcceptance:
             pytest.fail(f"It was not possible to import required packages {exc_err}")
 
     @pytest.fixture(
-        name="t_10_3_infrastructures_fixture",
-        params=[True, False],
-        ids=["With infrastructures", "Without infrastructures"],
-    )
-    def _get_infrastructure_surroundings_fixture(
-        self,
-        request: pytest.FixtureRequest,
-    ) -> Iterable[bool]:
-        yield request.param
-
-    @pytest.fixture(
-        name="t_10_3_obstacles_fixture",
-        params=[True, False],
-        ids=["With obstacles", "Without obstacles"],
-    )
-    def _get_obstacle_surroundings_fixture(
-        self,
-        request: pytest.FixtureRequest,
-    ) -> Iterable[bool]:
-        yield request.param
-
-    @pytest.fixture(
         name="t_10_3_surroundings_wrapper_fixture",
         params=[(False, False), (False, True), (True, False), (True, True)],
         ids=[
@@ -124,7 +105,7 @@ class TestAcceptance:
     def _get_surroundings_wrapper_fixture(
         self,
         request: pytest.FixtureRequest,
-    ) -> Iterable[list[SurroundingsWrapper]]:
+    ) -> Iterable[tuple[SurroundingsWrapper, Path]]:
         _traject = "10_3"
         # Shp locations file
         _shp_file = test_data.joinpath(
@@ -183,10 +164,10 @@ class TestAcceptance:
         assert any(_surroundings_wrapper_list)
 
         # Yield result
-        yield _surroundings_wrapper_list[0]
+        yield _surroundings_wrapper_list[0], _temp_dir
 
         # Remove temp dir
-        shutil.rmtree(_temp_dir)
+        # shutil.rmtree(_temp_dir)
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
@@ -200,13 +181,19 @@ class TestAcceptance:
         input_profile_case,
         scenario_case: KoswatProfileBase,
         layers_case,
-        t_10_3_surroundings_wrapper_fixture: SurroundingsWrapper,
+        t_10_3_surroundings_wrapper_fixture: tuple[SurroundingsWrapper, Path],
     ):
         # 1. Define test data.
+        _surroundings_wrapper, _test_dir = t_10_3_surroundings_wrapper_fixture
+
+        assert _test_dir.exists()
+        assert isinstance(_surroundings_wrapper, SurroundingsWrapper)
+
+        # Define scenario settings.
         _run_settings = KoswatRunScenarioSettings(
             scenario=scenario_case,
             reinforcement_settings=KoswatReinforcementSettings(),
-            surroundings=t_10_3_surroundings_wrapper_fixture,
+            surroundings=_surroundings_wrapper,
             input_profile_case=KoswatProfileBuilder.with_data(
                 dict(
                     input_profile_data=input_profile_case,
@@ -240,12 +227,43 @@ class TestAcceptance:
                 surtax_costs=SurtaxCostsSettings(),
             ),
         )
+
         # 2. Run test.
         _summary = KoswatSummaryBuilder(run_scenario_settings=_run_settings).build()
         assert isinstance(_summary, KoswatSummary)
 
         # 3. Verify expectations.
-        pass
+        assert any(_summary.locations_profile_report_list)
+
+        # TODO: These checks take extremely long time.
+        KoswatSummaryExporter().export(_summary, _test_dir)
+        assert _test_dir.joinpath("summary_costs.csv").exists()
+
+        # Validate obstacles.
+        if _surroundings_wrapper.obstacle_surroundings_wrapper.apply_buildings:
+            assert _test_dir.joinpath("summary_locations.csv").exists()
+
+        # Validate infrastructures.
+        if (
+            not _surroundings_wrapper.infrastructure_surroundings_wrapper.infrastructures_considered
+        ):
+            return
+        assert _test_dir.joinpath("summary_infrastructures.csv").exists()
+
+        def check_valid_infra_reports(
+            mlpc_report: MultiLocationProfileCostReport,
+        ) -> bool:
+            assert isinstance(mlpc_report, MultiLocationProfileCostReport)
+            assert any(mlpc_report.infra_multilocation_profile_cost_report)
+            assert all(
+                isinstance(_infra_report, InfrastructureLocationProfileCostReport)
+                for _infra_report in mlpc_report.infra_multilocation_profile_cost_report
+            )
+            return True
+
+        assert all(
+            map(check_valid_infra_reports, _summary.locations_profile_report_list)
+        )
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
