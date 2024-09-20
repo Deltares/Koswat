@@ -1,4 +1,4 @@
-from os import getcwd, rmdir, unlink
+from os import getcwd
 from pathlib import Path
 from shutil import copy2, copytree, rmtree
 
