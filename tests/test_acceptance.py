@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import shutil
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable, Iterator
 
 import cv2
 import numpy as np
@@ -10,8 +10,10 @@ import pytest
 
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
     InfrastructureSectionFom,
+    KoswatGeneralIniFom,
     SurroundingsSectionFom,
 )
+from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
@@ -22,9 +24,6 @@ from koswat.configuration.settings.costs.construction_costs_settings import (
 )
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
-)
-from koswat.configuration.settings.costs.infastructure_costs_settings import (
-    InfrastructureCostsSettings,
 )
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
@@ -42,6 +41,7 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
+from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
@@ -56,19 +56,13 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
-from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
-    InfrastructureSurroundingsWrapper,
-)
-from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
-    ObstacleSurroundingsWrapper,
-)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from tests import (
     get_fixturerequest_case_name,
-    get_test_results_dir,
     get_testcase_results_dir,
     test_data,
+    test_data_acceptance,
     test_results,
 )
 from tests.acceptance_scenarios.acceptance_test_scenario_cases import (
@@ -95,6 +89,25 @@ class TestAcceptance:
         except ImportError as exc_err:
             pytest.fail(f"It was not possible to import required packages {exc_err}")
 
+    @pytest.fixture(name="koswat_acceptance_settings")
+    def _get_koswat_acceptance_settings_fixtures(
+        self,
+    ) -> Iterator[Callable[[], tuple[KoswatGeneralIniFom, KoswatCostsSettings]]]:
+        # Config parser to map the settings to a real case
+        _koswat_general_settings: KoswatGeneralIniFom = KoswatIniReader(
+            koswat_ini_fom_type=KoswatGeneralIniFom
+        ).read(test_data_acceptance.joinpath("koswat_general.ini"))
+
+        # It is easier returning the costs directly than the FOM,
+        # as there's no direct converter from `KoswatCostsIniFom` to `KoswatCosts`
+        _costs_importer = KoswatCostsImporter()
+        _costs_importer.include_taxes = True
+        _koswat_costs = _costs_importer.import_from(
+            test_data_acceptance.joinpath("koswat_costs.ini")
+        )
+
+        yield lambda: (_koswat_general_settings, _koswat_costs)
+
     @pytest.fixture(
         name="t_10_3_surroundings_wrapper_fixture",
         params=[(False, False), (False, True), (True, False), (True, True)],
@@ -107,8 +120,11 @@ class TestAcceptance:
     )
     def _get_surroundings_wrapper_fixture(
         self,
+        koswat_acceptance_settings: Callable[
+            [], tuple[KoswatGeneralIniFom, KoswatCostsSettings]
+        ],
         request: pytest.FixtureRequest,
-    ) -> Iterable[tuple[SurroundingsWrapper, Path]]:
+    ) -> Iterable[tuple[SurroundingsWrapper, KoswatCostsSettings, Path]]:
         _traject = "10_3"
         # Shp locations file
         _shp_file = test_data.joinpath(
@@ -119,8 +135,8 @@ class TestAcceptance:
         assert _shp_file.is_file()
 
         # Surroundings directory
-        _surroundings_analysis_path = test_data.joinpath(
-            "acceptance", "surroundings_analysis", _traject
+        _surroundings_analysis_path = test_data_acceptance.joinpath(
+            "surroundings_analysis", _traject
         )
         assert _surroundings_analysis_path.is_dir()
 
@@ -131,30 +147,18 @@ class TestAcceptance:
             shutil.rmtree(_temp_dir)
         shutil.copytree(_surroundings_analysis_path, _temp_dir)
 
-        # Generate surroundings section File Object Model.
+        # Set surroundings (obstacles / infras)
         _include_obstacles, _include_infras = request.param
-        _surroundings_settings = SurroundingsSectionFom(
-            surroundings_database_dir=_temp_dir.parent,
-            constructieafstand=50,
-            constructieovergang=10,
-            buitendijks=False,
-            bebouwing=_include_obstacles,
-            spoorwegen=False,
-            water=False,
-        )
+
+        # Generate surroundings section File Object Model.
+        _koswat_general_settings, _koswat_costs = koswat_acceptance_settings()
+        _surroundings_settings = _koswat_general_settings.surroundings_section
+        _surroundings_settings.surroundings_database_dir = _temp_dir.parent
+        _surroundings_settings.bebouwing = _include_obstacles
 
         # Generate Infrastructures section file model
-        _infrastructure_settings = InfrastructureSectionFom(
-            infrastructuur=_include_infras,
-            opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,
-            infrakosten_0dh=InfraCostsEnum.GEEN,
-            buffer_buitendijks=0,
-            wegen_klasse2_breedte=2,
-            wegen_klasse7_breedte=5,
-            wegen_klasse24_breedte=8,
-            wegen_klasse47_breedte=12,
-            wegen_onbekend_breedte=8,
-        )
+        _infrastructure_settings = _koswat_general_settings.infrastructuur_section
+        _infrastructure_settings.infrastructuur = _include_infras
 
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
@@ -167,10 +171,11 @@ class TestAcceptance:
         assert any(_surroundings_wrapper_list)
 
         # Yield result
-        yield _surroundings_wrapper_list[0], _temp_dir
+        yield _surroundings_wrapper_list[0], _koswat_costs, _temp_dir
 
-        # Remove temp dir
-        # shutil.rmtree(_temp_dir)
+        if not _include_infras:
+            # Do not keep analysis results when no infrastructures are included.
+            shutil.rmtree(_temp_dir)
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
@@ -184,10 +189,16 @@ class TestAcceptance:
         input_profile_case,
         scenario_case: KoswatProfileBase,
         layers_case,
-        t_10_3_surroundings_wrapper_fixture: tuple[SurroundingsWrapper, Path],
+        t_10_3_surroundings_wrapper_fixture: tuple[
+            SurroundingsWrapper, KoswatCostsSettings, Path
+        ],
     ):
         # 1. Define test data.
-        _surroundings_wrapper, _test_dir = t_10_3_surroundings_wrapper_fixture
+        (
+            _surroundings_wrapper,
+            _cost_settings,
+            _test_dir,
+        ) = t_10_3_surroundings_wrapper_fixture
 
         assert _test_dir.exists()
         assert isinstance(_surroundings_wrapper, SurroundingsWrapper)
@@ -195,8 +206,9 @@ class TestAcceptance:
         # Define scenario settings.
         _run_settings = KoswatRunScenarioSettings(
             scenario=scenario_case,
-            reinforcement_settings=KoswatReinforcementSettings(),
             surroundings=_surroundings_wrapper,
+            costs_setting=_cost_settings,
+            reinforcement_settings=KoswatReinforcementSettings(),
             input_profile_case=KoswatProfileBuilder.with_data(
                 dict(
                     input_profile_data=input_profile_case,
@@ -204,61 +216,6 @@ class TestAcceptance:
                     profile_type=KoswatProfileBase,
                 )
             ).build(),
-            costs_setting=KoswatCostsSettings(
-                # Set default dike profile costs_setting.
-                dike_profile_costs=DikeProfileCostsSettings(
-                    added_layer_grass_m3=12.44,
-                    added_layer_clay_m3=18.05,
-                    added_layer_sand_m3=10.98,
-                    reused_layer_grass_m3=6.04,
-                    reused_layer_core_m3=4.67,
-                    disposed_material_m3=7.07,
-                    profiling_layer_grass_m2=0.88,
-                    profiling_layer_clay_m2=0.65,
-                    profiling_layer_sand_m2=0.60,
-                    bewerken_maaiveld_m2=0.25,
-                ),
-                construction_costs=ConstructionCostsSettings(
-                    cb_damwand=ConstructionFactors(
-                        c_factor=0,
-                        d_factor=0,
-                        z_factor=999,
-                        f_factor=0,
-                        g_factor=0,
-                    ),
-                ),
-                infrastructure_costs=InfrastructureCostsSettings(
-                    # Using the data from `koswat_costs.ini`
-                    # in `acceptance\surroundings_analysis`
-                    removing_roads_klasse2=7.40,
-                    removing_roads_klasse24=9.64,
-                    removing_roads_klasse47=23.99,
-                    removing_roads_klasse7=38.77,
-                    removing_roads_unknown=9.64,
-                    adding_roads_klasse2=24.31,
-                    adding_roads_klasse24=32.30,
-                    adding_roads_klasse47=31.85,
-                    adding_roads_klasse7=36.64,
-                    adding_roads_unknown=32.30,
-                ),
-                surtax_costs=SurtaxCostsSettings(
-                    # Using the data from `koswat_costs.ini`
-                    # in `acceptance\surroundings_analysis`
-                    # Including BTW in the `.ini` example.
-                    soil_easy=1.714,
-                    soil_normal=1.953,
-                    soil_hard=2.177,
-                    construction_easy=2.097,
-                    construction_normal=2.413,
-                    construction_hard=2.690,
-                    roads_easy=2.097,
-                    roads_normal=2.413,
-                    roads_hard=2.690,
-                    land_purchase_easy=1.292,
-                    land_purchase_normal=1.412,
-                    land_purchase_hard=1.645,
-                ),
-            ),
         )
 
         # 2. Run test.
@@ -369,6 +326,8 @@ class TestAcceptance:
             )
         ).build()
 
+        # IMPORTANT!!!
+        # These are not (entirely) the values from the acceptance `.ini` files!
         _run_settings = KoswatRunScenarioSettings(
             scenario=scenario_case,
             reinforcement_settings=_reinforcement_settings,

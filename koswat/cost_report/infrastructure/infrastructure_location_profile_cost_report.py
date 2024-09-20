@@ -1,4 +1,3 @@
-import math
 from dataclasses import dataclass
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol

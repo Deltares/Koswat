@@ -1,4 +1,5 @@
 import configparser
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Type
 
@@ -6,12 +7,10 @@ from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
+@dataclass
 class KoswatIniReader(KoswatReaderProtocol):
 
-    koswat_ini_fom_type: Type[KoswatIniFomProtocol]
-
-    def __init__(self) -> None:
-        self.koswat_ini_fom_type = None
+    koswat_ini_fom_type: Type[KoswatIniFomProtocol] = None
 
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix == ".ini"

@@ -1,7 +1,6 @@
 import logging
 import math
 from pathlib import Path
-from typing import Any
 
 from koswat.configuration.io.ini import KoswatGeneralIniFom
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
