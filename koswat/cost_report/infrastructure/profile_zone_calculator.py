@@ -38,7 +38,7 @@ class ProfileZoneCalculator:
             self.reinforced_profile.old_profile
         )
         _zone_b = self.reinforced_profile.points[-1].x - _left_limit
-        return (math.nan, _zone_b)
+        return (0, _zone_b)
 
     def calculate(self) -> tuple[float, float]:
         """

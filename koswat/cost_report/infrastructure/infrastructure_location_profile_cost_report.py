@@ -1,4 +1,3 @@
-import math
 from dataclasses import dataclass
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
@@ -32,7 +31,7 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     @property
     def total_cost(self) -> float:
         if not self.infrastructure_location_costs:
-            return math.nan
+            return 0
         return (
             self.infrastructure_location_costs.zone_a_costs
             + self.infrastructure_location_costs.zone_b_costs
@@ -41,5 +40,5 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     @property
     def total_cost_with_surtax(self) -> float:
         if not self.infrastructure_location_costs:
-            return math.nan
+            return 0
         return self.total_cost * self.infrastructure_location_costs.surtax

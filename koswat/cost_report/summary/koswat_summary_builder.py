@@ -1,5 +1,6 @@
 import logging
 import math
+from dataclasses import dataclass
 
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
@@ -29,11 +30,9 @@ from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 
 
+@dataclass
 class KoswatSummaryBuilder(BuilderProtocol):
-    run_scenario_settings: KoswatRunScenarioSettings
-
-    def __init__(self) -> None:
-        self.run_scenario_settings = None
+    run_scenario_settings: KoswatRunScenarioSettings = None
 
     @staticmethod
     def _get_corrected_koswat_scenario(

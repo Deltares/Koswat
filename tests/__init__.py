@@ -3,8 +3,9 @@ from pathlib import Path
 
 from pytest import FixtureRequest
 
-test_data = Path(__file__).parent / "test_data"
-test_results = Path(__file__).parent / "test_results"
+test_data = Path(__file__).parent.joinpath("test_data")
+test_data_acceptance = test_data.joinpath("acceptance")
+test_results = Path(__file__).parent.joinpath("test_results")
 
 if not test_results.is_dir():
     test_results.mkdir(parents=True)

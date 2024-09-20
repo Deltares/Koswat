@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import shutil
 from pathlib import Path
+from typing import Callable, Iterable, Iterator
 
 import cv2
 import numpy as np
@@ -9,8 +10,10 @@ import pytest
 
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
     InfrastructureSectionFom,
+    KoswatGeneralIniFom,
     SurroundingsSectionFom,
 )
+from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
@@ -38,7 +41,11 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
+from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
+from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
+    InfrastructureLocationProfileCostReport,
+)
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
 )
@@ -55,6 +62,7 @@ from tests import (
     get_fixturerequest_case_name,
     get_testcase_results_dir,
     test_data,
+    test_data_acceptance,
     test_results,
 )
 from tests.acceptance_scenarios.acceptance_test_scenario_cases import (
@@ -80,6 +88,172 @@ class TestAcceptance:
             import koswat.__main__
         except ImportError as exc_err:
             pytest.fail(f"It was not possible to import required packages {exc_err}")
+
+    @pytest.fixture(name="koswat_acceptance_settings")
+    def _get_koswat_acceptance_settings_fixtures(
+        self,
+    ) -> Iterator[Callable[[], tuple[KoswatGeneralIniFom, KoswatCostsSettings]]]:
+        # Config parser to map the settings to a real case
+        _koswat_general_settings: KoswatGeneralIniFom = KoswatIniReader(
+            koswat_ini_fom_type=KoswatGeneralIniFom
+        ).read(test_data_acceptance.joinpath("koswat_general.ini"))
+
+        # It is easier returning the costs directly than the FOM,
+        # as there's no direct converter from `KoswatCostsIniFom` to `KoswatCosts`
+        _costs_importer = KoswatCostsImporter()
+        _costs_importer.include_taxes = True
+        _koswat_costs = _costs_importer.import_from(
+            test_data_acceptance.joinpath("koswat_costs.ini")
+        )
+
+        yield lambda: (_koswat_general_settings, _koswat_costs)
+
+    @pytest.fixture(
+        name="t_10_3_surroundings_wrapper_fixture",
+        params=[(False, False), (False, True), (True, False), (True, True)],
+        ids=[
+            "Without ANY surrounding",
+            "With Infrastructure",
+            "With Obstacles",
+            "With Infrastructure and Obstacles",
+        ],
+    )
+    def _get_surroundings_wrapper_fixture(
+        self,
+        koswat_acceptance_settings: Callable[
+            [], tuple[KoswatGeneralIniFom, KoswatCostsSettings]
+        ],
+        request: pytest.FixtureRequest,
+    ) -> Iterable[tuple[SurroundingsWrapper, KoswatCostsSettings, Path]]:
+        _traject = "10_3"
+        # Shp locations file
+        _shp_file = test_data.joinpath(
+            "shp_reader",
+            "Dijkvak",
+            "Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp",
+        )
+        assert _shp_file.is_file()
+
+        # Surroundings directory
+        _surroundings_analysis_path = test_data_acceptance.joinpath(
+            "surroundings_analysis", _traject
+        )
+        assert _surroundings_analysis_path.is_dir()
+
+        # Create a dummy dir to avoid importing unnecessary data.
+        _dir_name = get_testcase_results_dir(request)
+        _temp_dir = test_results.joinpath(_dir_name, _traject)
+        if _temp_dir.exists():
+            shutil.rmtree(_temp_dir)
+        shutil.copytree(_surroundings_analysis_path, _temp_dir)
+
+        # Set surroundings (obstacles / infras)
+        _include_obstacles, _include_infras = request.param
+
+        # Generate surroundings section File Object Model.
+        _koswat_general_settings, _koswat_costs = koswat_acceptance_settings()
+        _surroundings_settings = _koswat_general_settings.surroundings_section
+        _surroundings_settings.surroundings_database_dir = _temp_dir.parent
+        _surroundings_settings.bebouwing = _include_obstacles
+
+        # Generate Infrastructures section file model
+        _infrastructure_settings = _koswat_general_settings.infrastructuur_section
+        _infrastructure_settings.infrastructuur = _include_infras
+
+        # Generate wrapper
+        _importer = SurroundingsWrapperCollectionImporter(
+            infrastructure_section_fom=_infrastructure_settings,
+            surroundings_section_fom=_surroundings_settings,
+            selected_locations=[],
+            traject_loc_shp_file=_shp_file,
+        )
+        _surroundings_wrapper_list = _importer.build()
+        assert any(_surroundings_wrapper_list)
+
+        # Yield result
+        yield _surroundings_wrapper_list[0], _koswat_costs, _temp_dir
+
+        if not _include_infras:
+            # Do not keep analysis results when no infrastructures are included.
+            shutil.rmtree(_temp_dir)
+
+    @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
+    @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
+    @pytest.mark.parametrize(
+        "layers_case",
+        LayersCases.cases,
+    )
+    @pytest.mark.slow
+    def test_koswat_run_as_sandbox_with_obstacles_and_infrastructures(
+        self,
+        input_profile_case,
+        scenario_case: KoswatProfileBase,
+        layers_case,
+        t_10_3_surroundings_wrapper_fixture: tuple[
+            SurroundingsWrapper, KoswatCostsSettings, Path
+        ],
+    ):
+        # 1. Define test data.
+        (
+            _surroundings_wrapper,
+            _cost_settings,
+            _test_dir,
+        ) = t_10_3_surroundings_wrapper_fixture
+
+        assert _test_dir.exists()
+        assert isinstance(_surroundings_wrapper, SurroundingsWrapper)
+
+        # Define scenario settings.
+        _run_settings = KoswatRunScenarioSettings(
+            scenario=scenario_case,
+            surroundings=_surroundings_wrapper,
+            costs_setting=_cost_settings,
+            reinforcement_settings=KoswatReinforcementSettings(),
+            input_profile_case=KoswatProfileBuilder.with_data(
+                dict(
+                    input_profile_data=input_profile_case,
+                    layers_data=layers_case,
+                    profile_type=KoswatProfileBase,
+                )
+            ).build(),
+        )
+
+        # 2. Run test.
+        _summary = KoswatSummaryBuilder(run_scenario_settings=_run_settings).build()
+        assert isinstance(_summary, KoswatSummary)
+
+        # 3. Verify expectations.
+        # TODO: These checks take extremely long time  when infrastructures are present
+        assert any(_summary.locations_profile_report_list)
+
+        KoswatSummaryExporter().export(_summary, _test_dir)
+        assert _test_dir.joinpath("summary_costs.csv").exists()
+
+        # Validate obstacles.
+        if _surroundings_wrapper.obstacle_surroundings_wrapper.apply_buildings:
+            assert _test_dir.joinpath("summary_locations.csv").exists()
+
+        # Validate infrastructures.
+        if (
+            not _surroundings_wrapper.infrastructure_surroundings_wrapper.infrastructures_considered
+        ):
+            return
+        assert _test_dir.joinpath("summary_infrastructure_costs.csv").exists()
+
+        def check_valid_infra_reports(
+            mlpc_report: MultiLocationProfileCostReport,
+        ) -> bool:
+            assert isinstance(mlpc_report, MultiLocationProfileCostReport)
+            assert any(mlpc_report.infra_multilocation_profile_cost_report)
+            assert all(
+                isinstance(_infra_report, InfrastructureLocationProfileCostReport)
+                for _infra_report in mlpc_report.infra_multilocation_profile_cost_report
+            )
+            return True
+
+        assert all(
+            map(check_valid_infra_reports, _summary.locations_profile_report_list)
+        )
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
@@ -152,38 +326,42 @@ class TestAcceptance:
             )
         ).build()
 
-        _run_settings = KoswatRunScenarioSettings()
-        _run_settings.scenario = scenario_case
-        _run_settings.reinforcement_settings = _reinforcement_settings
-        _run_settings.surroundings = _surroundings
-        _run_settings.input_profile_case = _base_koswat_profile
-        _costs_settings = KoswatCostsSettings()
-        _run_settings.costs_setting = _costs_settings
-        # Set default dike profile costs_setting.
-        _costs_settings.dike_profile_costs = DikeProfileCostsSettings()
-        _costs_settings.dike_profile_costs.added_layer_grass_m3 = 12.44
-        _costs_settings.dike_profile_costs.added_layer_clay_m3 = 18.05
-        _costs_settings.dike_profile_costs.added_layer_sand_m3 = 10.98
-        _costs_settings.dike_profile_costs.reused_layer_grass_m3 = 6.04
-        _costs_settings.dike_profile_costs.reused_layer_core_m3 = 4.67
-        _costs_settings.dike_profile_costs.disposed_material_m3 = 7.07
-        _costs_settings.dike_profile_costs.profiling_layer_grass_m2 = 0.88
-        _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
-        _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
-        _costs_settings.construction_costs = ConstructionCostsSettings()
-        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
-        _costs_settings.construction_costs.cb_damwand.c_factor = 0
-        _costs_settings.construction_costs.cb_damwand.d_factor = 0
-        _costs_settings.construction_costs.cb_damwand.z_factor = 999
-        _costs_settings.construction_costs.cb_damwand.f_factor = 0
-        _costs_settings.construction_costs.cb_damwand.g_factor = 0
-        _costs_settings.surtax_costs = SurtaxCostsSettings()
+        # IMPORTANT!!!
+        # These are not (entirely) the values from the acceptance `.ini` files!
+        _run_settings = KoswatRunScenarioSettings(
+            scenario=scenario_case,
+            reinforcement_settings=_reinforcement_settings,
+            surroundings=_surroundings,
+            input_profile_case=_base_koswat_profile,
+            costs_setting=KoswatCostsSettings(
+                # Set default dike profile costs_setting.
+                dike_profile_costs=DikeProfileCostsSettings(
+                    added_layer_grass_m3=12.44,
+                    added_layer_clay_m3=18.05,
+                    added_layer_sand_m3=10.98,
+                    reused_layer_grass_m3=6.04,
+                    reused_layer_core_m3=4.67,
+                    disposed_material_m3=7.07,
+                    profiling_layer_grass_m2=0.88,
+                    profiling_layer_clay_m2=0.65,
+                    profiling_layer_sand_m2=0.60,
+                    bewerken_maaiveld_m2=0.25,
+                ),
+                construction_costs=ConstructionCostsSettings(
+                    cb_damwand=ConstructionFactors(
+                        c_factor=0,
+                        d_factor=0,
+                        z_factor=999,
+                        f_factor=0,
+                        g_factor=0,
+                    ),
+                ),
+                surtax_costs=SurtaxCostsSettings(),
+            ),
+        )
 
         # 2. Run test
-        _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
-        _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
-        _summary = _multi_loc_multi_prof_cost_builder.build()
+        _summary = KoswatSummaryBuilder(run_scenario_settings=_run_settings).build()
         assert isinstance(_summary, KoswatSummary)
 
         KoswatSummaryExporter().export(_summary, _test_dir)
