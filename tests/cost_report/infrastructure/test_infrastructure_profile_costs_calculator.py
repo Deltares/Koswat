@@ -23,8 +23,8 @@ class TestInfrastructureProfileCostsCalculator:
         assert isinstance(_calculator, InfrastructureProfileCostsCalculator)
         assert not _calculator.infrastructure
         assert math.isnan(_calculator.surtax)
-        assert math.isnan(_calculator.zone_a_costs)
-        assert math.isnan(_calculator.zone_b_costs)
+        assert _calculator.zone_a_costs == 0
+        assert _calculator.zone_b_costs == 0
 
     def test_given_infrastructure_fixture_calculates_costs(
         self,

@@ -87,31 +87,31 @@ class TestProfileZoneCalculator:
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (40.87, -0.6), (68.87, -0.6), (74, -2)],
-                (math.nan, 74),
+                (0, 74),
                 id="With dh0 increase to 1 - Soil reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (44.17, -1.5), (54.17, -1.5), (56, -2)],
-                (math.nan, 56),
+                (0, 56),
                 id="With dh0 increase to 1 - Vertical Piping Solution",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (46, -2), (46, -2), (46, -2)],
-                (math.nan, 46),
+                (0, 46),
                 id="With dh0 increase to 1 - Piping Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (34, -2), (34, -2), (34, -2)],
-                (math.nan, 34),
+                (0, 34),
                 id="With dh0 increase to 1 - Stability Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 7), (10, 7), (34, -2), (34, -2), (34, -2)],
-                (math.nan, 34),
+                (0, 34),
                 id="With dh0 increase to 1- Cofferdam reinforcement",
             ),
         ],
