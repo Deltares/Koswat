@@ -78,7 +78,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         _infrastructure_cost_rows = self.dict_to_csv_row(_infrastructure_cost)
 
         _total_cost_rows = self.dict_to_csv_row(
-            self._get_total_cost(_measure_cost, _infrastructure_cost)
+            self._get_total_cost_rows(_measure_cost, _infrastructure_cost)
         )
 
         return KoswatCsvFom(
@@ -117,7 +117,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             for _report in self.koswat_summary.locations_profile_report_list
         ]
 
-    def _get_total_cost(
+    def _get_total_cost_rows(
         self,
         measure_cost: dict[str, list[float]],
         infrastructure_cost: dict[str, list[float]],
