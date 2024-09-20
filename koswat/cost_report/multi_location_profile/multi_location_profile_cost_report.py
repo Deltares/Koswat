@@ -31,6 +31,10 @@ class MultiLocationProfileCostReport(CostReportProtocol):
 
     @property
     def total_cost(self) -> float:
+        """
+        Calculates the cost of the measure for all possible locations,
+        regardless whether that measure is chosen by the order strategy or not.
+        """
         if not self.profile_cost_report or not self.obstacle_locations:
             return math.nan
         return self.profile_cost_report.total_cost * len(self.obstacle_locations)
@@ -41,6 +45,21 @@ class MultiLocationProfileCostReport(CostReportProtocol):
             return math.nan
         return self.profile_cost_report.total_cost_with_surtax * len(
             self.obstacle_locations
+        )
+
+    @property
+    def infrastructure_cost(self) -> float:
+        if not self.infra_multilocation_profile_cost_report:
+            return math.nan
+        return sum(x.total_cost for x in self.infra_multilocation_profile_cost_report)
+
+    @property
+    def infrastructure_cost_with_surtax(self) -> float:
+        if not self.infra_multilocation_profile_cost_report:
+            return math.nan
+        return sum(
+            x.total_cost_with_surtax
+            for x in self.infra_multilocation_profile_cost_report
         )
 
     @property

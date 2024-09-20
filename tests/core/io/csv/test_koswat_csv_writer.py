@@ -16,9 +16,10 @@ class TestKoswatCsvWriter:
     def test_koswat_csv_writer_write(self, request: pytest.FixtureRequest):
         # 1. Define test data.
         _test_file = get_test_results_dir(request) / "test_data.csv"
-        _csv_fom = KoswatCsvFom()
-        _csv_fom.headers = ["a header", "another header"]
-        _csv_fom.entries = [["row_0", "col_1"], ["row_1", "col_1"]]
+        _csv_fom = KoswatCsvFom(
+            headers=["a header", "another header"],
+            entries=[["row_0", "col_1"], ["row_1", "col_1"]],
+        )
         _expected_result = "a header;another header\nrow_0;col_1\nrow_1;col_1"
 
         # 2. Run test.

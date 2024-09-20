@@ -29,27 +29,27 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
         ]
 
     def build(self) -> KoswatCsvFom:
-        _csv_fom = KoswatCsvFom()
         _ordered_profile_types = list(
             map(
                 lambda x: x.profile_type_name,
                 self.koswat_summary.locations_profile_report_list,
             )
         )
-        _csv_fom.headers = (
-            [
-                "Section",
-                "X coord",
-                "Y coord",
-            ]
-            + _ordered_profile_types
-            + ["Selected reinforcement"]
-        )
-        _csv_fom.entries = self._get_locations_matrix(
-            self.koswat_summary.reinforcement_per_locations
-        )
 
-        return _csv_fom
+        return KoswatCsvFom(
+            headers=(
+                [
+                    "Section",
+                    "X coord",
+                    "Y coord",
+                ]
+                + _ordered_profile_types
+                + ["Selected reinforcement"]
+            ),
+            entries=self._get_locations_matrix(
+                self.koswat_summary.reinforcement_per_locations
+            ),
+        )
 
     def _get_locations_matrix(
         self,
