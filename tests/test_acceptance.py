@@ -233,9 +233,9 @@ class TestAcceptance:
         assert isinstance(_summary, KoswatSummary)
 
         # 3. Verify expectations.
+        # TODO: These checks take extremely long time  when infrastructures are present
         assert any(_summary.locations_profile_report_list)
 
-        # TODO: These checks take extremely long time.
         KoswatSummaryExporter().export(_summary, _test_dir)
         assert _test_dir.joinpath("summary_costs.csv").exists()
 
@@ -248,7 +248,7 @@ class TestAcceptance:
             not _surroundings_wrapper.infrastructure_surroundings_wrapper.infrastructures_considered
         ):
             return
-        assert _test_dir.joinpath("summary_infrastructures.csv").exists()
+        assert _test_dir.joinpath("summary_infrastructure_costs.csv").exists()
 
         def check_valid_infra_reports(
             mlpc_report: MultiLocationProfileCostReport,
