@@ -365,13 +365,10 @@ class TestAcceptance:
         _run_scenario, _export_path_dir = sandbox_acceptance_case
         assert isinstance(_run_scenario, KoswatRunScenarioSettings)
 
-        _export_summary_costs_path = _export_path_dir.joinpath("summary_costs.csv")
-        assert not _export_summary_costs_path.exists()
-
-        _export_summary_locations_path = _export_path_dir.joinpath(
-            "summary_locations.csv"
-        )
-        assert not _export_summary_locations_path.exists()
+        _reference_dir = _export_path_dir.joinpath("reference")
+        for _reference_csv_file in _reference_dir.glob("*.csv"):
+            _result_csv_file = _export_path_dir.joinpath(_reference_csv_file.name)
+            assert not _result_csv_file.exists()
 
         _export_figures_path = _export_path_dir.joinpath("figures")
         assert not _export_figures_path.exists()
@@ -395,20 +392,30 @@ class TestAcceptance:
         assert _export_figures_path.exists()
 
         # 4. Compare CSV results
-        _reference_dir = _export_path_dir.joinpath("reference")
-        assert _export_summary_costs_path.exists()
 
-        _csv_summary_costs_lines = _export_summary_costs_path.read_text().splitlines()
-        _csv_reference_lines = (
-            _reference_dir.joinpath(_export_summary_costs_path.name)
-            .read_text()
-            .splitlines()
-        )
-        for _idx, _reference_line in enumerate(_csv_reference_lines):
-            _line_nr = _idx + 1
-            assert (
-                _reference_line == _csv_summary_costs_lines[_idx]
-            ), f"CSV Summary difference found at lines:\n [{_line_nr}] Expected: {_reference_line}\n [{_line_nr}]Result: {_csv_summary_costs_lines[_idx]}"
+        # - check number of files
+        _reference_csv_files = list(_reference_dir.glob("*.csv"))
+        _result_csv_files = list(_export_path_dir.glob("*.csv"))
+        assert len(_result_csv_files) == len(
+            _reference_csv_files
+        ), f"Expected: {len(_reference_csv_files)} Result: {len(_result_csv_files)}"
+
+        # - check file content
+        for _reference_csv_file in _reference_csv_files:
+            _result_csv_file = _export_path_dir.joinpath(_reference_csv_file.name)
+            assert _result_csv_file.exists(), f"File {_result_csv_file} not found."
+
+            _csv_reference_lines = _reference_csv_file.read_text().splitlines()
+            _csv_result_lines = _result_csv_file.read_text().splitlines()
+            assert len(_csv_result_lines) == len(
+                _csv_reference_lines
+            ), f"Difference found in {_result_csv_file.name} in length: Expected: {len(_csv_reference_lines)} Result: {len(_csv_result_lines)}"
+
+            for _idx, _reference_line in enumerate(_csv_reference_lines):
+                _line_nr = _idx + 1
+                assert (
+                    _reference_line == _csv_result_lines[_idx]
+                ), f"Difference found in {_result_csv_file.name} at lines:\n [{_line_nr}] Expected: {_reference_line}\n [{_line_nr}]Result: {_csv_result_lines[_idx]}"
 
         # 5. Compare geometry images.
         def compare_images(reference_img, result_image) -> tuple[float, np.ndarray]:
