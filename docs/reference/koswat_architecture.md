@@ -53,7 +53,7 @@ At the current (unreleased) version `v.0.15.0` the component hierarchy looks lik
 
 And the components interdependencies could be slightly represented as in the following diagram:
 
-|![Base profile sand layer](./imgs/component_diagram.drawio.png)|
+|![Component diagram](./imgs/component_diagram.drawio.png)|
 |:--:|
 |Image 1. Component diagram|
 

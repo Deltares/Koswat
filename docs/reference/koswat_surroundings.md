@@ -1,9 +1,16 @@
 # Koswat Surroundings
 
-In koswat's real domain, a dike is surrounded by all sort of surroundings, these could be nature or human-built structures. During our analyisis we make use of (`.shp`) maps where a dike's traject is shown together with all the human-built structures in its proximity. We categorize these structures in the following two types:
+In koswat's real domain, a dike is surrounded by all sort of surroundings, these could be nature or human-built structures. During our analyisis we make use of (`.shp`) maps where a dike's traject is shown together with all the human-built structures in its proximity. 
+
+We categorize these structures in the following two types:
 
 - [Obstacles](#obstacles), surroundings that __cannot__ be modified in any way.
 - [Infrastructures](#infrastructures), as opposite to the obstacles, surroundings that can be repaired or removed and added again (elsewhere).
+
+
+|![Koswat dike surroundings representation](./imgs/dike_traject_with_surroundings.png)|
+|:--:|
+|Image 1. Surroundings representation|
 
 To define said surroundings we make use of `.csv` files, each file for a specific type of surrounding that needs to be "enabled" in the `koswat_general.ini` settings file.
 
