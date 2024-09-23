@@ -4,7 +4,7 @@ A Koswat report is divided in different parts:
 
 - __Summary report__: A summary containing all 'location reports'.
 - __Location report__: Which profile reinforcements can be applied to each location based on their surroundings and reinforcement properties (`MultiLocationProfileCostReport`). 
-- [__Infrastructure report__](): (`InfrastructureLocationProfileCostReport`) Costs related to applying all calculated reinforcement profiles at the locations where infrastructures are present.
+- [__Infrastructure report__](#infrastructure-report): (`InfrastructureLocationProfileCostReport`) Costs related to applying all calculated reinforcement profiles at the locations where infrastructures are present.
 - __Profile report__: (`ProfileCostReport`), what are the (material) volume costs associated when applying a given [reinforced profile](./koswat_reinforced_profile.md#possible-reinforcements) .
 - __Layer report__: A sub report of the 'profile report' which breaks down the different costs of each one of the layers. This can be seen in _Image 1 Volume costs_.
 
@@ -88,6 +88,8 @@ After running a Koswat analysis, several files and directories will be generated
         - Represents the Summary, Profile and Layer report.
     - summary_locations.csv: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
         - Represents the Location report.
+    - summary_infrastructure_costs.csv: A csv file contaning all the infrastructure costs at each location for each of the supported reinforcement profile types.
+        - Represents the [Infrastructure Report](#infrastructure-report).
 
 Example using a summarized view of the output tree directory when running the acceptance test `test_main.test_given_valid_input_succeeds`: 
 ```
@@ -102,6 +104,7 @@ acceptance
 |   |   |   |   Kwelscherm.png
 |   |   |   |   summary_costs.csv
 |   |   |   |   summary_locations.csv
+|   |   |   |   summary_infrastructure_costs.csv
 |   |   |   |   Stabiliteitswand.png
 |   |   |   |   Verticale_piping_oplossing.png
 |   |   |   |
