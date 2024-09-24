@@ -53,8 +53,8 @@ As reminder, at the moment we only support 'inside the dike's' surroundings.
 
 Infrastructures are mostly "roads". Contrary to the [obstacles](#obstacles) these infrastructures do not become a boundary for a reinforcement and they will simply be either displaced or repaired when applying a reinforcement requires their space. When this occurs, it is reflected as additional costs for the given type of reinforcement at that location. In short, these costs are calculated based on:
 
-- The length of the infrastructure (taken from the `Koswat_general.ini` settings),
-- The width of the infrastructure at that location (the values in the columns `afst_{x}m`),
+- The width of the infrastructure (taken from the `Koswat_general.ini` settings),
+- The length of the infrastructure at that location (the values in the columns `afst_{x}m`),
 - The required technique (repair, displace, nothing) for the type of infrastructure (also from `koswat_general.ini` settings) and its related costs (`koswat_costs.ini`).
 
 With the above values we know what's the __affected area__ of an infrastructure when a reinforced profile needs to be applied and therefore can estimate their costs.

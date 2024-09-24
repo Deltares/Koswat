@@ -26,7 +26,7 @@ These characteristics are then used to estimate how much surface of the infrastr
 
 A reinforced profile can be different from its original state in many ways, however here we are only intestered in two things:
 
-1. The new profile's width from the outsides (waterside) crest point.
+1. The new profile's width from the original outsides (waterside) crest point.
 2. Whether there is a crest's height increase (`dh0`),
 
 By using the old and the reinforced profile's geometries, we can determine what we call zone `A` and zone `B`, `A + B = {profile's width from waterside crest point}`. 
