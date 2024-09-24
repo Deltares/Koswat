@@ -1,4 +1,4 @@
-# Koswat Surroundings
+# Surroundings
 
 In koswat's real domain, a dike is surrounded by all sort of surroundings, these could be nature or human-built structures. During our analyisis we make use of (`.shp`) maps where a dike's traject is shown together with all the human-built structures in its proximity. 
 
@@ -46,7 +46,7 @@ Currently we identify and support the following surroundings as written in the `
 - `spoorwegen_binnendijks` (railways),
 - `waters_binnendijks` (waters),
 
-As remainder, at the moment we only support 'inside the dike's' surroundings.
+As reminder, at the moment we only support 'inside the dike's' surroundings.
 
 
 ## Infrastructures
@@ -69,4 +69,20 @@ Currently we identify and support the following surroundings as written in the `
 - `wegen_binnendijks_klasse47` (roads class 47),
 - `wegen_binnendijks_klasseonbekend` (roads of unknown class),
 
-As remainder, at the moment we only support 'inside the dike's' surroundings.
+As reminder, at the moment we only support 'inside the dike's' surroundings.
+
+## Surroundings in the code
+
+But, how are these surroundings represented in the code? As earlier described, we distinguish surroundings by either [obstacles](#obstacles) or [infrastructures](#infrastructures). This is also reflected in the code where we create a general [SurroundingsWrapper](./koswat_docstrings/dike/surroundings.md), which as the name states, wraps the obstacle and infrastructure surroundings in separate properties, each implementing an specialitzation of the `BaseSurroundingsWrapper` so that: 
+
+- `ObstacleSurroundingsWrapper` will wrap all the supported [obstacle types](#obstacle-types), in separate properties of type `SurroundingsObstacle`.
+- `InfrastructureSurroundingsWrapper` will wrap all the supported [infrastructure types](#infrastructures-types), in separate properties of type `SurroundingsInfrastructure`.
+
+A simple diagram illustrating the above can be seen in the image below:
+
+|![Koswat surroundings in the code](./imgs/surroundings_diagram.drawio.png)|
+|:--:|
+|Image 2. Surroundings code-wise|
+
+
+More detailed information can be found in the corresponding [surroundings subproject](https://github.com/Deltares/Koswat/blob/86630ecc065aaa06890ac63a22b00f780fc98b3c/koswat/dike/surroundings).
