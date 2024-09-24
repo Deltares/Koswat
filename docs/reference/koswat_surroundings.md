@@ -22,7 +22,7 @@ The surroundings files follow all the same format both in naming and content.
 
 Their file name has the form of `T{dike_traject}_{type_of_surrounding}.csv`:
 - The `{dike_traject}` is the dike's traject code name, usually something like `10_1`,
-- the `{type_of_surrounding}` is the name of surrounding that will be imported (check further in the corresponding subsections of [obstacles](#obstacle-types)).
+- the `{type_of_surrounding}` is the name of surrounding that will be imported (check further in the corresponding subsections of [obstacles](#obstacle-types) and [infrastructure](#infrastructure-types)).
 
 Their headers are divided in the following columns:
 
