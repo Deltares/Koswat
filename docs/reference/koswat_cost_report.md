@@ -46,7 +46,7 @@ However, when the crest's height of a `ReinforcementProfileProtocol` has increas
 
 ### Infrastructure's distances
 
-An infrastructure (`SurroundingsInfrastructure`) can be present a different locations (`SurroundingsInfrastructure.points`), each of these locatinos (`PointSurroundings`) contains a dictionary (`surroundings_matrix: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.
+An infrastructure (`SurroundingsInfrastructure`) can be present at different locations (`SurroundingsInfrastructure.points`). Each of these locations (`PointSurroundings`) contains a dictionary (`surroundings_matrix: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.
 
 For instance, we could have `surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}`, which means:
 - Between `0` and `5` meters from the location we will find `1.5` meters of the infrastructure,
@@ -75,7 +75,7 @@ Using as example the previous `surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}` w
 
 
 ## Generated files
-After running a Koswat analysis, several files and directories will be generated, usually the structure will be as follows:
+After running a Koswat analysis, several files and directories will be generated. Usually the structure will be as follows:
 
 `Dike profile section scenarios -> Scenario -> Generated files`
 
