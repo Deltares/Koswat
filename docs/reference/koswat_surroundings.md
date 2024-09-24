@@ -81,7 +81,6 @@ But, how are these surroundings represented in the code? As earlier described, w
 A simple diagram illustrating the above can be seen in the image below:
 
 |![Koswat surroundings in the code](./imgs/surroundings_diagram.drawio.png)|
-|:--:|
 |Image 2. Surroundings code-wise|
 
 
