@@ -17,9 +17,6 @@ class InfrastructureProfileCostsCalculator:
     based on the locations of the contained infrastructure
     (`SurroundingsInfrastructure.points`) and the width of `zone_a` and
     `zone_b`.
-
-    Returns:
-        _type_: _description_
     """
 
     infrastructure: SurroundingsInfrastructure = None

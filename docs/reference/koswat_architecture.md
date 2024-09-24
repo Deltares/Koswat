@@ -10,16 +10,12 @@ In general, the architecture of this package is based on the following principle
 
 We cluster entities into modules (components) that represent their domain and have minimal dependencies with others components, this way the modules can be accessed when operating Koswat as a sandbox. Within each component we apply the same principle and create sub-modules to reduce dependencies.
 
-At the current version (v.0.12.1) the component hierarchy looks like follows:
+At the current (unreleased) version `v.0.15.0` the component hierarchy looks like follows:
 
     koswat/
-        calculations/   # Dike calculations to generate possible reinforcements.
-            io/
-            outside_slope_reinforcement/
-            protocols/
-            standard_reinforcement/
 
         configuration/  # Data structures required for a koswat run.
+            geometries/
             io/
             settings/
 
@@ -30,6 +26,7 @@ At the current version (v.0.12.1) the component hierarchy looks like follows:
 
         cost_report/    # Summary of costs per dike reinforcement.
             io/
+            infrastructure/
             multi_location_profile/
             profile/
             summary/
@@ -41,13 +38,22 @@ At the current version (v.0.12.1) the component hierarchy looks like follows:
             profile/
             surroundings/
 
+        dike_reinforcements/   # Dike calculations to generate possible reinforcements.
+            input_profile/
+            io/
+            reinforcement_layers/
+            reinforcement_profile/
+
         plots/          # Generic functionality for plotting.
             dike/
             geometries/
 
+        strategies/     # Different selection methods of all possible dike reinforcements alongside a dike traject.
+            order_strategy
+
 And the components interdependencies could be slightly represented as in the following diagram:
 
-|![Base profile sand layer](./imgs/component_diagram.png)|
+|![Component diagram](./imgs/component_diagram.drawio.png)|
 |:--:|
 |Image 1. Component diagram|
 

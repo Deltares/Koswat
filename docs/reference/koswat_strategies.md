@@ -1,4 +1,4 @@
-# Koswat strategies
+# Strategies
 
 Koswat can determine which is the "best" reinforcement type for a dike traject based on different selection criteria that we name "strategies" (`StrategyProtocol`).
 
