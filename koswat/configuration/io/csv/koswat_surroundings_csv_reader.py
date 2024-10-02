@@ -50,14 +50,10 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
         self, entry: list[str], distances_list: list[float]
     ) -> PointSurroundings:
         def csv_column_to_dict(csv_columns: list[str]) -> dict:
-            _surroundings_matrix = {}
-            for e_idx, e_val in enumerate(csv_columns):
-                _float_eval = float(e_val)
-                if _float_eval == 0:
-                    # We are not interested in 'cells' without 'value'.
-                    continue
-                _surroundings_matrix[distances_list[e_idx]] = _float_eval
-            return _surroundings_matrix
+            return {
+                distances_list[e_idx]: float(e_val)
+                for e_idx, e_val in enumerate(csv_columns)
+            }
 
         return PointSurroundings(
             section=entry[1],
