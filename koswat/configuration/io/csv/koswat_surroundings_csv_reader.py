@@ -1,4 +1,6 @@
+import math
 import re
+from math import isclose
 from pathlib import Path
 
 from shapely import Point
@@ -50,14 +52,30 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
         self, entry: list[str], distances_list: list[float]
     ) -> PointSurroundings:
         def csv_column_to_dict(csv_columns: list[str]) -> dict:
-            _surroundings_matrix = {}
-            for e_idx, e_val in enumerate(csv_columns):
-                _float_eval = float(e_val)
-                if _float_eval == 0:
-                    # We are not interested in 'cells' without 'value'.
-                    continue
-                _surroundings_matrix[distances_list[e_idx]] = _float_eval
-            return _surroundings_matrix
+            """
+            (Koswat #172) To avoid adding more entries than required,
+             - only add keys whose weight is greater than zero,
+             - and the keys before them that are zero.
+            The keys with zeros act as a limit to avoid adding unnecessary costs
+            """
+            _tuples_for_dict = []
+
+            def last_tuple_had_weight() -> bool:
+                return any(_tuples_for_dict) and not math.isclose(
+                    _tuples_for_dict[0][1], 0
+                )
+
+            def can_add_item(weight: float) -> bool:
+                return weight > 0 or (
+                    math.isclose(weight, 0) and last_tuple_had_weight()
+                )
+
+            for e_idx, e_val in reversed(list(enumerate(csv_columns))):
+                _as_float = float(e_val)
+                if can_add_item(_as_float):
+                    _tuples_for_dict.insert(0, (distances_list[e_idx], _as_float))
+
+            return dict(_tuples_for_dict)
 
         return PointSurroundings(
             section=entry[1],
