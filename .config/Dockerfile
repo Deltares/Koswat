@@ -9,17 +9,28 @@ FROM condaforge/miniforge3:latest
 
 RUN apt-get update && apt-get install libgl1 -y
 
+ARG SRC_ROOT="/usr/src"
+
+# For persisting the environment remember to mount it as well:
+# -v {your_local_tmp_dir}:/usr/src/.env
+ARG CONDA_ENV="${SRC_ROOT}/.env"
+
 # Install conda environment
-WORKDIR /usr/src/app
-COPY environment.yml /usr/src/.config/environment.yml
+# This location needs to be mounted with your koswat checout:
+# -v {your_koswat_checkout_dir}:/usr/src/app
+WORKDIR $SRC_ROOT/app
+COPY environment.yml $SRC_ROOT/.config/environment.yml
 
 RUN conda init bash \
     && . ~/.bashrc \
-    && conda env create -f /usr/src/.config/environment.yml -p /usr/src/.env
+    && conda env create -f $SRC_ROOT/.config/environment.yml -p $CONDA_ENV
 
 # Activate conda environment
-RUN echo "export PATH=/usr/src/.env/bin:$PATH" >>  ~/.bashrc
-RUN conda init && echo 'conda activate /usr/src/.env' >>  ~/.bashrc
+ENV PATH $CONDA_ENV/bin:$PATH
+RUN echo "export PATH=${CONDA_ENV}/bin:$PATH" >>  ~/.bashrc
+RUN echo conda init && echo "conda activate ${CONDA_ENV}" >>  ~/.bashrc
+# This ensures it's available also for `sh` instead of `bash`.
+RUN echo "conda activate ${CONDA_ENV}" > ~/.profile
 
 # Define the endpoint
-CMD ["bash"]
+CMD [ "/bin/bash" ]
