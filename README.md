@@ -60,7 +60,7 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 
 2. Navigate to your Koswat repository and then install the koswat package with your preferred step:
 
-    1. With [Anaconda](https://www.anaconda.com/) (our recommendation):    
+    1. With [Anaconda (miniforge)](https://conda-forge.org/miniforge/) (our recommendation):    
         ```bash
         cd C:\repos\koswat
         conda env create -f .config\environment.yml
