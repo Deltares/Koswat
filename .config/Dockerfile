@@ -27,7 +27,6 @@ RUN conda init bash \
 
 # Activate conda environment
 ENV PATH $CONDA_ENV/bin:$PATH
-RUN echo "export PATH=${CONDA_ENV}/bin:$PATH" >>  ~/.bashrc
 RUN echo conda init && echo "conda activate ${CONDA_ENV}" >>  ~/.bashrc
 # This ensures it's available also for `sh` instead of `bash`.
 RUN echo "conda activate ${CONDA_ENV}" > ~/.profile
