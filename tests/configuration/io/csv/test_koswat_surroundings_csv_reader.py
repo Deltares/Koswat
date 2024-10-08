@@ -1,3 +1,5 @@
+import pytest
+
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
@@ -30,15 +32,30 @@ class TestKoswatSurroundingsCsvReader:
         assert isinstance(_csv_fom, KoswatSurroundingsCsvFom)
         assert _csv_fom.is_valid()
 
-    def test_when_build_point_surroundings_then_reduced_surroundings_matrix(self):
+    @pytest.mark.parametrize(
+        "distance_weights, expected_matrix",
+        [
+            pytest.param(
+                [0, 0, 2, 0, 0, 4, 0],
+                {10: 0, 15: 2, 25: 0, 30: 4},
+                id="More than one weight.",
+            ),
+            pytest.param(
+                [0, 0, 0, 0, 0, 0, 2], {30: 0, 35: 2}, id="Only one weight available."
+            ),
+        ],
+    )
+    def test_when_build_point_surroundings_then_reduced_surroundings_matrix(
+        self, distance_weights: list[float], expected_matrix: dict[int, float]
+    ):
         # 1. Define test data.
         _section = "Dummy"
         _traject_order = -1
         _location_x = 4.2
         _location_y = 2.4
         _distances_list = [5, 10, 15, 20, 25, 30, 35]
-        _distance_weights = [0, 0, 2, 0, 0, 4, 0]
-        _expected_matrix = {10: 0, 15: 2, 25: 0, 30: 4}
+        assert len(distance_weights) == len(_distances_list)
+        assert all(_key in _distances_list for _key in expected_matrix.keys())
 
         # 2. Run test.
         _point_surroundings = KoswatSurroundingsCsvReader()._build_point_surroundings(
@@ -47,7 +64,7 @@ class TestKoswatSurroundingsCsvReader:
                 _section,
                 _location_x,
                 _location_y,
-                *_distance_weights,
+                *distance_weights,
             ],
             distances_list=_distances_list,
         )
@@ -58,4 +75,4 @@ class TestKoswatSurroundingsCsvReader:
         assert _point_surroundings.traject_order == _traject_order
         assert _point_surroundings.location.x == _location_x
         assert _point_surroundings.location.y == _location_y
-        assert _point_surroundings.surroundings_matrix == _expected_matrix
+        assert _point_surroundings.surroundings_matrix == expected_matrix

@@ -43,3 +43,17 @@ class TestPointSurroundings:
 
         # 3. Verify expectations.
         assert _result == _point_surroundings_case.expected_total_widths
+
+    def test_get_total_infrastructure_per_zone_given_no_infra_in_zone_a_b(self):
+        # 1. Define test data.
+        _zone_a = [0, 5]
+        _zone_b = [5, 25]
+        _ps = PointSurroundings(surroundings_matrix={30: 0, 35: 5})
+        assert max(_zone_b) < max(_ps.surroundings_matrix.keys())
+
+        # 2. Run test.
+        _total_infra = _ps.get_total_infrastructure_per_zone(_zone_a, _zone_b)
+
+        # 3. Verify expectations.
+        assert _total_infra[0] == pytest.approx(0)
+        assert _total_infra[1] == pytest.approx(0)

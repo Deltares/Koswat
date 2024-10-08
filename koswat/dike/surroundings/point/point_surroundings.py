@@ -101,8 +101,9 @@ class PointSurroundings:
                 ):
                     return 0
                 if _matrix_distance in _taken_keys:
+                    # if _matrix_distance in _taken_keys and not math.isclose(value, 0):
                     continue
-                # _matrix_distance >= lower_limit
+
                 _total_width += value
                 _taken_keys.append(_matrix_distance)
                 if _matrix_distance > _upper_limit or math.isclose(
