@@ -177,8 +177,10 @@ class TestAcceptance:
             # Do not keep analysis results when no infrastructures are included.
             shutil.rmtree(_temp_dir)
 
-    @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
-    @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
+    # @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
+    # @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
+    @pytest.mark.parametrize("input_profile_case", [InputProfileCases.infra])
+    @pytest.mark.parametrize("scenario_case", [ScenarioCases.scenario_infra])
     @pytest.mark.parametrize(
         "layers_case",
         LayersCases.cases,

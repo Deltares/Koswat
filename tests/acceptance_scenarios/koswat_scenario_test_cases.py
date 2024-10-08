@@ -25,6 +25,12 @@ class ScenarioCases(CasesProtocol):
         kruin_breedte=5,
         buiten_talud=3,
     )
+    scenario_infra = KoswatScenario(
+        d_h=0,
+        d_s=20,
+        d_p=50,
+        kruin_breedte=8,
+    )
 
     cases = [
         pytest.param(default, id="Default Scenario"),
