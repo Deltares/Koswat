@@ -43,6 +43,25 @@ class InputProfileCases(CasesProtocol):
         aquifer=-2,
     )
 
+    infra = KoswatInputProfileBase(
+        dike_section="test_data",
+        buiten_maaiveld=0,
+        buiten_talud=3,
+        buiten_berm_hoogte=0,
+        buiten_berm_breedte=0,
+        kruin_hoogte=6,
+        kruin_breedte=8,
+        binnen_talud=3,
+        binnen_berm_hoogte=0,
+        binnen_berm_breedte=0,
+        binnen_maaiveld=0,
+        grondprijs_bebouwd=150,
+        grondprijs_onbebouwd=10,
+        factor_zetting=1.2,
+        pleistoceen=-5,
+        aquifer=-2,
+    )
+
     cases = [pytest.param(default, id="Default Input Profile")]
 
 

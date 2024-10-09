@@ -96,15 +96,15 @@ class PointSurroundings:
                 return 0
             _total_width = 0
             for _matrix_distance, value in _sorted_matrix_array:
-                if _matrix_distance < _lower_limit and not math.isclose(
-                    _matrix_distance, _lower_limit
+                if _matrix_distance in _taken_keys or (
+                    _matrix_distance < _lower_limit
+                    and not math.isclose(_matrix_distance, _lower_limit)
                 ):
-                    return 0
-                if _matrix_distance in _taken_keys:
                     continue
-                # _matrix_distance >= lower_limit
+
                 _total_width += value
-                _taken_keys.append(_matrix_distance)
+                if value != 0:
+                    _taken_keys.append(_matrix_distance)
                 if _matrix_distance > _upper_limit or math.isclose(
                     _matrix_distance, _upper_limit
                 ):
