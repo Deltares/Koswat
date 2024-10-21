@@ -4,7 +4,7 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 - `StrategyInput`, wraps all required properties to apply a strategy: 
     - locations_matrix (`dict[PointSurroundings, list[Type[ReinforcementProfileProtocol]]]`), contains all the available reinforcements that can be applied at each location.
-    - structure_min_buffer (`float`), how many extra meters a structure requires for support its reinforcement.
+    - structure_min_buffer (`float`), how many extra meters a structure requires to support its reinforcement.
     - structure_min_length (`float`), how many minimal meters are required for a structure to "exist". This rule can, at times, have certain exceptions.
 
 - `StrategyLocationReinforcement`, represents a mapped location to a selected measure.
