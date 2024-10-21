@@ -34,47 +34,47 @@ class TestSummaryCostsCsvExporter:
         _expected_text = """Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand
 Cost per km (Euro/km);0.0;8144.4;16288.8;24433.2
 Cost per km incl surtax (Euro/km);0.0;12216.6;24433.2;36649.8
-New grass volume (quantity):;nan;nan;nan;nan
-New grass volume (cost):;nan;nan;nan;nan
-New grass volume (cost incl surtax):;nan;nan;nan;nan
-New clay volume (quantity):;nan;nan;nan;nan
-New clay volume (cost):;nan;nan;nan;nan
-New clay volume (cost incl surtax):;nan;nan;nan;nan
-New core volume (quantity):;nan;nan;nan;nan
-New core volume (cost):;nan;nan;nan;nan
-New core volume (cost incl surtax):;nan;nan;nan;nan
-Reused grass volume (quantity):;nan;nan;nan;nan
-Reused grass volume (cost):;nan;nan;nan;nan
-Reused grass volume (cost incl surtax):;nan;nan;nan;nan
-Reused core volume (quantity):;nan;nan;nan;nan
-Reused core volume (cost):;nan;nan;nan;nan
-Reused core volume (cost incl surtax):;nan;nan;nan;nan
-Removed material volume (quantity):;nan;nan;nan;nan
-Removed material volume (cost):;nan;nan;nan;nan
-Removed material volume (cost incl surtax):;nan;nan;nan;nan
-New grass layer surface (quantity):;nan;nan;nan;nan
-New grass layer surface (cost):;nan;nan;nan;nan
-New grass layer surface (cost incl surtax):;nan;nan;nan;nan
-New clay layer surface (quantity):;nan;nan;nan;nan
-New clay layer surface (cost):;nan;nan;nan;nan
-New clay layer surface (cost incl surtax):;nan;nan;nan;nan
-New core layer surface (quantity):;nan;nan;nan;nan
-New core layer surface (cost):;nan;nan;nan;nan
-New core layer surface (cost incl surtax):;nan;nan;nan;nan
-New maaiveld surface (quantity):;nan;nan;nan;nan
-New maaiveld surface (cost):;nan;nan;nan;nan
-New maaiveld surface (cost incl surtax):;nan;nan;nan;nan
-Land purchase surface (quantity):;nan;nan;nan;nan
-Land purchase surface (cost):;nan;nan;nan;nan
-Land purchase surface (cost incl surtax):;nan;nan;nan;nan
-Construction length (quantity):;nan;nan;nan;nan
-Construction length (cost):;nan;nan;nan;nan
-Construction length (cost incl surtax):;nan;nan;nan;nan
+New grass volume (quantity):;0.0;0.0;0.0;0.0
+New grass volume (cost):;0.0;0.0;0.0;0.0
+New grass volume (cost incl surtax):;0.0;0.0;0.0;0.0
+New clay volume (quantity):;0.0;0.0;0.0;0.0
+New clay volume (cost):;0.0;0.0;0.0;0.0
+New clay volume (cost incl surtax):;0.0;0.0;0.0;0.0
+New core volume (quantity):;0.0;0.0;0.0;0.0
+New core volume (cost):;0.0;0.0;0.0;0.0
+New core volume (cost incl surtax):;0.0;0.0;0.0;0.0
+Reused grass volume (quantity):;0.0;0.0;0.0;0.0
+Reused grass volume (cost):;0.0;0.0;0.0;0.0
+Reused grass volume (cost incl surtax):;0.0;0.0;0.0;0.0
+Reused core volume (quantity):;0.0;0.0;0.0;0.0
+Reused core volume (cost):;0.0;0.0;0.0;0.0
+Reused core volume (cost incl surtax):;0.0;0.0;0.0;0.0
+Removed material volume (quantity):;0.0;0.0;0.0;0.0
+Removed material volume (cost):;0.0;0.0;0.0;0.0
+Removed material volume (cost incl surtax):;0.0;0.0;0.0;0.0
+New grass layer surface (quantity):;0.0;0.0;0.0;0.0
+New grass layer surface (cost):;0.0;0.0;0.0;0.0
+New grass layer surface (cost incl surtax):;0.0;0.0;0.0;0.0
+New clay layer surface (quantity):;0.0;0.0;0.0;0.0
+New clay layer surface (cost):;0.0;0.0;0.0;0.0
+New clay layer surface (cost incl surtax):;0.0;0.0;0.0;0.0
+New core layer surface (quantity):;0.0;0.0;0.0;0.0
+New core layer surface (cost):;0.0;0.0;0.0;0.0
+New core layer surface (cost incl surtax):;0.0;0.0;0.0;0.0
+New maaiveld surface (quantity):;0.0;0.0;0.0;0.0
+New maaiveld surface (cost):;0.0;0.0;0.0;0.0
+New maaiveld surface (cost incl surtax):;0.0;0.0;0.0;0.0
+Land purchase surface (quantity):;0.0;0.0;0.0;0.0
+Land purchase surface (cost):;0.0;0.0;0.0;0.0
+Land purchase surface (cost incl surtax):;0.0;0.0;0.0;0.0
+Construction length (quantity):;0.0;0.0;0.0;0.0
+Construction length (cost):;0.0;0.0;0.0;0.0
+Construction length (cost incl surtax):;0.0;0.0;0.0;0.0
 Total measure meters;0;1;1;2
 Total measure cost;0.0;8.14;16.29;48.87;73.3
 Total measure cost incl surtax;0.0;12.22;24.43;73.3;109.95
-Infrastructure cost;39.6;39.6;39.6;39.6;158.4
-Infrastructure cost incl surtax;277.2;277.2;277.2;277.2;1108.8
-Total cost;39.6;47.74;55.89;88.47;231.7
-Total cost incl surtax;277.2;289.42;301.63;350.5;1218.75"""
+Infrastructure cost;0.0;0.0;6.6;33.0;39.6
+Infrastructure cost incl surtax;0.0;0.0;19.8;257.4;277.2
+Total cost;0.0;8.14;22.89;81.87;112.9
+Total cost incl surtax;0.0;12.22;44.23;330.7;387.15"""
         assert _expected_text == _read_text
