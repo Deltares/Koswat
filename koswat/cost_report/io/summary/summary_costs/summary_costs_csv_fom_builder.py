@@ -151,19 +151,24 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         _infrastructure_cost_incl_surtax_key = "Infrastructure cost incl surtax"
         _infrastructure_rows = defaultdict(list)
 
+        # Cost per reinforcement type
         for _ordered_reinf in self._get_summary_reinforcement_type_column_order():
-            _report_by_profile = self.koswat_summary.get_report_by_profile(
-                _ordered_reinf
-            )
             _infrastructure_rows[_infrastructure_cost_key].append(
-                round(_report_by_profile.infrastructure_cost, self._decimals)
+                round(
+                    self.koswat_summary.get_infrastructure_cost(_ordered_reinf),
+                    self._decimals,
+                )
             )
             _infrastructure_rows[_infrastructure_cost_incl_surtax_key].append(
                 round(
-                    _report_by_profile.infrastructure_cost_with_surtax, self._decimals
+                    self.koswat_summary.get_infrastructure_cost_with_surtax(
+                        _ordered_reinf
+                    ),
+                    self._decimals,
                 )
             )
 
+        # Summary of cost per reinforcement type
         _infrastructure_rows[_infrastructure_cost_key].append(
             round(sum(_infrastructure_rows[_infrastructure_cost_key]), self._decimals)
         )
@@ -184,6 +189,8 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         _total_meters_per_selected_measure = (
             self._get_total_meters_per_selected_measure()
         )
+
+        # Cost per reinforcement type
         for _ordered_reinf in self._get_summary_reinforcement_type_column_order():
             _total_meters = _total_meters_per_selected_measure.get(_ordered_reinf, 0)
             _selected_measures_rows[_total_measure_meters_key].append(_total_meters)
@@ -203,6 +210,7 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
                 round(_measure_cost_with_surtax, self._decimals)
             )
 
+        # Summary of cost per reinforcement type
         _selected_measures_rows[_total_measure_cost_key].append(
             round(sum(_selected_measures_rows[_total_measure_cost_key]), self._decimals)
         )
