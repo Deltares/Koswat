@@ -10,6 +10,9 @@ from koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastr
 from koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter import (
     SummaryLocationsCsvExporter,
 )
+from koswat.cost_report.io.summary.summary_locations.summary_locations_shp_exporter import (
+    SummaryLocationsShpExporter,
+)
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 
 
@@ -21,6 +24,9 @@ class KoswatSummaryExporter(KoswatExporterProtocol):
         SummaryInfrastructureCostsCsvExporter().export(
             koswat_summary, export_path.joinpath("summary_infrastructure_costs.csv")
         )
-        SummaryLocationsCsvExporter().export(
-            koswat_summary, export_path.joinpath("summary_locations.csv")
+        # SummaryLocationsCsvExporter().export(
+        #     koswat_summary, export_path.joinpath("summary_locations.csv")
+        # )
+        SummaryLocationsShpExporter().export(
+            koswat_summary, export_path.joinpath("summary_locations")
         )
