@@ -76,8 +76,10 @@ class KoswatSummary:
         Returns:
             float: Infrastructure cost.
         """
-        _report = self.get_report_by_profile(profile_type)
         _locations = self.get_locations_by_profile(profile_type)
+        if not _locations:
+            return 0.0
+        _report = self.get_report_by_profile(profile_type)
         return sum(
             ilpcr.total_cost
             for ilpcr in _report.infra_multilocation_profile_cost_report
@@ -87,8 +89,10 @@ class KoswatSummary:
     def get_infrastructure_cost_with_surtax(
         self, profile_type: Type[ReinforcementProfileProtocol]
     ) -> float:
-        _report = self.get_report_by_profile(profile_type)
         _locations = self.get_locations_by_profile(profile_type)
+        if not _locations:
+            return 0.0
+        _report = self.get_report_by_profile(profile_type)
         return sum(
             ilpcr.total_cost_with_surtax
             for ilpcr in _report.infra_multilocation_profile_cost_report
