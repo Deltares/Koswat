@@ -123,12 +123,8 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         infrastructure_cost: dict[str, list[float]],
     ) -> dict[str, list[float]]:
         def add_costs(measure_cost: list[float], infra_cost: list[float]):
-            def replace_nan(cost: list[float]) -> list[float]:
-                return [0 if math.isnan(x) else x for x in cost]
-
             return [
-                x + y
-                for x, y in zip(replace_nan(measure_cost), replace_nan(infra_cost))
+                round(x + y, self._decimals) for x, y in zip(measure_cost, infra_cost)
             ]
 
         _total_cost_key = "Total cost"
@@ -239,21 +235,19 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
 
             _quantity_key = f"{_parameter_name} {self._quantity_key}:"
             csv_dictionary[_quantity_key].append(
-                round(_vc_parameter.quantity, self._decimals)
-                if _vc_parameter
-                else math.nan
+                round(_vc_parameter.quantity, self._decimals) if _vc_parameter else 0.0
             )
 
             _cost_key = f"{_parameter_name} {self._cost_key}:"
             csv_dictionary[_cost_key].append(
                 round(_vc_parameter.total_cost, self._decimals)
                 if _vc_parameter
-                else math.nan
+                else 0.0
             )
 
             _cost_with_surtax_key = f"{_parameter_name} {self._cost_with_surtax_key}:"
             csv_dictionary[_cost_with_surtax_key].append(
                 round(_vc_parameter.total_cost_with_surtax, self._decimals)
                 if _vc_parameter
-                else math.nan
+                else 0.0
             )
