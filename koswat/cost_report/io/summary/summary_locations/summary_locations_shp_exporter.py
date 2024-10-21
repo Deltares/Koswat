@@ -33,20 +33,20 @@ class SummaryLocationsShpExporter:
                 "dijkbasis_oud": _report.profile_cost_report.reinforced_profile.old_profile.profile_width,
                 "dijkbasis_nw": _report.profile_cost_report.reinforced_profile.profile_width,
             }
-            _lines_data.append(_base_geometry | {"geometry": _base_geometry})
+            _lines_data.append(_base_data | {"geometry": _base_geometry})
             _old_lines_data.append(
-                _base_geometry
+                _base_data
                 | {
                     "geometry": _base_geometry.buffer(
-                        _base_data["dijkbasis_oud"], cap_style=2, single_sided=True
+                        -_base_data["dijkbasis_oud"], cap_style=2, single_sided=True
                     )
                 }
             )
             _new_lines_data.append(
-                _base_geometry
+                _base_data
                 | {
                     "geometry": _base_geometry.buffer(
-                        _base_data["dijkbasis_nw"], cap_style=2, single_sided=True
+                        -_base_data["dijkbasis_nw"], cap_style=2, single_sided=True
                     )
                 }
             )
