@@ -12,43 +12,53 @@ class SummaryLocationsShpExporter:
     def export(self, koswat_summary: KoswatSummary, export_path: Path) -> None:
         if not export_path.exists():
             export_path.mkdir(parents=True)
-        _base_path = export_path.joinpath("summary_locations.shp")
-        _measures = _base_path.with_name(_base_path.name + "_measures")
-        _old = _base_path.with_name(_base_path.name + "_old")
-        _new = _base_path.with_name(_base_path.name + "_new")
+        _measures = export_path.joinpath("summary_locations_measures.shp")
+        _old = export_path.joinpath("summary_locations_old.shp")
+        _new = export_path.joinpath("summary_locations_new.shp")
 
         # Get clusters
         _lines_data = []
+        _old_lines_data = []
+        _new_lines_data = []
         for _profile_type, _locations in groupby(
             koswat_summary.reinforcement_per_locations,
             key=lambda x: x.selected_measure,
         ):
             _cluster = list(_locations)
-            _lines_data.append(
-                {
-                    "geometry": LineString([_l.location.location for _l in _cluster]),
-                    "maatregel": _profile_type.__name__,
-                    "lengte": len(_cluster),
-                    "dijkbasis_oud": 23,
-                    "dijkbasis_nw": 42,
+            _report = koswat_summary.get_report_by_profile(_profile_type)
+            _base_geometry = LineString([_l.location.location for _l in _cluster])
+            _base_data = {
+                "maatregel": _profile_type.__name__,
+                "lengte": len(_cluster),
+                "dijkbasis_oud": _report.profile_cost_report.reinforced_profile.old_profile.profile_width,
+                "dijkbasis_nw": _report.profile_cost_report.reinforced_profile.profile_width,
+            }
+            _lines_data.append(_base_geometry | {"geometry": _base_geometry})
+            _old_lines_data.append(
+                _base_geometry
+                | {
+                    "geometry": _base_geometry.buffer(
+                        _base_data["dijkbasis_oud"], cap_style=2, single_sided=True
+                    )
+                }
+            )
+            _new_lines_data.append(
+                _base_geometry
+                | {
+                    "geometry": _base_geometry.buffer(
+                        _base_data["dijkbasis_nw"], cap_style=2, single_sided=True
+                    )
                 }
             )
         _gdf = GeoDataFrame(_lines_data)
         _gdf.crs = "EPSG:28992"
         _gdf.to_file(_measures)
 
-        # Get linestring per cluster
+        ## BUFFERS
+        _old_gdf = GeoDataFrame(_old_lines_data)
+        _old_gdf.crs = "EPSG:28992"
+        _old_gdf.to_file(_old)
 
-        # Determine start and end of each section.
-
-        # Get width per cluster - per point
-        # lines_data.append(
-        #     {
-        #         "coordinates": coords,
-        #         "maatregel": maatregel,
-        #         "lengte": len(coords),
-        #         "dijkbasis_oud": dijkbasis_oud,
-        #         "dijkbasis_nw": dijkbasis_nw,
-        #     }
-        # )
-        # pass
+        _new_gdf = GeoDataFrame(_new_lines_data)
+        _new_gdf.crs = "EPSG:28992"
+        _new_gdf.to_file(_new)
