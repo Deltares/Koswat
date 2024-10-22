@@ -62,10 +62,10 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             apply_railways=self.surroundings_section_fom.spoorwegen,
             apply_waters=self.surroundings_section_fom.water,
         )
-        if self.surroundings_section_fom.bebouwing:
-            _obs_wrapper.buildings_polderside.points = (
-                self._get_polderside_surroundings_from_fom("buildings_polderside")
-            )
+        # Buildings polderside should always be present to determine the location coordinates.
+        _obs_wrapper.buildings_polderside.points = (
+            self._get_polderside_surroundings_from_fom("buildings_polderside")
+        )
         if self.surroundings_section_fom.spoorwegen:
             _obs_wrapper.railways_polderside.points = (
                 self._get_polderside_surroundings_from_fom("railways_polderside")
