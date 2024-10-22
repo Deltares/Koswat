@@ -36,21 +36,6 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     railways_dikeside: SurroundingsObstacle = None
     waters_dikeside: SurroundingsObstacle = None
 
-    def _exclude_surroundings(self, surroundings_dict: dict) -> dict:
-        def exclude_surrounding(property_name: str):
-            surroundings_dict.pop(property_name + "_polderside", None)
-            surroundings_dict.pop(property_name + "_dikeside", None)
-
-        if not self.apply_buildings:
-            exclude_surrounding("buildings")
-
-        if not self.apply_railways:
-            exclude_surrounding("railways")
-
-        if not self.apply_waters:
-            exclude_surrounding("waters")
-        return surroundings_dict
-
     @property
     def obstacle_locations(self) -> list[PointSurroundings]:
         """
