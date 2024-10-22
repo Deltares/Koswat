@@ -33,7 +33,7 @@ class MultiInfrastructureProfileCostsCalculator:
     ) -> list[InfrastructureLocationProfileCostReport]:
         """
         Calculates the costs related to appyling the provided `reinforcement_profile`
-        at all the locations where an infrastructures' is present. It first determines
+        at all the locations where an infrastructure is present. It first determines
         zone `A` and `B` and then provides their widths to the inner
         infrastructure calculators (`InfrastructureProfileCostsCalculator`).
 
