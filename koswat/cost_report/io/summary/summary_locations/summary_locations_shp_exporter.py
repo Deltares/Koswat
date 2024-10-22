@@ -93,7 +93,7 @@ class ClusterCollectionShpFom:
             cluster_shp_fom: ClusterShpFom,
         ) -> tuple[dict, dict, dict]:
             _base_dict = {
-                "maatregel": str(type(cluster_shp_fom.reinforced_profile)),
+                "maatregel": cluster_shp_fom.reinforced_profile.output_name,
                 "lengte": len(cluster_shp_fom.locations),
                 "dijkbasis_oud": cluster_shp_fom.old_profile_width,
                 "dijkbasis_nw": cluster_shp_fom.new_profile_width,
@@ -107,7 +107,7 @@ class ClusterCollectionShpFom:
             return (
                 _base_dict | dict(geometry=cluster_shp_fom.base_geometry),
                 buffered_entry(cluster_shp_fom.old_profile_width),
-                buffered_entry(cluster_shp_fom.old_profile_width),
+                buffered_entry(cluster_shp_fom.new_profile_width),
             )
 
         def dict_list_to_gdf(dict_entries: list[dict]) -> GeoDataFrame:
