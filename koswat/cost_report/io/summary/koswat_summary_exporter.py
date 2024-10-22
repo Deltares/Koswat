@@ -24,9 +24,9 @@ class KoswatSummaryExporter(KoswatExporterProtocol):
         SummaryInfrastructureCostsCsvExporter().export(
             koswat_summary, export_path.joinpath("summary_infrastructure_costs.csv")
         )
-        # SummaryLocationsCsvExporter().export(
-        #     koswat_summary, export_path.joinpath("summary_locations.csv")
-        # )
+        SummaryLocationsCsvExporter().export(
+            koswat_summary, export_path.joinpath("summary_locations.csv")
+        )
         SummaryLocationsShpExporter().export(
             koswat_summary, export_path.joinpath("summary_locations")
         )

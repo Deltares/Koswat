@@ -1,14 +1,125 @@
 # -*- coding: utf-8 -*-
+from dataclasses import dataclass, field
 from itertools import groupby
 from pathlib import Path
+from typing import Type
 
 from geopandas import GeoDataFrame
 from shapely.geometry import LineString
 
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
+
+
+@dataclass
+class ClusterShpFom:
+    locations: list[StrategyLocationReinforcement]
+    reinforced_profile: ReinforcementProfileProtocol
+
+    @property
+    def old_profile_width(self) -> float:
+        return self.reinforced_profile.old_profile.profile_width
+
+    @property
+    def new_profile_width(self) -> float:
+        return self.reinforced_profile.profile_width
+
+    @property
+    def base_geometry(self) -> LineString:
+        LineString([_l.location.location for _l in self.locations])
+
+    def get_buffered_geometry(self, width: float) -> LineString:
+        return self.base_geometry.buffer(-width, cap_style=2, single_sided=True)
+
+
+@dataclass
+class ClusterCollectionShpFom:
+    clusters: list[ClusterShpFom] = field(default_factory=[])
+    crs_projection: int = "EPSG:28992"
+
+    @classmethod
+    def from_summary(cls, koswat_summary: KoswatSummary):
+        """
+        Maps the `KoswatSummary` into a file object model that can be exported into `*.shp` files.
+
+        Args:
+            koswat_summary (KoswatSummary): The summary containing the information to export.
+
+        Returns:
+            ClusterCollectionShpFom: Dataclass instance that can be directly exported into `.shp`.
+        """
+
+        def to_cluster_shp_fom(
+            key_group_tuple: tuple[
+                Type[ReinforcementProfileProtocol], list[StrategyLocationReinforcement]
+            ]
+        ) -> ClusterShpFom:
+            return ClusterShpFom(
+                locations=list(key_group_tuple[1]),
+                reinforced_profile=koswat_summary.get_report_by_profile(
+                    key_group_tuple[0]
+                ).profile_cost_report.reinforced_profile,
+            )
+
+        return cls(
+            clusters=list(
+                map(
+                    to_cluster_shp_fom,
+                    groupby(
+                        koswat_summary.reinforcement_per_locations,
+                        key=lambda x: x.selected_measure,
+                    ),
+                )
+            )
+        )
+
+    def generate_geodataframes(self) -> tuple[GeoDataFrame, GeoDataFrame, GeoDataFrame]:
+        """
+        Generates all geodataframes of the given clusters. The generated geodataframes
+        correspond to the, base geometry (without buffering), the old and new geometries
+        with their profile's width being buffered to the base geometry.
+
+        Returns:
+            tuple[GeoDataFrame, GeoDataFrame, GeoDataFrame]:
+                Tuple of geodataframes maping this `ClusterCollectionShpFom`.
+        """
+
+        def to_gdf_entry(
+            cluster_shp_fom: ClusterShpFom,
+        ) -> tuple[dict, dict, dict]:
+            _base_dict = {
+                "maatregel": str(type(cluster_shp_fom.reinforced_profile)),
+                "lengte": len(cluster_shp_fom.locations),
+                "dijkbasis_oud": cluster_shp_fom.old_profile_width,
+                "dijkbasis_nw": cluster_shp_fom.new_profile_width,
+            }
+
+            def buffered_entry(buffered_value: float) -> dict:
+                return _base_dict | dict(
+                    geometry=cluster_shp_fom.get_buffered_geometry(buffered_value)
+                )
+
+            return tuple(
+                _base_dict | dict(geometry=cluster_shp_fom.base_geometry),
+                buffered_entry(cluster_shp_fom.old_profile_width),
+                buffered_entry(cluster_shp_fom.old_profile_width),
+            )
+
+        return tuple(
+            map(
+                lambda x: GeoDataFrame(data=x, crs=self.crs_projection),
+                map(to_gdf_entry, self.clusters),
+            )
+        )
 
 
 class SummaryLocationsShpExporter:
+
     def export(self, koswat_summary: KoswatSummary, export_path: Path) -> None:
         if not export_path.exists():
             export_path.mkdir(parents=True)
@@ -17,48 +128,10 @@ class SummaryLocationsShpExporter:
         _new = export_path.joinpath("summary_locations_new.shp")
 
         # Get clusters
-        _lines_data = []
-        _old_lines_data = []
-        _new_lines_data = []
-        for _profile_type, _locations in groupby(
-            koswat_summary.reinforcement_per_locations,
-            key=lambda x: x.selected_measure,
-        ):
-            _cluster = list(_locations)
-            _report = koswat_summary.get_report_by_profile(_profile_type)
-            _base_geometry = LineString([_l.location.location for _l in _cluster])
-            _base_data = {
-                "maatregel": _profile_type.__name__,
-                "lengte": len(_cluster),
-                "dijkbasis_oud": _report.profile_cost_report.reinforced_profile.old_profile.profile_width,
-                "dijkbasis_nw": _report.profile_cost_report.reinforced_profile.profile_width,
-            }
-            _lines_data.append(_base_data | {"geometry": _base_geometry})
-            _old_lines_data.append(
-                _base_data
-                | {
-                    "geometry": _base_geometry.buffer(
-                        -_base_data["dijkbasis_oud"], cap_style=2, single_sided=True
-                    )
-                }
-            )
-            _new_lines_data.append(
-                _base_data
-                | {
-                    "geometry": _base_geometry.buffer(
-                        -_base_data["dijkbasis_nw"], cap_style=2, single_sided=True
-                    )
-                }
-            )
-        _gdf = GeoDataFrame(_lines_data)
-        _gdf.crs = "EPSG:28992"
-        _gdf.to_file(_measures)
+        _base_gdf, _old_gdf, _new_gdf = ClusterCollectionShpFom.from_summary(
+            koswat_summary
+        ).generate_geodataframes()
 
-        ## BUFFERS
-        _old_gdf = GeoDataFrame(_old_lines_data)
-        _old_gdf.crs = "EPSG:28992"
+        _base_gdf.to_file(_measures)
         _old_gdf.to_file(_old)
-
-        _new_gdf = GeoDataFrame(_new_lines_data)
-        _new_gdf.crs = "EPSG:28992"
         _new_gdf.to_file(_new)
