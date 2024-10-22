@@ -18,7 +18,7 @@ class TestSummaryLocationsShpExporter:
 
     def test_summary_locations_shp_exporter_export(
         self,
-        valid_mocked_summary: KoswatSummary,
+        valid_clusters_mocked_summary: KoswatSummary,
         request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
@@ -27,7 +27,9 @@ class TestSummaryLocationsShpExporter:
             shutil.rmtree(_test_dir)
 
         # 2. Run test.
-        SummaryLocationsShpExporter().export(valid_mocked_summary, _test_dir)
+        SummaryLocationsShpExporter().export(valid_clusters_mocked_summary, _test_dir)
 
         # 3. Verify expectations.
         assert _test_dir.exists()
+        _shp_files = list(_test_dir.glob("*.shp"))
+        assert len(_shp_files) == 3

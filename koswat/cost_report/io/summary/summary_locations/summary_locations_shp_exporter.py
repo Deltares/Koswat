@@ -31,7 +31,7 @@ class ClusterShpFom:
 
     @property
     def base_geometry(self) -> LineString:
-        LineString([_l.location.location for _l in self.locations])
+        return LineString([_l.location.location for _l in self.locations])
 
     def get_buffered_geometry(self, width: float) -> LineString:
         return self.base_geometry.buffer(-width, cap_style=2, single_sided=True)
@@ -104,16 +104,19 @@ class ClusterCollectionShpFom:
                     geometry=cluster_shp_fom.get_buffered_geometry(buffered_value)
                 )
 
-            return tuple(
+            return (
                 _base_dict | dict(geometry=cluster_shp_fom.base_geometry),
                 buffered_entry(cluster_shp_fom.old_profile_width),
                 buffered_entry(cluster_shp_fom.old_profile_width),
             )
 
+        def dict_list_to_gdf(dict_entries: list[dict]) -> GeoDataFrame:
+            return GeoDataFrame(data=dict_entries, crs=self.crs_projection)
+
         return tuple(
             map(
-                lambda x: GeoDataFrame(data=x, crs=self.crs_projection),
-                map(to_gdf_entry, self.clusters),
+                dict_list_to_gdf,
+                zip(*(to_gdf_entry(_cl) for _cl in self.clusters)),
             )
         )
 

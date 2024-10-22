@@ -174,3 +174,25 @@ def _get_valid_mocked_summary_fixture() -> KoswatSummary:
         _summary, _available_points
     )
     return _summary
+
+
+@pytest.fixture(name="valid_clusters_mocked_summary")
+def _get_valid_clusters_mocked_summary_fixture() -> KoswatSummary:
+    _required_profiles = [
+        CofferdamReinforcementProfile,
+        PipingWallReinforcementProfile,
+        SoilReinforcementProfile,
+        StabilityWallReinforcementProfile,
+    ]
+    _available_points = _create_locations()
+    _summary = KoswatSummary()
+    _summary.locations_profile_report_list = list(
+        map(
+            lambda x: _create_report(x, _available_points, len(_available_points)),
+            _required_profiles,
+        )
+    )
+    _summary.reinforcement_per_locations = get_locations_reinforcements(
+        _summary, _available_points
+    )
+    return _summary
