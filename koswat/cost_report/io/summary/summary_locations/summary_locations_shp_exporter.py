@@ -1,12 +1,13 @@
 from pathlib import Path
 
+from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.summary.summary_locations.cluster_collection_shp_fom import (
     ClusterCollectionShpFom,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 
 
-class SummaryLocationsShpExporter:
+class SummaryLocationsShpExporter(KoswatExporterProtocol):
     def export(self, koswat_summary: KoswatSummary, export_path: Path) -> None:
         if not export_path.exists():
             export_path.mkdir(parents=True)

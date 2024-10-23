@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from itertools import groupby
 from typing import Type
@@ -19,10 +21,10 @@ from koswat.strategies.strategy_location_reinforcement import (
 @dataclass
 class ClusterCollectionShpFom:
     clusters: list[ClusterShpFom] = field(default_factory=lambda: [])
-    crs_projection: int = "EPSG:28992"
+    crs_projection: str = "EPSG:28992"
 
     @classmethod
-    def from_summary(cls, koswat_summary: KoswatSummary):
+    def from_summary(cls, koswat_summary: KoswatSummary) -> ClusterCollectionShpFom:
         """
         Maps the `KoswatSummary` into a file object model that can be exported into `*.shp` files.
 
