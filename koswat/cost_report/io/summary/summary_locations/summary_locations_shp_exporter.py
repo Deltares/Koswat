@@ -15,10 +15,13 @@ class SummaryLocationsShpExporter:
         _new = export_path.joinpath("summary_locations_new.shp")
 
         # Get clusters
-        _base_gdf, _old_gdf, _new_gdf = ClusterCollectionShpFom.from_summary(
+        _clusters = ClusterCollectionShpFom.from_summary(
             koswat_summary
         ).generate_geodataframes()
 
-        _base_gdf.to_file(_measures)
-        _old_gdf.to_file(_old)
-        _new_gdf.to_file(_new)
+        if not _clusters:
+            return
+
+        _clusters[0].to_file(_measures)
+        _clusters[1].to_file(_old)
+        _clusters[2].to_file(_new)
