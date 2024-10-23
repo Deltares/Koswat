@@ -1,3 +1,5 @@
+from typing import Iterator
+
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -8,8 +10,8 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class TestOrderCluster:
-    @pytest.fixture
-    def basic_order_cluster(self) -> OrderCluster:
+    @pytest.fixture(name="basic_order_cluster")
+    def _get_basic_order_cluster(self) -> Iterator[OrderCluster]:
         yield OrderCluster(reinforcement_idx=1, location_reinforcements=[])
 
     @pytest.mark.parametrize(
@@ -42,10 +44,10 @@ class TestOrderCluster:
             len(basic_order_cluster.location_reinforcements) - 1,
         )
 
-    @pytest.fixture
-    def order_cluster_with_neighbors(
+    @pytest.fixture(name="order_cluster_with_neighbors")
+    def _get_order_cluster_with_neighbors(
         self, basic_order_cluster: OrderCluster
-    ) -> OrderCluster:
+    ) -> Iterator[OrderCluster]:
         # Set locations.
         for _idx in range(0, 4):
             _dummy_location = StrategyLocationReinforcement(

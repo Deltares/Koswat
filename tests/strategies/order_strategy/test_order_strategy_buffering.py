@@ -4,9 +4,6 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
     OrderStrategyBuffering,
 )
 from koswat.strategies.strategy_input import StrategyInput
-from tests.strategies.order_strategy.order_strategy_fixtures import (  # Don't remove
-    example_strategy_input,
-)
 
 
 class TestOrderStrategyBuffering:

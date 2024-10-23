@@ -1,3 +1,5 @@
+from typing import Iterator
+
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -14,8 +16,8 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 
 
-@pytest.fixture
-def example_strategy_input() -> StrategyInput:
+@pytest.fixture(name="example_strategy_input")
+def _get_example_strategy_input() -> Iterator[StrategyInput]:
     # This is the data defined in the docs\reference\koswat_strategies.md
     # as examples. DON'T MODIFY IT!
     _matrix = {
@@ -36,10 +38,10 @@ def example_strategy_input() -> StrategyInput:
     )
 
 
-@pytest.fixture
-def example_location_reinforcements_with_buffering(
+@pytest.fixture(name="example_location_reinforcements_with_buffering")
+def _get_example_location_reinforcements_with_buffering(
     example_strategy_input: StrategyInput,
-) -> list[StrategyLocationReinforcement]:
+) -> Iterator[list[StrategyLocationReinforcement]]:
     _result_after_buffering_idx = [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
     _measure_order = OrderStrategy.get_default_order_for_reinforcements()
     _location_reinforcements = []

@@ -15,7 +15,8 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 ## Available strategies
 
-The following strategies are currently available, please refer to the official documentation for a more in-detail explanation of each of them
+The following strategies are currently available, please refer to the official documentation for a more in-detail explanation of each of them:
 
-- [__Default__] Order based. A strategy is chosen based on a pre-defined measure priority order.
+- [__Default__] Order based (`OrderBased`). A strategy is chosen based on a pre-defined measure priority order.
+- Infra-priority based (`InfraPriorityStrategy`). Clusters are created based on the cheapest total cost (including infrastructure reworks). This strategy is applied __after__  _Order based_, the clusters are then modified into a reinforcement that requires less space (thus more expensive) but does not affect infrastructures, therefore becoming cheaper.
 

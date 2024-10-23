@@ -19,10 +19,6 @@ from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
-from tests.strategies.order_strategy.order_strategy_fixtures import (
-    example_location_reinforcements_with_buffering,
-    example_strategy_input,
-)
 
 
 class TestOrderStrategy:
