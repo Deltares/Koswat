@@ -10,7 +10,7 @@ from koswat.cost_report.infrastructure.infrastructure_location_costs import (
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
 )
-from koswat.cost_report.io.summary.summary_locations.summary_locations_shp_exporter import (
+from koswat.cost_report.io.summary.summary_locations.cluster_shp_fom import (
     ClusterShpFom,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (

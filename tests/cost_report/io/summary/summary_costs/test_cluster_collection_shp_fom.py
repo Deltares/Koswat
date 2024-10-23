@@ -3,8 +3,10 @@ from typing import Callable, Type
 from geopandas import GeoDataFrame
 from shapely import LineString
 
-from koswat.cost_report.io.summary.summary_locations.summary_locations_shp_exporter import (
+from koswat.cost_report.io.summary.summary_locations.cluster_collection_shp_fom import (
     ClusterCollectionShpFom,
+)
+from koswat.cost_report.io.summary.summary_locations.cluster_shp_fom import (
     ClusterShpFom,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
@@ -43,7 +45,7 @@ class TestClusterCollectionShpFom:
             isinstance(_fom_cluster, ClusterShpFom) for _fom_cluster in _fom.clusters
         )
 
-    def test_given_three_ordered_clusters_then_gets_expected_gdf(
+    def test_given_clusters_when_generate_geodataframes_then_gets_expected_gdf(
         self,
         cluster_shp_fom_factory: Callable[
             [list[tuple[float, float]], Type[ReinforcementProfileProtocol], float],
