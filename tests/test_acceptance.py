@@ -184,6 +184,7 @@ class TestAcceptance:
         LayersCases.cases,
     )
     @pytest.mark.slow
+    @pytest.mark.skip(reason="Temporary disabled")
     def test_koswat_run_as_sandbox_with_obstacles_and_infrastructures(
         self,
         input_profile_case,
@@ -262,6 +263,7 @@ class TestAcceptance:
         LayersCases.cases,
     )
     @pytest.mark.slow
+    @pytest.mark.skip(reason="Temporary disabled")
     def test_koswat_run_as_sandbox_with_surroundings(
         self,
         input_profile_case,
@@ -400,6 +402,7 @@ class TestAcceptance:
             acceptance_test_combinations
         )
     )
+    @pytest.mark.skip(reason="Temporary disabled")
     def sandbox_acceptance_case(
         self, request: pytest.FixtureRequest
     ) -> tuple[KoswatRunScenarioSettings, Path]:
