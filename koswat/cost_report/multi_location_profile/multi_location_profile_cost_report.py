@@ -48,21 +48,6 @@ class MultiLocationProfileCostReport(CostReportProtocol):
         )
 
     @property
-    def infrastructure_cost(self) -> float:
-        if not self.infra_multilocation_profile_cost_report:
-            return math.nan
-        return sum(x.total_cost for x in self.infra_multilocation_profile_cost_report)
-
-    @property
-    def infrastructure_cost_with_surtax(self) -> float:
-        if not self.infra_multilocation_profile_cost_report:
-            return math.nan
-        return sum(
-            x.total_cost_with_surtax
-            for x in self.infra_multilocation_profile_cost_report
-        )
-
-    @property
     def profile_type_name(self) -> str:
         if (
             not self.profile_cost_report
