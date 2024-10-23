@@ -1,4 +1,4 @@
-from click import Path
+from pathlib import Path
 
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter import (
