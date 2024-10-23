@@ -77,7 +77,6 @@ from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
 from tests.acceptance_scenarios.layers_cases import LayersCases
 
 
-@pytest.mark.skip(reason="Temporary disabled")
 class TestAcceptance:
     def test_koswat_package_can_be_imported(self):
         """
@@ -185,6 +184,7 @@ class TestAcceptance:
         LayersCases.cases,
     )
     @pytest.mark.slow
+    @pytest.mark.skip(reason="Temporary disabled")
     def test_koswat_run_as_sandbox_with_obstacles_and_infrastructures(
         self,
         input_profile_case,
@@ -263,6 +263,7 @@ class TestAcceptance:
         LayersCases.cases,
     )
     @pytest.mark.slow
+    @pytest.mark.skip(reason="Temporary disabled")
     def test_koswat_run_as_sandbox_with_surroundings(
         self,
         input_profile_case,
@@ -537,6 +538,7 @@ class TestAcceptance:
         yield _run_settings, _output_dir
 
     @pytest.mark.slow
+    @pytest.mark.skip(reason="Temporary disabled")
     def test_koswat_when_sandbox_given_run_scenario_then_returns_expectation(
         self, sandbox_acceptance_case: tuple[KoswatRunScenarioSettings, Path]
     ):
