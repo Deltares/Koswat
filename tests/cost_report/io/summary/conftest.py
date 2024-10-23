@@ -1,5 +1,5 @@
 from copy import deepcopy
-from typing import Type
+from typing import Callable, Iterable, Type
 
 import pytest
 from shapely.geometry import Point
@@ -9,6 +9,9 @@ from koswat.cost_report.infrastructure.infrastructure_location_costs import (
 )
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
+)
+from koswat.cost_report.io.summary.summary_locations.summary_locations_shp_exporter import (
+    ClusterShpFom,
 )
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
@@ -196,3 +199,45 @@ def _get_valid_clusters_mocked_summary_fixture() -> KoswatSummary:
         _summary, _available_points
     )
     return _summary
+
+
+@pytest.fixture(name="cluster_shp_fom_factory")
+def _get_cluster_shp_fom_factory() -> Iterable[
+    Callable[
+        [list[tuple[float, float]], Type[ReinforcementProfileProtocol], float],
+        ClusterShpFom,
+    ]
+]:
+    def add_cluster_location(
+        coordinates: tuple[float, float],
+        reinforced_profile: ReinforcementProfileProtocol,
+    ) -> StrategyLocationReinforcement:
+        return StrategyLocationReinforcement(
+            location=PointSurroundings(location=Point(coordinates)),
+            selected_measure=reinforced_profile,
+            available_measures=[],
+        )
+
+    def create_cluster(
+        points: list[tuple[float, float]],
+        type_reinforcement: Type[ReinforcementProfileProtocol],
+        new_width: float,
+    ) -> ClusterShpFom:
+        _tr = type_reinforcement()
+
+        class MockedBaseProfile(KoswatProfileProtocol):
+            profile_width: float = 0.42
+            points = [(0, 0), (0.42, 0)]
+
+        class MockedReinforcedProfile(ReinforcementProfileProtocol):
+            output_name: str = _tr.output_name
+            old_profile: KoswatProfileProtocol = MockedBaseProfile()
+            profile_width: float = new_width
+
+        _reinforced_profile = MockedReinforcedProfile()
+        return ClusterShpFom(
+            locations=[add_cluster_location(_p, type_reinforcement) for _p in points],
+            reinforced_profile=_reinforced_profile,
+        )
+
+    yield create_cluster

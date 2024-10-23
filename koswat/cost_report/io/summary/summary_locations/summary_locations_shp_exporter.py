@@ -39,7 +39,7 @@ class ClusterShpFom:
 
 @dataclass
 class ClusterCollectionShpFom:
-    clusters: list[ClusterShpFom] = field(default_factory=[])
+    clusters: list[ClusterShpFom] = field(default_factory=lambda: [])
     crs_projection: int = "EPSG:28992"
 
     @classmethod
@@ -122,7 +122,6 @@ class ClusterCollectionShpFom:
 
 
 class SummaryLocationsShpExporter:
-
     def export(self, koswat_summary: KoswatSummary, export_path: Path) -> None:
         if not export_path.exists():
             export_path.mkdir(parents=True)
