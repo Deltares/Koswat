@@ -112,7 +112,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         ]
         _strategy_input = StrategyInput(
             strategy_locations=_matrix,
-            reinforcements=_reinforcements,
+            strategy_reinforcement_type_costs=_reinforcements,
             reinforcement_min_buffer=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer,
             reinforcement_min_length=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation,
         )

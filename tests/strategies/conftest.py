@@ -70,7 +70,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     ]
     yield StrategyInput(
         strategy_locations=_strategy_locations,
-        reinforcements=_reinforcements,
+        strategy_reinforcement_type_costs=_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )

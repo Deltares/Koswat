@@ -9,6 +9,6 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 @dataclass
 class StrategyInput:
     strategy_locations: list[StrategyLocationInput]
-    reinforcements: list[StrategyReinforcementTypeCosts]
+    strategy_reinforcement_type_costs: list[StrategyReinforcementTypeCosts]
     reinforcement_min_buffer: float
     reinforcement_min_length: float
