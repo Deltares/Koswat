@@ -66,13 +66,9 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         )
         for _idx, _rt in enumerate(_initial_state_per_location)
     ]
-    _reinforcements = [
-        StrategyReinforcementTypeCosts(reinforcement_type=_rt)
-        for _rt in _default_reinforcements
-    ]
+
     yield StrategyInput(
         strategy_locations=_strategy_locations,
-        strategy_reinforcement_type_costs=_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )
