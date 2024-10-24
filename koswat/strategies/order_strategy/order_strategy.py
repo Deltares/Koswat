@@ -27,6 +27,9 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
 )
+from koswat.strategies.order_strategy.order_strategy_reinforcements import (
+    OrderStrategyReinforcements,
+)
 from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -72,7 +75,9 @@ class OrderStrategy(StrategyProtocol):
     def apply_strategy(
         self, strategy_input: StrategyInput
     ) -> list[StrategyLocationReinforcement]:
-        _reinforcement_order = self.get_default_order_for_reinforcements()
+        _reinforcement_order = OrderStrategyReinforcements.from_strategy_input(
+            strategy_input
+        ).strategy_reinforcements
         _strategy_reinforcements = self.get_strategy_reinforcements(
             strategy_input.strategy_locations, _reinforcement_order
         )
