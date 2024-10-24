@@ -25,23 +25,6 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 
 @pytest.fixture(name="example_strategy_input")
 def _get_example_strategy_input() -> Iterator[StrategyInput]:
-    _reinforcement_type_default_order = (
-        OrderStrategy.get_default_order_for_reinforcements()
-    )
-    _levels_data = [
-        StrategyReinforcementTypeCosts(
-            reinforcement_type=_reinforcement,
-            base_costs=(10**_idx) * 42,
-            infrastructure_costs=100 ** (len(_reinforcement_type_default_order) - _idx)
-            * 42,  # Dramatic infra costs to verify functionality!
-        )
-        for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
-    ]
-
-    _initial_states = {}
-    for _idx, _srtc in enumerate(_levels_data):
-        _initial_states[_srtc.reinforcement_type] = _levels_data[_idx:]
-
     # This is the data defined in the docs\reference\koswat_strategies.md
     # as examples. DON'T MODIFY IT!
     _initial_state_per_location = [
@@ -56,6 +39,25 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         CofferdamReinforcementProfile,  # Expected idx 4 in default order!
         CofferdamReinforcementProfile,
     ]
+
+    _reinforcement_type_default_order = (
+        OrderStrategy.get_default_order_for_reinforcements()
+    )
+    _levels_data = [
+        StrategyReinforcementTypeCosts(
+            reinforcement_type=_reinforcement,
+            base_costs=(10**_idx) * 42,
+            infrastructure_costs=100 ** (len(_reinforcement_type_default_order) - _idx)
+            * 42,  # Dramatic infra costs to verify functionality!
+        )
+        for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
+    ]
+
+    _initial_states = {
+        _srtc.reinforcement_type: _levels_data[_idx:]
+        for _idx, _srtc in enumerate(_levels_data)
+    }
+
     _strategy_locations = [
         StrategyLocationInput(
             point_surrounding=PointSurroundings(traject_order=_idx),
