@@ -113,7 +113,7 @@ def _create_report(
     )
 
     _report = MockSummary()
-    _report.obstacle_locations = available_points[0:selected_locations]
+    _report.report_locations = available_points[0:selected_locations]
     _report.infra_multilocation_profile_cost_report = _create_infra_reports(
         _reinforced_profile, available_points
     )
@@ -142,7 +142,7 @@ def get_locations_reinforcements(
         _a_measures = list(
             type(_lp_report.profile_cost_report.reinforced_profile)
             for _lp_report in summary.locations_profile_report_list
-            if _location in _lp_report.obstacle_locations
+            if _location in _lp_report.report_locations
         )
         _selected_measure = _available_reinforcements[-1]
         if any(_a_measures):

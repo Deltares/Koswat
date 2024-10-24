@@ -32,13 +32,14 @@ class TestKoswatSummaryLocationMatrixBuilder:
         _builder.locations_profile_report_list = []
 
         # 2. Run test.
-        _matrix = _builder.build()
+        _strategy_locations = _builder.build()
 
         # 3. Verify final expectations.
-        assert isinstance(_matrix, dict)
-        assert len(_matrix) == len(_builder.available_locations)
-        assert all(_mk in _builder.available_locations for _mk in _matrix.keys())
-        assert all(_mv == [] for _mv in _matrix.values())
+        assert isinstance(_strategy_locations, list)
+        assert len(_strategy_locations) == len(_builder.available_locations)
+        for _sl in _strategy_locations:
+            assert _sl.point_surrounding in _builder.available_locations
+            assert _sl.strategy_reinforcement_type_costs == []
 
     def test_given_profile_report_list_then_returns_expected_matrix(self):
         class MyMockedReinforcementProfile(ReinforcementProfileProtocol):
@@ -52,7 +53,7 @@ class TestKoswatSummaryLocationMatrixBuilder:
         ]
 
         _profile_report = MultiLocationProfileCostReport()
-        _profile_report.obstacle_locations = _locations[:1]
+        _profile_report.report_locations = _locations[:1]
         _profile_report.profile_cost_report = ProfileCostReport()
         _profile_report.profile_cost_report.reinforced_profile = (
             MyMockedReinforcementProfile()
@@ -63,13 +64,19 @@ class TestKoswatSummaryLocationMatrixBuilder:
         _builder.locations_profile_report_list = [_profile_report]
 
         # 2. Run test.
-        _matrix = _builder.build()
+        _strategy_locations = _builder.build()
 
         # 3. Verify final expectations.
-        assert isinstance(_matrix, dict)
-        assert len(_matrix) == len(_builder.available_locations)
-        assert all(_mk in _builder.available_locations for _mk in _matrix.keys())
-        assert len(_matrix[_locations[0]]) == 1
-        assert _matrix[_locations[0]][0] == MyMockedReinforcementProfile
-
-        assert all(len(_matrix[_l]) == 0 for _l in _locations[1:])
+        assert isinstance(_strategy_locations, list)
+        assert len(_strategy_locations) == len(_builder.available_locations)
+        assert _strategy_locations[0].point_surrounding in _builder.available_locations
+        assert len(_strategy_locations[0].strategy_reinforcement_type_costs) == 1
+        assert (
+            _strategy_locations[0]
+            .strategy_reinforcement_type_costs[0]
+            .reinforcement_type
+            == MyMockedReinforcementProfile
+        )
+        for _sl in _strategy_locations[1:]:
+            assert _sl.point_surrounding in _builder.available_locations
+            assert _sl.strategy_reinforcement_type_costs == []
