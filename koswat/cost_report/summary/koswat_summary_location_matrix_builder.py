@@ -61,7 +61,6 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
     def build(
         self,
     ) -> list[StrategyLocationInput]:
-        # dict[PointSurroundings, list[Type[ReinforcementProfileProtocol]]]:
         # 1. First we get all the possible reinforcements per point.
 
         logging.info("Initalizing locations-reinforcements matrix.")
