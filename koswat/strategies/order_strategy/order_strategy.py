@@ -34,7 +34,7 @@ class OrderStrategy(StrategyProtocol):
         and least restrictive to most restrictive.
 
         Returns:
-            list[type[ReinforcementProfileProtocol] ]:
+            list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
         return [
             SoilReinforcementProfile,
@@ -54,7 +54,7 @@ class OrderStrategy(StrategyProtocol):
         Cofferdam should always be the last reinforcement type.
 
         Returns:
-            list[type[ReinforcementProfileProtocol]]: _description_
+            list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
         # TODO Implement this method
         return self.get_default_order_for_reinforcements()
