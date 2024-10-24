@@ -91,3 +91,4 @@ class TestOrderStrategyReinforcements:
 
         # 3. Verify expectations
         assert _reinforcements == self._default_reinforcements
+        assert _reinforcements[-1] == CofferdamReinforcementProfile
