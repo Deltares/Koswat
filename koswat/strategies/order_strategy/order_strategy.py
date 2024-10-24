@@ -39,18 +39,6 @@ from koswat.strategies.strategy_protocol import StrategyProtocol
 
 class OrderStrategy(StrategyProtocol):
     @staticmethod
-    def get_default_order_for_reinforcements() -> list[
-        Type[ReinforcementProfileProtocol]
-    ]:
-        return [
-            SoilReinforcementProfile,
-            VPSReinforcementProfile,
-            PipingWallReinforcementProfile,
-            StabilityWallReinforcementProfile,
-            CofferdamReinforcementProfile,
-        ]
-
-    @staticmethod
     def get_strategy_reinforcements(
         strategy_locations: list[StrategyLocationInput],
         selection_order: list[Type[ReinforcementProfileProtocol]],

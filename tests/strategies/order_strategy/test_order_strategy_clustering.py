@@ -13,6 +13,9 @@ from koswat.strategies.order_strategy.order_strategy_base import OrderStrategyBa
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
 )
+from koswat.strategies.order_strategy.order_strategy_reinforcements import (
+    OrderStrategyReinforcements,
+)
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -37,9 +40,7 @@ class TestOrderStrategyClustering:
         _strategy.reinforcement_min_length = (
             example_strategy_input.reinforcement_min_length
         )
-        _strategy.reinforcement_order = (
-            OrderStrategy.get_default_order_for_reinforcements()
-        )
+        _strategy.reinforcement_order = OrderStrategyReinforcements.get_default_order()
 
         # 2. Run test.
         _strategy.apply(example_location_reinforcements_with_buffering)
@@ -67,9 +68,7 @@ class TestOrderStrategyClustering:
         # 1. Define test data.
         _strategy = OrderStrategyClustering()
         _strategy.reinforcement_min_length = 2
-        _strategy.reinforcement_order = (
-            OrderStrategy.get_default_order_for_reinforcements()
-        )
+        _strategy.reinforcement_order = OrderStrategyReinforcements.get_default_order()
 
         _location_reinforcements = example_location_reinforcements_with_buffering
 
@@ -109,9 +108,7 @@ class TestOrderStrategyClustering:
         _strategy.reinforcement_min_length = (
             example_strategy_input.reinforcement_min_length
         )
-        _strategy.reinforcement_order = (
-            OrderStrategy.get_default_order_for_reinforcements()
-        )
+        _strategy.reinforcement_order = OrderStrategyReinforcements.get_default_order()
 
         # 2. Run test.
         _order_clusters = _strategy._get_reinforcement_order_clusters(

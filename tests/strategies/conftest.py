@@ -14,6 +14,9 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
+from koswat.strategies.order_strategy.order_strategy_reinforcements import (
+    OrderStrategyReinforcements,
+)
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -79,7 +82,7 @@ def example_location_reinforcements_with_buffering(
     example_strategy_input: StrategyInput,
 ) -> Iterator[list[StrategyLocationReinforcement]]:
     _result_after_buffering_idx = [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
-    _measure_order = OrderStrategy.get_default_order_for_reinforcements()
+    _measure_order = OrderStrategyReinforcements.get_default_order()
     _location_reinforcements = []
     for _idx, _location in enumerate(example_strategy_input.strategy_locations):
         _measure_idx = _result_after_buffering_idx[_idx]

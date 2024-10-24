@@ -15,6 +15,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.order_strategy.order_strategy_base import OrderStrategyBase
+from koswat.strategies.order_strategy.order_strategy_reinforcements import (
+    OrderStrategyReinforcements,
+)
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -28,27 +31,11 @@ class TestOrderStrategy:
         _strategy = OrderStrategy()
         assert isinstance(_strategy, OrderStrategy)
 
-    def test_get_default_order_for_reinforcements(self):
-        # 1. Define test data.
-        _expected_result = [
-            SoilReinforcementProfile,
-            VPSReinforcementProfile,
-            PipingWallReinforcementProfile,
-            StabilityWallReinforcementProfile,
-            CofferdamReinforcementProfile,
-        ]
-
-        # 2. Run test.
-        _result = OrderStrategy.get_default_order_for_reinforcements()
-
-        # 3. Verify expectations
-        assert _result == _expected_result
-
     def test__get_strategy_reinforcements_given_example(
         self, example_strategy_input: StrategyInput
     ):
         # 1. Define test data.
-        _default_order = OrderStrategy.get_default_order_for_reinforcements()
+        _default_order = OrderStrategyReinforcements.get_default_order()
         assert _default_order[-1] == CofferdamReinforcementProfile
 
         # 2. Run test.
@@ -82,7 +69,7 @@ class TestOrderStrategy:
         class MockedStrategy(OrderStrategyBase):
             def __init__(self) -> None:
                 self.reinforcement_order = (
-                    OrderStrategy.get_default_order_for_reinforcements()
+                    OrderStrategyReinforcements.get_default_order()
                 )
 
             def apply(
