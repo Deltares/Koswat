@@ -8,13 +8,13 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class OrderStrategyBuffering(OrderStrategyBase):
-    reinforcement_order: list[ReinforcementProfileProtocol]
+    reinforcement_order: list[type[ReinforcementProfileProtocol]]
     reinforcement_min_buffer: float
 
     @classmethod
     def with_strategy(
         cls,
-        reinforcement_order: list[ReinforcementProfileProtocol],
+        reinforcement_order: list[type[ReinforcementProfileProtocol]],
         reinforcement_min_buffer: float,
     ):
         _this = cls()
