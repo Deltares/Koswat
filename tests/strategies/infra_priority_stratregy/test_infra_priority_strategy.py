@@ -1,3 +1,12 @@
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
+    SoilReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
+    StabilityWallReinforcementProfile,
+)
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
 )

@@ -3,12 +3,6 @@ from typing import Iterator
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile import (
-    PipingWallInputProfile,
-)
-from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input_profile import (
-    VPSInputProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
@@ -31,44 +25,44 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 
 @pytest.fixture(name="example_strategy_input")
 def _get_example_strategy_input() -> Iterator[StrategyInput]:
-    _levels_data = {
-        SoilReinforcementProfile: (0, 420000),
-        VPSInputProfile: (4.2, 42000),
-        PipingWallInputProfile: (42, 4200),
-        StabilityWallReinforcementProfile: (420, 42),
-        CofferdamReinforcementProfile: (4200, 4.2),
-    }
+    _reinforcement_type_default_order = (
+        OrderStrategy.get_default_order_for_reinforcements()
+    )
+    _levels_data = [
+        StrategyReinforcementTypeCosts(
+            reinforcement_type=_reinforcement,
+            base_costs=(10**_idx) * 42,
+            infastructure_costs=100 ** (len(_reinforcement_type_default_order) - _idx)
+            * 42,  # Dramatic infra costs to verify functionality!
+        )
+        for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
+    ]
+
+    _initial_states = {}
+    for _idx, _srtc in enumerate(_levels_data):
+        _initial_states[_srtc.reinforcement_type] = _levels_data[_idx:]
 
     # This is the data defined in the docs\reference\koswat_strategies.md
     # as examples. DON'T MODIFY IT!
     _initial_state_per_location = [
+        SoilReinforcementProfile,  # Expected idx 0 in default order!
         SoilReinforcementProfile,
         SoilReinforcementProfile,
-        SoilReinforcementProfile,
+        StabilityWallReinforcementProfile,  # Expected idx 3 in default order!
         StabilityWallReinforcementProfile,
-        StabilityWallReinforcementProfile,
         SoilReinforcementProfile,
         SoilReinforcementProfile,
         SoilReinforcementProfile,
-        CofferdamReinforcementProfile,
+        CofferdamReinforcementProfile,  # Expected idx 4 in default order!
         CofferdamReinforcementProfile,
     ]
-    _strategy_locations = []
-    for _idx, _rt in enumerate(_initial_state_per_location):
-        _levels_idx = list(_levels_data.keys()).index(_rt)
-        _available_srtc = list(_levels_data.items())[_levels_idx:]
-        _sli = StrategyLocationInput(
+    _strategy_locations = [
+        StrategyLocationInput(
             point_surrounding=PointSurroundings(traject_order=_idx),
-            strategy_reinforcement_type_costs=[
-                StrategyReinforcementTypeCosts(
-                    reinforcement_type=_reinforcement_type,
-                    base_costs=_costs[0],
-                    infastructure_costs=[1],
-                )
-                for _reinforcement_type, _costs in _available_srtc
-            ],
+            strategy_reinforcement_type_costs=_initial_states[_rt],
         )
-        _strategy_locations.append(_sli)
+        for _idx, _rt in enumerate(_initial_state_per_location)
+    ]
     yield StrategyInput(
         strategy_locations=_strategy_locations,
         reinforcement_min_buffer=1,
