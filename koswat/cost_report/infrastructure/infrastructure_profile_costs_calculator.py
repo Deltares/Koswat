@@ -29,7 +29,7 @@ class InfrastructureProfileCostsCalculator:
     ) -> list[InfrastructureLocationCosts]:
         """
         Calculates the costs affecting this instance's infrastructure
-        at all points where its present.
+        at all points where it is present.
 
         Args:
             zone_a_width (float): Width of zone type `A`.
