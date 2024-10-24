@@ -1,9 +1,7 @@
 import shutil
-from typing import Callable, Iterator
+from typing import Iterator
 
 import pytest
-from numpy import isin
-from shapely.geometry import Point
 
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
     InfrastructureSectionFom,
