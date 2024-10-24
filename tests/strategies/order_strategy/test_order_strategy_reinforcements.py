@@ -12,6 +12,7 @@ from koswat.dike_reinforcements.reinforcement_profile import (
 from koswat.strategies.order_strategy.order_strategy_reinforcements import (
     OrderStrategyReinforcements,
 )
+from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_reinforcement_type import StrategyReinforcementType
 from koswat.strategies.strategy_reinforcements_protocol import (
     StrategyReinforcementsProtocol,
@@ -55,6 +56,17 @@ class TestOrderStrategyReinforcements:
         # 3. Verify expectations
         assert isinstance(_strategy_reinforcements, OrderStrategyReinforcements)
         assert isinstance(_strategy_reinforcements, StrategyReinforcementsProtocol)
+
+    def test_from_strategy_input(self, example_strategy_input: StrategyInput):
+        # 1. Define test data.
+
+        # 2. Run test.
+        _reinforcements = OrderStrategyReinforcements.from_strategy_input(
+            example_strategy_input
+        )
+
+        # 3. Verify expectations
+        assert isinstance(_reinforcements, OrderStrategyReinforcements)
 
     def test_get_default_order(self):
         # 1. Define test data.

@@ -30,7 +30,7 @@ from koswat.strategies.strategy_reinforcements_protocol import (
 @dataclass
 class OrderStrategyReinforcements(StrategyReinforcementsProtocol):
     """
-    Provide the reinforcemenrts for the order strategy.
+    Provide the reinforcements for the order strategy.
     """
 
     reinforcements: list[StrategyReinforcementType] = field(default_factory=list)
@@ -39,8 +39,16 @@ class OrderStrategyReinforcements(StrategyReinforcementsProtocol):
     def from_strategy_input(
         cls, strategy_input: StrategyInput
     ) -> OrderStrategyReinforcements:
-        # TODO Implement this method.
-        return cls(reinforcements=[])
+        _reinforcements = {
+            StrategyReinforcementType(
+                reinforcement_type=type.reinforcement_type,
+                base_costs=type.base_costs,
+                ground_level_surface=type.ground_level_surface,
+            )
+            for loc in strategy_input.strategy_locations
+            for type in loc.strategy_reinforcement_type
+        }
+        return cls(reinforcements=list(_reinforcements))
 
     @property
     def strategy_reinforcements(self) -> list[type[ReinforcementProfileProtocol]]:
