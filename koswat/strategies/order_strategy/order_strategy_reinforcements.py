@@ -41,12 +41,11 @@ class OrderStrategyReinforcements(StrategyReinforcementsProtocol):
     ) -> OrderStrategyReinforcements:
         _reinforcements = {
             StrategyReinforcementType(
-                reinforcement_type=type.reinforcement_type,
-                base_costs=type.base_costs,
-                ground_level_surface=type.ground_level_surface,
+                reinforcement_type=x.reinforcement_type,
+                base_costs=x.base_costs,
+                ground_level_surface=x.ground_level_surface,
             )
-            for loc in strategy_input.strategy_locations
-            for type in loc.strategy_reinforcement_type
+            for x in strategy_input.reinforcements
         }
         return cls(reinforcements=list(_reinforcements))
 
