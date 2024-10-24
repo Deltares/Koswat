@@ -1,0 +1,4911 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Cost report module - Koswat</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Cost report module";
+        var mkdocs_page_input_path = "reference/koswat_docstrings/cost_report.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Koswat docstrings</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="cost_report.html">Cost report module</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#koswat.cost_report.cost_report_protocol.CostReportProtocol">CostReportProtocol</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#infrastructure-cost-calculator">Infrastructure cost calculator</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.profile_zone_calculator.ProfileZoneCalculator">ProfileZoneCalculator</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.profile_zone_calculator.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureLocationCosts">InfrastructureLocationCosts</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator">InfrastructureProfileCostsCalculator</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.PointSurroundings">PointSurroundings</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.SurroundingsInfrastructure">SurroundingsInfrastructure</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator">InfrastructureProfileCostsCalculator</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.MultiInfrastructureProfileCostsCalculator">MultiInfrastructureProfileCostsCalculator</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.ProfileZoneCalculator">ProfileZoneCalculator</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.BuilderProtocol">BuilderProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.InfrastructureProfileCostsCalculator">InfrastructureProfileCostsCalculator</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.MultiInfrastructureProfileCostsCalculator">MultiInfrastructureProfileCostsCalculator</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.MultiInfrastructureProfileCostsCalculatorBuilder">MultiInfrastructureProfileCostsCalculatorBuilder</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.SurroundingsInfrastructure">SurroundingsInfrastructure</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quantity-cost-parameters-calculator">Quantity cost parameters calculator</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol">CostParameterProtocol</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#io">IO</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#summary">Summary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.koswat_summary_exporter.KoswatExporterProtocol">KoswatExporterProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.koswat_summary_exporter.KoswatSummary">KoswatSummary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter.KoswatExporterProtocol">KoswatExporterProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter.KoswatSummary">KoswatSummary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.BuilderProtocol">BuilderProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.CostParameterProtocol">CostParameterProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.KoswatSummary">KoswatSummary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.KoswatExporterProtocol">KoswatExporterProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.KoswatSummary">KoswatSummary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.SummaryInfrastructureCostsCsvFomBuilder">SummaryInfrastructureCostsCsvFomBuilder</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.BuilderProtocol">BuilderProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.InfrastructureLocationCosts">InfrastructureLocationCosts</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.KoswatSummary">KoswatSummary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.PointSurroundings">PointSurroundings</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.SummaryInfrastructureCostsCsvFomBuilder">SummaryInfrastructureCostsCsvFomBuilder</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter.KoswatExporterProtocol">KoswatExporterProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter.KoswatSummary">KoswatSummary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.BuilderProtocol">BuilderProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.KoswatSummary">KoswatSummary</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.PointSurroundings">PointSurroundings</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#">Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html" class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Reference &raquo;</li>
+          <li>Koswat docstrings &raquo;</li>
+      <li>Cost report module</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_docstrings/cost_report.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="cost-report-module">Cost report module<a class="headerlink" href="#cost-report-module" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.cost_report_protocol.CostReportProtocol" class="doc doc-heading">
+        <code>CostReportProtocol</code>
+
+
+<a href="#koswat.cost_report.cost_report_protocol.CostReportProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+  
+      <p>A <code>Protocol</code> defining the properties of a report in Koswat.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h2 id="infrastructure-cost-calculator">Infrastructure cost calculator<a class="headerlink" href="#infrastructure-cost-calculator" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.profile_zone_calculator.ProfileZoneCalculator" class="doc doc-heading">
+        <code>ProfileZoneCalculator</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.profile_zone_calculator.ProfileZoneCalculator" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculator to determine the width of zones <code>A</code> and <code>B</code> of a reinforced
+profile (<code>ReinforcementProfileProtocol</code>). It requires its original base
+profile to be in its definition.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.infrastructure.profile_zone_calculator.ProfileZoneCalculator.calculate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.infrastructure.profile_zone_calculator.ProfileZoneCalculator.calculate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the width of zones <code>A</code> and <code>B</code> for the defined instance of
+<code>ReinforcementProfileProtocol</code>. The calculation is as follows:
+- When <code>dh0</code> has not varied with respect to the base profile, then zones
+<code>A</code> and <code>B</code> are calculated.
+- When <code>dh0</code> has increased then only zone <code>B</code> is calculated.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>tuple[float, float]</code>
+          </td>
+          <td><p>tuple[float, float]: Calculated zone <code>A</code> and <code>B</code> respectively.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.profile_zone_calculator.ReinforcementProfileProtocol" class="doc doc-heading">
+        <code>ReinforcementProfileProtocol</code>
+
+
+<a href="#koswat.cost_report.infrastructure.profile_zone_calculator.ReinforcementProfileProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="koswat.dike.koswat_profile_protocol.KoswatProfileProtocol">KoswatProfileProtocol</span></code>, <code><span title="typing.Protocol">Protocol</span></code></p>
+
+  
+      <p>Extension of the <code>KoswatProfileProtocol</code> to define the properties of a calculated reinforcement.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureLocationCosts" class="doc doc-heading">
+        <code>InfrastructureLocationCosts</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureLocationCosts" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Simple data structure containing the results of the costs calculations
+for a given <code>ReinforcementProfileProtocol</code> profile.
+The values related to <code>zone_a</code> and <code>zone_b</code> are calculated in the
+<code>ProfileZoneCalculator</code>.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator" class="doc doc-heading">
+        <code>InfrastructureProfileCostsCalculator</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculator to generate all <code>InfrastructureLocationCosts</code> instances
+based on the locations of the contained infrastructure
+(<code>SurroundingsInfrastructure.points</code>) and the width of <code>zone_a</code> and
+<code>zone_b</code>.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator.calculate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate</span><span class="p">(</span><span class="n">zone_a_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">zone_b_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InfrastructureLocationCosts</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator.calculate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the costs affecting this instance's infrastructure
+at all points where it is present.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>zone_a_width</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>Width of zone type <code>A</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>zone_b_width</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>Width of zone type `B .</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.cost_report.infrastructure.infrastructure_location_costs.InfrastructureLocationCosts" href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureLocationCosts">InfrastructureLocationCosts</a>]</code>
+          </td>
+          <td><p>list[InfrastructureLocationCosts]: Resulting cost summaries.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.PointSurroundings" class="doc doc-heading">
+        <code>PointSurroundings</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.PointSurroundings" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Object representing a <code>meter</code> with <code>x</code>, <code>y</code> coordinates in a polder (or else).</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="n">__value</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Overriding of the "magic" equality operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Overriding of the "magic" hash operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.closest_obstacle" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">closest_obstacle</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.closest_obstacle" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be <code>NaN</code> (Not A Number), so that the value 0 is reserved for buildings at distance 0.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Distance to the closest surrounding.</p></td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_total_infrastructure_per_zone</span><span class="p">(</span><span class="o">*</span><span class="n">zone_limit_collection</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the total infrastructure width at each of the provided zones
+<code>zone_limit_collection</code> (<code>tuple[float, float]</code>).
+The zone limits are matched by rounding up their upper limit to the
+<code>surroundings_matrix</code> keys (distances to the <code>location</code> in the real world).
+When two zones have overlapping limits (as expected) the lower one will
+"claim" the corresponding surrounding distance.</p>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <ul>
+<li><code>zone_limit_collection</code> = (0, 4), (4, 11)</li>
+<li><code>surroundings_matrix</code> = {5: 1.5, 10: 3, 15: 6}</li>
+<li>"Taken" distances per zone:<ul>
+<li><code>(0, 4)</code> takes key <code>5</code>.</li>
+<li><code>(4, 11)</code> takes key(s) <code>10</code> and <code>15</code> because <code>5</code> was already taken.</li>
+</ul>
+</li>
+<li>Total infrastructure width at zones = <code>(1.5, 9)</code></li>
+</ul>
+</details>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[float]</code>
+          </td>
+          <td><p>list[float]: list with total width corresponding to each provided zone.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.SurroundingsInfrastructure" class="doc doc-heading">
+        <code>SurroundingsInfrastructure</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.SurroundingsInfrastructure" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol" href="dike/surroundings.html#koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol">KoswatSurroundingsProtocol</a></code></p>
+
+  
+      <p>Defines surroundings point collections that can be repaired or replaced.</p>
+<p>The <code>PointSurroundings</code> contain a matrix (dictionary) where the keys
+represent the distances to an obstacle, and the values a float representing
+how long that infrastructure is.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator" class="doc doc-heading">
+        <code>InfrastructureProfileCostsCalculator</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculator to generate all <code>InfrastructureLocationCosts</code> instances
+based on the locations of the contained infrastructure
+(<code>SurroundingsInfrastructure.points</code>) and the width of <code>zone_a</code> and
+<code>zone_b</code>.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator.calculate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate</span><span class="p">(</span><span class="n">zone_a_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">zone_b_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InfrastructureLocationCosts</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator.calculate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the costs affecting this instance's infrastructure
+at all points where it is present.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>zone_a_width</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>Width of zone type <code>A</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>zone_b_width</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>Width of zone type `B .</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.cost_report.infrastructure.infrastructure_location_costs.InfrastructureLocationCosts" href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureLocationCosts">InfrastructureLocationCosts</a>]</code>
+          </td>
+          <td><p>list[InfrastructureLocationCosts]: Resulting cost summaries.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.MultiInfrastructureProfileCostsCalculator" class="doc doc-heading">
+        <code>MultiInfrastructureProfileCostsCalculator</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.MultiInfrastructureProfileCostsCalculator" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculator that contains all possible "infrastructure" calculators
+(<code>InfrastructureProfileCostsCalculator</code>) one for each of the available
+infrastructures in the current <code>KoswatScenario</code>.
+Its <code>calculate</code> method only requires a reinforcement
+(<code>ReinforcementProfileProtocol</code>) to determine all infrastructures' costs.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.MultiInfrastructureProfileCostsCalculator.calculate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate</span><span class="p">(</span><span class="n">reinforced_profile</span><span class="p">:</span> <span class="n">ReinforcementProfileProtocol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InfrastructureLocationProfileCostReport</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.MultiInfrastructureProfileCostsCalculator.calculate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the costs related to appyling the provided <code>reinforcement_profile</code>
+at all the locations where an infrastructure is present. It first determines
+zone <code>A</code> and <code>B</code> and then provides their widths to the inner
+infrastructure calculators (<code>InfrastructureProfileCostsCalculator</code>).</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>reinforced_profile</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a></code>
+          </td>
+          <td><p>Reinforcement to be applied.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<span title="koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report.InfrastructureLocationProfileCostReport">InfrastructureLocationProfileCostReport</span>]</code>
+          </td>
+          <td><p>list[InfrastructureLocationProfileCostReport]: Collection of reports summarizing the cost-impact of a <code>reinforced_profile</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.ProfileZoneCalculator" class="doc doc-heading">
+        <code>ProfileZoneCalculator</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.ProfileZoneCalculator" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculator to determine the width of zones <code>A</code> and <code>B</code> of a reinforced
+profile (<code>ReinforcementProfileProtocol</code>). It requires its original base
+profile to be in its definition.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.infrastructure.profile_zone_calculator.ProfileZoneCalculator.calculate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.infrastructure.profile_zone_calculator.ProfileZoneCalculator.calculate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the width of zones <code>A</code> and <code>B</code> for the defined instance of
+<code>ReinforcementProfileProtocol</code>. The calculation is as follows:
+- When <code>dh0</code> has not varied with respect to the base profile, then zones
+<code>A</code> and <code>B</code> are calculated.
+- When <code>dh0</code> has increased then only zone <code>B</code> is calculated.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>tuple[float, float]</code>
+          </td>
+          <td><p>tuple[float, float]: Calculated zone <code>A</code> and <code>B</code> respectively.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.ReinforcementProfileProtocol" class="doc doc-heading">
+        <code>ReinforcementProfileProtocol</code>
+
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.ReinforcementProfileProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="koswat.dike.koswat_profile_protocol.KoswatProfileProtocol">KoswatProfileProtocol</span></code>, <code><span title="typing.Protocol">Protocol</span></code></p>
+
+  
+      <p>Extension of the <code>KoswatProfileProtocol</code> to define the properties of a calculated reinforcement.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.BuilderProtocol" class="doc doc-heading">
+        <code>BuilderProtocol</code>
+
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.BuilderProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">build</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Any</span></code>
+
+<a href="#koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Instantiates a concrete object to separate its initalization from the data structure.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Any</code></td>          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td><p>Intance of a created object within Koswat domain.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.InfrastructureProfileCostsCalculator" class="doc doc-heading">
+        <code>InfrastructureProfileCostsCalculator</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.InfrastructureProfileCostsCalculator" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculator to generate all <code>InfrastructureLocationCosts</code> instances
+based on the locations of the contained infrastructure
+(<code>SurroundingsInfrastructure.points</code>) and the width of <code>zone_a</code> and
+<code>zone_b</code>.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator.calculate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate</span><span class="p">(</span><span class="n">zone_a_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">zone_b_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InfrastructureLocationCosts</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureProfileCostsCalculator.calculate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the costs affecting this instance's infrastructure
+at all points where it is present.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>zone_a_width</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>Width of zone type <code>A</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>zone_b_width</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td><p>Width of zone type `B .</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.cost_report.infrastructure.infrastructure_location_costs.InfrastructureLocationCosts" href="#koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator.InfrastructureLocationCosts">InfrastructureLocationCosts</a>]</code>
+          </td>
+          <td><p>list[InfrastructureLocationCosts]: Resulting cost summaries.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.MultiInfrastructureProfileCostsCalculator" class="doc doc-heading">
+        <code>MultiInfrastructureProfileCostsCalculator</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.MultiInfrastructureProfileCostsCalculator" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculator that contains all possible "infrastructure" calculators
+(<code>InfrastructureProfileCostsCalculator</code>) one for each of the available
+infrastructures in the current <code>KoswatScenario</code>.
+Its <code>calculate</code> method only requires a reinforcement
+(<code>ReinforcementProfileProtocol</code>) to determine all infrastructures' costs.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.MultiInfrastructureProfileCostsCalculator.calculate" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">calculate</span><span class="p">(</span><span class="n">reinforced_profile</span><span class="p">:</span> <span class="n">ReinforcementProfileProtocol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">InfrastructureLocationProfileCostReport</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator.MultiInfrastructureProfileCostsCalculator.calculate" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the costs related to appyling the provided <code>reinforcement_profile</code>
+at all the locations where an infrastructure is present. It first determines
+zone <code>A</code> and <code>B</code> and then provides their widths to the inner
+infrastructure calculators (<code>InfrastructureProfileCostsCalculator</code>).</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>reinforced_profile</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a></code>
+          </td>
+          <td><p>Reinforcement to be applied.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<span title="koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report.InfrastructureLocationProfileCostReport">InfrastructureLocationProfileCostReport</span>]</code>
+          </td>
+          <td><p>list[InfrastructureLocationProfileCostReport]: Collection of reports summarizing the cost-impact of a <code>reinforced_profile</code>.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.MultiInfrastructureProfileCostsCalculatorBuilder" class="doc doc-heading">
+        <code>MultiInfrastructureProfileCostsCalculatorBuilder</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.MultiInfrastructureProfileCostsCalculatorBuilder" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="koswat.core.protocols.builder_protocol.BuilderProtocol" href="core/protocols.html#koswat.core.protocols.builder_protocol.BuilderProtocol">BuilderProtocol</a></code></p>
+
+  
+      <p>Builder to set up "fix" information such as costs derived from the koswat
+settings (<code>InfraCostsEnum</code>, <code>SurtaxFactorEnum</code>) which directly determines the
+zone <code>A</code> and/or <code>B</code> costs that will be applied for each infrastructure.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.SurroundingsInfrastructure" class="doc doc-heading">
+        <code>SurroundingsInfrastructure</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder.SurroundingsInfrastructure" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol" href="dike/surroundings.html#koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol">KoswatSurroundingsProtocol</a></code></p>
+
+  
+      <p>Defines surroundings point collections that can be repaired or replaced.</p>
+<p>The <code>PointSurroundings</code> contain a matrix (dictionary) where the keys
+represent the distances to an obstacle, and the values a float representing
+how long that infrastructure is.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h2 id="quantity-cost-parameters-calculator">Quantity cost parameters calculator<a class="headerlink" href="#quantity-cost-parameters-calculator" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol" class="doc doc-heading">
+        <code>CostParameterProtocol</code>
+
+
+<a href="#koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">total_cost</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The total cost (quantity * unit cost)</p>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost_with_surtax" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">total_cost_with_surtax</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost_with_surtax" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The total cost including surtaxes</p>
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h2 id="io">IO<a class="headerlink" href="#io" title="Permanent link">&para;</a></h2>
+<h3 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.koswat_summary_exporter.KoswatExporterProtocol" class="doc doc-heading">
+        <code>KoswatExporterProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.koswat_summary_exporter.KoswatExporterProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">export</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+<a href="#koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Exports an object model into a concrete file format.</p>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.koswat_summary_exporter.KoswatSummary" class="doc doc-heading">
+        <code>KoswatSummary</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.koswat_summary_exporter.KoswatSummary" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infrastructure_cost</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the infrastructure cost for those locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Infrastructure cost.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_locations_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+          </td>
+          <td><p>list[PointSurroundings]: List of locations.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_report_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiLocationProfileCostReport</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the report for a specific profile type.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.cost_report.multi_location_profile.MultiLocationProfileCostReport" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a> | None</code>
+          </td>
+          <td><p>MultiLocationProfileCostReport | None: Report for the profile type.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h4 id="summary-costs">Summary costs<a class="headerlink" href="#summary-costs" title="Permanent link">&para;</a></h4>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter.KoswatExporterProtocol" class="doc doc-heading">
+        <code>KoswatExporterProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter.KoswatExporterProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">export</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+<a href="#koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Exports an object model into a concrete file format.</p>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter.KoswatSummary" class="doc doc-heading">
+        <code>KoswatSummary</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_exporter.KoswatSummary" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infrastructure_cost</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the infrastructure cost for those locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Infrastructure cost.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_locations_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+          </td>
+          <td><p>list[PointSurroundings]: List of locations.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_report_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiLocationProfileCostReport</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the report for a specific profile type.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.cost_report.multi_location_profile.MultiLocationProfileCostReport" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a> | None</code>
+          </td>
+          <td><p>MultiLocationProfileCostReport | None: Report for the profile type.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.BuilderProtocol" class="doc doc-heading">
+        <code>BuilderProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.BuilderProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">build</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Any</span></code>
+
+<a href="#koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Instantiates a concrete object to separate its initalization from the data structure.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Any</code></td>          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td><p>Intance of a created object within Koswat domain.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.CostParameterProtocol" class="doc doc-heading">
+        <code>CostParameterProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.CostParameterProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">total_cost</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The total cost (quantity * unit cost)</p>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost_with_surtax" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">total_cost_with_surtax</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.cost_report.profile.quantity_cost_parameters.CostParameterProtocol.total_cost_with_surtax" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The total cost including surtaxes</p>
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.KoswatSummary" class="doc doc-heading">
+        <code>KoswatSummary</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.KoswatSummary" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infrastructure_cost</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the infrastructure cost for those locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Infrastructure cost.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_locations_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+          </td>
+          <td><p>list[PointSurroundings]: List of locations.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_report_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiLocationProfileCostReport</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the report for a specific profile type.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.cost_report.multi_location_profile.MultiLocationProfileCostReport" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a> | None</code>
+          </td>
+          <td><p>MultiLocationProfileCostReport | None: Report for the profile type.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.ReinforcementProfileProtocol" class="doc doc-heading">
+        <code>ReinforcementProfileProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_costs.summary_costs_csv_fom_builder.ReinforcementProfileProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="koswat.dike.koswat_profile_protocol.KoswatProfileProtocol">KoswatProfileProtocol</span></code>, <code><span title="typing.Protocol">Protocol</span></code></p>
+
+  
+      <p>Extension of the <code>KoswatProfileProtocol</code> to define the properties of a calculated reinforcement.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h4 id="summary-infrastructure-costs">Summary infrastructure costs<a class="headerlink" href="#summary-infrastructure-costs" title="Permanent link">&para;</a></h4>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.KoswatExporterProtocol" class="doc doc-heading">
+        <code>KoswatExporterProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.KoswatExporterProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">export</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+<a href="#koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Exports an object model into a concrete file format.</p>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.KoswatSummary" class="doc doc-heading">
+        <code>KoswatSummary</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.KoswatSummary" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infrastructure_cost</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the infrastructure cost for those locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Infrastructure cost.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_locations_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+          </td>
+          <td><p>list[PointSurroundings]: List of locations.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_report_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiLocationProfileCostReport</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the report for a specific profile type.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.cost_report.multi_location_profile.MultiLocationProfileCostReport" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a> | None</code>
+          </td>
+          <td><p>MultiLocationProfileCostReport | None: Report for the profile type.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.SummaryInfrastructureCostsCsvFomBuilder" class="doc doc-heading">
+        <code>SummaryInfrastructureCostsCsvFomBuilder</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_exporter.SummaryInfrastructureCostsCsvFomBuilder" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="koswat.core.protocols.builder_protocol.BuilderProtocol" href="core/protocols.html#koswat.core.protocols.builder_protocol.BuilderProtocol">BuilderProtocol</a></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.BuilderProtocol" class="doc doc-heading">
+        <code>BuilderProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.BuilderProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">build</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Any</span></code>
+
+<a href="#koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Instantiates a concrete object to separate its initalization from the data structure.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Any</code></td>          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td><p>Intance of a created object within Koswat domain.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.InfrastructureLocationCosts" class="doc doc-heading">
+        <code>InfrastructureLocationCosts</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.InfrastructureLocationCosts" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Simple data structure containing the results of the costs calculations
+for a given <code>ReinforcementProfileProtocol</code> profile.
+The values related to <code>zone_a</code> and <code>zone_b</code> are calculated in the
+<code>ProfileZoneCalculator</code>.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.KoswatSummary" class="doc doc-heading">
+        <code>KoswatSummary</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.KoswatSummary" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infrastructure_cost</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the infrastructure cost for those locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Infrastructure cost.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_locations_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+          </td>
+          <td><p>list[PointSurroundings]: List of locations.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_report_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiLocationProfileCostReport</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the report for a specific profile type.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.cost_report.multi_location_profile.MultiLocationProfileCostReport" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a> | None</code>
+          </td>
+          <td><p>MultiLocationProfileCostReport | None: Report for the profile type.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport" class="doc doc-heading">
+        <code>MultiLocationProfileCostReport</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="koswat.cost_report.cost_report_protocol.CostReportProtocol" href="#koswat.cost_report.cost_report_protocol.CostReportProtocol">CostReportProtocol</a></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.multi_location_profile.multi_location_profile_cost_report.MultiLocationProfileCostReport.get_infra_costs_per_location" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infra_costs_per_location</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.multi_location_profile.multi_location_profile_cost_report.MultiLocationProfileCostReport.get_infra_costs_per_location" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the total costs related to infrastructures at each of the points for
+the profile type in <code>profile_cost_report</code></p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>dict[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>, float]</code>
+          </td>
+          <td><p>dict[PointSurroundings, float]: Total cost per location.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.cost_report.multi_location_profile.multi_location_profile_cost_report.MultiLocationProfileCostReport.total_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">total_cost</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.cost_report.multi_location_profile.multi_location_profile_cost_report.MultiLocationProfileCostReport.total_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculates the cost of the measure for all possible locations,
+regardless whether that measure is chosen by the order strategy or not.</p>
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.PointSurroundings" class="doc doc-heading">
+        <code>PointSurroundings</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.PointSurroundings" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Object representing a <code>meter</code> with <code>x</code>, <code>y</code> coordinates in a polder (or else).</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="n">__value</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Overriding of the "magic" equality operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Overriding of the "magic" hash operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.closest_obstacle" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">closest_obstacle</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.closest_obstacle" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be <code>NaN</code> (Not A Number), so that the value 0 is reserved for buildings at distance 0.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Distance to the closest surrounding.</p></td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_total_infrastructure_per_zone</span><span class="p">(</span><span class="o">*</span><span class="n">zone_limit_collection</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the total infrastructure width at each of the provided zones
+<code>zone_limit_collection</code> (<code>tuple[float, float]</code>).
+The zone limits are matched by rounding up their upper limit to the
+<code>surroundings_matrix</code> keys (distances to the <code>location</code> in the real world).
+When two zones have overlapping limits (as expected) the lower one will
+"claim" the corresponding surrounding distance.</p>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <ul>
+<li><code>zone_limit_collection</code> = (0, 4), (4, 11)</li>
+<li><code>surroundings_matrix</code> = {5: 1.5, 10: 3, 15: 6}</li>
+<li>"Taken" distances per zone:<ul>
+<li><code>(0, 4)</code> takes key <code>5</code>.</li>
+<li><code>(4, 11)</code> takes key(s) <code>10</code> and <code>15</code> because <code>5</code> was already taken.</li>
+</ul>
+</li>
+<li>Total infrastructure width at zones = <code>(1.5, 9)</code></li>
+</ul>
+</details>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[float]</code>
+          </td>
+          <td><p>list[float]: list with total width corresponding to each provided zone.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.SummaryInfrastructureCostsCsvFomBuilder" class="doc doc-heading">
+        <code>SummaryInfrastructureCostsCsvFomBuilder</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.SummaryInfrastructureCostsCsvFomBuilder" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><a class="autorefs autorefs-internal" title="koswat.core.protocols.builder_protocol.BuilderProtocol" href="core/protocols.html#koswat.core.protocols.builder_protocol.BuilderProtocol">BuilderProtocol</a></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h4 id="summary-locations">Summary locations<a class="headerlink" href="#summary-locations" title="Permanent link">&para;</a></h4>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter.KoswatExporterProtocol" class="doc doc-heading">
+        <code>KoswatExporterProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter.KoswatExporterProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">export</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+<a href="#koswat.core.io.koswat_exporter_protocol.KoswatExporterProtocol.export" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Exports an object model into a concrete file format.</p>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter.KoswatSummary" class="doc doc-heading">
+        <code>KoswatSummary</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_exporter.KoswatSummary" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infrastructure_cost</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the infrastructure cost for those locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Infrastructure cost.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_locations_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+          </td>
+          <td><p>list[PointSurroundings]: List of locations.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_report_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiLocationProfileCostReport</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the report for a specific profile type.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.cost_report.multi_location_profile.MultiLocationProfileCostReport" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a> | None</code>
+          </td>
+          <td><p>MultiLocationProfileCostReport | None: Report for the profile type.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.BuilderProtocol" class="doc doc-heading">
+        <code>BuilderProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.BuilderProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">build</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Any</span></code>
+
+<a href="#koswat.core.protocols.builder_protocol.BuilderProtocol.build" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Instantiates a concrete object to separate its initalization from the data structure.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>Any</code></td>          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td><p>Intance of a created object within Koswat domain.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.KoswatSummary" class="doc doc-heading">
+        <code>KoswatSummary</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.KoswatSummary" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_infrastructure_cost</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_infrastructure_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the infrastructure cost for those locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Infrastructure cost.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_locations_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_locations_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the locations for which a specific profile type is selected.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" href="dike/surroundings.html#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+          </td>
+          <td><p>list[PointSurroundings]: List of locations.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_report_by_profile</span><span class="p">(</span><span class="n">profile_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiLocationProfileCostReport</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+<a href="#koswat.cost_report.summary.koswat_summary.KoswatSummary.get_report_by_profile" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get the report for a specific profile type.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>profile_type</code></td>
+          <td>
+                <code><span title="typing.Type">Type</span>[<a class="autorefs autorefs-internal" title="koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>
+          </td>
+          <td><p>Type of reinforcement profile.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="koswat.cost_report.multi_location_profile.MultiLocationProfileCostReport" href="#koswat.cost_report.io.summary.summary_infrastructure_costs.summary_infrastructure_costs_csv_fom_builder.MultiLocationProfileCostReport">MultiLocationProfileCostReport</a> | None</code>
+          </td>
+          <td><p>MultiLocationProfileCostReport | None: Report for the profile type.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.PointSurroundings" class="doc doc-heading">
+        <code>PointSurroundings</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.PointSurroundings" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Object representing a <code>meter</code> with <code>x</code>, <code>y</code> coordinates in a polder (or else).</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="n">__value</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Overriding of the "magic" equality operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Overriding of the "magic" hash operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.closest_obstacle" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">closest_obstacle</span><span class="p">:</span> <span class="nb">float</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.closest_obstacle" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be <code>NaN</code> (Not A Number), so that the value 0 is reserved for buildings at distance 0.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>float</code></td>          <td>
+                <code>float</code>
+          </td>
+          <td><p>Distance to the closest surrounding.</p></td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_total_infrastructure_per_zone</span><span class="p">(</span><span class="o">*</span><span class="n">zone_limit_collection</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the total infrastructure width at each of the provided zones
+<code>zone_limit_collection</code> (<code>tuple[float, float]</code>).
+The zone limits are matched by rounding up their upper limit to the
+<code>surroundings_matrix</code> keys (distances to the <code>location</code> in the real world).
+When two zones have overlapping limits (as expected) the lower one will
+"claim" the corresponding surrounding distance.</p>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <ul>
+<li><code>zone_limit_collection</code> = (0, 4), (4, 11)</li>
+<li><code>surroundings_matrix</code> = {5: 1.5, 10: 3, 15: 6}</li>
+<li>"Taken" distances per zone:<ul>
+<li><code>(0, 4)</code> takes key <code>5</code>.</li>
+<li><code>(4, 11)</code> takes key(s) <code>10</code> and <code>15</code> because <code>5</code> was already taken.</li>
+</ul>
+</li>
+<li>Total infrastructure width at zones = <code>(1.5, 9)</code></li>
+</ul>
+</details>
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[float]</code>
+          </td>
+          <td><p>list[float]: list with total width corresponding to each provided zone.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.ReinforcementProfileProtocol" class="doc doc-heading">
+        <code>ReinforcementProfileProtocol</code>
+
+
+<a href="#koswat.cost_report.io.summary.summary_locations.summary_locations_csv_fom_builder.ReinforcementProfileProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="koswat.dike.koswat_profile_protocol.KoswatProfileProtocol">KoswatProfileProtocol</span></code>, <code><span title="typing.Protocol">Protocol</span></code></p>
+
+  
+      <p>Extension of the <code>KoswatProfileProtocol</code> to define the properties of a calculated reinforcement.</p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../koswat_surroundings.html" class="btn btn-neutral float-left" title="Surroundings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="koswat_handler.html" class="btn btn-neutral float-right" title="Koswat handler">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../koswat_surroundings.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="koswat_handler.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
