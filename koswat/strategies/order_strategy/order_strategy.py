@@ -1,25 +1,14 @@
 from __future__ import annotations
 
-from typing import Type
-
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+    StabilityWallReinforcementProfile,
+    VPSReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
-    PipingWallReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
-    SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
-    StabilityWallReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
-    VPSReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy_buffering import (
     OrderStrategyBuffering,
@@ -37,8 +26,16 @@ from koswat.strategies.strategy_protocol import StrategyProtocol
 class OrderStrategy(StrategyProtocol):
     @staticmethod
     def get_default_order_for_reinforcements() -> list[
-        Type[ReinforcementProfileProtocol]
+        type[ReinforcementProfileProtocol]
     ]:
+        """
+        Give the default order for reinforcements types,
+        assuming they are sorted from cheapest to most expensive
+        and least restrictive to most restrictive.
+
+        Returns:
+            list[type[ReinforcementProfileProtocol]]: list of reinforcement types
+        """
         return [
             SoilReinforcementProfile,
             VPSReinforcementProfile,
@@ -47,10 +44,25 @@ class OrderStrategy(StrategyProtocol):
             CofferdamReinforcementProfile,
         ]
 
+    def get_strategy_order_for_reinforcements(
+        self,
+    ) -> list[type[ReinforcementProfileProtocol]]:
+        """
+        Give the ordered reinforcement types for this strategy,
+        from cheapest to most expensive,
+        possibly omitting reinforcement types that are more expensive and more restrictive than others.
+        Cofferdam should always be the last reinforcement type.
+
+        Returns:
+            list[type[ReinforcementProfileProtocol]]: list of reinforcement types
+        """
+        # TODO Implement this method
+        return self.get_default_order_for_reinforcements()
+
     @staticmethod
     def get_strategy_reinforcements(
         strategy_locations: list[StrategyLocationInput],
-        selection_order: list[Type[ReinforcementProfileProtocol]],
+        selection_order: list[type[ReinforcementProfileProtocol]],
     ) -> list[StrategyLocationReinforcement]:
         _strategy_reinforcements = []
         for _strategy_location in strategy_locations:
@@ -72,7 +84,7 @@ class OrderStrategy(StrategyProtocol):
     def apply_strategy(
         self, strategy_input: StrategyInput
     ) -> list[StrategyLocationReinforcement]:
-        _reinforcement_order = self.get_default_order_for_reinforcements()
+        _reinforcement_order = self.get_strategy_order_for_reinforcements()
         _strategy_reinforcements = self.get_strategy_reinforcements(
             strategy_input.strategy_locations, _reinforcement_order
         )

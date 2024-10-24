@@ -11,13 +11,13 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class OrderStrategyClustering(OrderStrategyBase):
-    reinforcement_order: list[ReinforcementProfileProtocol]
+    reinforcement_order: list[type[ReinforcementProfileProtocol]]
     reinforcement_min_length: float
 
     @classmethod
     def with_strategy(
         cls,
-        reinforcement_order: list[ReinforcementProfileProtocol],
+        reinforcement_order: list[type[ReinforcementProfileProtocol]],
         reinforcement_min_length: float,
     ):
         _this = cls()
