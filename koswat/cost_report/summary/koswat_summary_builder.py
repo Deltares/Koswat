@@ -28,6 +28,9 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_reinforcement_type_costs import (
+    StrategyReinforcementTypeCosts,
+)
 
 
 @dataclass
@@ -99,8 +102,17 @@ class KoswatSummaryBuilder(BuilderProtocol):
             available_locations=available_locations,
             locations_profile_report_list=locations_profile_report_list,
         ).build()
+        _reinforcements = [
+            StrategyReinforcementTypeCosts(
+                reinforcement_type=type(x.profile_cost_report.reinforced_profile),
+                base_costs=x.profile_cost_report.total_cost,
+                ground_level_surface=x.profile_cost_report.reinforced_profile.new_ground_level_surface,
+            )
+            for x in locations_profile_report_list
+        ]
         _strategy_input = StrategyInput(
             strategy_locations=_matrix,
+            reinforcements=_reinforcements,
             reinforcement_min_buffer=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer,
             reinforcement_min_length=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation,
         )

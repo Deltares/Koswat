@@ -3,14 +3,15 @@ from typing import Iterator, Type
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike_reinforcements.reinforcement_profile import (
+    CofferdamReinforcementProfile,
+    PipingWallReinforcementProfile,
+    SoilReinforcementProfile,
+    StabilityWallReinforcementProfile,
+    VPSReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
-    SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
-    StabilityWallReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
@@ -25,6 +26,14 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 
 @pytest.fixture(name="example_strategy_input")
 def _get_example_strategy_input() -> Iterator[StrategyInput]:
+    _default_reinforcements = [
+        SoilReinforcementProfile,
+        VPSReinforcementProfile,
+        PipingWallReinforcementProfile,
+        StabilityWallReinforcementProfile,
+        CofferdamReinforcementProfile,
+    ]
+
     def _to_strategy_location(
         idx: int, reinforcement_type: list[Type[ReinforcementProfileProtocol]]
     ) -> StrategyLocationInput:
@@ -55,8 +64,13 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         _to_strategy_location(_idx, _rt_list)
         for _idx, _rt_list in enumerate(_initial_state_per_location)
     ]
+    _reinforcements = [
+        StrategyReinforcementTypeCosts(reinforcement_type=_rt)
+        for _rt in _default_reinforcements
+    ]
     yield StrategyInput(
         strategy_locations=_strategy_locations,
+        reinforcements=_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )

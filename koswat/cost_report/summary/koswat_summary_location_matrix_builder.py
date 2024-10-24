@@ -43,7 +43,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
         _dict_matrix = defaultdict(create_strategy_location_reinforcement_costs)
         for _location in locations_profile.report_locations:
-            _dict_matrix[_location].infastructure_costs = _infra_costs.get(
+            _dict_matrix[_location].infrastructure_costs = _infra_costs.get(
                 _location, 0.0
             )
         return dict(_dict_matrix)

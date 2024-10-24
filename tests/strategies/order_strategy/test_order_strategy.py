@@ -1,16 +1,8 @@
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
     VPSReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
@@ -22,6 +14,14 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class TestOrderStrategy:
+    _default_reinforcements = [
+        SoilReinforcementProfile,
+        VPSReinforcementProfile,
+        PipingWallReinforcementProfile,
+        StabilityWallReinforcementProfile,
+        CofferdamReinforcementProfile,
+    ]
+
     def test_initialize(self):
         # This test is just to ensure the design principle
         # of parameterless constructors is met.
@@ -30,19 +30,27 @@ class TestOrderStrategy:
 
     def test_get_default_order_for_reinforcements(self):
         # 1. Define test data.
-        _expected_result = [
-            SoilReinforcementProfile,
-            VPSReinforcementProfile,
-            PipingWallReinforcementProfile,
-            StabilityWallReinforcementProfile,
-            CofferdamReinforcementProfile,
-        ]
+        _expected_result = self._default_reinforcements
 
         # 2. Run test.
         _result = OrderStrategy.get_default_order_for_reinforcements()
 
         # 3. Verify expectations
         assert _result == _expected_result
+
+    def test_get_strategy_order_for_reinforcements(
+        self,
+    ):
+        # 1. Define test data.
+        _expected_result = self._default_reinforcements
+        _strategy = OrderStrategy()
+
+        # 2. Run test.
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements()
+
+        # 3. Verify expectations
+        assert _reinforcements == _expected_result
+        assert _reinforcements[-1] == CofferdamReinforcementProfile
 
     def test__get_strategy_reinforcements_given_example(
         self, example_strategy_input: StrategyInput
