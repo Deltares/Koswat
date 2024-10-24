@@ -44,6 +44,7 @@ class TestKoswatSummaryLocationMatrixBuilder:
     def test_given_profile_report_list_then_returns_expected_matrix(self):
         class MyMockedReinforcementProfile(ReinforcementProfileProtocol):
             output_name: str = "MockedReinforcementProfile"
+            new_ground_level_surface: float = 42.0
 
         # 1. Define test data.
         _section = "A"

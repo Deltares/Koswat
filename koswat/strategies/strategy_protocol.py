@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -6,6 +6,7 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 
 
+@runtime_checkable
 class StrategyProtocol(Protocol):
     def apply_strategy(
         self,

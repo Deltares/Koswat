@@ -39,3 +39,13 @@ class StrategyLocationInput:
         return [
             _slr.reinforcement_type for _slr in self.strategy_reinforcement_type_costs
         ]
+
+    def get_reinforcement_costs(
+        self, reinforcement_type: type[ReinforcementProfileProtocol]
+    ) -> float:
+        for _srtc in self.strategy_reinforcement_type_costs:
+            if _srtc.reinforcement_type == reinforcement_type:
+                return _srtc.total_costs
+        raise ValueError(
+            f"Reinforcement {reinforcement_type.output_name} not available, costs cannot be computed."
+        )
