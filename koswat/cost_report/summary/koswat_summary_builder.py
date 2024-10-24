@@ -20,14 +20,15 @@ from koswat.cost_report.summary.koswat_summary_location_matrix_builder import (
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
+from koswat.strategies.strategy_reinforcement_type import StrategyReinforcementType
 
 
 @dataclass
@@ -94,13 +95,22 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self,
         locations_profile_report_list: list[MultiLocationProfileCostReport],
         available_locations: list[PointSurroundings],
-    ) -> dict[PointSurroundings, ReinforcementProfile]:
+    ) -> list[StrategyLocationReinforcement]:
         _matrix = KoswatSummaryLocationMatrixBuilder(
             available_locations=available_locations,
             locations_profile_report_list=locations_profile_report_list,
         ).build()
+        _reinforcements = [
+            StrategyReinforcementType(
+                reinforcement_type=type(x.profile_cost_report.reinforced_profile),
+                base_costs=x.profile_cost_report.total_cost,
+                ground_level_surface=x.profile_cost_report.reinforced_profile.new_ground_level_surface,
+            )
+            for x in locations_profile_report_list
+        ]
         _strategy_input = StrategyInput(
             strategy_locations=_matrix,
+            reinforcements=_reinforcements,
             reinforcement_min_buffer=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer,
             reinforcement_min_length=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation,
         )
