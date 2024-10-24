@@ -13,13 +13,6 @@ class StrategyReinforcementType:
     infastructure_costs: float = 0.0
     ground_level_surface: float = 0.0
 
-    def __hash__(self) -> int:
-        """
-        Overriding of the "magic" hash operator required
-        so that `StrategyReinforcementType` can be used as a key in a python dict or set.
-        """
-        return hash((self.reinforcement_type))
-
     @property
     def total_costs(self) -> float:
         """

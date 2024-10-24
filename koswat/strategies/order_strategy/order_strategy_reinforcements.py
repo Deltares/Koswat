@@ -39,15 +39,15 @@ class OrderStrategyReinforcements(StrategyReinforcementsProtocol):
     def from_strategy_input(
         cls, strategy_input: StrategyInput
     ) -> OrderStrategyReinforcements:
-        _reinforcements = {
+        _reinforcements = [
             StrategyReinforcementType(
                 reinforcement_type=x.reinforcement_type,
                 base_costs=x.base_costs,
                 ground_level_surface=x.ground_level_surface,
             )
             for x in strategy_input.reinforcements
-        }
-        return cls(reinforcements=list(_reinforcements))
+        ]
+        return cls(reinforcements=_reinforcements)
 
     @property
     def strategy_reinforcements(self) -> list[type[ReinforcementProfileProtocol]]:
