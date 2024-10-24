@@ -32,7 +32,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         StrategyReinforcementTypeCosts(
             reinforcement_type=_reinforcement,
             base_costs=(10**_idx) * 42,
-            infastructure_costs=100 ** (len(_reinforcement_type_default_order) - _idx)
+            infrastructure_costs=100 ** (len(_reinforcement_type_default_order) - _idx)
             * 42,  # Dramatic infra costs to verify functionality!
         )
         for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
