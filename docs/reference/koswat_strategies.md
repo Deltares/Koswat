@@ -222,3 +222,14 @@ Resulting cluster:
         (4, ["Location_007","Location_008","Location_009",]),
     ]
 ```
+
+### Infrastructure priority
+
+This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to a cheaper one when considering also (possible) infrastructure costs. This strategy works under no order assumption, thus it only modifies the selected reinforcement if it can be applied to all the points of its cluster. Furthermore, it DOES NOT apply more than one iteration, therefore in case of creating neighbor clusters of the same type they will remain as that. In steps, this is what it does:
+
+1. Run the [order based strategy](#order-based-default).
+2. Get common available measures for each cluster an their costs when applied at the cluster.
+3. Set the **cheapest** common available measure per cluster.
+
+####  Infrastructure priority example
+...
