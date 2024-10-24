@@ -15,7 +15,9 @@ class TestKoswatSummaryExporter:
         assert isinstance(_exporter, KoswatExporterProtocol)
 
     def test_koswat_summary_exporter_export_given_valid_data(
-        self, valid_mocked_summary: KoswatSummary, request: pytest.FixtureRequest
+        self,
+        valid_clusters_mocked_summary: KoswatSummary,
+        request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
         _test_dir = test_results.joinpath(request.node.name)
@@ -26,7 +28,7 @@ class TestKoswatSummaryExporter:
         _expected_locations_summary = _test_dir.joinpath("summary_locations.csv")
 
         # 2. Run test
-        KoswatSummaryExporter().export(valid_mocked_summary, _test_dir)
+        KoswatSummaryExporter().export(valid_clusters_mocked_summary, _test_dir)
 
         # 3. Validate results
         assert _expected_costs_summary.exists()

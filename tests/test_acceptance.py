@@ -193,6 +193,10 @@ class TestAcceptance:
             SurroundingsWrapper, KoswatCostsSettings, Path
         ],
     ):
+        """
+        IMPORTANT! When these tests fail in TC they make the build stall
+        for a (yet) unknown reason.
+        """
         # 1. Define test data.
         (
             _surroundings_wrapper,
