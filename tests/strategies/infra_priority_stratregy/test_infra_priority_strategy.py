@@ -1,6 +1,10 @@
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
 )
+from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
 from koswat.strategies.strategy_protocol import StrategyProtocol
 
 
@@ -12,3 +16,35 @@ class TestInfraPriorityStrategy:
         # 2. Verify expectations.
         assert isinstance(_strategy, InfraPriorityStrategy)
         assert isinstance(_strategy, StrategyProtocol)
+
+    def test_given_example_when_apply_strategy_then_gets_new_ones(
+        self, example_strategy_input: StrategyInput
+    ):
+        # 1. Define test data.
+        assert isinstance(example_strategy_input, StrategyInput)
+
+        # 2. Run test.
+        _strategy_result = InfraPriorityStrategy().apply_strategy(
+            example_strategy_input
+        )
+
+        # 3. Verify final expectations.
+        assert isinstance(_strategy_result, list)
+        assert len(_strategy_result) == len(example_strategy_input.strategy_locations)
+        assert all(
+            isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
+        )
+
+        # Basically the same checks as in `test__apply_min_distance_given_example`.
+        assert all(
+            _sr.selected_measure == SoilReinforcementProfile
+            for _sr in _strategy_result[0:2]
+        )
+        assert all(
+            _sr.selected_measure == StabilityWallReinforcementProfile
+            for _sr in _strategy_result[2:7]
+        )
+        assert all(
+            _sr.selected_measure == CofferdamReinforcementProfile
+            for _sr in _strategy_result[7:]
+        )
