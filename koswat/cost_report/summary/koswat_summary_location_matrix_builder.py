@@ -7,8 +7,8 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
     MultiLocationProfileCostReport,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.strategies.strategy_input import (
-    StrategyLocationInput,
+from koswat.strategies.strategy_input import StrategyLocationInput
+from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
 

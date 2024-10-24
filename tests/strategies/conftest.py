@@ -13,13 +13,13 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
     StabilityWallReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
-from koswat.strategies.strategy_input import (
-    StrategyInput,
-    StrategyLocationInput,
-    StrategyReinforcementTypeCosts,
-)
+from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
+)
+from koswat.strategies.strategy_reinforcement_type_costs import (
+    StrategyReinforcementTypeCosts,
 )
 
 
