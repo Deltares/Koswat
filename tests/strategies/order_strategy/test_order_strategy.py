@@ -40,13 +40,16 @@ class TestOrderStrategy:
 
     def test_get_strategy_order_for_reinforcements(
         self,
+        example_strategy_input: StrategyInput,
     ):
         # 1. Define test data.
-        _expected_result = self._default_reinforcements
+        _expected_result = [SoilReinforcementProfile, CofferdamReinforcementProfile]
         _strategy = OrderStrategy()
 
         # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements()
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
+            example_strategy_input
+        )
 
         # 3. Verify expectations
         assert _reinforcements == _expected_result
