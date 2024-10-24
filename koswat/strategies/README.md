@@ -1,15 +1,16 @@
 # Strategies
 
-This modules contains the logic to choose which measure will be applied for a given dike traject. A strategy follows the `StrategyProtocol` and it's applied with the method `apply_strategy`, which expects a strategy input (`StrategyInput`) and returns a mapping (`StrategyLocationReinforcement`) between a location(`PointSurroundings`) and the selected reinforcement (`ReinforcementProtocol`) .
+This modules contains the logic to choose which measure will be applied for a given dike traject. A strategy follows the `StrategyProtocol` and it's applied with the method `apply_strategy`, which expects a strategy input (`StrategyInput`) and returns a mapping (`StrategyLocationReinforcement`) between a location(`PointSurroundings`) and the selected reinforcement (`ReinforcementProfileProtocol`) .
 
 - `StrategyInput`, wraps all required properties to apply a strategy: 
     - strategy_locations (`list[StrategyLocationInput]`), contains all the available reinforcements that can be applied at each location and their related costs.
+    - strategy_reinforcement_type_costs (`list[StrategyReinforcementTypeCosts]`), all the reinforcements that can be used at this location and their related costs and width.
     - structure_min_buffer (`float`), how many extra meters a structure requires to support its reinforcement.
     - structure_min_length (`float`), how many minimal meters are required for a structure to "exist". This rule can, at times, have certain exceptions.
 
 - `StrategyLocationInput`, gathers all the input required for a strategy to determine which reinforcement can be applied based on its location (`point_surrounding`) and `available_reinforcements`.
     - point_surrounding (`PointSurroundings`), a point (meter) in the dike traject.
-    - strategy_reinforcement_type_costs (`list[StrategyReinforcementTypeCosts]`), all the reinforcements that can be used at this location and their related costs.
+    - strategy_reinforcement_type_costs (`list[StrategyReinforcementTypeCosts]`), all the reinforcements that can be used at this location and their related costs and width.
     - cheapest_reinforcement (`StrategyReinforcementTypeCosts`), returns which "available reinforcment" has the lower total costs at this location.
     - available_measures (`Type[ReinforcementProfileProtocol]`), returns only the reinforcement type from the `strategy_reinforcement_type_costs` collection.
 
@@ -18,6 +19,7 @@ This modules contains the logic to choose which measure will be applied for a gi
     - base_costs (`float`), the costs only related to the reinforcement's required space (thus excluding infrastructure costs).
     - infrastructure_costs (`float`), the costs associated **only** to infrastructures.
     - total_costs (`float`), the addition of `base_costs` and `infrastructure_costs`.
+    - ground_level_surface (`float`), profile's width from outside (waterside) crest point.
 
 - `StrategyLocationReinforcement`, represents a mapped location to a selected measure.
     - location (`PointSurroundings`), a point (meter) in the dike traject.

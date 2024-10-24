@@ -11,6 +11,7 @@ class StrategyReinforcementTypeCosts:
     reinforcement_type: Type[ReinforcementProfileProtocol]
     base_costs: float = 0.0
     infrastructure_costs: float = 0.0
+    ground_level_surface: float = 0.0
 
     @property
     def total_costs(self) -> float:
