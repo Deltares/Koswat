@@ -1,6 +1,9 @@
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
+    PipingWallReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
@@ -43,7 +46,7 @@ class TestInfraPriorityStrategy:
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
-            _sr.selected_measure == StabilityWallReinforcementProfile
+            _sr.selected_measure == PipingWallReinforcementProfile
             for _sr in _strategy_result[0:2]
         )
         assert all(
