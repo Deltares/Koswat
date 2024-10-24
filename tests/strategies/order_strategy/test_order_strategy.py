@@ -53,12 +53,12 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = OrderStrategy.get_strategy_reinforcements(
-            example_strategy_input.locations_matrix, _default_order
+            example_strategy_input.strategy_locations, _default_order
         )
 
         # 3. Verify expectations
         assert isinstance(_reinforcements, list)
-        assert len(_reinforcements) == len(example_strategy_input.locations_matrix)
+        assert len(_reinforcements) == len(example_strategy_input.strategy_locations)
 
         def assert_subset_selected_measure(selected_measure: type, subset: list):
             assert all(_r.selected_measure == selected_measure for _r in subset)
@@ -114,9 +114,7 @@ class TestOrderStrategy:
 
         # 3. Verify final expectations.
         assert isinstance(_strategy_result, list)
-        assert len(_strategy_result) == len(
-            example_strategy_input.locations_matrix.keys()
-        )
+        assert len(_strategy_result) == len(example_strategy_input.strategy_locations)
         assert all(
             isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
         )

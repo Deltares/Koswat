@@ -144,6 +144,6 @@ class TestKoswatSummaryBuilder:
             for lpr in _summary.locations_profile_report_list
         )
         assert (
-            _summary.locations_profile_report_list[0].obstacle_locations[0].location
+            _summary.locations_profile_report_list[0].report_locations[0].location
             == _p_surrounding.location
         )

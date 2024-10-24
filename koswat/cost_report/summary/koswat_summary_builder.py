@@ -95,13 +95,12 @@ class KoswatSummaryBuilder(BuilderProtocol):
         locations_profile_report_list: list[MultiLocationProfileCostReport],
         available_locations: list[PointSurroundings],
     ) -> dict[PointSurroundings, ReinforcementProfile]:
-        _matrix_builder = KoswatSummaryLocationMatrixBuilder()
-        _matrix_builder.available_locations = available_locations
-        _matrix_builder.locations_profile_report_list = locations_profile_report_list
-        _matrix = _matrix_builder.build()
-
+        _matrix = KoswatSummaryLocationMatrixBuilder(
+            available_locations=available_locations,
+            locations_profile_report_list=locations_profile_report_list,
+        ).build()
         _strategy_input = StrategyInput(
-            locations_matrix=_matrix,
+            strategy_locations=_matrix,
             reinforcement_min_buffer=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer,
             reinforcement_min_length=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation,
         )

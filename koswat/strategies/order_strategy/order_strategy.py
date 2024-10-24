@@ -27,7 +27,7 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
 )
-from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
@@ -49,25 +49,22 @@ class OrderStrategy(StrategyProtocol):
 
     @staticmethod
     def get_strategy_reinforcements(
-        location_matrix: dict[
-            PointSurroundings, list[Type[ReinforcementProfileProtocol]]
-        ],
+        strategy_locations: list[StrategyLocationInput],
         selection_order: list[Type[ReinforcementProfileProtocol]],
     ) -> list[StrategyLocationReinforcement]:
         _strategy_reinforcements = []
-        for (
-            _location,
-            _reinforcements,
-        ) in location_matrix.items():
+        for _strategy_location in strategy_locations:
+            _reinforcements = _strategy_location.available_measures
             _selected_reinforcement = next(
                 (_or for _or in selection_order if _or in _reinforcements),
                 selection_order[-1],
             )
             _strategy_reinforcements.append(
                 StrategyLocationReinforcement(
-                    location=_location,
+                    location=_strategy_location.point_surrounding,
                     available_measures=_reinforcements,
                     selected_measure=_selected_reinforcement,
+                    strategy_location_input=_strategy_location,
                 )
             )
         return _strategy_reinforcements
@@ -77,7 +74,7 @@ class OrderStrategy(StrategyProtocol):
     ) -> list[StrategyLocationReinforcement]:
         _reinforcement_order = self.get_default_order_for_reinforcements()
         _strategy_reinforcements = self.get_strategy_reinforcements(
-            strategy_input.locations_matrix, _reinforcement_order
+            strategy_input.strategy_locations, _reinforcement_order
         )
         OrderStrategyBuffering.with_strategy(
             _reinforcement_order, strategy_input.reinforcement_min_buffer
