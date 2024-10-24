@@ -225,11 +225,106 @@ Resulting cluster:
 
 ### Infrastructure priority
 
-This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to a cheaper one when considering also (possible) infrastructure costs. This strategy works under no order assumption, thus it only modifies the selected reinforcement if it can be applied to all the points of its cluster. Furthermore, it DOES NOT apply more than one iteration, therefore in case of creating neighbor clusters of the same type they will remain as that. In steps, this is what it does:
+This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [reinfrastructure costs](koswat_cost_report.md#infrastructure-report) . 
+
+__Conditions__:
+- It only modifies the selected reinforcement if it can be applied to all the points of its cluster. 
+- It DOES NOT apply more than one iteration, thus in case of creating neighbor clusters of the same type they will remain as that.
+
+__Steps breakdown__:
 
 1. Run the [order based strategy](#order-based-default).
 2. Get common available measures for each cluster an their costs when applied at the cluster.
 3. Set the **cheapest** common available measure per cluster.
 
 ####  Infrastructure priority example
-...
+
+We will strat by defining some unrealistic costs per reinforcement type for all locations* such as:
+
+| Index | Reinforcement type | base cost | infra cost |
+| ---- | ---- |---- | ---- |
+| 0 | Soil reinforcement | 42 | 1000**10 |
+| 1 | Vertical Piping Solution | 420 | 1000**10 |
+| 2 | Piping Wall | 4200 | 0 |
+| 3 | Stability Wall | 42000 | 1000**10 |
+| 4 | Cofferdam | 420000 | 0 |
+
+> ***Important!** For example purposes we are applying the same infrastructure costs to all the locations. However, in a real case these costs would vary per location (and per reinforcement type).
+
+Based on this data `Piping Wall` will be chosen **unless** any of the points in the cluster cannot apply it due to obstacles or other constraints, in which case it would end up settling for a `Cofferdam` reinforcement.
+
+Let's see now the strategy steps using the results from the [clustering example](#clustering-example): 
+
+```json
+1. List of clusters:
+[
+    (0, ["Location_000","Location_001",]),
+    (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",]),
+    (4, ["Location_007","Location_008","Location_009",]),
+]
+
+2. Iterate over each cluster:
+2.1. First cluster is:
+    (0, ["Location_000","Location_001",])
+    2.1.1. Get the current cost of using this cluster.
+        - (Base + infracosts) * N locations = (42 + 1000**10) * 2
+    2.1.2. Get cheaper common available measures:
+        - Soil Reinforcement, (idx=0),
+            - Current selection.
+        - Vertical Piping Solution, (idx=1),
+            - (Base + infracosts) * N locations = (42 + 1000**10) * 2
+            - Costs are equal to the initial state, discard reinforcement.
+        - Piping Wall, (idx=2),
+            - (Base + infracosts) * N locations = (4200 + 0) * 2
+            - Costs are cheaper than the initial state, keep.
+        - Stability Wall, (idx=3),
+            - (Base + infracosts) * N locations = (42 + 1000**10) * 2
+            - Costs are equal to the initial state, discard reinforcement.
+        - Cofferdam, (idx=3),
+            - (Base + infracosts) * N locations = (420000 + 0) * 2
+            - Costs are cheaper than the initial state, keep.
+    2.1.3. Set the cheapest common available measure per cluster:
+        - Piping wall costs < Cofferdam costs < Soil reinforcement costs (current state)
+        - We set Piping wall as the new reinforcement for this cluster.
+    (2, ["Location_000","Location_001",])
+2.2. Second cluster is:
+    (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",])
+    2.3.1. Get the current cost of using this cluster.
+    - (Base + infracosts) * N locations = (42000 + 1000**10) * 5
+    2.3.2. Get cheaper common available measures.
+        - Soil Reinforcement, (idx=0),
+            - Only present at "Location_002", "Location_005", "Location_006", discard.
+        - Vertical Piping Solution, (idx=1),
+            - Only present at "Location_002", "Location_005", "Location_006", discard.
+        - Piping Wall, (idx=2),
+            - Only present at "Location_002", "Location_005", "Location_006", discard.
+        - Stability Wall, (idx=3),
+            - Current selection.
+        - Cofferdam, (idx=3),
+            - (Base + infracosts) * N locations = (420000 + 0) * 5
+            - Costs are cheaper than the initial state, keep.
+    2.3.3. Set the cheapest common available measure per cluster:
+        - Cofferdam costs < Stability wall costs
+        - We set Cofferdam as the new reinforcement for this cluster.
+    (4, ["Location_002","Location_003","Location_004","Location_005","Location_006",])
+2.3. Third cluster is:
+    (4, ["Location_007","Location_008","Location_009",])
+    2.3.1. Get the current cost of using this cluster.
+    - (Base + infracosts) * N locations = (42 + 0) * 2
+    2.3.2. Get cheaper common available measures.
+        - Cofferdam, (idx=4),
+            - Current selection.
+    2.3.3. Set the cheapest common available measure per cluster:
+        - Because no (other) measure was available at 2.3.2, they remain on the same cluster.
+    (4, ["Location_007","Location_008","Location_009",])
+
+Resulting clusters:
+    [
+        (2, ["Location_000","Location_001",]),
+        (4, ["Location_002","Location_003","Location_004","Location_005","Location_006", "Location_007","Location_008","Location_009",]),
+    ]
+```
+
+With this, we went from:
+- Initial costs: `(42 + 1000**10) * 2 + (42000 + 1000**10) * 5 + (42) * 2`, to
+- Final costs: `4200 * 2 + 42 * 8`
