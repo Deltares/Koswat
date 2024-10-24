@@ -4,13 +4,13 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.order_strategy.order_strategy_reinforcements import (
-    StrategyReinforcementProfile,
+    StrategyReinforcementType,
 )
 
 
 @runtime_checkable
 class StrategyReinforcementsProtocol(Protocol):
-    reinforcements: list[StrategyReinforcementProfile]
+    reinforcements: list[StrategyReinforcementType]
     """
     Protocol to provide the reinforcements to be considered in the strategy.
     """

@@ -8,9 +8,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.strategies.strategy_input import StrategyLocationInput
-from koswat.strategies.strategy_reinforcement_type_costs import (
-    StrategyReinforcementTypeCosts,
-)
+from koswat.strategies.strategy_reinforcement_type import StrategyReinforcementType
 
 
 @dataclass
@@ -30,11 +28,11 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
     def _get_multi_location_profile_to_dict_matrix(
         self, locations_profile: MultiLocationProfileCostReport
-    ) -> dict[PointSurroundings, StrategyReinforcementTypeCosts]:
+    ) -> dict[PointSurroundings, StrategyReinforcementType]:
         _infra_costs = locations_profile.get_infra_costs_per_location()
 
         def create_strategy_location_reinforcement_costs():
-            return StrategyReinforcementTypeCosts(
+            return StrategyReinforcementType(
                 reinforcement_type=type(
                     locations_profile.profile_cost_report.reinforced_profile
                 ),
@@ -50,7 +48,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
     def _get_list_summary_matrix_for_locations_with_reinforcements(
         self,
-    ) -> list[dict[PointSurroundings, StrategyReinforcementTypeCosts]]:
+    ) -> list[dict[PointSurroundings, StrategyReinforcementType]]:
         return list(
             map(
                 self._get_multi_location_profile_to_dict_matrix,
@@ -84,11 +82,11 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
         # 4. Sort matrix by traject order for normalized usage in Koswat.
         def to_strategy_location(
-            matrix_tuple: tuple[PointSurroundings, list[StrategyReinforcementTypeCosts]]
+            matrix_tuple: tuple[PointSurroundings, list[StrategyReinforcementType]]
         ) -> StrategyLocationInput:
             return StrategyLocationInput(
                 point_surrounding=matrix_tuple[0],
-                strategy_reinforcement_type_costs=matrix_tuple[1],
+                strategy_reinforcement_type=matrix_tuple[1],
             )
 
         _strategy_locations = list(

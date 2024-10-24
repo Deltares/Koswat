@@ -21,9 +21,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement
     VPSReinforcementProfile,
 )
 from koswat.strategies.strategy_input import StrategyInput
-from koswat.strategies.strategy_reinforcement_profile import (
-    StrategyReinforcementProfile,
-)
+from koswat.strategies.strategy_reinforcement_type import StrategyReinforcementType
 from koswat.strategies.strategy_reinforcements_protocol import (
     StrategyReinforcementsProtocol,
 )
@@ -35,7 +33,7 @@ class OrderStrategyReinforcements(StrategyReinforcementsProtocol):
     Provide the reinforcemenrts for the order strategy.
     """
 
-    reinforcements: list[StrategyReinforcementProfile] = field(default_factory=list)
+    reinforcements: list[StrategyReinforcementType] = field(default_factory=list)
 
     @classmethod
     def from_strategy_input(

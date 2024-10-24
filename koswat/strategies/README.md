@@ -9,15 +9,16 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 - `StrategyLocationInput`, gathers all the input required for a strategy to determine which reinforcement can be applied based on its location (`point_surrounding`) and `available_reinforcements`.
     - point_surrounding (`PointSurroundings`), a point (meter) in the dike traject.
-    - strategy_reinforcement_type_costs (`list[StrategyReinforcementTypeCosts]`), all the reinforcements that can be used at this location and their related costs.
-    - cheapest_reinforcement (`StrategyReinforcementTypeCosts`), returns which "available reinforcment" has the lower total costs at this location.
-    - available_measures (`Type[ReinforcementProfileProtocol]`), returns only the reinforcement type from the `strategy_reinforcement_type_costs` collection.
+    - strategy_reinforcement_type (`list[StrategyReinforcementType]`), all the reinforcements that can be used at this location and their related costs.
+    - cheapest_reinforcement (`StrategyReinforcementType`), returns which "available reinforcment" has the lower total costs at this location.
+    - available_measures (`Type[ReinforcementProfileProtocol]`), returns only the reinforcement type from the `strategy_reinforcement_type` collection.
 
-- `StrategyReinforcementTypeCosts`, maps a type of reinforcement to the calculated costs from the `cost_report` subproject.
+- `StrategyReinforcementType`, maps a type of reinforcement to the calculated costs from the `cost_report` subproject.
     - reinforcement_type (`Type[ReinforcementProfileProtocol]`), the mapped reinforcement type.
     - base_costs (`float`), the costs only related to the reinforcement's required space (thus excluding infrastructure costs).
     - infrastructure_costs (`float`), the costs associated **only** to infrastructures.
     - total_costs (`float`), the addition of `base_costs` and `infrastructure_costs`.
+    - ground_level_surface (`float`), the surface (width) of the ground level.
 
 - `StrategyLocationReinforcement`, represents a mapped location to a selected measure.
     - location (`PointSurroundings`), a point (meter) in the dike traject.

@@ -18,9 +18,7 @@ from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
-from koswat.strategies.strategy_reinforcement_type_costs import (
-    StrategyReinforcementTypeCosts,
-)
+from koswat.strategies.strategy_reinforcement_type import StrategyReinforcementType
 
 
 @pytest.fixture(name="example_strategy_input")
@@ -30,8 +28,8 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     ) -> StrategyLocationInput:
         return StrategyLocationInput(
             point_surrounding=PointSurroundings(traject_order=idx),
-            strategy_reinforcement_type_costs=[
-                StrategyReinforcementTypeCosts(reinforcement_type=_rt)
+            strategy_reinforcement_type=[
+                StrategyReinforcementType(reinforcement_type=_rt)
                 for _rt in reinforcement_type
             ],
         )

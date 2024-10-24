@@ -7,10 +7,11 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 
 
 @dataclass
-class StrategyReinforcementTypeCosts:
+class StrategyReinforcementType:
     reinforcement_type: Type[ReinforcementProfileProtocol]
     base_costs: float = 0.0
     infastructure_costs: float = 0.0
+    ground_level_surface: float = 0.0
 
     @property
     def total_costs(self) -> float:

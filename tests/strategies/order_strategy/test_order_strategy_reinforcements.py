@@ -1,4 +1,3 @@
-import math
 from typing import Iterator
 
 import pytest
@@ -10,15 +9,10 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     StabilityWallReinforcementProfile,
     VPSReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.strategies.order_strategy.order_strategy_reinforcements import (
     OrderStrategyReinforcements,
 )
-from koswat.strategies.strategy_reinforcement_profile import (
-    StrategyReinforcementProfile,
-)
+from koswat.strategies.strategy_reinforcement_type import StrategyReinforcementType
 from koswat.strategies.strategy_reinforcements_protocol import (
     StrategyReinforcementsProtocol,
 )
@@ -36,17 +30,20 @@ class TestOrderStrategyReinforcements:
     @pytest.fixture(name="order_strategy_reinforcements_fixture")
     def _get_order_strategy_reinforcements(
         self,
-    ) -> Iterator[list[StrategyReinforcementProfile]]:
+    ) -> Iterator[list[StrategyReinforcementType]]:
         yield [
-            StrategyReinforcementProfile(
-                reinforcement_type=x, ground_level_surface=10.0 - i, total_cost=i + 1
+            StrategyReinforcementType(
+                reinforcement_type=x,
+                base_costs=i + 1,
+                infastructure_costs=0.0,
+                ground_level_surface=10.0 - i,
             )
             for i, x in enumerate(self._default_reinforcements)
         ]
 
     def test_initialize(
         self,
-        order_strategy_reinforcements_fixture: list[StrategyReinforcementProfile],
+        order_strategy_reinforcements_fixture: list[StrategyReinforcementType],
     ):
         # 1. Define test data.
 
@@ -70,7 +67,7 @@ class TestOrderStrategyReinforcements:
 
     def test_strategy_reinforcements(
         self,
-        order_strategy_reinforcements_fixture: list[StrategyReinforcementProfile],
+        order_strategy_reinforcements_fixture: list[StrategyReinforcementType],
     ):
         # 1. Define test data.
         _strategy_reinforcements = OrderStrategyReinforcements(
