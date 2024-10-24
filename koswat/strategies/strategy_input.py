@@ -25,7 +25,7 @@ class StrategyLocationReinforcementCosts:
 
 
 @dataclass
-class StrategyLocation:
+class StrategyLocationInput:
     point_surrounding: PointSurroundings
     available_reinforcements: list[StrategyLocationReinforcementCosts] = field(
         default_factory=lambda: []
@@ -41,9 +41,11 @@ class StrategyLocation:
         return min(self.available_reinforcements, key=lambda x: x.total_costs)
 
     @property
-    def reinforcement_types(self) -> list[Type[ReinforcementProfileProtocol]]:
+    def available_measures(self) -> list[Type[ReinforcementProfileProtocol]]:
         """
         Gets all the available reinforcement types in `strategy_location_reinforcements`.
+        It is called `available_measures` to match the `StrategyLocationReinforcement`
+        definition.
 
         Returns:
             list[Type[ReinforcementProfileProtocol]]: resulting list.
@@ -53,6 +55,6 @@ class StrategyLocation:
 
 @dataclass
 class StrategyInput:
-    strategy_locations: list[StrategyLocation]
+    strategy_locations: list[StrategyLocationInput]
     reinforcement_min_buffer: float
     reinforcement_min_length: float

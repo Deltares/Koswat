@@ -8,7 +8,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.strategies.strategy_input import (
-    StrategyLocation,
+    StrategyLocationInput,
     StrategyLocationReinforcementCosts,
 )
 
@@ -60,7 +60,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
     def build(
         self,
-    ) -> list[StrategyLocation]:
+    ) -> list[StrategyLocationInput]:
         # dict[PointSurroundings, list[Type[ReinforcementProfileProtocol]]]:
         # 1. First we get all the possible reinforcements per point.
 
@@ -87,8 +87,8 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
             matrix_tuple: tuple[
                 PointSurroundings, list[StrategyLocationReinforcementCosts]
             ]
-        ) -> StrategyLocation:
-            return StrategyLocation(
+        ) -> StrategyLocationInput:
+            return StrategyLocationInput(
                 point_surrounding=matrix_tuple[0],
                 available_reinforcements=matrix_tuple[1],
             )

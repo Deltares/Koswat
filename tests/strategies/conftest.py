@@ -18,7 +18,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import (
     StrategyInput,
-    StrategyLocation,
+    StrategyLocationInput,
     StrategyLocationReinforcementCosts,
 )
 from koswat.strategies.strategy_location_reinforcement import (
@@ -30,8 +30,8 @@ from koswat.strategies.strategy_location_reinforcement import (
 def _get_example_strategy_input() -> Iterator[StrategyInput]:
     def _to_strategy_location(
         idx: int, reinforcement_type: list[Type[ReinforcementProfileProtocol]]
-    ) -> StrategyLocation:
-        return StrategyLocation(
+    ) -> StrategyLocationInput:
+        return StrategyLocationInput(
             point_surrounding=PointSurroundings(traject_order=idx),
             available_reinforcements=[
                 StrategyLocationReinforcementCosts(reinforcement_type=_rt)
@@ -54,12 +54,12 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         [],
         [],
     ]
-    _matrix = [
+    _strategy_locations = [
         _to_strategy_location(_idx, _rt_list)
         for _idx, _rt_list in enumerate(_initial_state_per_location)
     ]
     yield StrategyInput(
-        strategy_locations=_matrix,
+        strategy_locations=_strategy_locations,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )
@@ -72,7 +72,7 @@ def example_location_reinforcements_with_buffering(
     _result_after_buffering_idx = [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
     _measure_order = OrderStrategy.get_default_order_for_reinforcements()
     _location_reinforcements = []
-    for _idx, _location in enumerate(example_strategy_input.strategy_locations.keys()):
+    for _idx, _location in enumerate(example_strategy_input.strategy_locations):
         _measure_idx = _result_after_buffering_idx[_idx]
         _location_reinforcements.append(
             StrategyLocationReinforcement(

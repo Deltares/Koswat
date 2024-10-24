@@ -114,9 +114,7 @@ class TestOrderStrategy:
 
         # 3. Verify final expectations.
         assert isinstance(_strategy_result, list)
-        assert len(_strategy_result) == len(
-            example_strategy_input.strategy_locations.keys()
-        )
+        assert len(_strategy_result) == len(example_strategy_input.strategy_locations)
         assert all(
             isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
         )
