@@ -39,7 +39,7 @@ class TestKoswatSummaryLocationMatrixBuilder:
         assert len(_strategy_locations) == len(_builder.available_locations)
         for _sl in _strategy_locations:
             assert _sl.point_surrounding in _builder.available_locations
-            assert _sl.available_reinforcements == []
+            assert _sl.strategy_reinforcement_type_costs == []
 
     def test_given_profile_report_list_then_returns_expected_matrix(self):
         class MyMockedReinforcementProfile(ReinforcementProfileProtocol):
@@ -70,11 +70,13 @@ class TestKoswatSummaryLocationMatrixBuilder:
         assert isinstance(_strategy_locations, list)
         assert len(_strategy_locations) == len(_builder.available_locations)
         assert _strategy_locations[0].point_surrounding in _builder.available_locations
-        assert len(_strategy_locations[0].available_reinforcements) == 1
+        assert len(_strategy_locations[0].strategy_reinforcement_type_costs) == 1
         assert (
-            _strategy_locations[0].available_reinforcements[0].reinforcement_type
+            _strategy_locations[0]
+            .strategy_reinforcement_type_costs[0]
+            .reinforcement_type
             == MyMockedReinforcementProfile
         )
         for _sl in _strategy_locations[1:]:
             assert _sl.point_surrounding in _builder.available_locations
-            assert _sl.available_reinforcements == []
+            assert _sl.strategy_reinforcement_type_costs == []

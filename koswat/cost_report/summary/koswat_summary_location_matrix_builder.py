@@ -88,7 +88,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         ) -> StrategyLocationInput:
             return StrategyLocationInput(
                 point_surrounding=matrix_tuple[0],
-                available_reinforcements=matrix_tuple[1],
+                strategy_reinforcement_type_costs=matrix_tuple[1],
             )
 
         _strategy_locations = list(

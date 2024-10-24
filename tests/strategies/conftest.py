@@ -30,7 +30,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     ) -> StrategyLocationInput:
         return StrategyLocationInput(
             point_surrounding=PointSurroundings(traject_order=idx),
-            available_reinforcements=[
+            strategy_reinforcement_type_costs=[
                 StrategyReinforcementTypeCosts(reinforcement_type=_rt)
                 for _rt in reinforcement_type
             ],

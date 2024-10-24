@@ -13,18 +13,18 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 @dataclass
 class StrategyLocationInput:
     point_surrounding: PointSurroundings
-    available_reinforcements: list[StrategyReinforcementTypeCosts] = field(
+    strategy_reinforcement_type_costs: list[StrategyReinforcementTypeCosts] = field(
         default_factory=lambda: []
     )
 
     @property
-    def cheapest_reinforcment(self) -> StrategyReinforcementTypeCosts:
+    def cheapest_reinforcement(self) -> StrategyReinforcementTypeCosts:
         """
         Gets the `StrategyLocationReinforcementCosts` with the lower `total_costs` value.
         Returns:
             StrategyLocationReinforcementCosts: The cheapest reinforcement for this location.
         """
-        return min(self.available_reinforcements, key=lambda x: x.total_costs)
+        return min(self.strategy_reinforcement_type_costs, key=lambda x: x.total_costs)
 
     @property
     def available_measures(self) -> list[Type[ReinforcementProfileProtocol]]:
@@ -36,4 +36,6 @@ class StrategyLocationInput:
         Returns:
             list[Type[ReinforcementProfileProtocol]]: resulting list.
         """
-        return [_slr.reinforcement_type for _slr in self.available_reinforcements]
+        return [
+            _slr.reinforcement_type for _slr in self.strategy_reinforcement_type_costs
+        ]
