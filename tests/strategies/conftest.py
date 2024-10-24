@@ -3,9 +3,6 @@ from typing import Iterator, Type
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -19,7 +16,7 @@ from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import (
     StrategyInput,
     StrategyLocationInput,
-    StrategyLocationReinforcementCosts,
+    StrategyReinforcementTypeCosts,
 )
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -34,7 +31,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         return StrategyLocationInput(
             point_surrounding=PointSurroundings(traject_order=idx),
             available_reinforcements=[
-                StrategyLocationReinforcementCosts(reinforcement_type=_rt)
+                StrategyReinforcementTypeCosts(reinforcement_type=_rt)
                 for _rt in reinforcement_type
             ],
         )
