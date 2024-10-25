@@ -59,6 +59,8 @@ class OrderStrategy(StrategyProtocol):
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
+        if not strategy_input.strategy_reinforcements:
+            return []
 
         def split_reinforcements() -> tuple[
             list[StrategyReinforcementInput], list[StrategyReinforcementInput]
