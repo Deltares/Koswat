@@ -43,7 +43,6 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                     locations_profile.profile_cost_report.reinforced_profile
                 ),
                 base_costs=locations_profile.profile_cost_report.total_cost,
-                ground_level_surface=locations_profile.profile_cost_report.reinforced_profile.new_ground_level_surface,
             )
 
         _dict_matrix = defaultdict(create_strategy_location_reinforcement_costs)
