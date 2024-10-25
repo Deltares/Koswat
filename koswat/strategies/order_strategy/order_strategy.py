@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import math
 from itertools import pairwise
 
 from koswat.dike_reinforcements.reinforcement_profile import (
@@ -24,9 +23,7 @@ from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 from koswat.strategies.strategy_protocol import StrategyProtocol
-from koswat.strategies.strategy_reinforcement_type_costs import (
-    StrategyReinforcementTypeCosts,
-)
+from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
 
 
 class OrderStrategy(StrategyProtocol):
@@ -62,32 +59,19 @@ class OrderStrategy(StrategyProtocol):
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
-        _available_reinforcements = []
-        for _rt in self.get_default_order_for_reinforcements():
-            _available_reinforcements.append(
-                next(
-                    (
-                        _srtc
-                        for _sl in strategy_input.strategy_locations
-                        for _srtc in _sl.strategy_reinforcement_type_costs
-                        if _srtc.reinforcement_type == _rt
-                    ),
-                    None,
-                )
-            )
 
         def split_reinforcements() -> tuple[
-            list[StrategyReinforcementTypeCosts], list[StrategyReinforcementTypeCosts]
+            list[StrategyReinforcementInput], list[StrategyReinforcementInput]
         ]:
             _cofferdam = next(
                 obj
-                for obj in _available_reinforcements
+                for obj in strategy_input.strategy_reinforcements
                 if obj and obj.reinforcement_type == CofferdamReinforcementProfile
             )
             return (
                 [
                     obj
-                    for obj in _available_reinforcements
+                    for obj in strategy_input.strategy_reinforcements
                     if obj and obj.reinforcement_type != CofferdamReinforcementProfile
                 ],
                 [_cofferdam],
@@ -100,8 +84,8 @@ class OrderStrategy(StrategyProtocol):
         )
 
         def check_reinforcement(
-            pair: tuple[StrategyReinforcementTypeCosts, StrategyReinforcementTypeCosts],
-        ) -> StrategyReinforcementTypeCosts | None:
+            pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
+        ) -> StrategyReinforcementInput | None:
             # Only keep the more expensive reinforcement if it is more restrictive
             if pair[1].ground_level_surface < pair[0].ground_level_surface:
                 return pair[1]

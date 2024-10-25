@@ -65,7 +65,7 @@ class TestOrderStrategy:
     ):
         # 1. Define test data.
         idx = 1
-        example_strategy_input.strategy_reinforcement_type_costs[idx].base_costs *= 20
+        example_strategy_input.strategy_reinforcements[idx].base_costs *= 20
         _expected_result = [
             x
             for x in self._default_reinforcements
@@ -89,9 +89,7 @@ class TestOrderStrategy:
         example_strategy_input: StrategyInput,
     ):
         # 1. Define test data.
-        example_strategy_input.strategy_reinforcement_type_costs[
-            idx
-        ].ground_level_surface -= 15
+        example_strategy_input.strategy_reinforcements[idx].ground_level_surface -= 15
         _expected_result = [
             x
             for x in self._default_reinforcements

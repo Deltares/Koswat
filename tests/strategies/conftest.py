@@ -14,6 +14,7 @@ from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
@@ -30,7 +31,6 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
             base_costs=(10**_idx) * 42,
             infrastructure_costs=100 ** (len(_reinforcement_type_default_order) - _idx)
             * 42,  # Dramatic infra costs to verify functionality!
-            ground_level_surface=10 * (len(_reinforcement_type_default_order) - _idx),
         )
         for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
     ]
@@ -60,8 +60,17 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         )
         for _idx, _rt in enumerate(_initial_state_per_location)
     ]
+    _strategy_reinforcements = [
+        StrategyReinforcementInput(
+            reinforcement_type=_rtc.reinforcement_type,
+            base_costs=_rtc.base_costs,
+            ground_level_surface=10 * (len(_reinforcement_type_default_order) - _idx),
+        )
+        for _idx, _rtc in enumerate(_levels_data)
+    ]
     yield StrategyInput(
         strategy_locations=_strategy_locations,
+        strategy_reinforcements=_strategy_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )
