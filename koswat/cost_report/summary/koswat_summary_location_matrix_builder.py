@@ -80,28 +80,6 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         _strategy_reinforcements_list = []
 
         # 3. Last, we merge the reinforcements dictionary into the matrix.
-        def get_reinforcement(
-            reinforcement_cost: StrategyReinforcementTypeCosts,
-        ) -> StrategyReinforcementInput:
-            _reinforcement = next(
-                (
-                    _pcr.profile_cost_report.reinforced_profile
-                    for _pcr in self.locations_profile_report_list
-                    if type(_pcr.profile_cost_report.reinforced_profile)
-                    == reinforcement_cost.reinforcement_type
-                ),
-                None,
-            )
-            if not _reinforcement:
-                raise ValueError(
-                    f"Reinforcement type {reinforcement_cost.reinforcement_type} not found in profile reports."
-                )
-            return StrategyReinforcementInput(
-                reinforcement_type=reinforcement_cost.reinforcement_type,
-                base_costs=reinforcement_cost.base_costs,
-                ground_level_surface=_reinforcement.new_ground_level_surface,
-            )
-
         for _location, _item in _strategy_locations_dict.items():
             for _reinforce_matrix_dict in _reinforce_matrix_dict_list:
                 # Add the reinforcement to the matrix if location exists.
@@ -133,6 +111,28 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 ).items(),
             )
         )
+
+        def get_reinforcement(
+            reinforcement_cost: StrategyReinforcementTypeCosts,
+        ) -> StrategyReinforcementInput:
+            _reinforcement = next(
+                (
+                    _pcr.profile_cost_report.reinforced_profile
+                    for _pcr in self.locations_profile_report_list
+                    if type(_pcr.profile_cost_report.reinforced_profile)
+                    == reinforcement_cost.reinforcement_type
+                ),
+                None,
+            )
+            if not _reinforcement:
+                raise ValueError(
+                    f"Reinforcement type {reinforcement_cost.reinforcement_type} not found in profile reports."
+                )
+            return StrategyReinforcementInput(
+                reinforcement_type=reinforcement_cost.reinforcement_type,
+                base_costs=reinforcement_cost.base_costs,
+                ground_level_surface=_reinforcement.new_ground_level_surface,
+            )
 
         _strategy_reinforcements = list(
             map(get_reinforcement, _strategy_reinforcements_list)
