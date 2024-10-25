@@ -47,7 +47,8 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         StrategyReinforcementTypeCosts(
             reinforcement_type=_reinforcement,
             base_costs=(10**_idx) * 42,
-            infrastructure_costs=1000**10
+            infrastructure_costs=(10 ** (len(_reinforcement_type_default_order) - 1))
+            * 42
             if _idx in [0, 1, 3]
             else 0,  # Dramatic infra costs so they move to where we want
         )

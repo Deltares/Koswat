@@ -253,17 +253,17 @@ __Steps breakdown__:
 
 We will start by defining some unrealistic costs per reinforcement type for all locations* such as:
 
-| Index | Reinforcement type | base cost | infra cost |
-| ---- | ---- |---- | ---- |
-| 0 | Soil reinforcement | 42 | 1000**10 |
-| 1 | Vertical Piping Solution | 420 | 1000**10 |
-| 2 | Piping Wall | 4200 | 0 |
-| 3 | Stability Wall | 42000 | 1000**10 |
-| 4 | Cofferdam | 420000 | 0 |
+| Index | Reinforcement type | base cost | infra cost | total cost |
+| ---- | ---- |---- | ---- | ---- |
+| 0 | Soil reinforcement | 42 | 420000 | 420042 |
+| 1 | Vertical Piping Solution | 420 | 420000 | 420420 |
+| 2 | Piping Wall | 4200 | 0 | 4200 |
+| 3 | Stability Wall | 42000 | 420000 | 462000 |
+| 4 | Cofferdam | 420000 | 0 | 420000 |
 
 ---------------
 > **_Important!_** 
-> For example purposes we are applying the same infrastructure costs to all the locations. |However, in a real case these costs would vary per location (and per reinforcement type). So we can determine the cluster's reinforcement costs as `(Base + infracosts) * N locations`
+> For example purposes we are applying the same infrastructure costs to all the locations. |However, in a real case these costs would vary per location (and per reinforcement type). So we can determine the cluster's reinforcement costs as `(total cost) * N locations`
 ---------------
 
 Based on this data `Piping Wall` will be chosen **unless** any of the points in the cluster cannot apply it due to obstacles or other constraints, in which case it would end up settling for a `Cofferdam` reinforcement.
@@ -286,23 +286,23 @@ Let's see now the strategy steps using the results from the [clustering example]
     { (0, ["Location_000","Location_001",]) }
     
     2.1.1. Get the current cost of using this cluster.
-        - (Base + infracosts) * N locations = (42 + 1000**10) * 2
+        - Total costs * N locations = `(420042) * 2 = 840084`
 
     2.1.2. Get cheaper common available measures:
         - Soil Reinforcement, (idx=0),
-            - Current selection.
+            - [Discard] Current selection.
         - Vertical Piping Solution, (idx=1),
-            - Costs = (42 + 1000**10) * 2
-            - Costs are equal to the initial state, discard.
+            - Costs = `(420420) * 2 = 840840`
+            - [Discard] Costs are higher than initial state.
         - Piping Wall, (idx=2),
-            - Costs = (4200 + 0) * 2
-            - Costs are cheaper than the initial state, keep.
+            - Costs = `(4200 + 0) * 2 = 8400`
+            - [Keep] Costs are cheaper than the initial state.
         - Stability Wall, (idx=3),
-            - Costs = (42 + 1000**10) * 2
-            - Costs are equal to the initial state, discard.
+            - Costs = `(462000) * 2 = 924000`
+            - [Discard] Costs are higher than initial state.
         - Cofferdam, (idx=3),
-            - (Base + infracosts) * N locations = (420000 + 0) * 2
-            - Costs are cheaper than the initial state, keep.
+            - Costs = `(420000) * 2 = 840000`
+            - [Keep] Costs are cheaper than the initial state, keep.
 
     2.1.3. Set the cheapest common available measure per cluster:
         - Piping wall < Cofferdam < Soil reinforcement (current)
@@ -316,20 +316,20 @@ Let's see now the strategy steps using the results from the [clustering example]
             "Location_006",])}
 
     2.3.1. Get the current cost of using this cluster.
-        - (Base + infracosts) * N locations = (42000 + 1000**10) * 5
+        - Total costs * N locations = `(462000) * 5 = 2310000`
     
     2.3.2. Get cheaper common available measures.
         - Soil Reinforcement, (idx=0),
-            - Not present at "Location_003", "Location_004", discard.
+            - [Discard] Not present at "Location_003", "Location_004".
         - Vertical Piping Solution, (idx=1),
-            - Not present at "Location_003", "Location_004", discard.
+            - [Discard] Not present at "Location_003", "Location_004".
         - Piping Wall, (idx=2),
-            - Not present at "Location_003", "Location_004", discard.
+            - [Discard] Not present at "Location_003", "Location_004".
         - Stability Wall, (idx=3),
-            - Current selection.
+            - [Discard] Current selection.
         - Cofferdam, (idx=3),
-            - (Base + infracosts) * N locations = (420000 + 0) * 5
-            - Costs are cheaper than the initial state, keep.
+            - Costs = `(420000) * 5 = 2100000`
+            - [Keep] Costs are cheaper than the initial state.
     
     2.3.3. Set the cheapest common available measure per cluster:
         - Cofferdam < Stability wall
@@ -344,7 +344,7 @@ Let's see now the strategy steps using the results from the [clustering example]
             "Location_009",])}}
 
     2.3.1. Get the current cost of using this cluster.
-        - (Base + infracosts) * N locations = (42 + 0) * 2
+        - Total costs * N locations = `(420000) * 3 = 1260000`
 
     2.3.2. Get cheaper common available measures.
         - Cofferdam, (idx=4),
@@ -369,5 +369,7 @@ Let's see now the strategy steps using the results from the [clustering example]
 
 With this, we went from:
 
-- Initial costs: `(42 + 1000**10) * 2 + (42000 + 1000**10) * 5 + (42) * 2`, to
-- Final costs: `4200 * 2 + 42 * 8`
+- Initial costs: `(420042) * 2 + (462000) * 5 + (420000) * 3 = 4410084`, to
+- Final costs: `(4200) * 2 + (420000) * 8 = 3368400`
+
+Which would amount to a total save of **1.041.684€**
