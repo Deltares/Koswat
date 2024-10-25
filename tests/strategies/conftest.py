@@ -1,17 +1,16 @@
-from typing import Iterator, Type
+from typing import Iterator
 
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
-    PipingWallReinforcementProfile,
-    SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
-    VPSReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
+    SoilReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
+    StabilityWallReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
@@ -26,58 +25,58 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 
 @pytest.fixture(name="example_strategy_input")
 def _get_example_strategy_input() -> Iterator[StrategyInput]:
-    _default_reinforcements = [
-        SoilReinforcementProfile,
-        VPSReinforcementProfile,
-        PipingWallReinforcementProfile,
-        StabilityWallReinforcementProfile,
-        CofferdamReinforcementProfile,
-    ]
-
-    def _to_strategy_location(
-        idx: int, reinforcement_type: list[Type[ReinforcementProfileProtocol]]
-    ) -> StrategyLocationInput:
-        return StrategyLocationInput(
-            point_surrounding=PointSurroundings(traject_order=idx),
-            strategy_reinforcement_type_costs=[
-                StrategyReinforcementTypeCosts(reinforcement_type=_rt)
-                for _rt in reinforcement_type
-            ],
-        )
-
     # This is the data defined in the docs\reference\koswat_strategies.md
     # as examples. DON'T MODIFY IT!
     _initial_state_per_location = [
-        [SoilReinforcementProfile],
-        [SoilReinforcementProfile],
-        [SoilReinforcementProfile],
-        [StabilityWallReinforcementProfile],
-        [StabilityWallReinforcementProfile],
-        [SoilReinforcementProfile],
-        [SoilReinforcementProfile],
-        [SoilReinforcementProfile],
-        # CofferDamReinforcementProfile will be set for those without available measures.
-        [],
-        [],
+        SoilReinforcementProfile,  # Expected idx 0 in default order!
+        SoilReinforcementProfile,
+        SoilReinforcementProfile,
+        StabilityWallReinforcementProfile,  # Expected idx 3 in default order!
+        StabilityWallReinforcementProfile,
+        SoilReinforcementProfile,
+        SoilReinforcementProfile,
+        SoilReinforcementProfile,
+        CofferdamReinforcementProfile,  # Expected idx 4 in default order!
+        CofferdamReinforcementProfile,
     ]
+
+    _reinforcement_type_default_order = (
+        OrderStrategy.get_default_order_for_reinforcements()
+    )
+    _levels_data = [
+        StrategyReinforcementTypeCosts(
+            reinforcement_type=_reinforcement,
+            base_costs=(10**_idx) * 42,
+            infrastructure_costs=(10 ** (len(_reinforcement_type_default_order) - 1))
+            * 42
+            if _idx in [0, 1, 3]
+            else 0,  # Dramatic infra costs so they move to where we want
+        )
+        for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
+    ]
+
+    _initial_states = {
+        _srtc.reinforcement_type: _levels_data[_idx:]
+        for _idx, _srtc in enumerate(_levels_data)
+    }
+
     _strategy_locations = [
-        _to_strategy_location(_idx, _rt_list)
-        for _idx, _rt_list in enumerate(_initial_state_per_location)
+        StrategyLocationInput(
+            point_surrounding=PointSurroundings(traject_order=_idx),
+            strategy_reinforcement_type_costs=_initial_states[_rt],
+        )
+        for _idx, _rt in enumerate(_initial_state_per_location)
     ]
-    _reinforcements = [
-        StrategyReinforcementTypeCosts(reinforcement_type=_rt)
-        for _rt in _default_reinforcements
-    ]
+
     yield StrategyInput(
         strategy_locations=_strategy_locations,
-        strategy_reinforcement_type_costs=_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )
 
 
-@pytest.fixture
-def example_location_reinforcements_with_buffering(
+@pytest.fixture(name="example_location_reinforcements_with_buffering")
+def _get_example_location_reinforcements_with_buffering(
     example_strategy_input: StrategyInput,
 ) -> Iterator[list[StrategyLocationReinforcement]]:
     _result_after_buffering_idx = [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]

@@ -27,11 +27,13 @@ This strategy is the first and default of all defined strategies. Its criteria i
 #### Reinforcement order
 The predefined (hardcoded) reinforcement's order, from least to most restrictive, is as follows:
 
-1. `SoilReinforcementProfile`
-2. `VPSReinforcementProfile`
-3. `PipingWallReinforcementProfile`
-4. `StabilityWallReinforcementProfile`
-5. `CofferDamReinforcementProfile`
+| Priority index | Reinforcement type |
+| ---- | ---- |
+| 0 | `SoilReinforcementProfile` |
+| 1 | `VPSReinforcementProfile` |
+| 2 | `PipingWallReinforcementProfile` |
+| 3 | `StabilityWallReinforcementProfile` |
+| 4 | `CofferDamReinforcementProfile` |
 
 #### Reinforcement grouping
 
@@ -94,57 +96,57 @@ One simplified example, based on the [grouping example](#grouping-example), and 
 
 ```json
 1. Initialize the masks based on the provided clusters:
-{
-    "SoilReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "VPSReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "PipingWallReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "StabilityWallReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-    "CofferDamReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
-}
+    {
+        "SoilReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+        "VPSReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+        "PipingWallReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+        "StabilityWallReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+        "CofferDamReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1 ,-1, -1, -1, -1],
+    }
 
 2. Iterate over the clusters and update the masks' values:
-{
-    "SoilReinforcementProfile": 
-        [ 0,  0,  0,  0,  0,  0,  0,  0,  0, -1],
-    "VPSReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-    "PipingWallReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-    "StabilityWallReinforcementProfile": 
-        [-1, -1,  3,  3,  3,  3, -1, -1, -1, -1],
-    "CofferDamReinforcementProfile": 
-        [-1, -1, -1, -1, -1, -1, -1,  4,  4,  4],
-}
+    {
+        "SoilReinforcementProfile": 
+            [ 0,  0,  0,  0,  0,  0,  0,  0,  0, -1],
+        "VPSReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "PipingWallReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        "StabilityWallReinforcementProfile": 
+            [-1, -1,  3,  3,  3,  3, -1, -1, -1, -1],
+        "CofferDamReinforcementProfile": 
+            [-1, -1, -1, -1, -1, -1, -1,  4,  4,  4],
+    }
 
 3. Merge all masks and select their maximum value:
-[0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
+    [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
 
 4. Update the cluster's locations:
-{
-    "SoilReinforcementProfile": [
-        "Location_000",
-        "Location_001",
-    ],
-    "StabilityWallReinforcementProfile": [
-        "Location_002",
-        "Location_003",
-        "Location_004",
-        "Location_005",
-    ],
-    "SoilReinforcementProfile": [
-        "Location_006",
-    ],
-    "CofferDamReinforcementProfile": [
-        "Location_007",
-        "Location_008",
-        "Location_009",
-    ],
-}
+    {
+        "SoilReinforcementProfile": [
+            "Location_000",
+            "Location_001",
+        ],
+        "StabilityWallReinforcementProfile": [
+            "Location_002",
+            "Location_003",
+            "Location_004",
+            "Location_005",
+        ],
+        "SoilReinforcementProfile": [
+            "Location_006",
+        ],
+        "CofferDamReinforcementProfile": [
+            "Location_007",
+            "Location_008",
+            "Location_009",
+        ],
+    }
 ```
 
 #### Reinforcement clustering
@@ -184,41 +186,190 @@ One simplified example, based on the [buffering example](#buffering-example), an
 
 ```json
 1. List of unmerged clusters:
-[
-    (0, ["Location_000","Location_001",]),
-    (3, ["Location_002","Location_003","Location_004","Location_005",]),
-    (0, ["Location_006",]),
-    (4, ["Location_007","Location_008","Location_009",]),
-]
+    {
+        (0, ["Location_000","Location_001",]),
+        (3, ["Location_002","Location_003","Location_004","Location_005",]),
+        (0, ["Location_006",]),
+        (4, ["Location_007","Location_008","Location_009",])
+    }
 
 2. Iterate over each reinforcement type:
-2.1. Target is "SoilReinforcementProfile" (idx=0), non-compliant clusters:
-    [
-        (0, ["Location_006",]),
-    ]
-    2.1.1. Length = 1.
-    2.1.2. Get a stronger neighbor,
-        - Left-neighbor reinforcement type = 3,
-        - Right-neighbor reinforcement type = 4,
-        - Left-neighbor is selected.
-    2.1.3. Move locations to stronger neighbor.
-    [
+
+2.1. Target is "SoilReinforcementProfile" (idx=0), non-compliant clusters
+    {
+        (0, ["Location_006",])
+    }
+
+2.1.1. Length = 1.
+
+2.1.2. Get a stronger neighbor,
+    - Left-neighbor reinforcement type = 3,
+    - Right-neighbor reinforcement type = 4,
+    - Left-neighbor is selected.
+
+2.1.3. Move locations to stronger neighbor.
+    {
         (2, ["Location_002", ... ,"Location_006",]),
         (0, ["Location_006",]),
-    ]
-    2.1.4. Remove the current cluster from the available list.
+    }
 
-2.2. Target is "PipingWallReinforcementProfile" (idx=3), 
+2.1.4. Remove the current cluster from the available list.
+
+2.2. Target is "PipingWallReinforcementProfile" (idx=2), 
     - All clusters are compliant at this point.
-2.3. Target is "StabilityWallReinforcementProfile" (idx=4),
+
+2.3. Target is "StabilityWallReinforcementProfile" (idx=3),
     - All clusters are compliant at this point.
-2.4. "CofferDamReinforcementProfile" won't be checked as it's the last
-reinforcement profile type, therefore the strongest.
+
+2.4. "CofferDamReinforcementProfile" (idx=4)
+    - Last reinforcement profile type, therefore the strongest.
 
 Resulting cluster:
-    [
+    {
         (0, ["Location_000","Location_001",]),
         (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",]),
         (4, ["Location_007","Location_008","Location_009",]),
-    ]
+    }
 ```
+
+### Infrastructure priority
+
+This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report) . 
+
+__Conditions__:
+
+- It only modifies the selected reinforcement if it can be applied to all the points of its cluster. 
+- It DOES NOT apply more than one iteration, thus in case of creating neighbor clusters of the same type they will remain as that.
+- Cluster's costs are calculated the summation of each location's total costs:
+    `sum((reinforcement base costs + location costs), cluster's locations)`
+
+__Steps breakdown__:
+
+1. Run the [order based strategy](#order-based-default).
+2. Get common available measures for each cluster an their total costs when applied at the cluster.
+3. Set the **cheapest** common available measure per cluster.
+
+####  Infrastructure priority example
+
+We will start by defining some unrealistic costs per reinforcement type for all locations* such as:
+
+| Index | Reinforcement type | base cost | infra cost | total cost |
+| ---- | ---- |---- | ---- | ---- |
+| 0 | Soil reinforcement | 42 | 420000 | 420042 |
+| 1 | Vertical Piping Solution | 420 | 420000 | 420420 |
+| 2 | Piping Wall | 4200 | 0 | 4200 |
+| 3 | Stability Wall | 42000 | 420000 | 462000 |
+| 4 | Cofferdam | 420000 | 0 | 420000 |
+
+---------------
+> **_Important!_** 
+> For example purposes we are applying the same infrastructure costs to all the locations. |However, in a real case these costs would vary per location (and per reinforcement type). So we can determine the cluster's reinforcement costs as `(total cost) * N locations`
+---------------
+
+Based on this data `Piping Wall` will be chosen **unless** any of the points in the cluster cannot apply it due to obstacles or other constraints, in which case it would end up settling for a `Cofferdam` reinforcement.
+
+Let's see now the strategy steps using the results from the [clustering example](#clustering-example): 
+
+```json
+1. List of clusters:
+    {
+        (0, ["Location_000","Location_001",]),
+        (3, ["Location_002","Location_003",
+                "Location_004","Location_005",
+                "Location_006",]),
+        (4, ["Location_007","Location_008","Location_009",]),
+    }
+
+2. Iterate over each cluster:
+
+2.1. First cluster is:
+    { (0, ["Location_000","Location_001",]) }
+    
+    2.1.1. Get the current cost of using this cluster.
+        - Total costs * N locations = `(420042) * 2 = 840084`
+
+    2.1.2. Get cheaper common available measures:
+        - Soil Reinforcement, (idx=0),
+            - [Discard] Current selection.
+        - Vertical Piping Solution, (idx=1),
+            - Costs = `(420420) * 2 = 840840`
+            - [Discard] Costs are higher than initial state.
+        - Piping Wall, (idx=2),
+            - Costs = `(4200 + 0) * 2 = 8400`
+            - [Keep] Costs are cheaper than the initial state.
+        - Stability Wall, (idx=3),
+            - Costs = `(462000) * 2 = 924000`
+            - [Discard] Costs are higher than initial state.
+        - Cofferdam, (idx=3),
+            - Costs = `(420000) * 2 = 840000`
+            - [Keep] Costs are cheaper than the initial state, keep.
+
+    2.1.3. Set the cheapest common available measure per cluster:
+        - Piping wall < Cofferdam < Soil reinforcement (current)
+        - Piping wall is the new reinforcement for this cluster.
+    
+    - Result: {(2, ["Location_000","Location_001",])}
+
+2.2. Second cluster is:
+    {(3, ["Location_002","Location_003",
+            "Location_004","Location_005",
+            "Location_006",])}
+
+    2.3.1. Get the current cost of using this cluster.
+        - Total costs * N locations = `(462000) * 5 = 2310000`
+    
+    2.3.2. Get cheaper common available measures.
+        - Soil Reinforcement, (idx=0),
+            - [Discard] Not present at "Location_003", "Location_004".
+        - Vertical Piping Solution, (idx=1),
+            - [Discard] Not present at "Location_003", "Location_004".
+        - Piping Wall, (idx=2),
+            - [Discard] Not present at "Location_003", "Location_004".
+        - Stability Wall, (idx=3),
+            - [Discard] Current selection.
+        - Cofferdam, (idx=3),
+            - Costs = `(420000) * 5 = 2100000`
+            - [Keep] Costs are cheaper than the initial state.
+    
+    2.3.3. Set the cheapest common available measure per cluster:
+        - Cofferdam < Stability wall
+        - Cofferdam is the new reinforcement for this cluster.
+    
+    - Result : {(4, ["Location_002","Location_003",
+                    "Location_004","Location_005",
+                    "Location_006",])}
+
+2.3. Third cluster is:
+    { (4, ["Location_007","Location_008",
+            "Location_009",])}}
+
+    2.3.1. Get the current cost of using this cluster.
+        - Total costs * N locations = `(420000) * 3 = 1260000`
+
+    2.3.2. Get cheaper common available measures.
+        - Cofferdam, (idx=4),
+            - Current selection.
+
+    2.3.3. Set the cheapest common available measure per cluster:
+        - Only cofferdam available,
+        - No further action.
+
+    - Result: {(4, ["Location_007","Location_008",
+                    "Location_009",])}
+
+2.4. Resulting clusters:
+    {
+        (2, ["Location_000","Location_001",]),
+        (4, ["Location_002","Location_003",
+                "Location_004","Location_005",
+                "Location_006","Location_007",
+                "Location_008","Location_009",]),
+    }
+```
+
+With this, we went from:
+
+- Initial costs: `(420042) * 2 + (462000) * 5 + (420000) * 3 = 4410084`, to
+- Final costs: `(4200) * 2 + (420000) * 8 = 3368400`
+
+Which would amount to a total save of **1.041.684€**
