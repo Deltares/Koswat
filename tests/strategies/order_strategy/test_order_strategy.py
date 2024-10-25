@@ -57,7 +57,9 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
-    @pytest.mark.parametrize("idx", range(len(_default_reinforcements) - 1))
+    @pytest.mark.parametrize(
+        "idx", range(len(_default_reinforcements) - 1), ids=_default_reinforcements[:-1]
+    )
     def test_get_strategy_order_increased_cost_filters_reinforcement(
         self,
         idx: int,
@@ -82,7 +84,9 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
-    @pytest.mark.parametrize("idx", range(len(_default_reinforcements) - 2))
+    @pytest.mark.parametrize(
+        "idx", range(len(_default_reinforcements) - 2), ids=_default_reinforcements[:-2]
+    )
     def test_get_strategy_order_reduced_surface_filters_next_reinforcement(
         self,
         idx: int,
