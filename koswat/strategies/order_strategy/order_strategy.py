@@ -63,19 +63,17 @@ class OrderStrategy(StrategyProtocol):
         def split_reinforcements() -> tuple[
             list[StrategyReinforcementInput], list[StrategyReinforcementInput]
         ]:
-            _cofferdam = next(
+            _last = [
                 obj
                 for obj in strategy_input.strategy_reinforcements
                 if obj and obj.reinforcement_type == CofferdamReinforcementProfile
-            )
-            return (
-                [
-                    obj
-                    for obj in strategy_input.strategy_reinforcements
-                    if obj and obj.reinforcement_type != CofferdamReinforcementProfile
-                ],
-                [_cofferdam],
-            )
+            ]
+            _other = [
+                obj
+                for obj in strategy_input.strategy_reinforcements
+                if obj and obj.reinforcement_type != CofferdamReinforcementProfile
+            ]
+            return (_other, _last)
 
         # Split in a list to be sorted (cheap to expensive) and a list to be put last (Cofferdam for now)
         _unsorted, _last = split_reinforcements()
