@@ -49,7 +49,7 @@ class OrderStrategy(StrategyProtocol):
 
     def get_strategy_order_for_reinforcements(
         self,
-        strategy_input: StrategyInput,
+        strategy_reinforcements: list[StrategyReinforcementInput],
     ) -> list[type[ReinforcementProfileProtocol]]:
         """
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
@@ -59,7 +59,7 @@ class OrderStrategy(StrategyProtocol):
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
-        if not strategy_input.strategy_reinforcements:
+        if not strategy_reinforcements:
             return []
 
         def split_reinforcements() -> tuple[
@@ -67,12 +67,12 @@ class OrderStrategy(StrategyProtocol):
         ]:
             _last = [
                 obj
-                for obj in strategy_input.strategy_reinforcements
+                for obj in strategy_reinforcements
                 if obj and obj.reinforcement_type == CofferdamReinforcementProfile
             ]
             _other = [
                 obj
-                for obj in strategy_input.strategy_reinforcements
+                for obj in strategy_reinforcements
                 if obj and obj.reinforcement_type != CofferdamReinforcementProfile
             ]
             return (_other, _last)
@@ -126,7 +126,7 @@ class OrderStrategy(StrategyProtocol):
         self, strategy_input: StrategyInput
     ) -> list[StrategyLocationReinforcement]:
         _reinforcement_order = self.get_strategy_order_for_reinforcements(
-            strategy_input
+            strategy_input.strategy_reinforcements
         )
         _strategy_reinforcements = self.get_strategy_reinforcements(
             strategy_input.strategy_locations, _reinforcement_order
