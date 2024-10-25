@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import math
+from itertools import pairwise
+
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -21,6 +24,9 @@ from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 from koswat.strategies.strategy_protocol import StrategyProtocol
+from koswat.strategies.strategy_reinforcement_type_costs import (
+    StrategyReinforcementTypeCosts,
+)
 
 
 class OrderStrategy(StrategyProtocol):
@@ -50,32 +56,52 @@ class OrderStrategy(StrategyProtocol):
     ) -> list[type[ReinforcementProfileProtocol]]:
         """
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
-        possibly omitting reinforcement types that are more expensive and more restrictive than others.
+        possibly removing reinforcement types that are more expensive and more restrictive than others.
         Cofferdam should always be the last reinforcement type.
 
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
 
-        # Remove cofferdam from the list of reinforcements
-        _cofferdam = next(
-            obj
-            for obj in strategy_input.strategy_reinforcement_type_costs
-            if obj.reinforcement_type == CofferdamReinforcementProfile
-        )
-        strategy_input.strategy_reinforcement_type_costs.remove(_cofferdam)
+        def split_reinforcements() -> tuple[
+            list[StrategyReinforcementTypeCosts], list[StrategyReinforcementTypeCosts]
+        ]:
+            _cofferdam = next(
+                obj
+                for obj in strategy_input.strategy_reinforcement_type_costs
+                if obj.reinforcement_type == CofferdamReinforcementProfile
+            )
+            return (
+                [
+                    obj
+                    for obj in strategy_input.strategy_reinforcement_type_costs
+                    if obj.reinforcement_type != CofferdamReinforcementProfile
+                ],
+                [_cofferdam],
+            )
 
-        # Sort the remaining list of reinforcements from cheapest to most expensive
+        # Split in a list to be sorted (cheap to expensive) and a list to be put last (Cofferdam for now)
+        _unsorted, _last = split_reinforcements()
         _sorted = sorted(
-            strategy_input.strategy_reinforcement_type_costs, key=lambda x: x.base_costs
+            _unsorted, key=lambda x: (x.base_costs, x.ground_level_surface)
         )
 
-        # Filter out reinforcements that are less restrictive than the previous (cheaper) one
-        for i, obj in enumerate(_sorted[1:]):
-            if obj.ground_level_surface >= _sorted[i - 1].ground_level_surface:
-                _sorted.remove(obj)
+        def check_reinforcement(
+            pair: tuple[StrategyReinforcementTypeCosts, StrategyReinforcementTypeCosts],
+        ) -> StrategyReinforcementTypeCosts | None:
+            # Only keep the more expensive reinforcement if it is more restrictive
+            if pair[1].ground_level_surface < pair[0].ground_level_surface:
+                return pair[1]
+            return None
 
-        return [x.reinforcement_type for x in _sorted] + [_cofferdam.reinforcement_type]
+        # Check if the current (more expensive) reinforcement is more restrictive than the previous
+        # (the first needs to be prepended as it is always kept)
+        _sorted_pairs = pairwise(_sorted)
+        _kept = [_sorted[0]] + list(map(check_reinforcement, _sorted_pairs))
+
+        return [x.reinforcement_type for x in _kept if x] + [
+            x.reinforcement_type for x in _last
+        ]
 
     @staticmethod
     def get_strategy_reinforcements(

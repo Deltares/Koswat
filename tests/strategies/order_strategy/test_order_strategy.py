@@ -1,3 +1,5 @@
+import pytest
+
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -38,12 +40,63 @@ class TestOrderStrategy:
         # 3. Verify expectations
         assert _result == _expected_result
 
-    def test_get_strategy_order_for_reinforcements(
+    def test_get_strategy_order_given_example_returns_default_order(
         self,
         example_strategy_input: StrategyInput,
     ):
         # 1. Define test data.
-        _expected_result = [SoilReinforcementProfile, CofferdamReinforcementProfile]
+        _expected_result = self._default_reinforcements
+        _strategy = OrderStrategy()
+
+        # 2. Run test.
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
+            example_strategy_input
+        )
+
+        # 3. Verify expectations
+        assert _reinforcements == _expected_result
+        assert _reinforcements[-1] == CofferdamReinforcementProfile
+
+    @pytest.mark.parametrize("idx", range(len(_default_reinforcements) - 1))
+    def test_get_strategy_order_increased_cost_filters_reinforcement(
+        self,
+        idx: int,
+        example_strategy_input: StrategyInput,
+    ):
+        # 1. Define test data.
+        idx = 1
+        example_strategy_input.strategy_reinforcement_type_costs[idx].base_costs *= 20
+        _expected_result = [
+            x
+            for x in self._default_reinforcements
+            if x != self._default_reinforcements[idx]
+        ]
+        _strategy = OrderStrategy()
+
+        # 2. Run test.
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
+            example_strategy_input
+        )
+
+        # 3. Verify expectations
+        assert _reinforcements == _expected_result
+        assert _reinforcements[-1] == CofferdamReinforcementProfile
+
+    @pytest.mark.parametrize("idx", range(len(_default_reinforcements) - 2))
+    def test_get_strategy_order_reduced_surface_filters_next_reinforcement(
+        self,
+        idx: int,
+        example_strategy_input: StrategyInput,
+    ):
+        # 1. Define test data.
+        example_strategy_input.strategy_reinforcement_type_costs[
+            idx
+        ].ground_level_surface -= 15
+        _expected_result = [
+            x
+            for x in self._default_reinforcements
+            if x != self._default_reinforcements[idx + 1]
+        ]
         _strategy = OrderStrategy()
 
         # 2. Run test.
