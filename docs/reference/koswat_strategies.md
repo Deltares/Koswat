@@ -239,7 +239,7 @@ __Steps breakdown__:
 
 ####  Infrastructure priority example
 
-We will strat by defining some unrealistic costs per reinforcement type for all locations* such as:
+We will start by defining some unrealistic costs per reinforcement type for all locations* such as:
 
 | Index | Reinforcement type | base cost | infra cost |
 | ---- | ---- |---- | ---- |
@@ -257,17 +257,21 @@ Let's see now the strategy steps using the results from the [clustering example]
 
 ```json
 1. List of clusters:
-[
-    (0, ["Location_000","Location_001",]),
-    (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",]),
-    (4, ["Location_007","Location_008","Location_009",]),
-]
+    [
+        (0, ["Location_000","Location_001",]),
+        (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",]),
+        (4, ["Location_007","Location_008","Location_009",]),
+    ]
 
 2. Iterate over each cluster:
+
 2.1. First cluster is:
-    (0, ["Location_000","Location_001",])
+
+    - Initial cluster: (0, ["Location_000","Location_001",])
+    
     2.1.1. Get the current cost of using this cluster.
         - (Base + infracosts) * N locations = (42 + 1000**10) * 2
+
     2.1.2. Get cheaper common available measures:
         - Soil Reinforcement, (idx=0),
             - Current selection.
@@ -283,14 +287,20 @@ Let's see now the strategy steps using the results from the [clustering example]
         - Cofferdam, (idx=3),
             - (Base + infracosts) * N locations = (420000 + 0) * 2
             - Costs are cheaper than the initial state, keep.
+
     2.1.3. Set the cheapest common available measure per cluster:
         - Piping wall costs < Cofferdam costs < Soil reinforcement costs (current state)
         - We set Piping wall as the new reinforcement for this cluster.
-    (2, ["Location_000","Location_001",])
+    
+    - Result cluster: (2, ["Location_000","Location_001",])
+
 2.2. Second cluster is:
-    (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",])
+
+    - Initial cluster: (3, ["Location_002","Location_003","Location_004","Location_005","Location_006",])
+
     2.3.1. Get the current cost of using this cluster.
-    - (Base + infracosts) * N locations = (42000 + 1000**10) * 5
+        - (Base + infracosts) * N locations = (42000 + 1000**10) * 5
+    
     2.3.2. Get cheaper common available measures.
         - Soil Reinforcement, (idx=0),
             - Only present at "Location_002", "Location_005", "Location_006", discard.
@@ -303,22 +313,30 @@ Let's see now the strategy steps using the results from the [clustering example]
         - Cofferdam, (idx=3),
             - (Base + infracosts) * N locations = (420000 + 0) * 5
             - Costs are cheaper than the initial state, keep.
+    
     2.3.3. Set the cheapest common available measure per cluster:
         - Cofferdam costs < Stability wall costs
         - We set Cofferdam as the new reinforcement for this cluster.
-    (4, ["Location_002","Location_003","Location_004","Location_005","Location_006",])
+    
+    - Result cluster: (4, ["Location_002","Location_003","Location_004","Location_005","Location_006",])
+
 2.3. Third cluster is:
-    (4, ["Location_007","Location_008","Location_009",])
+
+    - Initial cluster: (4, ["Location_007","Location_008","Location_009",])
+
     2.3.1. Get the current cost of using this cluster.
-    - (Base + infracosts) * N locations = (42 + 0) * 2
+        - (Base + infracosts) * N locations = (42 + 0) * 2
+
     2.3.2. Get cheaper common available measures.
         - Cofferdam, (idx=4),
             - Current selection.
+
     2.3.3. Set the cheapest common available measure per cluster:
         - Because no (other) measure was available at 2.3.2, they remain on the same cluster.
-    (4, ["Location_007","Location_008","Location_009",])
 
-Resulting clusters:
+    - Result cluster (4, ["Location_007","Location_008","Location_009",])
+
+2.4. Resulting clusters:
     [
         (2, ["Location_000","Location_001",]),
         (4, ["Location_002","Location_003","Location_004","Location_005","Location_006", "Location_007","Location_008","Location_009",]),
