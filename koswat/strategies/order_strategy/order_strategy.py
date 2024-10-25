@@ -62,20 +62,33 @@ class OrderStrategy(StrategyProtocol):
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
+        _available_reinforcements = []
+        for _rt in self.get_default_order_for_reinforcements():
+            _available_reinforcements.append(
+                next(
+                    (
+                        _srtc
+                        for _sl in strategy_input.strategy_locations
+                        for _srtc in _sl.strategy_reinforcement_type_costs
+                        if _srtc.reinforcement_type == _rt
+                    ),
+                    None,
+                )
+            )
 
         def split_reinforcements() -> tuple[
             list[StrategyReinforcementTypeCosts], list[StrategyReinforcementTypeCosts]
         ]:
             _cofferdam = next(
                 obj
-                for obj in strategy_input.strategy_reinforcement_type_costs
-                if obj.reinforcement_type == CofferdamReinforcementProfile
+                for obj in _available_reinforcements
+                if obj and obj.reinforcement_type == CofferdamReinforcementProfile
             )
             return (
                 [
                     obj
-                    for obj in strategy_input.strategy_reinforcement_type_costs
-                    if obj.reinforcement_type != CofferdamReinforcementProfile
+                    for obj in _available_reinforcements
+                    if obj and obj.reinforcement_type != CofferdamReinforcementProfile
                 ],
                 [_cofferdam],
             )
