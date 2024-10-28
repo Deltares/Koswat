@@ -89,6 +89,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 ground_level_surface=_reinforcement.new_ground_level_surface,
             )
 
+        # Get the reinforcement cost of the first location for each reinforcement.
         _reinforcement_costs = [
             next(iter(_reinforcement_dict.values()), None)
             for _reinforcement_dict in locations_per_reinforcement
