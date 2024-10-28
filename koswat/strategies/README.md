@@ -4,7 +4,7 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 - `StrategyInput`, wraps all required properties to apply a strategy: 
     - strategy_locations (`list[StrategyLocationInput]`), contains all the available reinforcements that can be applied at each location and their related costs.
-    - strategy_reinforcement_type_costs (`list[StrategyReinforcementTypeCosts]`), all the reinforcements that can be used at this location and their related costs and width.
+    - strategy_reinforcements (`list[StrategyReinforcementInput]`), all the reinforcements that can be used at this location and their related costs and width.
     - structure_min_buffer (`float`), how many extra meters a structure requires to support its reinforcement.
     - structure_min_length (`float`), how many minimal meters are required for a structure to "exist". This rule can, at times, have certain exceptions.
 
@@ -36,6 +36,6 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 The following strategies are currently available, please refer to the official documentation for a more in-detail explanation of each of them:
 
-- [__Default__] Order based (`OrderBased`). A strategy is chosen based on a pre-defined measure priority order.
+- [__Default__] Order based (`OrderBased`). A strategy is chosen based on a dynamically determined order of reinforcements. This order is determined from least to most restrictive, where reinforcements are omitted when they are less restrictive and more expensive than other reinforcement(s). Cofferdam is forced as the last reinforcement of this order.
 - Infra-priority based (`InfraPriorityStrategy`). Clusters are created based on the cheapest total cost (including infrastructure reworks). This strategy is applied __after__  _Order based_, the clusters are then modified into a reinforcement that requires less space (thus more expensive) but induce less infrastructure costs, therefore becoming cheaper.
 

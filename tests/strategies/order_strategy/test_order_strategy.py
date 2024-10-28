@@ -70,11 +70,9 @@ class TestOrderStrategy:
         # to become more expensive than the next (more restrictive) reinforcement
         # and will be filtered out.
         example_strategy_input.strategy_reinforcements[idx].base_costs *= 20
-        _expected_result = [
-            x
-            for x in self._default_reinforcements
-            if x != self._default_reinforcements[idx]
-        ]
+        _expected_result = self._default_reinforcements
+        _expected_result.remove(self._default_reinforcements[idx])
+
         _strategy = OrderStrategy()
 
         # 2. Run test.
@@ -101,11 +99,9 @@ class TestOrderStrategy:
         # to become less restrictive than the previous (cheaper) reinforcement
         # and will be filtered out.
         example_strategy_input.strategy_reinforcements[idx].ground_level_surface += 15
-        _expected_result = [
-            x
-            for x in self._default_reinforcements
-            if x != self._default_reinforcements[idx]
-        ]
+        _expected_result = self._default_reinforcements
+        _expected_result.remove(self._default_reinforcements[idx])
+
         _strategy = OrderStrategy()
 
         # 2. Run test.
