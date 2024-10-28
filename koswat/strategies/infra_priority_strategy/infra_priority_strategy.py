@@ -1,44 +1,18 @@
+from __future__ import annotations
+
 from collections import defaultdict
-from dataclasses import dataclass, field
 from itertools import groupby
 
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 from koswat.strategies.strategy_protocol import StrategyProtocol
-
-
-@dataclass
-class InfraCluster:
-    reinforcement_type: type[ReinforcementProfileProtocol]
-    cluster: list[StrategyLocationReinforcement] = field(default_factory=lambda: [])
-
-    def set_cheapest_common_available_measure(
-        self,
-        measure_costs: dict[type[ReinforcementProfileProtocol]],
-    ) -> None:
-        """
-        Updates all the location reinforcements with the cheapest reinforcement type
-        from the `measure_costs`.
-
-        Args:
-            measure_costs (dict[type[ReinforcementProfileProtocol]]):
-                dictionary with the total costs per reinforcement type.
-        """
-        _selection = min(
-            measure_costs,
-            key=measure_costs.get,
-        )
-
-        if _selection != self.reinforcement_type:
-            self.reinforcement_type = _selection
-            for _cd in self.cluster:
-                _cd.selected_measure = _selection
 
 
 class InfraPriorityStrategy(StrategyProtocol):
@@ -53,7 +27,7 @@ class InfraPriorityStrategy(StrategyProtocol):
     def _get_initial_clusters(
         self, strategy_input: StrategyInput
     ) -> list[InfraCluster]:
-        _infra_cluster_list = []
+        _infra_cluster_list: list[InfraCluster] = []
         for _grouped_by, _grouping in groupby(
             OrderStrategy().apply_strategy(strategy_input),
             key=lambda x: x.selected_measure,
@@ -61,9 +35,14 @@ class InfraPriorityStrategy(StrategyProtocol):
             _grouping_data = list(_grouping)
             if not _grouping_data:
                 continue
-            _infra_cluster_list.append(
-                InfraCluster(reinforcement_type=_grouped_by, cluster=_grouping_data)
+            _cluster = InfraCluster(
+                reinforcement_type=_grouped_by, cluster=_grouping_data
             )
+            if any(_infra_cluster_list):
+                # Add neighbors
+                _cluster.left_neighbor = _infra_cluster_list[-1]
+                _infra_cluster_list[-1].right_neighbor = _cluster
+            _infra_cluster_list.append(_cluster)
         return _infra_cluster_list
 
     def _get_common_available_measures(
@@ -72,9 +51,7 @@ class InfraPriorityStrategy(StrategyProtocol):
     ) -> dict[type[ReinforcementProfileProtocol], float]:
         # Define initial costs
         _costs_dict = defaultdict(lambda: 0.0)
-        _costs_dict[infra_cluster.reinforcement_type] = sum(
-            _c.current_cost for _c in infra_cluster.cluster
-        )
+        _costs_dict[infra_cluster.reinforcement_type] = infra_cluster.current_cost
 
         # Get common measures excluding the initial one to reduce computations.
         _common_available_measures = set(
