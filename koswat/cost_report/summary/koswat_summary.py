@@ -68,7 +68,7 @@ class KoswatSummary:
     ) -> defaultdict[type[ReinforcementProfileProtocol], tuple[float, float]]:
         """
         Gets the infrastructure costs for each profile type
-        for the locations for which the profile type is selected.
+        for those locations for which the profile type is selected.
 
         Returns:
             defaultdict[type[ReinforcementProfileProtocol], tuple[float, float]]:
@@ -77,15 +77,22 @@ class KoswatSummary:
         _locs_per_reinforcements = self.get_locations_by_profile()
 
         _infra_cost_per_reinforcement = defaultdict(lambda: (0.0, 0.0))
+        _infra_cost_list, _infra_cost_with_surtax_list = [], []
         for _rt, _locs in _locs_per_reinforcements.items():
-            _infra_cost_list, _infra_cost_with_surtax_list = zip(
-                *(
-                    (_impcr.total_cost, _impcr.total_cost_with_surtax)
-                    for _lprl in self.locations_profile_report_list
-                    for _impcr in _lprl.infra_multilocation_profile_cost_report
-                    if _impcr.location in _locs
+            for _lprl in self.locations_profile_report_list:
+                if not type(_lprl.profile_cost_report.reinforced_profile) == _rt:
+                    continue
+                if not _lprl.infra_multilocation_profile_cost_report:
+                    continue
+                _infra_cost, _infra_cost_with_surtax = zip(
+                    *(
+                        (_impcr.total_cost, _impcr.total_cost_with_surtax)
+                        for _impcr in _lprl.infra_multilocation_profile_cost_report
+                        if _impcr.location in _locs
+                    )
                 )
-            )
+                _infra_cost_list.append(sum(_infra_cost))
+                _infra_cost_with_surtax_list.append(sum(_infra_cost_with_surtax))
 
             _infra_cost_per_reinforcement[_rt] = (
                 sum(_infra_cost_list),
