@@ -73,8 +73,8 @@ Construction length (cost incl surtax):;0.0;0.0;0.0;0.0
 Total measure meters;0;1;1;2
 Total measure cost;0.0;8.14;16.29;48.87;73.3
 Total measure cost incl surtax;0.0;12.22;24.43;73.3;109.95
-Infrastructure cost;0.0;0.0;6.6;39.6;46.2
-Infrastructure cost incl surtax;0.0;0.0;19.8;277.2;297.0
-Total cost;0.0;8.14;22.89;88.47;119.5
-Total cost incl surtax;0.0;12.22;44.23;350.5;406.95"""
+Infrastructure cost;0.0;0.0;0.0;0.0;0.0
+Infrastructure cost incl surtax;0.0;0.0;0.0;0.0;0.0
+Total cost;0.0;8.14;16.29;48.87;73.3
+Total cost incl surtax;0.0;12.22;24.43;73.3;109.95"""
         assert _expected_text == _read_text
