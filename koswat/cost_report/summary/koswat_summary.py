@@ -58,13 +58,15 @@ class KoswatSummary:
         """
         _infra_cost_per_reinforcement = defaultdict(tuple)
 
-        _infra_per_reinforcement = defaultdict(list)
+        # Get the infra cost tuples (without and with surtax) for each location.
+        _infra_cost_dict = defaultdict(list)
         for _loc in self.reinforcement_per_locations:
-            _infra_per_reinforcement[_loc.selected_measure].append(
+            _infra_cost_dict[_loc.selected_measure].append(
                 _loc.get_infrastructure_costs(_loc.selected_measure)
             )
 
-        for _rt, _infra_costs in _infra_per_reinforcement.items():
+        # Sum the infra costs for each reinforcement type.
+        for _rt, _infra_costs in _infra_cost_dict.items():
             _infra_cost, _infra_cost_with_surtax = zip(*_infra_costs)
             _infra_cost_per_reinforcement[_rt] = (
                 sum(_infra_cost),
@@ -72,38 +74,3 @@ class KoswatSummary:
             )
 
         return dict(_infra_cost_per_reinforcement)
-
-    def get_infrastructure_cost(
-        self, profile_type: type[ReinforcementProfileProtocol]
-    ) -> float:
-        """
-        Get the infrastructure cost for those locations for which a specific profile type is selected.
-
-        Args:
-            profile_type (type[ReinforcementProfileProtocol]): Type of reinforcement profile.
-
-        Returns:
-            float: Infrastructure cost.
-        """
-        _locations = self.get_locations_by_profile(profile_type)
-        if not _locations:
-            return 0.0
-        _report = self.get_report_by_profile(profile_type)
-        return sum(
-            ilpcr.total_cost
-            for ilpcr in _report.infra_multilocation_profile_cost_report
-            if ilpcr.location in _locations
-        )
-
-    def get_infrastructure_cost_with_surtax(
-        self, profile_type: type[ReinforcementProfileProtocol]
-    ) -> float:
-        _locations = self.get_locations_by_profile(profile_type)
-        if not _locations:
-            return 0.0
-        _report = self.get_report_by_profile(profile_type)
-        return sum(
-            ilpcr.total_cost_with_surtax
-            for ilpcr in _report.infra_multilocation_profile_cost_report
-            if ilpcr.location in _locations
-        )
