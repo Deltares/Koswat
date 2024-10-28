@@ -234,11 +234,16 @@ Resulting cluster:
 
 ### Infrastructure priority
 
-This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report) . 
+This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report).
+
+For an optimal assignment of a new reinforcement profile, we make use of "subclusters". These subclusters are defined as a subset of contiguous locations of the same reinforcement type. In addition, these subclusters have to be larger than twice the minimal length of the reinforcement buffer (`reinforcement_min_buffer`) which translates to: `min_cluster_length = (2 * reinforcement_min_buffer) + 1`.
 
 __Conditions__:
 
-- It only modifies the selected reinforcement if it can be applied to all the points of its cluster. 
+- It only modifies the selected reinforcement if it can be applied to all the points of its (sub)cluster. 
+- We create (sub) clusters based on the immediate results of the [order based strategy](#order-based-default), we do not try to combine or create new clusters based on a "greedier" strategy.
+- We define a "viable" cluster option as a cluster which fulfills the required minimal length and whose costs are not higher than the current ones.
+- We consider "minimal costs" or "lower costs" as the lowest cost of applying the same reinforcement type to a given subcluster.
 - It DOES NOT apply more than one iteration, thus in case of creating neighbor clusters of the same type they will remain as that.
 - Cluster's costs are calculated the summation of each location's total costs:
     `sum((reinforcement base costs + location costs), cluster's locations)`
@@ -246,10 +251,13 @@ __Conditions__:
 __Steps breakdown__:
 
 1. Run the [order based strategy](#order-based-default).
-2. Get common available measures for each cluster an their total costs when applied at the cluster.
-3. Set the **cheapest** common available measure per cluster.
+2. For each generated cluster, calculate all its viable options.
+    1. For each option (list of subclusters):
+        1. Get common available measures for each cluster an their minimal costs when applied at the cluster.
+    2. Find the option with the lowest cost.
+    3. Set the **cheapest** common available measure of each subcluster for the clustering option with the lowest cost.
 
-####  Infrastructure priority example
+####  Infrastructure priority (basic) example
 
 We will start by defining some unrealistic costs per reinforcement type for all locations* such as:
 
@@ -373,3 +381,8 @@ With this, we went from:
 - Final costs: `(4200) * 2 + (420000) * 8 = 3368400`
 
 Which would amount to a total save of **1.041.684€**
+
+
+#### Infrastructure priority subclustering example
+
+....

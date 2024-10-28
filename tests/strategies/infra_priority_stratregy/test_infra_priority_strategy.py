@@ -10,9 +10,6 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_re
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
 )
-from koswat.strategies.infra_priority_strategy.infra_priority_subclustering_strategy import (
-    InfraPrioritySubclusteringStrategy,
-)
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
