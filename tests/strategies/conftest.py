@@ -3,13 +3,9 @@ from typing import Iterator
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
@@ -18,6 +14,7 @@ from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
@@ -67,9 +64,18 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         )
         for _idx, _rt in enumerate(_initial_state_per_location)
     ]
+    _strategy_reinforcements = [
+        StrategyReinforcementInput(
+            reinforcement_type=_rtc.reinforcement_type,
+            base_costs=_rtc.base_costs,
+            ground_level_surface=10 * (len(_reinforcement_type_default_order) - _idx),
+        )
+        for _idx, _rtc in enumerate(_levels_data)
+    ]
 
     yield StrategyInput(
         strategy_locations=_strategy_locations,
+        strategy_reinforcements=_strategy_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )
