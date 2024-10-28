@@ -116,7 +116,7 @@ def _get_example_location_reinforcements_with_selected_subclustering(
     # This should induce a splitting of the second cluster (based on order strategy)
     # so that the final result should be:
     # {
-    #     (0, ["Location_000","Location_001",]),
+    #     (2, ["Location_000","Location_001",]),
     #     (3, ["Location_002","Location_003", "Location_004",]),
     #     (4, ["Location_005","Location_006", "Location_007",
     #           "Location_008","Location_009",]),
@@ -135,11 +135,11 @@ def _get_example_location_reinforcements_with_selected_subclustering(
         )
         # We only modify the infra costs because the base costs increment
         # with the index, so reinforcement_type[4].base_costs > reinforcement_type[3].base_costs
-        for _idx, _costs in enumerate(
-            location.strategy_reinforcement_type_costs[:target_reinforcement_idx]
-        ):
+        for _costs in location.strategy_reinforcement_type_costs[
+            :target_reinforcement_idx
+        ]:
             _costs.infrastructure_costs = (
-                100 ** (len(_reinforcement_type_default_order) - 1)
+                10 ** len(_reinforcement_type_default_order)
             ) * 42
 
     # We force the first cluster from index 0 to index 2

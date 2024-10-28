@@ -29,7 +29,7 @@ class InfraPriorityStrategy(StrategyProtocol):
     """
 
     @staticmethod
-    def get_common_available_measures(
+    def get_common_available_measures_costs(
         infra_cluster: InfraCluster,
     ) -> dict[type[ReinforcementProfileProtocol], float]:
         """
@@ -113,7 +113,7 @@ class InfraPriorityStrategy(StrategyProtocol):
             _icc_costs = 0
             for _sub_cluster in _clustering_option:
                 _icc.add_cluster(
-                    _sub_cluster, self.get_common_available_measures(_sub_cluster)
+                    _sub_cluster, self.get_common_available_measures_costs(_sub_cluster)
                 )
                 _icc_costs += min(_icc.cluster_costs[-1].values())
                 if _icc_costs > _min_costs:
