@@ -56,6 +56,9 @@ class OrderStrategy(StrategyProtocol):
         possibly removing reinforcement types that are more expensive and more restrictive than others.
         Cofferdam should always be the last reinforcement type.
 
+        Input:
+            strategy_reinforcements (list[StrategyReinforcementInput]): list of reinforcement types with costs and surface
+
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
@@ -65,40 +68,47 @@ class OrderStrategy(StrategyProtocol):
         def split_reinforcements() -> tuple[
             list[StrategyReinforcementInput], list[StrategyReinforcementInput]
         ]:
-            _last = [
-                obj
-                for obj in strategy_reinforcements
-                if obj and obj.reinforcement_type == CofferdamReinforcementProfile
-            ]
-            _other = [
-                obj
-                for obj in strategy_reinforcements
-                if obj and obj.reinforcement_type != CofferdamReinforcementProfile
-            ]
+            _last, _other = [], []
+            for obj in strategy_reinforcements:
+                if not obj:
+                    continue
+                if obj.reinforcement_type == CofferdamReinforcementProfile:
+                    _last.append(obj)
+                else:
+                    _other.append(obj)
+
             return (_other, _last)
 
-        # Split in a list to be sorted (cheap to expensive) and a list to be put last (Cofferdam for now)
+        # Split in a list to be sorted (least to most restrictive) and a list to be put last (Cofferdam for now)
         _unsorted, _last = split_reinforcements()
         _sorted = sorted(
-            _unsorted, key=lambda x: (x.base_costs, x.ground_level_surface)
+            _unsorted,
+            key=lambda x: (x.ground_level_surface, x.base_costs),
+            reverse=True,
         )
 
         def check_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
         ) -> StrategyReinforcementInput | None:
-            # Only keep the more expensive reinforcement if it is more restrictive
-            if pair[1].ground_level_surface < pair[0].ground_level_surface:
-                return pair[1]
+            # Only keep the less restrictive reinforcement if it is cheaper
+            if (
+                pair[0].ground_level_surface > pair[1].ground_level_surface
+                and pair[0].base_costs < pair[1].base_costs
+            ):
+                return pair[0]
             return None
 
         # Check if the current (more expensive) reinforcement is more restrictive than the previous
-        # (the first needs to be prepended as it is always kept)
-        _sorted_pairs = pairwise(_sorted)
-        _kept = [_sorted[0]] + list(map(check_reinforcement, _sorted_pairs))
+        # (the last needs to be appended as it is always kept)
+        _sorted_pairs = pairwise(_sorted + _last)
+        _kept = (
+            list(
+                filter(lambda x: x is not None, map(check_reinforcement, _sorted_pairs))
+            )
+            + _last
+        )
 
-        return [x.reinforcement_type for x in _kept if x] + [
-            x.reinforcement_type for x in _last
-        ]
+        return [x.reinforcement_type for x in _kept]
 
     @staticmethod
     def get_strategy_reinforcements(

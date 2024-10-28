@@ -7,9 +7,6 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
     MultiLocationProfileCostReport,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
 from koswat.strategies.strategy_input import StrategyLocationInput
 from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
 from koswat.strategies.strategy_reinforcement_type_costs import (
@@ -64,7 +61,16 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
     def build(
         self,
-    ) -> tuple[list[StrategyLocationInput], list[StrategyReinforcementInput],]:
+    ) -> tuple[list[StrategyLocationInput], list[StrategyReinforcementInput]]:
+        """
+        Build the locations-reinforcements matrix.
+
+        Returns:
+            tuple[list[StrategyLocationInput], list[StrategyReinforcementInput]]:
+                Tuple containing:
+                - list[StrategyLocationInput]: The locations-reinforcements matrix;
+                - list[StrategyReinforcementInput]: The list of applied reinforcements.
+        """
         # 1. First we get all the possible reinforcements per point.
 
         logging.info("Initalizing locations-reinforcements matrix.")
@@ -79,38 +85,6 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         _strategy_reinforcements_list = []
 
         # 3. Last, we merge the reinforcements dictionary into the matrix.
-        for _location, _item in _strategy_locations_dict.items():
-            for _reinforce_matrix_dict in _reinforce_matrix_dict_list:
-                # Add the reinforcement to the matrix if location exists.
-                if _location not in _reinforce_matrix_dict:
-                    continue
-                _item.append(_reinforce_matrix_dict[_location])
-                # Add to the reinforcement list if not already present.
-                if _reinforce_matrix_dict[_location] in _strategy_reinforcements_list:
-                    continue
-                _strategy_reinforcements_list.append(_reinforce_matrix_dict[_location])
-
-        # 4. Sort matrix by traject order for normalized usage in Koswat.
-        def to_strategy_location(
-            matrix_tuple: tuple[PointSurroundings, list[StrategyReinforcementTypeCosts]]
-        ) -> StrategyLocationInput:
-            return StrategyLocationInput(
-                point_surrounding=matrix_tuple[0],
-                strategy_reinforcement_type_costs=matrix_tuple[1],
-            )
-
-        _strategy_locations = list(
-            map(
-                to_strategy_location,
-                dict(
-                    sorted(
-                        _strategy_locations_dict.items(),
-                        key=lambda x: x[0].traject_order,
-                    )
-                ).items(),
-            )
-        )
-
         def get_reinforcement(
             reinforcement_cost: StrategyReinforcementTypeCosts,
         ) -> StrategyReinforcementInput:
@@ -133,10 +107,40 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 ground_level_surface=_reinforcement.new_ground_level_surface,
             )
 
-        _strategy_reinforcements = list(
-            map(get_reinforcement, _strategy_reinforcements_list)
+        for _location, _item in _strategy_locations_dict.items():
+            for _reinforce_matrix_dict in _reinforce_matrix_dict_list:
+                # Add the reinforcement to the matrix if location exists.
+                if _location not in _reinforce_matrix_dict:
+                    continue
+                _item.append(_reinforce_matrix_dict[_location])
+                # Add to the reinforcement to the list if not already present.
+                if _reinforce_matrix_dict[_location] in _strategy_reinforcements_list:
+                    continue
+                _strategy_reinforcements_list.append(
+                    get_reinforcement(_reinforce_matrix_dict[_location])
+                )
+
+        # 4. Sort matrix by traject order for normalized usage in Koswat.
+        def to_strategy_location(
+            matrix_tuple: tuple[PointSurroundings, list[StrategyReinforcementTypeCosts]]
+        ) -> StrategyLocationInput:
+            return StrategyLocationInput(
+                point_surrounding=matrix_tuple[0],
+                strategy_reinforcement_type_costs=matrix_tuple[1],
+            )
+
+        _strategy_locations = list(
+            map(
+                to_strategy_location,
+                dict(
+                    sorted(
+                        _strategy_locations_dict.items(),
+                        key=lambda x: x[0].traject_order,
+                    )
+                ).items(),
+            )
         )
 
         logging.info("Finalized locations-reinforcements matrix.")
 
-        return _strategy_locations, _strategy_reinforcements
+        return _strategy_locations, _strategy_reinforcements_list

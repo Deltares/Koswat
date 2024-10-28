@@ -66,7 +66,9 @@ class TestOrderStrategy:
         example_strategy_input: StrategyInput,
     ):
         # 1. Define test data.
-        idx = 1
+        # Increase the cost of the reinforcement at the given index
+        # to become more expensive than the next (more restrictive) reinforcement
+        # and will be filtered out.
         example_strategy_input.strategy_reinforcements[idx].base_costs *= 20
         _expected_result = [
             x
@@ -85,19 +87,24 @@ class TestOrderStrategy:
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
     @pytest.mark.parametrize(
-        "idx", range(len(_default_reinforcements) - 2), ids=_default_reinforcements[:-2]
+        "idx",
+        range(1, len(_default_reinforcements) - 1),
+        ids=_default_reinforcements[1:-1],
     )
-    def test_get_strategy_order_reduced_surface_filters_next_reinforcement(
+    def test_get_strategy_order_increased_surface_filters_reinforcement(
         self,
         idx: int,
         example_strategy_input: StrategyInput,
     ):
         # 1. Define test data.
-        example_strategy_input.strategy_reinforcements[idx].ground_level_surface -= 15
+        # Reduce the surface of the reinforcement at the given index
+        # to become less restrictive than the previous (cheaper) reinforcement
+        # and will be filtered out.
+        example_strategy_input.strategy_reinforcements[idx].ground_level_surface += 15
         _expected_result = [
             x
             for x in self._default_reinforcements
-            if x != self._default_reinforcements[idx + 1]
+            if x != self._default_reinforcements[idx]
         ]
         _strategy = OrderStrategy()
 

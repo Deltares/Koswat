@@ -99,11 +99,3 @@ def _get_example_location_reinforcements_with_buffering(
         )
 
     yield _location_reinforcements
-
-
-@pytest.fixture(name="example_strategy_input_with_infra_costs")
-def _get_example_strategy_input_with_infra_costs_for_unbalanced_clusters(
-    example_strategy_input: StrategyInput,
-) -> Iterator[StrategyInput]:
-    for _sl in example_strategy_input.strategy_locations:
-        pass
