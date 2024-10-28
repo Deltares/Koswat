@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Type
 
 from koswat.cost_report.multi_location_profile import MultiLocationProfileCostReport
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -24,13 +23,13 @@ class KoswatSummary:
     )
 
     def get_report_by_profile(
-        self, profile_type: Type[ReinforcementProfileProtocol]
+        self, profile_type: type[ReinforcementProfileProtocol]
     ) -> MultiLocationProfileCostReport | None:
         """
         Get the report for a specific profile type.
 
         Args:
-            profile_type (Type[ReinforcementProfileProtocol]): Type of reinforcement profile.
+            profile_type (type[ReinforcementProfileProtocol]): Type of reinforcement profile.
 
         Returns:
             MultiLocationProfileCostReport | None: Report for the profile type.
@@ -50,7 +49,7 @@ class KoswatSummary:
         self,
     ) -> dict[type[ReinforcementProfileProtocol], list[PointSurroundings]]:
         """
-        Get the locations for per selected profile type.
+        Get the locations per selected profile type.
 
         Returns:
             dict[type[ReinforcementProfileProtocol], list[PointSurroundings]]:
@@ -64,7 +63,7 @@ class KoswatSummary:
 
         return dict(_locs_per_reinforcements)
 
-    def get_infra_costs_per_reinforcement(
+    def get_infra_costs_by_profile(
         self,
     ) -> defaultdict[type[ReinforcementProfileProtocol], tuple[float, float]]:
         """
@@ -96,13 +95,13 @@ class KoswatSummary:
         return _infra_cost_per_reinforcement
 
     def get_infrastructure_cost(
-        self, profile_type: Type[ReinforcementProfileProtocol]
+        self, profile_type: type[ReinforcementProfileProtocol]
     ) -> float:
         """
         Get the infrastructure cost for those locations for which a specific profile type is selected.
 
         Args:
-            profile_type (Type[ReinforcementProfileProtocol]): Type of reinforcement profile.
+            profile_type (type[ReinforcementProfileProtocol]): Type of reinforcement profile.
 
         Returns:
             float: Infrastructure cost.
@@ -118,7 +117,7 @@ class KoswatSummary:
         )
 
     def get_infrastructure_cost_with_surtax(
-        self, profile_type: Type[ReinforcementProfileProtocol]
+        self, profile_type: type[ReinforcementProfileProtocol]
     ) -> float:
         _locations = self.get_locations_by_profile(profile_type)
         if not _locations:
