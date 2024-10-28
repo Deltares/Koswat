@@ -4,12 +4,13 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 - `StrategyInput`, wraps all required properties to apply a strategy: 
     - strategy_locations (`list[StrategyLocationInput]`), contains all the available reinforcements that can be applied at each location and their related costs.
+    - strategy_reinforcements (`list[StrategyReinforcementInput]`), all the reinforcements that can be used at this location and their related costs and width.
     - structure_min_buffer (`float`), how many extra meters a structure requires to support its reinforcement.
     - structure_min_length (`float`), how many minimal meters are required for a structure to "exist". This rule can, at times, have certain exceptions.
 
 - `StrategyLocationInput`, gathers all the input required for a strategy to determine which reinforcement can be applied based on its location (`point_surrounding`) and `available_reinforcements`.
     - point_surrounding (`PointSurroundings`), a point (meter) in the dike traject.
-    - strategy_reinforcement_type_costs (`list[StrategyReinforcementTypeCosts]`), all the reinforcements that can be used at this location and their related costs and width.
+    - strategy_reinforcement (`list[StrategyReinforcementInput]`), all the reinforcements that can be used at this location and their related cost and width.
     - cheapest_reinforcement (`StrategyReinforcementTypeCosts`), returns which "available reinforcment" has the lower total costs at this location.
     - available_measures (`Type[ReinforcementProfileProtocol]`), returns only the reinforcement type from the `strategy_reinforcement_type_costs` collection.
 
@@ -18,6 +19,10 @@ This modules contains the logic to choose which measure will be applied for a gi
     - base_costs (`float`), the costs only related to the reinforcement's required space (thus excluding infrastructure costs).
     - infrastructure_costs (`float`), the costs associated **only** to infrastructures.
     - total_costs (`float`), the addition of `base_costs` and `infrastructure_costs`.
+
+- `StrategyReinforcementInput`, contains the reinforcement types that are relevant to the strategy, as they were selected for one or more locations included in the strategy.
+    - reinforcement_type (`Type[ReinforcementProfileProtocol]`), the mapped reinforcement type.
+    - base_costs (`float`), the costs only related to the reinforcement's required space (thus excluding infrastructure costs).
     - ground_level_surface (`float`), profile's width from outside (waterside) crest point.
 
 - `StrategyLocationReinforcement`, represents a mapped location to a selected measure.
@@ -31,6 +36,6 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 The following strategies are currently available, please refer to the official documentation for a more in-detail explanation of each of them:
 
-- [__Default__] Order based (`OrderBased`). A strategy is chosen based on a pre-defined measure priority order.
+- [__Default__] Order based (`OrderBased`). A strategy is chosen based on a dynamically determined order of reinforcements. This order is determined from least to most restrictive, where reinforcements are omitted when they are less restrictive and more expensive than other reinforcement(s). Cofferdam is forced as the last reinforcement of this order.
 - Infra-priority based (`InfraPriorityStrategy`). Clusters are created based on the cheapest total cost (including infrastructure reworks). This strategy is applied __after__  _Order based_, the clusters are then modified into a reinforcement that requires less space (thus more expensive) but induce less infrastructure costs, therefore becoming cheaper.
 

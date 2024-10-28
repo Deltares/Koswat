@@ -1,3 +1,5 @@
+import pytest
+
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
@@ -25,10 +27,27 @@ class TestStabilityWallInputProfileCalculation:
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
-    def test_calculate_length_type_stability_wall(self):
+    @pytest.mark.parametrize(
+        "soil_binnen_berm_breedte, expected",
+        [
+            pytest.param(
+                0,
+                (13.5, ConstructionTypeEnum.DAMWAND_VERANKERD),
+                id="soil_binnen_berm_breedte=0",
+            ),
+            pytest.param(
+                30.0,
+                (14.5, ConstructionTypeEnum.DIEPWAND),
+                id="soil_binnen_berm_breedte=30",
+            ),
+        ],
+    )
+    def test_calculate_length_type_stability_wall(
+        self,
+        soil_binnen_berm_breedte: float,
+        expected: tuple[float, ConstructionTypeEnum],
+    ):
         class MockInputData(KoswatInputProfileProtocol):
-            kruin_hoogte: float
-            binnen_maaiveld: float
             pleistoceen: float
             aquifer: float
 
@@ -39,17 +58,14 @@ class TestStabilityWallInputProfileCalculation:
         # 1. Define test data.
         _calculator = StabilityWallInputProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 19
-        _input_data.binnen_maaiveld = 2
-        _input_data.pleistoceen = -6
+        _input_data.pleistoceen = -5
         _input_data.aquifer = -2
         _stability_wall_settings = MockSettings()
         _stability_wall_settings.min_lengte_stabiliteitswand = 0
         _stability_wall_settings.max_lengte_stabiliteitswand = 99
-        _stability_wall_settings.overgang_damwand_diepwand = 15
-        _soil_binnen_berm_breedte = 12
-        _new_kruin_hoogte = 16
-        _expected_result = (22.5, ConstructionTypeEnum.DIEPWAND)
+        _stability_wall_settings.overgang_damwand_diepwand = 14
+        _soil_binnen_berm_breedte = soil_binnen_berm_breedte
+        _new_kruin_hoogte = 8
 
         # 2. Run test.
         _length = _calculator._calculate_length_stability_wall(
@@ -64,7 +80,7 @@ class TestStabilityWallInputProfileCalculation:
         _result = (_length, _type)
 
         # 3. Verify expectations
-        assert _result == _expected_result
+        assert _result == expected
 
     def test_calculate_new_kruin_hoogte(self):
         class MockInputData(KoswatInputProfileProtocol):

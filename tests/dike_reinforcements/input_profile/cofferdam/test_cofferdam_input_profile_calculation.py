@@ -1,7 +1,6 @@
 import pytest
 
 from koswat.configuration.settings import KoswatScenario
-from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
     KoswatCofferdamSettings,
 )
@@ -27,10 +26,19 @@ class TestCofferdamInputProfileCalculation:
         assert isinstance(_calculation, CofferdamInputProfileCalculation)
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
 
-    def test_calculate_length_coffer_dam(self):
+    @pytest.mark.parametrize(
+        "soil_binnen_berm_breedte, expected",
+        [
+            pytest.param(0.0, 13.5, id="soil_binnen_berm_breedte=0"),
+            pytest.param(30.0, 14.5, id="soil_binnen_berm_breedte=30"),
+        ],
+    )
+    def test_calculate_length_coffer_dam(
+        self, soil_binnen_berm_breedte: float, expected: float
+    ):
         class MockInputData(KoswatInputProfileProtocol):
-            kruin_hoogte: float
-            binnen_maaiveld: float
+            pleistoceen: float
+            aquifer: float
 
         class MockSettings(KoswatCofferdamSettings):
             min_lengte_kistdam: float
@@ -44,13 +52,16 @@ class TestCofferdamInputProfileCalculation:
         _cofferdam_settings = MockSettings()
         _cofferdam_settings.min_lengte_kistdam = 0
         _cofferdam_settings.max_lengte_kistdam = 99
-        _soil_binnen_berm_breedte = 12
-        _kruin_hoogte = 8
-        _expected_result = 13.5
+        _soil_binnen_berm_breedte = soil_binnen_berm_breedte
+        _new_kruin_hoogte = 8
+        _expected_result = expected
 
         # 2. Run test.
         _result = _calculator._calculate_length_coffer_dam(
-            _input_data, _cofferdam_settings, _soil_binnen_berm_breedte, _kruin_hoogte
+            _input_data,
+            _cofferdam_settings,
+            _soil_binnen_berm_breedte,
+            _new_kruin_hoogte,
         )
 
         # 3. Verify expectations
