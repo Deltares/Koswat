@@ -73,7 +73,7 @@ class InfraCluster:
                 return False
             return all(map(valid_cluster, cluster_collection))
 
-        if not valid_cluster(self):
+        if not valid_cluster(self) or len(self.cluster) < 2 * (min_length - 1):
             # If the cluster is not twice as big as the minimum
             # required length we know there is no possibility of
             # creating subclusters.
