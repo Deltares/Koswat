@@ -148,18 +148,20 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         _infrastructure_rows = defaultdict(list)
 
         # Cost per reinforcement type
+        _infra_cost_per_reinforcement = (
+            self.koswat_summary.get_infra_costs_per_reinforcement()
+        )
+
         for _ordered_reinf in self._get_summary_reinforcement_type_column_order():
             _infrastructure_rows[_infrastructure_cost_key].append(
                 round(
-                    self.koswat_summary.get_infrastructure_cost(_ordered_reinf),
+                    _infra_cost_per_reinforcement[_ordered_reinf][0],
                     self._decimals,
                 )
             )
             _infrastructure_rows[_infrastructure_cost_incl_surtax_key].append(
                 round(
-                    self.koswat_summary.get_infrastructure_cost_with_surtax(
-                        _ordered_reinf
-                    ),
+                    _infra_cost_per_reinforcement[_ordered_reinf][1],
                     self._decimals,
                 )
             )
