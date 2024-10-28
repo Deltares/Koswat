@@ -2,11 +2,15 @@ from __future__ import annotations
 
 from collections import defaultdict
 from itertools import groupby
+from typing import Iterator
 
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
+from koswat.strategies.infra_priority_strategy.infra_cluster_collection import (
+    InfraClusterOption,
+)
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -77,15 +81,14 @@ class InfraPriorityStrategy(StrategyProtocol):
     ) -> list[StrategyLocationReinforcement]:
         _clustered_locations = []
         # 1. Run `OrderStrategy` to generate an initial cluster formation.
-        for _infra_cluster in self._get_initial_clusters(strategy_input):
+        for _infra_cluster in self._get_initial_state(strategy_input):
             self._set_cheapest_measure_per_cluster(_infra_cluster, strategy_input)
             _clustered_locations.extend(_infra_cluster.cluster)
         return _clustered_locations
 
-    def _get_initial_clusters(
+    def _get_initial_state(
         self, strategy_input: StrategyInput
-    ) -> list[InfraCluster]:
-        _infra_cluster_list: list[InfraCluster] = []
+    ) -> Iterator[InfraCluster]:
         for _grouped_by, _grouping in groupby(
             OrderStrategy().apply_strategy(strategy_input),
             key=lambda x: x.selected_measure,
@@ -93,15 +96,35 @@ class InfraPriorityStrategy(StrategyProtocol):
             _grouping_data = list(_grouping)
             if not _grouping_data:
                 continue
-            _infra_cluster_list.append(
-                InfraCluster(reinforcement_type=_grouped_by, cluster=_grouping_data)
-            )
-        return _infra_cluster_list
+            yield InfraCluster(reinforcement_type=_grouped_by, cluster=_grouping_data)
 
     def _set_cheapest_measure_per_cluster(
         self, infra_cluster: InfraCluster, strategy_input: StrategyInput
     ):
         # 2. Get common available measures for each cluster
-        _cam_costs = self.get_common_available_measures(infra_cluster)
+        _min_costs = infra_cluster.current_cost
+        _selected_cluster_collection_costs = None
+        for _clustering_option in infra_cluster.generate_subcluster_options(
+            strategy_input.reinforcement_min_cluster
+        ):
+            _icc = InfraClusterOption(
+                cluster_min_length=strategy_input.reinforcement_min_cluster,
+            )
+            _icc_costs = 0
+            for _sub_cluster in _clustering_option:
+                _icc.add_cluster(
+                    _sub_cluster, self.get_common_available_measures(_sub_cluster)
+                )
+                _icc_costs += min(_icc.cluster_costs[-1].values())
+                if _icc_costs > _min_costs:
+                    # No need to check further, it is more expensive already.
+                    break
+            if _icc_costs < _min_costs:
+                # Replace cluster collection with minimal costs.
+                _min_costs = _icc_costs
+                _selected_cluster_collection_costs = _icc
+
         # 3. Set the **cheapest** common available measure.
-        infra_cluster.set_cheapest_common_available_measure(_cam_costs)
+        if _selected_cluster_collection_costs:
+            # Do nothing, we did not improve the cluster.
+            _selected_cluster_collection_costs.set_cheapest_option()

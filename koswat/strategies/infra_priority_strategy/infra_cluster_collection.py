@@ -1,44 +1,47 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from itertools import chain
-
-from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
-from koswat.strategies.strategy_location_reinforcement import (
-    StrategyLocationReinforcement,
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
 )
+from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 
 
-@dataclass
-class InfraClusterCollectionOption:
+class InfraClusterOption:
     """
     Represents one set of (sub) clusters the strategy could select
     for costs optimization.
     """
 
-    cluster_min_length: int
-    cluster_collection: list[InfraCluster] = field(default_factory=lambda: [])
+    _cluster_collection: list[InfraCluster]
+    _cluster_costs: list[dict[ReinforcementProfileProtocol, float]]
+    _cluster_min_length: int
+
+    def __init__(self, cluster_min_length: int):
+        self._cluster_collection = []
+        self._cluster_costs = []
+        self._cluster_min_length = cluster_min_length
 
     @property
-    def total_cost(self) -> float:
-        """
-        The total (current cost) of this cluster.
-
-        Returns:
-            float: The total cost.
-        """
-        return sum(c.current_cost for c in self.cluster_collection)
+    def cluster_collection(self) -> list[InfraCluster]:
+        return self._cluster_collection
 
     @property
-    def clustered_locations(self) -> list[StrategyLocationReinforcement]:
-        """
-        Returned all the clustered locations sparsed throughout
-        the different subclusters.
+    def cluster_costs(
+        self,
+    ) -> list[dict[ReinforcementProfileProtocol, float]]:
+        return self._cluster_costs
 
-        Returns:
-            list[StrategyLocationReinforcement]: All the available locations.
+    def add_cluster(self, infra_cluster: InfraCluster, cluster_costs: dict):
         """
-        return list(chain(*map(lambda x: x.cluster, self.cluster_collection)))
+        Adds the infra cluster into the collection as well as its reinforcement
+        costs.
+
+        Args:
+            infra_cluster (InfraCluster): Cluster to add to this collection option.
+            cluster_costs (dict): Reinforcement costs for the given cluster.
+        """
+        self._cluster_collection.append(infra_cluster)
+        self._cluster_costs.append(cluster_costs)
 
     def valid_cluster(self) -> bool:
         """
@@ -49,6 +52,14 @@ class InfraClusterCollectionOption:
             bool: Validation result.
         """
         return any(self.cluster_collection) and all(
-            len(_ic.cluster) >= self.cluster_min_length
+            len(_ic.cluster) >= self._cluster_min_length
             for _ic in self.cluster_collection
         )
+
+    def set_cheapest_option(self):
+        """
+        Sets the subclusters defined in this option to their most optimal (cheapest)
+        reinforcement possible.
+        """
+        for _cluster, _costs in zip(self._cluster_collection, self._cluster_costs):
+            _cluster.set_cheapest_common_available_measure(_costs)
