@@ -4,7 +4,7 @@ import more_itertools
 
 from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 from koswat.strategies.infra_priority_strategy.infra_cluster_collection import (
-    InfraClusterCollection,
+    InfraClusterCollectionOption,
 )
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
@@ -18,21 +18,21 @@ from koswat.strategies.strategy_location_reinforcement import (
 class InfraPrioritySubclusteringStrategy(InfraPriorityStrategy):
     def _get_subclusters(
         self, infra_cluster: InfraCluster, min_length: int
-    ) -> list[InfraClusterCollection]:
+    ) -> list[InfraClusterCollectionOption]:
         if len(infra_cluster.cluster) < 2 * min_length:
             # If the cluster is not twice as big as the minimum
             # required length we know there is no possibility of
             # creating subclusters.
             return [
-                InfraClusterCollection(
+                InfraClusterCollectionOption(
                     cluster_min_length=min_length, cluster_collection=[infra_cluster]
                 )
             ]
 
         def windowed_cluster_to_icc(
             location_collection: list[StrategyLocationReinforcement],
-        ) -> Iterator[InfraClusterCollection]:
-            _icc = InfraClusterCollection(cluster_min_length=min_length)
+        ) -> Iterator[InfraClusterCollectionOption]:
+            _icc = InfraClusterCollectionOption(cluster_min_length=min_length)
             for _w_element in location_collection:
                 if not _w_element:
                     # `window_complete` returns collections as:

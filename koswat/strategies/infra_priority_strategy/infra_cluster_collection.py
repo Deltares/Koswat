@@ -10,7 +10,12 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 @dataclass
-class InfraClusterCollection:
+class InfraClusterCollectionOption:
+    """
+    Represents one set of (sub) clusters the strategy could select
+    for costs optimization.
+    """
+
     cluster_min_length: int
     cluster_collection: list[InfraCluster] = field(default_factory=lambda: [])
 
