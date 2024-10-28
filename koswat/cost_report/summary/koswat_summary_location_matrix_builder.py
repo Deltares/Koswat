@@ -90,14 +90,14 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
             )
 
         _reinforcement_costs = [
-            next(iter(_reinforcement_dict.values()))
+            next(iter(_reinforcement_dict.values()), None)
             for _reinforcement_dict in locations_per_reinforcement
         ]
 
         return list(
             map(
                 get_reinforcement,
-                _reinforcement_costs,
+                filter(lambda x: x is not None, _reinforcement_costs),
             )
         )
 
