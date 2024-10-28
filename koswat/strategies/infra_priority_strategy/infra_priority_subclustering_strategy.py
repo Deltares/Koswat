@@ -45,7 +45,7 @@ class InfraPrioritySubclusteringStrategy(InfraPriorityStrategy):
                     # this cluster will result as not valid.
                     _icc.cluster_collection.clear()
                     break
-                _icc.add_cluster(
+                _icc.cluster_collection.append(
                     InfraCluster(
                         reinforcement_type=infra_cluster.reinforcement_type,
                         cluster=list(_w_element),

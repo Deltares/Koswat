@@ -14,8 +14,6 @@ from koswat.strategies.strategy_location_reinforcement import (
 class InfraCluster:
     reinforcement_type: type[ReinforcementProfileProtocol]
     cluster: list[StrategyLocationReinforcement] = field(default_factory=lambda: [])
-    left_neighbor: InfraCluster = None
-    right_neighbor: InfraCluster = None
 
     @property
     def current_cost(self) -> float:

@@ -47,17 +47,3 @@ class InfraClusterCollection:
             len(_ic.cluster) >= self.cluster_min_length
             for _ic in self.cluster_collection
         )
-
-    def add_cluster(self, new_subcluster: InfraCluster) -> None:
-        """
-        Adds a new cluster (`InfraCluster`) to the current collection
-        and corrects the neighbor properties to the new and existing
-        clusters.
-
-        Args:
-            new_subcluster (InfraCluster): The cluster to add to this collection.
-        """
-        if any(self.cluster_collection):
-            new_subcluster.left_neighbor = self.cluster_collection[-1]
-            self.cluster_collection[-1].right_neighbor = new_subcluster
-        self.cluster_collection.append(new_subcluster)

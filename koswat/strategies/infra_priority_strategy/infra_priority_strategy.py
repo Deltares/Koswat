@@ -93,14 +93,9 @@ class InfraPriorityStrategy(StrategyProtocol):
             _grouping_data = list(_grouping)
             if not _grouping_data:
                 continue
-            _cluster = InfraCluster(
-                reinforcement_type=_grouped_by, cluster=_grouping_data
+            _infra_cluster_list.append(
+                InfraCluster(reinforcement_type=_grouped_by, cluster=_grouping_data)
             )
-            if any(_infra_cluster_list):
-                # Add neighbors
-                _cluster.left_neighbor = _infra_cluster_list[-1]
-                _infra_cluster_list[-1].right_neighbor = _cluster
-            _infra_cluster_list.append(_cluster)
         return _infra_cluster_list
 
     def _set_cheapest_measure_per_cluster(
