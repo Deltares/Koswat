@@ -4,6 +4,9 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_re
 from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
+    StabilityWallReinforcementProfile,
+)
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
 )
@@ -56,18 +59,18 @@ class TestInfraPriorityStrategy:
 
 
 class TestInfraPrioritySubsclusteringStrategy:
-    def test_with_subclusters(self, example_strategy_input: StrategyInput):
+    def test_with_subclusters(self, example_subclustering: StrategyInput):
         # 1. Define test data.
-        assert isinstance(example_strategy_input, StrategyInput)
+        assert isinstance(example_subclustering, StrategyInput)
 
         # 2. Run test.
         _strategy_result = InfraPrioritySubclusteringStrategy().apply_strategy(
-            example_strategy_input
+            example_subclustering
         )
 
         # 3. Verify final expectations.
         assert isinstance(_strategy_result, list)
-        assert len(_strategy_result) == len(example_strategy_input.strategy_locations)
+        assert len(_strategy_result) == len(example_subclustering.strategy_locations)
         assert all(
             isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
         )
@@ -78,6 +81,10 @@ class TestInfraPrioritySubsclusteringStrategy:
             for _sr in _strategy_result[0:2]
         )
         assert all(
+            _sr.selected_measure == StabilityWallReinforcementProfile
+            for _sr in _strategy_result[2:5]
+        )
+        assert all(
             _sr.selected_measure == CofferdamReinforcementProfile
-            for _sr in _strategy_result[2:]
+            for _sr in _strategy_result[5:]
         )

@@ -44,7 +44,7 @@ class InfraClusterCollection:
             bool: Validation result.
         """
         return any(self.cluster_collection) and all(
-            len(_ic.cluster) > self.cluster_min_length
+            len(_ic.cluster) >= self.cluster_min_length
             for _ic in self.cluster_collection
         )
 

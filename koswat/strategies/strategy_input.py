@@ -21,5 +21,5 @@ class StrategyInput:
             int: `Total length`
         """
         if math.isnan(self.reinforcement_min_buffer):
-            return float("nan")
-        return (2 * self.reinforcement_min_buffer) + 1
+            return -1
+        return int(round(2 * self.reinforcement_min_buffer)) + 1

@@ -40,7 +40,7 @@ class InfraPrioritySubclusteringStrategy(InfraPriorityStrategy):
         return _infra_cluster_list
 
     def _get_subclusters(
-        self, infra_cluster: InfraCluster, min_length: float
+        self, infra_cluster: InfraCluster, min_length: int
     ) -> list[InfraClusterCollection]:
         if len(infra_cluster.cluster) < 2 * min_length:
             # If the cluster is not twice as big as the minimum
@@ -57,12 +57,17 @@ class InfraPrioritySubclusteringStrategy(InfraPriorityStrategy):
         ) -> Iterator[InfraClusterCollection]:
             _icc = InfraClusterCollection(cluster_min_length=min_length)
             for _w_element in location_collection:
-                if len(_w_element) > 0 or len(_w_element) < min_length:
+                if not _w_element:
                     # `window_complete` returns collections as:
                     # `[(), (A,B,C), (D,E,F)]`
                     # `[(A,B,C), (D,E,F), ()]`
                     # Which are valid except for the limit item.
                     continue
+                if len(_w_element) < min_length:
+                    # There is no need to check further,
+                    # this cluster will result as not valid.
+                    _icc.cluster_collection.clear()
+                    break
                 _icc.add_cluster(
                     InfraCluster(
                         reinforcement_type=infra_cluster.reinforcement_type,
@@ -91,12 +96,30 @@ class InfraPrioritySubclusteringStrategy(InfraPriorityStrategy):
                 _infra_cluster, strategy_input.reinforcement_min_cluster
             )
 
+            _min_costs = _infra_cluster.current_cost
+            _selected_cluster_collection_costs = None
             for _icc in _subcluster_collection:
+                _icc_costs = 0
+                _icc_cam_costs = []
                 for _sc in _icc.cluster_collection:
-                    _sc_costs = self._get_common_available_measures(_sc)
-                    _sc.set_cheapest_common_available_measure(_sc_costs)
+                    _icc_cam_costs.append(self._get_common_available_measures(_sc))
+                    _icc_costs += min(_icc_cam_costs[-1].values())
+                    if _icc_costs > _min_costs:
+                        # No need to check further, it is more expensive already.
+                        break
+                if _icc_costs < _min_costs:
+                    # Replace cluster collection with minimal costs.
+                    _min_costs = _icc_costs
+                    _selected_cluster_collection_costs = list(
+                        zip(_icc.cluster_collection, _icc_cam_costs)
+                    )
 
             # 3. Set the **cheapest** common available measure.
-            _optimal_icc = min(_subcluster_collection, key=lambda icc: icc.total_cost)
-            _clustered_locations.extend(_optimal_icc.clustered_locations)
+            if _selected_cluster_collection_costs:
+                # Do nothing, we did not improve the cluster.
+                for _sc, _costs in _selected_cluster_collection_costs:
+                    _sc.set_cheapest_common_available_measure(_costs)
+                    _clustered_locations.extend(_sc.cluster)
+            else:
+                _clustered_locations.extend(_infra_cluster.cluster)
         return _clustered_locations
