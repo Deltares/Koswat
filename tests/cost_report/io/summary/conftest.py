@@ -163,7 +163,6 @@ def _get_valid_mocked_summary_fixture() -> KoswatSummary:
         PipingWallReinforcementProfile,
         SoilReinforcementProfile,
         StabilityWallReinforcementProfile,
-        # VPSReinforcementProfile,
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()
@@ -186,7 +185,6 @@ def _get_valid_clusters_mocked_summary_fixture() -> KoswatSummary:
         PipingWallReinforcementProfile,
         SoilReinforcementProfile,
         StabilityWallReinforcementProfile,
-        # VPSReinforcementProfile,
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()
