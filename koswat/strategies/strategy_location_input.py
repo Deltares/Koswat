@@ -49,3 +49,16 @@ class StrategyLocationInput:
         raise ValueError(
             f"Reinforcement {reinforcement_type.output_name} not available, costs cannot be computed."
         )
+
+    def get_infrastructure_costs(
+        self, reinforcement_type: type[ReinforcementProfileProtocol]
+    ) -> tuple[float, float]:
+        for _srtc in self.strategy_reinforcement_type_costs:
+            if _srtc.reinforcement_type == reinforcement_type:
+                return (
+                    _srtc.infrastructure_costs,
+                    _srtc.infrastructure_costs_with_surtax,
+                )
+        raise ValueError(
+            f"Reinforcement {reinforcement_type.output_name} not available, costs cannot be computed."
+        )

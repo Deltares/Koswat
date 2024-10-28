@@ -17,16 +17,21 @@ class MultiLocationProfileCostReport(CostReportProtocol):
     ] = field(default_factory=lambda: [])
     profile_cost_report: ProfileCostReport = None
 
-    def get_infra_costs_per_location(self) -> dict[PointSurroundings, float]:
+    def get_infra_costs_per_location(
+        self,
+    ) -> dict[PointSurroundings, tuple[float, float]]:
         """
         Gets the total costs related to infrastructures at each of the points for
         the profile type in `profile_cost_report`
 
         Returns:
-            dict[PointSurroundings, float]: Total cost per location.
+            dict[PointSurroundings, tuple[float, float]]: Total cost per location (without and with surtax).
         """
         return {
-            _infra_cost_report.location: _infra_cost_report.total_cost
+            _infra_cost_report.location: (
+                _infra_cost_report.total_cost,
+                _infra_cost_report.total_cost_with_surtax,
+            )
             for _infra_cost_report in self.infra_multilocation_profile_cost_report
         }
 

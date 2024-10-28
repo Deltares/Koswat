@@ -45,24 +45,6 @@ class KoswatSummary:
             None,
         )
 
-    def get_locations_by_profile(
-        self,
-    ) -> dict[type[ReinforcementProfileProtocol], list[PointSurroundings]]:
-        """
-        Get the locations per selected profile type.
-
-        Returns:
-            dict[type[ReinforcementProfileProtocol], list[PointSurroundings]]:
-        """
-        _locs_per_reinforcements: dict[
-            type[ReinforcementProfileProtocol], list[PointSurroundings]
-        ] = defaultdict(list)
-
-        for _loc in self.reinforcement_per_locations:
-            _locs_per_reinforcements[_loc.selected_measure].append(_loc.location)
-
-        return dict(_locs_per_reinforcements)
-
     def get_infra_costs_by_profile(
         self,
     ) -> defaultdict[type[ReinforcementProfileProtocol], tuple[float, float]]:
@@ -74,32 +56,22 @@ class KoswatSummary:
             defaultdict[type[ReinforcementProfileProtocol], tuple[float, float]]:
                 infra cost without and with surtax per reinforcement type.
         """
-        _locs_per_reinforcements = self.get_locations_by_profile()
+        _infra_cost_per_reinforcement = defaultdict(tuple)
 
-        _infra_cost_per_reinforcement = defaultdict(lambda: (0.0, 0.0))
-        _infra_cost_list, _infra_cost_with_surtax_list = [], []
-        for _rt, _locs in _locs_per_reinforcements.items():
-            for _lprl in self.locations_profile_report_list:
-                if not type(_lprl.profile_cost_report.reinforced_profile) == _rt:
-                    continue
-                if not _lprl.infra_multilocation_profile_cost_report:
-                    continue
-                _infra_cost, _infra_cost_with_surtax = zip(
-                    *(
-                        (_impcr.total_cost, _impcr.total_cost_with_surtax)
-                        for _impcr in _lprl.infra_multilocation_profile_cost_report
-                        if _impcr.location in _locs
-                    )
-                )
-                _infra_cost_list.append(sum(_infra_cost))
-                _infra_cost_with_surtax_list.append(sum(_infra_cost_with_surtax))
-
-            _infra_cost_per_reinforcement[_rt] = (
-                sum(_infra_cost_list),
-                sum(_infra_cost_with_surtax_list),
+        _infra_per_reinforcement = defaultdict(list)
+        for _loc in self.reinforcement_per_locations:
+            _infra_per_reinforcement[_loc.selected_measure].append(
+                _loc.get_infrastructure_costs(_loc.selected_measure)
             )
 
-        return _infra_cost_per_reinforcement
+        for _rt, _infra_costs in _infra_per_reinforcement.items():
+            _infra_cost, _infra_cost_with_surtax = zip(*_infra_costs)
+            _infra_cost_per_reinforcement[_rt] = (
+                sum(_infra_cost),
+                sum(_infra_cost_with_surtax),
+            )
+
+        return dict(_infra_cost_per_reinforcement)
 
     def get_infrastructure_cost(
         self, profile_type: type[ReinforcementProfileProtocol]

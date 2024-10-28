@@ -39,14 +39,16 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                     locations_profile.profile_cost_report.reinforced_profile
                 ),
                 base_costs=locations_profile.profile_cost_report.total_cost,
+                base_costs_with_surtax=locations_profile.profile_cost_report.total_cost_with_surtax,
                 ground_level_surface=locations_profile.profile_cost_report.reinforced_profile.new_ground_level_surface,
             )
 
         _dict_matrix = defaultdict(create_strategy_location_reinforcement_costs)
         for _location in locations_profile.report_locations:
-            _dict_matrix[_location].infrastructure_costs = _infra_costs.get(
-                _location, 0.0
-            )
+            (
+                _dict_matrix[_location].infrastructure_costs,
+                _dict_matrix[_location].infrastructure_costs_with_surtax,
+            ) = _infra_costs.get(_location, (0.0, 0.0))
         return dict(_dict_matrix)
 
     def _get_list_summary_matrix_for_locations_with_reinforcements(
