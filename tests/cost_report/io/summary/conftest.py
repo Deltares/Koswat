@@ -1,5 +1,5 @@
 from copy import deepcopy
-from typing import Callable, Iterable, Type
+from typing import Callable, Iterable
 
 import pytest
 from shapely.geometry import Point
@@ -25,16 +25,15 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
+from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
+    VPSReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
 )
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -94,7 +93,7 @@ def _create_infra_reports(
 
 
 def _create_report(
-    report_type: Type[ReinforcementProfileProtocol],
+    report_type: type[ReinforcementProfileProtocol],
     available_points: list[PointSurroundings],
     selected_locations: int,
 ) -> MultiLocationProfileCostReport:
@@ -164,6 +163,7 @@ def _get_valid_mocked_summary_fixture() -> KoswatSummary:
         PipingWallReinforcementProfile,
         SoilReinforcementProfile,
         StabilityWallReinforcementProfile,
+        # VPSReinforcementProfile,
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()
@@ -186,6 +186,7 @@ def _get_valid_clusters_mocked_summary_fixture() -> KoswatSummary:
         PipingWallReinforcementProfile,
         SoilReinforcementProfile,
         StabilityWallReinforcementProfile,
+        # VPSReinforcementProfile,
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()
@@ -204,7 +205,7 @@ def _get_valid_clusters_mocked_summary_fixture() -> KoswatSummary:
 @pytest.fixture(name="cluster_shp_fom_factory")
 def _get_cluster_shp_fom_factory() -> Iterable[
     Callable[
-        [list[tuple[float, float]], Type[ReinforcementProfileProtocol], float],
+        [list[tuple[float, float]], type[ReinforcementProfileProtocol], float],
         ClusterShpFom,
     ]
 ]:
@@ -220,7 +221,7 @@ def _get_cluster_shp_fom_factory() -> Iterable[
 
     def create_cluster(
         points: list[tuple[float, float]],
-        type_reinforcement: Type[ReinforcementProfileProtocol],
+        type_reinforcement: type[ReinforcementProfileProtocol],
         new_width: float,
     ) -> ClusterShpFom:
         _tr = type_reinforcement()
