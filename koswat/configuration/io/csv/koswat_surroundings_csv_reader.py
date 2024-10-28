@@ -1,6 +1,5 @@
 import math
 import re
-from math import isclose
 from pathlib import Path
 
 from shapely import Point

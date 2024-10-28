@@ -62,15 +62,18 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             apply_railways=self.surroundings_section_fom.spoorwegen,
             apply_waters=self.surroundings_section_fom.water,
         )
+        # Buildings polderside should always be present to determine the location coordinates.
         _obs_wrapper.buildings_polderside.points = (
             self._get_polderside_surroundings_from_fom("buildings_polderside")
         )
-        _obs_wrapper.railways_polderside.points = (
-            self._get_polderside_surroundings_from_fom("railways_polderside")
-        )
-        _obs_wrapper.waters_polderside.points = (
-            self._get_polderside_surroundings_from_fom("waters_polderside")
-        )
+        if self.surroundings_section_fom.spoorwegen:
+            _obs_wrapper.railways_polderside.points = (
+                self._get_polderside_surroundings_from_fom("railways_polderside")
+            )
+        if self.surroundings_section_fom.water:
+            _obs_wrapper.waters_polderside.points = (
+                self._get_polderside_surroundings_from_fom("waters_polderside")
+            )
 
         return _obs_wrapper
 
@@ -97,20 +100,31 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             infrastructures_considered=self.infrastructure_section_fom.infrastructuur,
             surtax_cost_factor=self.infrastructure_section_fom.opslagfactor_wegen,
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrakosten_0dh,
-            roads_class_2_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_2_polderside"
-            ),
-            roads_class_7_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_7_polderside"
-            ),
-            roads_class_24_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_24_polderside"
-            ),
-            roads_class_47_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_47_polderside"
-            ),
-            roads_class_unknown_polderside=self._get_polderside_surroundings_infrastructure(
-                "roads_class_unknown_polderside"
-            ),
         )
+        if self.infrastructure_section_fom.infrastructuur:
+            _infra_wrapper.roads_class_2_polderside = (
+                self._get_polderside_surroundings_infrastructure(
+                    "roads_class_2_polderside"
+                )
+            )
+            _infra_wrapper.roads_class_7_polderside = (
+                self._get_polderside_surroundings_infrastructure(
+                    "roads_class_7_polderside"
+                )
+            )
+            _infra_wrapper.roads_class_24_polderside = (
+                self._get_polderside_surroundings_infrastructure(
+                    "roads_class_24_polderside"
+                )
+            )
+            _infra_wrapper.roads_class_47_polderside = (
+                self._get_polderside_surroundings_infrastructure(
+                    "roads_class_47_polderside"
+                )
+            )
+            _infra_wrapper.roads_class_unknown_polderside = (
+                self._get_polderside_surroundings_infrastructure(
+                    "roads_class_unknown_polderside"
+                )
+            )
         return _infra_wrapper

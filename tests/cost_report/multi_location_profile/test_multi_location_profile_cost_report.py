@@ -9,7 +9,7 @@ class TestMultipleLocationProfileCostReport:
     def test_initialize(self):
         _report = MultiLocationProfileCostReport()
         assert isinstance(_report, MultiLocationProfileCostReport)
-        assert not any(_report.obstacle_locations)
+        assert not any(_report.report_locations)
         assert not _report.profile_cost_report
         assert not _report.profile_type_name
         assert math.isnan(_report.total_cost)

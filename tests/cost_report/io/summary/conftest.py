@@ -1,5 +1,5 @@
 from copy import deepcopy
-from typing import Type
+from typing import Callable, Iterable, Type
 
 import pytest
 from shapely.geometry import Point
@@ -10,11 +10,17 @@ from koswat.cost_report.infrastructure.infrastructure_location_costs import (
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
 )
+from koswat.cost_report.io.summary.summary_locations.cluster_shp_fom import (
+    ClusterShpFom,
+)
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
+from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -61,13 +67,13 @@ def _create_locations() -> list[PointSurroundings]:
 
 
 def _create_infra_reports(
-    report_type: Type[ReinforcementProfileProtocol],
+    reinforced_profile: ReinforcementProfileProtocol,
     available_points: list[PointSurroundings],
 ) -> list[InfrastructureLocationProfileCostReport]:
     _infra_reports = []
     for i, _point in enumerate(available_points):
         _infra_report1 = InfrastructureLocationProfileCostReport(
-            reinforced_profile=report_type(),
+            reinforced_profile=reinforced_profile,
             infrastructure=SurroundingsInfrastructure(infrastructure_name="TestInfra1"),
             infrastructure_location_costs=InfrastructureLocationCosts(
                 location=_point,
@@ -97,17 +103,26 @@ def _create_report(
         _layer_report.material = material
         return _layer_report
 
+    _reinforced_profile = report_type()
+    _reinforced_profile.characteristic_points = CharacteristicPoints(
+        p_1=Point(0, 0), p_8=Point(42, 0)
+    )
+    _reinforced_profile.old_profile = KoswatProfileBase()
+    _reinforced_profile.old_profile.characteristic_points = CharacteristicPoints(
+        p_1=Point(0, 0), p_8=Point(4.2, 0)
+    )
+
     _report = MockSummary()
-    _report.obstacle_locations = available_points[0:selected_locations]
+    _report.report_locations = available_points[0:selected_locations]
     _report.infra_multilocation_profile_cost_report = _create_infra_reports(
-        report_type, available_points
+        _reinforced_profile, available_points
     )
     _required_klei = 2.4 * selected_locations
     _required_zand = 4.2 * selected_locations
     _report.cost_per_km = (_required_klei + _required_zand) * 1234
     _report.cost_per_km_with_surtax = _report.cost_per_km * 1.5
     _report.profile_cost_report = ProfileCostReport()
-    _report.profile_cost_report.reinforced_profile = report_type()
+    _report.profile_cost_report.reinforced_profile = _reinforced_profile
     _report.profile_cost_report.layer_cost_reports = [
         _get_layer("Klei", _required_klei),
         _get_layer("Zand", _required_zand),
@@ -127,7 +142,7 @@ def get_locations_reinforcements(
         _a_measures = list(
             type(_lp_report.profile_cost_report.reinforced_profile)
             for _lp_report in summary.locations_profile_report_list
-            if _location in _lp_report.obstacle_locations
+            if _location in _lp_report.report_locations
         )
         _selected_measure = _available_reinforcements[-1]
         if any(_a_measures):
@@ -162,3 +177,67 @@ def _get_valid_mocked_summary_fixture() -> KoswatSummary:
         _summary, _available_points
     )
     return _summary
+
+
+@pytest.fixture(name="valid_clusters_mocked_summary")
+def _get_valid_clusters_mocked_summary_fixture() -> KoswatSummary:
+    _required_profiles = [
+        CofferdamReinforcementProfile,
+        PipingWallReinforcementProfile,
+        SoilReinforcementProfile,
+        StabilityWallReinforcementProfile,
+    ]
+    _available_points = _create_locations()
+    _summary = KoswatSummary()
+    _summary.locations_profile_report_list = list(
+        map(
+            lambda x: _create_report(x, _available_points, len(_available_points)),
+            _required_profiles,
+        )
+    )
+    _summary.reinforcement_per_locations = get_locations_reinforcements(
+        _summary, _available_points
+    )
+    return _summary
+
+
+@pytest.fixture(name="cluster_shp_fom_factory")
+def _get_cluster_shp_fom_factory() -> Iterable[
+    Callable[
+        [list[tuple[float, float]], Type[ReinforcementProfileProtocol], float],
+        ClusterShpFom,
+    ]
+]:
+    def add_cluster_location(
+        coordinates: tuple[float, float],
+        reinforced_profile: ReinforcementProfileProtocol,
+    ) -> StrategyLocationReinforcement:
+        return StrategyLocationReinforcement(
+            location=PointSurroundings(location=Point(coordinates)),
+            selected_measure=reinforced_profile,
+            available_measures=[],
+        )
+
+    def create_cluster(
+        points: list[tuple[float, float]],
+        type_reinforcement: Type[ReinforcementProfileProtocol],
+        new_width: float,
+    ) -> ClusterShpFom:
+        _tr = type_reinforcement()
+
+        class MockedBaseProfile(KoswatProfileProtocol):
+            profile_width: float = 0.42
+            points = [(0, 0), (0.42, 0)]
+
+        class MockedReinforcedProfile(ReinforcementProfileProtocol):
+            output_name: str = _tr.output_name
+            old_profile: KoswatProfileProtocol = MockedBaseProfile()
+            profile_width: float = new_width
+
+        _reinforced_profile = MockedReinforcedProfile()
+        return ClusterShpFom(
+            locations=[add_cluster_location(_p, type_reinforcement) for _p in points],
+            reinforced_profile=_reinforced_profile,
+        )
+
+    yield create_cluster

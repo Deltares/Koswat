@@ -4,9 +4,6 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
     OrderStrategyBuffering,
 )
 from koswat.strategies.strategy_input import StrategyInput
-from tests.strategies.order_strategy.order_strategy_fixtures import (  # Don't remove
-    example_strategy_input,
-)
 
 
 class TestOrderStrategyBuffering:
@@ -19,7 +16,7 @@ class TestOrderStrategyBuffering:
         # 1. Define test data.
         _reinforcement_order = OrderStrategy.get_default_order_for_reinforcements()
         _reinforcements = OrderStrategy.get_strategy_reinforcements(
-            example_strategy_input.locations_matrix,
+            example_strategy_input.strategy_locations,
             _reinforcement_order,
         )
         _strategy = OrderStrategyBuffering()
@@ -47,7 +44,7 @@ class TestOrderStrategyBuffering:
         # 1. Define test data.
         _order_reinforcement = OrderStrategy.get_default_order_for_reinforcements()
         _reinforcements = OrderStrategy.get_strategy_reinforcements(
-            example_strategy_input.locations_matrix,
+            example_strategy_input.strategy_locations,
             _order_reinforcement,
         )
         _strategy = OrderStrategyBuffering()
