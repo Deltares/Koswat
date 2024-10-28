@@ -8,7 +8,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
-from koswat.strategies.infra_priority_strategy.infra_cluster_collection import (
+from koswat.strategies.infra_priority_strategy.infra_cluster_option import (
     InfraClusterOption,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
