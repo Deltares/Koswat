@@ -3,8 +3,8 @@ from typing import Iterator
 
 import more_itertools
 
-from koswat.strategies.infra_priority_strategy.infra_cluster import (
-    InfraCluster,
+from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
+from koswat.strategies.infra_priority_strategy.infra_cluster_collection import (
     InfraClusterCollection,
 )
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
@@ -18,10 +18,6 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 
 class InfraPrioritySubclusteringStrategy(InfraPriorityStrategy):
-    """
-    KISSSSSSSSSSSSSSS
-    """
-
     def _get_initial_clusters(
         self, strategy_input: StrategyInput
     ) -> list[InfraCluster]:
