@@ -110,11 +110,13 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 ground_level_surface=_reinforcement.new_ground_level_surface,
             )
 
-        for _loc_key, _strat_locs in _strategy_locations_dict.items():
+        for _loc_key in _strategy_locations_dict.keys():
             for _reinforce_matrix_dict in _reinforce_matrix_dict_list:
                 # Add the reinforcement to the matrix if location exists.
                 if _loc_key in _reinforce_matrix_dict:
-                    _strat_locs.append(_reinforce_matrix_dict[_loc_key])
+                    _strategy_locations_dict[_loc_key].append(
+                        _reinforce_matrix_dict[_loc_key]
+                    )
                 else:
                     continue
                 # Add to the reinforcement to the list if not already present.
