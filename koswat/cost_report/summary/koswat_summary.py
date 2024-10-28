@@ -44,32 +44,32 @@ class KoswatSummary:
             None,
         )
 
-    def get_infra_costs(
+    def get_infrastructure_costs(
         self,
-    ) -> defaultdict[type[ReinforcementProfileProtocol], tuple[float, float]]:
+    ) -> dict[type[ReinforcementProfileProtocol], tuple[float, float]]:
         """
         Gets the infrastructure costs for each profile type
         for those locations for which the profile type is selected.
 
         Returns:
-            defaultdict[type[ReinforcementProfileProtocol], tuple[float, float]]:
-                infra cost without and with surtax per reinforcement type.
+            dict[type[ReinforcementProfileProtocol], tuple[float, float]]:
+                infrastructure costs without and with surtax per reinforcement type.
         """
-        _infra_cost_per_reinforcement = defaultdict(tuple)
+        _infra_costs_per_reinforcement = defaultdict(tuple)
 
         # Get the infra cost tuples (without and with surtax) for each location.
-        _infra_cost_dict = defaultdict(list)
+        _infra_costs_dict = defaultdict(list)
         for _loc in self.reinforcement_per_locations:
-            _infra_cost_dict[_loc.selected_measure].append(
+            _infra_costs_dict[_loc.selected_measure].append(
                 _loc.get_infrastructure_costs(_loc.selected_measure)
             )
 
         # Sum the infra costs for each reinforcement type.
-        for _rt, _infra_costs in _infra_cost_dict.items():
-            _infra_cost, _infra_cost_with_surtax = zip(*_infra_costs)
-            _infra_cost_per_reinforcement[_rt] = (
-                sum(_infra_cost),
-                sum(_infra_cost_with_surtax),
+        for _rt, _infra_costs in _infra_costs_dict.items():
+            _infra_costs, _infra_costs_with_surtax = zip(*_infra_costs)
+            _infra_costs_per_reinforcement[_rt] = (
+                sum(_infra_costs),
+                sum(_infra_costs_with_surtax),
             )
 
-        return dict(_infra_cost_per_reinforcement)
+        return dict(_infra_costs_per_reinforcement)
