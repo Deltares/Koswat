@@ -59,6 +59,14 @@ class TestInfraPriorityStrategy:
 
 
 class TestInfraPrioritySubsclusteringStrategy:
+    def test_initialize(self):
+        # 1. Define and run test data.
+        _strategy = InfraPrioritySubclusteringStrategy()
+
+        # 2. Verify expectations.
+        assert isinstance(_strategy, InfraPrioritySubclusteringStrategy)
+        assert isinstance(_strategy, StrategyProtocol)
+
     def test_with_subclusters(self, example_subclustering: StrategyInput):
         # 1. Define test data.
         assert isinstance(example_subclustering, StrategyInput)

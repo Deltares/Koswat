@@ -119,7 +119,5 @@ class InfraPrioritySubclusteringStrategy(InfraPriorityStrategy):
                 # Do nothing, we did not improve the cluster.
                 for _sc, _costs in _selected_cluster_collection_costs:
                     _sc.set_cheapest_common_available_measure(_costs)
-                    _clustered_locations.extend(_sc.cluster)
-            else:
-                _clustered_locations.extend(_infra_cluster.cluster)
+            _clustered_locations.extend(_infra_cluster.cluster)
         return _clustered_locations
