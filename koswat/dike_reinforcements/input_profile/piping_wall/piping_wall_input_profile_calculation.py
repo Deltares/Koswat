@@ -49,9 +49,9 @@ class PipingWallInputProfileCalculation(
             min(
                 max(
                     _length_piping,
-                    piping_wall_settings.min_lengte_kwelscherm,
+                    piping_wall_settings.min_length_piping_wall,
                 ),
-                piping_wall_settings.max_lengte_kwelscherm,
+                piping_wall_settings.max_length_piping_wall,
             ),
             1,
         )
@@ -125,7 +125,8 @@ class PipingWallInputProfileCalculation(
             base_data, piping_wall_settings, _soil_binnen_berm_breedte
         )
         _new_data.construction_type = self._determine_construction_type(
-            piping_wall_settings.overgang_cbwand_damwand, _new_data.construction_length
+            piping_wall_settings.transition_cbwall_sheet_pile,
+            _new_data.construction_length,
         )
         _new_data.soil_surtax_factor = piping_wall_settings.soil_surtax_factor
         _new_data.constructive_surtax_factor = (

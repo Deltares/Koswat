@@ -1,0 +1,142 @@
+2024-10-29 12:53:47 PM - [koswat_handler.py:119] - root - INFO - Initialized Koswat.
+2024-10-29 12:53:47 PM - [koswat_handler.py:93] - root - ERROR - File not found at not\a\path
+2024-10-29 12:53:47 PM - [koswat_handler.py:123] - root - INFO - Finalized Koswat.
+2024-10-29 12:53:47 PM - [koswat_handler.py:119] - root - INFO - Initialized Koswat.
+2024-10-29 12:53:47 PM - [koswat_run_settings_importer.py:67] - root - INFO - Importing INI configuration from C:\Users\klapwij\code\Koswat\tests\test_data\acceptance\koswat_general.ini
+2024-10-29 12:53:47 PM - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from tests\test_data\acceptance\koswat_costs.ini.
+2024-10-29 12:53:51 PM - [koswat_handler.py:123] - root - INFO - Finalized Koswat.
+2024-10-29 12:53:51 PM - [koswat_run_settings_importer.py:221] - root - ERROR - Dike input profiles csv file not found at C:\Users\klapwij\code\Koswat\tests\configuration\io
+2024-10-29 12:53:51 PM - [koswat_run_settings_importer.py:253] - root - ERROR - Dike selection txt file not found at C:\Users\klapwij\code\Koswat\tests\configuration\io
+2024-10-29 12:53:51 PM - [koswat_run_settings_importer.py:263] - root - ERROR - Dike costs ini file not found at C:\Users\klapwij\code\Koswat\tests\configuration\io
+2024-10-29 12:53:51 PM - [koswat_run_settings_importer.py:263] - root - ERROR - Dike costs ini file not found at C:\Users\klapwij\code\Koswat\tests\configuration\io
+2024-10-29 12:53:51 PM - [koswat_run_settings_importer.py:67] - root - INFO - Importing INI configuration from C:\Users\klapwij\code\Koswat\tests\test_data\acceptance\koswat_general.ini
+2024-10-29 12:53:51 PM - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from tests\test_data\acceptance\koswat_costs.ini.
+2024-10-29 12:53:59 PM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section 10-1-3-C-1-D-1. Detailed error: 'InfrastructureSectionFom' object has no attribute 'wegen_klasse2_breedte'
+2024-10-29 12:53:59 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-2
+2024-10-29 12:53:59 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-3
+2024-10-29 12:54:04 PM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section 10-1-3-C-1-A. Detailed error: 'InfrastructureSectionFom' object has no attribute 'wegen_klasse2_breedte'
+2024-10-29 12:54:04 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-3
+2024-10-29 12:54:04 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-1
+2024-10-29 12:54:07 PM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section 10-1-4-C-1-B. Detailed error: 'InfrastructureSectionFom' object has no attribute 'wegen_klasse2_breedte'
+2024-10-29 12:54:08 PM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section 10-1-4-B-1-B-1. Detailed error: 'InfrastructureSectionFom' object has no attribute 'wegen_klasse2_breedte'
+2024-10-29 12:54:08 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-3
+2024-10-29 12:54:08 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-1
+2024-10-29 12:54:08 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-3
+2024-10-29 12:54:08 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-1
+2024-10-29 12:54:08 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-2
+2024-10-29 12:54:11 PM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section 10-1-2-A-1-A. Detailed error: 'InfrastructureSectionFom' object has no attribute 'wegen_klasse2_breedte'
+2024-10-29 12:54:11 PM - [surroundings_wrapper_collection_importer.py:61] - root - WARNING - No surroundings files found for traject 10-1
+2024-10-29 12:54:16 PM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section 10-1-1-A-1-A. Detailed error: 'InfrastructureSectionFom' object has no attribute 'wegen_klasse2_breedte'
+2024-10-29 12:54:17 PM - [koswat_scenario_list_ini_dir_reader.py:23] - root - ERROR - Scenario 10-1-1-A-1-A skipped because section was not selected.
+2024-10-29 12:54:17 PM - [koswat_scenario_list_ini_dir_reader.py:40] - root - ERROR - Scenarios directory not found at not_a_dir
+2024-10-29 12:54:17 PM - [koswat_dike_locations_shp_reader.py:29] - root - WARNING - No selected locations.
+2024-10-29 12:54:17 PM - [raw.py:723] - pyogrio._io - INFO - Created 1 records
+2024-10-29 12:54:17 PM - [raw.py:723] - pyogrio._io - INFO - Created 1 records
+2024-10-29 12:54:17 PM - [raw.py:723] - pyogrio._io - INFO - Created 1 records
+2024-10-29 12:54:18 PM - [raw.py:723] - pyogrio._io - INFO - Created 1 records
+2024-10-29 12:54:18 PM - [raw.py:723] - pyogrio._io - INFO - Created 1 records
+2024-10-29 12:54:18 PM - [raw.py:723] - pyogrio._io - INFO - Created 1 records
+2024-10-29 12:54:18 PM - [quantity_cost_parameters_builder.py:53] - root - ERROR - Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass).
+2024-10-29 12:54:18 PM - [quantity_cost_parameters_builder.py:53] - root - ERROR - Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass).
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-10-29 12:54:18 PM - [koswat_summary_builder.py:118] - root - INFO - Creating analysis for test_data - scenario  - 
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-10-29 12:54:18 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-10-29 12:54:18 PM - [quantity_cost_parameters_builder.py:53] - root - ERROR - Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass).
+2024-10-29 12:54:18 PM - [quantity_cost_parameters_builder.py:53] - root - ERROR - Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass).
+2024-10-29 12:54:18 PM - [quantity_cost_parameters_builder.py:53] - root - ERROR - Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass).
+2024-10-29 12:54:18 PM - [quantity_cost_parameters_builder.py:53] - root - ERROR - Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass).
+2024-10-29 12:54:18 PM - [quantity_cost_parameters_builder.py:53] - root - ERROR - Only supported reinforcement profiles with 3 layers (Sand - Clay - Grass).
+2024-10-29 12:54:18 PM - [koswat_summary_location_matrix_builder.py:115] - root - INFO - Initalizing locations-reinforcements matrix.
+2024-10-29 12:54:18 PM - [koswat_summary_location_matrix_builder.py:152] - root - INFO - Finalized locations-reinforcements matrix.
+2024-10-29 12:54:18 PM - [koswat_summary_location_matrix_builder.py:115] - root - INFO - Initalizing locations-reinforcements matrix.
+2024-10-29 12:54:18 PM - [koswat_summary_location_matrix_builder.py:152] - root - INFO - Finalized locations-reinforcements matrix.
+2024-10-29 12:54:18 PM - [koswat_summary_location_matrix_builder.py:115] - root - INFO - Initalizing locations-reinforcements matrix.
+2024-10-29 12:54:18 PM - [koswat_summary_location_matrix_builder.py:152] - root - INFO - Finalized locations-reinforcements matrix.
+2024-10-29 12:54:18 PM - [koswat_dike_locations_shp_reader.py:29] - root - WARNING - No selected locations.
+2024-10-29 12:54:23 PM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section 10-1-3-C-1-D-1. Detailed error: 'InfrastructureSectionFom' object has no attribute 'wegen_klasse2_breedte'
+2024-10-29 12:54:23 PM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-10-29 12:54:23 PM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-10-29 12:54:23 PM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-10-29 12:54:23 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-10-29 12:54:24 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-10-29 12:54:25 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-10-29 12:54:26 PM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Grondmaatregel profiel: 1
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Verticale piping oplossing: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Kwelscherm: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Stabiliteitswand: 0
+2024-10-29 12:54:27 PM - [order_cluster.py:75] - root - WARNING - Trying to extend cluster from an unrelated one.
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Grondmaatregel profiel: 1
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Verticale piping oplossing: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Kwelscherm: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Stabiliteitswand: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Grondmaatregel profiel: 1
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Verticale piping oplossing: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Kwelscherm: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Stabiliteitswand: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Grondmaatregel profiel: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Verticale piping oplossing: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Kwelscherm: 0
+2024-10-29 12:54:27 PM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Stabiliteitswand: 0

@@ -72,12 +72,12 @@ class TestSurroundingsWrapperCollectionImporter:
         # traject's surroundings are avaiable in said dir.
         yield SurroundingsSectionFom(
             surroundings_database_dir=_temp_dir.parent,
-            constructieafstand=50,
-            constructieovergang=10,
-            buitendijks=True,
-            bebouwing=True,
-            spoorwegen=True,
-            water=True,
+            construction_distance=50,
+            construction_buffer=10,
+            waterside=True,
+            buildings=True,
+            railways=True,
+            waters=True,
         )
 
         # Remove the temporary directory.
@@ -86,15 +86,15 @@ class TestSurroundingsWrapperCollectionImporter:
     @pytest.fixture(name="infrastructure_section_fom_fixture")
     def _get_infrastructure_section_fom(self) -> Iterator[InfrastructureSectionFom]:
         yield InfrastructureSectionFom(
-            infrastructuur=True,
-            opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,
-            infrakosten_0dh=InfraCostsEnum.GEEN,
-            buffer_buitendijks=0.42,
-            wegen_klasse2_breedte=2.4,
-            wegen_klasse24_breedte=4.2,
-            wegen_klasse47_breedte=24,
-            wegen_klasse7_breedte=42,
-            wegen_onbekend_breedte=0.67,
+            infrastructure=True,
+            surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
+            infrastructure_costs_0dh=InfraCostsEnum.GEEN,
+            buffer_waterside=0.42,
+            roads_class2_width=2.4,
+            roads_class24_width=4.2,
+            roads_class47_width=24,
+            roads_class7_width=42,
+            roads_unknown_width=0.67,
         )
 
     def test_given_valid_surroundings_path_when_import_from_returns_surrounding_wrapper(

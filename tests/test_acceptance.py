@@ -154,11 +154,11 @@ class TestAcceptance:
         _koswat_general_settings, _koswat_costs = koswat_acceptance_settings()
         _surroundings_settings = _koswat_general_settings.surroundings_section
         _surroundings_settings.surroundings_database_dir = _temp_dir.parent
-        _surroundings_settings.bebouwing = _include_obstacles
+        _surroundings_settings.buildings = _include_obstacles
 
         # Generate Infrastructures section file model
         _infrastructure_settings = _koswat_general_settings.infrastructuur_section
-        _infrastructure_settings.infrastructuur = _include_infras
+        _infrastructure_settings.infrastructure = _include_infras
 
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
@@ -293,25 +293,25 @@ class TestAcceptance:
 
         # Surroundings wrapper
         _surroundings_section = SurroundingsSectionFom(
-            constructieafstand=50,
-            constructieovergang=10,
+            construction_distance=50,
+            construction_buffer=10,
             surroundings_database_dir=_test_dir,
-            buitendijks=False,
-            bebouwing=True,
-            spoorwegen=False,
-            water=False,
+            waterside=False,
+            buildings=True,
+            railways=False,
+            waters=False,
         )
 
         _infrastructure_section = InfrastructureSectionFom(
-            infrastructuur=False,
-            opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,
-            infrakosten_0dh=InfraCostsEnum.GEEN,
-            buffer_buitendijks=0,
-            wegen_klasse2_breedte=2,
-            wegen_klasse24_breedte=5,
-            wegen_klasse47_breedte=8,
-            wegen_klasse7_breedte=12,
-            wegen_onbekend_breedte=8,
+            infrastructure=False,
+            surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
+            infrastructure_costs_0dh=InfraCostsEnum.GEEN,
+            buffer_waterside=0,
+            roads_class2_width=2,
+            roads_class24_width=5,
+            roads_class47_width=8,
+            roads_class7_width=12,
+            roads_unknown_width=8,
         )
 
         _surroundings = SurroundingsWrapperCollectionImporter(
@@ -352,7 +352,7 @@ class TestAcceptance:
                     bewerken_maaiveld_m2=0.25,
                 ),
                 construction_costs=ConstructionCostsSettings(
-                    cb_damwand=ConstructionFactors(
+                    cb_sheet_pile=ConstructionFactors(
                         c_factor=0,
                         d_factor=0,
                         z_factor=999,
@@ -445,7 +445,7 @@ class TestAcceptance:
         _run_settings.reinforcement_settings.vps_settings.land_purchase_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
-        _run_settings.reinforcement_settings.vps_settings.binnen_berm_breedte_vps = 10
+        _run_settings.reinforcement_settings.vps_settings.polderside_berm_width_vps = 10
         _run_settings.reinforcement_settings.piping_wall_settings.soil_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
@@ -493,36 +493,36 @@ class TestAcceptance:
         _construction_costs.vzg.z_factor = 500
         _construction_costs.vzg.f_factor = 0
         _construction_costs.vzg.g_factor = 0
-        _construction_costs.cb_damwand = ConstructionFactors()
-        _construction_costs.cb_damwand.c_factor = 0
-        _construction_costs.cb_damwand.d_factor = 159.326
-        _construction_costs.cb_damwand.z_factor = -34.794
-        _construction_costs.cb_damwand.f_factor = 0
-        _construction_costs.cb_damwand.g_factor = 0
-        _construction_costs.damwand_onverankerd = ConstructionFactors()
-        _construction_costs.damwand_onverankerd.c_factor = 9.298
-        _construction_costs.damwand_onverankerd.d_factor = 132.239
-        _construction_costs.damwand_onverankerd.z_factor = 103.628
-        _construction_costs.damwand_onverankerd.f_factor = 0
-        _construction_costs.damwand_onverankerd.g_factor = 0
-        _construction_costs.damwand_verankerd = ConstructionFactors()
-        _construction_costs.damwand_verankerd.c_factor = 9.298
-        _construction_costs.damwand_verankerd.d_factor = 150.449
-        _construction_costs.damwand_verankerd.z_factor = 1304.455
-        _construction_costs.damwand_verankerd.f_factor = 0
-        _construction_costs.damwand_verankerd.g_factor = 0
-        _construction_costs.diepwand = ConstructionFactors()
-        _construction_costs.diepwand.c_factor = 0
-        _construction_costs.diepwand.d_factor = 0
-        _construction_costs.diepwand.z_factor = 0
-        _construction_costs.diepwand.f_factor = 281.176
-        _construction_costs.diepwand.g_factor = 1.205
-        _construction_costs.kistdam = ConstructionFactors()
-        _construction_costs.kistdam.c_factor = 0
-        _construction_costs.kistdam.d_factor = 680.782
-        _construction_costs.kistdam.z_factor = -74.602
-        _construction_costs.kistdam.f_factor = 0
-        _construction_costs.kistdam.g_factor = 0
+        _construction_costs.cb_sheet_pile = ConstructionFactors()
+        _construction_costs.cb_sheet_pile.c_factor = 0
+        _construction_costs.cb_sheet_pile.d_factor = 159.326
+        _construction_costs.cb_sheet_pile.z_factor = -34.794
+        _construction_costs.cb_sheet_pile.f_factor = 0
+        _construction_costs.cb_sheet_pile.g_factor = 0
+        _construction_costs.sheet_pile_unanchored = ConstructionFactors()
+        _construction_costs.sheet_pile_unanchored.c_factor = 9.298
+        _construction_costs.sheet_pile_unanchored.d_factor = 132.239
+        _construction_costs.sheet_pile_unanchored.z_factor = 103.628
+        _construction_costs.sheet_pile_unanchored.f_factor = 0
+        _construction_costs.sheet_pile_unanchored.g_factor = 0
+        _construction_costs.sheet_pile_anchored = ConstructionFactors()
+        _construction_costs.sheet_pile_anchored.c_factor = 9.298
+        _construction_costs.sheet_pile_anchored.d_factor = 150.449
+        _construction_costs.sheet_pile_anchored.z_factor = 1304.455
+        _construction_costs.sheet_pile_anchored.f_factor = 0
+        _construction_costs.sheet_pile_anchored.g_factor = 0
+        _construction_costs.diaphragm_wall = ConstructionFactors()
+        _construction_costs.diaphragm_wall.c_factor = 0
+        _construction_costs.diaphragm_wall.d_factor = 0
+        _construction_costs.diaphragm_wall.z_factor = 0
+        _construction_costs.diaphragm_wall.f_factor = 281.176
+        _construction_costs.diaphragm_wall.g_factor = 1.205
+        _construction_costs.cofferdam = ConstructionFactors()
+        _construction_costs.cofferdam.c_factor = 0
+        _construction_costs.cofferdam.d_factor = 680.782
+        _construction_costs.cofferdam.z_factor = -74.602
+        _construction_costs.cofferdam.f_factor = 0
+        _construction_costs.cofferdam.g_factor = 0
         _run_settings.costs_setting.construction_costs = _construction_costs
 
         _run_settings.costs_setting.surtax_costs = SurtaxCostsSettings()

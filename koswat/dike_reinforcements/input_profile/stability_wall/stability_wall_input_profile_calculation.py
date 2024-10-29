@@ -57,9 +57,9 @@ class StabilityWallInputProfileCalculation(
                 max(
                     _length_piping,
                     _length_stability,
-                    stability_wall_settings.min_lengte_stabiliteitswand,
+                    stability_wall_settings.min_length_stability_wall,
                 ),
-                stability_wall_settings.max_lengte_stabiliteitswand,
+                stability_wall_settings.max_length_stability_wall,
             ),
             1,
         )
@@ -143,7 +143,7 @@ class StabilityWallInputProfileCalculation(
             _new_data.kruin_hoogte,
         )
         _new_data.construction_type = self._determine_construction_type(
-            stability_wall_settings.overgang_damwand_diepwand,
+            stability_wall_settings.transition_sheet_pile_diaphragm_wall,
             _new_data.construction_length,
         )
         _new_data.soil_surtax_factor = stability_wall_settings.soil_surtax_factor

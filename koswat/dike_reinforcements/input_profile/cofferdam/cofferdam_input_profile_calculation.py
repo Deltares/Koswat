@@ -91,9 +91,9 @@ class CofferdamInputProfileCalculation(
                 max(
                     _length_piping,
                     _length_stability,
-                    cofferdam_settings.min_lengte_kistdam,
+                    cofferdam_settings.min_length_cofferdam,
                 ),
-                cofferdam_settings.max_lengte_kistdam,
+                cofferdam_settings.max_length_cofferdam,
             ),
             1,
         )

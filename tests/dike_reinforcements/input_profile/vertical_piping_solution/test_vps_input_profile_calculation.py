@@ -47,7 +47,7 @@ class TestVPSInputProfileCalculation:
         _old_profile.binnen_berm_breedte = 0
         _old_profile.binnen_maaiveld = 0
         _vps_settings = KoswatVPSSettings()
-        _vps_settings.binnen_berm_breedte_vps = 10
+        _vps_settings.polderside_berm_width_vps = 10
 
         # 2. Run test
         _new_profile = VPSInputProfileCalculation()._calculate_new_input_profile(

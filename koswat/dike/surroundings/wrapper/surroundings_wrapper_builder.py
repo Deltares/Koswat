@@ -55,22 +55,22 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
         _obs_wrapper = ObstacleSurroundingsWrapper(
-            reinforcement_min_separation=self.surroundings_section_fom.constructieafstand,
-            reinforcement_min_buffer=self.surroundings_section_fom.constructieovergang,
-            apply_waterside=self.surroundings_section_fom.buitendijks,
-            apply_buildings=self.surroundings_section_fom.bebouwing,
-            apply_railways=self.surroundings_section_fom.spoorwegen,
-            apply_waters=self.surroundings_section_fom.water,
+            reinforcement_min_separation=self.surroundings_section_fom.construction_distance,
+            reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
+            apply_waterside=self.surroundings_section_fom.waterside,
+            apply_buildings=self.surroundings_section_fom.buildings,
+            apply_railways=self.surroundings_section_fom.railways,
+            apply_waters=self.surroundings_section_fom.waters,
         )
         # Buildings polderside should always be present to determine the location coordinates.
         _obs_wrapper.buildings_polderside.points = (
             self._get_polderside_surroundings_from_fom("buildings_polderside")
         )
-        if self.surroundings_section_fom.spoorwegen:
+        if self.surroundings_section_fom.railways:
             _obs_wrapper.railways_polderside.points = (
                 self._get_polderside_surroundings_from_fom("railways_polderside")
             )
-        if self.surroundings_section_fom.water:
+        if self.surroundings_section_fom.waters:
             _obs_wrapper.waters_polderside.points = (
                 self._get_polderside_surroundings_from_fom("waters_polderside")
             )
@@ -97,11 +97,11 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         self,
     ) -> InfrastructureSurroundingsWrapper:
         _infra_wrapper = InfrastructureSurroundingsWrapper(
-            infrastructures_considered=self.infrastructure_section_fom.infrastructuur,
-            surtax_cost_factor=self.infrastructure_section_fom.opslagfactor_wegen,
-            non_rising_dike_costs_factor=self.infrastructure_section_fom.infrakosten_0dh,
+            infrastructures_considered=self.infrastructure_section_fom.infrastructure,
+            surtax_cost_factor=self.infrastructure_section_fom.surtax_factor_roads,
+            non_rising_dike_costs_factor=self.infrastructure_section_fom.infrastructure_costs_0dh,
         )
-        if self.infrastructure_section_fom.infrastructuur:
+        if self.infrastructure_section_fom.infrastructure:
             _infra_wrapper.roads_class_2_polderside = (
                 self._get_polderside_surroundings_infrastructure(
                     "roads_class_2_polderside"

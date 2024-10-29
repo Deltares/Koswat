@@ -141,9 +141,9 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
     surtax_costs_excl_tax_section: SurtaxCostsSectionFom
     construction_cost_cb_wall: ConstructionCostsSectionFom
     construction_cost_vzg: ConstructionCostsSectionFom
-    construction_cost_damwall_unanchored: ConstructionCostsSectionFom
-    construction_cost_damwall_anchored: ConstructionCostsSectionFom
-    construction_cost_deep_wall: ConstructionCostsSectionFom
+    construction_cost_sheet_pile_unanchored: ConstructionCostsSectionFom
+    construction_cost_sheet_pile_anchored: ConstructionCostsSectionFom
+    construction_cost_diaphragm_wall: ConstructionCostsSectionFom
     construction_cost_cofferdam: ConstructionCostsSectionFom
 
     @classmethod
@@ -170,16 +170,16 @@ class KoswatCostsIniFom(KoswatIniFomProtocol):
         _ini_fom.construction_cost_cb_wall = ConstructionCostsSectionFom.from_config(
             ini_dict["KostenCBwand"]
         )
-        _ini_fom.construction_cost_damwall_unanchored = (
+        _ini_fom.construction_cost_sheet_pile_unanchored = (
             ConstructionCostsSectionFom.from_config(
                 ini_dict["KostenDamwandOnverankerd"]
             )
         )
-        _ini_fom.construction_cost_damwall_anchored = (
+        _ini_fom.construction_cost_sheet_pile_anchored = (
             ConstructionCostsSectionFom.from_config(ini_dict["KostenDamwandVerankerd"])
         )
-        _ini_fom.construction_cost_deep_wall = ConstructionCostsSectionFom.from_config(
-            ini_dict["KostenDiepwand"]
+        _ini_fom.construction_cost_diaphragm_wall = (
+            ConstructionCostsSectionFom.from_config(ini_dict["KostenDiepwand"])
         )
         _ini_fom.construction_cost_cofferdam = ConstructionCostsSectionFom.from_config(
             ini_dict["KostenKistdam"]

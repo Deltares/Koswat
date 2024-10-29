@@ -133,7 +133,7 @@ class TestQuantityCostParametersBuilder:
         _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
         _builder.koswat_costs_settings.surtax_costs.construction_normal = 2.0
         _builder.koswat_costs_settings.construction_costs = ConstructionCostsSettings()
-        _builder.koswat_costs_settings.construction_costs.cb_damwand = (
+        _builder.koswat_costs_settings.construction_costs.cb_sheet_pile = (
             ConstructionFactors(
                 c_factor=0, d_factor=10, z_factor=0, f_factor=0, g_factor=0
             )
@@ -263,12 +263,12 @@ class TestQuantityCostParametersBuilder:
         _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
         _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
         _costs_settings.construction_costs = ConstructionCostsSettings()
-        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
-        _costs_settings.construction_costs.cb_damwand.c_factor = 0
-        _costs_settings.construction_costs.cb_damwand.d_factor = 0
-        _costs_settings.construction_costs.cb_damwand.z_factor = 999
-        _costs_settings.construction_costs.cb_damwand.f_factor = 0
-        _costs_settings.construction_costs.cb_damwand.g_factor = 0
+        _costs_settings.construction_costs.cb_sheet_pile = ConstructionFactors()
+        _costs_settings.construction_costs.cb_sheet_pile.c_factor = 0
+        _costs_settings.construction_costs.cb_sheet_pile.d_factor = 0
+        _costs_settings.construction_costs.cb_sheet_pile.z_factor = 999
+        _costs_settings.construction_costs.cb_sheet_pile.f_factor = 0
+        _costs_settings.construction_costs.cb_sheet_pile.g_factor = 0
         _costs_settings.surtax_costs = SurtaxCostsSettings()
 
         # 2. Run test

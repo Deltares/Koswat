@@ -65,18 +65,18 @@ class ReinforcementProfileSectionFomBase(KoswatIniFomProtocol, abc.ABC):
 
 
 class SoilReinforcementSectionFom(ReinforcementProfileSectionFomBase):
-    min_bermhoogte: float
-    max_bermhoogte_factor: float
-    factor_toename_bermhoogte: float
+    min_berm_height: float
+    max_berm_height_factor: float
+    factor_increase_berm_height: float
     land_purchase_surtax_factor: SurtaxFactorEnum
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
-        _section.min_bermhoogte = ini_config.getfloat("min_bermhoogte")
-        _section.max_bermhoogte_factor = ini_config.getfloat("max_bermhoogte_factor")
-        _section.factor_toename_bermhoogte = ini_config.getfloat(
+        _section.min_berm_height = ini_config.getfloat("min_bermhoogte")
+        _section.max_berm_height_factor = ini_config.getfloat("max_bermhoogte_factor")
+        _section.factor_increase_berm_height = ini_config.getfloat(
             "factor_toename_bermhoogte"
         )
         _section.land_purchase_surtax_factor = SurtaxFactorEnum[
@@ -88,7 +88,7 @@ class SoilReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 
 
 class VPSReinforcementSectionFom(ReinforcementProfileSectionFomBase):
-    binnen_berm_breedte_vps: float
+    polderside_berm_width_vps: float
     constructive_surtax_factor: float
     land_purchase_surtax_factor: SurtaxFactorEnum
 
@@ -96,7 +96,7 @@ class VPSReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
-        _section.binnen_berm_breedte_vps = ini_config.getfloat(
+        _section.polderside_berm_width_vps = ini_config.getfloat(
             "binnen_berm_breedte_vps"
         )
         _section.constructive_surtax_factor = SurtaxFactorEnum[
@@ -113,9 +113,9 @@ class VPSReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 
 
 class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
-    min_lengte_kwelscherm: float
-    overgang_cbwand_damwand: float
-    max_lengte_kwelscherm: float
+    min_length_piping_wall: float
+    transition_cbwall_sheet_pile: float
+    max_length_piping_wall: float
     constructive_surtax_factor: SurtaxFactorEnum
     land_purchase_surtax_factor: SurtaxFactorEnum
 
@@ -123,11 +123,11 @@ class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
-        _section.min_lengte_kwelscherm = ini_config.getfloat("min_lengte_kwelscherm")
-        _section.overgang_cbwand_damwand = ini_config.getfloat(
+        _section.min_length_piping_wall = ini_config.getfloat("min_lengte_kwelscherm")
+        _section.transition_cbwall_sheet_pile = ini_config.getfloat(
             "overgang_cbwand_damwand"
         )
-        _section.max_lengte_kwelscherm = ini_config.getfloat("max_lengte_kwelscherm")
+        _section.max_length_piping_wall = ini_config.getfloat("max_lengte_kwelscherm")
         _section.constructive_surtax_factor = SurtaxFactorEnum[
             ini_config.get(
                 "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
@@ -142,10 +142,10 @@ class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 
 
 class StabilitywallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
-    versteiling_binnentalud: float
-    min_lengte_stabiliteitswand: float
-    overgang_damwand_diepwand: float
-    max_lengte_stabiliteitswand: float
+    steepening_polderside_slope: float
+    min_length_stability_wall: float
+    transition_sheet_pile_diaphragm_wall: float
+    max_length_stability_wall: float
     constructive_surtax_factor: SurtaxFactorEnum
     land_purchase_surtax_factor: SurtaxFactorEnum
 
@@ -153,16 +153,16 @@ class StabilitywallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
-        _section.versteiling_binnentalud = ini_config.getfloat(
+        _section.steepening_polderside_slope = ini_config.getfloat(
             "versteiling_binnentalud"
         )
-        _section.min_lengte_stabiliteitswand = ini_config.getfloat(
+        _section.min_length_stability_wall = ini_config.getfloat(
             "min_lengte_stabiliteitswand"
         )
-        _section.overgang_damwand_diepwand = ini_config.getfloat(
+        _section.transition_sheet_pile_diaphragm_wall = ini_config.getfloat(
             "overgang_damwand_diepwand"
         )
-        _section.max_lengte_stabiliteitswand = ini_config.getfloat(
+        _section.max_length_stability_wall = ini_config.getfloat(
             "max_lengte_stabiliteitswand"
         )
         _section.constructive_surtax_factor = SurtaxFactorEnum[
@@ -179,16 +179,16 @@ class StabilitywallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 
 
 class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
-    min_lengte_kistdam: float
-    max_lengte_kistdam: float
+    min_length_cofferdam: float
+    max_length_cofferdam: float
     constructive_surtax_factor: SurtaxFactorEnum
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
         _section._set_properties_from_dict(ini_config)
-        _section.min_lengte_kistdam = ini_config.getfloat("min_lengte_kistdam")
-        _section.max_lengte_kistdam = ini_config.getfloat("max_lengte_kistdam")
+        _section.min_length_cofferdam = ini_config.getfloat("min_lengte_kistdam")
+        _section.max_length_cofferdam = ini_config.getfloat("max_lengte_kistdam")
         _section.constructive_surtax_factor = SurtaxFactorEnum[
             ini_config.get(
                 "opslagfactor_constructief", SurtaxFactorEnum.NORMAAL.name
@@ -200,64 +200,66 @@ class CofferdamReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 @dataclass
 class SurroundingsSectionFom(KoswatIniFomProtocol):
     surroundings_database_dir: Path
-    constructieafstand: float
-    constructieovergang: float
-    buitendijks: bool
-    bebouwing: bool
-    spoorwegen: bool
-    water: bool
+    construction_distance: float
+    construction_buffer: float
+    waterside: bool
+    buildings: bool
+    railways: bool
+    waters: bool
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls(
             surroundings_database_dir=Path(ini_config["omgevingsdatabases"]),
-            constructieafstand=ini_config.getfloat("constructieafstand"),
-            constructieovergang=ini_config.getfloat("constructieovergang"),
-            buitendijks=ini_config.getboolean("buitendijks"),
-            bebouwing=ini_config.getboolean("bebouwing"),
-            spoorwegen=ini_config.getboolean("spoorwegen"),
-            water=ini_config.getboolean("water"),
+            construction_distance=ini_config.getfloat("constructieafstand"),
+            construction_buffer=ini_config.getfloat("constructieovergang"),
+            waterside=ini_config.getboolean("buitendijks"),
+            buildings=ini_config.getboolean("bebouwing"),
+            railways=ini_config.getboolean("spoorwegen"),
+            waters=ini_config.getboolean("water"),
         )
         return _section
 
 
 @dataclass
 class InfrastructureSectionFom(KoswatIniFomProtocol):
-    infrastructuur: bool
-    opslagfactor_wegen: SurtaxFactorEnum
-    infrakosten_0dh: InfraCostsEnum
-    buffer_buitendijks: float
-    wegen_klasse2_breedte: float
-    wegen_klasse24_breedte: float
-    wegen_klasse47_breedte: float
-    wegen_klasse7_breedte: float
-    wegen_onbekend_breedte: float
+    infrastructure: bool
+    surtax_factor_roads: SurtaxFactorEnum
+    infrastructure_costs_0dh: InfraCostsEnum
+    buffer_waterside: float
+    roads_class2_width: float
+    roads_class24_width: float
+    roads_class47_width: float
+    roads_class7_width: float
+    roads_unknown_width: float
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         return cls(
-            infrastructuur=ini_config.getboolean("infrastructuur"),
-            opslagfactor_wegen=SurtaxFactorEnum[
+            infrastructure=ini_config.getboolean("infrastructuur"),
+            surtax_factor_roads=SurtaxFactorEnum[
                 ini_config["opslagfactor_wegen"].upper()
             ],
-            infrakosten_0dh=InfraCostsEnum[ini_config["infrakosten_0dh"].upper()],
-            buffer_buitendijks=ini_config.getfloat("buffer_buitendijks"),
-            wegen_klasse2_breedte=ini_config.getfloat("wegen_klasse2_breedte"),
-            wegen_klasse24_breedte=ini_config.getfloat("wegen_klasse24_breedte"),
-            wegen_klasse47_breedte=ini_config.getfloat("wegen_klasse47_breedte"),
-            wegen_klasse7_breedte=ini_config.getfloat("wegen_klasse7_breedte"),
-            wegen_onbekend_breedte=ini_config.getfloat("wegen_onbekend_breedte"),
+            infrastructure_costs_0dh=InfraCostsEnum[
+                ini_config["infrakosten_0dh"].upper()
+            ],
+            buffer_waterside=ini_config.getfloat("buffer_buitendijks"),
+            roads_class2_width=ini_config.getfloat("wegen_klasse2_breedte"),
+            roads_class24_width=ini_config.getfloat("wegen_klasse24_breedte"),
+            roads_class47_width=ini_config.getfloat("wegen_klasse47_breedte"),
+            roads_class7_width=ini_config.getfloat("wegen_klasse7_breedte"),
+            roads_unknown_width=ini_config.getfloat("wegen_onbekend_breedte"),
         )
 
 
 class KoswatGeneralIniFom(KoswatIniFomProtocol):
-    analyse_section_fom: AnalysisSectionFom
-    dike_profile_section_fom: DikeProfileSectionFom
-    grondmaatregel_section: SoilReinforcementSectionFom
+    analysis_section: AnalysisSectionFom
+    dike_profile_section: DikeProfileSectionFom
+    soil_measure_section: SoilReinforcementSectionFom
     vps_section: VPSReinforcementSectionFom
-    kwelscherm_section: PipingwallReinforcementSectionFom
-    stabiliteitswand_section: StabilitywallReinforcementSectionFom
-    kistdam_section: CofferdamReinforcementSectionFom
+    piping_wall_section: PipingwallReinforcementSectionFom
+    stability_wall_section: StabilitywallReinforcementSectionFom
+    cofferdam_section: CofferdamReinforcementSectionFom
     surroundings_section: SurroundingsSectionFom
     infrastructuur_section: InfrastructureSectionFom
 
@@ -265,27 +267,27 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _general_ini = cls()
 
-        _general_ini.analyse_section_fom = AnalysisSectionFom.from_config(
+        _general_ini.analysis_section = AnalysisSectionFom.from_config(
             ini_config["Analyse"]
         )
-        _general_ini.dike_profile_section_fom = DikeProfileSectionFom.from_config(
+        _general_ini.dike_profile_section = DikeProfileSectionFom.from_config(
             ini_config["Dijkprofiel"]
         )
-        _general_ini.grondmaatregel_section = SoilReinforcementSectionFom.from_config(
+        _general_ini.soil_measure_section = SoilReinforcementSectionFom.from_config(
             ini_config["Grondmaatregel"]
         )
         _general_ini.vps_section = VPSReinforcementSectionFom.from_config(
             ini_config["VerticalePipingOplossing"]
         )
-        _general_ini.kwelscherm_section = PipingwallReinforcementSectionFom.from_config(
-            ini_config["Kwelscherm"]
+        _general_ini.piping_wall_section = (
+            PipingwallReinforcementSectionFom.from_config(ini_config["Kwelscherm"])
         )
-        _general_ini.stabiliteitswand_section = (
+        _general_ini.stability_wall_section = (
             StabilitywallReinforcementSectionFom.from_config(
                 ini_config["Stabiliteitswand"]
             )
         )
-        _general_ini.kistdam_section = CofferdamReinforcementSectionFom.from_config(
+        _general_ini.cofferdam_section = CofferdamReinforcementSectionFom.from_config(
             ini_config["Kistdam"]
         )
         _general_ini.surroundings_section = SurroundingsSectionFom.from_config(

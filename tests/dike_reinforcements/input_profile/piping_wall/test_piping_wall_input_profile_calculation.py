@@ -44,7 +44,7 @@ class TestPipingWallInputProfileCalculation:
         _piping_wall_settings = MockSettings()
         _piping_wall_settings.min_lengte_kwelscherm = 0
         _piping_wall_settings.max_lengte_kwelscherm = 99
-        _piping_wall_settings.overgang_cbwand_damwand = 15
+        _piping_wall_settings.transition_cbwall_sheet_pile = 15
         _soil_binnen_berm_breedte = 12.5
         _expected_result = (6.1, ConstructionTypeEnum.CB_DAMWAND)
 
@@ -53,7 +53,7 @@ class TestPipingWallInputProfileCalculation:
             _profile_data, _piping_wall_settings, _soil_binnen_berm_breedte
         )
         _type = _calculator._determine_construction_type(
-            _piping_wall_settings.overgang_cbwand_damwand, _length
+            _piping_wall_settings.transition_cbwall_sheet_pile, _length
         )
         _result = (_length, _type)
 

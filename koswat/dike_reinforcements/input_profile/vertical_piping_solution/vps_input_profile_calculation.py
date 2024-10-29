@@ -43,7 +43,7 @@ class VPSInputProfileCalculation(
         _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
-        _new_data.binnen_berm_breedte = vps_settings.binnen_berm_breedte_vps
+        _new_data.binnen_berm_breedte = vps_settings.polderside_berm_width_vps
         _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(
             base_data, _new_data, scenario
         )
