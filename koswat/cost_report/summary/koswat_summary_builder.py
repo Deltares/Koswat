@@ -1,6 +1,6 @@
 import logging
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
@@ -28,14 +28,13 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
-from koswat.strategies.strategy_reinforcement_type_costs import (
-    StrategyReinforcementTypeCosts,
-)
+from koswat.strategies.strategy_protocol import StrategyProtocol
 
 
 @dataclass
 class KoswatSummaryBuilder(BuilderProtocol):
     run_scenario_settings: KoswatRunScenarioSettings = None
+    strategy_type: type[StrategyProtocol] = field(default_factory=lambda: OrderStrategy)
 
     @staticmethod
     def _get_corrected_koswat_scenario(
@@ -111,7 +110,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         # In theory this will become a factory (somewhere) where
         # the adequate strategy will be chosen.
-        return OrderStrategy().apply_strategy(_strategy_input)
+        return self.strategy_type().apply_strategy(_strategy_input)
 
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()
