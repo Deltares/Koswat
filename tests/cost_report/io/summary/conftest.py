@@ -152,6 +152,8 @@ def get_locations_reinforcements(
         # Set this location reinforcement selection history
         # We set as "initial" selection SoilReinforcementProfile
         _slr.selected_measure = SoilReinforcementProfile
+        # We emulate an "in-between" step
+        _slr.selected_measure = SoilReinforcementProfile
         # We now set the "final" selection
         _slr.selected_measure = _selected_measure
         _matrix.append(_slr)

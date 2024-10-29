@@ -37,24 +37,21 @@ class StrategyLocationReinforcement:
     def previous_selected_measure(self) -> type[ReinforcementProfileProtocol]:
         """
         Exposes the selected measure previous to the current one.
+        Expected at least three steps:
+            - 0, first selection, without clustering.
+            - 1, selection based on traject's buffer + clustering.
+            - 2, selection based on optimal  infrastructure's costs.
         """
         if not self._selected_measures:
             return None
-        if len(self._selected_measures) > 1:
+        if len(self._selected_measures) > 2:
             return self._selected_measures[-2]
-        return self._selected_measures[0]
+        # If no "in-between" step was found, then just pick the last one.
+        return self._selected_measures[-1]
 
     @selected_measure.setter
     def selected_measure(self, reinforcement_type: type[ReinforcementProfileProtocol]):
         self._selected_measures.append(reinforcement_type)
-
-    @property
-    def selection_measure_steps(self) -> list[type[ReinforcementProfileProtocol]]:
-        """
-        READ-ONLY property. Exposes the different selected measures for this reinforcement.
-        We consider the last item the current selection, so from older to newer.
-        """
-        return self._selected_measures
 
     @property
     def current_cost(self) -> float:
@@ -66,7 +63,8 @@ class StrategyLocationReinforcement:
         for _srtc in self.strategy_location_input.strategy_reinforcement_type_costs:
             if _srtc.reinforcement_type == self.selected_measure:
                 return _srtc.total_costs
-        raise ValueError("No current cost could be calculated")
+        return 0.0
+        # raise ValueError("No current cost could be calculated")
 
     @property
     def cheapest_reinforcement(self) -> StrategyReinforcementTypeCosts:
