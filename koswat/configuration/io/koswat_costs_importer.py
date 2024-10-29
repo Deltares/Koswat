@@ -60,34 +60,34 @@ class KoswatCostsImporter(KoswatImporterProtocol):
     ) -> DikeProfileCostsSettings:
         _settings = DikeProfileCostsSettings()
         _settings.added_layer_grass_m3 = (
-            fom_costs.dike_profile_costs_section.aanleg_graslaag_m3
+            fom_costs.dike_profile_costs_section.construction_grass_layer_m3
         )
         _settings.added_layer_clay_m3 = (
-            fom_costs.dike_profile_costs_section.aanleg_kleilaag_m3
+            fom_costs.dike_profile_costs_section.construction_clay_layer_m3
         )
         _settings.added_layer_sand_m3 = (
-            fom_costs.dike_profile_costs_section.aanleg_kern_m3
+            fom_costs.dike_profile_costs_section.construction_sand_m3
         )
         _settings.reused_layer_grass_m3 = (
-            fom_costs.dike_profile_costs_section.hergebruik_graslaag_m3
+            fom_costs.dike_profile_costs_section.reuse_grass_layer_m3
         )
         _settings.reused_layer_core_m3 = (
-            fom_costs.dike_profile_costs_section.hergebruik_kern_m3
+            fom_costs.dike_profile_costs_section.reuse_sand_m3
         )
         _settings.disposed_material_m3 = (
-            fom_costs.dike_profile_costs_section.afvoeren_materiaal_m3
+            fom_costs.dike_profile_costs_section.dispose_material_m3
         )
         _settings.profiling_layer_grass_m2 = (
-            fom_costs.dike_profile_costs_section.profileren_graslaag_m2
+            fom_costs.dike_profile_costs_section.profile_grass_layer_m2
         )
         _settings.profiling_layer_clay_m2 = (
-            fom_costs.dike_profile_costs_section.profileren_kleilaag_m2
+            fom_costs.dike_profile_costs_section.profile_clay_layer_m2
         )
         _settings.profiling_layer_sand_m2 = (
-            fom_costs.dike_profile_costs_section.profileren_kern_m2
+            fom_costs.dike_profile_costs_section.profile_sand_m2
         )
         _settings.bewerken_maaiveld_m2 = (
-            fom_costs.dike_profile_costs_section.bewerken_maaiveld_m2
+            fom_costs.dike_profile_costs_section.process_ground_level_surface_m2
         )
         return _settings
 
@@ -96,34 +96,34 @@ class KoswatCostsImporter(KoswatImporterProtocol):
     ) -> InfrastructureCostsSettings:
         _settings = InfrastructureCostsSettings()
         _settings.removing_roads_klasse2 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse2_verwijderen
+            fom_costs.infrastructure_costs_section.roads_class2_removal
         )
         _settings.removing_roads_klasse24 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse24_verwijderen
+            fom_costs.infrastructure_costs_section.roads_class24_removal
         )
         _settings.removing_roads_klasse47 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse47_verwijderen
+            fom_costs.infrastructure_costs_section.roads_class47_removal
         )
         _settings.removing_roads_klasse7 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse7_verwijderen
+            fom_costs.infrastructure_costs_section.roads_class7_removal
         )
         _settings.removing_roads_unknown = (
-            fom_costs.infrastructure_costs_section.wegen_onbekend_verwijderen
+            fom_costs.infrastructure_costs_section.roads_unknown_removal
         )
         _settings.adding_roads_klasse2 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse2_aanleg
+            fom_costs.infrastructure_costs_section.roads_class2_construction
         )
         _settings.adding_roads_klasse24 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse24_aanleg
+            fom_costs.infrastructure_costs_section.roads_class24_construction
         )
         _settings.adding_roads_klasse47 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse47_aanleg
+            fom_costs.infrastructure_costs_section.roads_class47_construction
         )
         _settings.adding_roads_klasse7 = (
-            fom_costs.infrastructure_costs_section.wegen_klasse7_aanleg
+            fom_costs.infrastructure_costs_section.roads_class7_construction
         )
         _settings.adding_roads_unknown = (
-            fom_costs.infrastructure_costs_section.wegen_onbekend_aanleg
+            fom_costs.infrastructure_costs_section.roads_unknown_construction
         )
         return _settings
 
@@ -134,18 +134,18 @@ class KoswatCostsImporter(KoswatImporterProtocol):
             if self.include_taxes
             else fom_costs.surtax_costs_excl_tax_section
         )
-        _settings.soil_easy = _fom_settings.grond_makkelijk
-        _settings.soil_normal = _fom_settings.grond_normaal
-        _settings.soil_hard = _fom_settings.grond_moeilijk
-        _settings.construction_easy = _fom_settings.constructief_makkelijk
-        _settings.construction_normal = _fom_settings.constructief_normaal
-        _settings.construction_hard = _fom_settings.constructief_moeilijk
-        _settings.roads_easy = _fom_settings.wegen_makkelijk
-        _settings.roads_normal = _fom_settings.wegen_normaal
-        _settings.roads_hard = _fom_settings.wegen_moeilijk
-        _settings.land_purchase_easy = _fom_settings.grond_makkelijk
-        _settings.land_purchase_normal = _fom_settings.grondaankoop_normaal
-        _settings.land_purchase_hard = _fom_settings.grondaankoop_moeilijk
+        _settings.soil_easy = _fom_settings.soil_easy
+        _settings.soil_normal = _fom_settings.soil_normal
+        _settings.soil_hard = _fom_settings.soil_hard
+        _settings.construction_easy = _fom_settings.constructive_easy
+        _settings.construction_normal = _fom_settings.constructive_normal
+        _settings.construction_hard = _fom_settings.constructive_hard
+        _settings.roads_easy = _fom_settings.road_easy
+        _settings.roads_normal = _fom_settings.roads_normal
+        _settings.roads_hard = _fom_settings.roads_hard
+        _settings.land_purchase_easy = _fom_settings.soil_easy
+        _settings.land_purchase_normal = _fom_settings.land_purchase_normal
+        _settings.land_purchase_hard = _fom_settings.land_purchase_hard
         return _settings
 
     def _get_construction_costs(
