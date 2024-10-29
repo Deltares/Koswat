@@ -8,7 +8,7 @@ from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 
 class InfraClusterOption:
     """
-    Represents one set of (sub) clusters the strategy could select
+    Represents one set of subclusters the strategy could select
     for costs optimization.
     """
 

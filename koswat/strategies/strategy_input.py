@@ -15,7 +15,7 @@ class StrategyInput:
     @property
     def reinforcement_min_cluster(self) -> int:
         """
-        Returns the minimun length of a reinforcement type
+        Returns the minimum length of a reinforcement type
         along a traject, usually named as `cluster` throughout
         the code.
 
