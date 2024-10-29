@@ -113,13 +113,13 @@ class TestSurroundingsWrapperCollectionImporter:
             infrastructure_section_fom=infrastructure_section_fom_fixture,
             traject_loc_shp_file=_shp_file,
             selected_locations=[
-                # For traject 10-1
+                # For section 10-1
                 "10-1-3-C-1-D-1",
                 "10-1-3-C-1-A",
-                # For traject 10-2
+                # For section 10-2
                 "10-1-4-C-1-B",
                 "10-1-4-B-1-B-1",
-                # For traject 10-3
+                # For section 10-3
                 "10-1-2-A-1-A",
                 "10-1-1-A-1-A",
             ],

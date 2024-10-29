@@ -81,16 +81,14 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         self, name: str
     ) -> SurroundingsInfrastructure:
         _mapped_name = (
-            name.replace("_polderside", "")
-            .replace("roads_class_unknown", "wegen_onbekend")
-            .replace("roads_class_", "wegen_klasse")
+            name.replace("_polderside", "_width")
+            .replace("class_unknown", "unknown")
+            .replace("class_", "class")
         )
         return SurroundingsInfrastructure(
             infrastructure_name=name,
             points=self._get_polderside_surroundings_from_fom(name),
-            infrastructure_width=getattr(
-                self.infrastructure_section_fom, _mapped_name + "_breedte"
-            ),
+            infrastructure_width=getattr(self.infrastructure_section_fom, _mapped_name),
         )
 
     def _get_infrastructure_surroundings_wrapper(

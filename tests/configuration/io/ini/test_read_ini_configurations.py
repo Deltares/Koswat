@@ -192,10 +192,10 @@ class TestReadIniConfigurations:
         )
         assert _ini_fom.surroundings_section.construction_distance == 50
         assert _ini_fom.surroundings_section.construction_buffer == 10
-        assert _ini_fom.surroundings_section.waterside == False
-        assert _ini_fom.surroundings_section.buildings == True
-        assert _ini_fom.surroundings_section.railways == False
-        assert _ini_fom.surroundings_section.waters == False
+        assert _ini_fom.surroundings_section.waterside is False
+        assert _ini_fom.surroundings_section.buildings is True
+        assert _ini_fom.surroundings_section.railways is False
+        assert _ini_fom.surroundings_section.waters is False
 
         # Infrastructuur section
         assert isinstance(_ini_fom.infrastructuur_section, InfrastructureSectionFom)
