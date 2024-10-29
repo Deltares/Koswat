@@ -43,7 +43,7 @@ class InfraClusterOption:
         self._cluster_collection.append(infra_cluster)
         self._cluster_costs.append(cluster_costs)
 
-    def valid_cluster(self) -> bool:
+    def valid_option(self) -> bool:
         """
         Validates the collection of clusters based on the
         required minimun length.
