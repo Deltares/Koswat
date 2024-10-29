@@ -4,6 +4,8 @@ from collections import defaultdict
 from itertools import groupby
 from typing import Iterator
 
+from more_itertools import windowed_complete
+
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -76,6 +78,65 @@ class InfraPriorityStrategy(StrategyProtocol):
             if _cd_m in _common_available_measures
         }
 
+    @staticmethod
+    def generate_subcluster_options(
+        from_cluster: InfraCluster, min_length: int
+    ) -> Iterator[list[InfraCluster]]:
+        """
+        Generates all possible combinations of (sub) clusters based on the locations
+        of this cluster. These are also referred as "options".
+
+        Args:
+            min_length (int): Minimun length for a cluster to be valid.
+
+        Returns:
+            list[list[InfraCluster]]: Collection of "options" with valid length.
+        """
+
+        if not from_cluster.fits_subclusters():
+            # If the cluster is not twice as big as the minimum
+            # required length we know there is no possibility of
+            # creating subclusters.
+            return [[from_cluster]]
+
+        def valid_cluster_collection(cluster_collection: list[InfraCluster]) -> bool:
+            if not cluster_collection:
+                return False
+            return all(map(InfraCluster.is_valid, cluster_collection))
+
+        def get_subcluster_collection(
+            location_collection: list[StrategyLocationReinforcement],
+        ) -> Iterator[list[InfraCluster]]:
+            _icc = []
+            for _w_element in location_collection:
+                if not _w_element:
+                    # `window_complete` returns collections as:
+                    # `[(), (A,B,C), (D,E,F)]`
+                    # `[(A,B,C), (D,E,F), ()]`
+                    # Which are valid except for the limit item.
+                    continue
+                if len(_w_element) < min_length:
+                    # There is no need to check further,
+                    # this cluster will result as not valid.
+                    _icc.clear()
+                    break
+                _icc.append(
+                    InfraCluster(
+                        min_required_length=from_cluster.min_required_length,
+                        reinforcement_type=from_cluster.reinforcement_type,
+                        cluster=list(_w_element),
+                    )
+                )
+            return _icc
+
+        return filter(
+            valid_cluster_collection,
+            map(
+                get_subcluster_collection,
+                windowed_complete(from_cluster.cluster, min_length),
+            ),
+        )
+
     def apply_strategy(
         self, strategy_input: StrategyInput
     ) -> list[StrategyLocationReinforcement]:
@@ -96,7 +157,11 @@ class InfraPriorityStrategy(StrategyProtocol):
             _grouping_data = list(_grouping)
             if not _grouping_data:
                 continue
-            yield InfraCluster(reinforcement_type=_grouped_by, cluster=_grouping_data)
+            yield InfraCluster(
+                reinforcement_type=_grouped_by,
+                cluster=_grouping_data,
+                min_required_length=strategy_input.reinforcement_min_cluster,
+            )
 
     def _set_cheapest_measure_per_cluster(
         self, infra_cluster: InfraCluster, strategy_input: StrategyInput
@@ -104,8 +169,8 @@ class InfraPriorityStrategy(StrategyProtocol):
         # 2. Get common available measures for each cluster
         _min_costs = infra_cluster.current_cost
         _selected_cluster_collection_costs = None
-        for _clustering_option in infra_cluster.generate_subcluster_options(
-            strategy_input.reinforcement_min_cluster
+        for _clustering_option in self.generate_subcluster_options(
+            infra_cluster, strategy_input.reinforcement_min_cluster
         ):
             _icc = InfraClusterOption(
                 cluster_min_length=strategy_input.reinforcement_min_cluster,
