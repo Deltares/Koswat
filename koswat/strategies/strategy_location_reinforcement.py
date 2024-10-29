@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -12,13 +12,44 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 
 @dataclass
 class StrategyLocationReinforcement:
+    """
+    Represents a location and the different reinforcements that can be applied to it
+    as well their costs.
+    This class is used to show the final chosen state for a location.
+    """
+
     location: PointSurroundings
-    selected_measure: type[ReinforcementProfileProtocol]
     available_measures: list[type[ReinforcementProfileProtocol]]
     strategy_location_input: StrategyLocationInput = None
 
+    _selected_measures: list = field(default_factory=lambda: [])
+
+    @property
+    def selected_measure(self) -> type[ReinforcementProfileProtocol]:
+        """
+        Exposes the current selected measure for this object.
+        """
+        if not self._selected_measures:
+            return None
+        return self._selected_measures[-1]
+
+    @selected_measure.setter
+    def selected_measure(self, reinforcement_type: type[ReinforcementProfileProtocol]):
+        self._selected_measures.append(reinforcement_type)
+
+    @property
+    def selection_measure_steps(self) -> list[type[ReinforcementProfileProtocol]]:
+        """
+        READ-ONLY property. Exposes the different selected measures for this reinforcement.
+        We consider the last item the current selection, so from older to newer.
+        """
+        return self._selected_measures
+
     @property
     def current_cost(self) -> float:
+        """
+        Estimates the costs at this location for the given `selected_measure`.
+        """
         if not self.selected_measure or not self.strategy_location_input:
             return 0.0
         for _srtc in self.strategy_location_input.strategy_reinforcement_type_costs:

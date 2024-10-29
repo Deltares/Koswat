@@ -52,7 +52,6 @@ class TestOrderCluster:
         for _idx in range(0, 4):
             _dummy_location = StrategyLocationReinforcement(
                 location=PointSurroundings(section="test", traject_order=_idx),
-                selected_measure=[],
                 available_measures=[],
             )
             basic_order_cluster.location_reinforcements.append(_dummy_location)
@@ -166,9 +165,9 @@ class TestOrderCluster:
         _merging_to = order_cluster_with_neighbors.left_neighbor
         _single_location = StrategyLocationReinforcement(
             location=PointSurroundings(),
-            selected_measure=_selected_measure_value,
             available_measures=[],
         )
+        _single_location.selected_measure = _selected_measure_value
         _merging_to.location_reinforcements = [_single_location]
 
         # 2. Run test.
@@ -196,9 +195,10 @@ class TestOrderCluster:
         _merging_to = order_cluster_with_neighbors.right_neighbor
         _single_location = StrategyLocationReinforcement(
             location=PointSurroundings(),
-            selected_measure=_selected_measure_value,
             available_measures=[],
         )
+        _single_location.selected_measure = _selected_measure_value
+
         _merging_to.location_reinforcements = [_single_location]
 
         # 2. Run test.

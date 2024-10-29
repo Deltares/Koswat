@@ -120,12 +120,11 @@ def _get_example_location_reinforcements_with_buffering(
     _location_reinforcements = []
     for _idx, _location in enumerate(example_strategy_input.strategy_locations):
         _measure_idx = _result_after_buffering_idx[_idx]
-        _location_reinforcements.append(
-            StrategyLocationReinforcement(
-                location=_location,
-                selected_measure=_measure_order[_measure_idx],
-                available_measures=[],
-            )
+        _slr = StrategyLocationReinforcement(
+            location=_location,
+            available_measures=[],
         )
+        _slr.selected_measure = _measure_order[_measure_idx]
+        _location_reinforcements.append(_slr)
 
     yield _location_reinforcements

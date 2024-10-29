@@ -122,14 +122,13 @@ class OrderStrategy(StrategyProtocol):
                 (_or for _or in selection_order if _or in _reinforcements),
                 selection_order[-1],
             )
-            _strategy_reinforcements.append(
-                StrategyLocationReinforcement(
-                    location=_strategy_location.point_surrounding,
-                    available_measures=_reinforcements,
-                    selected_measure=_selected_reinforcement,
-                    strategy_location_input=_strategy_location,
-                )
+            _slr = StrategyLocationReinforcement(
+                location=_strategy_location.point_surrounding,
+                available_measures=_reinforcements,
+                strategy_location_input=_strategy_location,
             )
+            _slr.selected_measure = _selected_reinforcement
+            _strategy_reinforcements.append(_slr)
         return _strategy_reinforcements
 
     def apply_strategy(

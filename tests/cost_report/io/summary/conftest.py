@@ -146,13 +146,12 @@ def get_locations_reinforcements(
         _selected_measure = _available_reinforcements[-1]
         if any(_a_measures):
             _selected_measure = _a_measures[0]
-        _matrix.append(
-            StrategyLocationReinforcement(
-                location=_location,
-                available_measures=_a_measures,
-                selected_measure=_selected_measure,
-            )
+        _slr = StrategyLocationReinforcement(
+            location=_location,
+            available_measures=_a_measures,
         )
+        _slr.selected_measure = _selected_measure
+        _matrix.append(_slr)
     return _matrix
 
 
@@ -211,11 +210,12 @@ def _get_cluster_shp_fom_factory() -> Iterable[
         coordinates: tuple[float, float],
         reinforced_profile: ReinforcementProfileProtocol,
     ) -> StrategyLocationReinforcement:
-        return StrategyLocationReinforcement(
+        _slr = StrategyLocationReinforcement(
             location=PointSurroundings(location=Point(coordinates)),
-            selected_measure=reinforced_profile,
             available_measures=[],
         )
+        _slr.selected_measure = reinforced_profile
+        return _slr
 
     def create_cluster(
         points: list[tuple[float, float]],
