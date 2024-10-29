@@ -35,7 +35,7 @@ class InfraPriorityStrategy(StrategyProtocol):
         infra_cluster: InfraCluster,
     ) -> dict[type[ReinforcementProfileProtocol], float]:
         """
-        Gets a dictionary with the reinforcements present at all
+        Gets a dictionary with the reinforcements available at all
         locations of the cluster (`infra_cluster`) as well as their
         total cost if said reinforcement is applied at them.
 
@@ -87,7 +87,7 @@ class InfraPriorityStrategy(StrategyProtocol):
         of this cluster. These are also referred as "options".
 
         Args:
-            min_length (int): Minimun length for a cluster to be valid.
+            min_length (int): Minimum length for a cluster to be valid.
 
         Returns:
             list[list[InfraCluster]]: Collection of "options" with valid length.
