@@ -43,11 +43,11 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     _levels_data = [
         StrategyReinforcementTypeCosts(
             reinforcement_type=_reinforcement,
-            base_costs=(10**_idx) * 42,
+            base_costs=(10**_idx) * 42.0,
             infrastructure_costs=(10 ** (len(_reinforcement_type_default_order) - 1))
-            * 42
+            * 42.0
             if _idx in [0, 1, 3]
-            else 0,  # Dramatic infra costs so they move to where we want
+            else 0.0,  # Dramatic infra costs so they move to where we want
         )
         for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
     ]
@@ -68,7 +68,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         StrategyReinforcementInput(
             reinforcement_type=_rtc.reinforcement_type,
             base_costs=_rtc.base_costs,
-            ground_level_surface=10 * (len(_reinforcement_type_default_order) - _idx),
+            ground_level_surface=10.0 * (len(_reinforcement_type_default_order) - _idx),
         )
         for _idx, _rtc in enumerate(_levels_data)
     ]
@@ -79,6 +79,36 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
     )
+
+
+@pytest.fixture(name="example_location_input")
+def _get_example_location_input(
+    example_strategy_input: StrategyInput,
+) -> Iterator[list[StrategyLocationInput]]:
+    assert any(example_strategy_input.strategy_locations)
+    assert (
+        len(
+            example_strategy_input.strategy_locations[
+                0
+            ].strategy_reinforcement_type_costs
+        )
+        == 5
+    )
+    assert (
+        len(
+            example_strategy_input.strategy_locations[
+                -1
+            ].strategy_reinforcement_type_costs
+        )
+        == 1
+    )
+    assert (
+        example_strategy_input.strategy_locations[-1]
+        .strategy_reinforcement_type_costs[0]
+        .reinforcement_type
+        != SoilReinforcementProfile
+    )
+    yield example_strategy_input.strategy_locations
 
 
 @pytest.fixture(name="example_location_reinforcements_with_buffering")

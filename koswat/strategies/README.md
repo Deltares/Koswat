@@ -10,7 +10,7 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 - `StrategyLocationInput`, gathers all the input required for a strategy to determine which reinforcement can be applied based on its location (`point_surrounding`) and `available_reinforcements`.
     - point_surrounding (`PointSurroundings`), a point (meter) in the dike traject.
-    - strategy_reinforcement (`list[StrategyReinforcementInput]`), all the reinforcements that can be used at this location and their related cost and width.
+    - strategy_reinforcement_type_costs (`list[StrategyReinforcementTypeCosts]`), all the reinforcements that can be used at this location and their related cost.
     - cheapest_reinforcement (`StrategyReinforcementTypeCosts`), returns which "available reinforcment" has the lower total costs at this location.
     - available_measures (`Type[ReinforcementProfileProtocol]`), returns only the reinforcement type from the `strategy_reinforcement_type_costs` collection.
 

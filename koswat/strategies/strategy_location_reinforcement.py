@@ -40,3 +40,24 @@ class StrategyLocationReinforcement:
                 f"Reinforcement {reinforcement_type.output_name} not available, costs cannot be computed.",
             )
         return self.strategy_location_input.get_reinforcement_costs(reinforcement_type)
+
+    def get_infrastructure_costs(
+        self, reinforcement_type: type[ReinforcementProfileProtocol]
+    ) -> tuple[float, float]:
+        """
+        Returns the infrastructure costs for the given reinforcement type (without and with surtax).
+
+        Args:
+            reinforcement_type (type[ReinforcementProfileProtocol]): Reinforcement type.
+
+        Returns:
+            tuple[float, float]: Tuple containing the infrastructure costs without and with surtax.
+        """
+        if (
+            self.strategy_location_input
+            and reinforcement_type in self.available_measures
+        ):
+            return self.strategy_location_input.get_infrastructure_costs(
+                reinforcement_type
+            )
+        return (0.0, 0.0)
