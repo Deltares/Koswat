@@ -240,7 +240,7 @@ __Steps breakdown__:
 
 1. Assignment of [order based clusters](#order-based-default),
 2. [Cluster options](#cluster-options) evaluation,
-    1. [Common available measures'](#cluster-common-available-measure-costs) cost calculation,
+    1. [Common available measures](#cluster-common-available-measure-costs) cost calculation,
     2. Cheapest option selection,
 3. Update reinforcement selection with selected option.
 
@@ -248,13 +248,13 @@ __Steps breakdown__:
 
 For an optimal assignment of a new reinforcement profile, we make use of "subclusters". These subclusters are contiguous subsets from an order based cluster and have the minimal required length (`StrategyInput.reinforcement_min_cluster`). The logic for this section can be found in `InfraPriorityStrategy.generate_subcluster_options`.
 
-For each of original the clusters, multiple combinations of subclusters are possible, we refer to them as "**cluster option**" (`InfraClusterOption`) . We can already discard creating subclusters when the size of the original cluster is less than twice the required minimal length. So for a minimal length of 2 locations, you require a cluster of 4 locations to generate subclusters.
+For each of original the clusters, multiple combinations of subclusters are possible. We refer to them as "**cluster option**" (`InfraClusterOption`) . We can already discard creating subclusters when the size of the original cluster is less than twice the required minimal length. So for a minimal length of 2 locations, you require a cluster of at least 4 locations to generate subclusters.
 
 __Conditions__:
 
 - We only create (sub)clusters when the cluster's original size is, at least, twice the required minimal cluster's length.
 - We estimate the cluster's minimal length to be at least twice the size of the buffer so: `min_cluster_length = (2 * reinforcement_min_buffer) + 1`.
-- We create (sub) clusters based on the immediate results of the [order based strategy](#order-based-default), we do not try to combine or create new clusters based on a "greedier" strategy.
+- We create (sub)clusters based on the immediate results of the [order based strategy](#order-based-default).  We do not try to combine or create new clusters based on a "greedier" strategy.
 
 
 ##### Cluster option example
@@ -322,7 +322,7 @@ We will store this value in the `InfraClusterOption.cluster_costs`. In the curre
 __Conditions__:
 
 - A "viable" cluster option must be cheaper than the order's cluster and has the cluster's minimal length.
-- We consider "minimal costs" or "lower costs" as the lowest cost of applying the same reinforcement type to a given subcluster.
+- We consider "minimal costs" or "lower costs" as the lowest cost of applying a certain reinforcement type to a given subcluster.
 
 
 ##### Common available measures' cost example
@@ -342,8 +342,7 @@ Following the [options example](#cluster-option-example) we can estimate some fi
 | Location_000 | 0, 1 | 4200000 |
 | Location_005 | 0, 1, 2, 3 | 4200000 |
 
-We already know that only the second cluster can generate subclusters,
-therefore different valid options, so we will use said subcluster's options for the example
+We already know that only the second cluster can generate subclusters, therefore different valid options, so we will use said subcluster's options for the example.
 
 ```json
 
@@ -421,7 +420,7 @@ therefore different valid options, so we will use said subcluster's options for 
 }
 ```
 
-In this example we can therefore demonstrate the cost reduction, the last column represents the difference (positive means saved money):
+In this example we can therefore demonstrate the cost reduction. The last column represents the difference (positive means saved money):
 
 | Location | (O.S.) reinforcement | (O.S.) cost | (I.S.) reinforcement | (I.S.) cost | Difference |
 | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -443,7 +442,7 @@ In this example we can therefore demonstrate the cost reduction, the last column
 > **_Important!_** 
 > This example is based on the first approach of this strategy and its steps might differ from the current solution. We left this example as it can help understanding the basic concepts of the strategy.
 ---------------
-We will start by defining some unrealistic costs per reinforcement type for all locations* such as, for a more realistic scenario check the [subclustering example](#infrastructure-priority-subclustering-example):
+We will start by defining some unrealistic costs per reinforcement type for all locations* such as. For a more realistic scenario check the [subclustering example](#infrastructure-priority-subclustering-example):
 
 | Index | Reinforcement type | base cost | infra cost | total cost |
 | ---- | ---- |---- | ---- | ---- |
