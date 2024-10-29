@@ -77,11 +77,14 @@ class CofferdamInputProfileCalculation(
         Identical to calculation of Stability wall
         """
         if soil_binnen_berm_breedte == 0:
-            # No wall is needed.
-            return 0
-        _length_piping = (
-            (soil_binnen_berm_breedte / 6) + (new_kruin_hoogte - 0.5) - old_data.aquifer
-        )
+            # Length of wall is not determined by piping.
+            _length_piping = 0.0
+        else:
+            _length_piping = (
+                (soil_binnen_berm_breedte / 6)
+                + (new_kruin_hoogte - 0.5)
+                - old_data.aquifer
+            )
         _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistoceen - 1)
         return round(
             min(
