@@ -19,6 +19,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
+    VPSReinforcementProfile,
+)
 from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
@@ -141,19 +144,16 @@ class TestInfraPriorityStrategy:
     @pytest.fixture(name="infra_cluster_for_subclusters")
     def _get_infra_cluster_for_subclusters_fixture(self) -> Iterator[InfraCluster]:
 
+        _common_reinforcements = [
+            SoilReinforcementProfile,
+            VPSReinforcementProfile,
+            PipingWallReinforcementProfile,
+        ]
         _available_measures_per_location = [
-            [
-                SoilReinforcementProfile,
-                PipingWallReinforcementProfile,
-                CofferdamReinforcementProfile,
-            ],
-            [SoilReinforcementProfile, PipingWallReinforcementProfile],
-            [SoilReinforcementProfile, PipingWallReinforcementProfile],
-            [
-                SoilReinforcementProfile,
-                PipingWallReinforcementProfile,
-                StabilityWallReinforcementProfile,
-            ],
+            _common_reinforcements + [CofferdamReinforcementProfile],
+            _common_reinforcements,
+            _common_reinforcements,
+            _common_reinforcements + [StabilityWallReinforcementProfile],
         ]
         _location_input = StrategyLocationInput(
             point_surrounding=None,
@@ -165,6 +165,12 @@ class TestInfraPriorityStrategy:
                     PipingWallReinforcementProfile,
                     base_costs=4200,
                     infrastructure_costs=420,
+                ),
+                # Costs are too big, it won't be considered
+                StrategyReinforcementTypeCosts(
+                    VPSReinforcementProfile,
+                    base_costs=42000000,
+                    infrastructure_costs=4200000,
                 ),
                 # Not present at all locations.
                 StrategyReinforcementTypeCosts(
