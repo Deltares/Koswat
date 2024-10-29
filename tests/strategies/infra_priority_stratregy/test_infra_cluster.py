@@ -10,7 +10,6 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
     SoilReinforcementProfile,
 )
 from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
-from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )

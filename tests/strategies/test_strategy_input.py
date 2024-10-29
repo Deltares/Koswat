@@ -5,12 +5,14 @@ class TestStrategyInput:
     def test_initialize(self):
         # 1. Define test data
         _locations = []
+        _reinforcements = []
         _min_buffer = 1
         _min_length = 2
 
         # 2. Run test.
         _input = StrategyInput(
             strategy_locations=_locations,
+            strategy_reinforcements=_reinforcements,
             reinforcement_min_buffer=_min_buffer,
             reinforcement_min_length=_min_length,
         )
@@ -18,6 +20,7 @@ class TestStrategyInput:
         # 3. Verify expectations.
         assert isinstance(_input, StrategyInput)
         assert _input.strategy_locations == _locations
+        assert _input.strategy_reinforcements == _reinforcements
         assert _input.reinforcement_min_buffer == _min_buffer
         assert _input.reinforcement_min_length == _min_length
         assert _input.reinforcement_min_cluster == (2 * _min_buffer) + 1
@@ -26,6 +29,7 @@ class TestStrategyInput:
         # 1. Define test data.
         _input = StrategyInput(
             strategy_locations=[],
+            strategy_reinforcements=[],
             reinforcement_min_buffer=float("nan"),
             reinforcement_min_length=float("nan"),
         )
