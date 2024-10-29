@@ -252,9 +252,9 @@ For each of original the clusters, multiple combinations of subclusters are poss
 
 __Conditions__:
 
-- We only create (sub)clusters when the cluster's original size is, at least, twice the required minimal cluster's length.
+- We only create subclusters when the cluster's original size is, at least, twice the required minimal cluster's length.
 - We estimate the cluster's minimal length to be at least twice the size of the buffer so: `min_cluster_length = (2 * reinforcement_min_buffer) + 1`.
-- We create (sub)clusters based on the immediate results of the [order based strategy](#order-based-default).  We do not try to combine or create new clusters based on a "greedier" strategy.
+- We create subclusters based on the immediate results of the [order based strategy](#order-based-default).  We do not try to combine or create new clusters based on a "greedier" strategy.
 
 
 ##### Cluster option example
