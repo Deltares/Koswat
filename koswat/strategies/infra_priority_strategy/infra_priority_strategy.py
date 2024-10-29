@@ -81,7 +81,7 @@ class InfraPriorityStrategy(StrategyProtocol):
     @staticmethod
     def generate_subcluster_options(
         from_cluster: InfraCluster, min_length: int
-    ) -> Iterator[list[InfraCluster]]:
+    ) -> list[list[InfraCluster]]:
         """
         Generates all possible combinations of (sub) clusters based on the locations
         of this cluster. These are also referred as "options".
@@ -101,7 +101,7 @@ class InfraPriorityStrategy(StrategyProtocol):
 
         def get_cluster_option(
             location_collection: list[StrategyLocationReinforcement],
-        ) -> Iterator[list[InfraCluster]]:
+        ) -> list[list[InfraCluster]]:
             _icc = []
             for _w_element in filter(len, location_collection):
                 _ic = InfraCluster(
@@ -119,7 +119,7 @@ class InfraPriorityStrategy(StrategyProtocol):
             return _icc
 
         return filter(
-            len,
+            any,
             map(
                 get_cluster_option,
                 windowed_complete(from_cluster.cluster, min_length),
