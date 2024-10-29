@@ -62,11 +62,10 @@ class TestInfraClusterOption:
 
         _simple_cluster = InfraCluster(
             reinforcement_type=None,
-            min_required_length=10 * dummy_option._cluster_min_length,
-            cluster=[0] * dummy_option._cluster_min_length,
+            min_required_length=dummy_option.cluster_min_length,
+            cluster=[0] * dummy_option.cluster_min_length,
         )
-        # Ironically, the current logic allows for this to be valid
-        assert not _simple_cluster.is_valid()
+        assert _simple_cluster.is_valid()
 
         # 2. Run test
         dummy_option.add_cluster(_simple_cluster, {})

@@ -1,25 +1,25 @@
 from __future__ import annotations
 
+from dataclasses import dataclass, field
+
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 
 
+@dataclass
 class InfraClusterOption:
     """
     Represents one set of subclusters the strategy could select
     for costs optimization.
     """
 
-    _cluster_collection: list[InfraCluster]
-    _cluster_costs: list[dict[ReinforcementProfileProtocol, float]]
-    _cluster_min_length: int
-
-    def __init__(self, cluster_min_length: int):
-        self._cluster_collection = []
-        self._cluster_costs = []
-        self._cluster_min_length = cluster_min_length
+    cluster_min_length: int
+    _cluster_collection: list[InfraCluster] = field(default_factory=lambda: [])
+    _cluster_costs: list[dict[ReinforcementProfileProtocol, float]] = field(
+        default_factory=lambda: []
+    )
 
     @property
     def cluster_collection(self) -> list[InfraCluster]:
@@ -58,8 +58,7 @@ class InfraClusterOption:
             bool: Validation result.
         """
         return any(self.cluster_collection) and all(
-            len(_ic.cluster) >= self._cluster_min_length
-            for _ic in self.cluster_collection
+            map(InfraCluster.is_valid, self.cluster_collection)
         )
 
     def set_cheapest_option(self):
