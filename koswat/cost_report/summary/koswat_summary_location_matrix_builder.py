@@ -92,9 +92,10 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         # Get the reinforcement cost of the first location for each reinforcement (if present).
         _reinforcement_costs = []
         for _ref_loc_dict in locations_per_reinforcement:
-            if not _ref_loc_dict.values():
+            _locs = list(_ref_loc_dict.values())
+            if not _locs:
                 continue
-            _reinforcement_costs.append(list(_ref_loc_dict.values())[0])
+            _reinforcement_costs.append(_locs[0])
 
         return list(map(get_reinforcement, _reinforcement_costs))
 

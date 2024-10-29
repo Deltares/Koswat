@@ -81,6 +81,36 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     )
 
 
+@pytest.fixture(name="example_location_input")
+def _get_example_location_input(
+    example_strategy_input: StrategyInput,
+) -> Iterator[list[StrategyLocationInput]]:
+    assert any(example_strategy_input.strategy_locations)
+    assert (
+        len(
+            example_strategy_input.strategy_locations[
+                0
+            ].strategy_reinforcement_type_costs
+        )
+        == 5
+    )
+    assert (
+        len(
+            example_strategy_input.strategy_locations[
+                -1
+            ].strategy_reinforcement_type_costs
+        )
+        == 1
+    )
+    assert (
+        example_strategy_input.strategy_locations[-1]
+        .strategy_reinforcement_type_costs[0]
+        .reinforcement_type
+        != SoilReinforcementProfile
+    )
+    yield example_strategy_input.strategy_locations
+
+
 @pytest.fixture(name="example_location_reinforcements_with_buffering")
 def _get_example_location_reinforcements_with_buffering(
     example_strategy_input: StrategyInput,
