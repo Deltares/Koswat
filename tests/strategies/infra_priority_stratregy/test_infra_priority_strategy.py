@@ -1,12 +1,21 @@
+from cgitb import small
+from typing import Iterator
+
+import pytest
+
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
+    SoilReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
     StabilityWallReinforcementProfile,
 )
+from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
 )
@@ -83,3 +92,30 @@ class TestInfraPriorityStrategy:
             _sr.selected_measure == CofferdamReinforcementProfile
             for _sr in _strategy_result[5:]
         )
+
+    @pytest.fixture(name="small_infra_cluster")
+    def _get_small_infra_cluster_fixture(self) -> Iterator[InfraCluster]:
+        yield InfraCluster(
+            reinforcement_type=SoilReinforcementProfile,
+            min_required_length=2,
+            cluster=[],
+        )
+
+    def test_given_small_cluster_when_generate_subcluster_options_then_returns_it_back(
+        self, small_infra_cluster: InfraCluster
+    ):
+        # 1. Define test data.
+        assert isinstance(small_infra_cluster, InfraCluster)
+        _subcluster_min_length = len(small_infra_cluster.cluster) + 1
+
+        # 2. Run test.
+        _return_value = InfraPriorityStrategy.generate_subcluster_options(
+            small_infra_cluster, _subcluster_min_length
+        )
+
+        # 3. Verify expectations.
+        assert isinstance(_return_value, list)
+        assert len(_return_value) == 1
+        assert isinstance(_return_value[0], list)
+        assert len(_return_value[0]) == 1
+        assert _return_value[0][0] == small_infra_cluster
