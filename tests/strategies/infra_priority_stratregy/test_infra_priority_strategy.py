@@ -101,12 +101,21 @@ class TestInfraPriorityStrategy:
             cluster=[],
         )
 
+    @pytest.mark.parametrize(
+        "subcluster_min_length_addition",
+        [
+            pytest.param(0, id="Same size as Infra cluster"),
+            pytest.param(1, id="Bigger than size of Infra cluster"),
+        ],
+    )
     def test_given_small_cluster_when_generate_subcluster_options_then_returns_it_back(
-        self, small_infra_cluster: InfraCluster
+        self, small_infra_cluster: InfraCluster, subcluster_min_length_addition: int
     ):
         # 1. Define test data.
         assert isinstance(small_infra_cluster, InfraCluster)
-        _subcluster_min_length = len(small_infra_cluster.cluster) + 1
+        _subcluster_min_length = (
+            len(small_infra_cluster.cluster) + subcluster_min_length_addition
+        )
 
         # 2. Run test.
         _return_value = InfraPriorityStrategy.generate_subcluster_options(
@@ -119,3 +128,43 @@ class TestInfraPriorityStrategy:
         assert isinstance(_return_value[0], list)
         assert len(_return_value[0]) == 1
         assert _return_value[0][0] == small_infra_cluster
+
+    @pytest.fixture(name="infra_cluster_for_subclusters")
+    def _get_infra_cluster_for_subclusters_fixture(self) -> Iterator[InfraCluster]:
+        yield InfraCluster(
+            reinforcement_type=SoilReinforcementProfile,
+            min_required_length=2,
+            cluster=[
+                StrategyLocationReinforcement(
+                    location=None,
+                    selected_measure=SoilReinforcementProfile,
+                    available_measures=[],
+                )
+            ]
+            * 4,
+        )
+
+    def test_given_cluster_when_generate_sbucluster_options_returns(
+        self, infra_cluster_for_subclusters: InfraCluster
+    ):
+        # 1. Define test data.
+        assert isinstance(infra_cluster_for_subclusters, InfraCluster)
+        _min_cluster_len = int(len(infra_cluster_for_subclusters.cluster) / 2)
+
+        # 2. Run test.
+        _options = list(
+            InfraPriorityStrategy.generate_subcluster_options(
+                infra_cluster_for_subclusters, _min_cluster_len
+            )
+        )
+
+        # 3. Verify expectations.
+        assert len(_options) == 2
+        for _option in _options:
+            assert len(_option) == 2
+            for _subcluster in _option:
+                assert isinstance(_subcluster, InfraCluster)
+                assert all(
+                    _sc in infra_cluster_for_subclusters.cluster
+                    for _sc in _subcluster.cluster
+                )
