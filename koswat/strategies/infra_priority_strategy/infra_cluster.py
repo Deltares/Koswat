@@ -57,7 +57,7 @@ class InfraCluster:
 
     def set_cheapest_common_available_measure(
         self,
-        measure_costs: dict[type[ReinforcementProfileProtocol]],
+        measure_costs: dict[type[ReinforcementProfileProtocol], float],
     ) -> None:
         """
         Updates all the location reinforcements with the cheapest reinforcement type
