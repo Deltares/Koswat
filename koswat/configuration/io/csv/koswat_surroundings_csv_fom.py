@@ -10,13 +10,13 @@ from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 class KoswatSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
     traject: str = ""
     buildings_polderside: KoswatSurroundingsCsvFom = None
-    buildings_dikeside: KoswatSurroundingsCsvFom = None
+    buildings_waterside: KoswatSurroundingsCsvFom = None
 
     railways_polderside: KoswatSurroundingsCsvFom = None
-    railways_dikeside: KoswatSurroundingsCsvFom = None
+    railways_waterside: KoswatSurroundingsCsvFom = None
 
     waters_polderside: KoswatSurroundingsCsvFom = None
-    waters_dikeside: KoswatSurroundingsCsvFom = None
+    waters_waterside: KoswatSurroundingsCsvFom = None
 
     roads_class_2_polderside: KoswatSurroundingsCsvFom = None
     roads_class_7_polderside: KoswatSurroundingsCsvFom = None
@@ -24,11 +24,11 @@ class KoswatSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
     roads_class_47_polderside: KoswatSurroundingsCsvFom = None
     roads_class_unknown_polderside: KoswatSurroundingsCsvFom = None
 
-    roads_class_2_dikeside: KoswatSurroundingsCsvFom = None
-    roads_class_7_dikeside: KoswatSurroundingsCsvFom = None
-    roads_class_24_dikeside: KoswatSurroundingsCsvFom = None
-    roads_class_47_dikeside: KoswatSurroundingsCsvFom = None
-    roads_class_unknown_dikeside: KoswatSurroundingsCsvFom = None
+    roads_class_2_waterside: KoswatSurroundingsCsvFom = None
+    roads_class_7_waterside: KoswatSurroundingsCsvFom = None
+    roads_class_24_waterside: KoswatSurroundingsCsvFom = None
+    roads_class_47_waterside: KoswatSurroundingsCsvFom = None
+    roads_class_unknown_waterside: KoswatSurroundingsCsvFom = None
 
     def is_valid(self) -> bool:
         _surroundings = [
