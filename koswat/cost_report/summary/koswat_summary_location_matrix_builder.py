@@ -89,18 +89,14 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 ground_level_surface=_reinforcement.new_ground_level_surface,
             )
 
-        # Get the reinforcement cost of the first location for each reinforcement.
-        _reinforcement_costs = [
-            next(iter(_reinforcement_dict.values()), None)
-            for _reinforcement_dict in locations_per_reinforcement
-        ]
+        # Get the reinforcement cost of the first location for each reinforcement (if present).
+        _reinforcement_costs = []
+        for _ref_loc_dict in locations_per_reinforcement:
+            if not _ref_loc_dict.values():
+                continue
+            _reinforcement_costs.append(list(_ref_loc_dict.values())[0])
 
-        return list(
-            map(
-                get_reinforcement,
-                filter(lambda x: x is not None, _reinforcement_costs),
-            )
-        )
+        return list(map(get_reinforcement, _reinforcement_costs))
 
     def build(
         self,

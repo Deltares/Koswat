@@ -54,8 +54,10 @@ class StrategyLocationReinforcement:
             tuple[float, float]: Tuple containing the infrastructure costs without and with surtax.
         """
         if (
-            not self.strategy_location_input
-            or reinforcement_type not in self.available_measures
+            self.strategy_location_input
+            and reinforcement_type in self.available_measures
         ):
-            return (0.0, 0.0)
-        return self.strategy_location_input.get_infrastructure_costs(reinforcement_type)
+            return self.strategy_location_input.get_infrastructure_costs(
+                reinforcement_type
+            )
+        return (0.0, 0.0)

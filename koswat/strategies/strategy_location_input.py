@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from typing import Type
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -28,7 +27,7 @@ class StrategyLocationInput:
         return min(self.strategy_reinforcement_type_costs, key=lambda x: x.total_costs)
 
     @property
-    def available_measures(self) -> list[Type[ReinforcementProfileProtocol]]:
+    def available_measures(self) -> list[type[ReinforcementProfileProtocol]]:
         """
         Gets all the available reinforcement types in `strategy_location_reinforcements`.
         It is called `available_measures` to match the `StrategyLocationReinforcement`
