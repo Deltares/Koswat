@@ -99,40 +99,29 @@ class InfraPriorityStrategy(StrategyProtocol):
             # creating subclusters.
             return [[from_cluster]]
 
-        def valid_cluster_collection(cluster_collection: list[InfraCluster]) -> bool:
-            if not cluster_collection:
-                return False
-            return all(map(InfraCluster.is_valid, cluster_collection))
-
-        def get_subcluster_collection(
+        def get_cluster_option(
             location_collection: list[StrategyLocationReinforcement],
         ) -> Iterator[list[InfraCluster]]:
             _icc = []
-            for _w_element in location_collection:
-                if not _w_element:
-                    # `window_complete` returns collections as:
-                    # `[(), (A,B,C), (D,E,F)]`
-                    # `[(A,B,C), (D,E,F), ()]`
-                    # Which are valid except for the limit item.
-                    continue
-                if len(_w_element) < min_length:
+            for _w_element in filter(len, location_collection):
+                _ic = InfraCluster(
+                    min_required_length=from_cluster.min_required_length,
+                    reinforcement_type=from_cluster.reinforcement_type,
+                    cluster=list(_w_element),
+                )
+
+                if not _ic.is_valid():
                     # There is no need to check further,
-                    # this cluster will result as not valid.
+                    # this option will result as not valid.
                     _icc.clear()
                     break
-                _icc.append(
-                    InfraCluster(
-                        min_required_length=from_cluster.min_required_length,
-                        reinforcement_type=from_cluster.reinforcement_type,
-                        cluster=list(_w_element),
-                    )
-                )
+                _icc.append(_ic)
             return _icc
 
         return filter(
-            valid_cluster_collection,
+            len,
             map(
-                get_subcluster_collection,
+                get_cluster_option,
                 windowed_complete(from_cluster.cluster, min_length),
             ),
         )
