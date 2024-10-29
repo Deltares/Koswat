@@ -2,9 +2,13 @@ from cgitb import small
 from typing import Iterator
 
 import pytest
+from mergedeep import Strategy
 
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
     PipingWallReinforcementProfile,
@@ -20,10 +24,15 @@ from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
 )
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 from koswat.strategies.strategy_protocol import StrategyProtocol
+from koswat.strategies.strategy_reinforcement_type_costs import (
+    StrategyReinforcementTypeCosts,
+)
+from tests.dike.surroundings import point
 
 
 class TestInfraPriorityStrategy:
@@ -131,6 +140,44 @@ class TestInfraPriorityStrategy:
 
     @pytest.fixture(name="infra_cluster_for_subclusters")
     def _get_infra_cluster_for_subclusters_fixture(self) -> Iterator[InfraCluster]:
+
+        _available_measures_per_location = [
+            [
+                SoilReinforcementProfile,
+                PipingWallReinforcementProfile,
+                CofferdamReinforcementProfile,
+            ],
+            [SoilReinforcementProfile, PipingWallReinforcementProfile],
+            [SoilReinforcementProfile, PipingWallReinforcementProfile],
+            [
+                SoilReinforcementProfile,
+                PipingWallReinforcementProfile,
+                StabilityWallReinforcementProfile,
+            ],
+        ]
+        _location_input = StrategyLocationInput(
+            point_surrounding=None,
+            strategy_reinforcement_type_costs=[
+                StrategyReinforcementTypeCosts(
+                    SoilReinforcementProfile, base_costs=42, infrastructure_costs=420000
+                ),
+                StrategyReinforcementTypeCosts(
+                    PipingWallReinforcementProfile,
+                    base_costs=4200,
+                    infrastructure_costs=420,
+                ),
+                # Not present at all locations.
+                StrategyReinforcementTypeCosts(
+                    StabilityWallReinforcementProfile,
+                    base_costs=42,
+                    infrastructure_costs=42,
+                ),
+                # Cheapest of all, but only present at one location.
+                StrategyReinforcementTypeCosts(
+                    CofferdamReinforcementProfile, base_costs=42, infrastructure_costs=0
+                ),
+            ],
+        )
         yield InfraCluster(
             reinforcement_type=SoilReinforcementProfile,
             min_required_length=2,
@@ -138,10 +185,11 @@ class TestInfraPriorityStrategy:
                 StrategyLocationReinforcement(
                     location=None,
                     selected_measure=SoilReinforcementProfile,
-                    available_measures=[],
+                    available_measures=_available_measures,
+                    strategy_location_input=_location_input,
                 )
-            ]
-            * 4,
+                for _available_measures in _available_measures_per_location
+            ],
         )
 
     def test_given_cluster_when_generate_sbucluster_options_returns(
@@ -168,3 +216,37 @@ class TestInfraPriorityStrategy:
                     _sc in infra_cluster_for_subclusters.cluster
                     for _sc in _subcluster.cluster
                 )
+
+    def test_given_cluster_when_get_common_available_measures_costs_then_returns_dict(
+        self, infra_cluster_for_subclusters: InfraCluster
+    ):
+        # 1. Define test data.
+        _expected_common_reinforcements = [
+            SoilReinforcementProfile,
+            PipingWallReinforcementProfile,
+        ]
+        assert infra_cluster_for_subclusters.is_valid()
+
+        # 2. Run test.
+        _costs_dict = InfraPriorityStrategy.get_common_available_measures_costs(
+            infra_cluster_for_subclusters
+        )
+
+        # 3. Verify expectations.
+        assert isinstance(_costs_dict, dict)
+        assert len(_costs_dict.keys()) == len(_expected_common_reinforcements)
+
+        # Only the common types are in the costs dictionary.
+        def validate_costs_for_profile(
+            reinforcement_type: type[ReinforcementProfileProtocol],
+        ):
+            assert reinforcement_type in _costs_dict
+            _sr_costs = infra_cluster_for_subclusters.cluster[
+                0
+            ].get_reinforcement_costs(reinforcement_type)
+            assert _costs_dict[reinforcement_type] == pytest.approx(
+                _sr_costs * len(infra_cluster_for_subclusters.cluster)
+            )
+
+        for _expected_type in _expected_common_reinforcements:
+            validate_costs_for_profile(_expected_type)
