@@ -11,5 +11,5 @@ class TestKoswatSurroundingsCsvFom:
         assert isinstance(_csv_fom, KoswatCsvFomProtocol)
         assert not _csv_fom.points_surroundings_list
         assert not _csv_fom.distances_list
-        assert _csv_fom.traject == ""
+        assert _csv_fom.section == ""
         assert not _csv_fom.is_valid()

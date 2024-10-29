@@ -222,7 +222,7 @@ class TestReadIniConfigurations:
 
         # Eenheidsprijzen
         assert isinstance(_ini_fom.unit_prices_section, UnitPricesSectionFom)
-        assert _ini_fom.unit_prices_section.prijspeil == 2017
+        assert _ini_fom.unit_prices_section.price_level == 2017
 
         # KostenDijkProfiel
         assert isinstance(

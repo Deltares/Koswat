@@ -8,7 +8,7 @@ from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 
 @dataclass
 class KoswatSurroundingsWrapperCsvFom(KoswatCsvFomProtocol):
-    traject: str = ""
+    section: str = ""
     buildings_polderside: KoswatSurroundingsCsvFom = None
     buildings_waterside: KoswatSurroundingsCsvFom = None
 

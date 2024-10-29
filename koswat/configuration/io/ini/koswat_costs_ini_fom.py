@@ -4,12 +4,12 @@ from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 
 
 class UnitPricesSectionFom(KoswatIniFomProtocol):
-    prijspeil: float
+    price_level: float
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
         _section = cls()
-        _section.prijspeil = ini_config.getint("prijspeil")
+        _section.price_level = ini_config.getint("prijspeil")
         return _section
 
 

@@ -42,7 +42,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         _costs_fom = self._get_costs_fom(from_path)
 
         _costs_settings = KoswatCostsSettings()
-        _costs_settings.price_year = int(_costs_fom.unit_prices_section.prijspeil)
+        _costs_settings.price_year = int(_costs_fom.unit_prices_section.price_level)
         _costs_settings.dike_profile_costs = self._get_dike_profile_costs_settings(
             _costs_fom
         )

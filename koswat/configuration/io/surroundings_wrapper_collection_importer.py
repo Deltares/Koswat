@@ -113,7 +113,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         self, csv_file: Path, traject_name: str
     ) -> tuple[str, KoswatSurroundingsCsvFom]:
         _surrounding_csv_fom = KoswatSurroundingsCsvReader().read(csv_file)
-        _surrounding_csv_fom.traject = traject_name
+        _surrounding_csv_fom.section = traject_name
         _surrounding_type = self._map_surrounding_type(
             csv_file.stem.replace(f"T_{traject_name}_", "")
         )
