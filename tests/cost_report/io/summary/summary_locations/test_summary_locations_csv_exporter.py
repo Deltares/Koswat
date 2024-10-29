@@ -31,9 +31,9 @@ class TestSummaryLocationsCsvExporter:
         # 3. Validate results
         assert _export_path.exists()
         _read_text = _export_path.read_text(encoding="utf-8")
-        _expected_text = """Section;X coord;Y coord;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand;Selected reinforcement
-A;0.24;0.42;0;1;1;1;Kwelscherm
-A;2.4;0.42;0;0;1;1;Grondmaatregel profiel
-A;0.24;2.4;0;0;0;1;Stabiliteitswand
-A;2.4;2.4;0;0;0;0;Stabiliteitswand"""
+        _expected_text = """Section;X coord;Y coord;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand;Base reinforcement selection;Optimized reinforcement selection
+A;0.24;0.42;0;1;1;1;Grondmaatregel profiel;Kwelscherm
+A;2.4;0.42;0;0;1;1;Grondmaatregel profiel;Grondmaatregel profiel
+A;0.24;2.4;0;0;0;1;Grondmaatregel profiel;Stabiliteitswand
+A;2.4;2.4;0;0;0;0;Grondmaatregel profiel;Stabiliteitswand"""
         assert _expected_text == _read_text

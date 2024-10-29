@@ -33,6 +33,17 @@ class StrategyLocationReinforcement:
             return None
         return self._selected_measures[-1]
 
+    @property
+    def previous_selected_measure(self) -> type[ReinforcementProfileProtocol]:
+        """
+        Exposes the selected measure previous to the current one.
+        """
+        if not self._selected_measures:
+            return None
+        if len(self._selected_measures) > 1:
+            return self._selected_measures[-2]
+        return self._selected_measures[0]
+
     @selected_measure.setter
     def selected_measure(self, reinforcement_type: type[ReinforcementProfileProtocol]):
         self._selected_measures.append(reinforcement_type)
