@@ -333,14 +333,14 @@ Following the [options example](#cluster-option-example) we can estimate some fi
 | ---- | ---- |---- |
 | 0 | Soil reinforcement | 42 |
 | 1 | Vertical Piping Solution | 420 |
-| 2 | Piping Wall | 4200 |
-| 3 | Stability Wall | 42000 |
-| 4 | Cofferdam | 420000 |
+| 2 | Piping Wall | 4.200 |
+| 3 | Stability Wall | 42.000 |
+| 4 | Cofferdam | 420.000 |
 
 | Location | Reinforcement indices | Infrastructure cost |
 | ---- | ---- | ---- |
-| Location_000 | 0, 1 | 4200000 |
-| Location_005 | 0, 1, 2, 3 | 4200000 |
+| Location_000 | 0, 1 | 4.200.000 |
+| Location_005 | 0, 1, 2, 3 | 4.200.000 |
 
 We already know that only the second cluster can generate subclusters,
 therefore different valid options, so we will use said subcluster's options for the example
@@ -350,37 +350,37 @@ therefore different valid options, so we will use said subcluster's options for 
 1. Determine current cost:
     - {3, ["Location_002", "Location_003",
         "Location_004", "Location_005", "Location_006"]}
-    - Base costs = 5 * 42000 = 210000
-    - Infra costs = (1) * 4200000 = 4200000
-    - Total costs = 4410000
+    - Base costs = 5 * 42.000 = 210.000
+    - Infra costs = (1) * 4.200.000 = 4.200.000
+    - Total costs = 4.410.000
 
 2. Calculate costs for first option:
     - {(3, ["Location_002", "Location_003"],
         ["Location_004", "Location_005", "Location_006"])},
     1. First subcluster's common measures:
         - Stability Wall (current):
-            - Base costs = 2 * 42000 = 84000
+            - Base costs = 2 * 42.000 = 84.000
             - Infra costs = 0
-            - Total costs = 42000
+            - Total costs = 42.000
         - Cofferdam:
-            - Base costs = 2 * 420000 = 840000
+            - Base costs = 2 * 420.000 = 840.000
             - Infra costs = 0
-            - Total costs = 840000
+            - Total costs = 840.000
         - The current reinfocement is cheaper
     2. Second subcluster's common measures:
         - Stability Wall (current):
-            - Base costs = 3 * 42000 = 126000
-            - Infra costs = (1) * 4200000 = 4200000
-            - Total costs = 4326000
+            - Base costs = 3 * 42.000 = 126.000
+            - Infra costs = (1) * 4.200.000 = 4.200.000
+            - Total costs = 4.326.000
         - Cofferdam:
-            - Base costs = 3 * 420000 = 1260000
+            - Base costs = 3 * 420.000 = 1.260.000
             - Infra costs = 0
-            - Total costs = 1260000
+            - Total costs = 1.260.000
         - Cofferdam will be cheaper.
     3. Subcluster's best option is cheaper than current:
         - {(3, ["Location_002", "Location_003"]),
         (4, ["Location_004", "Location_005", "Location_006"])}
-        - Total cost = 42000 + 1260000 = 1302000
+        - Total cost = 42.000 + 1.260.000 = 1.302.000
         - Selected as option.
 
 3. Calculate costs for second option:
@@ -388,28 +388,28 @@ therefore different valid options, so we will use said subcluster's options for 
         ["Location_005", "Location_006"])}
     1. First subluster's common measures
         - Stability Wall (current):
-            - Base costs = 3 * 42000 = 126000
+            - Base costs = 3 * 42.000 = 126.000
             - Infra costs = 0
-            - Total costs = 126000
+            - Total costs = 126.000
         - Cofferdam:
-            - Base costs = 3 * 420000 = 1260000
+            - Base costs = 3 * 420.000 = 1.260.000
             - Infra costs = 0
-            - Total costs = 1260000
+            - Total costs = 1.260.000
         - The current reinfocement is cheaper
     2. Second subluster's common measures
         - Stability Wall (current):
-            - Base costs = 2 * 42000 = 84000
+            - Base costs = 2 * 42.000 = 84.000
             - Infra costs = 0
-            - Total costs = 84000
+            - Total costs = 84.000
         - Cofferdam:
-            - Base costs = 2 * 420000 = 840000
+            - Base costs = 2 * 420.000 = 840.000
             - Infra costs = 0
-            - Total costs = 840000
+            - Total costs = 840.000
         - Cofferdam is cheaper
     3. Subcluster's best option is cheaper than selection:
         - {(3, ["Location_002", "Location_003", "Location_004"]),
             (4, ["Location_005", "Location_006"])}
-        - Total cost = 126000 + 840000 = 966000
+        - Total cost = 126.000 + 840.000 = 966.000
         - Selected as option.
 
 4. Update locations' selected reinforcement:
@@ -423,19 +423,22 @@ therefore different valid options, so we will use said subcluster's options for 
 
 In this example we can therefore demonstrate the cost reduction, the last column represents the difference (positive means saved money):
 
+- O.S. = Order strategy
+- I.S. = Infrastructure priority strategy
+
 | Location | (O.S.) reinforcement | (O.S.) cost | (I.S.) reinforcement | (I.S.) cost | Difference |
 | ---- | ---- | ---- | ---- | ---- | ---- |
-|Total | ---- | 6090084 | ----  | 2226840 | __+3863244__ |
-|Location_000 | Soil reinforcement | 4200042 | Piping Wall | 420 | +4199622 |
+|Total | ---- | 6.090.084 | ----  | 2.226.840 | __+3.863.244__ |
+|Location_000 | Soil reinforcement | 4.200.042 | Piping Wall | 420 | +4.199.622 |
 |Location_001 | Soil reinforcement | 42 | Piping Wall | 420 | -378 |
-|Location_002 | Stability Wall | 42000 | Stability Wall | 42000 | 0 |
-|Location_003 | Stability Wall | 42000 | Stability Wall | 42000 | 0 |
-|Location_004 | Stability Wall | 42000 | Stability Wall | 42000 | 0 |
-|Location_005 | Stability Wall | 462000 | Cofferdam | 420000 | +42000 |
-|Location_006 | Stability Wall | 42000 | Cofferdam | 420000 | -378000 |
-|Location_007 | Cofferdam | 420000 | Cofferdam | 420000 | 0 |
-|Location_008 | Cofferdam | 420000 | Cofferdam | 420000 | 0 |
-|Location_009 | Cofferdam | 420000 | Cofferdam | 420000 | 0 |
+|Location_002 | Stability Wall | 42.000 | Stability Wall | 42.000 | 0 |
+|Location_003 | Stability Wall | 42.000 | Stability Wall | 42.000 | 0 |
+|Location_004 | Stability Wall | 42.000 | Stability Wall | 42.000 | 0 |
+|Location_005 | Stability Wall | 462.000 | Cofferdam | 420.000 | +42000 |
+|Location_006 | Stability Wall | 42.000 | Cofferdam | 420.000 | -378000 |
+|Location_007 | Cofferdam | 420.000 | Cofferdam | 420.000 | 0 |
+|Location_008 | Cofferdam | 420.000 | Cofferdam | 420.000 | 0 |
+|Location_009 | Cofferdam | 420.000 | Cofferdam | 420.000 | 0 |
 
 ####  Infrastructure priority (old approach) example
 
@@ -447,11 +450,11 @@ We will start by defining some unrealistic costs per reinforcement type for all 
 
 | Index | Reinforcement type | base cost | infra cost | total cost |
 | ---- | ---- |---- | ---- | ---- |
-| 0 | Soil reinforcement | 42 | 420000 | 420042 |
-| 1 | Vertical Piping Solution | 420 | 420000 | 420420 |
+| 0 | Soil reinforcement | 42 | 420.000 | 420.042 |
+| 1 | Vertical Piping Solution | 420 | 420.000 | 420.420 |
 | 2 | Piping Wall | 4200 | 0 | 4200 |
-| 3 | Stability Wall | 42000 | 420000 | 462000 |
-| 4 | Cofferdam | 420000 | 0 | 420000 |
+| 3 | Stability Wall | 42.000 | 420.000 | 462.000 |
+| 4 | Cofferdam | 420.000 | 0 | 420.000 |
 
 ---------------
 > **_Important!_** 
@@ -484,16 +487,16 @@ Let's see now the strategy steps using the results from the [clustering example]
         - Soil Reinforcement, (idx=0),
             - [Discard] Current selection.
         - Vertical Piping Solution, (idx=1),
-            - Costs = `(420420) * 2 = 840840`
+            - Costs = `(420.420) * 2 = 840.840`
             - [Discard] Costs are higher than initial state.
         - Piping Wall, (idx=2),
-            - Costs = `(4200 + 0) * 2 = 8400`
+            - Costs = `(4.200 + 0) * 2 = 8.400`
             - [Keep] Costs are cheaper than the initial state.
         - Stability Wall, (idx=3),
-            - Costs = `(462000) * 2 = 924000`
+            - Costs = `(462.000) * 2 = 924.000`
             - [Discard] Costs are higher than initial state.
         - Cofferdam, (idx=3),
-            - Costs = `(420000) * 2 = 840000`
+            - Costs = `(420.000) * 2 = 840.000`
             - [Keep] Costs are cheaper than the initial state, keep.
 
     2.1.3. Set the cheapest common available measure per cluster:
@@ -508,7 +511,7 @@ Let's see now the strategy steps using the results from the [clustering example]
             "Location_006",])}
 
     2.3.1. Get the current cost of using this cluster.
-        - Total costs * N locations = `(462000) * 5 = 2310000`
+        - Total costs * N locations = `(462.000) * 5 = 2.310.000`
     
     2.3.2. Get cheaper common available measures.
         - Soil Reinforcement, (idx=0),
@@ -520,7 +523,7 @@ Let's see now the strategy steps using the results from the [clustering example]
         - Stability Wall, (idx=3),
             - [Discard] Current selection.
         - Cofferdam, (idx=3),
-            - Costs = `(420000) * 5 = 2100000`
+            - Costs = `(420.000) * 5 = 2.100.000`
             - [Keep] Costs are cheaper than the initial state.
     
     2.3.3. Set the cheapest common available measure per cluster:
@@ -536,7 +539,7 @@ Let's see now the strategy steps using the results from the [clustering example]
             "Location_009",])}}
 
     2.3.1. Get the current cost of using this cluster.
-        - Total costs * N locations = `(420000) * 3 = 1260000`
+        - Total costs * N locations = `(420.000) * 3 = 1.260.000`
 
     2.3.2. Get cheaper common available measures.
         - Cofferdam, (idx=4),
@@ -561,135 +564,8 @@ Let's see now the strategy steps using the results from the [clustering example]
 
 With this, we went from:
 
-- Initial costs: `(420042) * 2 + (462000) * 5 + (420000) * 3 = 4410084`, to
-- Final costs: `(4200) * 2 + (420000) * 8 = 3368400`
+- Initial costs: `(420.042) * 2 + (462.000) * 5 + (420.000) * 3 = 4.410.084`, to
+- Final costs: `(4.200) * 2 + (420.000) * 8 = 3.368.400`
 
 Which would amount to a total save of **1.041.684€**
 
-
-#### Infrastructure priority subclustering example
-
-To examplify this case we will make use the data from the [previous basic example](#infrastructure-priority-basic-example) with some variatons:
-
-- The minimal cluster length will be 2, so that we can create subclusters with the existing data.
-
-| Index | Reinforcement type | base cost | infra cost | total cost |
-| ---- | ---- |---- | ---- | ---- |
-| 0 | Soil reinforcement | 42 | 420000 | 420042 |
-| 1 | Vertical Piping Solution | 420 | 420000 | 420420 |
-| 2 | Piping Wall | 4200 | 0 | 4200 |
-| 3 | Stability Wall | 42000 | 420000 | 462000 |
-| 4 | Cofferdam | 420000 | 0 | 420000 |
-
----------------
-> **_Important!_** 
-> For example purposes we are applying the same infrastructure costs to all the locations. |However, in a real case these costs would vary per location (and per reinforcement type). So we can determine the cluster's reinforcement costs as `(total cost) * N locations`
----------------
-
-Based on this data `Piping Wall` will be chosen **unless** any of the points in the cluster cannot apply it due to obstacles or other constraints, in which case it would end up settling for a `Cofferdam` reinforcement.
-
-Let's see now the strategy steps using the results from the [clustering example](#clustering-example): 
-
-```json
-1. List of clusters:
-    {
-        (0, ["Location_000","Location_001",]),
-        (3, ["Location_002","Location_003",
-                "Location_004","Location_005",
-                "Location_006",]),
-        (4, ["Location_007","Location_008","Location_009",]),
-    }
-
-2. Iterate over each cluster:
-
-2.1. First cluster is:
-    { (0, ["Location_000","Location_001",]) }
-    
-    2.1.1. Get the current cost of using this cluster.
-        - Total costs * N locations = `(420042) * 2 = 840084`
-
-    2.1.2. Get cheaper common available measures:
-        - Soil Reinforcement, (idx=0),
-            - [Discard] Current selection.
-        - Vertical Piping Solution, (idx=1),
-            - Costs = `(420420) * 2 = 840840`
-            - [Discard] Costs are higher than initial state.
-        - Piping Wall, (idx=2),
-            - Costs = `(4200 + 0) * 2 = 8400`
-            - [Keep] Costs are cheaper than the initial state.
-        - Stability Wall, (idx=3),
-            - Costs = `(462000) * 2 = 924000`
-            - [Discard] Costs are higher than initial state.
-        - Cofferdam, (idx=3),
-            - Costs = `(420000) * 2 = 840000`
-            - [Keep] Costs are cheaper than the initial state, keep.
-
-    2.1.3. Set the cheapest common available measure per cluster:
-        - Piping wall < Cofferdam < Soil reinforcement (current)
-        - Piping wall is the new reinforcement for this cluster.
-    
-    - Result: {(2, ["Location_000","Location_001",])}
-
-2.2. Second cluster is:
-    {(3, ["Location_002","Location_003",
-            "Location_004","Location_005",
-            "Location_006",])}
-
-    2.3.1. Get the current cost of using this cluster.
-        - Total costs * N locations = `(462000) * 5 = 2310000`
-    
-    2.3.2. Get cheaper common available measures.
-        - Soil Reinforcement, (idx=0),
-            - [Discard] Not present at "Location_003", "Location_004".
-        - Vertical Piping Solution, (idx=1),
-            - [Discard] Not present at "Location_003", "Location_004".
-        - Piping Wall, (idx=2),
-            - [Discard] Not present at "Location_003", "Location_004".
-        - Stability Wall, (idx=3),
-            - [Discard] Current selection.
-        - Cofferdam, (idx=3),
-            - Costs = `(420000) * 5 = 2100000`
-            - [Keep] Costs are cheaper than the initial state.
-    
-    2.3.3. Set the cheapest common available measure per cluster:
-        - Cofferdam < Stability wall
-        - Cofferdam is the new reinforcement for this cluster.
-    
-    - Result : {(4, ["Location_002","Location_003",
-                    "Location_004","Location_005",
-                    "Location_006",])}
-
-2.3. Third cluster is:
-    { (4, ["Location_007","Location_008",
-            "Location_009",])}}
-
-    2.3.1. Get the current cost of using this cluster.
-        - Total costs * N locations = `(420000) * 3 = 1260000`
-
-    2.3.2. Get cheaper common available measures.
-        - Cofferdam, (idx=4),
-            - Current selection.
-
-    2.3.3. Set the cheapest common available measure per cluster:
-        - Only cofferdam available,
-        - No further action.
-
-    - Result: {(4, ["Location_007","Location_008",
-                    "Location_009",])}
-
-2.4. Resulting clusters:
-    {
-        (2, ["Location_000","Location_001",]),
-        (4, ["Location_002","Location_003",
-                "Location_004","Location_005",
-                "Location_006","Location_007",
-                "Location_008","Location_009",]),
-    }
-```
-
-With this, we went from:
-
-- Initial costs: `(420042) * 2 + (462000) * 5 + (420000) * 3 = 4410084`, to
-- Final costs: `(4200) * 2 + (420000) * 8 = 3368400`
-
-Which would amount to a total save of **1.041.684€**
