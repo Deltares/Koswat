@@ -12,6 +12,11 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 @dataclass
 class InfraCluster:
+    """
+    This dataclass represents the subset of locations sharing the same
+    reinforcement type (`type[ReinforcementProfileProtocol]`).
+    """
+
     reinforcement_type: type[ReinforcementProfileProtocol]
     min_required_length: int
     cluster: list[StrategyLocationReinforcement] = field(default_factory=lambda: [])
@@ -35,7 +40,7 @@ class InfraCluster:
         Returns:
             bool: Whether subclusters can be generated from this one.
         """
-        return self.is_valid() and len(self.cluster) > 2 * self.min_required_length
+        return self.is_valid() and len(self.cluster) >= 2 * self.min_required_length
 
     @property
     def current_cost(self) -> float:
@@ -46,6 +51,8 @@ class InfraCluster:
         Returns:
             float: The total (current) cost of this cluster.
         """
+        if not self.cluster:
+            return float("nan")
         return sum(_c.current_cost for _c in self.cluster)
 
     def set_cheapest_common_available_measure(
