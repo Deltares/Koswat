@@ -23,12 +23,18 @@ class InfraClusterOption:
 
     @property
     def cluster_collection(self) -> list[InfraCluster]:
+        """
+        Read-only property to expose the stored subclusters.
+        """
         return self._cluster_collection
 
     @property
     def cluster_costs(
         self,
     ) -> list[dict[ReinforcementProfileProtocol, float]]:
+        """
+        Read-only property to expose the stored costs.
+        """
         return self._cluster_costs
 
     def add_cluster(self, infra_cluster: InfraCluster, cluster_costs: dict):
