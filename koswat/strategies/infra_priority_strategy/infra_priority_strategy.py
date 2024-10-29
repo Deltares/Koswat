@@ -30,9 +30,12 @@ class InfraPriorityStrategy(StrategyProtocol):
     per cluster.
     """
 
+    _order_strategy: OrderStrategy
+
     @staticmethod
     def get_common_available_measures_costs(
         infra_cluster: InfraCluster,
+        order_strategy_reinforcements: list[type[ReinforcementProfileProtocol]],
     ) -> dict[type[ReinforcementProfileProtocol], float]:
         """
         Gets a dictionary with the reinforcements available at all
@@ -41,6 +44,8 @@ class InfraPriorityStrategy(StrategyProtocol):
 
         Args:
             infra_cluster (InfraCluster): Cluster being analyzed.
+            order_strategy_reinforcements (list[type[ReinforcementProfileProtocol]]):
+                Reinforcements ordered by base cost (ground surface).
 
         Returns:
             dict[type[ReinforcementProfileProtocol], float]:
@@ -51,16 +56,22 @@ class InfraPriorityStrategy(StrategyProtocol):
         _costs_dict[infra_cluster.reinforcement_type] = infra_cluster.current_cost
 
         # Get common measures excluding the initial one to reduce computations.
+        _lower_measures = order_strategy_reinforcements.index(
+            infra_cluster.reinforcement_type
+        )
         _common_available_measures = set(
-            OrderStrategy.get_default_order_for_reinforcements()
+            order_strategy_reinforcements[_lower_measures:]
         )
         _common_available_measures.discard(infra_cluster.reinforcement_type)
+        if not any(_common_available_measures):
+            return _costs_dict
 
         # Intersect per location
         for _cl in infra_cluster.cluster:
             _common_available_measures.intersection_update(_cl.available_measures)
             _discarded_measures = set()
             # Get only available measures **cheaper** than current state  and their cost.
+            # We compare the **total** costs between current reinforcement and candidate.
             for _am in _common_available_measures:
                 _costs_dict[_am] += _cl.get_reinforcement_costs(_am)
                 if _costs_dict[_am] > _costs_dict[infra_cluster.reinforcement_type]:
@@ -131,16 +142,19 @@ class InfraPriorityStrategy(StrategyProtocol):
     ) -> list[StrategyLocationReinforcement]:
         _clustered_locations = []
         # 1. Run `OrderStrategy` to generate an initial cluster formation.
-        for _infra_cluster in self._get_initial_state(strategy_input):
+        self._order_strategy = OrderStrategy()
+        for _infra_cluster in self._get_initial_state(
+            self._order_strategy, strategy_input
+        ):
             self._set_cheapest_measure_per_cluster(_infra_cluster, strategy_input)
             _clustered_locations.extend(_infra_cluster.cluster)
         return _clustered_locations
 
     def _get_initial_state(
-        self, strategy_input: StrategyInput
+        self, order_strategy: OrderStrategy, strategy_input: StrategyInput
     ) -> Iterator[InfraCluster]:
         for _grouped_by, _grouping in groupby(
-            OrderStrategy().apply_strategy(strategy_input),
+            order_strategy.apply_strategy(strategy_input),
             key=lambda x: x.selected_measure,
         ):
             _grouping_data = list(_grouping)
@@ -166,9 +180,10 @@ class InfraPriorityStrategy(StrategyProtocol):
             )
             _icc_costs = 0
             for _sub_cluster in _clustering_option:
-                _icc.add_cluster(
-                    _sub_cluster, self.get_common_available_measures_costs(_sub_cluster)
+                _costs_dict = self.get_common_available_measures_costs(
+                    _sub_cluster, self._order_strategy.reinforcement_order
                 )
+                _icc.add_cluster(_sub_cluster, _costs_dict)
                 _icc_costs += min(_icc.cluster_costs[-1].values())
                 if _icc_costs > _min_costs:
                     # No need to check further, it is more expensive already.

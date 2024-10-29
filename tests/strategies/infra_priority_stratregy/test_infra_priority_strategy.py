@@ -26,6 +26,7 @@ from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
 from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
     InfraPriorityStrategy,
 )
+from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -235,7 +236,8 @@ class TestInfraPriorityStrategy:
 
         # 2. Run test.
         _costs_dict = InfraPriorityStrategy.get_common_available_measures_costs(
-            infra_cluster_for_subclusters
+            infra_cluster_for_subclusters,
+            OrderStrategy.get_default_order_for_reinforcements(),
         )
 
         # 3. Verify expectations.
