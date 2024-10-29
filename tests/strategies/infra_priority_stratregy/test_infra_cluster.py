@@ -3,10 +3,17 @@ from typing import Iterator
 
 import pytest
 
+from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinforcement_profile import (
+    PipingWallReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
 from koswat.strategies.infra_priority_strategy.infra_cluster import InfraCluster
+from koswat.strategies.strategy_location_input import StrategyLocationInput
+from koswat.strategies.strategy_location_reinforcement import (
+    StrategyLocationReinforcement,
+)
 
 
 class TestInfraCluster:
@@ -77,3 +84,28 @@ class TestInfraCluster:
 
         # 2. Run test.
         assert cluster_fixture.fits_subclusters()
+
+    def test_set_cheapest_common_available_measure(self, cluster_fixture: InfraCluster):
+        # 1. Define test data.
+        _costs_dict = {
+            SoilReinforcementProfile: 4200,
+            PipingWallReinforcementProfile: 42,
+        }
+        assert cluster_fixture.reinforcement_type == SoilReinforcementProfile
+        cluster_fixture.cluster = [
+            StrategyLocationReinforcement(
+                location=None,
+                selected_measure=cluster_fixture.reinforcement_type,
+                available_measures=[],
+            )
+        ] * cluster_fixture.min_required_length
+        assert cluster_fixture.is_valid()
+
+        # 2. Run test.
+        cluster_fixture.set_cheapest_common_available_measure(_costs_dict)
+
+        # 3. Verify expectations.
+        assert all(
+            c.selected_measure == PipingWallReinforcementProfile
+            for c in cluster_fixture.cluster
+        )
