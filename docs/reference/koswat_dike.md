@@ -7,10 +7,12 @@ In this section we will describe how a Koswat dike is defined and what its parts
 A koswat dike is represented by an instance of a `KoswatProfileProtocol`. And its properties represent different aspects of a 'real domain'. With _Image 1. Base profile properties_ as reference, we can see the mapping between said 'real domain' and the koswat properties:
 
 - `input_data`: The parts of a dike (written on the image reference), which are directly mapped as an implementation of the `KoswatInputProfileProtocol`. 
-- `characteristic_points`: 8 points given by the user describing the dike on (x,y) coordinates, the first four represent the waterside, the last four the polderside. Numbered in the reference picture from 1 to 8. 
+- `characteristic_points`: 8 points given by the user describing the dike on (x,y) coordinates, the first four represent the waterside, the last four the polderside. Numbered in the reference picture from 1 to 8. Point 4 is considered to be the reference value (0) with respect to distances of e.g. surroundings and widths of certain parts of the dike.
 - `layers_wrapper`: The description on how the layers of the dike are built. Further described in [Dike layers](#dike-layers).
-- `location`: coordinate (x, y) where the dike is situated.
-- `profile_width`: The difference between the lowest and the highest 'x' coordinates of the profile characteristic points. The distance between characteristic point 1 and 8.
+- `location`: Geospatial coordinates (x, y) where the dike is situated.
+- `profile_width`: The difference between the lowest and the highest 'x' coordinates of the profile characteristic points. The distance between characteristic points 1 and 8. This can be broken down into:
+  - `waterside_width`: The distance between characteristics points 1 and 4.
+  - `polderside_width`: The distance between characteristics points 4 and 8.
 
 |![Base profile properties](./imgs/base_profile_properties.png)|
 |:--:|
