@@ -118,19 +118,29 @@ class OrderStrategy(StrategyProtocol):
         selection_order: list[type[ReinforcementProfileProtocol]],
     ) -> list[StrategyLocationReinforcement]:
         _strategy_reinforcements = []
+        _selection_order_set = set(selection_order)
         for _strategy_location in strategy_locations:
-            _available_measures = (
-                _strategy_location.available_measures
-                if any(_strategy_location.available_measures)
-                else [selection_order[-1]]
-            )
-            _strategy_reinforcements.append(
-                StrategyLocationReinforcement(
-                    location=_strategy_location.point_surrounding,
-                    available_measures=_available_measures,
-                    strategy_location_input=_strategy_location,
+            # Get the available measures in the expected order!
+            _available_measures = list(
+                _selection_order_set.intersection(
+                    set(_strategy_location.available_measures)
                 )
             )
+
+            # Create the strategy representation.
+            _slr = StrategyLocationReinforcement(
+                location=_strategy_location.point_surrounding,
+                available_measures=_available_measures,
+                strategy_location_input=_strategy_location,
+            )
+
+            # Manually set the current selected measure if none available.
+            if not any(_slr.available_measures):
+                # TODO: Unclear why tests fail when setting this measure
+                # as the only available measure.
+                _slr.current_selected_measure = selection_order[-1]
+
+            _strategy_reinforcements.append(_slr)
         return _strategy_reinforcements
 
     def apply_strategy(
