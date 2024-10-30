@@ -38,38 +38,22 @@ class StrategyLocationReinforcement:
         """
         Exposes the current selected measure for this object.
         """
-        return self._selected_measures[0]
+        return self._selected_measures[-1]
 
     @current_selected_measure.setter
     def current_selected_measure(
         self, reinforcement_type: type[ReinforcementProfileProtocol]
     ):
         # Last item in `_selected_measures` is the oldest selection
-        self._selected_measures.insert(0, reinforcement_type)
+        self._selected_measures.append(reinforcement_type)
 
     def output_selected_measures(
-        self, history_length: int
+        self, history_size: int
     ) -> list[type[ReinforcementProfileProtocol]]:
-        _recorded_history = list(tail(history_length, self._selected_measures))
-        return _recorded_history + [self._selected_measures[-1]] * (
-            history_length - len(_recorded_history)
-        )
-
-    @property
-    def previous_selected_measure(self) -> type[ReinforcementProfileProtocol]:
-        """
-        Exposes the selected measure previous to the current one.
-        Expected at least three steps:
-            - 0, first selection, without clustering.
-            - 1, selection based on traject's buffer + clustering.
-            - 2, selection based on optimal  infrastructure's costs.
-        """
-        if not self._selected_measures:
-            return None
-        if len(self._selected_measures) > 2:
-            return self._selected_measures[-2]
-        # If no "in-between" step was found, then just pick the last one.
-        return self._selected_measures[-1]
+        _from_idx = min(history_size, len(self._selected_measures))
+        return [self._selected_measures[-_from_idx]] * (
+            history_size - _from_idx
+        ) + self._selected_measures[-_from_idx:]
 
     @property
     def current_cost(self) -> float:
