@@ -117,6 +117,18 @@ class OrderStrategy(StrategyProtocol):
         strategy_locations: list[StrategyLocationInput],
         selection_order: list[type[ReinforcementProfileProtocol]],
     ) -> list[StrategyLocationReinforcement]:
+        """
+        Gets the strategy representation of the locations with their available measures
+        ordered filtered and order by the provided `selection_order`. It also sets
+        their initial state.
+
+        Args:
+            strategy_locations (list[StrategyLocationInput]): Locations to map into reinforcement locations.
+            selection_order (list[type[ReinforcementProfileProtocol]]): Priority order to assign a reinforcement.
+
+        Returns:
+            list[StrategyLocationReinforcement]: Mapped location reinforcements.
+        """
         _strategy_reinforcements = []
         _selection_order_set = set(selection_order)
         for _strategy_location in strategy_locations:
