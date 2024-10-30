@@ -130,12 +130,12 @@ class OrderStrategy(StrategyProtocol):
             list[StrategyLocationReinforcement]: Mapped location reinforcements.
         """
         _strategy_reinforcements = []
-        _selection_order_set = set(selection_order)
         for _strategy_location in strategy_locations:
             # Get the available measures in the expected order!
             _available_measures = list(
-                _selection_order_set.intersection(
-                    set(_strategy_location.available_measures)
+                filter(
+                    lambda x: x in _strategy_location.available_measures,
+                    selection_order,
                 )
             )
 

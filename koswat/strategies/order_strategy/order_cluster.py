@@ -77,6 +77,7 @@ class OrderCluster:
         if any(self.location_reinforcements):
             _new_profile_type = self.location_reinforcements[0].current_selected_measure
             for _lr in other.location_reinforcements:
+                _lr._selected_measures.clear()
                 _lr.current_selected_measure = _new_profile_type
 
         if self.left_neighbor == other:
