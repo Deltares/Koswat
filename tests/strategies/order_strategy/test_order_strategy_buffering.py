@@ -34,7 +34,7 @@ class TestOrderStrategyBuffering:
 
         # 3. Verify expectations.
         assert all(
-            _r.selected_measure == _expected_result[_r_idx]
+            _r.current_selected_measure == _expected_result[_r_idx]
             for _r_idx, _r in enumerate(_reinforcements)
         )
 

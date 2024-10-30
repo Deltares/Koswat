@@ -93,9 +93,8 @@ class TestInfraCluster:
         assert cluster_fixture.reinforcement_type == SoilReinforcementProfile
         _slr = StrategyLocationReinforcement(
             location=None,
-            available_measures=[],
+            available_measures=[cluster_fixture.reinforcement_type],
         )
-        _slr.selected_measure = cluster_fixture.reinforcement_type
         cluster_fixture.cluster = [_slr] * cluster_fixture.min_required_length
         assert cluster_fixture.is_valid()
 
@@ -104,6 +103,6 @@ class TestInfraCluster:
 
         # 3. Verify expectations.
         assert all(
-            c.selected_measure == PipingWallReinforcementProfile
+            c.current_selected_measure == PipingWallReinforcementProfile
             for c in cluster_fixture.cluster
         )

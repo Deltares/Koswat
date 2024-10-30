@@ -53,7 +53,7 @@ class ClusterCollectionShpFom:
                     to_cluster_shp_fom,
                     groupby(
                         koswat_summary.reinforcement_per_locations,
-                        key=lambda x: x.selected_measure,
+                        key=lambda x: x.current_selected_measure,
                     ),
                 )
             )

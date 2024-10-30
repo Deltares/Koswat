@@ -155,7 +155,7 @@ class InfraPriorityStrategy(StrategyProtocol):
     ) -> Iterator[InfraCluster]:
         for _grouped_by, _grouping in groupby(
             order_strategy.apply_strategy(strategy_input),
-            key=lambda x: x.selected_measure,
+            key=lambda x: x.current_selected_measure,
         ):
             _grouping_data = list(_grouping)
             if not _grouping_data:

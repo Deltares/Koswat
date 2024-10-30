@@ -76,16 +76,16 @@ class TestInfraClusterOption:
     @pytest.fixture(name="valid_option")
     def _get_valid_option_fixture(self) -> Iterator[InfraClusterOption]:
         _option = InfraClusterOption(cluster_min_length=1)
-        _slr = StrategyLocationReinforcement(
-            location=None,
-            available_measures=[],
-        )
-        _slr.selected_measure = SoilReinforcementProfile
         _option.add_cluster(
             InfraCluster(
                 reinforcement_type=SoilReinforcementProfile,
                 min_required_length=0,
-                cluster=[_slr],
+                cluster=[
+                    StrategyLocationReinforcement(
+                        location=None,
+                        available_measures=[SoilReinforcementProfile],
+                    )
+                ],
             ),
             {SoilReinforcementProfile: 42000, PipingWallReinforcementProfile: 42},
         )

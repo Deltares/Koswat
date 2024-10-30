@@ -119,18 +119,18 @@ class OrderStrategy(StrategyProtocol):
     ) -> list[StrategyLocationReinforcement]:
         _strategy_reinforcements = []
         for _strategy_location in strategy_locations:
-            _reinforcements = _strategy_location.available_measures
-            _selected_reinforcement = next(
-                (_or for _or in selection_order if _or in _reinforcements),
-                selection_order[-1],
+            _available_measures = (
+                _strategy_location.available_measures
+                if any(_strategy_location.available_measures)
+                else [selection_order[-1]]
             )
-            _slr = StrategyLocationReinforcement(
-                location=_strategy_location.point_surrounding,
-                available_measures=_reinforcements,
-                strategy_location_input=_strategy_location,
+            _strategy_reinforcements.append(
+                StrategyLocationReinforcement(
+                    location=_strategy_location.point_surrounding,
+                    available_measures=_available_measures,
+                    strategy_location_input=_strategy_location,
+                )
             )
-            _slr.selected_measure = _selected_reinforcement
-            _strategy_reinforcements.append(_slr)
         return _strategy_reinforcements
 
     def apply_strategy(

@@ -69,4 +69,6 @@ class OrderStrategyBuffering(OrderStrategyBase):
 
         # Apply buffer values.
         for _idx, _location in enumerate(location_reinforcements):
-            _location.selected_measure = self.reinforcement_order[_result_mask[_idx]]
+            _location.current_selected_measure = self.reinforcement_order[
+                _result_mask[_idx]
+            ]

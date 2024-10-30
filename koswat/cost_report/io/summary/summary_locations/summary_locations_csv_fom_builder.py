@@ -76,8 +76,10 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
                 for _type in self.get_summary_reinforcement_type_column_order()
             ]
             _matrix[_reinforcement_per_location.location] = _suitable_locations + [
-                _reinforcement_per_location.previous_selected_measure.output_name,
-                _reinforcement_per_location.selected_measure.output_name,
+                _sm.output_name
+                for _sm in _reinforcement_per_location._selected_measures
+                # _reinforcement_per_location.previous_selected_measure.output_name,
+                # _reinforcement_per_location.selected_measure.output_name,
             ]
 
         return list(

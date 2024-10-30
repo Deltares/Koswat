@@ -99,13 +99,13 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         # ALWAYS to be of 1 meter.
         _sorted_reinforcements = sorted(
             self.koswat_summary.reinforcement_per_locations,
-            key=lambda x: x.selected_measure.output_name,
+            key=lambda x: x.current_selected_measure.output_name,
         )
         return dict(
             (k, len(list(g)))
             for k, g in groupby(
                 _sorted_reinforcements,
-                lambda x: x.selected_measure,
+                lambda x: x.current_selected_measure,
             )
         )
 

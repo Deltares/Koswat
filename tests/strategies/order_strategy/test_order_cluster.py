@@ -165,9 +165,8 @@ class TestOrderCluster:
         _merging_to = order_cluster_with_neighbors.left_neighbor
         _single_location = StrategyLocationReinforcement(
             location=PointSurroundings(),
-            available_measures=[],
+            available_measures=[_selected_measure_value],
         )
-        _single_location.selected_measure = _selected_measure_value
         _merging_to.location_reinforcements = [_single_location]
 
         # 2. Run test.
@@ -177,7 +176,7 @@ class TestOrderCluster:
 
         # 3. Verify expectations
         assert all(
-            lr.selected_measure == _selected_measure_value
+            lr.current_selected_measure == _selected_measure_value
             for lr in order_cluster_with_neighbors.location_reinforcements
         )
         assert _merging_to.right_neighbor == order_cluster_with_neighbors.right_neighbor
@@ -195,9 +194,8 @@ class TestOrderCluster:
         _merging_to = order_cluster_with_neighbors.right_neighbor
         _single_location = StrategyLocationReinforcement(
             location=PointSurroundings(),
-            available_measures=[],
+            available_measures=[_selected_measure_value],
         )
-        _single_location.selected_measure = _selected_measure_value
 
         _merging_to.location_reinforcements = [_single_location]
 
@@ -208,7 +206,7 @@ class TestOrderCluster:
 
         # 3. Verify expectations
         assert all(
-            lr.selected_measure == _selected_measure_value
+            lr.current_selected_measure == _selected_measure_value
             for lr in order_cluster_with_neighbors.location_reinforcements
         )
         assert _merging_to.left_neighbor == order_cluster_with_neighbors.left_neighbor

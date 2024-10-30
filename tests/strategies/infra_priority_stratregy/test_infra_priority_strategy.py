@@ -68,11 +68,11 @@ class TestInfraPriorityStrategy:
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
-            _sr.selected_measure == PipingWallReinforcementProfile
+            _sr.current_selected_measure == PipingWallReinforcementProfile
             for _sr in _strategy_result[0:2]
         )
         assert all(
-            _sr.selected_measure == CofferdamReinforcementProfile
+            _sr.current_selected_measure == CofferdamReinforcementProfile
             for _sr in _strategy_result[2:]
         )
 
@@ -94,15 +94,15 @@ class TestInfraPriorityStrategy:
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
-            _sr.selected_measure == PipingWallReinforcementProfile
+            _sr.current_selected_measure == PipingWallReinforcementProfile
             for _sr in _strategy_result[0:2]
         )
         assert all(
-            _sr.selected_measure == StabilityWallReinforcementProfile
+            _sr.current_selected_measure == StabilityWallReinforcementProfile
             for _sr in _strategy_result[2:5]
         )
         assert all(
-            _sr.selected_measure == CofferdamReinforcementProfile
+            _sr.current_selected_measure == CofferdamReinforcementProfile
             for _sr in _strategy_result[5:]
         )
 
@@ -190,10 +190,11 @@ class TestInfraPriorityStrategy:
         for _available_measures in _available_measures_per_location:
             _slr = StrategyLocationReinforcement(
                 location=None,
-                available_measures=_available_measures,
+                available_measures=_available_measures
+                if any(_available_measures)
+                else [SoilReinforcementProfile],
                 strategy_location_input=_location_input,
             )
-            _slr.selected_measure = SoilReinforcementProfile
             _cluster_data.append(_slr)
 
         yield InfraCluster(

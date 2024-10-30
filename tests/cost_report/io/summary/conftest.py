@@ -142,20 +142,13 @@ def get_locations_reinforcements(
             for _lp_report in summary.locations_profile_report_list
             if _location in _lp_report.report_locations
         )
-        _selected_measure = _available_reinforcements[-1]
-        if any(_a_measures):
-            _selected_measure = _a_measures[0]
+
         _slr = StrategyLocationReinforcement(
             location=_location,
-            available_measures=_a_measures,
+            available_measures=_a_measures
+            if any(_a_measures)
+            else [_available_reinforcements[-1]],
         )
-        # Set this location reinforcement selection history
-        # We set as "initial" selection SoilReinforcementProfile
-        _slr.selected_measure = SoilReinforcementProfile
-        # We emulate an "in-between" step
-        _slr.selected_measure = SoilReinforcementProfile
-        # We now set the "final" selection
-        _slr.selected_measure = _selected_measure
         _matrix.append(_slr)
     return _matrix
 
@@ -215,12 +208,10 @@ def _get_cluster_shp_fom_factory() -> Iterable[
         coordinates: tuple[float, float],
         reinforced_profile: ReinforcementProfileProtocol,
     ) -> StrategyLocationReinforcement:
-        _slr = StrategyLocationReinforcement(
+        return StrategyLocationReinforcement(
             location=PointSurroundings(location=Point(coordinates)),
-            available_measures=[],
+            available_measures=[reinforced_profile],
         )
-        _slr.selected_measure = reinforced_profile
-        return _slr
 
     def create_cluster(
         points: list[tuple[float, float]],

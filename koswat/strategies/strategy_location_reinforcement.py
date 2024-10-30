@@ -22,16 +22,33 @@ class StrategyLocationReinforcement:
     available_measures: list[type[ReinforcementProfileProtocol]]
     strategy_location_input: StrategyLocationInput = None
 
-    _selected_measures: list = field(default_factory=lambda: [])
+    _selected_measures: list[type[ReinforcementProfileProtocol]] = field(
+        default_factory=lambda: [None, None, None]
+    )
+
+    def __post_init__(self):
+        if any(self.available_measures):
+            # Set the inital selection to the first available measure.
+            self.current_selected_measure = self.available_measures[0]
 
     @property
-    def selected_measure(self) -> type[ReinforcementProfileProtocol]:
+    def current_selected_measure(self) -> type[ReinforcementProfileProtocol]:
         """
         Exposes the current selected measure for this object.
         """
-        if not self._selected_measures:
-            return None
         return self._selected_measures[-1]
+
+    @current_selected_measure.setter
+    def current_selected_measure(
+        self, reinforcement_type: type[ReinforcementProfileProtocol]
+    ):
+        # We only want to keep [Initial, Step, Current] selection history
+        if not self._selected_measures[0]:
+            self._selected_measures = [reinforcement_type] * 3
+            return
+
+        # Shift the current to "step" and add the new one
+        self._selected_measures[1:] = [self._selected_measures[2], reinforcement_type]
 
     @property
     def previous_selected_measure(self) -> type[ReinforcementProfileProtocol]:
@@ -49,19 +66,15 @@ class StrategyLocationReinforcement:
         # If no "in-between" step was found, then just pick the last one.
         return self._selected_measures[-1]
 
-    @selected_measure.setter
-    def selected_measure(self, reinforcement_type: type[ReinforcementProfileProtocol]):
-        self._selected_measures.append(reinforcement_type)
-
     @property
     def current_cost(self) -> float:
         """
         Estimates the costs at this location for the given `selected_measure`.
         """
-        if not self.selected_measure or not self.strategy_location_input:
+        if not self.current_selected_measure or not self.strategy_location_input:
             return 0.0
         for _srtc in self.strategy_location_input.strategy_reinforcement_type_costs:
-            if _srtc.reinforcement_type == self.selected_measure:
+            if _srtc.reinforcement_type == self.current_selected_measure:
                 return _srtc.total_costs
         return 0.0
         # raise ValueError("No current cost could be calculated")
