@@ -44,7 +44,10 @@ class StrategyLocationReinforcement:
     def current_selected_measure(
         self, reinforcement_type: type[ReinforcementProfileProtocol]
     ):
-        # Last item in `_selected_measures` is the oldest selection
+        # TODO: Could be modified to accept a "STEP" enum
+        # Then save the selection to a dictionary with said step as ky
+        # We no longer need the _selected_measures list as we only
+        # need to proxy the last property.
         self._selected_measures.append(reinforcement_type)
 
     def output_selected_measures(
