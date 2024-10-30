@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from more_itertools import tail
+
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -23,7 +25,7 @@ class StrategyLocationReinforcement:
     strategy_location_input: StrategyLocationInput = None
 
     _selected_measures: list[type[ReinforcementProfileProtocol]] = field(
-        default_factory=lambda: [None, None, None]
+        default_factory=lambda: []
     )
 
     def __post_init__(self):
@@ -36,19 +38,22 @@ class StrategyLocationReinforcement:
         """
         Exposes the current selected measure for this object.
         """
-        return self._selected_measures[-1]
+        return self._selected_measures[0]
 
     @current_selected_measure.setter
     def current_selected_measure(
         self, reinforcement_type: type[ReinforcementProfileProtocol]
     ):
-        # We only want to keep [Initial, Step, Current] selection history
-        if not self._selected_measures[0]:
-            self._selected_measures = [reinforcement_type] * 3
-            return
+        # Last item in `_selected_measures` is the oldest selection
+        self._selected_measures.insert(0, reinforcement_type)
 
-        # Shift the current to "step" and add the new one
-        self._selected_measures[1:] = [self._selected_measures[2], reinforcement_type]
+    def output_selected_measures(
+        self, history_length: int
+    ) -> list[type[ReinforcementProfileProtocol]]:
+        _recorded_history = list(tail(history_length, self._selected_measures))
+        return _recorded_history + [self._selected_measures[-1]] * (
+            history_length - len(_recorded_history)
+        )
 
     @property
     def previous_selected_measure(self) -> type[ReinforcementProfileProtocol]:

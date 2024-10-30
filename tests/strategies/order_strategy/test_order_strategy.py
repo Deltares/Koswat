@@ -9,9 +9,6 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     StabilityWallReinforcementProfile,
     VPSReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -121,7 +118,7 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
-    def test__get_strategy_reinforcements_given_example(
+    def test_get_strategy_reinforcements_given_example(
         self, example_strategy_input: StrategyInput
     ):
         # 1. Define test data.

@@ -44,7 +44,11 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
                     "Y coord",
                 ]
                 + _ordered_profile_types
-                + ["Base reinforcement selection", "Optimized reinforcement selection"]
+                + [
+                    "Initial selection",
+                    "Ordered based selection",
+                    "Optimized selection",
+                ]
             ),
             entries=self._get_locations_matrix(
                 self.koswat_summary.reinforcement_per_locations
@@ -75,12 +79,12 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
                 int(_type in _reinforcement_per_location.available_measures)
                 for _type in self.get_summary_reinforcement_type_column_order()
             ]
-            _matrix[_reinforcement_per_location.location] = _suitable_locations + [
-                _sm.output_name
-                for _sm in _reinforcement_per_location._selected_measures
-                # _reinforcement_per_location.previous_selected_measure.output_name,
-                # _reinforcement_per_location.selected_measure.output_name,
-            ]
+            _matrix[_reinforcement_per_location.location] = _suitable_locations + list(
+                map(
+                    lambda x: x.output_name,
+                    _reinforcement_per_location.output_selected_measures(3),
+                )
+            )
 
         return list(
             map(

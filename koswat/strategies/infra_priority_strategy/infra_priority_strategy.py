@@ -114,6 +114,7 @@ class InfraPriorityStrategy(StrategyProtocol):
             location_collection: list[StrategyLocationReinforcement],
         ) -> list[list[InfraCluster]]:
             _icc = []
+            # TODO: Try using more_itertools.strip at location_collection?
             for _w_element in filter(len, location_collection):
                 _ic = InfraCluster(
                     min_required_length=from_cluster.min_required_length,
@@ -133,6 +134,7 @@ class InfraPriorityStrategy(StrategyProtocol):
             any,
             map(
                 get_cluster_option,
+                # TODO: Try using more_itertools.set_partitions instead.
                 windowed_complete(from_cluster.cluster, min_length),
             ),
         )
