@@ -27,7 +27,7 @@ This modules contains the logic to choose which measure will be applied for a gi
 
 - `StrategyLocationReinforcement`, represents a mapped location to a selected measure.
     - location (`PointSurroundings`), a point (meter) in the dike traject.
-    - selected_measure (`Type[ReinforcementProfileProtocol]`), which is the reinforcement that should be applied to the location.
+    - current_selected_measure (`Type[ReinforcementProfileProtocol]`), which is the reinforcement that should be applied to the location.
     - available_measures (`list[Type[ReinforcementProfileProtocol]]`), which are the possible reinforcements that could be applied to the location.
     - strategy_location_input (`StrategyLocationInput`), the related input with available reinforcements and their costs related to this location-measure mapping.
 

@@ -69,7 +69,7 @@ class StrategyLocationReinforcement:
     @property
     def current_cost(self) -> float:
         """
-        Estimates the costs at this location for the given `selected_measure`.
+        Estimates the costs at this location for the given `current_selected_measure`.
         """
         if not self.current_selected_measure or not self.strategy_location_input:
             return 0.0

@@ -62,7 +62,7 @@ class OrderCluster:
         """
         Extends the current cluster with the reinforcements
         (`list[StrategyLocationReinforcement]`) from another cluster.
-        Modifies the `selected_measure` property of those measures being merged but it
+        Modifies the `current_selected_measure` property of those measures being merged but it
         does not remove them from their source cluster.
 
         Args:
