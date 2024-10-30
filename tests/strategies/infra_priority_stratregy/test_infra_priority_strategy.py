@@ -185,18 +185,21 @@ class TestInfraPriorityStrategy:
                 ),
             ],
         )
+
+        _cluster_data = []
+        for _available_measures in _available_measures_per_location:
+            _slr = StrategyLocationReinforcement(
+                location=None,
+                available_measures=_available_measures,
+                strategy_location_input=_location_input,
+            )
+            _slr.selected_measure = SoilReinforcementProfile
+            _cluster_data.append(_slr)
+
         yield InfraCluster(
             reinforcement_type=SoilReinforcementProfile,
             min_required_length=2,
-            cluster=[
-                StrategyLocationReinforcement(
-                    location=None,
-                    selected_measure=SoilReinforcementProfile,
-                    available_measures=_available_measures,
-                    strategy_location_input=_location_input,
-                )
-                for _available_measures in _available_measures_per_location
-            ],
+            cluster=_cluster_data,
         )
 
     def test_given_cluster_when_generate_sbucluster_options_returns(
