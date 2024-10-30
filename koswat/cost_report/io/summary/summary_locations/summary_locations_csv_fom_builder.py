@@ -45,8 +45,7 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
                 ]
                 + _ordered_profile_types
                 + [
-                    "Initial selection",
-                    "Ordered based selection",
+                    "Ordered selection",
                     "Optimized selection",
                 ]
             ),
