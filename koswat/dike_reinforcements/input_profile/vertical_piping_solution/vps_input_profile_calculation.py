@@ -35,22 +35,24 @@ class VPSInputProfileCalculation(
     ) -> KoswatInputProfileBase:
         _new_data = VPSInputProfile()
         _new_data.dike_section = base_data.dike_section
-        _new_data.buiten_maaiveld = base_data.buiten_maaiveld
-        _new_data.buiten_talud = scenario.buiten_talud
-        _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
-        _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
-        _new_data.kruin_breedte = scenario.kruin_breedte
-        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
-        _new_data.binnen_maaiveld = base_data.binnen_maaiveld
-        _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
-        _new_data.binnen_berm_breedte = vps_settings.binnen_berm_breedte_vps
-        _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(
+        _new_data.waterside_ground_level = base_data.waterside_ground_level
+        _new_data.waterside_slope = scenario.waterside_slope
+        _new_data.waterside_berm_height = base_data.waterside_berm_height
+        _new_data.waterside_berm_width = base_data.waterside_berm_width
+        _new_data.crest_width = scenario.crest_width
+        _new_data.crest_height = self._calculate_new_crest_height(base_data, scenario)
+        _new_data.polderside_ground_level = base_data.polderside_ground_level
+        _new_data.polderside_slope = self._calculate_new_polderside_slope(
+            base_data, scenario
+        )
+        _new_data.polderside_berm_width = vps_settings.polderside_berm_width_vps
+        _new_data.polderside_berm_height = self._calculate_new_polderside_berm_height(
             base_data, _new_data, scenario
         )
-        _new_data.grondprijs_bebouwd = base_data.grondprijs_bebouwd
-        _new_data.grondprijs_onbebouwd = base_data.grondprijs_onbebouwd
-        _new_data.factor_zetting = base_data.factor_zetting
-        _new_data.pleistoceen = base_data.pleistoceen
+        _new_data.ground_price_builtup = base_data.ground_price_builtup
+        _new_data.ground_price_unbuilt = base_data.ground_price_unbuilt
+        _new_data.factor_settlement = base_data.factor_settlement
+        _new_data.pleistocene = base_data.pleistocene
         _new_data.aquifer = base_data.aquifer
         _new_data.construction_type = ConstructionTypeEnum.VZG
         _new_data.soil_surtax_factor = vps_settings.soil_surtax_factor

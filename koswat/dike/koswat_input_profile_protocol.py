@@ -8,22 +8,22 @@ from koswat.core.protocols.data_object_model_protocol import DataObjectModelProt
 @runtime_checkable
 class KoswatInputProfileProtocol(DataObjectModelProtocol, Protocol):
     dike_section: str
-    buiten_maaiveld: float
-    buiten_talud: float
-    buiten_berm_hoogte: float
-    buiten_berm_breedte: float
-    kruin_hoogte: float
-    kruin_breedte: float
-    binnen_talud: float
-    binnen_berm_hoogte: float
-    binnen_berm_breedte: float
-    binnen_maaiveld: float
-    grondprijs_bebouwd: float
-    grondprijs_onbebouwd: float
-    factor_zetting: float
-    pleistoceen: float
+    waterside_ground_level: float
+    waterside_slope: float
+    waterside_berm_height: float
+    waterside_berm_width: float
+    crest_height: float
+    crest_width: float
+    polderside_slope: float
+    polderside_berm_height: float
+    polderside_berm_width: float
+    polderside_ground_level: float
+    ground_price_builtup: float
+    ground_price_unbuilt: float
+    factor_settlement: float
+    pleistocene: float
     aquifer: float
 
     @property
-    def grondprijs(self) -> float:
+    def ground_price(self) -> float:
         pass

@@ -19,7 +19,7 @@ class DikeProfileCostsSettings(KoswatConfigProtocol):
     profiling_layer_grass_m2: float = math.nan
     profiling_layer_clay_m2: float = math.nan
     profiling_layer_sand_m2: float = math.nan
-    bewerken_maaiveld_m2: float = math.nan
+    processing_ground_level_surface_m2: float = math.nan
 
     def is_valid(self) -> bool:
         return all(_valid_float_prop(_prop) for _prop in self.__dict__.values())

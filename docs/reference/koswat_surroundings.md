@@ -29,12 +29,13 @@ Their headers are divided in the following columns:
 - `SECTIE`, section of the location in the dike's traject,
 - `Xcoord`, x coordinate of the location,
 - `Ycoord`, y coordinate of the location, 
-- `afst_{x}m`, distance from the location, where 'x' are all the values between `5` and `200` with steps of 5, thus 40 columns. The values in these cells are called define whether there are obstacles at this distance or not and in `Koswat` are usually built in the `SurroundingsPoint.surroundings_matrix`, each type of surrounding interprets the weights in a different manner.
+- `afst_{x}m`, distance from the reference point of the location, where 'x' are all the values between `5` and `200` with steps of 5, thus 40 columns. The values in these cells define whether there are obstacles or infrastructures at this distance or not and in `Koswat` are usually built in the `SurroundingsPoint.surroundings_matrix`, each type of surrounding interprets the weights in a different manner.
 
 
 ## Obstacles
 
 An obstacle usually represents a building, because they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
+The distance from the reference point of the dike to the closes point of the obstacle is given.
 
 The values in the columns `afst_{x}m` are either `1` or `0` and are simply interpreted as having a surrounding or not. Thus ignoring other characteristics of the surrounding and just focusing on its presence.
 
@@ -58,6 +59,8 @@ Infrastructures are mostly "roads". Contrary to the [obstacles](#obstacles) thes
 - The required technique (repair, displace, nothing) for the type of infrastructure (also from `koswat_general.ini` settings) and its related costs (`koswat_costs.ini`).
 
 With the above values we know what's the __affected area__ of an infrastructure when a reinforced profile needs to be applied and therefore can estimate their costs.
+
+The distance from the reference point of the dike to the center point of the infrastructure is given.
 
 ### Infrastructures types
 

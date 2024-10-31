@@ -26,12 +26,12 @@ These characteristics are then used to estimate how much surface of the infrastr
 
 A reinforced profile can be different from its original state in many ways, however here we are only intestered in two things:
 
-1. The new profile's width from the original outsides (waterside) crest point.
+1. The new profile's width from the original waterside crest point.
 2. Whether there is a crest's height increase (`dh0`),
 
 By using the old and the reinforced profile's geometries, we can determine what we call zone `A` and zone `B`, `A + B = {profile's width from waterside crest point}`. 
 
-- Zone `A` represents the length of the dike old profile's crest (highest surface).
+- Zone `A` represents the width of the dike old profile's crest (highest surface).
 - Zone `B` the distance between said crest and the end of the dike's reinforcement.
 
 |![Dike profile with zone A and B](./imgs/surroundings_zone_a_b.png)|

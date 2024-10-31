@@ -29,19 +29,19 @@ class TestConstructionCostsSettings:
         _construction_costs_settings.vzg = _populate_construction_factors(
             list(range(5))
         )
-        _construction_costs_settings.cb_damwand = _populate_construction_factors(
+        _construction_costs_settings.cb_sheetpile = _populate_construction_factors(
             list(range(5))
         )
-        _construction_costs_settings.damwand_onverankerd = (
+        _construction_costs_settings.sheetpile_unanchored = (
             _populate_construction_factors(list(range(5)))
         )
-        _construction_costs_settings.damwand_verankerd = _populate_construction_factors(
+        _construction_costs_settings.sheetpile_anchored = (
+            _populate_construction_factors(list(range(5)))
+        )
+        _construction_costs_settings.diaphragm_wall = _populate_construction_factors(
             list(range(5))
         )
-        _construction_costs_settings.diepwand = _populate_construction_factors(
-            list(range(5))
-        )
-        _construction_costs_settings.kistdam = _populate_construction_factors(
+        _construction_costs_settings.cofferdam = _populate_construction_factors(
             list(range(5))
         )
 
@@ -55,7 +55,7 @@ class TestConstructionCostsSettings:
         # 1. Define test data
         _construction_type = ConstructionTypeEnum.CB_DAMWAND
         _construction_costs_settings = ConstructionCostsSettings()
-        _construction_costs_settings.cb_damwand = ConstructionFactors(
+        _construction_costs_settings.cb_sheetpile = ConstructionFactors(
             c_factor=0.1, d_factor=1.2, z_factor=2.3, f_factor=3.4, g_factor=4.5
         )
 

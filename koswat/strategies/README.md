@@ -23,7 +23,7 @@ This modules contains the logic to choose which measure will be applied for a gi
 - `StrategyReinforcementInput`, contains the reinforcement types that are relevant to the strategy, as they were selected for one or more locations included in the strategy.
     - reinforcement_type (`Type[ReinforcementProfileProtocol]`), the mapped reinforcement type.
     - base_costs (`float`), the costs only related to the reinforcement's required space (thus excluding infrastructure costs).
-    - ground_level_surface (`float`), profile's width from outside (waterside) crest point.
+    - ground_level_surface (`float`), profile's width from waterside crest point.
 
 - `StrategyLocationReinforcement`, represents a mapped location to a selected measure.
     - location (`PointSurroundings`), a point (meter) in the dike traject.

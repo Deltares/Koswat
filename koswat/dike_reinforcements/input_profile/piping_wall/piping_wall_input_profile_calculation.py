@@ -35,33 +35,33 @@ class PipingWallInputProfileCalculation(
         self,
         old_data: KoswatInputProfileBase,
         piping_wall_settings: KoswatPipingWallSettings,
-        soil_binnen_berm_breedte: float,
+        soil_polderside_berm_width: float,
     ) -> float:
-        if soil_binnen_berm_breedte == 0:
+        if soil_polderside_berm_width == 0:
             # No wall is needed.
             return 0
         _length_piping = (
-            (soil_binnen_berm_breedte / 6)
-            + (old_data.binnen_maaiveld - old_data.aquifer)
+            (soil_polderside_berm_width / 6)
+            + (old_data.polderside_ground_level - old_data.aquifer)
             + 1
         )
         return round(
             min(
                 max(
                     _length_piping,
-                    piping_wall_settings.min_lengte_kwelscherm,
+                    piping_wall_settings.min_length_piping_wall,
                 ),
-                piping_wall_settings.max_lengte_kwelscherm,
+                piping_wall_settings.max_length_piping_wall,
             ),
             1,
         )
 
-    def _calculate_new_kruin_hoogte(
+    def _calculate_new_crest_height(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
-        return base_data.kruin_hoogte + scenario.d_h
+        return base_data.crest_height + scenario.d_h
 
-    def _calculate_new_binnen_talud(
+    def _calculate_new_polderside_slope(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         """
@@ -74,16 +74,18 @@ class PipingWallInputProfileCalculation(
                 +(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud)*Binnen_Talud_Oud)
                 /(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud+dH))
         """
-        _first_part = scenario.d_h * scenario.buiten_talud
-        _second_part = scenario.kruin_breedte - base_data.kruin_breedte
+        _first_part = scenario.d_h * scenario.waterside_slope
+        _second_part = scenario.crest_width - base_data.crest_width
         _third_parth = (
-            base_data.kruin_hoogte - base_data.binnen_maaiveld
-        ) * base_data.binnen_talud
-        _dividend = base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h
+            base_data.crest_height - base_data.polderside_ground_level
+        ) * base_data.polderside_slope
+        _dividend = (
+            base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
+        )
         _right_side = (
             scenario.d_s - _first_part - _second_part + _third_parth
         ) / _dividend
-        return max(base_data.binnen_talud, _right_side)
+        return max(base_data.polderside_slope, _right_side)
 
     def _determine_construction_type(
         self, overgang: float, construction_length: float
@@ -103,29 +105,32 @@ class PipingWallInputProfileCalculation(
     ) -> PipingWallInputProfile:
         _new_data = PipingWallInputProfile()
         _new_data.dike_section = base_data.dike_section
-        _new_data.buiten_maaiveld = base_data.buiten_maaiveld
-        _new_data.buiten_talud = scenario.buiten_talud
-        _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
-        _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
-        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
-        _new_data.kruin_breedte = scenario.kruin_breedte
-        _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
-        _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
-        _new_data.binnen_berm_breedte = 0
-        _new_data.binnen_maaiveld = base_data.binnen_maaiveld
-        _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
+        _new_data.waterside_ground_level = base_data.waterside_ground_level
+        _new_data.waterside_slope = scenario.waterside_slope
+        _new_data.waterside_berm_height = base_data.waterside_berm_height
+        _new_data.waterside_berm_width = base_data.waterside_berm_width
+        _new_data.crest_height = self._calculate_new_crest_height(base_data, scenario)
+        _new_data.crest_width = scenario.crest_width
+        _new_data.polderside_slope = self._calculate_new_polderside_slope(
+            base_data, scenario
+        )
+        _new_data.polderside_berm_height = base_data.polderside_ground_level
+        _new_data.polderside_berm_width = 0
+        _new_data.polderside_ground_level = base_data.polderside_ground_level
+        _soil_polderside_berm_width = self._calculate_soil_polderside_berm_width(
             base_data, _new_data, scenario
         )
-        _new_data.grondprijs_bebouwd = base_data.grondprijs_bebouwd
-        _new_data.grondprijs_onbebouwd = base_data.grondprijs_onbebouwd
-        _new_data.factor_zetting = base_data.factor_zetting
-        _new_data.pleistoceen = base_data.pleistoceen
+        _new_data.ground_price_builtup = base_data.ground_price_builtup
+        _new_data.ground_price_unbuilt = base_data.ground_price_unbuilt
+        _new_data.factor_settlement = base_data.factor_settlement
+        _new_data.pleistocene = base_data.pleistocene
         _new_data.aquifer = base_data.aquifer
         _new_data.construction_length = self._calculate_length_piping_wall(
-            base_data, piping_wall_settings, _soil_binnen_berm_breedte
+            base_data, piping_wall_settings, _soil_polderside_berm_width
         )
         _new_data.construction_type = self._determine_construction_type(
-            piping_wall_settings.overgang_cbwand_damwand, _new_data.construction_length
+            piping_wall_settings.transition_cbwall_sheetpile,
+            _new_data.construction_length,
         )
         _new_data.soil_surtax_factor = piping_wall_settings.soil_surtax_factor
         _new_data.constructive_surtax_factor = (

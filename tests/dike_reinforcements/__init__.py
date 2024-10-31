@@ -41,10 +41,10 @@ def _compare_koswat_input_profile(
         if key
         not in [
             "dike_section",
-            "grondprijs_bebouwd",
-            "grondprijs_onbebouwd",
-            "factor_zetting",
-            "pleistoceen",
+            "ground_price_builtup",
+            "ground_price_unbuilt",
+            "factor_settlement",
+            "pleistocene",
             "aquifer",
             "construction_type",
             "soil_surtax_factor",

@@ -86,21 +86,21 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         _normalized = surrounding_type.lower().strip()
         _translations = dict(
             bebouwing_binnendijks="buildings_polderside",
-            bebouwing_buitendijks="buildings_dikeside",
+            bebouwing_buitendijks="buildings_waterside",
             spoor_binnendijks="railways_polderside",
-            spoor_buitendijks="railways_dikeside",
+            spoor_buitendijks="railways_waterside",
             water_binnendijks="waters_polderside",
-            water_buitendijks="waters_dikeside",
+            water_buitendijks="waters_waterside",
             wegen_binnendijks_klasse2="roads_class_2_polderside",
             wegen_binnendijks_klasse7="roads_class_7_polderside",
             wegen_binnendijks_klasse24="roads_class_24_polderside",
             wegen_binnendijks_klasse47="roads_class_47_polderside",
             wegen_binnendijks_klasseonbekend="roads_class_unknown_polderside",
-            wegen_buitendijks_klasse2="roads_class_2_dikeside",
-            wegen_buitendijks_klasse7="roads_class_7_dikeside",
-            wegen_buitendijks_klasse24="roads_class_24_dikeside",
-            wegen_buitendijks_klasse47="roads_class_47_dikeside",
-            wegen_buitendijks_klasseonbekend="roads_class_unknown_dikeside",
+            wegen_buitendijks_klasse2="roads_class_2_waterside",
+            wegen_buitendijks_klasse7="roads_class_7_waterside",
+            wegen_buitendijks_klasse24="roads_class_24_waterside",
+            wegen_buitendijks_klasse47="roads_class_47_waterside",
+            wegen_buitendijks_klasseonbekend="roads_class_unknown_waterside",
         )
         _translation = _translations.get(_normalized, None)
         if not _translation:

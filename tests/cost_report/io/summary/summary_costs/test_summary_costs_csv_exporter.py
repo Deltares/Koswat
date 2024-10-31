@@ -61,9 +61,9 @@ New clay layer surface (cost incl surtax):;0.0;0.0;0.0;0.0
 New core layer surface (quantity):;0.0;0.0;0.0;0.0
 New core layer surface (cost):;0.0;0.0;0.0;0.0
 New core layer surface (cost incl surtax):;0.0;0.0;0.0;0.0
-New maaiveld surface (quantity):;0.0;0.0;0.0;0.0
-New maaiveld surface (cost):;0.0;0.0;0.0;0.0
-New maaiveld surface (cost incl surtax):;0.0;0.0;0.0;0.0
+New ground level surface (quantity):;0.0;0.0;0.0;0.0
+New ground level surface (cost):;0.0;0.0;0.0;0.0
+New ground level surface (cost incl surtax):;0.0;0.0;0.0;0.0
 Land purchase surface (quantity):;0.0;0.0;0.0;0.0
 Land purchase surface (cost):;0.0;0.0;0.0;0.0
 Land purchase surface (cost incl surtax):;0.0;0.0;0.0;0.0

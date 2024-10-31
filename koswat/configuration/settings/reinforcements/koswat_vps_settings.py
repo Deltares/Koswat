@@ -13,7 +13,7 @@ class KoswatVPSSettings(KoswatConfigProtocol):
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     constructive_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
-    binnen_berm_breedte_vps: float = 0
+    polderside_berm_width_vps: float = 0
 
     def is_valid(self) -> bool:
         return True
