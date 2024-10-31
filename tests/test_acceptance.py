@@ -349,7 +349,7 @@ class TestAcceptance:
                     profiling_layer_grass_m2=0.88,
                     profiling_layer_clay_m2=0.65,
                     profiling_layer_sand_m2=0.60,
-                    bewerken_maaiveld_m2=0.25,
+                    processing_ground_level_surface_m2=0.25,
                 ),
                 construction_costs=ConstructionCostsSettings(
                     cb_sheetpile=ConstructionFactors(
@@ -484,7 +484,9 @@ class TestAcceptance:
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_grass_m2 = 0.88
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _run_settings.costs_setting.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _run_settings.costs_setting.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _run_settings.costs_setting.dike_profile_costs.processing_ground_level_surface_m2 = (
+            0.25
+        )
 
         _construction_costs = ConstructionCostsSettings()
         _construction_costs.vzg = ConstructionFactors()

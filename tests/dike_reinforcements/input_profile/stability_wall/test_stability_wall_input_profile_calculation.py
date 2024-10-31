@@ -52,8 +52,8 @@ class TestStabilityWallInputProfileCalculation:
             aquifer: float
 
         class MockSettings(KoswatStabilityWallSettings):
-            min_lengte_stabiliteitswand: float
-            max_lengte_stabiliteitswand: float
+            min_length_stability_wall: float
+            max_length_stability_wall: float
 
         # 1. Define test data.
         _calculator = StabilityWallInputProfileCalculation()
@@ -61,8 +61,8 @@ class TestStabilityWallInputProfileCalculation:
         _input_data.pleistoceen = -5
         _input_data.aquifer = -2
         _stability_wall_settings = MockSettings()
-        _stability_wall_settings.min_lengte_stabiliteitswand = 0
-        _stability_wall_settings.max_lengte_stabiliteitswand = 99
+        _stability_wall_settings.min_length_stability_wall = 0
+        _stability_wall_settings.max_length_stability_wall = 99
         _stability_wall_settings.transition_sheetpile_diaphragm_wall = 14
         _soil_binnen_berm_breedte = soil_binnen_berm_breedte
         _new_kruin_hoogte = 8
@@ -143,8 +143,8 @@ class TestStabilityWallInputProfileCalculation:
             aquifer: float
 
         class MockSettings(KoswatStabilityWallSettings):
-            min_lengte_stabiliteitswand: float
-            max_lengte_stabiliteitswand: float
+            min_length_stability_wall: float
+            max_length_stability_wall: float
 
         # 1. Define test data.
         _calculator = StabilityWallInputProfileCalculation()
@@ -165,8 +165,8 @@ class TestStabilityWallInputProfileCalculation:
         _input_data.pleistoceen = -6.7
         _input_data.aquifer = -2.3
         _stability_wall_settings = MockSettings()
-        _stability_wall_settings.min_lengte_stabiliteitswand = 0
-        _stability_wall_settings.max_lengte_stabiliteitswand = 99
+        _stability_wall_settings.min_length_stability_wall = 0
+        _stability_wall_settings.max_length_stability_wall = 99
         _scenario = KoswatScenario()
         _scenario.d_h = 12
         _scenario.crest_width = 6.7
