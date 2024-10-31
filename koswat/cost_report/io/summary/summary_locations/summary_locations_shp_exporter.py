@@ -15,14 +15,28 @@ class SummaryLocationsShpExporter(KoswatExporterProtocol):
         _old = export_path.joinpath("summary_locations_old.shp")
         _new = export_path.joinpath("summary_locations_new.shp")
 
-        # Get clusters
+        # Get clusters comparing old to new.
         _clusters = ClusterCollectionShpFom.from_summary(
-            koswat_summary
+            koswat_summary, lambda x: x.current_selected_measure
         ).generate_geodataframes()
 
         if not _clusters:
             return
 
-        _clusters[0].to_file(_measures)
-        _clusters[1].to_file(_old)
-        _clusters[2].to_file(_new)
+        # Export clusters to file
+        _clusters.base_layer.to_file(_measures)
+        _clusters.initial_state.to_file(_old)
+        _clusters.new_state.to_file(_new)
+
+        # Get clusters for steps
+        _step_clusters = ClusterCollectionShpFom.from_summary(
+            koswat_summary, lambda x: x.get_selected_measure_steps()[1]
+        ).generate_geodataframes()
+
+        if not _step_clusters:
+            return
+
+        # Export clusters to file
+        _step_clusters.new_state.to_file(
+            export_path.joinpath("summary_locations_step.shp")
+        )
