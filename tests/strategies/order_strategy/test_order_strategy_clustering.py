@@ -75,15 +75,15 @@ class TestOrderStrategyClustering:
 
         # Set all locations to the lowest type:
         for location_reinforcement in _location_reinforcements:
-            location_reinforcement.current_selected_measure = (
-                _strategy.reinforcement_order[0]
+            location_reinforcement.set_selected_measure(
+                _strategy.reinforcement_order[0], None
             )
 
         # Create an isolated cluster in the middle.
         _mid_cluster = len(_location_reinforcements) // 2
-        _location_reinforcements[
-            _mid_cluster
-        ].current_selected_measure = _strategy.reinforcement_order[1]
+        _location_reinforcements[_mid_cluster].set_selected_measure(
+            _strategy.reinforcement_order[1], None
+        )
 
         # 2. Run test.
         _strategy.apply(example_location_reinforcements_with_buffering)
