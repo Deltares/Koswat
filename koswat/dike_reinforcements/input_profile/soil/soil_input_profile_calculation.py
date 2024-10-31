@@ -43,7 +43,7 @@ class SoilInputProfileCalculation(
                 +(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud)*Binnen_Talud_Oud)
                 /(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud+dH))
         """
-        _first_part = scenario.d_h * scenario.polderside_slope
+        _first_part = scenario.d_h * scenario.waterside_slope
         _second_part = scenario.crest_width - base_data.crest_width
         _third_parth = (
             base_data.crest_height - base_data.polderside_ground_level
@@ -95,7 +95,7 @@ class SoilInputProfileCalculation(
         _new_data = SoilInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.waterside_ground_level = base_data.waterside_ground_level
-        _new_data.waterside_slope = scenario.polderside_slope
+        _new_data.waterside_slope = scenario.waterside_slope
         _new_data.waterside_berm_height = base_data.waterside_berm_height
         _new_data.waterside_berm_width = base_data.waterside_berm_width
         _new_data.crest_width = scenario.crest_width

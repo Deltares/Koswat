@@ -87,7 +87,7 @@ class StabilityWallInputProfileCalculation(
         _first_part = (
             base_data.crest_height - base_data.polderside_ground_level
         ) * base_data.polderside_slope
-        _second_part = scenario.d_h * scenario.polderside_slope
+        _second_part = scenario.d_h * scenario.waterside_slope
         _operand = (
             base_data.crest_width + _first_part - _second_part - scenario.crest_width
         )
@@ -118,7 +118,7 @@ class StabilityWallInputProfileCalculation(
         _new_data = StabilityWallInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.waterside_ground_level = base_data.waterside_ground_level
-        _new_data.waterside_slope = scenario.polderside_slope
+        _new_data.waterside_slope = scenario.waterside_slope
         _new_data.waterside_berm_height = base_data.waterside_berm_height
         _new_data.waterside_berm_width = base_data.waterside_berm_width
         _new_data.crest_height = self._calculate_new_kruin_hoogte(base_data, scenario)

@@ -14,7 +14,7 @@ class KoswatScenario(KoswatConfigProtocol):
     d_s: float = math.nan
     d_p: float = math.nan
     crest_width: float = math.nan
-    polderside_slope: float = math.nan
+    waterside_slope: float = math.nan
 
     def is_valid(self) -> bool:
         return (

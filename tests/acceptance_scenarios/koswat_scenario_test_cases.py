@@ -16,14 +16,14 @@ class ScenarioCases(CasesProtocol):
         d_s=20,
         d_p=80,
         crest_width=5,
-        polderside_slope=4,
+        waterside_slope=4,
     )
     scenario_3 = KoswatScenario(
         d_h=2,
         d_s=10,
         d_p=30,
         crest_width=5,
-        polderside_slope=3,
+        waterside_slope=3,
     )
     scenario_infra = KoswatScenario(
         d_h=0,
@@ -47,7 +47,7 @@ class ScenarioCasesAB(CasesProtocol):
             d_s=0,
             d_p=0,
             crest_width=5,
-            polderside_slope=3,
+            waterside_slope=3,
         ),
         KoswatScenario(
             scenario_name="1b_ds",

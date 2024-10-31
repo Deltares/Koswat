@@ -34,7 +34,7 @@ class TestVPSInputProfileCalculation:
         _scenario.d_h = 1
         _scenario.d_p = 30
         _scenario.crest_width = 5
-        _scenario.polderside_slope = 3
+        _scenario.waterside_slope = 3
         _old_profile = KoswatInputProfileBase()
         _old_profile.waterside_ground_level = 0
         _old_profile.waterside_slope = 3

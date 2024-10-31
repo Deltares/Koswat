@@ -110,8 +110,8 @@ def scenario_ini_file() -> list[pytest.param]:
                 d_p=_section_scenario.d_p,
                 scenario_section=scenario_data.scenario_dike_section,
                 scenario_name=_section_scenario.scenario_name,
-                crest_width=_section_scenario.kruin_breedte,
-                polderside_slope=_section_scenario.buiten_talud,
+                crest_width=_section_scenario.crest_width,
+                waterside_slope=_section_scenario.waterside_slope,
             )
             yield _scenario
 
@@ -229,8 +229,8 @@ class TestReinforcementProfileBuilderFactory:
             _combination.koswat_scenario_case.crest_width = (
                 _combination.input_profile_case.crest_width
             )
-        if math.isnan(_combination.koswat_scenario_case.polderside_slope):
-            _combination.koswat_scenario_case.polderside_slope = (
+        if math.isnan(_combination.koswat_scenario_case.waterside_slope):
+            _combination.koswat_scenario_case.waterside_slope = (
                 _combination.input_profile_case.waterside_slope
             )
 
@@ -362,8 +362,8 @@ class TestReinforcementProfileBuilderFactory:
         assert isinstance(_base_profile, KoswatProfileBase)
 
         # Correct scenario.
-        if not scenario.polderside_slope or math.isnan(scenario.polderside_slope):
-            scenario.polderside_slope = input_profile.waterside_slope
+        if not scenario.waterside_slope or math.isnan(scenario.waterside_slope):
+            scenario.waterside_slope = input_profile.waterside_slope
         if not scenario.crest_width or math.isnan(scenario.crest_width):
             scenario.crest_width = input_profile.crest_width
 

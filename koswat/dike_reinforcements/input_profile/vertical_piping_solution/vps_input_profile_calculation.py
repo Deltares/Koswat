@@ -36,7 +36,7 @@ class VPSInputProfileCalculation(
         _new_data = VPSInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.waterside_ground_level = base_data.waterside_ground_level
-        _new_data.waterside_slope = scenario.polderside_slope
+        _new_data.waterside_slope = scenario.waterside_slope
         _new_data.waterside_berm_height = base_data.waterside_berm_height
         _new_data.waterside_berm_width = base_data.waterside_berm_width
         _new_data.crest_width = scenario.crest_width
