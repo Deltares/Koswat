@@ -1,3 +1,4 @@
+import copy
 from typing import Iterator
 
 import pytest
@@ -60,7 +61,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     _strategy_locations = [
         StrategyLocationInput(
             point_surrounding=PointSurroundings(traject_order=_idx),
-            strategy_reinforcement_type_costs=_initial_states[_rt],
+            strategy_reinforcement_type_costs=copy.deepcopy(_initial_states[_rt]),
         )
         for _idx, _rt in enumerate(_initial_state_per_location)
     ]
@@ -129,3 +130,50 @@ def _get_example_location_reinforcements_with_buffering(
         )
 
     yield _location_reinforcements
+
+
+@pytest.fixture(name="example_subclustering")
+def _get_example_location_reinforcements_with_selected_subclustering(
+    example_strategy_input: StrategyInput,
+) -> Iterator[StrategyInput]:
+    # Force min cluster to be our required value.
+    example_strategy_input.reinforcement_min_buffer = 0.5
+    assert (
+        example_strategy_input.reinforcement_min_cluster == 2
+    ), "Test should be written under fake data for demonstration purposes."
+
+    # Only apply infrastructure costs at position 0 and 5 ( `Location_005`)
+    # This should induce a splitting of the second cluster (based on order strategy)
+    # so that the final result should be:
+    # {
+    #     (2, ["Location_000","Location_001",]),
+    #     (3, ["Location_002","Location_003", "Location_004",]),
+    #     (4, ["Location_005","Location_006", "Location_007",
+    #           "Location_008","Location_009",]),
+    # }
+    # Clean up previous costs.
+    for _sl in example_strategy_input.strategy_locations:
+        for _cost in _sl.strategy_reinforcement_type_costs:
+            _cost.infrastructure_costs = 0
+
+    def modify_costs_to(
+        location: StrategyLocationInput,
+        target_reinforcement_idx: int,
+    ):
+        _reinforcement_type_default_order = (
+            OrderStrategy.get_default_order_for_reinforcements()
+        )
+        # We only modify the infra costs because the base costs increment
+        # with the index, so reinforcement_type[4].base_costs > reinforcement_type[3].base_costs
+        for _costs in location.strategy_reinforcement_type_costs[
+            :target_reinforcement_idx
+        ]:
+            _costs.infrastructure_costs = (
+                10 ** len(_reinforcement_type_default_order)
+            ) * 42
+
+    # We force the first cluster from index 0 to index 2
+    modify_costs_to(example_strategy_input.strategy_locations[0], 2)
+    # We split the second cluster, so that the second (minimal half) is increased to index 4
+    modify_costs_to(example_strategy_input.strategy_locations[5], 4)
+    yield example_strategy_input
