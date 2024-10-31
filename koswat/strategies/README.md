@@ -31,6 +31,7 @@ This modules contains the logic to choose which measure will be applied for a gi
     - available_measures (`list[Type[ReinforcementProfileProtocol]]`), which are the possible reinforcements that could be applied to the location.
     - strategy_location_input (`StrategyLocationInput`), the related input with available reinforcements and their costs related to this location-measure mapping.
 
+- `StrategyStepAssignment`, helps keep track of the different `StrategyLocationReinforcement.current_selected_measure` values done at each strategy.
 
 ## Available strategies
 
