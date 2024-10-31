@@ -36,7 +36,7 @@ class VPSInputProfileCalculation(
         _new_data = VPSInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
-        _new_data.buiten_talud = scenario.polderside_slope
+        _new_data.buiten_talud = scenario.waterside_slope
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
         _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
         _new_data.kruin_breedte = scenario.crest_width

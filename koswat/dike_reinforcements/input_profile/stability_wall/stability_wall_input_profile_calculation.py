@@ -87,7 +87,7 @@ class StabilityWallInputProfileCalculation(
         _first_part = (
             base_data.kruin_hoogte - base_data.binnen_maaiveld
         ) * base_data.binnen_talud
-        _second_part = scenario.d_h * scenario.polderside_slope
+        _second_part = scenario.d_h * scenario.waterside_slope
         _operand = (
             base_data.kruin_breedte + _first_part - _second_part - scenario.crest_width
         )
@@ -116,7 +116,7 @@ class StabilityWallInputProfileCalculation(
         _new_data = StabilityWallInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
-        _new_data.buiten_talud = scenario.polderside_slope
+        _new_data.buiten_talud = scenario.waterside_slope
         _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
         _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
         _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)

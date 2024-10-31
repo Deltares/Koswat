@@ -55,8 +55,8 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _new_koswat_scenario = KoswatScenario(**original_scenario.__dict__)
         if math.isnan(_new_koswat_scenario.crest_width):
             _new_koswat_scenario.crest_width = input_profile_base.kruin_breedte
-        if math.isnan(_new_koswat_scenario.polderside_slope):
-            _new_koswat_scenario.polderside_slope = input_profile_base.buiten_talud
+        if math.isnan(_new_koswat_scenario.waterside_slope):
+            _new_koswat_scenario.waterside_slope = input_profile_base.buiten_talud
 
         return _new_koswat_scenario
 

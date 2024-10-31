@@ -117,7 +117,7 @@ class TestStabilityWallInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 12
         _scenario.crest_width = 6.7
-        _scenario.polderside_slope = 7.8
+        _scenario.waterside_slope = 7.8
         _expected_result = 2
 
         # 2. Run test.
@@ -170,7 +170,7 @@ class TestStabilityWallInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 12
         _scenario.crest_width = 6.7
-        _scenario.polderside_slope = 7.8
+        _scenario.waterside_slope = 7.8
 
         # 2. Run test.
         _result = _calculator._calculate_new_input_profile(
