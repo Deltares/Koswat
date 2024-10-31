@@ -18,6 +18,12 @@ A koswat dike is represented by an instance of a `KoswatProfileProtocol`. And it
 |:--:|
 |Image 1. Base profile properties|
 
+The geometry of a dike has certain additional characteristics:
+- `crest` (_kruin_): The flat part on top of the dike.
+- `berm` (_berm_): The flat part between either point 2 and 3 (waterside) or point 6 an 7 (polderside).
+- `slope` (_talud_): The (steepness of the) diagonal parts between points 1 and 4 (waterside) or points 5 and 8 (polderside).
+- `ground level` (_maaiveld_): The level of the area to the left of point 1 (waterside) or to the right of point 8 (polderside).
+
 ## Dike layers
 A dike is composed by three layers:
 
