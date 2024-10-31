@@ -45,7 +45,13 @@ class ClusterGeoDataFrameOutputFom:
         Returns:
             bool: Validation result.
         """
-        return self.base_layer and self.initial_state and self.new_state
+
+        def validate_gdf(gdf: GeoDataFrame | None) -> bool:
+            return gdf is not None
+
+        return all(
+            map(validate_gdf, [self.base_layer, self.initial_state, self.new_state])
+        )
 
 
 @dataclass
