@@ -20,7 +20,7 @@ class SummaryLocationsShpExporter(KoswatExporterProtocol):
             koswat_summary, lambda x: x.current_selected_measure
         ).generate_geodataframes()
 
-        if not _clusters:
+        if not _clusters.is_valid():
             return
 
         # Export clusters to file
@@ -33,7 +33,7 @@ class SummaryLocationsShpExporter(KoswatExporterProtocol):
             koswat_summary, lambda x: x.get_selected_measure_steps()[1]
         ).generate_geodataframes()
 
-        if not _step_clusters:
+        if not _step_clusters.is_valid():
             return
 
         # Export clusters to file
