@@ -76,7 +76,7 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
         self, profile_points: CharacteristicPoints
     ) -> ReinforcementLayersWrapper:
         _unchanged_outside_slope = (
-            self.scenario.buiten_talud == self.base_profile.input_data.buiten_talud
+            self.scenario.polderside_slope == self.base_profile.input_data.buiten_talud
         )
         _layers_builder = (
             StandardReinforcementLayersWrapperBuilder()
@@ -94,6 +94,6 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
         _char_points_builder = CharacteristicPointsBuilder()
         _char_points_builder.input_profile = input_profile
         _char_points_builder.p4_x_coordinate = (
-            self.scenario.d_h * self.scenario.buiten_talud
+            self.scenario.d_h * self.scenario.polderside_slope
         )
         return _char_points_builder.build()

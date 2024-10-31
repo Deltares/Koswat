@@ -301,6 +301,6 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 return getattr(base_profile.input_data, prop_name)
             return _value
 
-        _scenario.kruin_breedte = get_valid_value("kruin_breedte")
-        _scenario.buiten_talud = get_valid_value("buiten_talud")
+        _scenario.crest_width = get_valid_value("kruin_breedte")
+        _scenario.polderside_slope = get_valid_value("buiten_talud")
         return _scenario

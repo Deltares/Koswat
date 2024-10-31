@@ -124,8 +124,8 @@ class TestCofferdamInputProfileCalculation:
         _input_data.kruin_breedte = 5
         _scenario = KoswatScenario()
         _scenario.d_h = 2
-        _scenario.kruin_breedte = 5
-        _scenario.buiten_talud = 3
+        _scenario.crest_width = 5
+        _scenario.polderside_slope = 3
 
         # 2. Run test.
         _result = _calculator._calculate_new_binnen_talud(_input_data, _scenario)
@@ -176,8 +176,8 @@ class TestCofferdamInputProfileCalculation:
         _cofferdam_settings.max_lengte_kistdam = 99
         _scenario = KoswatScenario()
         _scenario.d_h = 12
-        _scenario.kruin_breedte = 6.7
-        _scenario.buiten_talud = 7.8
+        _scenario.crest_width = 6.7
+        _scenario.polderside_slope = 7.8
 
         # 2. Run test.
         _result = _calculator._calculate_new_input_profile(

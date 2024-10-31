@@ -33,8 +33,8 @@ class TestVPSInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _scenario.d_p = 30
-        _scenario.kruin_breedte = 5
-        _scenario.buiten_talud = 3
+        _scenario.crest_width = 5
+        _scenario.polderside_slope = 3
         _old_profile = KoswatInputProfileBase()
         _old_profile.buiten_maaiveld = 0
         _old_profile.buiten_talud = 3
@@ -60,7 +60,7 @@ class TestVPSInputProfileCalculation:
         assert _new_profile.buiten_berm_hoogte == _old_profile.buiten_berm_hoogte
         assert _new_profile.buiten_berm_breedte == _old_profile.buiten_berm_breedte
         assert _new_profile.kruin_hoogte == pytest.approx(7, 0.0001)
-        assert _new_profile.kruin_breedte == _scenario.kruin_breedte
+        assert _new_profile.kruin_breedte == _scenario.crest_width
         assert _new_profile.binnen_talud == pytest.approx(3, 0.0001)
         assert _new_profile.binnen_maaiveld == _old_profile.binnen_maaiveld
         assert _new_profile.binnen_berm_breedte == pytest.approx(10, 0.0001)

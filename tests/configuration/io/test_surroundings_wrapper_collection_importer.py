@@ -69,7 +69,7 @@ class TestSurroundingsWrapperCollectionImporter:
 
         # Yield the surroundings section.
         # Remember! The database dir is the parent as in theory more
-        # traject's surroundings are avaiable in said dir.
+        # traject's surroundings are available in said dir.
         yield SurroundingsSectionFom(
             surroundings_database_dir=_temp_dir.parent,
             construction_distance=50,
