@@ -66,13 +66,13 @@ class KoswatCostsImporter(KoswatImporterProtocol):
             fom_costs.dike_profile_costs_section.construction_clay_layer_m3
         )
         _settings.added_layer_sand_m3 = (
-            fom_costs.dike_profile_costs_section.construction_sand_m3
+            fom_costs.dike_profile_costs_section.construction_core_m3
         )
         _settings.reused_layer_grass_m3 = (
             fom_costs.dike_profile_costs_section.reuse_grass_layer_m3
         )
         _settings.reused_layer_core_m3 = (
-            fom_costs.dike_profile_costs_section.reuse_sand_m3
+            fom_costs.dike_profile_costs_section.reuse_core_m3
         )
         _settings.disposed_material_m3 = (
             fom_costs.dike_profile_costs_section.dispose_material_m3
@@ -84,7 +84,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
             fom_costs.dike_profile_costs_section.profile_clay_layer_m2
         )
         _settings.profiling_layer_sand_m2 = (
-            fom_costs.dike_profile_costs_section.profile_sand_m2
+            fom_costs.dike_profile_costs_section.profile_core_m2
         )
         _settings.bewerken_maaiveld_m2 = (
             fom_costs.dike_profile_costs_section.process_ground_level_surface_m2

@@ -236,13 +236,13 @@ class TestReadIniConfigurations:
         )
         assert _ini_fom.dike_profile_costs_section.construction_grass_layer_m3 == 12.44
         assert _ini_fom.dike_profile_costs_section.construction_clay_layer_m3 == 18.05
-        assert _ini_fom.dike_profile_costs_section.construction_sand_m3 == 10.98
+        assert _ini_fom.dike_profile_costs_section.construction_core_m3 == 10.98
         assert _ini_fom.dike_profile_costs_section.reuse_grass_layer_m3 == 6.04
-        assert _ini_fom.dike_profile_costs_section.reuse_sand_m3 == 4.67
+        assert _ini_fom.dike_profile_costs_section.reuse_core_m3 == 4.67
         assert _ini_fom.dike_profile_costs_section.dispose_material_m3 == 7.07
         assert _ini_fom.dike_profile_costs_section.profile_grass_layer_m2 == 0.88
         assert _ini_fom.dike_profile_costs_section.profile_clay_layer_m2 == 0.65
-        assert _ini_fom.dike_profile_costs_section.profile_sand_m2 == 0.60
+        assert _ini_fom.dike_profile_costs_section.profile_core_m2 == 0.60
         assert (
             _ini_fom.dike_profile_costs_section.process_ground_level_surface_m2 == 0.25
         )

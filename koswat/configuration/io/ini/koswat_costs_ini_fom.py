@@ -16,13 +16,13 @@ class UnitPricesSectionFom(KoswatIniFomProtocol):
 class DikeProfileCostsSectionFom(KoswatIniFomProtocol):
     construction_grass_layer_m3: float
     construction_clay_layer_m3: float
-    construction_sand_m3: float
+    construction_core_m3: float
     reuse_grass_layer_m3: float
-    reuse_sand_m3: float
+    reuse_core_m3: float
     dispose_material_m3: float
     profile_grass_layer_m2: float
     profile_clay_layer_m2: float
-    profile_sand_m2: float
+    profile_core_m2: float
     process_ground_level_surface_m2: float
 
     @classmethod
@@ -30,13 +30,13 @@ class DikeProfileCostsSectionFom(KoswatIniFomProtocol):
         _section = cls()
         _section.construction_grass_layer_m3 = ini_config.getfloat("aanleg_graslaag_m3")
         _section.construction_clay_layer_m3 = ini_config.getfloat("aanleg_kleilaag_m3")
-        _section.construction_sand_m3 = ini_config.getfloat("aanleg_kern_m3")
+        _section.construction_core_m3 = ini_config.getfloat("aanleg_kern_m3")
         _section.reuse_grass_layer_m3 = ini_config.getfloat("hergebruik_graslaag_m3")
-        _section.reuse_sand_m3 = ini_config.getfloat("hergebruik_kern_m3")
+        _section.reuse_core_m3 = ini_config.getfloat("hergebruik_kern_m3")
         _section.dispose_material_m3 = ini_config.getfloat("afvoeren_materiaal_m3")
         _section.profile_grass_layer_m2 = ini_config.getfloat("profileren_graslaag_m2")
         _section.profile_clay_layer_m2 = ini_config.getfloat("profileren_kleilaag_m2")
-        _section.profile_sand_m2 = ini_config.getfloat("profileren_kern_m2")
+        _section.profile_core_m2 = ini_config.getfloat("profileren_kern_m2")
         _section.process_ground_level_surface_m2 = ini_config.getfloat(
             "bewerken_maaiveld_m2"
         )
