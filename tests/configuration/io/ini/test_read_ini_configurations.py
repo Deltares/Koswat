@@ -370,12 +370,12 @@ class TestReadIniConfigurations:
         assert _ini_fom.section_scenarios[0].d_h == 0.5
         assert _ini_fom.section_scenarios[0].d_s == 10
         assert _ini_fom.section_scenarios[0].d_p == 50
-        assert _ini_fom.section_scenarios[0].waterside_slope == None
-        assert _ini_fom.section_scenarios[0].crest_width == None
+        assert _ini_fom.section_scenarios[0].buiten_talud == None
+        assert _ini_fom.section_scenarios[0].kruin_breedte == None
 
         # Scenario 1
         assert _ini_fom.section_scenarios[1].d_h == 1
         assert _ini_fom.section_scenarios[1].d_s == 15
         assert _ini_fom.section_scenarios[1].d_p == 75
-        assert _ini_fom.section_scenarios[1].waterside_slope == 4
-        assert _ini_fom.section_scenarios[1].crest_width == 10
+        assert _ini_fom.section_scenarios[1].buiten_talud == 4
+        assert _ini_fom.section_scenarios[1].kruin_breedte == 10

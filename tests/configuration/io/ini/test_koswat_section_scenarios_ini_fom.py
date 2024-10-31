@@ -24,8 +24,8 @@ def _validate_test_section_scenario(
     assert ini_fom.d_h == 0.1
     assert ini_fom.d_s == 1.2
     assert ini_fom.d_p == 2.3
-    assert ini_fom.waterside_slope == 3.4
-    assert ini_fom.crest_width == 4.5
+    assert ini_fom.buiten_talud == 3.4
+    assert ini_fom.kruin_breedte == 4.5
 
 
 class TestKoswatSectionScenarioFom:

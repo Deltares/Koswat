@@ -53,10 +53,10 @@ class KoswatSummaryBuilder(BuilderProtocol):
             KoswatScenario: Valid scenario to be used in reinforcements.
         """
         _new_koswat_scenario = KoswatScenario(**original_scenario.__dict__)
-        if math.isnan(_new_koswat_scenario.crest_width):
-            _new_koswat_scenario.crest_width = input_profile_base.kruin_breedte
-        if math.isnan(_new_koswat_scenario.waterside_slope):
-            _new_koswat_scenario.waterside_slope = input_profile_base.buiten_talud
+        if math.isnan(_new_koswat_scenario.kruin_breedte):
+            _new_koswat_scenario.kruin_breedte = input_profile_base.kruin_breedte
+        if math.isnan(_new_koswat_scenario.buiten_talud):
+            _new_koswat_scenario.buiten_talud = input_profile_base.buiten_talud
 
         return _new_koswat_scenario
 
