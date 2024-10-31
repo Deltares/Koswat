@@ -31,8 +31,8 @@ class TestSoilInputProfileCalculation:
         _scenario.d_h = 1
         _scenario.d_s = 10
         _scenario.d_p = 30
-        _scenario.crest_width = 5
-        _scenario.waterside_slope = 3
+        _scenario.kruin_breedte = 5
+        _scenario.buiten_talud = 3
         _input_profile = KoswatInputProfileBase()
         _input_profile.crest_width = 5
         _input_profile.crest_height = 8
@@ -94,7 +94,7 @@ class TestSoilInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _scenario.d_p = 30
-        _scenario.waterside_slope = 3
+        _scenario.buiten_talud = 3
         _old_profile = KoswatInputProfileBase()
         _old_profile.waterside_ground_level = 0
         _old_profile.waterside_slope = 3

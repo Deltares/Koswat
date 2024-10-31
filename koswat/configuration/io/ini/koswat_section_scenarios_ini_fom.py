@@ -12,8 +12,8 @@ class SectionScenarioFom(KoswatIniFomProtocol):
     d_s: float
     d_p: float
     # If the following ones are not provided we should use the ones from the original profile
-    waterside_slope: Optional[float]
-    crest_width: Optional[float]
+    buiten_talud: Optional[float]
+    kruin_breedte: Optional[float]
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> SectionScenarioFom:
@@ -23,8 +23,8 @@ class SectionScenarioFom(KoswatIniFomProtocol):
         _section.d_h = ini_config.getfloat("dH")
         _section.d_s = ini_config.getfloat("dS")
         _section.d_p = ini_config.getfloat("dP")
-        _section.waterside_slope = ini_config.getfloat("Buitentalud")
-        _section.crest_width = ini_config.getfloat("kruinbreedte")
+        _section.buiten_talud = ini_config.getfloat("Buitentalud")
+        _section.kruin_breedte = ini_config.getfloat("kruinbreedte")
         return _section
 
 

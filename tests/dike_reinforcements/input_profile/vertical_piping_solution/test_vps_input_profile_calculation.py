@@ -33,8 +33,8 @@ class TestVPSInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _scenario.d_p = 30
-        _scenario.crest_width = 5
-        _scenario.waterside_slope = 3
+        _scenario.kruin_breedte = 5
+        _scenario.buiten_talud = 3
         _old_profile = KoswatInputProfileBase()
         _old_profile.waterside_ground_level = 0
         _old_profile.waterside_slope = 3
@@ -62,7 +62,7 @@ class TestVPSInputProfileCalculation:
         assert _new_profile.waterside_berm_height == _old_profile.waterside_berm_height
         assert _new_profile.waterside_berm_width == _old_profile.waterside_berm_width
         assert _new_profile.crest_height == pytest.approx(7, 0.0001)
-        assert _new_profile.crest_width == _scenario.crest_width
+        assert _new_profile.crest_width == _scenario.kruin_breedte
         assert _new_profile.polderside_slope == pytest.approx(3, 0.0001)
         assert (
             _new_profile.polderside_ground_level == _old_profile.polderside_ground_level

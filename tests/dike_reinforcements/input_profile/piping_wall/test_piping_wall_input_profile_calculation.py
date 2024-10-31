@@ -92,8 +92,8 @@ class TestPipingWallInputProfileCalculation:
         _scenario.d_h = 1
         _scenario.d_s = 10
         _scenario.d_p = 30
-        _scenario.crest_width = 5
-        _scenario.waterside_slope = 3
+        _scenario.kruin_breedte = 5
+        _scenario.buiten_talud = 3
         _input_profile = MockProfile()
         _input_profile.kruin_breedte = 5
         _input_profile.kruin_hoogte = 8

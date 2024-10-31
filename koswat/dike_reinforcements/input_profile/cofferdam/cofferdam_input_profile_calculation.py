@@ -49,7 +49,7 @@ class CofferdamInputProfileCalculation(
         _mid_operand = base_data.polderside_slope * (
             base_data.crest_height - base_data.polderside_ground_level
         )
-        _operand = base_data.crest_width + _mid_operand - scenario.crest_width
+        _operand = base_data.crest_width + _mid_operand - scenario.kruin_breedte
         _dividend = (
             base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
         )
@@ -126,7 +126,7 @@ class CofferdamInputProfileCalculation(
         _new_data.waterside_berm_height = base_data.waterside_berm_height
         _new_data.waterside_berm_width = base_data.waterside_berm_width
         _new_data.crest_height = self._calculate_new_crest_height(base_data, scenario)
-        _new_data.crest_width = scenario.crest_width
+        _new_data.crest_width = scenario.kruin_breedte
         _new_data.polderside_slope = self._calculate_new_binnen_talud(
             base_data, scenario
         )

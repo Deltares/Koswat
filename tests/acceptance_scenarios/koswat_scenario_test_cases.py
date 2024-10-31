@@ -9,27 +9,27 @@ class ScenarioCases(CasesProtocol):
         d_h=1,
         d_s=10,
         d_p=30,
-        crest_width=5,
+        kruin_breedte=5,
     )
     scenario_2 = KoswatScenario(
         d_h=0.5,
         d_s=20,
         d_p=80,
-        crest_width=5,
-        waterside_slope=4,
+        kruin_breedte=5,
+        buiten_talud=4,
     )
     scenario_3 = KoswatScenario(
         d_h=2,
         d_s=10,
         d_p=30,
-        crest_width=5,
-        waterside_slope=3,
+        kruin_breedte=5,
+        buiten_talud=3,
     )
     scenario_infra = KoswatScenario(
         d_h=0,
         d_s=20,
         d_p=50,
-        crest_width=8,
+        kruin_breedte=8,
     )
 
     cases = [
@@ -46,8 +46,8 @@ class ScenarioCasesAB(CasesProtocol):
             d_h=0.5,
             d_s=0,
             d_p=0,
-            crest_width=5,
-            waterside_slope=3,
+            kruin_breedte=5,
+            buiten_talud=3,
         ),
         KoswatScenario(
             scenario_name="1b_ds",

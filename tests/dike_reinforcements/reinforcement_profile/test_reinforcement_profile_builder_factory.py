@@ -110,8 +110,8 @@ def scenario_ini_file() -> list[pytest.param]:
                 d_p=_section_scenario.d_p,
                 scenario_section=scenario_data.scenario_dike_section,
                 scenario_name=_section_scenario.scenario_name,
-                crest_width=_section_scenario.crest_width,
-                waterside_slope=_section_scenario.waterside_slope,
+                kruin_breedte=_section_scenario.kruin_breedte,
+                buiten_talud=_section_scenario.buiten_talud,
             )
             yield _scenario
 
@@ -226,11 +226,11 @@ class TestReinforcementProfileBuilderFactory:
         ).build()
 
         if math.isnan(_combination.koswat_scenario_case.crest_width):
-            _combination.koswat_scenario_case.crest_width = (
+            _combination.koswat_scenario_case.kruin_breedte = (
                 _combination.input_profile_case.crest_width
             )
-        if math.isnan(_combination.koswat_scenario_case.waterside_slope):
-            _combination.koswat_scenario_case.waterside_slope = (
+        if math.isnan(_combination.koswat_scenario_case.buiten_talud):
+            _combination.koswat_scenario_case.buiten_talud = (
                 _combination.input_profile_case.waterside_slope
             )
 
@@ -362,10 +362,10 @@ class TestReinforcementProfileBuilderFactory:
         assert isinstance(_base_profile, KoswatProfileBase)
 
         # Correct scenario.
-        if not scenario.waterside_slope or math.isnan(scenario.waterside_slope):
-            scenario.waterside_slope = input_profile.waterside_slope
-        if not scenario.crest_width or math.isnan(scenario.crest_width):
-            scenario.crest_width = input_profile.crest_width
+        if not scenario.buiten_talud or math.isnan(scenario.buiten_talud):
+            scenario.buiten_talud = input_profile.waterside_slope
+        if not scenario.kruin_breedte or math.isnan(scenario.kruin_breedte):
+            scenario.kruin_breedte = input_profile.crest_width
 
         _reinforcement_settings = KoswatReinforcementSettings()
 
