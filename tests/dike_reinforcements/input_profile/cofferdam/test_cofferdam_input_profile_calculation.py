@@ -150,8 +150,8 @@ class TestCofferdamInputProfileCalculation:
             aquifer: float
 
         class MockSettings(KoswatCofferdamSettings):
-            min_lengte_kistdam: float
-            max_lengte_kistdam: float
+            min_length_cofferdam: float
+            max_length_cofferdam: float
 
         # 1. Define test data.
         _calculator = CofferdamInputProfileCalculation()
@@ -172,8 +172,8 @@ class TestCofferdamInputProfileCalculation:
         _input_data.pleistoceen = -6.7
         _input_data.aquifer = -2.3
         _cofferdam_settings = MockSettings()
-        _cofferdam_settings.min_lengte_kistdam = 0
-        _cofferdam_settings.max_lengte_kistdam = 99
+        _cofferdam_settings.min_length_cofferdam = 0
+        _cofferdam_settings.max_length_cofferdam = 99
         _scenario = KoswatScenario()
         _scenario.d_h = 12
         _scenario.crest_width = 6.7

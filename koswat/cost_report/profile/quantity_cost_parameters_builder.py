@@ -71,7 +71,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         _calculator.new_clay_layer_surface = _clay_layer.new_layer_surface.length
         _calculator.new_grass_layer_volume = _grass_layer.new_layer_geometry.area
         _calculator.new_grass_layer_surface = _grass_layer.new_layer_surface.length
-        _calculator.new_maaiveld_surface = (
+        _calculator.new_ground_level_surface = (
             self.reinforced_profile.new_ground_level_surface
         )
         _calculator.construction_length = (
@@ -137,16 +137,17 @@ class QuantityCostParametersBuilder(BuilderProtocol):
             _qcp.get_reused_grass_volume(), dike_profile_costs.reused_layer_grass_m3
         )
         qc_parameters.new_grass_volume = self._get_soil_cost_parameter(
-            _qcp.get_aanleg_grass_volume(), dike_profile_costs.added_layer_grass_m3
+            _qcp.get_construction_grass_volume(),
+            dike_profile_costs.added_layer_grass_m3,
         )
         qc_parameters.new_clay_volume = self._get_soil_cost_parameter(
-            _qcp.get_aanleg_clay_volume(), dike_profile_costs.added_layer_clay_m3
+            _qcp.get_construction_clay_volume(), dike_profile_costs.added_layer_clay_m3
         )
         qc_parameters.reused_core_volume = self._get_soil_cost_parameter(
             _qcp.get_reused_core_volume(), dike_profile_costs.reused_layer_core_m3
         )
         qc_parameters.new_core_volume = self._get_soil_cost_parameter(
-            _qcp.get_aanleg_core_volume(), dike_profile_costs.added_layer_sand_m3
+            _qcp.get_construction_core_volume(), dike_profile_costs.added_layer_sand_m3
         )
         qc_parameters.removed_material_volume = self._get_soil_cost_parameter(
             _qcp.get_removed_material_volume(), dike_profile_costs.disposed_material_m3
@@ -161,10 +162,11 @@ class QuantityCostParametersBuilder(BuilderProtocol):
             _qcp.new_core_layer_surface, dike_profile_costs.profiling_layer_sand_m2
         )
         qc_parameters.new_maaiveld_surface = self._get_soil_cost_parameter(
-            _qcp.new_maaiveld_surface, dike_profile_costs.bewerken_maaiveld_m2
+            _qcp.new_ground_level_surface,
+            dike_profile_costs.processing_ground_level_surface_m2,
         )
         qc_parameters.land_purchase_surface = self._get_land_purchase_cost_parameter(
-            _qcp.new_maaiveld_surface, self.reinforced_profile.input_data
+            _qcp.new_ground_level_surface, self.reinforced_profile.input_data
         )
         qc_parameters.construction_length = self._get_construction_cost_parameter(
             _qcp.construction_length, _qcp.construction_type

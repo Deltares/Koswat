@@ -227,7 +227,7 @@ class TestQuantityCostParametersBuilder:
         assert _qcp.new_clay_layer_surface == 4.2
         assert _qcp.new_grass_layer_volume == 4.8
         assert _qcp.new_grass_layer_surface == 8.4
-        assert _qcp.new_maaiveld_surface == 42
+        assert _qcp.new_ground_level_surface == 42
         assert _qcp.construction_length == 10
 
     def test_build_with_valid_data(self):
@@ -261,7 +261,7 @@ class TestQuantityCostParametersBuilder:
         _costs_settings.dike_profile_costs.profiling_layer_grass_m2 = 0.88
         _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.dike_profile_costs.processing_ground_level_surface_m2 = 0.25
         _costs_settings.construction_costs = ConstructionCostsSettings()
         _costs_settings.construction_costs.cb_sheetpile = ConstructionFactors()
         _costs_settings.construction_costs.cb_sheetpile.c_factor = 0

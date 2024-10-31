@@ -86,7 +86,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         _settings.profiling_layer_sand_m2 = (
             fom_costs.dike_profile_costs_section.profile_core_m2
         )
-        _settings.bewerken_maaiveld_m2 = (
+        _settings.processing_ground_level_surface_m2 = (
             fom_costs.dike_profile_costs_section.process_ground_level_surface_m2
         )
         return _settings
