@@ -227,11 +227,11 @@ class TestReinforcementProfileBuilderFactory:
 
         if math.isnan(_combination.koswat_scenario_case.crest_width):
             _combination.koswat_scenario_case.crest_width = (
-                _combination.input_profile_case.kruin_breedte
+                _combination.input_profile_case.crest_width
             )
         if math.isnan(_combination.koswat_scenario_case.polderside_slope):
             _combination.koswat_scenario_case.polderside_slope = (
-                _combination.input_profile_case.buiten_talud
+                _combination.input_profile_case.waterside_slope
             )
 
         def _get_reinforced_profile() -> ReinforcementProfileProtocol:
@@ -363,9 +363,9 @@ class TestReinforcementProfileBuilderFactory:
 
         # Correct scenario.
         if not scenario.polderside_slope or math.isnan(scenario.polderside_slope):
-            scenario.polderside_slope = input_profile.buiten_talud
+            scenario.polderside_slope = input_profile.waterside_slope
         if not scenario.crest_width or math.isnan(scenario.crest_width):
-            scenario.crest_width = input_profile.kruin_breedte
+            scenario.crest_width = input_profile.crest_width
 
         _reinforcement_settings = KoswatReinforcementSettings()
 

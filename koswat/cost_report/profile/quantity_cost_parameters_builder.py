@@ -99,7 +99,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
     ) -> SoilCostParameter:
         _lpcp = SoilCostParameter()
         _lpcp.quantity = quantity
-        _lpcp.cost = input_data.grondprijs
+        _lpcp.cost = input_data.ground_price
         _lpcp.surtax = self.koswat_costs_settings.surtax_costs.get_land_purchase_surtax(
             self.reinforced_profile.input_data.land_purchase_surtax_factor
         )

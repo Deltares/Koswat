@@ -39,7 +39,7 @@ class TestPipingWallInputProfileCalculation:
         _profile_data = MockProfile()
         _profile_data.binnen_berm_breedte = 6
         _profile_data.binnen_maaiveld = 1
-        _profile_data.pleistoceen = -5
+        _profile_data.pleistocene = -5
         _profile_data.aquifer = -2
         _piping_wall_settings = MockSettings()
         _piping_wall_settings.min_lengte_kwelscherm = 0

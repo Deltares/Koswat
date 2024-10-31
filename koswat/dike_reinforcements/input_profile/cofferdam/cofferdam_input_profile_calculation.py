@@ -32,10 +32,10 @@ class CofferdamInputProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
-    def _calculate_new_kruin_hoogte(
+    def _calculate_new_crest_height(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
-        return base_data.kruin_hoogte + scenario.d_h
+        return base_data.crest_height + scenario.d_h
 
     def _calculate_new_binnen_talud(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
@@ -46,11 +46,13 @@ class CofferdamInputProfileCalculation(
                 *Binnen_Talud_Oud-Kruin_Breedte_Nieuw)
         /(Kruin_Hoogte_Oud+dH)
         """
-        _mid_operand = base_data.binnen_talud * (
-            base_data.kruin_hoogte - base_data.binnen_maaiveld
+        _mid_operand = base_data.polderside_slope * (
+            base_data.crest_height - base_data.polderside_ground_level
         )
-        _operand = base_data.kruin_breedte + _mid_operand - scenario.crest_width
-        _dividend = base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h
+        _operand = base_data.crest_width + _mid_operand - scenario.crest_width
+        _dividend = (
+            base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
+        )
         return _operand / _dividend
 
     def _calculate_new_buiten_talud(
@@ -61,12 +63,14 @@ class CofferdamInputProfileCalculation(
         /(Kruin_Hoogte_Oud+dH)
         """
         _operand = (
-            base_data.kruin_hoogte - base_data.buiten_maaiveld
-        ) * base_data.buiten_talud
-        _dividend = base_data.kruin_hoogte - base_data.buiten_maaiveld + scenario.d_h
+            base_data.crest_height - base_data.waterside_ground_level
+        ) * base_data.waterside_slope
+        _dividend = (
+            base_data.crest_height - base_data.waterside_ground_level + scenario.d_h
+        )
         return _operand / _dividend
 
-    def _calculate_length_coffer_dam(
+    def _calculate_length_cofferdam(
         self,
         old_data: KoswatInputProfileProtocol,
         cofferdam_settings: KoswatCofferdamSettings,
@@ -85,7 +89,7 @@ class CofferdamInputProfileCalculation(
                 + (new_kruin_hoogte - 0.5)
                 - old_data.aquifer
             )
-        _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistoceen - 1)
+        _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistocene - 1)
         return round(
             min(
                 max(
@@ -115,29 +119,33 @@ class CofferdamInputProfileCalculation(
     ) -> CofferDamInputProfile:
         _new_data = CofferDamInputProfile()
         _new_data.dike_section = base_data.dike_section
-        _new_data.buiten_maaiveld = base_data.buiten_maaiveld
-        _new_data.buiten_talud = self._calculate_new_buiten_talud(base_data, scenario)
-        _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
-        _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
-        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
-        _new_data.kruin_breedte = scenario.crest_width
-        _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
-        _new_data.binnen_berm_breedte = 0
-        _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
-        _new_data.binnen_maaiveld = base_data.binnen_maaiveld
+        _new_data.waterside_ground_level = base_data.waterside_ground_level
+        _new_data.waterside_slope = self._calculate_new_buiten_talud(
+            base_data, scenario
+        )
+        _new_data.waterside_berm_height = base_data.waterside_berm_height
+        _new_data.waterside_berm_width = base_data.waterside_berm_width
+        _new_data.crest_height = self._calculate_new_crest_height(base_data, scenario)
+        _new_data.crest_width = scenario.crest_width
+        _new_data.polderside_slope = self._calculate_new_binnen_talud(
+            base_data, scenario
+        )
+        _new_data.polderside_berm_width = 0
+        _new_data.polderside_berm_height = base_data.polderside_ground_level
+        _new_data.polderside_ground_level = base_data.polderside_ground_level
         _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
             base_data, _new_data, scenario
         )
-        _new_data.grondprijs_bebouwd = base_data.grondprijs_bebouwd
-        _new_data.grondprijs_onbebouwd = base_data.grondprijs_onbebouwd
-        _new_data.factor_zetting = base_data.factor_zetting
-        _new_data.pleistoceen = base_data.pleistoceen
+        _new_data.ground_price_builtup = base_data.ground_price_builtup
+        _new_data.ground_price_unbuilt = base_data.ground_price_unbuilt
+        _new_data.factor_settlement = base_data.factor_settlement
+        _new_data.pleistocene = base_data.pleistocene
         _new_data.aquifer = base_data.aquifer
-        _new_data.construction_length = self._calculate_length_coffer_dam(
+        _new_data.construction_length = self._calculate_length_cofferdam(
             base_data,
             cofferdam_settings,
             _soil_binnen_berm_breedte,
-            _new_data.kruin_hoogte,
+            _new_data.crest_height,
         )
         _new_data.construction_type = self._determine_construction_type(
             _new_data.construction_length

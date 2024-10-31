@@ -76,7 +76,8 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
         self, profile_points: CharacteristicPoints
     ) -> ReinforcementLayersWrapper:
         _unchanged_outside_slope = (
-            self.scenario.polderside_slope == self.base_profile.input_data.buiten_talud
+            self.scenario.polderside_slope
+            == self.base_profile.input_data.waterside_slope
         )
         _layers_builder = (
             StandardReinforcementLayersWrapperBuilder()

@@ -15,5 +15,5 @@ class VPSInputProfile(SoilInputProfile, ReinforcementInputProfileProtocol):
         return "Verticale piping oplossing"
 
     @property
-    def grondprijs(self) -> float:
-        return self.grondprijs_bebouwd
+    def ground_price(self) -> float:
+        return self.ground_price_builtup

@@ -21,11 +21,11 @@ class TestStabilityWallInputProfile:
         _bebouwd = 100
         _onbebouwd = 10
         _profile = StabilityWallInputProfile()
-        _profile.grondprijs_bebouwd = _bebouwd
-        _profile.grondprijs_onbebouwd = _onbebouwd
+        _profile.ground_price_builtup = _bebouwd
+        _profile.ground_price_unbuilt = _onbebouwd
 
         # 2. Run test
-        _grondprijs = _profile.grondprijs
+        _grondprijs = _profile.ground_price
 
         # 3. Verify expectations
         assert _grondprijs == _bebouwd

@@ -16,17 +16,21 @@ class ReinforcementInputProfileCalculationBase(ABC):
         scenario: KoswatScenario,
     ) -> float:
         _dikebase_old = (
-            (old_data.kruin_hoogte - old_data.buiten_maaiveld) * old_data.buiten_talud
-            + old_data.buiten_berm_breedte
-            + old_data.kruin_breedte
-            + old_data.binnen_berm_breedte
-            + (old_data.kruin_hoogte - old_data.binnen_maaiveld) * old_data.binnen_talud
+            (old_data.crest_height - old_data.waterside_ground_level)
+            * old_data.waterside_slope
+            + old_data.waterside_berm_width
+            + old_data.crest_width
+            + old_data.polderside_berm_width
+            + (old_data.crest_height - old_data.polderside_ground_level)
+            * old_data.polderside_slope
         )
         _dikebase_new = (
-            (new_data.kruin_hoogte - new_data.buiten_maaiveld) * new_data.buiten_talud
-            + new_data.buiten_berm_breedte
-            + new_data.kruin_breedte
-            + (new_data.kruin_hoogte - new_data.binnen_maaiveld) * new_data.binnen_talud
+            (new_data.crest_height - new_data.waterside_ground_level)
+            * new_data.waterside_slope
+            + new_data.waterside_berm_width
+            + new_data.crest_width
+            + (new_data.crest_height - new_data.polderside_ground_level)
+            * new_data.polderside_slope
         )
         _berm = scenario.d_p - (_dikebase_new - _dikebase_old)
         return max(_berm, 0)

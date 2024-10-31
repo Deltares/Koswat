@@ -17,36 +17,45 @@ class CharacteristicPointsBuilder(BuilderProtocol):
         self.p4_x_coordinate = math.nan
 
     def _build_waterside(self, p4_x: float) -> List[Point]:
-        _p4 = Point(p4_x, self.input_profile.kruin_hoogte)
+        _p4 = Point(p4_x, self.input_profile.crest_height)
         _p3_x = _p4.x - (
-            (self.input_profile.kruin_hoogte - self.input_profile.buiten_berm_hoogte)
-            * self.input_profile.buiten_talud
+            (self.input_profile.crest_height - self.input_profile.waterside_berm_height)
+            * self.input_profile.waterside_slope
         )
-        _p3 = Point(_p3_x, self.input_profile.buiten_berm_hoogte)
-        _p2_x = _p3.x - self.input_profile.buiten_berm_breedte
-        _p2 = Point(_p2_x, self.input_profile.buiten_berm_hoogte)
+        _p3 = Point(_p3_x, self.input_profile.waterside_berm_height)
+        _p2_x = _p3.x - self.input_profile.waterside_berm_width
+        _p2 = Point(_p2_x, self.input_profile.waterside_berm_height)
         _p1_x = _p2.x - (
-            (self.input_profile.buiten_berm_hoogte - self.input_profile.buiten_maaiveld)
-            * self.input_profile.buiten_talud
+            (
+                self.input_profile.waterside_berm_height
+                - self.input_profile.waterside_ground_level
+            )
+            * self.input_profile.waterside_slope
         )
-        _p1 = Point(_p1_x, self.input_profile.buiten_maaiveld)
+        _p1 = Point(_p1_x, self.input_profile.waterside_ground_level)
         return [_p1, _p2, _p3, _p4]
 
     def _build_polderside(self, p4_x: float) -> List[Point]:
-        _x_p5 = p4_x + self.input_profile.kruin_breedte
-        _p5 = Point(_x_p5, self.input_profile.kruin_hoogte)
+        _x_p5 = p4_x + self.input_profile.crest_width
+        _p5 = Point(_x_p5, self.input_profile.crest_height)
         _x_p6 = _p5.x + (
-            (self.input_profile.kruin_hoogte - self.input_profile.binnen_berm_hoogte)
-            * self.input_profile.binnen_talud
+            (
+                self.input_profile.crest_height
+                - self.input_profile.polderside_berm_height
+            )
+            * self.input_profile.polderside_slope
         )
-        _p6 = Point(_x_p6, self.input_profile.binnen_berm_hoogte)
-        _x_p7 = _p6.x + self.input_profile.binnen_berm_breedte
-        _p7 = Point(_x_p7, self.input_profile.binnen_berm_hoogte)
+        _p6 = Point(_x_p6, self.input_profile.polderside_berm_height)
+        _x_p7 = _p6.x + self.input_profile.polderside_berm_width
+        _p7 = Point(_x_p7, self.input_profile.polderside_berm_height)
         _x_p8 = _p7.x + (
-            (self.input_profile.binnen_berm_hoogte - self.input_profile.binnen_maaiveld)
-            * self.input_profile.binnen_talud
+            (
+                self.input_profile.polderside_berm_height
+                - self.input_profile.polderside_ground_level
+            )
+            * self.input_profile.polderside_slope
         )
-        _p8 = Point(_x_p8, self.input_profile.binnen_maaiveld)
+        _p8 = Point(_x_p8, self.input_profile.polderside_ground_level)
         return [_p5, _p6, _p7, _p8]
 
     def build(self) -> CharacteristicPoints:

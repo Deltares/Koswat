@@ -155,8 +155,8 @@ class TestStabilityWallInputProfileCalculation:
         _input_data.binnen_maaiveld = 2.3
         _input_data.binnen_talud = 4.5
         _input_data.kruin_breedte = 5.6
-        _input_data.buiten_maaiveld = 6.7
-        _input_data.buiten_berm_hoogte = 7.8
+        _input_data.waterside_ground_level = 6.7
+        _input_data.waterside_berm_height = 7.8
         _input_data.buiten_berm_breedte = 8.9
         _input_data.buiten_talud = 3.4
         _input_data.grondprijs_bebouwd = 150

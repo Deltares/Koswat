@@ -34,10 +34,10 @@ class TestSoilInputProfileCalculation:
         _scenario.crest_width = 5
         _scenario.polderside_slope = 3
         _input_profile = KoswatInputProfileBase()
-        _input_profile.kruin_breedte = 5
-        _input_profile.kruin_hoogte = 8
-        _input_profile.binnen_talud = 3
-        _input_profile.binnen_maaiveld = 2
+        _input_profile.crest_width = 5
+        _input_profile.crest_height = 8
+        _input_profile.polderside_slope = 3
+        _input_profile.polderside_ground_level = 2
 
         # 2. Run test
         _new_binnen_talud = SoilInputProfileCalculation()._calculate_new_binnen_talud(
@@ -53,11 +53,11 @@ class TestSoilInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _old_data = KoswatInputProfileBase()
-        _old_data.binnen_berm_hoogte = 2
-        _old_data.binnen_maaiveld = 2
-        _old_data.kruin_hoogte = 8
+        _old_data.polderside_berm_height = 2
+        _old_data.polderside_ground_level = 2
+        _old_data.crest_height = 8
         _new_data = KoswatInputProfileBase()
-        _new_data.binnen_berm_breedte = 20
+        _new_data.polderside_berm_width = 20
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
@@ -73,10 +73,10 @@ class TestSoilInputProfileCalculation:
         # 1. Define test data.
         _scenario = KoswatScenario()
         _old_data = KoswatInputProfileBase()
-        _old_data.binnen_maaiveld = 4.2
+        _old_data.polderside_ground_level = 4.2
 
         _new_data = KoswatInputProfileBase()
-        _new_data.binnen_berm_breedte = -1
+        _new_data.polderside_berm_width = -1
 
         # 2. Run test
         _new_binnen_berm_hoogte = (
@@ -86,7 +86,7 @@ class TestSoilInputProfileCalculation:
         )
 
         # 3. Verify expectations
-        assert _new_binnen_berm_hoogte == _old_data.binnen_maaiveld
+        assert _new_binnen_berm_hoogte == _old_data.polderside_ground_level
 
     def test_calculate_new_binnen_berm_breedte(self):
         # 1. Define test data.
@@ -96,24 +96,24 @@ class TestSoilInputProfileCalculation:
         _scenario.d_p = 30
         _scenario.polderside_slope = 3
         _old_profile = KoswatInputProfileBase()
-        _old_profile.buiten_maaiveld = 0
-        _old_profile.buiten_talud = 3
-        _old_profile.buiten_berm_hoogte = 0
-        _old_profile.buiten_berm_breedte = 0
-        _old_profile.kruin_hoogte = 6
-        _old_profile.kruin_breedte = 5
-        _old_profile.binnen_talud = 3
-        _old_profile.binnen_berm_hoogte = 0
-        _old_profile.binnen_berm_breedte = 0
-        _old_profile.binnen_maaiveld = 0
+        _old_profile.waterside_ground_level = 0
+        _old_profile.waterside_slope = 3
+        _old_profile.waterside_berm_height = 0
+        _old_profile.waterside_berm_width = 0
+        _old_profile.crest_height = 6
+        _old_profile.crest_width = 5
+        _old_profile.polderside_slope = 3
+        _old_profile.polderside_berm_height = 0
+        _old_profile.polderside_berm_width = 0
+        _old_profile.polderside_ground_level = 0
         _new_profile = KoswatInputProfileBase()
-        _new_profile.buiten_maaiveld = 0
-        _new_profile.buiten_talud = 3
-        _new_profile.buiten_berm_breedte = 0
-        _new_profile.kruin_breedte = 5
-        _new_profile.kruin_hoogte = 7
-        _new_profile.binnen_talud = 3.5714
-        _new_profile.binnen_maaiveld = 0
+        _new_profile.waterside_ground_level = 0
+        _new_profile.waterside_slope = 3
+        _new_profile.waterside_berm_width = 0
+        _new_profile.crest_width = 5
+        _new_profile.crest_height = 7
+        _new_profile.polderside_slope = 3.5714
+        _new_profile.polderside_ground_level = 0
 
         # 2. Run test
         _new_binnen_berm_breedte = (
@@ -131,7 +131,7 @@ class TestSoilInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 2.2
         _old_data = KoswatInputProfileBase()
-        _old_data.kruin_hoogte = 40.04
+        _old_data.crest_height = 40.04
 
         # 2. Run test
         _new_kruin_hoogte = SoilInputProfileCalculation()._calculate_new_kruin_hoogte(

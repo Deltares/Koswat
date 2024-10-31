@@ -109,7 +109,7 @@ class TestQuantityCostParametersBuilder:
         _builder.koswat_costs_settings.surtax_costs.land_purchase_normal = 2.0
         _builder.reinforced_profile = SoilReinforcementProfile()
         _builder.reinforced_profile.input_data = SoilInputProfile()
-        _builder.reinforced_profile.input_data.grondprijs_onbebouwd = 10
+        _builder.reinforced_profile.input_data.ground_price_unbuilt = 10
         _builder.reinforced_profile.input_data.land_purchase_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
