@@ -114,7 +114,7 @@ class VPSReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 
 class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     min_length_piping_wall: float
-    transition_cbwall_sheet_pile: float
+    transition_cbwall_sheetpile: float
     max_length_piping_wall: float
     constructive_surtax_factor: SurtaxFactorEnum
     land_purchase_surtax_factor: SurtaxFactorEnum
@@ -124,7 +124,7 @@ class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         _section = cls()
         _section._set_properties_from_dict(ini_config)
         _section.min_length_piping_wall = ini_config.getfloat("min_lengte_kwelscherm")
-        _section.transition_cbwall_sheet_pile = ini_config.getfloat(
+        _section.transition_cbwall_sheetpile = ini_config.getfloat(
             "overgang_cbwand_damwand"
         )
         _section.max_length_piping_wall = ini_config.getfloat("max_lengte_kwelscherm")
@@ -144,7 +144,7 @@ class PipingwallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
 class StabilitywallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
     steepening_polderside_slope: float
     min_length_stability_wall: float
-    transition_sheet_pile_diaphragm_wall: float
+    transition_sheetpile_diaphragm_wall: float
     max_length_stability_wall: float
     constructive_surtax_factor: SurtaxFactorEnum
     land_purchase_surtax_factor: SurtaxFactorEnum
@@ -159,7 +159,7 @@ class StabilitywallReinforcementSectionFom(ReinforcementProfileSectionFomBase):
         _section.min_length_stability_wall = ini_config.getfloat(
             "min_lengte_stabiliteitswand"
         )
-        _section.transition_sheet_pile_diaphragm_wall = ini_config.getfloat(
+        _section.transition_sheetpile_diaphragm_wall = ini_config.getfloat(
             "overgang_damwand_diepwand"
         )
         _section.max_length_stability_wall = ini_config.getfloat(

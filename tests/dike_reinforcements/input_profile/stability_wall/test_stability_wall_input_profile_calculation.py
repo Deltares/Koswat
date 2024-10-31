@@ -63,7 +63,7 @@ class TestStabilityWallInputProfileCalculation:
         _stability_wall_settings = MockSettings()
         _stability_wall_settings.min_lengte_stabiliteitswand = 0
         _stability_wall_settings.max_lengte_stabiliteitswand = 99
-        _stability_wall_settings.transition_sheet_pile_diaphragm_wall = 14
+        _stability_wall_settings.transition_sheetpile_diaphragm_wall = 14
         _soil_binnen_berm_breedte = soil_binnen_berm_breedte
         _new_kruin_hoogte = 8
 
@@ -75,7 +75,7 @@ class TestStabilityWallInputProfileCalculation:
             _new_kruin_hoogte,
         )
         _type = _calculator._determine_construction_type(
-            _stability_wall_settings.transition_sheet_pile_diaphragm_wall, _length
+            _stability_wall_settings.transition_sheetpile_diaphragm_wall, _length
         )
         _result = (_length, _type)
 

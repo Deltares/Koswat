@@ -27,9 +27,9 @@ class ConstructionFactors:
 @dataclass
 class ConstructionCostsSettings(KoswatConfigProtocol):
     vzg: ConstructionFactors | None = None
-    cb_sheet_pile: ConstructionFactors | None = None
-    sheet_pile_unanchored: ConstructionFactors | None = None
-    sheet_pile_anchored: ConstructionFactors | None = None
+    cb_sheetpile: ConstructionFactors | None = None
+    sheetpile_unanchored: ConstructionFactors | None = None
+    sheetpile_anchored: ConstructionFactors | None = None
     diaphragm_wall: ConstructionFactors | None = None
     cofferdam: ConstructionFactors | None = None
 
@@ -41,11 +41,11 @@ class ConstructionCostsSettings(KoswatConfigProtocol):
         if construction_type == ConstructionTypeEnum.VZG:
             return self.vzg
         if construction_type == ConstructionTypeEnum.CB_DAMWAND:
-            return self.cb_sheet_pile
+            return self.cb_sheetpile
         if construction_type == ConstructionTypeEnum.DAMWAND_ONVERANKERD:
-            return self.sheet_pile_unanchored
+            return self.sheetpile_unanchored
         if construction_type == ConstructionTypeEnum.DAMWAND_VERANKERD:
-            return self.sheet_pile_anchored
+            return self.sheetpile_anchored
         if construction_type == ConstructionTypeEnum.DIEPWAND:
             return self.diaphragm_wall
         if construction_type == ConstructionTypeEnum.KISTDAM:
@@ -55,9 +55,9 @@ class ConstructionCostsSettings(KoswatConfigProtocol):
     def is_valid(self):
         return (
             self.vzg.is_valid()
-            and self.cb_sheet_pile.is_valid()
-            and self.sheet_pile_unanchored.is_valid()
-            and self.sheet_pile_anchored.is_valid()
+            and self.cb_sheetpile.is_valid()
+            and self.sheetpile_unanchored.is_valid()
+            and self.sheetpile_anchored.is_valid()
             and self.diaphragm_wall.is_valid()
             and self.cofferdam.is_valid()
         )

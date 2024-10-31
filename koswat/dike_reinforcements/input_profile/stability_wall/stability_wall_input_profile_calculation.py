@@ -140,7 +140,7 @@ class StabilityWallInputProfileCalculation(
             _new_data.kruin_hoogte,
         )
         _new_data.construction_type = self._determine_construction_type(
-            stability_wall_settings.transition_sheet_pile_diaphragm_wall,
+            stability_wall_settings.transition_sheetpile_diaphragm_wall,
             _new_data.construction_length,
         )
         _new_data.soil_surtax_factor = stability_wall_settings.soil_surtax_factor

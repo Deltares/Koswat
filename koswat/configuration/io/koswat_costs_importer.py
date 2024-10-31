@@ -163,17 +163,17 @@ class KoswatCostsImporter(KoswatImporterProtocol):
             return _construction_factors
 
         _settings = ConstructionCostsSettings()
-        _settings.cb_sheet_pile = _construction_fom_to_construction_factor(
+        _settings.cb_sheetpile = _construction_fom_to_construction_factor(
             fom_costs.construction_cost_cb_wall
         )
         _settings.vzg = _construction_fom_to_construction_factor(
             fom_costs.construction_cost_vzg
         )
-        _settings.sheet_pile_unanchored = _construction_fom_to_construction_factor(
-            fom_costs.construction_cost_sheet_pile_unanchored
+        _settings.sheetpile_unanchored = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_sheetpile_unanchored
         )
-        _settings.sheet_pile_anchored = _construction_fom_to_construction_factor(
-            fom_costs.construction_cost_sheet_pile_anchored
+        _settings.sheetpile_anchored = _construction_fom_to_construction_factor(
+            fom_costs.construction_cost_sheetpile_anchored
         )
         _settings.diaphragm_wall = _construction_fom_to_construction_factor(
             fom_costs.construction_cost_diaphragm_wall

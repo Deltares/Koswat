@@ -125,7 +125,7 @@ class PipingWallInputProfileCalculation(
             base_data, piping_wall_settings, _soil_binnen_berm_breedte
         )
         _new_data.construction_type = self._determine_construction_type(
-            piping_wall_settings.transition_cbwall_sheet_pile,
+            piping_wall_settings.transition_cbwall_sheetpile,
             _new_data.construction_length,
         )
         _new_data.soil_surtax_factor = piping_wall_settings.soil_surtax_factor

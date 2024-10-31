@@ -15,7 +15,7 @@ class KoswatStabilityWallSettings(KoswatConfigProtocol):
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     steepening_polderside_slope: float = 0
     min_length_stability_wall: float = 0
-    transition_sheet_pile_diaphragm_wall: float = 99
+    transition_sheetpile_diaphragm_wall: float = 99
     max_length_stability_wall: float = 99
 
     def is_valid(self) -> bool:

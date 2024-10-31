@@ -146,7 +146,7 @@ class TestReadIniConfigurations:
             == SurtaxFactorEnum.NORMAAL
         )
         assert _ini_fom.piping_wall_section.min_length_piping_wall == 4
-        assert _ini_fom.piping_wall_section.transition_cbwall_sheet_pile == 99
+        assert _ini_fom.piping_wall_section.transition_cbwall_sheetpile == 99
         assert _ini_fom.piping_wall_section.max_length_piping_wall == 25
 
         # Stabiliteitswand section
@@ -167,9 +167,7 @@ class TestReadIniConfigurations:
         )
         assert _ini_fom.stability_wall_section.steepening_polderside_slope == 2
         assert _ini_fom.stability_wall_section.min_length_stability_wall == 5
-        assert (
-            _ini_fom.stability_wall_section.transition_sheet_pile_diaphragm_wall == 20
-        )
+        assert _ini_fom.stability_wall_section.transition_sheetpile_diaphragm_wall == 20
         assert _ini_fom.stability_wall_section.max_length_stability_wall == 25
 
         # Kistdam section
@@ -311,25 +309,25 @@ class TestReadIniConfigurations:
 
         # KostenDamwandOnverankerd
         assert isinstance(
-            _ini_fom.construction_cost_sheet_pile_unanchored,
+            _ini_fom.construction_cost_sheetpile_unanchored,
             ConstructionCostsSectionFom,
         )
-        assert _ini_fom.construction_cost_sheet_pile_unanchored.c_factor == 9.298
-        assert _ini_fom.construction_cost_sheet_pile_unanchored.d_factor == 132.239
-        assert _ini_fom.construction_cost_sheet_pile_unanchored.z_factor == 103.628
-        assert _ini_fom.construction_cost_sheet_pile_unanchored.f_factor == 0
-        assert _ini_fom.construction_cost_sheet_pile_unanchored.g_factor == 0
+        assert _ini_fom.construction_cost_sheetpile_unanchored.c_factor == 9.298
+        assert _ini_fom.construction_cost_sheetpile_unanchored.d_factor == 132.239
+        assert _ini_fom.construction_cost_sheetpile_unanchored.z_factor == 103.628
+        assert _ini_fom.construction_cost_sheetpile_unanchored.f_factor == 0
+        assert _ini_fom.construction_cost_sheetpile_unanchored.g_factor == 0
 
         # KostenDamwandVerankerd
         assert isinstance(
-            _ini_fom.construction_cost_sheet_pile_anchored,
+            _ini_fom.construction_cost_sheetpile_anchored,
             ConstructionCostsSectionFom,
         )
-        assert _ini_fom.construction_cost_sheet_pile_anchored.c_factor == 9.298
-        assert _ini_fom.construction_cost_sheet_pile_anchored.d_factor == 150.449
-        assert _ini_fom.construction_cost_sheet_pile_anchored.z_factor == 1304.455
-        assert _ini_fom.construction_cost_sheet_pile_anchored.f_factor == 0
-        assert _ini_fom.construction_cost_sheet_pile_anchored.g_factor == 0
+        assert _ini_fom.construction_cost_sheetpile_anchored.c_factor == 9.298
+        assert _ini_fom.construction_cost_sheetpile_anchored.d_factor == 150.449
+        assert _ini_fom.construction_cost_sheetpile_anchored.z_factor == 1304.455
+        assert _ini_fom.construction_cost_sheetpile_anchored.f_factor == 0
+        assert _ini_fom.construction_cost_sheetpile_anchored.g_factor == 0
 
         # KostenDiepwand
         assert isinstance(
