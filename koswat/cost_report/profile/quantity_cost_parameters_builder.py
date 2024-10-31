@@ -161,7 +161,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         qc_parameters.new_core_layer_surface = self._get_soil_cost_parameter(
             _qcp.new_core_layer_surface, dike_profile_costs.profiling_layer_sand_m2
         )
-        qc_parameters.new_maaiveld_surface = self._get_soil_cost_parameter(
+        qc_parameters.new_ground_level_surface = self._get_soil_cost_parameter(
             _qcp.new_ground_level_surface,
             dike_profile_costs.processing_ground_level_surface_m2,
         )

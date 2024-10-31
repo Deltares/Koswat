@@ -30,7 +30,7 @@ class SoilInputProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
-    def _calculate_new_binnen_talud(
+    def _calculate_new_polderside_slope(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         """
@@ -43,8 +43,8 @@ class SoilInputProfileCalculation(
                 +(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud)*Binnen_Talud_Oud)
                 /(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud+dH))
         """
-        _first_part = scenario.d_h * scenario.buiten_talud
-        _second_part = scenario.kruin_breedte - base_data.crest_width
+        _first_part = scenario.d_h * scenario.waterside_slope
+        _second_part = scenario.crest_width - base_data.crest_width
         _third_parth = (
             base_data.crest_height - base_data.polderside_ground_level
         ) * base_data.polderside_slope
@@ -56,7 +56,7 @@ class SoilInputProfileCalculation(
         ) / _dividend
         return max(base_data.polderside_slope, _right_side)
 
-    def _calculate_new_binnen_berm_hoogte(
+    def _calculate_new_polderside_berm_height(
         self,
         old_data: KoswatInputProfileBase,
         new_data: KoswatInputProfileBase,
@@ -81,7 +81,7 @@ class SoilInputProfileCalculation(
             )
         return old_data.polderside_ground_level
 
-    def _calculate_new_kruin_hoogte(
+    def _calculate_new_crest_height(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         return base_data.crest_height + scenario.d_h
@@ -95,19 +95,19 @@ class SoilInputProfileCalculation(
         _new_data = SoilInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.waterside_ground_level = base_data.waterside_ground_level
-        _new_data.waterside_slope = scenario.buiten_talud
+        _new_data.waterside_slope = scenario.waterside_slope
         _new_data.waterside_berm_height = base_data.waterside_berm_height
         _new_data.waterside_berm_width = base_data.waterside_berm_width
-        _new_data.crest_width = scenario.kruin_breedte
-        _new_data.crest_height = self._calculate_new_kruin_hoogte(base_data, scenario)
+        _new_data.crest_width = scenario.crest_width
+        _new_data.crest_height = self._calculate_new_crest_height(base_data, scenario)
         _new_data.polderside_ground_level = base_data.polderside_ground_level
-        _new_data.polderside_slope = self._calculate_new_binnen_talud(
+        _new_data.polderside_slope = self._calculate_new_polderside_slope(
             base_data, scenario
         )
-        _new_data.polderside_berm_width = self._calculate_soil_binnen_berm_breedte(
+        _new_data.polderside_berm_width = self._calculate_soil_polderside_berm_width(
             base_data, _new_data, scenario
         )
-        _new_data.polderside_berm_height = self._calculate_new_binnen_berm_hoogte(
+        _new_data.polderside_berm_height = self._calculate_new_polderside_berm_height(
             base_data, _new_data, scenario
         )
         _new_data.ground_price_builtup = base_data.ground_price_builtup

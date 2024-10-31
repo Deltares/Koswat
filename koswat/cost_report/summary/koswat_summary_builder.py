@@ -28,9 +28,6 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
-from koswat.strategies.strategy_reinforcement_type_costs import (
-    StrategyReinforcementTypeCosts,
-)
 
 
 @dataclass
@@ -54,9 +51,9 @@ class KoswatSummaryBuilder(BuilderProtocol):
         """
         _new_koswat_scenario = KoswatScenario(**original_scenario.__dict__)
         if math.isnan(_new_koswat_scenario.crest_width):
-            _new_koswat_scenario.crest_width = input_profile_base.kruin_breedte
+            _new_koswat_scenario.crest_width = input_profile_base.crest_width
         if math.isnan(_new_koswat_scenario.waterside_slope):
-            _new_koswat_scenario.waterside_slope = input_profile_base.buiten_talud
+            _new_koswat_scenario.waterside_slope = input_profile_base.waterside_slope
 
         return _new_koswat_scenario
 

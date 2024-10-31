@@ -24,15 +24,15 @@ class TestSoilInputProfileCalculation:
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
-    def test_calculate_new_binnen_talud(self):
+    def test_calculate_new_polderside_slope(self):
         # 1. Define test data.
         _expected_value = 3.57
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _scenario.d_s = 10
         _scenario.d_p = 30
-        _scenario.kruin_breedte = 5
-        _scenario.buiten_talud = 3
+        _scenario.crest_width = 5
+        _scenario.waterside_slope = 3
         _input_profile = KoswatInputProfileBase()
         _input_profile.crest_width = 5
         _input_profile.crest_height = 8
@@ -40,14 +40,16 @@ class TestSoilInputProfileCalculation:
         _input_profile.polderside_ground_level = 2
 
         # 2. Run test
-        _new_binnen_talud = SoilInputProfileCalculation()._calculate_new_binnen_talud(
-            _input_profile, _scenario
+        _new_polderside_slope = (
+            SoilInputProfileCalculation()._calculate_new_polderside_slope(
+                _input_profile, _scenario
+            )
         )
 
         # 3. Verify expectations
-        assert _new_binnen_talud == pytest.approx(_expected_value, 0.001)
+        assert _new_polderside_slope == pytest.approx(_expected_value, 0.001)
 
-    def test_calculate_new_binnen_berm_hoogte_positive_binnen_berm_breedte(self):
+    def test_calculate_new_polderside_berm_height_positive_polderside_berm_width(self):
         # 1. Define test data.
         _expected_value = 3.0
         _scenario = KoswatScenario()
@@ -60,16 +62,16 @@ class TestSoilInputProfileCalculation:
         _new_data.polderside_berm_width = 20
 
         # 2. Run test
-        _new_binnen_berm_hoogte = (
-            SoilInputProfileCalculation()._calculate_new_binnen_berm_hoogte(
+        _new_polderside_berm_height = (
+            SoilInputProfileCalculation()._calculate_new_polderside_berm_height(
                 _old_data, _new_data, _scenario
             )
         )
 
         # 3. Verify expectations
-        assert _new_binnen_berm_hoogte == pytest.approx(_expected_value, 0.001)
+        assert _new_polderside_berm_height == pytest.approx(_expected_value, 0.001)
 
-    def test_calculate_new_binnen_berm_hoogte_negative_binnen_berm_breedte(self):
+    def test_calculate_new_polderside_berm_height_negative_polderside_berm_width(self):
         # 1. Define test data.
         _scenario = KoswatScenario()
         _old_data = KoswatInputProfileBase()
@@ -79,22 +81,22 @@ class TestSoilInputProfileCalculation:
         _new_data.polderside_berm_width = -1
 
         # 2. Run test
-        _new_binnen_berm_hoogte = (
-            SoilInputProfileCalculation()._calculate_new_binnen_berm_hoogte(
+        _new_polderside_berm_height = (
+            SoilInputProfileCalculation()._calculate_new_polderside_berm_height(
                 _old_data, _new_data, _scenario
             )
         )
 
         # 3. Verify expectations
-        assert _new_binnen_berm_hoogte == _old_data.polderside_ground_level
+        assert _new_polderside_berm_height == _old_data.polderside_ground_level
 
-    def test_calculate_new_binnen_berm_breedte(self):
+    def test_calculate_new_polderside_berm_width(self):
         # 1. Define test data.
         _expected_value = 20
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _scenario.d_p = 30
-        _scenario.buiten_talud = 3
+        _scenario.waterside_slope = 3
         _old_profile = KoswatInputProfileBase()
         _old_profile.waterside_ground_level = 0
         _old_profile.waterside_slope = 3
@@ -116,16 +118,16 @@ class TestSoilInputProfileCalculation:
         _new_profile.polderside_ground_level = 0
 
         # 2. Run test
-        _new_binnen_berm_breedte = (
-            SoilInputProfileCalculation()._calculate_soil_binnen_berm_breedte(
+        _new_polderside_berm_width = (
+            SoilInputProfileCalculation()._calculate_soil_polderside_berm_width(
                 _old_profile, _new_profile, _scenario
             )
         )
 
         # 3. Verify expectations
-        assert _new_binnen_berm_breedte == pytest.approx(_expected_value, 0.001)
+        assert _new_polderside_berm_width == pytest.approx(_expected_value, 0.001)
 
-    def test_calculate_new_kruin_hoogte(self):
+    def test_calculate_new_crest_height(self):
         # 1. Define test data.
         _expected_value = 42.24
         _scenario = KoswatScenario()
@@ -134,9 +136,9 @@ class TestSoilInputProfileCalculation:
         _old_data.crest_height = 40.04
 
         # 2. Run test
-        _new_kruin_hoogte = SoilInputProfileCalculation()._calculate_new_kruin_hoogte(
+        _new_crest_height = SoilInputProfileCalculation()._calculate_new_crest_height(
             _old_data, _scenario
         )
 
         # 3. Verify expectations
-        assert _new_kruin_hoogte == pytest.approx(_expected_value, 0.001)
+        assert _new_crest_height == pytest.approx(_expected_value, 0.001)

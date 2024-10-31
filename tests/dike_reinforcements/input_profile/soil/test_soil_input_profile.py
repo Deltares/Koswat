@@ -16,16 +16,16 @@ class TestSoilInputProfile:
         assert isinstance(_input, KoswatInputProfileProtocol)
         assert isinstance(_input, ReinforcementInputProfileProtocol)
 
-    def test_grondprijs(self):
+    def test_ground_price(self):
         # 1. Define test data
-        _bebouwd = 100
-        _onbebouwd = 10
+        _builtup = 100
+        _unbuilt = 10
         _profile = SoilInputProfile()
-        _profile.ground_price_builtup = _bebouwd
-        _profile.ground_price_unbuilt = _onbebouwd
+        _profile.ground_price_builtup = _builtup
+        _profile.ground_price_unbuilt = _unbuilt
 
         # 2. Run test
-        _grondprijs = _profile.ground_price
+        _ground_price = _profile.ground_price
 
         # 3. Verify expectations
-        assert _grondprijs == _onbebouwd
+        assert _ground_price == _unbuilt

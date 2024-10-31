@@ -37,7 +37,7 @@ class CofferdamInputProfileCalculation(
     ) -> float:
         return base_data.crest_height + scenario.d_h
 
-    def _calculate_new_binnen_talud(
+    def _calculate_new_polderside_slope(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         """
@@ -49,13 +49,13 @@ class CofferdamInputProfileCalculation(
         _mid_operand = base_data.polderside_slope * (
             base_data.crest_height - base_data.polderside_ground_level
         )
-        _operand = base_data.crest_width + _mid_operand - scenario.kruin_breedte
+        _operand = base_data.crest_width + _mid_operand - scenario.crest_width
         _dividend = (
             base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
         )
         return _operand / _dividend
 
-    def _calculate_new_buiten_talud(
+    def _calculate_new_waterside_slope(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         """
@@ -74,22 +74,22 @@ class CofferdamInputProfileCalculation(
         self,
         old_data: KoswatInputProfileProtocol,
         cofferdam_settings: KoswatCofferdamSettings,
-        soil_binnen_berm_breedte: float,
-        new_kruin_hoogte: float,
+        soil_polderside_berm_width: float,
+        new_crest_height: float,
     ) -> float:
         """
         Identical to calculation of Stability wall
         """
-        if soil_binnen_berm_breedte == 0:
+        if soil_polderside_berm_width == 0:
             # Length of wall is not determined by piping.
             _length_piping = 0.0
         else:
             _length_piping = (
-                (soil_binnen_berm_breedte / 6)
-                + (new_kruin_hoogte - 0.5)
+                (soil_polderside_berm_width / 6)
+                + (new_crest_height - 0.5)
                 - old_data.aquifer
             )
-        _length_stability = (new_kruin_hoogte - 0.5) - (old_data.pleistocene - 1)
+        _length_stability = (new_crest_height - 0.5) - (old_data.pleistocene - 1)
         return round(
             min(
                 max(
@@ -120,20 +120,20 @@ class CofferdamInputProfileCalculation(
         _new_data = CofferDamInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.waterside_ground_level = base_data.waterside_ground_level
-        _new_data.waterside_slope = self._calculate_new_buiten_talud(
+        _new_data.waterside_slope = self._calculate_new_waterside_slope(
             base_data, scenario
         )
         _new_data.waterside_berm_height = base_data.waterside_berm_height
         _new_data.waterside_berm_width = base_data.waterside_berm_width
         _new_data.crest_height = self._calculate_new_crest_height(base_data, scenario)
-        _new_data.crest_width = scenario.kruin_breedte
-        _new_data.polderside_slope = self._calculate_new_binnen_talud(
+        _new_data.crest_width = scenario.crest_width
+        _new_data.polderside_slope = self._calculate_new_polderside_slope(
             base_data, scenario
         )
         _new_data.polderside_berm_width = 0
         _new_data.polderside_berm_height = base_data.polderside_ground_level
         _new_data.polderside_ground_level = base_data.polderside_ground_level
-        _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(
+        _soil_polderside_berm_width = self._calculate_soil_polderside_berm_width(
             base_data, _new_data, scenario
         )
         _new_data.ground_price_builtup = base_data.ground_price_builtup
@@ -144,7 +144,7 @@ class CofferdamInputProfileCalculation(
         _new_data.construction_length = self._calculate_length_cofferdam(
             base_data,
             cofferdam_settings,
-            _soil_binnen_berm_breedte,
+            _soil_polderside_berm_width,
             _new_data.crest_height,
         )
         _new_data.construction_type = self._determine_construction_type(

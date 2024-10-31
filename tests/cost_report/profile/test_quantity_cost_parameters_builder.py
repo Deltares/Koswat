@@ -180,8 +180,8 @@ class TestQuantityCostParametersBuilder:
 
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcementInput(ReinforcementInputProfileProtocol):
-            grondprijs_bebouwd: float = 0
-            grondprijs_onbebouwd: float = 0
+            ground_price_builtup: float = 0
+            ground_price_unbuilt: float = 0
             construction_length: float = 0
             construction_type: ConstructionTypeEnum | None = None
             soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
@@ -298,6 +298,6 @@ class TestQuantityCostParametersBuilder:
         evaluate_cost_and_quantity(_qcp.new_grass_layer_surface, 0.88, 8.4)
         evaluate_cost_and_quantity(_qcp.new_clay_layer_surface, 0.65, 4.2)
         evaluate_cost_and_quantity(_qcp.new_core_layer_surface, 0.6, 2.1)
-        evaluate_cost_and_quantity(_qcp.new_maaiveld_surface, 0.25, 42)
+        evaluate_cost_and_quantity(_qcp.new_ground_level_surface, 0.25, 42)
         evaluate_cost_and_quantity(_qcp.removed_material_volume, 7.07, 1.2)
         evaluate_cost_and_length(_qcp.construction_length, 999, 10)

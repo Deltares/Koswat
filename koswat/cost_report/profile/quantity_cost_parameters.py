@@ -75,7 +75,7 @@ class QuantityCostParameters:
     new_grass_layer_surface: CostParameterProtocol
     new_clay_layer_surface: CostParameterProtocol
     new_core_layer_surface: CostParameterProtocol
-    new_maaiveld_surface: CostParameterProtocol
+    new_ground_level_surface: CostParameterProtocol
     land_purchase_surface: CostParameterProtocol
     construction_length: CostParameterProtocol
 
@@ -89,7 +89,7 @@ class QuantityCostParameters:
         self.new_grass_layer_surface = None
         self.new_clay_layer_surface = None
         self.new_core_layer_surface = None
-        self.new_maaiveld_surface = None
+        self.new_ground_level_surface = None
         self.land_purchase_surface = None
         self.construction_length = None
 

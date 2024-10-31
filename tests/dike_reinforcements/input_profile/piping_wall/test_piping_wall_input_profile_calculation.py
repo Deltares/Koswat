@@ -27,30 +27,30 @@ class TestPipingWallInputProfileCalculation:
 
     def test_calculate_length_type_piping_wall(self):
         class MockProfile(KoswatInputProfileProtocol):
-            binnen_berm_breedte: float
-            binnen_maaiveld: float
+            polderside_berm_width: float
+            polderside_ground_level: float
 
         class MockSettings(KoswatPipingWallSettings):
-            min_lengte_kwelscherm: float
-            max_lengte_kwelscherm: float
+            min_length_piping_wall: float
+            max_length_piping_wall: float
 
         # 1. Define test data.
         _calculator = PipingWallInputProfileCalculation()
         _profile_data = MockProfile()
-        _profile_data.binnen_berm_breedte = 6
-        _profile_data.binnen_maaiveld = 1
+        _profile_data.polderside_berm_width = 6
+        _profile_data.polderside_ground_level = 1
         _profile_data.pleistocene = -5
         _profile_data.aquifer = -2
         _piping_wall_settings = MockSettings()
-        _piping_wall_settings.min_lengte_kwelscherm = 0
-        _piping_wall_settings.max_lengte_kwelscherm = 99
+        _piping_wall_settings.min_length_piping_wall = 0
+        _piping_wall_settings.max_length_piping_wall = 99
         _piping_wall_settings.transition_cbwall_sheetpile = 15
-        _soil_binnen_berm_breedte = 12.5
+        _soil_polderside_berm_width = 12.5
         _expected_result = (6.1, ConstructionTypeEnum.CB_DAMWAND)
 
         # 2. Run test.
         _length = _calculator._calculate_length_piping_wall(
-            _profile_data, _piping_wall_settings, _soil_binnen_berm_breedte
+            _profile_data, _piping_wall_settings, _soil_polderside_berm_width
         )
         _type = _calculator._determine_construction_type(
             _piping_wall_settings.transition_cbwall_sheetpile, _length
@@ -60,31 +60,31 @@ class TestPipingWallInputProfileCalculation:
         # 3. Verify Expectations.
         assert _result == _expected_result
 
-    def test_calculate_new_kruin_hoogte(self):
+    def test_calculate_new_crest_height(self):
         class MockProfile(KoswatInputProfileProtocol):
-            kruin_hoogte: float
+            crest_height: float
 
         # 1. Define test data.
         _expected_result = 6.6
         _profile_data = MockProfile()
-        _profile_data.kruin_hoogte = 4.2
+        _profile_data.crest_height = 4.2
         _scenario = KoswatScenario()
         _scenario.d_h = 2.4
 
         # 2. Run test.
-        _result = PipingWallInputProfileCalculation()._calculate_new_kruin_hoogte(
+        _result = PipingWallInputProfileCalculation()._calculate_new_crest_height(
             _profile_data, _scenario
         )
 
         # 3. Verify Expectations.
         assert _result == _expected_result
 
-    def test_calculate_new_binnen_talud(self):
+    def test_calculate_new_polderside_slope(self):
         class MockProfile(KoswatInputProfileProtocol):
-            kruin_hoogte: float
-            kruin_breedte: float
-            binnen_talud: float
-            binnen_maaiveld: float
+            crest_height: float
+            crest_width: float
+            polderside_slope: float
+            polderside_ground_level: float
 
         # 1. Define test data.
         _expected_value = 3.57
@@ -92,20 +92,20 @@ class TestPipingWallInputProfileCalculation:
         _scenario.d_h = 1
         _scenario.d_s = 10
         _scenario.d_p = 30
-        _scenario.kruin_breedte = 5
-        _scenario.buiten_talud = 3
+        _scenario.crest_width = 5
+        _scenario.waterside_slope = 3
         _input_profile = MockProfile()
-        _input_profile.kruin_breedte = 5
-        _input_profile.kruin_hoogte = 8
-        _input_profile.binnen_talud = 3
-        _input_profile.binnen_maaiveld = 2
+        _input_profile.crest_width = 5
+        _input_profile.crest_height = 8
+        _input_profile.polderside_slope = 3
+        _input_profile.polderside_ground_level = 2
 
         # 2. Run test
-        _new_binnen_talud = (
-            PipingWallInputProfileCalculation()._calculate_new_binnen_talud(
+        _new_polderside_slope = (
+            PipingWallInputProfileCalculation()._calculate_new_polderside_slope(
                 _input_profile, _scenario
             )
         )
 
         # 3. Verify expectations
-        assert _new_binnen_talud == pytest.approx(_expected_value, 0.001)
+        assert _new_polderside_slope == pytest.approx(_expected_value, 0.001)
