@@ -1,7 +1,5 @@
 from dataclasses import dataclass, field
 
-from more_itertools import tail
-
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -10,6 +8,14 @@ from koswat.strategies.strategy_input import StrategyLocationInput
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
+from koswat.strategies.strategy_steps_enum import StrategyStepsEnum
+
+
+@dataclass
+class StrategyStepAssignment:
+    step_number: int
+    step_type: StrategyStepsEnum
+    step_value: type[ReinforcementProfileProtocol]
 
 
 @dataclass
@@ -24,39 +30,70 @@ class StrategyLocationReinforcement:
     available_measures: list[type[ReinforcementProfileProtocol]]
     strategy_location_input: StrategyLocationInput = None
 
-    _selected_measures: list[type[ReinforcementProfileProtocol]] = field(
-        default_factory=lambda: []
+    _selected_measure_steps: list[StrategyStepAssignment] = field(
+        init=False, default_factory=lambda: []
     )
 
     def __post_init__(self):
         if any(self.available_measures):
             # Set the inital selection to the first available measure.
-            self.current_selected_measure = self.available_measures[0]
+            self.updated_selected_measure(
+                self.available_measures[0], StrategyStepsEnum.INITIAL
+            )
 
     @property
     def current_selected_measure(self) -> type[ReinforcementProfileProtocol]:
         """
         Exposes the current selected measure for this object.
         """
-        return self._selected_measures[-1]
+        return self._selected_measure_steps[-1].step_value
 
-    @current_selected_measure.setter
-    def current_selected_measure(
-        self, reinforcement_type: type[ReinforcementProfileProtocol]
+    def updated_selected_measure(
+        self,
+        reinforcement_type: type[ReinforcementProfileProtocol],
+        step: StrategyStepsEnum,
     ):
-        # TODO: Could be modified to accept a "STEP" enum
-        # Then save the selection to a dictionary with said step as ky
-        # We no longer need the _selected_measures list as we only
-        # need to proxy the last property.
-        self._selected_measures.append(reinforcement_type)
+        """
+        Changes the value reprsented in `current_selected_measure` and updates the
+        dictionary of selections (history).
 
-    def output_selected_measures(
-        self, history_size: int
-    ) -> list[type[ReinforcementProfileProtocol]]:
-        _from_idx = min(history_size, len(self._selected_measures))
-        return [self._selected_measures[-_from_idx]] * (
-            history_size - _from_idx
-        ) + self._selected_measures[-_from_idx:]
+        Args:
+            reinforcement_type (type[ReinforcementProfileProtocol]): Reinforcement type
+            step (StrategyStepsEnum): Step whose
+        """
+        # Update the assigned value for this step.
+        self._selected_measure_steps.append(
+            StrategyStepAssignment(
+                step_number=len(self._selected_measure_steps),
+                step_type=step,
+                step_value=reinforcement_type,
+            )
+        )
+
+    def output_selected_measures(self) -> list[type[ReinforcementProfileProtocol]]:
+        """
+        Outputs the selected measure following the domain (expected) steps:
+            - Initial step,
+            - Order step,
+            - Infrastructure step
+
+        Returns:
+            list[type[ReinforcementProfileProtocol]]: Resulting list.
+        """
+
+        def filter_ordered_step(assignment_step: StrategyStepAssignment) -> bool:
+            return assignment_step.step_type == StrategyStepsEnum.ORDERED
+
+        _initial_step = self._selected_measure_steps[0]
+        _ordered_step = next(
+            filter(filter_ordered_step, self._selected_measure_steps[-1::-1]),
+            _initial_step,
+        )
+        return [
+            _initial_step.step_value,
+            _ordered_step.step_value,
+            self.current_selected_measure,
+        ]
 
     @property
     def current_cost(self) -> float:

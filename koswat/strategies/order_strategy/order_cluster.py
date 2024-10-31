@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_steps_enum import StrategyStepsEnum
 
 
 @dataclass
@@ -77,8 +78,9 @@ class OrderCluster:
         if any(self.location_reinforcements):
             _new_profile_type = self.location_reinforcements[0].current_selected_measure
             for _lr in other.location_reinforcements:
-                _lr._selected_measures.clear()
-                _lr.current_selected_measure = _new_profile_type
+                _lr.updated_selected_measure(
+                    _new_profile_type, StrategyStepsEnum.ORDERED
+                )
 
         if self.left_neighbor == other:
             self.location_reinforcements = (

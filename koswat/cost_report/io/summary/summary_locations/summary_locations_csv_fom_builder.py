@@ -45,6 +45,7 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
                 ]
                 + _ordered_profile_types
                 + [
+                    "Initial selection",
                     "Ordered selection",
                     "Optimized selection",
                 ]
@@ -81,7 +82,7 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
             _matrix[_reinforcement_per_location.location] = _suitable_locations + list(
                 map(
                     lambda x: x.output_name,
-                    _reinforcement_per_location.output_selected_measures(2),
+                    _reinforcement_per_location.output_selected_measures(),
                 )
             )
 
