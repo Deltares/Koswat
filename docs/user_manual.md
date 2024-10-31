@@ -26,7 +26,6 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
-from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
@@ -50,17 +49,17 @@ assert _shp_trajects_file.is_file()
 ## Define input profile case
 input_profile_case = KoswatInputProfileBase()
 input_profile_case.dike_section = "test_data"
-input_profile_case.buiten_maaiveld = 0
-input_profile_case.buiten_talud = 3
-input_profile_case.buiten_berm_hoogte = 0
-input_profile_case.buiten_berm_breedte = 0
-input_profile_case.kruin_hoogte = 6
-input_profile_case.kruin_breedte = 5
-input_profile_case.binnen_talud = 3
-input_profile_case.binnen_berm_hoogte = 0
-input_profile_case.binnen_berm_breedte = 0
-input_profile_case.binnen_maaiveld = 0
-input_profile_case.pleistoceen = -5
+input_profile_case.waterside_ground_level = 0
+input_profile_case.waterside_slope = 3
+input_profile_case.waterside_berm_width = 0
+input_profile_case.waterside_berm_height = 0
+input_profile_case.crest_height = 6
+input_profile_case.crest_width = 5
+input_profile_case.polderside_slope = 3
+input_profile_case.polderside_berm_height = 0
+input_profile_case.polderside_berm_width = 0
+input_profile_case.polderside_ground_level = 0
+input_profile_case.pleistocene = -5
 input_profile_case.aquifer = -2
 
 ## Define the scenario case
@@ -70,8 +69,8 @@ scenario_case.scenario_section = ""
 scenario_case.d_h = 1
 scenario_case.d_s = 10
 scenario_case.d_p = 30
-scenario_case.kruin_breedte = 5
-scenario_case.buiten_talud = 3
+scenario_case.crest_width = 5
+scenario_case.waterside_slope = 3
 
 ## Define the layers case
 layers_case = dict(
@@ -82,7 +81,7 @@ layers_case = dict(
         ],
     )
 
-## Import surroundings
+## Import surroundings (TODO: update with latest implementation of SurroundingsWrapperCollectionImporter)
 _surroundings_importer = KoswatSurroundingsImporter()
 _surroundings_importer.traject_loc_shp_file = _shp_trajects_file
 _surroundings = _surroundings_importer.import_from(_test_dir)[0]
