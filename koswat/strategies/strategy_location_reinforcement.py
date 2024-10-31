@@ -8,14 +8,10 @@ from koswat.strategies.strategy_input import StrategyLocationInput
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
-from koswat.strategies.strategy_steps_enum import StrategyStepsEnum
-
-
-@dataclass
-class StrategyStepAssignment:
-    step_number: int
-    step_type: StrategyStepsEnum
-    step_value: type[ReinforcementProfileProtocol]
+from koswat.strategies.strategy_step.strategy_step_assignment import (
+    StrategyStepAssignment,
+)
+from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
 @dataclass
@@ -38,7 +34,7 @@ class StrategyLocationReinforcement:
         if any(self.available_measures):
             # Set the inital selection to the first available measure.
             self.updated_selected_measure(
-                self.available_measures[0], StrategyStepsEnum.INITIAL
+                self.available_measures[0], StrategyStepEnum.INITIAL
             )
 
     @property
@@ -51,7 +47,7 @@ class StrategyLocationReinforcement:
     def updated_selected_measure(
         self,
         reinforcement_type: type[ReinforcementProfileProtocol],
-        step: StrategyStepsEnum,
+        step: StrategyStepEnum,
     ):
         """
         Changes the value reprsented in `current_selected_measure` and updates the
@@ -82,7 +78,7 @@ class StrategyLocationReinforcement:
         """
 
         def filter_ordered_step(assignment_step: StrategyStepAssignment) -> bool:
-            return assignment_step.step_type == StrategyStepsEnum.ORDERED
+            return assignment_step.step_type == StrategyStepEnum.ORDERED
 
         _initial_step = self._selected_measure_steps[0]
         _ordered_step = next(

@@ -24,7 +24,7 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 from koswat.strategies.strategy_protocol import StrategyProtocol
 from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
-from koswat.strategies.strategy_steps_enum import StrategyStepsEnum
+from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
 class OrderStrategy(StrategyProtocol):
@@ -152,7 +152,7 @@ class OrderStrategy(StrategyProtocol):
                 # TODO: Unclear why tests fail when setting this measure
                 # as the only available measure.
                 _slr.updated_selected_measure(
-                    selection_order[-1], StrategyStepsEnum.ORDERED
+                    selection_order[-1], StrategyStepEnum.ORDERED
                 )
 
             _strategy_reinforcements.append(_slr)

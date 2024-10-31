@@ -8,7 +8,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
-from koswat.strategies.strategy_steps_enum import StrategyStepsEnum
+from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
 @dataclass
@@ -77,5 +77,5 @@ class InfraCluster:
             self.reinforcement_type = _selection
             for _cd in self.cluster:
                 _cd.updated_selected_measure(
-                    _selection, StrategyStepsEnum.INFRASTRUCTURE
+                    _selection, StrategyStepEnum.INFRASTRUCTURE
                 )
