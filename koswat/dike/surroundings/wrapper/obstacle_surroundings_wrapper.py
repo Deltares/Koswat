@@ -32,9 +32,9 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     )
 
     # Dikeside (not yet supported)
-    buildings_dikeside: SurroundingsObstacle = None
-    railways_dikeside: SurroundingsObstacle = None
-    waters_dikeside: SurroundingsObstacle = None
+    buildings_waterside: SurroundingsObstacle = None
+    railways_waterside: SurroundingsObstacle = None
+    waters_waterside: SurroundingsObstacle = None
 
     @property
     def obstacle_locations(self) -> list[PointSurroundings]:

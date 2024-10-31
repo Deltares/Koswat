@@ -34,8 +34,8 @@ class TestInfrastructureSurroundingsWrapper:
         )
 
         # Verify unsupported infras are not initialized.
-        assert not _wrapper.roads_class_2_dikeside
-        assert not _wrapper.roads_class_7_dikeside
-        assert not _wrapper.roads_class_24_dikeside
-        assert not _wrapper.roads_class_47_dikeside
-        assert not _wrapper.roads_class_unknown_dikeside
+        assert not _wrapper.roads_class_2_waterside
+        assert not _wrapper.roads_class_7_waterside
+        assert not _wrapper.roads_class_24_waterside
+        assert not _wrapper.roads_class_47_waterside
+        assert not _wrapper.roads_class_unknown_waterside

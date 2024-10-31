@@ -60,25 +60,25 @@ class TestSurroundingsWrapper:
         # Generate surroundings section File Object Model.
         _surroundings_settings = SurroundingsSectionFom(
             surroundings_database_dir=_temp_dir.parent,
-            constructieafstand=float("nan"),
-            constructieovergang=float("nan"),
-            buitendijks=False,
-            bebouwing=True,
-            spoorwegen=False,
-            water=False,
+            construction_distance=float("nan"),
+            construction_buffer=float("nan"),
+            waterside=False,
+            buildings=True,
+            railways=False,
+            waters=False,
         )
 
         # Generate Infrastructures section file model
         _infrastructure_settings = InfrastructureSectionFom(
-            infrastructuur=True,
-            opslagfactor_wegen=SurtaxFactorEnum.NORMAAL,
-            infrakosten_0dh=InfraCostsEnum.GEEN,
-            buffer_buitendijks=0.24,
-            wegen_klasse2_breedte=1,
-            wegen_klasse7_breedte=2,
-            wegen_klasse24_breedte=3,
-            wegen_klasse47_breedte=4,
-            wegen_onbekend_breedte=5,
+            infrastructure=True,
+            surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
+            infrastructure_costs_0dh=InfraCostsEnum.GEEN,
+            buffer_waterside=0.24,
+            roads_class2_width=1,
+            roads_class7_width=2,
+            roads_class24_width=3,
+            roads_class47_width=4,
+            roads_unknown_width=5,
         )
 
         # Generate wrapper

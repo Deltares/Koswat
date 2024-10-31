@@ -16,7 +16,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
     def read(self, file_path: Path) -> KoswatSurroundingsCsvFom:
         _csv_fom = KoswatCsvReader().read(file_path)
 
-        # First three columns are section x and y coordinate.
+        # First three columns are section, x and y coordinate.
         _koswat_fom = KoswatSurroundingsCsvFom()
         _koswat_fom.distances_list = self._get_surroundings_distances(
             _csv_fom.headers[3:]
