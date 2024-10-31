@@ -76,6 +76,4 @@ class InfraCluster:
         if _selection != self.reinforcement_type:
             self.reinforcement_type = _selection
             for _cd in self.cluster:
-                _cd.updated_selected_measure(
-                    _selection, StrategyStepEnum.INFRASTRUCTURE
-                )
+                _cd.set_selected_measure(_selection, StrategyStepEnum.INFRASTRUCTURE)

@@ -151,9 +151,7 @@ class OrderStrategy(StrategyProtocol):
             if not any(_slr.available_measures):
                 # TODO: Unclear why tests fail when setting this measure
                 # as the only available measure.
-                _slr.updated_selected_measure(
-                    selection_order[-1], StrategyStepEnum.ORDERED
-                )
+                _slr.set_selected_measure(selection_order[-1], StrategyStepEnum.ORDERED)
 
             _strategy_reinforcements.append(_slr)
         return _strategy_reinforcements

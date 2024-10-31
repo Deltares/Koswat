@@ -82,7 +82,7 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
             _matrix[_reinforcement_per_location.location] = _suitable_locations + list(
                 map(
                     lambda x: x.output_name,
-                    _reinforcement_per_location.output_selected_measures(),
+                    _reinforcement_per_location.get_selected_measure_steps(),
                 )
             )
 

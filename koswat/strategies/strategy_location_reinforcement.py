@@ -23,7 +23,9 @@ class StrategyLocationReinforcement:
     """
 
     location: PointSurroundings
-    available_measures: list[type[ReinforcementProfileProtocol]]
+    available_measures: list[type[ReinforcementProfileProtocol]] = field(
+        default_factory=lambda: []
+    )
     strategy_location_input: StrategyLocationInput = None
 
     _selected_measure_steps: list[StrategyStepAssignment] = field(
@@ -33,7 +35,7 @@ class StrategyLocationReinforcement:
     def __post_init__(self):
         if any(self.available_measures):
             # Set the inital selection to the first available measure.
-            self.updated_selected_measure(
+            self.set_selected_measure(
                 self.available_measures[0], StrategyStepEnum.INITIAL
             )
 
@@ -42,9 +44,29 @@ class StrategyLocationReinforcement:
         """
         Exposes the current selected measure for this object.
         """
+        if not any(self._selected_measure_steps):
+            return None
         return self._selected_measure_steps[-1].step_value
 
-    def updated_selected_measure(
+    @property
+    def current_cost(self) -> float:
+        """
+        Estimates the costs at this location for the given `current_selected_measure`.
+        """
+        if not self.current_selected_measure or not self.strategy_location_input:
+            return 0.0
+        for _srtc in self.strategy_location_input.strategy_reinforcement_type_costs:
+            if _srtc.reinforcement_type == self.current_selected_measure:
+                return _srtc.total_costs
+        return 0.0
+
+    @property
+    def cheapest_reinforcement(self) -> StrategyReinforcementTypeCosts:
+        if not self.strategy_location_input:
+            return None
+        return self.strategy_location_input.cheapest_reinforcement
+
+    def set_selected_measure(
         self,
         reinforcement_type: type[ReinforcementProfileProtocol],
         step: StrategyStepEnum,
@@ -66,7 +88,13 @@ class StrategyLocationReinforcement:
             )
         )
 
-    def output_selected_measures(self) -> list[type[ReinforcementProfileProtocol]]:
+    def get_selected_measure_steps(
+        self,
+    ) -> tuple[
+        type[ReinforcementProfileProtocol],
+        type[ReinforcementProfileProtocol],
+        type[ReinforcementProfileProtocol],
+    ]:
         """
         Outputs the selected measure following the domain (expected) steps:
             - Initial step,
@@ -74,7 +102,10 @@ class StrategyLocationReinforcement:
             - Infrastructure step
 
         Returns:
-            list[type[ReinforcementProfileProtocol]]: Resulting list.
+            tuple[
+                type[ReinforcementProfileProtocol],
+                type[ReinforcementProfileProtocol],
+                type[ReinforcementProfileProtocol]]: Resulting tuple.
         """
 
         def filter_ordered_step(assignment_step: StrategyStepAssignment) -> bool:
@@ -85,30 +116,11 @@ class StrategyLocationReinforcement:
             filter(filter_ordered_step, self._selected_measure_steps[-1::-1]),
             _initial_step,
         )
-        return [
+        return (
             _initial_step.step_value,
             _ordered_step.step_value,
             self.current_selected_measure,
-        ]
-
-    @property
-    def current_cost(self) -> float:
-        """
-        Estimates the costs at this location for the given `current_selected_measure`.
-        """
-        if not self.current_selected_measure or not self.strategy_location_input:
-            return 0.0
-        for _srtc in self.strategy_location_input.strategy_reinforcement_type_costs:
-            if _srtc.reinforcement_type == self.current_selected_measure:
-                return _srtc.total_costs
-        return 0.0
-        # raise ValueError("No current cost could be calculated")
-
-    @property
-    def cheapest_reinforcement(self) -> StrategyReinforcementTypeCosts:
-        if not self.strategy_location_input:
-            return None
-        return self.strategy_location_input.cheapest_reinforcement
+        )
 
     def get_reinforcement_costs(
         self, reinforcement_type: type[ReinforcementProfileProtocol]
