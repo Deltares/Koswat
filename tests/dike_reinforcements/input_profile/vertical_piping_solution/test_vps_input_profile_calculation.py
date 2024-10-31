@@ -33,19 +33,19 @@ class TestVPSInputProfileCalculation:
         _scenario = KoswatScenario()
         _scenario.d_h = 1
         _scenario.d_p = 30
-        _scenario.kruin_breedte = 5
-        _scenario.buiten_talud = 3
+        _scenario.crest_width = 5
+        _scenario.waterside_slope = 3
         _old_profile = KoswatInputProfileBase()
-        _old_profile.buiten_maaiveld = 0
-        _old_profile.buiten_talud = 3
-        _old_profile.buiten_berm_hoogte = 0
-        _old_profile.buiten_berm_breedte = 0
-        _old_profile.kruin_hoogte = 6
-        _old_profile.kruin_breedte = 5
-        _old_profile.binnen_talud = 3
-        _old_profile.binnen_berm_hoogte = 0
-        _old_profile.binnen_berm_breedte = 0
-        _old_profile.binnen_maaiveld = 0
+        _old_profile.waterside_ground_level = 0
+        _old_profile.waterside_slope = 3
+        _old_profile.waterside_berm_height = 0
+        _old_profile.waterside_berm_width = 0
+        _old_profile.crest_height = 6
+        _old_profile.crest_width = 5
+        _old_profile.polderside_slope = 3
+        _old_profile.polderside_berm_height = 0
+        _old_profile.polderside_berm_width = 0
+        _old_profile.polderside_ground_level = 0
         _vps_settings = KoswatVPSSettings()
         _vps_settings.polderside_berm_width_vps = 10
 
@@ -55,13 +55,17 @@ class TestVPSInputProfileCalculation:
         )
 
         # 3. Verify expectations
-        assert _new_profile.buiten_maaiveld == _old_profile.buiten_maaiveld
-        assert _new_profile.buiten_talud == _old_profile.buiten_talud
-        assert _new_profile.buiten_berm_hoogte == _old_profile.buiten_berm_hoogte
-        assert _new_profile.buiten_berm_breedte == _old_profile.buiten_berm_breedte
-        assert _new_profile.kruin_hoogte == pytest.approx(7, 0.0001)
-        assert _new_profile.kruin_breedte == _scenario.kruin_breedte
-        assert _new_profile.binnen_talud == pytest.approx(3, 0.0001)
-        assert _new_profile.binnen_maaiveld == _old_profile.binnen_maaiveld
-        assert _new_profile.binnen_berm_breedte == pytest.approx(10, 0.0001)
-        assert _new_profile.binnen_berm_hoogte == pytest.approx(0.5, 0.0001)
+        assert (
+            _new_profile.waterside_ground_level == _old_profile.waterside_ground_level
+        )
+        assert _new_profile.waterside_slope == _old_profile.waterside_slope
+        assert _new_profile.waterside_berm_height == _old_profile.waterside_berm_height
+        assert _new_profile.waterside_berm_width == _old_profile.waterside_berm_width
+        assert _new_profile.crest_height == pytest.approx(7, 0.0001)
+        assert _new_profile.crest_width == _scenario.crest_width
+        assert _new_profile.polderside_slope == pytest.approx(3, 0.0001)
+        assert (
+            _new_profile.polderside_ground_level == _old_profile.polderside_ground_level
+        )
+        assert _new_profile.polderside_berm_width == pytest.approx(10, 0.0001)
+        assert _new_profile.polderside_berm_height == pytest.approx(0.5, 0.0001)

@@ -13,8 +13,8 @@ class KoswatScenario(KoswatConfigProtocol):
     d_h: float = math.nan
     d_s: float = math.nan
     d_p: float = math.nan
-    kruin_breedte: float = math.nan
-    buiten_talud: float = math.nan
+    crest_width: float = math.nan
+    waterside_slope: float = math.nan
 
     def is_valid(self) -> bool:
         return (

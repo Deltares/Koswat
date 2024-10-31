@@ -99,7 +99,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
     ) -> SoilCostParameter:
         _lpcp = SoilCostParameter()
         _lpcp.quantity = quantity
-        _lpcp.cost = input_data.grondprijs
+        _lpcp.cost = input_data.ground_price
         _lpcp.surtax = self.koswat_costs_settings.surtax_costs.get_land_purchase_surtax(
             self.reinforced_profile.input_data.land_purchase_surtax_factor
         )
@@ -161,7 +161,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         qc_parameters.new_core_layer_surface = self._get_soil_cost_parameter(
             _qcp.new_core_layer_surface, dike_profile_costs.profiling_layer_sand_m2
         )
-        qc_parameters.new_maaiveld_surface = self._get_soil_cost_parameter(
+        qc_parameters.new_ground_level_surface = self._get_soil_cost_parameter(
             _qcp.new_ground_level_surface,
             dike_profile_costs.processing_ground_level_surface_m2,
         )

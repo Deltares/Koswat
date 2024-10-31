@@ -27,108 +27,108 @@ class TestCofferdamInputProfileCalculation:
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
 
     @pytest.mark.parametrize(
-        "soil_binnen_berm_breedte, expected",
+        "soil_polderside_berm_width, expected",
         [
-            pytest.param(0.0, 13.5, id="soil_binnen_berm_breedte=0"),
-            pytest.param(30.0, 14.5, id="soil_binnen_berm_breedte=30"),
+            pytest.param(0.0, 13.5, id="soil_polderside_berm_width=0"),
+            pytest.param(30.0, 14.5, id="soil_polderside_berm_width=30"),
         ],
     )
-    def test_calculate_length_coffer_dam(
-        self, soil_binnen_berm_breedte: float, expected: float
+    def test_calculate_length_cofferdam(
+        self, soil_polderside_berm_width: float, expected: float
     ):
         class MockInputData(KoswatInputProfileProtocol):
-            pleistoceen: float
+            pleistocene: float
             aquifer: float
 
         class MockSettings(KoswatCofferdamSettings):
-            min_lengte_kistdam: float
-            max_lengte_kistdam: float
+            min_length_cofferdam: float
+            max_length_cofferdam: float
 
         # 1. Define test data.
         _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
-        _input_data.pleistoceen = -5
+        _input_data.pleistocene = -5
         _input_data.aquifer = -2
         _cofferdam_settings = MockSettings()
-        _cofferdam_settings.min_lengte_kistdam = 0
-        _cofferdam_settings.max_lengte_kistdam = 99
-        _soil_binnen_berm_breedte = soil_binnen_berm_breedte
-        _new_kruin_hoogte = 8
+        _cofferdam_settings.min_length_cofferdam = 0
+        _cofferdam_settings.max_length_cofferdam = 99
+        _soil_polderside_berm_width = soil_polderside_berm_width
+        _new_crest_height = 8
         _expected_result = expected
 
         # 2. Run test.
-        _result = _calculator._calculate_length_coffer_dam(
+        _result = _calculator._calculate_length_cofferdam(
             _input_data,
             _cofferdam_settings,
-            _soil_binnen_berm_breedte,
-            _new_kruin_hoogte,
+            _soil_polderside_berm_width,
+            _new_crest_height,
         )
 
         # 3. Verify expectations
         assert _result == _expected_result
 
-    def test_calculate_new_kruin_hoogte(self):
+    def test_calculate_new_crest_height(self):
         class MockInputData(KoswatInputProfileProtocol):
-            kruin_hoogte: float
+            crest_height: float
 
         # 1. Define test data.
         _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 6
+        _input_data.crest_height = 6
         _scenario = KoswatScenario()
         _scenario.d_h = 2
         _expected_result = 8
 
         # 2. Run test.
-        _result = _calculator._calculate_new_kruin_hoogte(_input_data, _scenario)
+        _result = _calculator._calculate_new_crest_height(_input_data, _scenario)
 
         # 3. Verify expectations
         assert _result == _expected_result
 
-    def test_calculate_new_buiten_talud(self):
+    def test_calculate_new_waterside_slope(self):
         class MockInputData(KoswatInputProfileProtocol):
-            kruin_hoogte: float
-            buiten_talud: float
-            buiten_maaiveld: float
+            crest_height: float
+            waterside_slope: float
+            waterside_ground_level: float
 
         # 1. Define test data.
         _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 8
-        _input_data.buiten_maaiveld = 2
-        _input_data.buiten_talud = 3
+        _input_data.crest_height = 8
+        _input_data.waterside_ground_level = 2
+        _input_data.waterside_slope = 3
         _scenario = KoswatScenario()
         _scenario.d_h = 2
         _expected_result = 2.25
 
         # 2. Run test.
-        _result = _calculator._calculate_new_buiten_talud(_input_data, _scenario)
+        _result = _calculator._calculate_new_waterside_slope(_input_data, _scenario)
 
         # 3. Verify expectations
         assert _result == _expected_result
 
-    def test_calculate_new_binnen_talud(self):
+    def test_calculate_new_polderside_slope(self):
         class MockInputData(KoswatInputProfileProtocol):
-            kruin_breedte: float
-            kruin_hoogte: float
-            binnen_maaiveld: float
-            binnen_talud: float
+            crest_width: float
+            crest_height: float
+            polderside_ground_level: float
+            polderside_slope: float
 
         # 1. Define test data.
         _expected_result = 2.25
         _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
-        _input_data.kruin_hoogte = 6
-        _input_data.binnen_maaiveld = 0
-        _input_data.binnen_talud = 3
-        _input_data.kruin_breedte = 5
+        _input_data.crest_height = 6
+        _input_data.polderside_ground_level = 0
+        _input_data.polderside_slope = 3
+        _input_data.crest_width = 5
         _scenario = KoswatScenario()
         _scenario.d_h = 2
-        _scenario.kruin_breedte = 5
-        _scenario.buiten_talud = 3
+        _scenario.crest_width = 5
+        _scenario.waterside_slope = 3
 
         # 2. Run test.
-        _result = _calculator._calculate_new_binnen_talud(_input_data, _scenario)
+        _result = _calculator._calculate_new_polderside_slope(_input_data, _scenario)
 
         # 3. Verify expectations
         assert _result == pytest.approx(_expected_result, 0.001)
@@ -136,17 +136,20 @@ class TestCofferdamInputProfileCalculation:
     def test_calculate_new_input_profile(self):
         class MockInputData(KoswatInputProfileProtocol):
             dike_section: str
-            kruin_hoogte: float
-            binnen_berm_breedte: float
-            binnen_maaiveld: float
-            binnen_talud: float
-            kruin_breedte: float
-            buiten_berm_breedte: float
-            buiten_talud: float
-            grondprijs_bebouwd: float
-            grondprijs_onbebouwd: float
-            factor_zetting: float
-            pleistoceen: float
+            waterside_ground_level: float
+            waterside_slope: float
+            waterside_berm_height: float
+            waterside_berm_width: float
+            crest_height: float
+            crest_width: float
+            polderside_slope: float
+            polderside_berm_height: float
+            polderside_berm_width: float
+            polderside_ground_level: float
+            ground_price_builtup: float
+            ground_price_unbuilt: float
+            factor_settlement: float
+            pleistocene: float
             aquifer: float
 
         class MockSettings(KoswatCofferdamSettings):
@@ -157,27 +160,28 @@ class TestCofferdamInputProfileCalculation:
         _calculator = CofferdamInputProfileCalculation()
         _input_data = MockInputData()
         _input_data.dike_section = "mocked_section"
-        _input_data.kruin_hoogte = 30
-        _input_data.binnen_berm_breedte = 9.0
-        _input_data.binnen_maaiveld = 2.3
-        _input_data.binnen_talud = 4.5
-        _input_data.kruin_breedte = 5.6
-        _input_data.buiten_maaiveld = 6.7
-        _input_data.buiten_berm_hoogte = 7.8
-        _input_data.buiten_berm_breedte = 8.9
-        _input_data.buiten_talud = 9.9
-        _input_data.grondprijs_bebouwd = 150
-        _input_data.grondprijs_onbebouwd = 10
-        _input_data.factor_zetting = 1.2
-        _input_data.pleistoceen = -6.7
+        _input_data.waterside_ground_level = 6.7
+        _input_data.waterside_slope = 9.9
+        _input_data.waterside_berm_height = 7.8
+        _input_data.waterside_berm_width = 8.9
+        _input_data.crest_height = 30
+        _input_data.crest_width = 5.6
+        _input_data.polderside_slope = 4.5
+        _input_data.polderside_berm_height = 7.8
+        _input_data.polderside_berm_width = 9.0
+        _input_data.polderside_ground_level = 2.3
+        _input_data.ground_price_builtup = 150
+        _input_data.ground_price_unbuilt = 10
+        _input_data.factor_settlement = 1.2
+        _input_data.pleistocene = -6.7
         _input_data.aquifer = -2.3
         _cofferdam_settings = MockSettings()
         _cofferdam_settings.min_length_cofferdam = 0
         _cofferdam_settings.max_length_cofferdam = 99
         _scenario = KoswatScenario()
         _scenario.d_h = 12
-        _scenario.kruin_breedte = 6.7
-        _scenario.buiten_talud = 7.8
+        _scenario.crest_width = 6.7
+        _scenario.waterside_slope = 7.8
 
         # 2. Run test.
         _result = _calculator._calculate_new_input_profile(
