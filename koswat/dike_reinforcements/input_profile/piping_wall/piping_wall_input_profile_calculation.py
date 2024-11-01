@@ -6,11 +6,10 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile import PipingWallInputProfile
-from koswat.dike_reinforcements.input_profile.soil.soil_input_profile_calculation import SoilInputProfileCalculation
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import ReinforcementInputProfileCalculationBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import ReinforcementInputProfileCalculationProtocol
 
-class PipingWallInputProfileCalculation(SoilInputProfileCalculation, ReinforcementInputProfileCalculationBase, ReinforcementInputProfileCalculationProtocol):
+class PipingWallInputProfileCalculation(ReinforcementInputProfileCalculationBase, ReinforcementInputProfileCalculationProtocol):
     base_profile: KoswatProfileProtocol
     reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
@@ -39,31 +38,6 @@ class PipingWallInputProfileCalculation(SoilInputProfileCalculation, Reinforceme
             1,
         )
 
-#    def _calculate_new_kruin_hoogte(self, base_data: KoswatInputProfileBase, scenario: KoswatScenario) -> float:
-#        return base_data.kruin_hoogte + scenario.d_h
-
-#    def _calculate_new_binnen_talud(self, base_data: KoswatInputProfileBase, scenario: KoswatScenario) -> float:
-#        """
-#        MAX(
-#            Binnen_Talud_Oud,
-#            (
-#                dS
-#                -dH*Buiten_Talud_Nieuw
-#                -(Kruin_Breedte_Nieuw-Kruin_Breedte_Oud)
-#                +(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud)*Binnen_Talud_Oud)
-#                /(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud+dH))
-#        """
-#        _first_part = scenario.d_h * scenario.buiten_talud
-#        _second_part = scenario.kruin_breedte - base_data.kruin_breedte
-#        _third_parth = (
-#            base_data.kruin_hoogte - base_data.binnen_maaiveld
-#        ) * base_data.binnen_talud
-#        _dividend = base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h
-#        _right_side = (
-#            scenario.d_s - _first_part - _second_part + _third_parth
-#        ) / _dividend
-#        return max(base_data.binnen_talud, _right_side)
-
     def _determine_construction_type(self, overgang: float, construction_length: float) -> ConstructionTypeEnum | None:
         if construction_length == 0:
             return None
@@ -78,10 +52,9 @@ class PipingWallInputProfileCalculation(SoilInputProfileCalculation, Reinforceme
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         _new_data.buiten_talud = scenario.buiten_talud
-        _new_data.buiten_berm_hoogte = self._calculate_new_buiten_berm_hoogte(base_data, scenario)
-        _new_data.buiten_berm_hoogte = base_data.buiten_berm_hoogte
+        _new_data.buiten_berm_hoogte = self._calculate_soil_new_buiten_berm_hoogte(base_data, scenario)
         _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
-        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
+        _new_data.kruin_hoogte = self._calculate_soil_new_kruin_hoogte(base_data, scenario)
         _new_data.kruin_breedte = scenario.kruin_breedte
 
         _dike_height_old = base_data.kruin_hoogte - base_data.binnen_maaiveld
@@ -99,18 +72,19 @@ class PipingWallInputProfileCalculation(SoilInputProfileCalculation, Reinforceme
         _dike_height_new = _new_data.kruin_hoogte-_new_data.binnen_maaiveld
         _dikebase_heigth_new = scenario.d_h*_new_data.buiten_talud + _new_data.kruin_breedte + _dike_height_new*base_data.binnen_talud
         _dikebase_stability_new = _dikebase_stability_old + scenario.d_s
-        _dikebase_piping_equivalent = _dikebase_piping_old + scenario.d_p
         _dikebase_piping_new = max(_dikebase_piping_old, _dikebase_heigth_new, _dikebase_stability_new)
-                                   
+        _dikebase_piping_needed = _dikebase_piping_old + scenario.d_p
+        _seepage_length = max(_dikebase_piping_needed - _dikebase_piping_new, 0)
+
         # Is a berm for piping neccesary --> Maybe there was an old one??
         if _dikebase_piping_new > max(_dikebase_heigth_new,_dikebase_stability_new):
             _new_data.binnen_berm_breedte = _dikebase_piping_new - max(_dikebase_heigth_new,_dikebase_stability_new)
-            _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
+            _new_data.binnen_talud = self._calculate_soil_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
             # extend existing berm?
             if base_data.binnen_berm_breedte > 0 and _dikebase_piping_old > max(_dikebase_heigth_new, _dikebase_stability_new):
-                _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(base_data, _new_data, scenario, soil_settings, _berm_extend_existing = True)
+                _new_data.binnen_berm_hoogte = self._calculate_soil_new_binnen_berm_hoogte_piping(base_data, _new_data, scenario, soil_settings, True)
             else:
-                _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(base_data, _new_data, scenario, soil_settings, _berm_extend_existing = False)
+                _new_data.binnen_berm_hoogte = self._calculate_soil_new_binnen_berm_hoogte_piping(base_data, _new_data, scenario, soil_settings, False)
         else:
             # Is measure for stability neccesary?
             if _dikebase_stability_new > _dikebase_heigth_new:
@@ -122,19 +96,12 @@ class PipingWallInputProfileCalculation(SoilInputProfileCalculation, Reinforceme
                 else:
                     _new_data.binnen_berm_breedte = 0
                     _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
-                    _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
+                    _new_data.binnen_talud = self._calculate_soil_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
             else:
                 _new_data.binnen_berm_breedte = 0
                 _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
                 _new_data.binnen_talud = base_data.binnen_talud
 
-        # _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario)
-        # _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
-        # _new_data.binnen_berm_breedte = 0
-        # _soil_binnen_berm_breedte = self._calculate_soil_binnen_berm_breedte(base_data, _new_data, scenario)
-
-        _seepage_length = max(_dikebase_piping_equivalent - _dikebase_piping_new, 0)
-        
         _new_data.grondprijs_bebouwd = base_data.grondprijs_bebouwd
         _new_data.grondprijs_onbebouwd = base_data.grondprijs_onbebouwd
         _new_data.factor_zetting = base_data.factor_zetting

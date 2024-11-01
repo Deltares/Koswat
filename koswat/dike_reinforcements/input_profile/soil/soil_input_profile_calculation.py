@@ -15,33 +15,6 @@ class SoilInputProfileCalculation(ReinforcementInputProfileCalculationBase, Rein
     def __init__(self) -> None:
         self.base_profile = None
         self.scenario = None
-
-    def _calculate_new_kruin_hoogte(self, base_data: KoswatInputProfileBase, scenario: KoswatScenario) -> float:
-        return base_data.kruin_hoogte + scenario.d_h
-    
-    def _calculate_new_buiten_berm_hoogte(self, base_data: KoswatInputProfileBase, scenario: KoswatScenario) -> float:
-        if base_data.buiten_berm_hoogte > base_data.buiten_maaiveld:       
-            return base_data.buiten_berm_hoogte + scenario.d_h
-        return base_data.buiten_berm_hoogte
-    
-    def _calculate_new_binnen_talud(self, base_data: KoswatInputProfileBase, scenario: KoswatScenario, _dikebase_heigth_new, _dikebase_stability_new) -> float:
-        _numerator = max(_dikebase_heigth_new, _dikebase_stability_new) - scenario.d_h * scenario.buiten_talud - scenario.kruin_breedte
-        _denominator = base_data.kruin_hoogte - base_data.binnen_maaiveld + scenario.d_h
-        return _numerator/_denominator
-    
-    def _calculate_new_binnen_berm_hoogte(self, old_data: KoswatInputProfileBase, new_data: KoswatInputProfileBase, scenario: KoswatScenario, soil_settings: KoswatSoilSettings, _berm_extend_existing) -> float:
-        if _berm_extend_existing:
-            _old_berm_height = old_data.binnen_berm_hoogte - old_data.binnen_maaiveld
-        else:
-            _old_berm_height = 0
-        _max = max(
-            soil_settings.min_bermhoogte,
-            _old_berm_height,
-            new_data.binnen_berm_breedte * soil_settings.factor_toename_bermhoogte,
-        )
-        return (
-            min(_max, soil_settings.max_bermhoogte_factor * (new_data.kruin_hoogte - new_data.binnen_maaiveld)) + new_data.binnen_maaiveld
-        )
         
     def _calculate_new_input_profile(self, base_data: KoswatInputProfileBase, soil_settings: KoswatSoilSettings, scenario: KoswatScenario) -> KoswatInputProfileBase:
         _new_data = SoilInputProfile()
@@ -49,10 +22,10 @@ class SoilInputProfileCalculation(ReinforcementInputProfileCalculationBase, Rein
         _new_data.buiten_maaiveld = base_data.buiten_maaiveld
         _new_data.binnen_maaiveld = base_data.binnen_maaiveld
         _new_data.buiten_talud = scenario.buiten_talud
-        _new_data.buiten_berm_hoogte = self._calculate_new_buiten_berm_hoogte(base_data, scenario)
+        _new_data.buiten_berm_hoogte = self._calculate_soil_new_buiten_berm_hoogte(base_data, scenario)
         _new_data.buiten_berm_breedte = base_data.buiten_berm_breedte
         _new_data.kruin_breedte = scenario.kruin_breedte
-        _new_data.kruin_hoogte = self._calculate_new_kruin_hoogte(base_data, scenario)
+        _new_data.kruin_hoogte = self._calculate_soil_new_kruin_hoogte(base_data, scenario)
         
         _dike_height_old = base_data.kruin_hoogte - base_data.binnen_maaiveld
         _berm_height_old = base_data.binnen_berm_hoogte - base_data.binnen_maaiveld
@@ -73,12 +46,12 @@ class SoilInputProfileCalculation(ReinforcementInputProfileCalculationBase, Rein
         # Is a berm for piping neccesary?
         if _dikebase_piping_new > max(_dikebase_heigth_new,_dikebase_stability_new):
             _new_data.binnen_berm_breedte = _dikebase_piping_new - max(_dikebase_heigth_new,_dikebase_stability_new)
-            _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
+            _new_data.binnen_talud = self._calculate_soil_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
             # extend existing berm?
             if base_data.binnen_berm_breedte > 0 and _dikebase_piping_old > max(_dikebase_heigth_new, _dikebase_stability_new):
-                _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(base_data, _new_data, scenario, soil_settings, _berm_extend_existing = True)
+                _new_data.binnen_berm_hoogte = self._calculate_soil_new_binnen_berm_hoogte_piping(base_data, _new_data, scenario, soil_settings, True)
             else:
-                _new_data.binnen_berm_hoogte = self._calculate_new_binnen_berm_hoogte(base_data, _new_data, scenario, soil_settings, _berm_extend_existing = False)
+                _new_data.binnen_berm_hoogte = self._calculate_soil_new_binnen_berm_hoogte_piping(base_data, _new_data, scenario, soil_settings, False)
         else:
             # Is measure for stability neccesary?
             if _dikebase_stability_new > _dikebase_heigth_new:
@@ -90,7 +63,7 @@ class SoilInputProfileCalculation(ReinforcementInputProfileCalculationBase, Rein
                 else:
                     _new_data.binnen_berm_breedte = 0
                     _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
-                    _new_data.binnen_talud = self._calculate_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
+                    _new_data.binnen_talud = self._calculate_soil_new_binnen_talud(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
             else:
                 _new_data.binnen_berm_breedte = 0
                 _new_data.binnen_berm_hoogte = base_data.binnen_maaiveld
