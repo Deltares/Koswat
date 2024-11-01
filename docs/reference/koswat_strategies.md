@@ -7,15 +7,21 @@ A strategy requires a strategy input (`StrategyInput`), this input contains info
 By default a strategy is applied as follows:
 
 1. For each point (meter) in the traject, determine which reinforcements can be applied to it.
-2. Choose one of the available reinforcements based on the chosen [strategy](#order-based-default). When no reinforcement is available the most restrictive will be chosen (`CofferDam`).
+2. Choose one of the available reinforcements based on the chosen [strategy](#order-based). When no reinforcement is available the most restrictive will be chosen (`CofferDam`).
 3. Apply a buffer (`reinforcement_min_buffer`) for each one of the reinforcements.
 4. Check if the minimal distance between constructions is met (`reinforcement_min_length`), otherwise change it into one of the reinforcements next to it.
 5. Repeat 4 until all reinforcements have enough distance between themselves.
-6. Return list of mapped locations (`list[StrategyLocationReinforcement]`).
+6. Find based on the strategy for [infrastructure derived costs](#infrastructure-priority), mapped locations (`list[StrategyLocationReinforcement]`) whose reinforcement can be increased into a most restrictive one with total lower costs. 
+7. Return list of mapped locations (`list[StrategyLocationReinforcement]`).
 
 ## Available strategies
 
-### Order based (default)
+Currently the following strategies are implemented:
+
+- [Order based](#order-based)
+- [Infrastructure priority](#infrastructure-priority), by default the strategy to run during a Koswat analysis.
+
+### Order based
 
 This strategy is the first and default of all defined strategies. Its criteria is based on a pre-defined ['order'](#reinforcement-order) of each reinforcement. In steps, it can be seen as:
 
@@ -234,11 +240,12 @@ Resulting cluster:
 
 ### Infrastructure priority
 
-This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report). In steps, this strategy can be broke down as:
+**DEFAULT STRATEGY**
+This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report). In steps, this strategy can be broke down as:
 
 __Steps breakdown__:
 
-1. Assignment of [order based clusters](#order-based-default),
+1. Assignment of [order based clusters](#order-based),
 2. [Cluster options](#cluster-options) evaluation,
     1. [Common available measures](#cluster-common-available-measure-costs) cost calculation,
     2. Cheapest option selection,
@@ -254,7 +261,7 @@ __Conditions__:
 
 - We only create subclusters when the cluster's original size is, at least, twice the required minimal cluster's length.
 - We estimate the cluster's minimal length to be at least twice the size of the buffer so: `min_cluster_length = (2 * reinforcement_min_buffer) + 1`.
-- We create subclusters based on the immediate results of the [order based strategy](#order-based-default).  We do not try to combine or create new clusters based on a "greedier" strategy.
+- We create subclusters based on the immediate results of the [order based strategy](#order-based).  We do not try to combine or create new clusters based on a "greedier" strategy.
 
 
 ##### Cluster option example

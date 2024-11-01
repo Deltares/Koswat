@@ -92,7 +92,7 @@ After running a Koswat analysis, several files and directories will be generated
         -`summary_locations_measures`: The same data as present in `summary_locations.csv` is used to shape the geometry of a dike's traject. We keep as well the type of chosen reinforcement.
         - `summary_locations_new`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the new selected reinforcement.
         - `summary_locations_old`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the original selected reinforcement.
-        - `summary_locations_step`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the [Ordered Strategy](koswat_strategies.md#order-based-default) step.
+        - `summary_locations_step`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the [Ordered Strategy](koswat_strategies.md#order-based) step.
     - `summary_infrastructure_costs.csv`: A csv file contaning all the infrastructure costs at each location for each of the supported reinforcement profile types.
         - Represents the [Infrastructure Report](#infrastructure-report).
 
