@@ -32,4 +32,4 @@ class TestSummaryLocationsShpExporter:
         # 3. Verify expectations.
         assert _test_dir.exists()
         _shp_files = list(_test_dir.glob("*.shp"))
-        assert len(_shp_files) == 3
+        assert len(_shp_files) == 4

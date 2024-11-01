@@ -20,11 +20,15 @@ class TestMain:
         assert _invalid_path == str(_run_result.exc_info[1])
 
     def test_given_valid_input_succeeds(self):
+        """
+        NOTE: This test is used as output reference in `koswat_cost_report.md`.
+        Keep it in mind when updating the reference data!
+        """
         # 1. Define test data.
-        _valid_path = test_data / "acceptance" / "koswat_general.ini"
+        _valid_path = test_data.joinpath("acceptance", "koswat_general.ini")
         assert _valid_path.is_file()
         # Ensure we have a clean results dir.
-        _results_dir = test_results / "acceptance"
+        _results_dir = test_results.joinpath("acceptance")
         if _results_dir.exists():
             shutil.rmtree(_results_dir)
         _results_dir.mkdir(parents=True)

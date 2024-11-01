@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
 @dataclass
@@ -62,7 +63,7 @@ class OrderCluster:
         """
         Extends the current cluster with the reinforcements
         (`list[StrategyLocationReinforcement]`) from another cluster.
-        Modifies the `selected_measure` property of those measures being merged but it
+        Modifies the `current_selected_measure` property of those measures being merged but it
         does not remove them from their source cluster.
 
         Args:
@@ -75,9 +76,9 @@ class OrderCluster:
             logging.warning("Trying to extend cluster from an unrelated one.")
 
         if any(self.location_reinforcements):
-            _new_profile_type = self.location_reinforcements[0].selected_measure
+            _new_profile_type = self.location_reinforcements[0].current_selected_measure
             for _lr in other.location_reinforcements:
-                _lr.selected_measure = _new_profile_type
+                _lr.set_selected_measure(_new_profile_type, StrategyStepEnum.ORDERED)
 
         if self.left_neighbor == other:
             self.location_reinforcements = (

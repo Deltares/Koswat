@@ -114,7 +114,7 @@ class InfraPriorityStrategy(StrategyProtocol):
             location_collection: list[StrategyLocationReinforcement],
         ) -> list[list[InfraCluster]]:
             _icc = []
-            for _w_element in filter(len, location_collection):
+            for _w_element in filter(any, location_collection):
                 _ic = InfraCluster(
                     min_required_length=from_cluster.min_required_length,
                     reinforcement_type=from_cluster.reinforcement_type,
@@ -155,7 +155,7 @@ class InfraPriorityStrategy(StrategyProtocol):
     ) -> Iterator[InfraCluster]:
         for _grouped_by, _grouping in groupby(
             order_strategy.apply_strategy(strategy_input),
-            key=lambda x: x.selected_measure,
+            key=lambda x: x.current_selected_measure,
         ):
             _grouping_data = list(_grouping)
             if not _grouping_data:

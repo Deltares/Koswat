@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from itertools import groupby
-from typing import Type
+from typing import Callable, Type
 
 from geopandas import GeoDataFrame
 
+from koswat.cost_report.io.summary.summary_locations.cluster_geodataframe_output_fom import (
+    ClusterGeoDataFrameOutputFom,
+)
 from koswat.cost_report.io.summary.summary_locations.cluster_shp_fom import (
     ClusterShpFom,
 )
@@ -24,12 +27,22 @@ class ClusterCollectionShpFom:
     crs_projection: str = "EPSG:28992"
 
     @classmethod
-    def from_summary(cls, koswat_summary: KoswatSummary) -> ClusterCollectionShpFom:
+    def from_summary(
+        cls,
+        koswat_summary: KoswatSummary,
+        cluster_criteria: Callable[
+            [StrategyLocationReinforcement], type[ReinforcementProfileProtocol]
+        ] = lambda x: x.current_selected_measure,
+    ) -> ClusterCollectionShpFom:
         """
         Maps the `KoswatSummary` into a file object model that can be exported into `*.shp` files.
 
         Args:
             koswat_summary (KoswatSummary): The summary containing the information to export.
+            cluster_criteria (Callable[
+                [StrategyLocationReinforcement],
+                type[ReinforcementProfileProtocol]
+            ]): (Lambda) Function criteria to group the locations by reinforcement type.
 
         Returns:
             ClusterCollectionShpFom: Dataclass instance that can be directly exported into `.shp`.
@@ -53,21 +66,20 @@ class ClusterCollectionShpFom:
                     to_cluster_shp_fom,
                     groupby(
                         koswat_summary.reinforcement_per_locations,
-                        key=lambda x: x.selected_measure,
+                        key=cluster_criteria,
                     ),
                 )
             )
         )
 
-    def generate_geodataframes(self) -> tuple[GeoDataFrame, GeoDataFrame, GeoDataFrame]:
+    def generate_geodataframes(self) -> ClusterGeoDataFrameOutputFom:
         """
         Generates all geodataframes of the given clusters. The generated geodataframes
         correspond to the, base geometry (without buffering), the old and new geometries
         with their profile's width being buffered to the base geometry.
 
         Returns:
-            tuple[GeoDataFrame, GeoDataFrame, GeoDataFrame]:
-                Tuple of geodataframes maping this `ClusterCollectionShpFom`.
+            ClusterGeoDataFrameOutputFom: Resulting geodataframes wrapper maping this `ClusterCollectionShpFom`.
         """
 
         def to_gdf_entry(
@@ -94,9 +106,11 @@ class ClusterCollectionShpFom:
         def dict_list_to_gdf(dict_entries: list[dict]) -> GeoDataFrame:
             return GeoDataFrame(data=dict_entries, crs=self.crs_projection)
 
-        return tuple(
-            map(
-                dict_list_to_gdf,
-                zip(*(to_gdf_entry(_cl) for _cl in self.clusters)),
+        return ClusterGeoDataFrameOutputFom(
+            tuple(
+                map(
+                    dict_list_to_gdf,
+                    zip(*(to_gdf_entry(_cl) for _cl in self.clusters)),
+                )
             )
         )

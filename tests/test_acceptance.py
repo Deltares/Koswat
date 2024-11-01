@@ -58,6 +58,9 @@ from koswat.cost_report.summary import KoswatSummary, KoswatSummaryBuilder
 from koswat.dike.profile import KoswatProfileBase, KoswatProfileBuilder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
+from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
+    InfraPriorityStrategy,
+)
 from tests import (
     get_fixturerequest_case_name,
     get_testcase_results_dir,
@@ -223,7 +226,9 @@ class TestAcceptance:
         )
 
         # 2. Run test.
-        _summary = KoswatSummaryBuilder(run_scenario_settings=_run_settings).build()
+        _summary = KoswatSummaryBuilder(
+            run_scenario_settings=_run_settings, strategy_type=InfraPriorityStrategy
+        ).build()
         assert isinstance(_summary, KoswatSummary)
 
         # 3. Verify expectations.

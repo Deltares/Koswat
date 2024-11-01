@@ -60,8 +60,8 @@ class KoswatSummary:
         # Get the infra cost tuples (without and with surtax) for each location.
         _infra_costs_dict = defaultdict(list)
         for _loc in self.reinforcement_per_locations:
-            _infra_costs_dict[_loc.selected_measure].append(
-                _loc.get_infrastructure_costs(_loc.selected_measure)
+            _infra_costs_dict[_loc.current_selected_measure].append(
+                _loc.get_infrastructure_costs(_loc.current_selected_measure)
             )
 
         # Sum the infra costs for each reinforcement type.

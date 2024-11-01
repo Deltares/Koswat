@@ -30,7 +30,6 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
-    VPSReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -143,16 +142,15 @@ def get_locations_reinforcements(
             for _lp_report in summary.locations_profile_report_list
             if _location in _lp_report.report_locations
         )
-        _selected_measure = _available_reinforcements[-1]
-        if any(_a_measures):
-            _selected_measure = _a_measures[0]
-        _matrix.append(
-            StrategyLocationReinforcement(
-                location=_location,
-                available_measures=_a_measures,
-                selected_measure=_selected_measure,
-            )
+
+        _slr = StrategyLocationReinforcement(
+            location=_location,
+            available_measures=_a_measures,
+            filtered_measures=_a_measures
+            if any(_a_measures)
+            else [_available_reinforcements[-1]],
         )
+        _matrix.append(_slr)
     return _matrix
 
 
@@ -213,8 +211,8 @@ def _get_cluster_shp_fom_factory() -> Iterable[
     ) -> StrategyLocationReinforcement:
         return StrategyLocationReinforcement(
             location=PointSurroundings(location=Point(coordinates)),
-            selected_measure=reinforced_profile,
-            available_measures=[],
+            available_measures=[reinforced_profile],
+            filtered_measures=[reinforced_profile],
         )
 
     def create_cluster(

@@ -19,7 +19,7 @@ class OrderStrategyBase(abc.ABC):
             (self.reinforcement_order.index(k), list(g))
             for k, g in groupby(
                 location_reinforcements,
-                lambda x: x.selected_measure,
+                lambda x: x.current_selected_measure,
             )
         )
 
