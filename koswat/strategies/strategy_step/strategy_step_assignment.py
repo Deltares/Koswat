@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from typing import TypedDict
 
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -6,8 +6,6 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
-@dataclass
-class StrategyStepAssignment:
-    step_number: int
+class StrategyStepAssignment(TypedDict):
     step_type: StrategyStepEnum
     step_value: type[ReinforcementProfileProtocol]

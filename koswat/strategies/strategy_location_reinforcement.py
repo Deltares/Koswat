@@ -52,7 +52,7 @@ class StrategyLocationReinforcement:
         """
         if not any(self._selected_measure_steps):
             return None
-        return self._selected_measure_steps[-1].step_value
+        return self._selected_measure_steps[-1]["step_value"]
 
     @property
     def current_cost(self) -> float:
@@ -92,7 +92,6 @@ class StrategyLocationReinforcement:
         # self._filtered_measures = self._filtered_measures[_from_idx:]
         self._selected_measure_steps.append(
             StrategyStepAssignment(
-                step_number=len(self._selected_measure_steps),
                 step_type=step,
                 step_value=reinforcement_type,
             )
@@ -119,7 +118,7 @@ class StrategyLocationReinforcement:
         """
 
         def filter_ordered_step(assignment_step: StrategyStepAssignment) -> bool:
-            return assignment_step.step_type == StrategyStepEnum.ORDERED
+            return assignment_step["step_type"] == StrategyStepEnum.ORDERED
 
         _initial_step = self._selected_measure_steps[0]
         _ordered_step = next(
@@ -127,8 +126,8 @@ class StrategyLocationReinforcement:
             _initial_step,
         )
         return (
-            _initial_step.step_value,
-            _ordered_step.step_value,
+            _initial_step["step_value"],
+            _ordered_step["step_value"],
             self.current_selected_measure,
         )
 
