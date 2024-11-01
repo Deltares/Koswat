@@ -35,5 +35,5 @@ class TestSummaryLocationsCsvExporter:
 A;0.24;0.42;0;1;1;1;Kwelscherm;Kwelscherm;Kwelscherm
 A;2.4;0.42;0;0;1;1;Grondmaatregel profiel;Grondmaatregel profiel;Grondmaatregel profiel
 A;0.24;2.4;0;0;0;1;Stabiliteitswand;Stabiliteitswand;Stabiliteitswand
-A;2.4;2.4;0;0;0;1;Stabiliteitswand;Stabiliteitswand;Stabiliteitswand"""
+A;2.4;2.4;0;0;0;0;Stabiliteitswand;Stabiliteitswand;Stabiliteitswand"""
         assert _expected_text == _read_text
