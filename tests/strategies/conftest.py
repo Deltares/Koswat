@@ -125,6 +125,7 @@ def _get_example_location_reinforcements_with_buffering(
             StrategyLocationReinforcement(
                 location=_location,
                 available_measures=[_measure_order[_measure_idx]],
+                filtered_measures=[_measure_order[_measure_idx]],
             )
         )
 

@@ -132,18 +132,16 @@ class OrderStrategy(StrategyProtocol):
         """
         _strategy_reinforcements = []
         for _strategy_location in strategy_locations:
-            # Get the available measures in the expected order!
-            _available_measures = list(
-                filter(
-                    lambda x: x in _strategy_location.available_measures,
-                    selection_order,
-                )
-            )
-
             # Create the strategy representation.
             _slr = StrategyLocationReinforcement(
                 location=_strategy_location.point_surrounding,
-                available_measures=_available_measures,
+                available_measures=_strategy_location.available_measures,
+                filtered_measures=list(
+                    filter(
+                        lambda x: x in _strategy_location.available_measures,
+                        selection_order,
+                    )
+                ),
                 strategy_location_input=_strategy_location,
             )
 

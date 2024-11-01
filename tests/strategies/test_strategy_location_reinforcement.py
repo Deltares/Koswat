@@ -36,6 +36,8 @@ class TestStrategyLocationReinforcement:
 
         # 2. Verify expectations.
         assert isinstance(_slr, StrategyLocationReinforcement)
+        assert not _slr.filtered_measures
+        assert not _slr.available_measures
         assert _slr.location is None
         assert _slr.current_selected_measure is None
         assert _slr.cheapest_reinforcement is None

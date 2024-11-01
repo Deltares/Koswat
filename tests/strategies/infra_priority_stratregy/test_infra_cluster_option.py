@@ -84,6 +84,7 @@ class TestInfraClusterOption:
                     StrategyLocationReinforcement(
                         location=None,
                         available_measures=[SoilReinforcementProfile],
+                        filtered_measures=[SoilReinforcementProfile],
                     )
                 ],
             ),

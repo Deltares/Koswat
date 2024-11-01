@@ -145,7 +145,8 @@ def get_locations_reinforcements(
 
         _slr = StrategyLocationReinforcement(
             location=_location,
-            available_measures=_a_measures
+            available_measures=_a_measures,
+            filtered_measures=_a_measures
             if any(_a_measures)
             else [_available_reinforcements[-1]],
         )
@@ -211,6 +212,7 @@ def _get_cluster_shp_fom_factory() -> Iterable[
         return StrategyLocationReinforcement(
             location=PointSurroundings(location=Point(coordinates)),
             available_measures=[reinforced_profile],
+            filtered_measures=[reinforced_profile],
         )
 
     def create_cluster(

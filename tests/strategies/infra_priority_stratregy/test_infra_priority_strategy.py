@@ -190,7 +190,8 @@ class TestInfraPriorityStrategy:
         for _available_measures in _available_measures_per_location:
             _slr = StrategyLocationReinforcement(
                 location=None,
-                available_measures=_available_measures
+                available_measures=_available_measures,
+                filtered_measures=_available_measures
                 if any(_available_measures)
                 else [SoilReinforcementProfile],
                 strategy_location_input=_location_input,

@@ -93,6 +93,7 @@ class TestInfraCluster:
         assert cluster_fixture.reinforcement_type == SoilReinforcementProfile
         _slr = StrategyLocationReinforcement(
             location=None,
+            filtered_measures=[cluster_fixture.reinforcement_type],
             available_measures=[cluster_fixture.reinforcement_type],
         )
         cluster_fixture.cluster = [_slr] * cluster_fixture.min_required_length

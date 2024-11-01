@@ -23,7 +23,13 @@ class StrategyLocationReinforcement:
     """
 
     location: PointSurroundings
+    # PHASED-OUT, this property should be removed once we confirm available measures
+    # are filtered by the order strategy (cost-space evaluation)
+    # use `filtered_measures` instead!
     available_measures: list[type[ReinforcementProfileProtocol]] = field(
+        default_factory=lambda: []
+    )
+    filtered_measures: list[type[ReinforcementProfileProtocol]] = field(
         default_factory=lambda: []
     )
     strategy_location_input: StrategyLocationInput = None
@@ -33,10 +39,10 @@ class StrategyLocationReinforcement:
     )
 
     def __post_init__(self):
-        if any(self.available_measures):
+        if any(self.filtered_measures):
             # Set the inital selection to the first available measure.
             self.set_selected_measure(
-                self.available_measures[0], StrategyStepEnum.INITIAL
+                self.filtered_measures[0], StrategyStepEnum.INITIAL
             )
 
     @property
@@ -80,6 +86,10 @@ class StrategyLocationReinforcement:
             step (StrategyStepsEnum): Step whose
         """
         # Update the assigned value for this step.
+        # TODO: Eventually we want to remove from `filtered_measures` all measures with
+        # a lower index, something like:
+        # _from_idx = self._filtered_measures.index(reinforcement_type)
+        # self._filtered_measures = self._filtered_measures[_from_idx:]
         self._selected_measure_steps.append(
             StrategyStepAssignment(
                 step_number=len(self._selected_measure_steps),
