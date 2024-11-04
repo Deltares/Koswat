@@ -1,5 +1,4 @@
 import logging
-import math
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import groupby
@@ -31,7 +30,11 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         ]
 
     def build(self) -> KoswatCsvFom:
+        def get_index(items: list, item):
+            return list(items).index(item) if item in items else -1
+
         _profile_type_key = "Profile type"
+        _reinforcement_order_key = "Strategy reinforcement order"
         _cost_per_km_key = "Cost per km (Euro/km)"
         _cost_per_km_incl_surtax_key = "Cost per km incl surtax (Euro/km)"
 
@@ -40,11 +43,19 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
             _dict_of_entries[_profile_type_key].append(
                 _loc_prof_report.profile_type_name
             )
+            _dict_of_entries[_reinforcement_order_key].append(
+                str(
+                    get_index(
+                        self.koswat_summary.reinforcement_order,
+                        type(_loc_prof_report.profile_cost_report.reinforced_profile),
+                    )
+                )
+            )
             _dict_of_entries[_cost_per_km_key].append(
-                round(_loc_prof_report.cost_per_km, self._decimals)
+                str(round(_loc_prof_report.cost_per_km, self._decimals))
             )
             _dict_of_entries[_cost_per_km_incl_surtax_key].append(
-                round(_loc_prof_report.cost_per_km_with_surtax, self._decimals)
+                str(round(_loc_prof_report.cost_per_km_with_surtax, self._decimals))
             )
             self._get_quantity_cost_parameters(
                 _loc_prof_report.profile_cost_report.quantity_cost_parameters.__dict__,
@@ -54,6 +65,10 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         if not _dict_of_entries:
             logging.error("No entries generated for the CSV Matrix.")
             return KoswatCsvFom()
+
+        _reinforcement_order_row = [
+            [_reinforcement_order_key] + _dict_of_entries[_reinforcement_order_key]
+        ]
 
         _cost_per_km_rows = [
             [_cost_per_km_key] + _dict_of_entries[_cost_per_km_key],
@@ -84,7 +99,8 @@ class SummaryCostsCsvFomBuilder(BuilderProtocol):
         return KoswatCsvFom(
             headers=[_profile_type_key] + _dict_of_entries[_profile_type_key],
             entries=(
-                _cost_per_km_rows
+                _reinforcement_order_row
+                + _cost_per_km_rows
                 + _quantity_costs_rows
                 + _selected_measure_cost_rows
                 + _infrastructure_cost_rows
