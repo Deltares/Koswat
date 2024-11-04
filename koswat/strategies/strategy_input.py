@@ -1,5 +1,5 @@
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
@@ -7,10 +7,16 @@ from koswat.strategies.strategy_reinforcement_input import StrategyReinforcement
 
 @dataclass
 class StrategyInput:
-    strategy_locations: list[StrategyLocationInput]
-    strategy_reinforcements: list[StrategyReinforcementInput]
-    reinforcement_min_buffer: float
-    reinforcement_min_length: float
+    """
+    Represents the input data structure for a strategy.
+    """
+
+    strategy_locations: list[StrategyLocationInput] = field(default_factory=lambda: [])
+    strategy_reinforcements: list[StrategyReinforcementInput] = field(
+        default_factory=lambda: []
+    )
+    reinforcement_min_buffer: float = 0.0
+    reinforcement_min_length: float = 0.0
 
     @property
     def reinforcement_min_cluster(self) -> int:

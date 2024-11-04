@@ -1,8 +1,6 @@
-from cgitb import small
 from typing import Iterator
 
 import pytest
-from mergedeep import Strategy
 
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
@@ -36,7 +34,6 @@ from koswat.strategies.strategy_protocol import StrategyProtocol
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
-from tests.dike.surroundings import point
 
 
 class TestInfraPriorityStrategy:
@@ -55,26 +52,30 @@ class TestInfraPriorityStrategy:
         assert isinstance(example_strategy_input, StrategyInput)
 
         # 2. Run test.
-        _strategy_result = InfraPriorityStrategy().apply_strategy(
+        _strategy_output = InfraPriorityStrategy().apply_strategy(
             example_strategy_input
         )
 
         # 3. Verify final expectations.
-        assert isinstance(_strategy_result, list)
-        assert len(_strategy_result) == len(example_strategy_input.strategy_locations)
-        assert all(
-            isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
-        )
+        _result = _strategy_output.location_reinforcements
+        assert isinstance(_result, list)
+        assert len(_result) == len(example_strategy_input.strategy_locations)
+        assert all(isinstance(_sr, StrategyLocationReinforcement) for _sr in _result)
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
             _sr.current_selected_measure == PipingWallReinforcementProfile
-            for _sr in _strategy_result[0:2]
+            for _sr in _result[0:2]
         )
         assert all(
             _sr.current_selected_measure == CofferdamReinforcementProfile
-            for _sr in _strategy_result[2:]
+            for _sr in _result[2:]
         )
+
+        _order = _strategy_output.reinforcement_order
+        assert isinstance(_order, list)
+        assert len(_order) == 5
+        assert all(isinstance(_r, type) for _r in _order)
 
     def test_given_example_for_subclusters_when_apply_strategy_then_splits_them(
         self, example_subclustering: StrategyInput
@@ -83,28 +84,32 @@ class TestInfraPriorityStrategy:
         assert isinstance(example_subclustering, StrategyInput)
 
         # 2. Run test.
-        _strategy_result = InfraPriorityStrategy().apply_strategy(example_subclustering)
+        _strategy_output = InfraPriorityStrategy().apply_strategy(example_subclustering)
 
         # 3. Verify final expectations.
-        assert isinstance(_strategy_result, list)
-        assert len(_strategy_result) == len(example_subclustering.strategy_locations)
-        assert all(
-            isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
-        )
+        _result = _strategy_output.location_reinforcements
+        assert isinstance(_result, list)
+        assert len(_result) == len(example_subclustering.strategy_locations)
+        assert all(isinstance(_sr, StrategyLocationReinforcement) for _sr in _result)
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
             _sr.current_selected_measure == PipingWallReinforcementProfile
-            for _sr in _strategy_result[0:2]
+            for _sr in _result[0:2]
         )
         assert all(
             _sr.current_selected_measure == StabilityWallReinforcementProfile
-            for _sr in _strategy_result[2:5]
+            for _sr in _result[2:5]
         )
         assert all(
             _sr.current_selected_measure == CofferdamReinforcementProfile
-            for _sr in _strategy_result[5:]
+            for _sr in _result[5:]
         )
+
+        _order = _strategy_output.reinforcement_order
+        assert isinstance(_order, list)
+        assert len(_order) == 5
+        assert all(isinstance(_r, type) for _r in _order)
 
     @pytest.fixture(name="small_infra_cluster")
     def _get_small_infra_cluster_fixture(self) -> Iterator[InfraCluster]:

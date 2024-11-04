@@ -20,14 +20,12 @@ from koswat.cost_report.summary.koswat_summary_location_matrix_builder import (
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
 
 
@@ -96,7 +94,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self,
         locations_profile_report_list: list[MultiLocationProfileCostReport],
         available_locations: list[PointSurroundings],
-    ) -> dict[PointSurroundings, ReinforcementProfile]:
+    ) -> StrategyOutput:
         _matrix, _reinforcements = KoswatSummaryLocationMatrixBuilder(
             available_locations=available_locations,
             locations_profile_report_list=locations_profile_report_list,
@@ -125,8 +123,11 @@ class KoswatSummaryBuilder(BuilderProtocol):
             _mlpc_builder.reinforced_profile = _calc_profile
             _summary.locations_profile_report_list.append(_mlpc_builder.build())
 
-        _summary.reinforcement_per_locations = self._get_final_reinforcement_per_location(
+        _strategy_output = self._get_final_reinforcement_per_location(
             _summary.locations_profile_report_list,
             self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.obstacle_locations,
         )
+        _summary.reinforcement_per_locations = _strategy_output.location_reinforcements
+        _summary.reinforcement_order = _strategy_output.reinforcement_order
+
         return _summary
