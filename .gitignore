@@ -21,6 +21,7 @@ coverage.xml
 # Koswat ignore
 tests/test_results/
 site/
+koswat.log
 
 # Local configurations files covered in pyproject.toml
 pytest.ini 
