@@ -241,7 +241,7 @@ Resulting cluster:
 ### Infrastructure priority
 
 **DEFAULT STRATEGY**
-This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report). In steps, this strategy can be broke down as:
+This strategy checks whether the clusters resulting from the [order based strategy](#order-based) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report). In steps, this strategy can be broke down as:
 
 __Steps breakdown__:
 

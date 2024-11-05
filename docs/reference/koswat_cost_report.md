@@ -86,7 +86,7 @@ After running a Koswat analysis, several files and directories will be generated
     - Images: Visual description of each of the possible reinforcements being applied.
     - `summary_costs.csv`: A csv file containing all the costs information of the summary.
         - Represents the Summary, Profile and Layer report.
-    - `summary_locations.csv` (phased out): A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
+    - `summary_locations.csv`: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
         - Represents the Location report.
     - `/summary_locations` directory: contains the following `.shp` files (and their related binaries):
         -`summary_locations_measures`: The same data as present in `summary_locations.csv` is used to shape the geometry of a dike's traject. We keep as well the type of chosen reinforcement.
