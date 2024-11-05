@@ -18,6 +18,7 @@ from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_output import StrategyOutput
 
 
 class TestOrderStrategy:
@@ -197,25 +198,31 @@ class TestOrderStrategy:
         assert isinstance(example_strategy_input, StrategyInput)
 
         # 2. Run test.
-        _strategy_result = OrderStrategy().apply_strategy(example_strategy_input)
+        _strategy_output = OrderStrategy().apply_strategy(example_strategy_input)
 
         # 3. Verify final expectations.
-        assert isinstance(_strategy_result, list)
-        assert len(_strategy_result) == len(example_strategy_input.strategy_locations)
-        assert all(
-            isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
-        )
+        assert isinstance(_strategy_output, StrategyOutput)
+
+        _result = _strategy_output.location_reinforcements
+        assert isinstance(_result, list)
+        assert len(_result) == len(example_strategy_input.strategy_locations)
+        assert all(isinstance(_sr, StrategyLocationReinforcement) for _sr in _result)
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
             _sr.current_selected_measure == SoilReinforcementProfile
-            for _sr in _strategy_result[0:2]
+            for _sr in _result[0:2]
         )
         assert all(
             _sr.current_selected_measure == StabilityWallReinforcementProfile
-            for _sr in _strategy_result[2:7]
+            for _sr in _result[2:7]
         )
         assert all(
             _sr.current_selected_measure == CofferdamReinforcementProfile
-            for _sr in _strategy_result[7:]
+            for _sr in _result[7:]
         )
+
+        _order = _strategy_output.reinforcement_order
+        assert isinstance(_order, list)
+        assert len(_order) == len(self._default_reinforcements)
+        assert all(isinstance(_r, type) for _r in _order)

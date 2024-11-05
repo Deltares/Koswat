@@ -18,6 +18,7 @@ from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
 
 
@@ -137,9 +138,7 @@ class InfraPriorityStrategy(StrategyProtocol):
             ),
         )
 
-    def apply_strategy(
-        self, strategy_input: StrategyInput
-    ) -> list[StrategyLocationReinforcement]:
+    def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
         _clustered_locations = []
         # 1. Run `OrderStrategy` to generate an initial cluster formation.
         self._order_strategy = OrderStrategy()
@@ -148,13 +147,16 @@ class InfraPriorityStrategy(StrategyProtocol):
         ):
             self._set_cheapest_measure_per_cluster(_infra_cluster, strategy_input)
             _clustered_locations.extend(_infra_cluster.cluster)
-        return _clustered_locations
+        return StrategyOutput(
+            location_reinforcements=_clustered_locations,
+            reinforcement_order=self._order_strategy.reinforcement_order,
+        )
 
     def _get_initial_state(
         self, order_strategy: OrderStrategy, strategy_input: StrategyInput
     ) -> Iterator[InfraCluster]:
         for _grouped_by, _grouping in groupby(
-            order_strategy.apply_strategy(strategy_input),
+            order_strategy.apply_strategy(strategy_input).location_reinforcements,
             key=lambda x: x.current_selected_measure,
         ):
             _grouping_data = list(_grouping)

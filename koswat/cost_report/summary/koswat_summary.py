@@ -14,10 +14,17 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 @dataclass
 class KoswatSummary:
+    """
+    Represents the summary of the KOSWAT analysis.
+    """
+
     locations_profile_report_list: list[MultiLocationProfileCostReport] = field(
         default_factory=lambda: []
     )
     reinforcement_per_locations: list[StrategyLocationReinforcement] = field(
+        default_factory=lambda: []
+    )
+    reinforcement_order: list[type[ReinforcementProfileProtocol]] = field(
         default_factory=lambda: []
     )
 

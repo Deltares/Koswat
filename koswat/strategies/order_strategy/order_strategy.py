@@ -22,6 +22,7 @@ from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInpu
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
 from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
 from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
@@ -154,9 +155,7 @@ class OrderStrategy(StrategyProtocol):
             _strategy_reinforcements.append(_slr)
         return _strategy_reinforcements
 
-    def apply_strategy(
-        self, strategy_input: StrategyInput
-    ) -> list[StrategyLocationReinforcement]:
+    def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
         self.reinforcement_order = self.get_strategy_order_for_reinforcements(
             strategy_input.strategy_reinforcements
         )
@@ -169,4 +168,7 @@ class OrderStrategy(StrategyProtocol):
         OrderStrategyClustering.with_strategy(
             self.reinforcement_order, strategy_input.reinforcement_min_length
         ).apply(_strategy_reinforcements)
-        return _strategy_reinforcements
+        return StrategyOutput(
+            location_reinforcements=_strategy_reinforcements,
+            reinforcement_order=self.reinforcement_order,
+        )
