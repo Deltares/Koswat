@@ -23,7 +23,9 @@ from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.strategies.order_strategy.order_strategy import OrderStrategy
+from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
+    InfraPriorityStrategy,
+)
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
@@ -32,7 +34,9 @@ from koswat.strategies.strategy_protocol import StrategyProtocol
 @dataclass
 class KoswatSummaryBuilder(BuilderProtocol):
     run_scenario_settings: KoswatRunScenarioSettings = None
-    strategy_type: type[StrategyProtocol] = field(default_factory=lambda: OrderStrategy)
+    strategy_type: type[StrategyProtocol] = field(
+        default_factory=lambda: InfraPriorityStrategy
+    )
 
     @staticmethod
     def _get_corrected_koswat_scenario(
