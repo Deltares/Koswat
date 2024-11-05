@@ -86,13 +86,13 @@ After running a Koswat analysis, several files and directories will be generated
     - Images: Visual description of each of the possible reinforcements being applied.
     - `summary_costs.csv`: A csv file containing all the costs information of the summary.
         - Represents the Summary, Profile and Layer report.
-    - `summary_locations.csv` (phased out): A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
+    - `summary_locations.csv`: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
         - Represents the Location report.
     - `/summary_locations` directory: contains the following `.shp` files (and their related binaries):
         -`summary_locations_measures`: The same data as present in `summary_locations.csv` is used to shape the geometry of a dike's traject. We keep as well the type of chosen reinforcement.
         - `summary_locations_new`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the new selected reinforcement.
         - `summary_locations_old`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the original selected reinforcement.
-        - `summary_locations_step`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the [Ordered Strategy](koswat_strategies.md#order-based-default) step.
+        - `summary_locations_step`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the [Ordered Strategy](koswat_strategies.md#order-based) step.
     - `summary_infrastructure_costs.csv`: A csv file contaning all the infrastructure costs at each location for each of the supported reinforcement profile types.
         - Represents the [Infrastructure Report](#infrastructure-report).
 
