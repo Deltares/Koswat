@@ -18,6 +18,7 @@ from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_output import StrategyOutput
 
 
 class TestOrderStrategy:
@@ -200,6 +201,8 @@ class TestOrderStrategy:
         _strategy_output = OrderStrategy().apply_strategy(example_strategy_input)
 
         # 3. Verify final expectations.
+        assert isinstance(_strategy_output, StrategyOutput)
+
         _result = _strategy_output.location_reinforcements
         assert isinstance(_result, list)
         assert len(_result) == len(example_strategy_input.strategy_locations)

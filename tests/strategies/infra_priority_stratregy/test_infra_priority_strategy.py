@@ -30,6 +30,7 @@ from koswat.strategies.strategy_location_input import StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
@@ -57,6 +58,8 @@ class TestInfraPriorityStrategy:
         )
 
         # 3. Verify final expectations.
+        assert isinstance(_strategy_output, StrategyOutput)
+
         _result = _strategy_output.location_reinforcements
         assert isinstance(_result, list)
         assert len(_result) == len(example_strategy_input.strategy_locations)
@@ -87,6 +90,8 @@ class TestInfraPriorityStrategy:
         _strategy_output = InfraPriorityStrategy().apply_strategy(example_subclustering)
 
         # 3. Verify final expectations.
+        assert isinstance(_strategy_output, StrategyOutput)
+
         _result = _strategy_output.location_reinforcements
         assert isinstance(_result, list)
         assert len(_result) == len(example_subclustering.strategy_locations)
