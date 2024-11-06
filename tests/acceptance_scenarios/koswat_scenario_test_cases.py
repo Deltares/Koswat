@@ -451,7 +451,7 @@ class ScenarioCasesDijk4(CasesProtocol):
             d_s=10,
             d_p=50,
             waterside_slope=3.56,
-        )
+        ),
     ]
 
 

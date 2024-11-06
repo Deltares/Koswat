@@ -127,7 +127,7 @@ class CofferdamInputProfileCalculation(
             base_data, scenario
         )
         _new_data.crest_width = base_data.crest_width  # no widening of crest allowed
-        _new_data.waterside_ground_level = base_data.polderside_ground_level
+        _new_data.polderside_ground_level = base_data.polderside_ground_level
         _new_data.polderside_berm_width = (
             base_data.polderside_berm_width
         )  # maintain current berm polderside

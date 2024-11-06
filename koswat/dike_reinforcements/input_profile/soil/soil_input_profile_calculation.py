@@ -41,7 +41,7 @@ class SoilInputProfileCalculation(
         _new_data.waterside_ground_level = base_data.waterside_ground_level
         _new_data.polderside_ground_level = base_data.polderside_ground_level
         _new_data.waterside_slope = scenario.waterside_slope
-        _new_data.waterside_ground_level = (
+        _new_data.waterside_berm_height = (
             self._calculate_soil_new_waterside_berm_height(base_data, scenario)
         )
         _new_data.waterside_berm_width = base_data.waterside_berm_width
