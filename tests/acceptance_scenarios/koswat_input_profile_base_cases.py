@@ -122,3 +122,41 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         pleistoceen=-5,
         aquifer=-2,
     )
+    
+    profile_dijk4 = KoswatInputProfileBase(
+        dike_section="dijk4",
+        buiten_maaiveld=6.38,
+        buiten_talud=2.56,
+        buiten_berm_hoogte=6.38,
+        buiten_berm_breedte=0,
+        kruin_hoogte=11.38,
+        kruin_breedte=10.36,
+        binnen_talud=3.57,
+        binnen_berm_hoogte=9.06,
+        binnen_berm_breedte=19.23,
+        binnen_maaiveld=6.45,
+        grondprijs_bebouwd=322.63,
+        grondprijs_onbebouwd=13.87,
+        factor_zetting=1.2,
+        pleistoceen=3.17,
+        aquifer=6.06,
+    )
+
+    profile_dijk5 = KoswatInputProfileBase(
+        dike_section="dijk5",
+        buiten_maaiveld=7.64,
+        buiten_talud=2.99,
+        buiten_berm_hoogte=7.64,
+        buiten_berm_breedte=0,
+        kruin_hoogte=11.28,
+        kruin_breedte=2.36,
+        binnen_talud=2.03,
+        binnen_berm_hoogte=10.69,
+        binnen_berm_breedte=13.27,
+        binnen_maaiveld=6.81,
+        grondprijs_bebouwd=322.63,
+        grondprijs_onbebouwd=13.87,
+        factor_zetting=1.2,
+        pleistoceen=3.53,
+        aquifer=6.42,
+    )

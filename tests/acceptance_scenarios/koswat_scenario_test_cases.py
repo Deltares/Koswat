@@ -441,3 +441,31 @@ class ScenarioCasesC(CasesProtocol):
         #     kruin_breedte=10,
         # ),
     ]
+
+class ScenarioCasesDijk4(CasesProtocol):
+    cases = [
+        KoswatScenario(
+            scenario_name="dijk4",
+            d_h=0.72,
+            d_s=10,
+            d_p=50,
+            buiten_talud=3.56,
+        )
+    ]
+
+class ScenarioCasesDijk5(CasesProtocol):
+    cases = [
+        KoswatScenario(
+            scenario_name="scen1",
+            d_h=0.62,
+            d_s=13.14,
+            d_p=50,
+        ),
+        KoswatScenario(
+            scenario_name="scen2",
+            d_h=0.62,
+            d_s=13.14,
+            d_p=50,
+            buiten_talud=3.00,
+        )
+    ]
