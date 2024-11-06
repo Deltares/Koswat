@@ -12,7 +12,7 @@ class BaseSurroundingsWrapper(ABC):
         The collection of `KoswatSurroundingsProtocol` objects that are considered for a scenario analysis.
 
         Returns:
-            list[KoswatSurroundingsProtocol]: Collection of surroundings to include in analysis.
+            dict[str, KoswatSurroundingsProtocol]: Collection of surroundings to include in analysis.
         """
         return {
             _prop: _value

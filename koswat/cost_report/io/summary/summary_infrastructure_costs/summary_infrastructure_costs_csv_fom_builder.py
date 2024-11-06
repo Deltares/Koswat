@@ -33,7 +33,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         self._ordered_infra_types = sorted(
             list(
                 set(
-                    _ilpcr.infrastructure.infrastructure_name
+                    _ilpcr.infrastructure_name
                     for _ilpcr in self.koswat_summary.locations_profile_report_list[
                         0
                     ].infra_multilocation_profile_cost_report
@@ -139,7 +139,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                 update_infra_location_cost_dict(
                     _ilpcr.infrastructure_location_costs.location,
                     _lpr.profile_type_name,
-                    _ilpcr.infrastructure.infrastructure_name,
+                    _ilpcr.infrastructure_name,
                     _ilpcr.infrastructure_location_costs,
                 )
 

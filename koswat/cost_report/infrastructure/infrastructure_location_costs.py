@@ -2,9 +2,6 @@ import math
 from dataclasses import dataclass
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_infrastructure import (
-    SurroundingsInfrastructure,
-)
 
 
 @dataclass
@@ -16,7 +13,6 @@ class InfrastructureLocationCosts:
     `ProfileZoneCalculator`.
     """
 
-    infrastructure: SurroundingsInfrastructure = None
     location: PointSurroundings = None
     zone_a: float = 0
     zone_a_costs: float = 0

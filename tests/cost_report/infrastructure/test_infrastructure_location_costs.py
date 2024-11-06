@@ -10,7 +10,6 @@ class TestInfrastructureLocationCosts:
 
         # 2. Verify expectations.
         assert isinstance(_infra_location_costs, InfrastructureLocationCosts)
-        assert not _infra_location_costs.infrastructure
         assert not _infra_location_costs.location
 
         # Verify default values are not `math.nan``.
