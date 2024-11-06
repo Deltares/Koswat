@@ -1,11 +1,9 @@
-import math
-from dataclasses import dataclass
+from typing import TypedDict
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
-@dataclass
-class InfrastructureLocationCosts:
+class InfrastructureLocationCosts(TypedDict):
     """
     Simple data structure containing the results of the costs calculations
     for a given `ReinforcementProfileProtocol` profile.
@@ -13,19 +11,12 @@ class InfrastructureLocationCosts:
     `ProfileZoneCalculator`.
     """
 
-    location: PointSurroundings = None
-    zone_a: float = 0
-    zone_a_costs: float = 0
+    location: PointSurroundings
+    zone_a: float
+    zone_a_costs: float
 
-    zone_b: float = 0
-    zone_b_costs: float = 0
-    surtax: float = 0
+    zone_b: float
+    zone_b_costs: float
 
-    @property
-    def total_cost(self) -> float:
-        def valid_cost(cost: float) -> float:
-            if math.isnan(cost):
-                return 0
-            return cost
-
-        return valid_cost(self.zone_a_costs) + valid_cost(self.zone_b_costs)
+    total_cost: float
+    total_cost_with_surtax: float

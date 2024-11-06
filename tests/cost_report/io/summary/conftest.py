@@ -68,6 +68,9 @@ def _create_infra_reports(
     _infra_reports = []
     for i, _point in enumerate(available_points):
         _infra_report1 = InfrastructureLocationProfileCostReport(
+            total_cost=i * 3.3,
+            total_cost_with_surtax=i**2 * 3,
+            location=_point,
             reinforced_profile=reinforced_profile,
             infrastructure_name="TestInfra1",
             infrastructure_location_costs=InfrastructureLocationCosts(
@@ -76,12 +79,13 @@ def _create_infra_reports(
                 zone_a_costs=i * 1.1,
                 zone_b=i * 2,
                 zone_b_costs=i * 2.2,
-                surtax=i * 3,
+                total_cost=i * 3.3,
+                total_cost_with_surtax=i**2 * 3,
             ),
         )
         _infra_reports.append(_infra_report1)
         _infra_report2 = deepcopy(_infra_report1)
-        _infra_report2.infrastructure_name = "TestInfra2"
+        _infra_report2["infrastructure_name"] = "TestInfra2"
         _infra_reports.append(_infra_report2)
     return _infra_reports
 

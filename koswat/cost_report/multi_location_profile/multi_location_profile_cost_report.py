@@ -28,9 +28,9 @@ class MultiLocationProfileCostReport(CostReportProtocol):
             dict[PointSurroundings, tuple[float, float]]: Total cost per location (without and with surtax).
         """
         return {
-            _infra_costs_report.location: (
-                _infra_costs_report.total_cost,
-                _infra_costs_report.total_cost_with_surtax,
+            _infra_costs_report["location"]: (
+                _infra_costs_report["total_cost"],
+                _infra_costs_report["total_cost_with_surtax"],
             )
             for _infra_costs_report in self.infra_multilocation_profile_cost_report
         }

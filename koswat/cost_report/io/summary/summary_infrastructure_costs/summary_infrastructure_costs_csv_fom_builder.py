@@ -33,7 +33,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         self._ordered_infra_types = sorted(
             list(
                 set(
-                    _ilpcr.infrastructure_name
+                    _ilpcr["infrastructure_name"]
                     for _ilpcr in self.koswat_summary.locations_profile_report_list[
                         0
                     ].infra_multilocation_profile_cost_report
@@ -57,7 +57,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         def _get_totals(location: PointSurroundings) -> list[float]:
             return list(
                 sum(
-                    _ilc.total_cost
+                    _ilc["total_cost"]
                     for _ilc in _infra_cost_per_loc_dict[location][
                         _profile_type
                     ].values()
@@ -70,7 +70,12 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             for _infra_type in self._ordered_infra_types:
                 _ilc = _infra_cost_per_loc_dict[location][profile_type][_infra_type]
                 _details.extend(
-                    [_ilc.zone_a, _ilc.zone_a_costs, _ilc.zone_b, _ilc.zone_b_costs]
+                    [
+                        _ilc["zone_a"],
+                        _ilc["zone_a_costs"],
+                        _ilc["zone_b"],
+                        _ilc["zone_b_costs"],
+                    ]
                 )
             return _details
 
@@ -137,10 +142,10 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         for _lpr in locations_profile_report_list:
             for _ilpcr in _lpr.infra_multilocation_profile_cost_report:
                 update_infra_location_cost_dict(
-                    _ilpcr.infrastructure_location_costs.location,
+                    _ilpcr["infrastructure_location_costs"]["location"],
                     _lpr.profile_type_name,
-                    _ilpcr.infrastructure_name,
-                    _ilpcr.infrastructure_location_costs,
+                    _ilpcr["infrastructure_name"],
+                    _ilpcr["infrastructure_location_costs"],
                 )
 
         return _infra_location_cost_dict

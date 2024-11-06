@@ -61,11 +61,21 @@ class InfrastructureProfileCostsCalculator:
         _surface_zone_a = _total_zone_a * self.infrastructure.infrastructure_width
         _surface_zone_b = _total_zone_b * self.infrastructure.infrastructure_width
 
+        def valid_cost(cost: float) -> float:
+            if math.isnan(cost):
+                return 0
+            return cost
+
+        _zone_a_cost = _surface_zone_a * self.zone_a_costs
+        _zone_b_cost = _surface_zone_b * self.zone_b_costs
+        _total_cost = valid_cost(_zone_a_cost) + valid_cost(_zone_b_cost)
+
         return InfrastructureLocationCosts(
             location=location,
-            surtax=self.surtax,
             zone_a=_surface_zone_a,
             zone_b=_surface_zone_b,
-            zone_a_costs=_surface_zone_a * self.zone_a_costs,
-            zone_b_costs=_surface_zone_b * self.zone_b_costs,
+            zone_a_costs=_zone_a_cost,
+            zone_b_costs=_zone_b_cost,
+            total_cost=_total_cost,
+            total_cost_with_surtax=_total_cost * self.surtax,
         )

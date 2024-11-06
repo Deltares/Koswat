@@ -53,6 +53,9 @@ class MultiInfrastructureProfileCostsCalculator:
             _reports.extend(
                 [
                     InfrastructureLocationProfileCostReport(
+                        total_cost=_subreport["total_cost"],
+                        total_cost_with_surtax=_subreport["total_cost_with_surtax"],
+                        location=_subreport["location"],
                         reinforced_profile=reinforced_profile,
                         infrastructure_name=_calculator.infrastructure.infrastructure_name,
                         infrastructure_location_costs=_subreport,
