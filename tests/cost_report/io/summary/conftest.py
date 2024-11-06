@@ -22,15 +22,11 @@ from koswat.dike.characteristic_points.characteristic_points import Characterist
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_infrastructure import (
-    SurroundingsInfrastructure,
-)
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallReinforcementProfile,
-    VPSReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -73,7 +69,7 @@ def _create_infra_reports(
     for i, _point in enumerate(available_points):
         _infra_report1 = InfrastructureLocationProfileCostReport(
             reinforced_profile=reinforced_profile,
-            infrastructure=SurroundingsInfrastructure(infrastructure_name="TestInfra1"),
+            infrastructure_name="TestInfra1",
             infrastructure_location_costs=InfrastructureLocationCosts(
                 location=_point,
                 zone_a=i,
@@ -85,9 +81,7 @@ def _create_infra_reports(
         )
         _infra_reports.append(_infra_report1)
         _infra_report2 = deepcopy(_infra_report1)
-        _infra_report2.infrastructure = SurroundingsInfrastructure(
-            infrastructure_name="TestInfra2"
-        )
+        _infra_report2.infrastructure_name = "TestInfra2"
         _infra_reports.append(_infra_report2)
     return _infra_reports
 
@@ -97,7 +91,7 @@ def _create_report(
     available_points: list[PointSurroundings],
     selected_locations: int,
 ) -> MultiLocationProfileCostReport:
-    def _get_layer(material: str, quantity: float) -> MockLayerReport:
+    def _get_layer(material: str) -> MockLayerReport:
         _layer_report = MockLayerReport()
         _layer_report.material = material
         return _layer_report
@@ -123,8 +117,8 @@ def _create_report(
     _report.profile_cost_report = ProfileCostReport()
     _report.profile_cost_report.reinforced_profile = _reinforced_profile
     _report.profile_cost_report.layer_cost_reports = [
-        _get_layer("Klei", _required_klei),
-        _get_layer("Zand", _required_zand),
+        _get_layer("Klei"),
+        _get_layer("Zand"),
     ]
     return _report
 
@@ -143,16 +137,15 @@ def get_locations_reinforcements(
             for _lp_report in summary.locations_profile_report_list
             if _location in _lp_report.report_locations
         )
-        _selected_measure = _available_reinforcements[-1]
-        if any(_a_measures):
-            _selected_measure = _a_measures[0]
-        _matrix.append(
-            StrategyLocationReinforcement(
-                location=_location,
-                available_measures=_a_measures,
-                selected_measure=_selected_measure,
-            )
+
+        _slr = StrategyLocationReinforcement(
+            location=_location,
+            available_measures=_a_measures,
+            filtered_measures=_a_measures
+            if any(_a_measures)
+            else [_available_reinforcements[-1]],
         )
+        _matrix.append(_slr)
     return _matrix
 
 
@@ -213,8 +206,8 @@ def _get_cluster_shp_fom_factory() -> Iterable[
     ) -> StrategyLocationReinforcement:
         return StrategyLocationReinforcement(
             location=PointSurroundings(location=Point(coordinates)),
-            selected_measure=reinforced_profile,
-            available_measures=[],
+            available_measures=[reinforced_profile],
+            filtered_measures=[reinforced_profile],
         )
 
     def create_cluster(

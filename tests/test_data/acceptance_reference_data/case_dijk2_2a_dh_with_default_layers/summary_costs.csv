@@ -1,4 +1,5 @@
 Profile type;Grondmaatregel profiel;Verticale piping oplossing;Kwelscherm;Stabiliteitswand;Kistdam
+Strategy reinforcement order;-1;-1;-1;-1;-1
 Cost per km (Euro/km);800957.3;3732177.3;1640957.3;5110036.7;9187155.01
 Cost per km incl surtax (Euro/km);1943781.86;6932732.84;3129861.86;14816685.72;29882149.06
 New grass volume (quantity):;1.8;4.8;1.8;0.04;0.03
@@ -28,9 +29,9 @@ New clay layer surface (cost incl surtax):;50.44;66.75;50.44;46.19;87.12
 New core layer surface (quantity):;27.51;27.51;27.51;22.52;45.17
 New core layer surface (cost):;16.51;16.51;16.51;13.51;27.1
 New core layer surface (cost incl surtax):;41.41;41.41;41.41;37.52;75.25
-New maaiveld surface (quantity):;6.0;16.0;6.0;0.0;0.0
-New maaiveld surface (cost):;1.5;4.0;1.5;0.0;0.0
-New maaiveld surface (cost incl surtax):;3.76;10.04;3.76;0.0;0.0
+New ground level surface (quantity):;6.0;16.0;6.0;0.0;0.0
+New ground level surface (cost):;1.5;4.0;1.5;0.0;0.0
+New ground level surface (cost incl surtax):;3.76;10.04;3.76;0.0;0.0
 Land purchase surface (quantity):;6.0;16.0;6.0;0.0;0.0
 Land purchase surface (cost):;60.0;2400.0;900.0;0.0;0.0
 Land purchase surface (cost incl surtax):;84.72;3388.8;1270.8;0.0;0.0

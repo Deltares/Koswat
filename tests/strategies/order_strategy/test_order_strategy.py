@@ -9,12 +9,16 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     StabilityWallReinforcementProfile,
     VPSReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.order_strategy.order_strategy_base import OrderStrategyBase
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_output import StrategyOutput
 
 
 class TestOrderStrategy:
@@ -115,7 +119,7 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
-    def test__get_strategy_reinforcements_given_example(
+    def test_get_strategy_reinforcements_given_example(
         self, example_strategy_input: StrategyInput
     ):
         # 1. Define test data.
@@ -123,24 +127,37 @@ class TestOrderStrategy:
         assert _default_order[-1] == CofferdamReinforcementProfile
 
         # 2. Run test.
-        _reinforcements = OrderStrategy.get_strategy_reinforcements(
+        _location_reinforcements = OrderStrategy.get_strategy_reinforcements(
             example_strategy_input.strategy_locations, _default_order
         )
 
         # 3. Verify expectations
-        assert isinstance(_reinforcements, list)
-        assert len(_reinforcements) == len(example_strategy_input.strategy_locations)
-
-        def assert_subset_selected_measure(selected_measure: type, subset: list):
-            assert all(_r.selected_measure == selected_measure for _r in subset)
-
-        assert_subset_selected_measure(SoilReinforcementProfile, _reinforcements[:3])
-        assert_subset_selected_measure(
-            StabilityWallReinforcementProfile, _reinforcements[3:5]
+        assert isinstance(_location_reinforcements, list)
+        assert len(_location_reinforcements) == len(
+            example_strategy_input.strategy_locations
         )
-        assert_subset_selected_measure(SoilReinforcementProfile, _reinforcements[5:8])
+        assert all(
+            isinstance(_lr, StrategyLocationReinforcement)
+            for _lr in _location_reinforcements
+        )
+
+        def assert_subset_selected_measure(
+            selected_measure: type[ReinforcementProfileProtocol],
+            subset: list[StrategyLocationReinforcement],
+        ):
+            assert all(_r.current_selected_measure == selected_measure for _r in subset)
+
         assert_subset_selected_measure(
-            CofferdamReinforcementProfile, _reinforcements[8:]
+            SoilReinforcementProfile, _location_reinforcements[:3]
+        )
+        assert_subset_selected_measure(
+            StabilityWallReinforcementProfile, _location_reinforcements[3:5]
+        )
+        assert_subset_selected_measure(
+            SoilReinforcementProfile, _location_reinforcements[5:8]
+        )
+        assert_subset_selected_measure(
+            CofferdamReinforcementProfile, _location_reinforcements[8:]
         )
 
     def test__get_reinforcement_clusters_given_example(
@@ -181,25 +198,31 @@ class TestOrderStrategy:
         assert isinstance(example_strategy_input, StrategyInput)
 
         # 2. Run test.
-        _strategy_result = OrderStrategy().apply_strategy(example_strategy_input)
+        _strategy_output = OrderStrategy().apply_strategy(example_strategy_input)
 
         # 3. Verify final expectations.
-        assert isinstance(_strategy_result, list)
-        assert len(_strategy_result) == len(example_strategy_input.strategy_locations)
-        assert all(
-            isinstance(_sr, StrategyLocationReinforcement) for _sr in _strategy_result
-        )
+        assert isinstance(_strategy_output, StrategyOutput)
+
+        _result = _strategy_output.location_reinforcements
+        assert isinstance(_result, list)
+        assert len(_result) == len(example_strategy_input.strategy_locations)
+        assert all(isinstance(_sr, StrategyLocationReinforcement) for _sr in _result)
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
         assert all(
-            _sr.selected_measure == SoilReinforcementProfile
-            for _sr in _strategy_result[0:2]
+            _sr.current_selected_measure == SoilReinforcementProfile
+            for _sr in _result[0:2]
         )
         assert all(
-            _sr.selected_measure == StabilityWallReinforcementProfile
-            for _sr in _strategy_result[2:7]
+            _sr.current_selected_measure == StabilityWallReinforcementProfile
+            for _sr in _result[2:7]
         )
         assert all(
-            _sr.selected_measure == CofferdamReinforcementProfile
-            for _sr in _strategy_result[7:]
+            _sr.current_selected_measure == CofferdamReinforcementProfile
+            for _sr in _result[7:]
         )
+
+        _order = _strategy_output.reinforcement_order
+        assert isinstance(_order, list)
+        assert len(_order) == len(self._default_reinforcements)
+        assert all(isinstance(_r, type) for _r in _order)

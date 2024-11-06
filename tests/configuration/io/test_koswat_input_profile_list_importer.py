@@ -39,18 +39,18 @@ class TestKoswatInputProfileListImporter:
         # 3. Verify final expectations.
         assert isinstance(_input_profile_base, KoswatInputProfileBase)
         assert _input_profile_base.dike_section == "test_section"
-        assert _input_profile_base.buiten_maaiveld == 1.1
-        assert _input_profile_base.buiten_talud == 2.2
-        assert _input_profile_base.buiten_berm_hoogte == 3.3
-        assert _input_profile_base.buiten_berm_breedte == 4.4
-        assert _input_profile_base.kruin_hoogte == 5.5
-        assert _input_profile_base.kruin_breedte == 6.6
-        assert _input_profile_base.binnen_talud == 7.7
-        assert _input_profile_base.binnen_berm_hoogte == 8.8
-        assert _input_profile_base.binnen_berm_breedte == 9.9
-        assert _input_profile_base.binnen_maaiveld == 0.0
-        assert _input_profile_base.grondprijs_bebouwd == 111
-        assert _input_profile_base.grondprijs_onbebouwd == 11
-        assert _input_profile_base.factor_zetting == 1.1
-        assert _input_profile_base.pleistoceen == -1.1
+        assert _input_profile_base.waterside_ground_level == 1.1
+        assert _input_profile_base.waterside_slope == 2.2
+        assert _input_profile_base.waterside_berm_height == 3.3
+        assert _input_profile_base.waterside_berm_width == 4.4
+        assert _input_profile_base.crest_height == 5.5
+        assert _input_profile_base.crest_width == 6.6
+        assert _input_profile_base.polderside_slope == 7.7
+        assert _input_profile_base.polderside_berm_height == 8.8
+        assert _input_profile_base.polderside_berm_width == 9.9
+        assert _input_profile_base.polderside_ground_level == 0.0
+        assert _input_profile_base.ground_price_builtup == 111
+        assert _input_profile_base.ground_price_unbuilt == 11
+        assert _input_profile_base.factor_settlement == 1.1
+        assert _input_profile_base.pleistocene == -1.1
         assert _input_profile_base.aquifer == -2.2

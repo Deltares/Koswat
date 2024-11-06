@@ -51,8 +51,8 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     )
 
     # Dikeside infrastructures (not supported yet)
-    roads_class_2_dikeside: SurroundingsInfrastructure = None
-    roads_class_7_dikeside: SurroundingsInfrastructure = None
-    roads_class_24_dikeside: SurroundingsInfrastructure = None
-    roads_class_47_dikeside: SurroundingsInfrastructure = None
-    roads_class_unknown_dikeside: SurroundingsInfrastructure = None
+    roads_class_2_waterside: SurroundingsInfrastructure = None
+    roads_class_7_waterside: SurroundingsInfrastructure = None
+    roads_class_24_waterside: SurroundingsInfrastructure = None
+    roads_class_47_waterside: SurroundingsInfrastructure = None
+    roads_class_unknown_waterside: SurroundingsInfrastructure = None

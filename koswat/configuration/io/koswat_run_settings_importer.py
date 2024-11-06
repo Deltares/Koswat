@@ -66,29 +66,27 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         # First get the FOM
         logging.info("Importing INI configuration from {}".format(from_path))
         _general_settings = self._import_general_settings(from_path)
-        _output_dir = _general_settings.analyse_section_fom.analysis_output_dir
+        _output_dir = _general_settings.analysis_section.analysis_output_dir
         _dike_selected_sections = self._import_selected_dike_section_names(
-            _general_settings.analyse_section_fom.dike_selection_txt_file
+            _general_settings.analysis_section.dike_selection_txt_file
         )
         _input_profile_cases = self._import_dike_input_profiles_list(
-            csv_file=_general_settings.analyse_section_fom.input_profiles_csv_file,
+            csv_file=_general_settings.analysis_section.input_profiles_csv_file,
             dike_selection=_dike_selected_sections,
-            layers_info=self._get_layers_info(
-                _general_settings.dike_profile_section_fom
-            ),
+            layers_info=self._get_layers_info(_general_settings.dike_profile_section),
         )
         _dike_costs = self._import_dike_costs(
-            ini_file=_general_settings.analyse_section_fom.costs_ini_file,
-            include_taxes=_general_settings.analyse_section_fom.include_taxes,
+            ini_file=_general_settings.analysis_section.costs_ini_file,
+            include_taxes=_general_settings.analysis_section.include_taxes,
         )
         _scenario_fom_list = self._import_scenario_fom_list(
-            _general_settings.analyse_section_fom.scenarios_ini_file,
+            _general_settings.analysis_section.scenarios_ini_file,
             _dike_selected_sections,
         )
         _surroundings_fom = self._import_surroundings_wrapper(
             _general_settings.surroundings_section,
             _general_settings.infrastructuur_section,
-            _general_settings.analyse_section_fom.dike_section_location_shp_file,
+            _general_settings.analysis_section.dike_section_location_shp_file,
             [_s.scenario_dike_section for _s in _scenario_fom_list],
         )
         _reinforcement_settings = self._get_reinforcement_settings(_general_settings)
@@ -184,17 +182,17 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     ) -> KoswatReinforcementSettings:
         _reinforcement_settings = KoswatReinforcementSettings(
             soil_settings=KoswatSoilSettings(
-                **(general_settings.grondmaatregel_section.__dict__)
+                **(general_settings.soil_measure_section.__dict__)
             ),
             vps_settings=KoswatVPSSettings(**(general_settings.vps_section.__dict__)),
             piping_wall_settings=KoswatPipingWallSettings(
-                **(general_settings.kwelscherm_section.__dict__)
+                **(general_settings.piping_wall_section.__dict__)
             ),
             stability_wall_settings=KoswatStabilityWallSettings(
-                **(general_settings.stabiliteitswand_section.__dict__)
+                **(general_settings.stability_wall_section.__dict__)
             ),
             cofferdam_settings=KoswatCofferdamSettings(
-                **(general_settings.kistdam_section.__dict__)
+                **(general_settings.cofferdam_section.__dict__)
             ),
         )
         return _reinforcement_settings
@@ -303,6 +301,6 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 return getattr(base_profile.input_data, prop_name)
             return _value
 
-        _scenario.kruin_breedte = get_valid_value("kruin_breedte")
-        _scenario.buiten_talud = get_valid_value("buiten_talud")
+        _scenario.crest_width = get_valid_value("crest_width")
+        _scenario.waterside_slope = get_valid_value("waterside_slope")
         return _scenario

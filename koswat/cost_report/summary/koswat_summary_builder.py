@@ -1,6 +1,6 @@
 import logging
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
@@ -20,22 +20,23 @@ from koswat.cost_report.summary.koswat_summary_location_matrix_builder import (
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.strategies.order_strategy.order_strategy import OrderStrategy
-from koswat.strategies.strategy_input import StrategyInput
-from koswat.strategies.strategy_reinforcement_type_costs import (
-    StrategyReinforcementTypeCosts,
+from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
+    InfraPriorityStrategy,
 )
+from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_output import StrategyOutput
+from koswat.strategies.strategy_protocol import StrategyProtocol
 
 
 @dataclass
 class KoswatSummaryBuilder(BuilderProtocol):
     run_scenario_settings: KoswatRunScenarioSettings = None
+    strategy_type: type[StrategyProtocol] = field(
+        default_factory=lambda: InfraPriorityStrategy
+    )
 
     @staticmethod
     def _get_corrected_koswat_scenario(
@@ -53,10 +54,10 @@ class KoswatSummaryBuilder(BuilderProtocol):
             KoswatScenario: Valid scenario to be used in reinforcements.
         """
         _new_koswat_scenario = KoswatScenario(**original_scenario.__dict__)
-        if math.isnan(_new_koswat_scenario.kruin_breedte):
-            _new_koswat_scenario.kruin_breedte = input_profile_base.kruin_breedte
-        if math.isnan(_new_koswat_scenario.buiten_talud):
-            _new_koswat_scenario.buiten_talud = input_profile_base.buiten_talud
+        if math.isnan(_new_koswat_scenario.crest_width):
+            _new_koswat_scenario.crest_width = input_profile_base.crest_width
+        if math.isnan(_new_koswat_scenario.waterside_slope):
+            _new_koswat_scenario.waterside_slope = input_profile_base.waterside_slope
 
         return _new_koswat_scenario
 
@@ -97,7 +98,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         self,
         locations_profile_report_list: list[MultiLocationProfileCostReport],
         available_locations: list[PointSurroundings],
-    ) -> dict[PointSurroundings, ReinforcementProfile]:
+    ) -> StrategyOutput:
         _matrix, _reinforcements = KoswatSummaryLocationMatrixBuilder(
             available_locations=available_locations,
             locations_profile_report_list=locations_profile_report_list,
@@ -111,7 +112,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         # In theory this will become a factory (somewhere) where
         # the adequate strategy will be chosen.
-        return OrderStrategy().apply_strategy(_strategy_input)
+        return self.strategy_type().apply_strategy(_strategy_input)
 
     def build(self) -> KoswatSummary:
         _summary = KoswatSummary()
@@ -126,8 +127,11 @@ class KoswatSummaryBuilder(BuilderProtocol):
             _mlpc_builder.reinforced_profile = _calc_profile
             _summary.locations_profile_report_list.append(_mlpc_builder.build())
 
-        _summary.reinforcement_per_locations = self._get_final_reinforcement_per_location(
+        _strategy_output = self._get_final_reinforcement_per_location(
             _summary.locations_profile_report_list,
             self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.obstacle_locations,
         )
+        _summary.reinforcement_per_locations = _strategy_output.location_reinforcements
+        _summary.reinforcement_order = _strategy_output.reinforcement_order
+
         return _summary

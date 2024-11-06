@@ -9,27 +9,27 @@ class ScenarioCases(CasesProtocol):
         d_h=1,
         d_s=10,
         d_p=30,
-        kruin_breedte=5,
+        crest_width=5,
     )
     scenario_2 = KoswatScenario(
         d_h=0.5,
         d_s=20,
         d_p=80,
-        kruin_breedte=5,
-        buiten_talud=4,
+        crest_width=5,
+        waterside_slope=4,
     )
     scenario_3 = KoswatScenario(
         d_h=2,
         d_s=10,
         d_p=30,
-        kruin_breedte=5,
-        buiten_talud=3,
+        crest_width=5,
+        waterside_slope=3,
     )
     scenario_infra = KoswatScenario(
         d_h=0,
         d_s=20,
         d_p=50,
-        kruin_breedte=8,
+        crest_width=8,
     )
 
     cases = [
@@ -46,8 +46,8 @@ class ScenarioCasesAB(CasesProtocol):
             d_h=0.5,
             d_s=0,
             d_p=0,
-            kruin_breedte=5,
-            buiten_talud=3,
+            crest_width=5,
+            waterside_slope=3,
         ),
         KoswatScenario(
             scenario_name="1b_ds",
@@ -442,6 +442,7 @@ class ScenarioCasesC(CasesProtocol):
         # ),
     ]
 
+
 class ScenarioCasesDijk4(CasesProtocol):
     cases = [
         KoswatScenario(
@@ -449,9 +450,10 @@ class ScenarioCasesDijk4(CasesProtocol):
             d_h=0.72,
             d_s=10,
             d_p=50,
-            buiten_talud=3.56,
+            waterside_slope=3.56,
         )
     ]
+
 
 class ScenarioCasesDijk5(CasesProtocol):
     cases = [
@@ -466,6 +468,6 @@ class ScenarioCasesDijk5(CasesProtocol):
             d_h=0.62,
             d_s=13.14,
             d_p=50,
-            buiten_talud=3.00,
-        )
+            waterside_slope=3.00,
+        ),
     ]

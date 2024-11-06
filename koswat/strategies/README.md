@@ -23,19 +23,20 @@ This modules contains the logic to choose which measure will be applied for a gi
 - `StrategyReinforcementInput`, contains the reinforcement types that are relevant to the strategy, as they were selected for one or more locations included in the strategy.
     - reinforcement_type (`Type[ReinforcementProfileProtocol]`), the mapped reinforcement type.
     - base_costs (`float`), the costs only related to the reinforcement's required space (thus excluding infrastructure costs).
-    - ground_level_surface (`float`), profile's width from outside (waterside) crest point.
+    - ground_level_surface (`float`), profile's width from waterside crest point.
 
 - `StrategyLocationReinforcement`, represents a mapped location to a selected measure.
     - location (`PointSurroundings`), a point (meter) in the dike traject.
-    - selected_measure (`Type[ReinforcementProfileProtocol]`), which is the reinforcement that should be applied to the location.
+    - current_selected_measure (`Type[ReinforcementProfileProtocol]`), which is the reinforcement that should be applied to the location.
     - available_measures (`list[Type[ReinforcementProfileProtocol]]`), which are the possible reinforcements that could be applied to the location.
     - strategy_location_input (`StrategyLocationInput`), the related input with available reinforcements and their costs related to this location-measure mapping.
 
+- `StrategyStepAssignment`, helps keep track of the different `StrategyLocationReinforcement.current_selected_measure` values done at each strategy.
 
 ## Available strategies
 
 The following strategies are currently available, please refer to the official documentation for a more in-detail explanation of each of them:
 
-- [__Default__] Order based (`OrderBased`). A strategy is chosen based on a dynamically determined order of reinforcements. This order is determined from least to most restrictive, where reinforcements are omitted when they are less restrictive and more expensive than other reinforcement(s). Cofferdam is forced as the last reinforcement of this order.
-- Infra-priority based (`InfraPriorityStrategy`). Clusters are created based on the cheapest total cost (including infrastructure reworks). This strategy is applied __after__  _Order based_, the clusters are then modified into a reinforcement that requires less space (thus more expensive) but induce less infrastructure costs, therefore becoming cheaper.
+- Order based (`OrderBased`). A strategy is chosen based on a dynamically determined order of reinforcements. This order is determined from least to most restrictive, where reinforcements are omitted when they are less restrictive and more expensive than other reinforcement(s). Cofferdam is forced as the last reinforcement of this order.
+- [__Default__] Infra-priority based (`InfraPriorityStrategy`). Clusters are created based on the cheapest total cost (including infrastructure reworks). This strategy is applied __after__  _Order based_, the clusters are then modified into a reinforcement that requires less space (thus more expensive) but induce less infrastructure costs, therefore becoming cheaper. We apply this strategy based on sub-clusters, this means that only at a specific contiguous subset of locations the new reinforcement will be applied, therefore optimizing costs.
 

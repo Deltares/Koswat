@@ -12,9 +12,9 @@ class KoswatSoilSettings(KoswatConfigProtocol):
 
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
-    min_bermhoogte: float = 0.5
-    max_bermhoogte_factor: float = 0.4
-    factor_toename_bermhoogte: float = 0.05
+    min_berm_height: float = 0.5
+    max_berm_height_factor: float = 0.4
+    factor_increase_berm_height: float = 0.05
 
     def is_valid(self) -> bool:
         return True

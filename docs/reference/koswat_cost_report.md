@@ -26,12 +26,12 @@ These characteristics are then used to estimate how much surface of the infrastr
 
 A reinforced profile can be different from its original state in many ways, however here we are only intestered in two things:
 
-1. The new profile's width from the original outsides (waterside) crest point.
+1. The new profile's width from the original waterside crest point.
 2. Whether there is a crest's height increase (`dh0`),
 
 By using the old and the reinforced profile's geometries, we can determine what we call zone `A` and zone `B`, `A + B = {profile's width from waterside crest point}`. 
 
-- Zone `A` represents the length of the dike old profile's crest (highest surface).
+- Zone `A` represents the width of the dike old profile's crest (highest surface).
 - Zone `B` the distance between said crest and the end of the dike's reinforcement.
 
 |![Dike profile with zone A and B](./imgs/surroundings_zone_a_b.png)|
@@ -84,11 +84,16 @@ After running a Koswat analysis, several files and directories will be generated
 - Dike section: The selected dike section being analyzed.
 - Generated files: A combination of images and a 'csv' matrix result.
     - Images: Visual description of each of the possible reinforcements being applied.
-    - summary_costs.csv: A csv file containing all the costs information of the summary.
+    - `summary_costs.csv`: A csv file containing all the costs information of the summary.
         - Represents the Summary, Profile and Layer report.
-    - summary_locations.csv: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
+    - `summary_locations.csv`: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see [strategies](koswat_strategies.md)).
         - Represents the Location report.
-    - summary_infrastructure_costs.csv: A csv file contaning all the infrastructure costs at each location for each of the supported reinforcement profile types.
+    - `/summary_locations` directory: contains the following `.shp` files (and their related binaries):
+        -`summary_locations_measures`: The same data as present in `summary_locations.csv` is used to shape the geometry of a dike's traject. We keep as well the type of chosen reinforcement.
+        - `summary_locations_new`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the new selected reinforcement.
+        - `summary_locations_old`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the original selected reinforcement.
+        - `summary_locations_step`: an overlay of `summary_locations_measures` with the geometry buffered in relation to the [Ordered Strategy](koswat_strategies.md#order-based) step.
+    - `summary_infrastructure_costs.csv`: A csv file contaning all the infrastructure costs at each location for each of the supported reinforcement profile types.
         - Represents the [Infrastructure Report](#infrastructure-report).
 
 Example using a summarized view of the output tree directory when running the acceptance test `test_main.test_given_valid_input_succeeds`: 
@@ -108,6 +113,27 @@ acceptance
 |   |   |   |   Stabiliteitswand.png
 |   |   |   |   Verticale_piping_oplossing.png
 |   |   |   |
+|   |   |   +-- summary_locations
+|   |   |       |   summary_locations_measures.cpg
+|   |   |       |   summary_locations_measures.dbf
+|   |   |       |   summary_locations_measures.prj
+|   |   |       |   summary_locations_measures.shp
+|   |   |       |   summary_locations_measures.shx
+|   |   |       |   summary_locations_new.cpg
+|   |   |       |   summary_locations_new.dbf
+|   |   |       |   summary_locations_new.prj
+|   |   |       |   summary_locations_new.shp
+|   |   |       |   summary_locations_new.shx
+|   |   |       |   summary_locations_old.cpg
+|   |   |       |   summary_locations_old.dbf
+|   |   |       |   summary_locations_old.prj
+|   |   |       |   summary_locations_old.shp
+|   |   |       |   summary_locations_step.shx
+|   |   |       |   summary_locations_step.cpg
+|   |   |       |   summary_locations_step.dbf
+|   |   |       |   summary_locations_step.prj
+|   |   |       |   summary_locations_step.shp
+|   |   |       |   summary_locations_step.shx
 |   |   |   +-- Grondmaatregel_profiel
 |   |   |       |   added_Grondmaatregel_profiel_CLAY.png
 |   |   |       |   added_Grondmaatregel_profiel_GRASS.png

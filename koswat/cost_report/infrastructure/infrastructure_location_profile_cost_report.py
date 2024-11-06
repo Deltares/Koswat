@@ -5,9 +5,6 @@ from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_infrastructure import (
-    SurroundingsInfrastructure,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -17,7 +14,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 class InfrastructureLocationProfileCostReport(CostReportProtocol):
     # Report classifiers.
     reinforced_profile: ReinforcementProfileProtocol
-    infrastructure: SurroundingsInfrastructure
+    infrastructure_name: str
 
     # Report calculated properties.
     infrastructure_location_costs: InfrastructureLocationCosts

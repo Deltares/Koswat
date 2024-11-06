@@ -34,6 +34,9 @@ from koswat.dike_reinforcements.reinforcement_profile import (
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.infra_priority_strategy.infra_priority_strategy import (
+    InfraPriorityStrategy,
+)
 from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
 from tests.acceptance_scenarios.koswat_scenario_test_cases import ScenarioCases
 from tests.acceptance_scenarios.layers_cases import LayersCases
@@ -44,6 +47,7 @@ class TestKoswatSummaryBuilder:
         _builder = KoswatSummaryBuilder()
         assert isinstance(_builder, KoswatSummaryBuilder)
         assert not _builder.run_scenario_settings
+        assert _builder.strategy_type == InfraPriorityStrategy
 
     def test_get_calculated_profile_list(self):
         # 1. Define test data.

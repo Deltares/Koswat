@@ -5,6 +5,7 @@ from shapely import LineString
 
 from koswat.cost_report.io.summary.summary_locations.cluster_collection_shp_fom import (
     ClusterCollectionShpFom,
+    ClusterGeoDataFrameOutputFom,
 )
 from koswat.cost_report.io.summary.summary_locations.cluster_shp_fom import (
     ClusterShpFom,
@@ -67,7 +68,7 @@ class TestClusterCollectionShpFom:
         _gdf_collection = _cluster_collection.generate_geodataframes()
 
         # 3. Verify xpectations.
-        assert len(_gdf_collection) == 3
+        assert isinstance(_gdf_collection, ClusterGeoDataFrameOutputFom)
 
         def check_gdf(
             gdf_result: GeoDataFrame,
@@ -93,14 +94,14 @@ class TestClusterCollectionShpFom:
                 assert _cluster_value[4] == geometry_lambda(_ref_data)
 
         check_gdf(
-            _gdf_collection[0],
+            _gdf_collection.base_layer,
             lambda c_fom: c_fom.base_geometry,
         )
         check_gdf(
-            _gdf_collection[1],
+            _gdf_collection.initial_state,
             lambda c_fom: c_fom.get_buffered_geometry(c_fom.old_profile_width),
         )
         check_gdf(
-            _gdf_collection[2],
+            _gdf_collection.new_state,
             lambda c_fom: c_fom.get_buffered_geometry(c_fom.new_profile_width),
         )

@@ -7,15 +7,21 @@ A strategy requires a strategy input (`StrategyInput`), this input contains info
 By default a strategy is applied as follows:
 
 1. For each point (meter) in the traject, determine which reinforcements can be applied to it.
-2. Choose one of the available reinforcements based on the chosen [strategy](#order-based-default). When no reinforcement is available the most restrictive will be chosen (`CofferDam`).
+2. Choose one of the available reinforcements based on the chosen [strategy](#order-based). When no reinforcement is available the most restrictive will be chosen (`CofferDam`).
 3. Apply a buffer (`reinforcement_min_buffer`) for each one of the reinforcements.
 4. Check if the minimal distance between constructions is met (`reinforcement_min_length`), otherwise change it into one of the reinforcements next to it.
 5. Repeat 4 until all reinforcements have enough distance between themselves.
-6. Return list of mapped locations (`list[StrategyLocationReinforcement]`).
+6. Find based on the strategy for [infrastructure derived costs](#infrastructure-priority), mapped locations (`list[StrategyLocationReinforcement]`) whose reinforcement can be increased into a most restrictive one with total lower costs. 
+7. Return list of mapped locations (`list[StrategyLocationReinforcement]`).
 
 ## Available strategies
 
-### Order based (default)
+Currently the following strategies are implemented:
+
+- [Order based](#order-based)
+- [Infrastructure priority](#infrastructure-priority), by default the strategy to run during a Koswat analysis.
+
+### Order based
 
 This strategy is the first and default of all defined strategies. Its criteria is based on a pre-defined ['order'](#reinforcement-order) of each reinforcement. In steps, it can be seen as:
 
@@ -234,32 +240,227 @@ Resulting cluster:
 
 ### Infrastructure priority
 
-This (experimental) strategy checks whether the clusters resulting from the [order based strategy](#order-based-default) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report) . 
-
-__Conditions__:
-
-- It only modifies the selected reinforcement if it can be applied to all the points of its cluster. 
-- It DOES NOT apply more than one iteration, thus in case of creating neighbor clusters of the same type they will remain as that.
-- Cluster's costs are calculated the summation of each location's total costs:
-    `sum((reinforcement base costs + location costs), cluster's locations)`
+**DEFAULT STRATEGY**
+This strategy checks whether the clusters resulting from the [order based strategy](#order-based) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report). In steps, this strategy can be broke down as:
 
 __Steps breakdown__:
 
-1. Run the [order based strategy](#order-based-default).
-2. Get common available measures for each cluster an their total costs when applied at the cluster.
-3. Set the **cheapest** common available measure per cluster.
+1. Assignment of [order based clusters](#order-based),
+2. [Cluster options](#cluster-options) evaluation,
+    1. [Common available measures](#cluster-common-available-measure-costs) cost calculation,
+    2. Cheapest option selection,
+3. Update reinforcement selection with selected option.
 
-####  Infrastructure priority example
+#### Cluster options
 
-We will start by defining some unrealistic costs per reinforcement type for all locations* such as:
+For an optimal assignment of a new reinforcement profile, we make use of "subclusters". These subclusters are contiguous subsets from an order based cluster and have the minimal required length (`StrategyInput.reinforcement_min_cluster`). The logic for this section can be found in `InfraPriorityStrategy.generate_subcluster_options`.
+
+For each of original the clusters, multiple combinations of subclusters are possible. We refer to them as "**cluster option**" (`InfraClusterOption`) . We can already discard creating subclusters when the size of the original cluster is less than twice the required minimal length. So for a minimal length of 2 locations, you require a cluster of at least 4 locations to generate subclusters.
+
+__Conditions__:
+
+- We only create subclusters when the cluster's original size is, at least, twice the required minimal cluster's length.
+- We estimate the cluster's minimal length to be at least twice the size of the buffer so: `min_cluster_length = (2 * reinforcement_min_buffer) + 1`.
+- We create subclusters based on the immediate results of the [order based strategy](#order-based).  We do not try to combine or create new clusters based on a "greedier" strategy.
+
+
+##### Cluster option example
+
+For example, given the results of the [clustering example](#clustering-example) we can calculate the options for the clusters for a required minimal length of `2`:
+
+1. List of clusters:
+    ```json
+    {
+        (0, ["Location_000","Location_001",]),
+        (3, ["Location_002","Location_003",
+                "Location_004","Location_005",
+                "Location_006",]),
+        (4, ["Location_007","Location_008","Location_009",]),
+    }
+    ```
+2. Options for cluster `{(0, ["Location_000","Location_001",])}`
+    ```json
+    - Valid options:
+        (0, ["Location_000","Location_001",])
+    ```
+
+3. Options for cluster `{(3, ["Location_002","Location_003", "Location_004","Location_005", "Location_006",])}`
+    ```json
+    - Valid:
+        - {["Location_002", "Location_003"],
+            ["Location_004", "Location_005", "Location_006"]},
+        - {["Location_002", "Location_003", "Location_004"],
+            ["Location_005", "Location_006"]}
+    - Invalid:
+        - first subcluster's size is less than required:
+            {["Location_002"],
+            ["Location_003", "Location_004"],
+            ["Location_005", "Location_006"]}
+
+        - last subcluster's size is less than required:
+            {["Location_002", "Location_003"],
+            ["Location_004", "Location_005"],
+            ["Location_006"]}, 
+        - second subcluster's size is less than required:
+            {["Location_002", "Location_003"],
+            ["Location_004"],
+            ["Location_005", "Location_006"]}, 
+        - and so on...
+    ```
+
+4. Options for cluster `{(4, ["Location_007","Location_008","Location_009",]),}`
+    ```json
+    - Valid:
+        - {["Location_007","Location_008","Location_009",]}
+    - Invalid:
+        - first subcluster's size is less than required:
+            {["Location_007"], ["Location_008", "Location_009"]}
+        - last subcluster's size is less than required:
+            {["Location_007", "Location_008"], ["Location_009"]}
+        - and so on...
+    ```
+
+#### Cluster common available measures' cost
+
+Once we have calculated a [cluster's option](#cluster-options) we can determine whether this cluster should be consider as a valid one. This estimation is based on the __cheapest reinforcement's cost__, and to get this value we first need to know which reinforcements are available at all the locations of this option. 
+
+We will store this value in the `InfraClusterOption.cluster_costs`. In the current implementation, these costs are added to the `InfraClusterOption` together with the cluster's data (`list[InfraCluster]`).
+
+__Conditions__:
+
+- A "viable" cluster option must be cheaper than the order's cluster and has the cluster's minimal length.
+- We consider "minimal costs" or "lower costs" as the lowest cost of applying a certain reinforcement type to a given subcluster.
+
+
+##### Common available measures' cost example
+
+Following the [options example](#cluster-option-example) we can estimate some fictional costs based on the following tables (if a type / location is not mentioned, then assume its cost is zero (`0`)):
+
+| Index | Reinforcement type | base cost |
+| ---- | ---- |---- |
+| 0 | Soil reinforcement | 42 |
+| 1 | Vertical Piping Solution | 420 |
+| 2 | Piping Wall | 4.200 |
+| 3 | Stability Wall | 42.000 |
+| 4 | Cofferdam | 420.000 |
+
+| Location | Reinforcement indices | Infrastructure cost |
+| ---- | ---- | ---- |
+| Location_000 | 0, 1 | 4.200.000 |
+| Location_005 | 0, 1, 2, 3 | 4.200.000 |
+
+We already know that only the second cluster can generate subclusters, therefore different valid options, so we will use said subcluster's options for the example.
+
+```json
+
+1. Determine current cost:
+    - {3, ["Location_002", "Location_003",
+        "Location_004", "Location_005", "Location_006"]}
+    - Base costs = 5 * 42.000 = 210.000
+    - Infra costs = (1) * 4.200.000 = 4.200.000
+    - Total costs = 4.410.000
+
+2. Calculate costs for first option:
+    - {(3, ["Location_002", "Location_003"],
+        ["Location_004", "Location_005", "Location_006"])},
+    1. First subcluster's common measures:
+        - Stability Wall (current):
+            - Base costs = 2 * 42.000 = 84.000
+            - Infra costs = 0
+            - Total costs = 42.000
+        - Cofferdam:
+            - Base costs = 2 * 420.000 = 840.000
+            - Infra costs = 0
+            - Total costs = 840.000
+        - The current reinfocement is cheaper
+    2. Second subcluster's common measures:
+        - Stability Wall (current):
+            - Base costs = 3 * 42.000 = 126.000
+            - Infra costs = (1) * 4.200.000 = 4.200.000
+            - Total costs = 4.326.000
+        - Cofferdam:
+            - Base costs = 3 * 420.000 = 1.260.000
+            - Infra costs = 0
+            - Total costs = 1.260.000
+        - Cofferdam will be cheaper.
+    3. Subcluster's best option is cheaper than current:
+        - {(3, ["Location_002", "Location_003"]),
+        (4, ["Location_004", "Location_005", "Location_006"])}
+        - Total cost = 42.000 + 1.260.000 = 1.302.000
+        - Selected as option.
+
+3. Calculate costs for second option:
+    - {3, (["Location_002", "Location_003", "Location_004"],
+        ["Location_005", "Location_006"])}
+    1. First subluster's common measures
+        - Stability Wall (current):
+            - Base costs = 3 * 42.000 = 126.000
+            - Infra costs = 0
+            - Total costs = 126.000
+        - Cofferdam:
+            - Base costs = 3 * 420.000 = 1.260.000
+            - Infra costs = 0
+            - Total costs = 1.260.000
+        - The current reinfocement is cheaper
+    2. Second subluster's common measures
+        - Stability Wall (current):
+            - Base costs = 2 * 42.000 = 84.000
+            - Infra costs = 0
+            - Total costs = 84.000
+        - Cofferdam:
+            - Base costs = 2 * 420.000 = 840.000
+            - Infra costs = 0
+            - Total costs = 840.000
+        - Cofferdam is cheaper
+    3. Subcluster's best option is cheaper than selection:
+        - {(3, ["Location_002", "Location_003", "Location_004"]),
+            (4, ["Location_005", "Location_006"])}
+        - Total cost = 126.000 + 840.000 = 966.000
+        - Selected as option.
+
+4. Update locations' selected reinforcement:
+{
+    (2, ["Location_000","Location_001",]),
+    (3, ["Location_002","Location_003", "Location_004",]),
+    (4, ["Location_005","Location_006", "Location_007",
+          "Location_008","Location_009",]),
+}
+```
+
+In this example we can therefore demonstrate the cost reduction. The last column represents the difference (positive means saved money):
+
+- O.S. = Order strategy
+- I.S. = Infrastructure priority strategy
+
+| Location | (O.S.) reinforcement | (O.S.) cost | (I.S.) reinforcement | (I.S.) cost | Difference |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+|Total | ---- | 6.090.084 | ----  | 2.226.840 | __+3.863.244__ |
+|Location_000 | Soil reinforcement | 4.200.042 | Piping Wall | 420 | +4.199.622 |
+|Location_001 | Soil reinforcement | 42 | Piping Wall | 420 | -378 |
+|Location_002 | Stability Wall | 42.000 | Stability Wall | 42.000 | 0 |
+|Location_003 | Stability Wall | 42.000 | Stability Wall | 42.000 | 0 |
+|Location_004 | Stability Wall | 42.000 | Stability Wall | 42.000 | 0 |
+|Location_005 | Stability Wall | 462.000 | Cofferdam | 420.000 | +42000 |
+|Location_006 | Stability Wall | 42.000 | Cofferdam | 420.000 | -378000 |
+|Location_007 | Cofferdam | 420.000 | Cofferdam | 420.000 | 0 |
+|Location_008 | Cofferdam | 420.000 | Cofferdam | 420.000 | 0 |
+|Location_009 | Cofferdam | 420.000 | Cofferdam | 420.000 | 0 |
+
+####  Infrastructure priority (old approach) example
+
+---------------
+> **_Important!_** 
+> This example is based on the first approach of this strategy and its steps might differ from the current solution. We left this example as it can help understanding the basic concepts of the strategy.
+---------------
+We will start by defining some unrealistic costs per reinforcement type for all locations* such as. For a more realistic scenario check the [subclustering example](#infrastructure-priority-subclustering-example):
 
 | Index | Reinforcement type | base cost | infra cost | total cost |
 | ---- | ---- |---- | ---- | ---- |
-| 0 | Soil reinforcement | 42 | 420000 | 420042 |
-| 1 | Vertical Piping Solution | 420 | 420000 | 420420 |
+| 0 | Soil reinforcement | 42 | 420.000 | 420.042 |
+| 1 | Vertical Piping Solution | 420 | 420.000 | 420.420 |
 | 2 | Piping Wall | 4200 | 0 | 4200 |
-| 3 | Stability Wall | 42000 | 420000 | 462000 |
-| 4 | Cofferdam | 420000 | 0 | 420000 |
+| 3 | Stability Wall | 42.000 | 420.000 | 462.000 |
+| 4 | Cofferdam | 420.000 | 0 | 420.000 |
 
 ---------------
 > **_Important!_** 
@@ -292,16 +493,16 @@ Let's see now the strategy steps using the results from the [clustering example]
         - Soil Reinforcement, (idx=0),
             - [Discard] Current selection.
         - Vertical Piping Solution, (idx=1),
-            - Costs = `(420420) * 2 = 840840`
+            - Costs = `(420.420) * 2 = 840.840`
             - [Discard] Costs are higher than initial state.
         - Piping Wall, (idx=2),
-            - Costs = `(4200 + 0) * 2 = 8400`
+            - Costs = `(4.200 + 0) * 2 = 8.400`
             - [Keep] Costs are cheaper than the initial state.
         - Stability Wall, (idx=3),
-            - Costs = `(462000) * 2 = 924000`
+            - Costs = `(462.000) * 2 = 924.000`
             - [Discard] Costs are higher than initial state.
         - Cofferdam, (idx=3),
-            - Costs = `(420000) * 2 = 840000`
+            - Costs = `(420.000) * 2 = 840.000`
             - [Keep] Costs are cheaper than the initial state, keep.
 
     2.1.3. Set the cheapest common available measure per cluster:
@@ -316,7 +517,7 @@ Let's see now the strategy steps using the results from the [clustering example]
             "Location_006",])}
 
     2.3.1. Get the current cost of using this cluster.
-        - Total costs * N locations = `(462000) * 5 = 2310000`
+        - Total costs * N locations = `(462.000) * 5 = 2.310.000`
     
     2.3.2. Get cheaper common available measures.
         - Soil Reinforcement, (idx=0),
@@ -328,7 +529,7 @@ Let's see now the strategy steps using the results from the [clustering example]
         - Stability Wall, (idx=3),
             - [Discard] Current selection.
         - Cofferdam, (idx=3),
-            - Costs = `(420000) * 5 = 2100000`
+            - Costs = `(420.000) * 5 = 2.100.000`
             - [Keep] Costs are cheaper than the initial state.
     
     2.3.3. Set the cheapest common available measure per cluster:
@@ -344,7 +545,7 @@ Let's see now the strategy steps using the results from the [clustering example]
             "Location_009",])}}
 
     2.3.1. Get the current cost of using this cluster.
-        - Total costs * N locations = `(420000) * 3 = 1260000`
+        - Total costs * N locations = `(420.000) * 3 = 1.260.000`
 
     2.3.2. Get cheaper common available measures.
         - Cofferdam, (idx=4),
@@ -369,7 +570,8 @@ Let's see now the strategy steps using the results from the [clustering example]
 
 With this, we went from:
 
-- Initial costs: `(420042) * 2 + (462000) * 5 + (420000) * 3 = 4410084`, to
-- Final costs: `(4200) * 2 + (420000) * 8 = 3368400`
+- Initial costs: `(420.042) * 2 + (462.000) * 5 + (420.000) * 3 = 4.410.084`, to
+- Final costs: `(4.200) * 2 + (420.000) * 8 = 3.368.400`
 
 Which would amount to a total save of **1.041.684€**
+

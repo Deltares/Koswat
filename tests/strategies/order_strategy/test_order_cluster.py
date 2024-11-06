@@ -52,8 +52,8 @@ class TestOrderCluster:
         for _idx in range(0, 4):
             _dummy_location = StrategyLocationReinforcement(
                 location=PointSurroundings(section="test", traject_order=_idx),
-                selected_measure=[],
                 available_measures=[],
+                filtered_measures=[],
             )
             basic_order_cluster.location_reinforcements.append(_dummy_location)
 
@@ -166,8 +166,8 @@ class TestOrderCluster:
         _merging_to = order_cluster_with_neighbors.left_neighbor
         _single_location = StrategyLocationReinforcement(
             location=PointSurroundings(),
-            selected_measure=_selected_measure_value,
-            available_measures=[],
+            available_measures=[_selected_measure_value],
+            filtered_measures=[_selected_measure_value],
         )
         _merging_to.location_reinforcements = [_single_location]
 
@@ -178,7 +178,7 @@ class TestOrderCluster:
 
         # 3. Verify expectations
         assert all(
-            lr.selected_measure == _selected_measure_value
+            lr.current_selected_measure == _selected_measure_value
             for lr in order_cluster_with_neighbors.location_reinforcements
         )
         assert _merging_to.right_neighbor == order_cluster_with_neighbors.right_neighbor
@@ -196,9 +196,10 @@ class TestOrderCluster:
         _merging_to = order_cluster_with_neighbors.right_neighbor
         _single_location = StrategyLocationReinforcement(
             location=PointSurroundings(),
-            selected_measure=_selected_measure_value,
-            available_measures=[],
+            available_measures=[_selected_measure_value],
+            filtered_measures=[_selected_measure_value],
         )
+
         _merging_to.location_reinforcements = [_single_location]
 
         # 2. Run test.
@@ -208,7 +209,7 @@ class TestOrderCluster:
 
         # 3. Verify expectations
         assert all(
-            lr.selected_measure == _selected_measure_value
+            lr.current_selected_measure == _selected_measure_value
             for lr in order_cluster_with_neighbors.location_reinforcements
         )
         assert _merging_to.left_neighbor == order_cluster_with_neighbors.left_neighbor

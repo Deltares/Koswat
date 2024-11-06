@@ -109,7 +109,7 @@ class TestQuantityCostParametersBuilder:
         _builder.koswat_costs_settings.surtax_costs.land_purchase_normal = 2.0
         _builder.reinforced_profile = SoilReinforcementProfile()
         _builder.reinforced_profile.input_data = SoilInputProfile()
-        _builder.reinforced_profile.input_data.grondprijs_onbebouwd = 10
+        _builder.reinforced_profile.input_data.ground_price_unbuilt = 10
         _builder.reinforced_profile.input_data.land_purchase_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
@@ -133,7 +133,7 @@ class TestQuantityCostParametersBuilder:
         _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
         _builder.koswat_costs_settings.surtax_costs.construction_normal = 2.0
         _builder.koswat_costs_settings.construction_costs = ConstructionCostsSettings()
-        _builder.koswat_costs_settings.construction_costs.cb_damwand = (
+        _builder.koswat_costs_settings.construction_costs.cb_sheetpile = (
             ConstructionFactors(
                 c_factor=0, d_factor=10, z_factor=0, f_factor=0, g_factor=0
             )
@@ -180,8 +180,8 @@ class TestQuantityCostParametersBuilder:
 
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcementInput(ReinforcementInputProfileProtocol):
-            grondprijs_bebouwd: float = 0
-            grondprijs_onbebouwd: float = 0
+            ground_price_builtup: float = 0
+            ground_price_unbuilt: float = 0
             construction_length: float = 0
             construction_type: ConstructionTypeEnum | None = None
             soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
@@ -227,7 +227,7 @@ class TestQuantityCostParametersBuilder:
         assert _qcp.new_clay_layer_surface == 4.2
         assert _qcp.new_grass_layer_volume == 4.8
         assert _qcp.new_grass_layer_surface == 8.4
-        assert _qcp.new_maaiveld_surface == 42
+        assert _qcp.new_ground_level_surface == 42
         assert _qcp.construction_length == 10
 
     def test_build_with_valid_data(self):
@@ -261,14 +261,14 @@ class TestQuantityCostParametersBuilder:
         _costs_settings.dike_profile_costs.profiling_layer_grass_m2 = 0.88
         _costs_settings.dike_profile_costs.profiling_layer_clay_m2 = 0.65
         _costs_settings.dike_profile_costs.profiling_layer_sand_m2 = 0.60
-        _costs_settings.dike_profile_costs.bewerken_maaiveld_m2 = 0.25
+        _costs_settings.dike_profile_costs.processing_ground_level_surface_m2 = 0.25
         _costs_settings.construction_costs = ConstructionCostsSettings()
-        _costs_settings.construction_costs.cb_damwand = ConstructionFactors()
-        _costs_settings.construction_costs.cb_damwand.c_factor = 0
-        _costs_settings.construction_costs.cb_damwand.d_factor = 0
-        _costs_settings.construction_costs.cb_damwand.z_factor = 999
-        _costs_settings.construction_costs.cb_damwand.f_factor = 0
-        _costs_settings.construction_costs.cb_damwand.g_factor = 0
+        _costs_settings.construction_costs.cb_sheetpile = ConstructionFactors()
+        _costs_settings.construction_costs.cb_sheetpile.c_factor = 0
+        _costs_settings.construction_costs.cb_sheetpile.d_factor = 0
+        _costs_settings.construction_costs.cb_sheetpile.z_factor = 999
+        _costs_settings.construction_costs.cb_sheetpile.f_factor = 0
+        _costs_settings.construction_costs.cb_sheetpile.g_factor = 0
         _costs_settings.surtax_costs = SurtaxCostsSettings()
 
         # 2. Run test
@@ -298,6 +298,6 @@ class TestQuantityCostParametersBuilder:
         evaluate_cost_and_quantity(_qcp.new_grass_layer_surface, 0.88, 8.4)
         evaluate_cost_and_quantity(_qcp.new_clay_layer_surface, 0.65, 4.2)
         evaluate_cost_and_quantity(_qcp.new_core_layer_surface, 0.6, 2.1)
-        evaluate_cost_and_quantity(_qcp.new_maaiveld_surface, 0.25, 42)
+        evaluate_cost_and_quantity(_qcp.new_ground_level_surface, 0.25, 42)
         evaluate_cost_and_quantity(_qcp.removed_material_volume, 7.07, 1.2)
         evaluate_cost_and_length(_qcp.construction_length, 999, 10)

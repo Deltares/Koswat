@@ -5,6 +5,7 @@ from koswat.strategies.order_strategy.order_strategy_base import OrderStrategyBa
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
 class OrderStrategyBuffering(OrderStrategyBase):
@@ -69,4 +70,6 @@ class OrderStrategyBuffering(OrderStrategyBase):
 
         # Apply buffer values.
         for _idx, _location in enumerate(location_reinforcements):
-            _location.selected_measure = self.reinforcement_order[_result_mask[_idx]]
+            _location.set_selected_measure(
+                self.reinforcement_order[_result_mask[_idx]], StrategyStepEnum.ORDERED
+            )

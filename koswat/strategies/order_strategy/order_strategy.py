@@ -22,11 +22,15 @@ from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInpu
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
+from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
 from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
+from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
 class OrderStrategy(StrategyProtocol):
+    reinforcement_order: list[type[ReinforcementProfileProtocol]]
+
     @staticmethod
     def get_default_order_for_reinforcements() -> list[
         type[ReinforcementProfileProtocol]
@@ -115,36 +119,56 @@ class OrderStrategy(StrategyProtocol):
         strategy_locations: list[StrategyLocationInput],
         selection_order: list[type[ReinforcementProfileProtocol]],
     ) -> list[StrategyLocationReinforcement]:
+        """
+        Gets the strategy representation of the locations with their available measures
+        ordered filtered and order by the provided `selection_order`. It also sets
+        their initial state.
+
+        Args:
+            strategy_locations (list[StrategyLocationInput]): Locations to map into reinforcement locations.
+            selection_order (list[type[ReinforcementProfileProtocol]]): Priority order to assign a reinforcement.
+
+        Returns:
+            list[StrategyLocationReinforcement]: Mapped location reinforcements.
+        """
         _strategy_reinforcements = []
         for _strategy_location in strategy_locations:
-            _reinforcements = _strategy_location.available_measures
-            _selected_reinforcement = next(
-                (_or for _or in selection_order if _or in _reinforcements),
-                selection_order[-1],
+            # Create the strategy representation.
+            _slr = StrategyLocationReinforcement(
+                location=_strategy_location.point_surrounding,
+                available_measures=_strategy_location.available_measures,
+                filtered_measures=list(
+                    filter(
+                        lambda x: x in _strategy_location.available_measures,
+                        selection_order,
+                    )
+                ),
+                strategy_location_input=_strategy_location,
             )
-            _strategy_reinforcements.append(
-                StrategyLocationReinforcement(
-                    location=_strategy_location.point_surrounding,
-                    available_measures=_reinforcements,
-                    selected_measure=_selected_reinforcement,
-                    strategy_location_input=_strategy_location,
-                )
-            )
+
+            # Manually set the current selected measure if none available.
+            if not any(_slr.available_measures):
+                # TODO: Unclear why tests fail when setting this measure
+                # as the only available measure.
+                _slr.set_selected_measure(selection_order[-1], StrategyStepEnum.ORDERED)
+
+            _strategy_reinforcements.append(_slr)
         return _strategy_reinforcements
 
-    def apply_strategy(
-        self, strategy_input: StrategyInput
-    ) -> list[StrategyLocationReinforcement]:
-        _reinforcement_order = self.get_strategy_order_for_reinforcements(
+    def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
+        self.reinforcement_order = self.get_strategy_order_for_reinforcements(
             strategy_input.strategy_reinforcements
         )
         _strategy_reinforcements = self.get_strategy_reinforcements(
-            strategy_input.strategy_locations, _reinforcement_order
+            strategy_input.strategy_locations, self.reinforcement_order
         )
         OrderStrategyBuffering.with_strategy(
-            _reinforcement_order, strategy_input.reinforcement_min_buffer
+            self.reinforcement_order, strategy_input.reinforcement_min_buffer
         ).apply(_strategy_reinforcements)
         OrderStrategyClustering.with_strategy(
-            _reinforcement_order, strategy_input.reinforcement_min_length
+            self.reinforcement_order, strategy_input.reinforcement_min_length
         ).apply(_strategy_reinforcements)
-        return _strategy_reinforcements
+        return StrategyOutput(
+            location_reinforcements=_strategy_reinforcements,
+            reinforcement_order=self.reinforcement_order,
+        )
