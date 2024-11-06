@@ -67,7 +67,7 @@ class CofferdamInputProfileCalculation(
         )
         return _operand / _dividend
 
-    def _calculate_length_coffer_dam(
+    def _calculate_length_cofferdam(
         self,
         old_data: KoswatInputProfileProtocol,
         cofferdam_settings: KoswatCofferdamSettings,
@@ -139,7 +139,7 @@ class CofferdamInputProfileCalculation(
         )
 
         _seepage_length = scenario.d_p
-        _new_data.construction_length = self._calculate_length_coffer_dam(
+        _new_data.construction_length = self._calculate_length_cofferdam(
             base_data, cofferdam_settings, _seepage_length, _new_data.crest_height
         )
         _new_data.construction_type = self._determine_construction_type(
