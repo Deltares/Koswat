@@ -9,7 +9,7 @@ class TestInfrastructureLocationProfileCostReport:
         # 1. Define test data.
         _report = InfrastructureLocationProfileCostReport(
             reinforced_profile=None,
-            infrastructure=None,
+            infrastructure_name=None,
             infrastructure_location_costs=None,
         )
 
