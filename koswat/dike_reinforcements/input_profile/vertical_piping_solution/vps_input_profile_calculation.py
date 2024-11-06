@@ -74,7 +74,7 @@ class VPSInputProfileCalculation(
 
         _dike_height_new = _new_data.crest_height - _new_data.polderside_ground_level
         _dikebase_heigth_new = (
-            scenario.d_h * _new_data.polderside_slope
+            scenario.d_h * _new_data.waterside_slope
             + _new_data.crest_width
             + _dike_height_new * base_data.polderside_slope
         )
