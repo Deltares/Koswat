@@ -26,7 +26,7 @@ from tests.conftest import PointSurroundingsTestCase
 
 @pytest.fixture(name="reinforcement_profile_builder")
 def _get_dummy_reinforcment_profile_builder() -> Iterable[
-    Callable[[CharacteristicPoints, CharacteristicPoints], ReinforcementProfileProtocol]
+    Callable[[list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol]
 ]:
     @dataclass
     class DummyReinforcementProfile(KoswatProfileBase, ReinforcementProfileProtocol):
@@ -72,7 +72,7 @@ def _get_surroundings_infrastructure_fixture(
         Callable[[], PointSurroundings], PointSurroundingsTestCase
     ],
     request: pytest.FixtureRequest,
-) -> Iterable[SurroundingsInfrastructure]:
+) -> Iterable[tuple[SurroundingsInfrastructure, PointSurroundingsTestCase]]:
     _infra_width = request.param
     _builder, test_case = point_surroundings_for_zones_builder_fixture
     test_case.expected_total_widths = list(
