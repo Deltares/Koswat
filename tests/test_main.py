@@ -47,3 +47,30 @@ class TestMain:
         assert (
             _log.read_text().find("ERROR") == -1
         ), "ERROR found in the log, run was not succesful."
+
+    def test_given_issue_case(self):
+        # 1. Define test data.
+        _valid_path = test_data.joinpath(
+            "issues", "KOSWAT_220", "KOSWAT_analyse_RaLi.ini"
+        )
+        assert _valid_path.is_file()
+        # Ensure we have a clean results dir.
+        _results_dir = test_results.joinpath("issues", "KOSWAT_220", "results")
+        if _results_dir.exists():
+            shutil.rmtree(_results_dir)
+        _results_dir.mkdir(parents=True)
+
+        _cli_arg = f'--input_file "{_valid_path}" --log_output "{_results_dir}"'
+
+        # 2. Run test.
+        _run_result = CliRunner().invoke(
+            __main__.run_analysis,
+            _cli_arg,
+        )
+        # 3. Verify final expectations.
+        assert _run_result.exit_code == 0
+        _log: Path = next(_results_dir.glob("*.log"), None)
+        assert _log and _log.is_file(), "Log file was not generated."
+        assert (
+            _log.read_text().find("ERROR") == -1
+        ), "ERROR found in the log, run was not succesful."
