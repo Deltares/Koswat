@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 
+import pytest
 from click.testing import CliRunner
 
 from koswat import __main__
@@ -48,6 +49,7 @@ class TestMain:
             _log.read_text().find("ERROR") == -1
         ), "ERROR found in the log, run was not succesful."
 
+    @pytest.mark.ignore(reason="Only meant to run locally")
     def test_given_issue_case(self):
         # 1. Define test data.
         _valid_path = test_data.joinpath(

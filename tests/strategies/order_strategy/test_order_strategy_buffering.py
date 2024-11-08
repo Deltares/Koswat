@@ -8,7 +8,10 @@ from koswat.strategies.strategy_input import StrategyInput
 
 class TestOrderStrategyBuffering:
     def test_initialize(self):
-        _strategy = OrderStrategyBuffering()
+        _strategy = OrderStrategyBuffering(
+            reinforcement_order=[],
+            reinforcement_min_buffer=float("nan"),
+        )
         assert isinstance(_strategy, OrderStrategyBuffering)
         assert isinstance(_strategy, OrderStrategyBase)
 
@@ -19,11 +22,11 @@ class TestOrderStrategyBuffering:
             example_strategy_input.strategy_locations,
             _reinforcement_order,
         )
-        _strategy = OrderStrategyBuffering()
-        _strategy.reinforcement_order = _reinforcement_order
-        _strategy.reinforcement_min_buffer = (
-            example_strategy_input.reinforcement_min_buffer
+        _strategy = OrderStrategyBuffering(
+            reinforcement_order=_reinforcement_order,
+            reinforcement_min_buffer=example_strategy_input.reinforcement_min_buffer,
         )
+
         _expected_result_idx = [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
         _expected_result = list(
             map(lambda x: _reinforcement_order[x], _expected_result_idx)
@@ -47,10 +50,9 @@ class TestOrderStrategyBuffering:
             example_strategy_input.strategy_locations,
             _order_reinforcement,
         )
-        _strategy = OrderStrategyBuffering()
-        _strategy.reinforcement_order = _order_reinforcement
-        _strategy.reinforcement_min_buffer = (
-            example_strategy_input.reinforcement_min_buffer
+        _strategy = OrderStrategyBuffering(
+            reinforcement_order=_order_reinforcement,
+            reinforcement_min_buffer=example_strategy_input.reinforcement_min_buffer,
         )
 
         # 2. Run test.
