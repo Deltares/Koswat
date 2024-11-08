@@ -7,6 +7,8 @@ from click.testing import CliRunner
 from koswat import __main__
 from tests import test_data, test_results
 
+issues_tests = test_data.joinpath("issues")
+
 
 class TestMain:
     def test_given_invalid_path_raises_value_error(self):
@@ -49,20 +51,29 @@ class TestMain:
             _log.read_text().find("ERROR") == -1
         ), "ERROR found in the log, run was not succesful."
 
-    @pytest.mark.ignore(reason="Only meant to run locally")
-    def test_given_issue_case(self):
+    @pytest.mark.skipif(
+        not any(issues_tests.glob("*")),
+        reason="Only meant to run locally with issue cases.",
+    )
+    @pytest.mark.parametrize(
+        "ini_file_location",
+        [
+            pytest.param(
+                issues_tests.joinpath("KOSWAT_220", "KOSWAT_analyse_RaLi.ini"),
+                id="Koswat 220",
+            )
+        ],
+    )
+    def test_given_issue_case(self, ini_file_location: Path):
         # 1. Define test data.
-        _valid_path = test_data.joinpath(
-            "issues", "KOSWAT_220", "KOSWAT_analyse_RaLi.ini"
-        )
-        assert _valid_path.is_file()
+        assert ini_file_location.is_file()
         # Ensure we have a clean results dir.
-        _results_dir = test_results.joinpath("issues", "KOSWAT_220", "results")
-        if _results_dir.exists():
-            shutil.rmtree(_results_dir)
-        _results_dir.mkdir(parents=True)
+        _log_dir = ini_file_location.parent.joinpath("log_output")
+        if _log_dir.exists():
+            shutil.rmtree(_log_dir)
+        _log_dir.mkdir(parents=True)
 
-        _cli_arg = f'--input_file "{_valid_path}" --log_output "{_results_dir}"'
+        _cli_arg = f'--input_file "{ini_file_location}" --log_output "{_log_dir}"'
 
         # 2. Run test.
         _run_result = CliRunner().invoke(
@@ -71,7 +82,7 @@ class TestMain:
         )
         # 3. Verify final expectations.
         assert _run_result.exit_code == 0
-        _log: Path = next(_results_dir.glob("*.log"), None)
+        _log: Path = next(_log_dir.glob("*.log"), None)
         assert _log and _log.is_file(), "Log file was not generated."
         assert (
             _log.read_text().find("ERROR") == -1
