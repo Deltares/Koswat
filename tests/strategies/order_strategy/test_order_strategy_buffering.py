@@ -60,3 +60,23 @@ class TestOrderStrategyBuffering:
 
         # 3. Verify expectations.
         assert _mask_result == [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
+
+    def test__get_modified_example_last_location_gets_buffered(
+        self, example_strategy_input: StrategyInput
+    ):
+        # 1. Define test data.
+        _order_reinforcement = OrderStrategy.get_default_order_for_reinforcements()
+        _reinforcements = OrderStrategy.get_strategy_reinforcements(
+            example_strategy_input.strategy_locations,
+            _order_reinforcement,
+        )[:6]
+        _strategy = OrderStrategyBuffering(
+            reinforcement_order=_order_reinforcement,
+            reinforcement_min_buffer=3,
+        )
+
+        # 2. Run test.
+        _mask_result = _strategy._get_buffer_mask(_reinforcements)
+
+        # 3. Verify expectations.
+        assert _mask_result == [3, 3, 3, 3, 3, 3]
