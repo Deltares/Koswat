@@ -64,6 +64,9 @@ class TestOrderStrategyBuffering:
     def test__get_modified_example_last_location_gets_buffered(
         self, example_strategy_input: StrategyInput
     ):
+        """
+        This test fixes the problem related to Koswat #220.
+        """
         # 1. Define test data.
         _order_reinforcement = OrderStrategy.get_default_order_for_reinforcements()
         _reinforcements = OrderStrategy.get_strategy_reinforcements(
