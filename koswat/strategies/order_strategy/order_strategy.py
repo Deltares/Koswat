@@ -162,11 +162,13 @@ class OrderStrategy(StrategyProtocol):
         _strategy_reinforcements = self.get_strategy_reinforcements(
             strategy_input.strategy_locations, self.reinforcement_order
         )
-        OrderStrategyBuffering.with_strategy(
-            self.reinforcement_order, strategy_input.reinforcement_min_buffer
+        OrderStrategyBuffering(
+            reinforcement_order=self.reinforcement_order,
+            reinforcement_min_buffer=strategy_input.reinforcement_min_buffer,
         ).apply(_strategy_reinforcements)
-        OrderStrategyClustering.with_strategy(
-            self.reinforcement_order, strategy_input.reinforcement_min_length
+        OrderStrategyClustering(
+            reinforcement_order=self.reinforcement_order,
+            reinforcement_min_length=strategy_input.reinforcement_min_length,
         ).apply(_strategy_reinforcements)
         return StrategyOutput(
             location_reinforcements=_strategy_reinforcements,

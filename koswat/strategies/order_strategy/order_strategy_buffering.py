@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -8,20 +10,17 @@ from koswat.strategies.strategy_location_reinforcement import (
 from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
+@dataclass
 class OrderStrategyBuffering(OrderStrategyBase):
+    """
+    Applies buffering, through masks, to each location's pre-assigned reinforcement.
+    The result of the `apply` method will be the locations with the best
+    reinforcement fit (lowest index from `reinforcement_order`) that fulfills the
+    `reinforcement_min_buffer` requirement.
+    """
+
     reinforcement_order: list[type[ReinforcementProfileProtocol]]
     reinforcement_min_buffer: float
-
-    @classmethod
-    def with_strategy(
-        cls,
-        reinforcement_order: list[type[ReinforcementProfileProtocol]],
-        reinforcement_min_buffer: float,
-    ):
-        _this = cls()
-        _this.reinforcement_order = reinforcement_order
-        _this.reinforcement_min_buffer = reinforcement_min_buffer
-        return _this
 
     def _get_buffer_mask(
         self, location_reinforcements: list[StrategyLocationReinforcement]
@@ -42,7 +41,7 @@ class OrderStrategyBuffering(OrderStrategyBase):
             _upper_limit = int(
                 min(
                     _new_visited + self.reinforcement_min_buffer,
-                    _len_location_reinforcements - 1,
+                    _len_location_reinforcements,
                 )
             )
 

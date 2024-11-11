@@ -21,7 +21,9 @@ from koswat.strategies.strategy_location_reinforcement import (
 
 class TestOrderStrategyClustering:
     def test_initialize(self):
-        _strategy = OrderStrategyClustering()
+        _strategy = OrderStrategyClustering(
+            reinforcement_min_length=float("nan"), reinforcement_order=[]
+        )
         assert isinstance(_strategy, OrderStrategyClustering)
         assert isinstance(_strategy, OrderStrategyBase)
 
@@ -33,12 +35,9 @@ class TestOrderStrategyClustering:
         ],
     ):
         # 1. Define test data.
-        _strategy = OrderStrategyClustering()
-        _strategy.reinforcement_min_length = (
-            example_strategy_input.reinforcement_min_length
-        )
-        _strategy.reinforcement_order = (
-            OrderStrategy.get_default_order_for_reinforcements()
+        _strategy = OrderStrategyClustering(
+            reinforcement_min_length=example_strategy_input.reinforcement_min_length,
+            reinforcement_order=OrderStrategy.get_default_order_for_reinforcements(),
         )
 
         # 2. Run test.
@@ -65,10 +64,9 @@ class TestOrderStrategyClustering:
         ],
     ):
         # 1. Define test data.
-        _strategy = OrderStrategyClustering()
-        _strategy.reinforcement_min_length = 2
-        _strategy.reinforcement_order = (
-            OrderStrategy.get_default_order_for_reinforcements()
+        _strategy = OrderStrategyClustering(
+            reinforcement_min_length=2,
+            reinforcement_order=OrderStrategy.get_default_order_for_reinforcements(),
         )
 
         _location_reinforcements = example_location_reinforcements_with_buffering
@@ -107,12 +105,9 @@ class TestOrderStrategyClustering:
         ],
     ):
         # 1. Define test data.
-        _strategy = OrderStrategyClustering()
-        _strategy.reinforcement_min_length = (
-            example_strategy_input.reinforcement_min_length
-        )
-        _strategy.reinforcement_order = (
-            OrderStrategy.get_default_order_for_reinforcements()
+        _strategy = OrderStrategyClustering(
+            reinforcement_min_length=example_strategy_input.reinforcement_min_length,
+            reinforcement_order=OrderStrategy.get_default_order_for_reinforcements(),
         )
 
         # 2. Run test.
