@@ -13,7 +13,7 @@ from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 @dataclass
 class OrderStrategyBuffering(OrderStrategyBase):
     """
-    Applies buffering, through masks, to each location pre-assigned reinforcement.
+    Applies buffering, through masks, to each location's pre-assigned reinforcement.
     The result of the `apply` method will be the locations with the best
     reinforcement fit (lowest index from `reinforcement_order`) that fulfills the
     `reinforcement_min_buffer` requirement.
