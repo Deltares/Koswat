@@ -1,9 +1,7 @@
 # Test strategy `Koswat`
 
 ## Overview
-We adhere to the standard V-model.
-
-![V-model of quality assurance](.\imgs\V-model.png "V-model")
+We adhere to the standard [V-model](#https://en.wikipedia.org/wiki/V-model_(software_development)).
 
 | Type of test      | Scope         |
 |-------------------|---------------|
