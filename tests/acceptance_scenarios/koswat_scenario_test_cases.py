@@ -25,6 +25,7 @@ class ScenarioCases(CasesProtocol):
         crest_width=5,
         waterside_slope=3,
     )
+    # TODO: not used
     scenario_infra = KoswatScenario(
         d_h=0,
         d_s=20,
