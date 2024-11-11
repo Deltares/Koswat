@@ -1,4 +1,5 @@
 import logging
+from dataclasses import dataclass
 
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -10,20 +11,18 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 
 
+@dataclass
 class OrderStrategyClustering(OrderStrategyBase):
+    """
+    Applies clustering, to the whole collection of reinforcements
+    (`location_reinforcements: list[StrategyLocationReinforcement]`).
+    The result of the `apply` method will be the locations with the best
+    reinforcement fit (lowest index from `reinforcement_order`) that fulfills the
+    `reinforcement_min_length` requirement.
+    """
+
     reinforcement_order: list[type[ReinforcementProfileProtocol]]
     reinforcement_min_length: float
-
-    @classmethod
-    def with_strategy(
-        cls,
-        reinforcement_order: list[type[ReinforcementProfileProtocol]],
-        reinforcement_min_length: float,
-    ):
-        _this = cls()
-        _this.reinforcement_order = reinforcement_order
-        _this.reinforcement_min_length = reinforcement_min_length
-        return _this
 
     def _get_reinforcement_order_clusters(
         self,
@@ -60,7 +59,7 @@ class OrderStrategyClustering(OrderStrategyBase):
         _available_clusters = self._get_reinforcement_order_clusters(
             location_reinforcements
         )
-        _reinforcements_order_max_idx = len(self.reinforcement_order)
+        _reinforcements_order_max_idx = len(self.reinforcement_order) - 1
         for _target_idx, _reinforcement_type in enumerate(
             self.reinforcement_order[:-1]
         ):

@@ -1,10 +1,13 @@
 import shutil
 from pathlib import Path
 
+import pytest
 from click.testing import CliRunner
 
 from koswat import __main__
 from tests import test_data, test_results
+
+issues_tests = test_data.joinpath("issues")
 
 
 class TestMain:
@@ -43,6 +46,43 @@ class TestMain:
         # 3. Verify final expectations.
         assert _run_result.exit_code == 0
         _log: Path = next(_results_dir.glob("*.log"), None)
+        assert _log and _log.is_file(), "Log file was not generated."
+        assert (
+            _log.read_text().find("ERROR") == -1
+        ), "ERROR found in the log, run was not succesful."
+
+    @pytest.mark.skipif(
+        not any(issues_tests.glob("*")),
+        reason="Only meant to run locally with issue cases.",
+    )
+    @pytest.mark.parametrize(
+        "ini_file_location",
+        [
+            pytest.param(
+                issues_tests.joinpath("KOSWAT_220", "KOSWAT_analyse_RaLi.ini"),
+                id="Koswat 220",
+            )
+        ],
+    )
+    def test_given_issue_case(self, ini_file_location: Path):
+        # 1. Define test data.
+        assert ini_file_location.is_file()
+        # Ensure we have a clean results dir.
+        _log_dir = ini_file_location.parent.joinpath("log_output")
+        if _log_dir.exists():
+            shutil.rmtree(_log_dir)
+        _log_dir.mkdir(parents=True)
+
+        _cli_arg = f'--input_file "{ini_file_location}" --log_output "{_log_dir}"'
+
+        # 2. Run test.
+        _run_result = CliRunner().invoke(
+            __main__.run_analysis,
+            _cli_arg,
+        )
+        # 3. Verify final expectations.
+        assert _run_result.exit_code == 0
+        _log: Path = next(_log_dir.glob("*.log"), None)
         assert _log and _log.is_file(), "Log file was not generated."
         assert (
             _log.read_text().find("ERROR") == -1
