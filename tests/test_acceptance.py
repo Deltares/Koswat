@@ -376,6 +376,7 @@ class TestAcceptance:
         KoswatSummaryExporter().export(_summary, _test_dir)
         assert _test_dir.joinpath("summary_costs.csv").exists()
         assert _test_dir.joinpath("summary_locations.csv").exists()
+        assert _test_dir.joinpath("summary_infrastructure_costs.csv").exists()
 
         # 3. Verify expectations.
         assert any(_summary.locations_profile_report_list)
@@ -416,7 +417,7 @@ class TestAcceptance:
         assert isinstance(_acceptance_test_scenario, AcceptanceTestScenario)
 
         # 1. Setup acceptance test case
-        # Get the refernce data in the output directory.
+        # Get the reference data in the output directory.
         _results_dir_name = get_fixturerequest_case_name(request)
         _output_dir = test_results.joinpath(
             "sandbox_acceptance_case", _results_dir_name
@@ -476,8 +477,12 @@ class TestAcceptance:
             SurtaxFactorEnum.MOEILIJK
         )
         _run_settings.surroundings = SurroundingsWrapper()
-        _run_settings.surroundings.reinforcement_min_buffer = 10
-        _run_settings.surroundings.reinforcement_min_separation = 50
+        _run_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer = (
+            10
+        )
+        _run_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation = (
+            50
+        )
         _run_settings.costs_setting = KoswatCostsSettings()
         _run_settings.costs_setting.dike_profile_costs = DikeProfileCostsSettings()
         _run_settings.costs_setting.dike_profile_costs.added_layer_grass_m3 = 12.44
