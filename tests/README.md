@@ -1,4 +1,4 @@
-# Test strategy
+# Test strategy Koswat
 
 ## Unit-/integration tests
 The goal of the unit- and integration tests is to validate the behavior of separate classes or subpackages.
@@ -9,9 +9,14 @@ The goal of the acceptance tests is to test if the overall behavior of the appli
 The full workflow is executed and the output is validated.
 As these tests take relatively much time to be executed, they are marked as `slow`.
 
+Possible improvements:
+- Add docstrings to the fixtures and classes used, describing the purpose and usage.
+
 ### Sandbox tests
 Several cases are tested, which are defined in `acceptance_test_scenario_cases`.
 A case combines a dike profile (`AcceptanceTestInputProfileCases`) with layers (`LayersCases`) and scenarios (`ScenarioCases*`).
+
+Goal: Validate a Koswat run generates the correct results.
 
 Inputs:
 - Realistic run settings (defined in `sandbox_acceptance_case`).
@@ -22,10 +27,12 @@ Validations:
 - Check is the generated exports (`.csv`) are identical to the provided reference files.
 
 Possible improvements:
-- Add locations.
+- Add a limited number of locations.
 
 ### Surroundings tests
 A limited number of cases is tested, using the default dike profile (`InputProfileCases`) with 2 layer cases (`LayersCases`) and 3 different scenarios (`ScenarioCases`).
+
+Goal: TODO
 
 Inputs:
 - Realistic run settings.
@@ -43,6 +50,8 @@ Possible improvements:
 ### Obstacle and infrastructure tests
 A limited number of cases is tested, using the default dike profile (`InputProfileCases`) with 2 layer cases (`LayersCases`) and 3 different scenarios (`ScenarioCases`). These are combined with 4 different surrounding scenarios with and without infrastructure and/or obstacles.
 
+Goal: Validate the calculations for locations with obstacles and infrastructures work correctly.
+
 Inputs:
 - Configs from `koswat_general.ini` and `koswat_costs.ini` in `test_data\acceptance`.
 - Surroundings from `test_data\acceptance\surroundings_analysis\10_3`.
@@ -56,3 +65,4 @@ Validations:
 Possible improvements:
 - Reduce the number of cases?
 - Reduce the number of locations?
+- Check content of .csv-files
