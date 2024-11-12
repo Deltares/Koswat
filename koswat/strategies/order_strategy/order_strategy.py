@@ -92,22 +92,17 @@ class OrderStrategy(StrategyProtocol):
         )
 
         # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others
-        def check_reinforcement(
+        def remove_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
-        ) -> StrategyReinforcementInput | None:
-            if (
+        ) -> bool:
+            return (
                 pair[0].base_costs > pair[1].base_costs
                 and pair[0].ground_level_surface >= pair[1].ground_level_surface
-            ):
-                return pair[0]
-            return None
+            )
 
-        _pairs = product(_sorted, _sorted + _last)
-        _to_remove = set(
-            filter(lambda x: x is not None, map(check_reinforcement, _pairs))
-        )
-        for _reinforcement in _to_remove:
-            _sorted.remove(_reinforcement)
+        for _pair in product(_sorted, _sorted + _last):
+            if remove_reinforcement(_pair):
+                _sorted.remove(_pair[0])
 
         return [x.reinforcement_type for x in _sorted + _last]
 
