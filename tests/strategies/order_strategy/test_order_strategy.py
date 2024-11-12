@@ -119,6 +119,38 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
+    def test_get_strategy_order_filters_two_consecutive_reinforcements(
+        self, example_strategy_input: StrategyInput
+    ):
+        # 1. Define test data.
+        # Related to #224
+        # 2nd reinforcement is more expensive and less restrictive than the 1st and should be filtered out
+        example_strategy_input.strategy_reinforcements[1].ground_level_surface = (
+            example_strategy_input.strategy_reinforcements[0].ground_level_surface * 2
+        )
+        # 3rd reinforcement is more expensive than and equally restrictive as the 1st and should be filtered out
+        example_strategy_input.strategy_reinforcements[
+            2
+        ].ground_level_surface = example_strategy_input.strategy_reinforcements[
+            0
+        ].ground_level_surface
+        _expected_result = deepcopy(self._default_reinforcements)
+        _expected_result = [
+            SoilReinforcementProfile,
+            StabilityWallReinforcementProfile,
+            CofferdamReinforcementProfile,
+        ]
+
+        _strategy = OrderStrategy()
+
+        # 2. Run test.
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
+            example_strategy_input.strategy_reinforcements
+        )
+
+        # 3. Verify expectations
+        assert _reinforcements == _expected_result
+
     def test_get_strategy_reinforcements_given_example(
         self, example_strategy_input: StrategyInput
     ):
