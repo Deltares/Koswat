@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from itertools import pairwise
+from itertools import pairwise, product
 
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
@@ -94,25 +94,23 @@ class OrderStrategy(StrategyProtocol):
         def check_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
         ) -> StrategyReinforcementInput | None:
-            # Only keep the less restrictive reinforcement if it is cheaper
             if (
-                pair[0].ground_level_surface > pair[1].ground_level_surface
-                and pair[0].base_costs < pair[1].base_costs
+                pair[0].ground_level_surface >= pair[1].ground_level_surface
+                and pair[0].base_costs > pair[1].base_costs
             ):
                 return pair[0]
             return None
 
-        # Check if the current (more expensive) reinforcement is more restrictive than the previous
-        # (the last needs to be appended as it is always kept)
-        _sorted_pairs = pairwise(_sorted + _last)
-        _kept = (
-            list(
-                filter(lambda x: x is not None, map(check_reinforcement, _sorted_pairs))
-            )
-            + _last
+        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others
+        # (the last is always kept)
+        _pairs = product(_sorted, _sorted + _last)
+        _to_remove = set(
+            filter(lambda x: x is not None, map(check_reinforcement, _pairs))
         )
+        for _reinforcement in _to_remove:
+            _sorted.remove(_reinforcement)
 
-        return [x.reinforcement_type for x in _kept]
+        return [x.reinforcement_type for x in _sorted + _last]
 
     @staticmethod
     def get_strategy_reinforcements(
