@@ -35,7 +35,7 @@ The reinforcements are ordered based on increasing cost (including surtax) and d
 Reinforcements that are more expensive but are wider or have equal width are skipped (order `-1`).
 The `CofferDamReinforcementProfile` will never be skipped and is always the last reinforcement that is applied in case no other reinforcement fits the surroundings.
 
-| Reinforcement type | Profile width | Cost with surtax | Order |
+| Reinforcement type | Profile width | Cost with surtax | Index |
 | ---- | ---- | ---- | ---- |
 | `SoilReinforcementProfile` | 10 | 100 | 0 |
 | `VPSReinforcementProfile` | 20 | 200 | -1 |
