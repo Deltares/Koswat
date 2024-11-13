@@ -101,7 +101,7 @@ class OrderStrategy(StrategyProtocol):
             )
 
         for _pair in product(_sorted, _sorted + _last):
-            if remove_reinforcement(_pair):
+            if remove_reinforcement(_pair) and _pair[0] in _sorted:
                 _sorted.remove(_pair[0])
 
         return [x.reinforcement_type for x in _sorted + _last]
