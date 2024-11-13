@@ -31,15 +31,17 @@ This strategy is the first and default of all defined strategies. Its criteria i
 4. [Clustering](#reinforcement-clustering) to the resulting groupings from the previous step.
 
 #### Reinforcement order
-The predefined (hardcoded) reinforcement's order, from least to most restrictive, is as follows:
+The reinforcements are ordered based on increasing cost (including surtax) and decreasing width.
+Reinforcements that are more expensive but are wider or have equal width are skipped (order `-1`).
+The `CofferDamReinforcementProfile` will never be skipped and is always the last reinforcement that is applied in case no other reinforcement fits the surroundings.
 
-| Priority index | Reinforcement type |
-| ---- | ---- |
-| 0 | `SoilReinforcementProfile` |
-| 1 | `VPSReinforcementProfile` |
-| 2 | `PipingWallReinforcementProfile` |
-| 3 | `StabilityWallReinforcementProfile` |
-| 4 | `CofferDamReinforcementProfile` |
+| Reinforcement type | Profile width | Cost with surtax | Order |
+| ---- | ---- | ---- | ---- |
+| `SoilReinforcementProfile` | 10 | 100 | 0 |
+| `VPSReinforcementProfile` | 20 | 200 | -1 |
+| `PipingWallReinforcementProfile` | 10 | 300 | -1 |
+| `StabilityWallReinforcementProfile` | 5 | 400 | 1 |
+| `CofferDamReinforcementProfile` | 0 | 500 | 2 |
 
 #### Reinforcement grouping
 

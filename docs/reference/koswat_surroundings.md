@@ -34,7 +34,7 @@ Their headers are divided in the following columns:
 
 ## Obstacles
 
-An obstacle usually represents a building, because they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
+An obstacle usually represents a building. Because they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
 The distance from the reference point of the dike to the closes point of the obstacle is given.
 
 The values in the columns `afst_{x}m` are either `1` or `0` and are simply interpreted as having a surrounding or not. Thus ignoring other characteristics of the surrounding and just focusing on its presence.
