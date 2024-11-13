@@ -39,7 +39,6 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 reinforcement_type=type(
                     locations_profile.profile_cost_report.reinforced_profile
                 ),
-                base_costs=locations_profile.profile_cost_report.total_cost,
                 base_costs_with_surtax=locations_profile.profile_cost_report.total_cost_with_surtax,
             )
 
@@ -85,8 +84,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 )
             return StrategyReinforcementInput(
                 reinforcement_type=reinforcement_cost.reinforcement_type,
-                base_costs=reinforcement_cost.base_costs,
-                base_costs_with_surtax=reinforcement_cost.base_costs,
+                base_costs_with_surtax=reinforcement_cost.base_costs_with_surtax,
                 ground_level_surface=_reinforcement.new_ground_level_surface,
             )
 

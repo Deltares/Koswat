@@ -171,31 +171,36 @@ class TestInfraPriorityStrategy:
             strategy_reinforcement_type_costs=[
                 StrategyReinforcementTypeCosts(
                     SoilReinforcementProfile,
-                    base_costs=42,
+                    base_costs_with_surtax=42,
                     infrastructure_costs=420000,
+                    infrastructure_costs_with_surtax=420000,
                 ),
                 StrategyReinforcementTypeCosts(
                     PipingWallReinforcementProfile,
-                    base_costs=4200,
+                    base_costs_with_surtax=4200,
                     infrastructure_costs=420,
+                    infrastructure_costs_with_surtax=420,
                 ),
                 # Costs are too big, it won't be considered
                 StrategyReinforcementTypeCosts(
                     VPSReinforcementProfile,
-                    base_costs=42000000,
+                    base_costs_with_surtax=42000000,
                     infrastructure_costs=4200000,
+                    infrastructure_costs_with_surtax=4200000,
                 ),
                 # Not present at all locations.
                 StrategyReinforcementTypeCosts(
                     StabilityWallReinforcementProfile,
-                    base_costs=42,
+                    base_costs_with_surtax=42,
                     infrastructure_costs=42,
+                    infrastructure_costs_with_surtax=42,
                 ),
                 # Cheapest of all, but only present at one location.
                 StrategyReinforcementTypeCosts(
                     CofferdamReinforcementProfile,
-                    base_costs=42,
+                    base_costs_with_surtax=42,
                     infrastructure_costs=0,
+                    infrastructure_costs_with_surtax=0,
                 ),
             ],
         )
