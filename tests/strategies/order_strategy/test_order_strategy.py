@@ -75,7 +75,7 @@ class TestOrderStrategy:
         # Increase the cost of the reinforcement at the given index
         # to become more expensive than the next (more restrictive) reinforcement
         # and will be filtered out.
-        example_strategy_input.strategy_reinforcements[idx].base_costs *= 20
+        example_strategy_input.strategy_reinforcements[idx].base_costs_with_surtax *= 20
         _expected_result = deepcopy(self._default_reinforcements)
         _expected_result.remove(self._default_reinforcements[idx])
 
