@@ -170,7 +170,9 @@ class TestInfraPriorityStrategy:
             point_surrounding=None,
             strategy_reinforcement_type_costs=[
                 StrategyReinforcementTypeCosts(
-                    SoilReinforcementProfile, base_costs=42, infrastructure_costs=420000
+                    SoilReinforcementProfile,
+                    base_costs=42,
+                    infrastructure_costs=420000,
                 ),
                 StrategyReinforcementTypeCosts(
                     PipingWallReinforcementProfile,
@@ -191,7 +193,9 @@ class TestInfraPriorityStrategy:
                 ),
                 # Cheapest of all, but only present at one location.
                 StrategyReinforcementTypeCosts(
-                    CofferdamReinforcementProfile, base_costs=42, infrastructure_costs=0
+                    CofferdamReinforcementProfile,
+                    base_costs=42,
+                    infrastructure_costs=0,
                 ),
             ],
         )

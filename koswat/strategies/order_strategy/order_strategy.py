@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from itertools import pairwise, product
+from itertools import product
 
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
@@ -87,7 +87,7 @@ class OrderStrategy(StrategyProtocol):
         _unsorted, _last = split_reinforcements()
         _sorted = sorted(
             _unsorted,
-            key=lambda x: (x.ground_level_surface, x.base_costs),
+            key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
             reverse=True,
         )
 
@@ -96,7 +96,7 @@ class OrderStrategy(StrategyProtocol):
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
         ) -> bool:
             return (
-                pair[0].base_costs > pair[1].base_costs
+                pair[0].base_costs_with_surtax > pair[1].base_costs_with_surtax
                 and pair[0].ground_level_surface >= pair[1].ground_level_surface
             )
 

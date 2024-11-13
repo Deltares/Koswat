@@ -85,7 +85,8 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 )
             return StrategyReinforcementInput(
                 reinforcement_type=reinforcement_cost.reinforcement_type,
-                base_costs=reinforcement_cost.base_costs,
+                base_costs=reinforcement_cost.base_cost,
+                base_costs_with_surtax=reinforcement_cost.base_costs,
                 ground_level_surface=_reinforcement.new_ground_level_surface,
             )
 
