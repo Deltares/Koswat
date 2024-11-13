@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from itertools import pairwise
+from itertools import product
 
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
@@ -87,32 +87,24 @@ class OrderStrategy(StrategyProtocol):
         _unsorted, _last = split_reinforcements()
         _sorted = sorted(
             _unsorted,
-            key=lambda x: (x.ground_level_surface, x.base_costs),
+            key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
             reverse=True,
         )
 
-        def check_reinforcement(
+        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others
+        def remove_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
-        ) -> StrategyReinforcementInput | None:
-            # Only keep the less restrictive reinforcement if it is cheaper
-            if (
-                pair[0].ground_level_surface > pair[1].ground_level_surface
-                and pair[0].base_costs < pair[1].base_costs
-            ):
-                return pair[0]
-            return None
-
-        # Check if the current (more expensive) reinforcement is more restrictive than the previous
-        # (the last needs to be appended as it is always kept)
-        _sorted_pairs = pairwise(_sorted + _last)
-        _kept = (
-            list(
-                filter(lambda x: x is not None, map(check_reinforcement, _sorted_pairs))
+        ) -> bool:
+            return (
+                pair[0].base_costs_with_surtax > pair[1].base_costs_with_surtax
+                and pair[0].ground_level_surface >= pair[1].ground_level_surface
             )
-            + _last
-        )
 
-        return [x.reinforcement_type for x in _kept]
+        for _pair in product(_sorted, _sorted + _last):
+            if remove_reinforcement(_pair) and _pair[0] in _sorted:
+                _sorted.remove(_pair[0])
+
+        return [x.reinforcement_type for x in _sorted + _last]
 
     @staticmethod
     def get_strategy_reinforcements(

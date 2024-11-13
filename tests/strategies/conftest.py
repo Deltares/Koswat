@@ -45,6 +45,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         StrategyReinforcementTypeCosts(
             reinforcement_type=_reinforcement,
             base_costs=(10**_idx) * 42.0,
+            base_costs_with_surtax=(10**_idx) * 42.0 * 2,
             infrastructure_costs=(10 ** (len(_reinforcement_type_default_order) - 1))
             * 42.0
             if _idx in [0, 1, 3]
@@ -69,6 +70,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         StrategyReinforcementInput(
             reinforcement_type=_rtc.reinforcement_type,
             base_costs=_rtc.base_costs,
+            base_costs_with_surtax=_rtc.base_costs_with_surtax,
             ground_level_surface=10.0 * (len(_reinforcement_type_default_order) - _idx),
         )
         for _idx, _rtc in enumerate(_levels_data)
