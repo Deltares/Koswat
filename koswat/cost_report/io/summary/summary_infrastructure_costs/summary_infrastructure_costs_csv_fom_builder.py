@@ -70,7 +70,12 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             for _infra_type in self._ordered_infra_types:
                 _ilc = _infra_cost_per_loc_dict[location][profile_type][_infra_type]
                 _details.extend(
-                    [_ilc.zone_a, _ilc.zone_a_costs, _ilc.zone_b, _ilc.zone_b_costs]
+                    [
+                        _ilc.zone_a,
+                        _ilc.zone_a_costs * _ilc.surtax,
+                        _ilc.zone_b,
+                        _ilc.zone_b_costs * _ilc.surtax,
+                    ]
                 )
             return _details
 
