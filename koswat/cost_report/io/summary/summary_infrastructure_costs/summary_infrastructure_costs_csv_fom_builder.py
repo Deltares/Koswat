@@ -163,8 +163,9 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         _headers = []
         _zone_key = "Zone"
         _length_key = "Lengte (m)"
-        _cost_key = "Kosten (Euro)"
-        _total_cost_key = "Totale kosten (Euro)"
+        _cost_key = "Kosten* (Euro)"
+        _total_cost_key = "Totale kosten* (Euro)"
+        _surtax_note = "*) Kosten incl. opslagfactoren"
 
         # Collect header fragments
         _zones = ["A", "B"]
@@ -191,7 +192,9 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
 
         # Total cost headers per profile type
         _headers[0].extend(self._ordered_profile_types)
-        _headers[1].extend([""] * len(self._ordered_profile_types))
+        _headers[1].extend(
+            [_surtax_note] + [""] * (len(self._ordered_profile_types) - 1)
+        )
         _headers[2].extend([_total_cost_key] * len(self._ordered_profile_types))
 
         # Cost detail headers per profile type, infra type and zone
