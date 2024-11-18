@@ -62,7 +62,7 @@ class InputProfileCases(CasesProtocol):
         aquifer=-2,
     )
 
-    cases = [pytest.param(default, id="Default Input Profile")]
+    cases = [pytest.param(default, id="Def. Input Profile")]
 
 
 class AcceptanceTestInputProfileCases(CasesProtocol):
