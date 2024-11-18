@@ -21,8 +21,8 @@ class InfrastructureProfileCostsCalculator:
 
     infrastructure: SurroundingsInfrastructure = None
     surtax: float = math.nan
-    zone_a_costs: float = 0
-    zone_b_costs: float = 0
+    zone_a_costs: float = 0.0
+    zone_b_costs: float = 0.0
 
     def calculate(
         self, zone_a_width: float, zone_b_width: float

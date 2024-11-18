@@ -57,7 +57,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         def _get_totals(location: PointSurroundings) -> list[float]:
             return list(
                 sum(
-                    _ilc.total_cost
+                    _ilc.total_cost_with_surtax
                     for _ilc in _infra_cost_per_loc_dict[location][
                         _profile_type
                     ].values()
