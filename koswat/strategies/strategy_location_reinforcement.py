@@ -57,13 +57,13 @@ class StrategyLocationReinforcement:
     @property
     def current_cost(self) -> float:
         """
-        Estimates the costs at this location for the given `current_selected_measure`.
+        Estimates the costs with surtax at this location for the given `current_selected_measure`.
         """
         if not self.current_selected_measure or not self.strategy_location_input:
             return 0.0
         for _srtc in self.strategy_location_input.strategy_reinforcement_type_costs:
             if _srtc.reinforcement_type == self.current_selected_measure:
-                return _srtc.total_costs
+                return _srtc.total_costs_with_surtax
         return 0.0
 
     @property
