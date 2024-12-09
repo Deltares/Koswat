@@ -1,0 +1,182 @@
+2024-11-06 10:47:20 AM - [koswat_handler.py:119] - root - INFO - Initialized Koswat.
+2024-11-06 10:48:01 AM - [koswat_run_settings_importer.py:67] - root - INFO - Importing INI configuration from c:\KOSWAT_app\invoer\RaLi\KOSWAT_analyse_RaLi.ini
+2024-11-06 10:48:01 AM - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from c:\KOSWAT_app\invoer\koswat_costs_2023.ini.
+2024-11-06 10:51:37 AM - [surroundings_wrapper_collection_importer.py:77] - root - ERROR - Could not load surroundings for dike section DV_11A_2. Detailed error: No point fromt the *.shp file matches the ones in the *.csv file.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:96] - root - INFO - Importing INI configuration completed.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:99] - root - INFO - Mapping data to Koswat Settings
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_1_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_1_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_1_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_1_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2A_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2A_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_5.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_6.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_7.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_2B_8.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_3_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_3_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_3_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_3_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_3_5.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_4_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_4_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_4_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_4_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_4_5.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_5A.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_5B_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_5B_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_5B_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_6_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_6_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7A_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7A_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7A_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7A_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7A_5.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7B_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7B_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_7B_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_8_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_8_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9A_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9A_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9A_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9A_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9A_5.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9B_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9B_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9B_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9B_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9B_5.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9B_6.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_9B_7.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_10_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_10_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_10_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_10_4.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_10_5.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_11A_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_11A_2.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:153] - root - INFO - Creating scenarios for profile DV_11B_3.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:166] - root - INFO - Created sub scenario Scenario_1.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:170] - root - INFO - Finished generating koswat scenarios. A total of 60 scenarios were created.
+2024-11-06 10:51:37 AM - [koswat_run_settings_importer.py:108] - root - INFO - Settings import completed.
+2024-11-06 10:55:27 AM - [koswat_summary_builder.py:118] - root - INFO - Creating analysis for DV_1_1 - scenario  - Scenario_1
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-11-06 10:55:27 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-11-06 10:55:27 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-11-06 10:55:27 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:27 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-11-06 10:55:27 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-11-06 10:55:28 AM - [koswat_summary_location_matrix_builder.py:115] - root - INFO - Initalizing locations-reinforcements matrix.
+2024-11-06 10:55:29 AM - [koswat_summary_location_matrix_builder.py:152] - root - INFO - Finalized locations-reinforcements matrix.
+2024-11-06 10:55:29 AM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Grondmaatregel profiel: 0
+2024-11-06 10:55:29 AM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Kwelscherm: 0
+2024-11-06 10:55:29 AM - [koswat_handler.py:45] - root - INFO - Analysis created.
+2024-11-06 10:55:29 AM - [koswat_handler.py:53] - root - INFO - Exporting csv results to c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_1\scenario_scenario_1.
+2024-11-06 10:55:30 AM - [raw.py:723] - pyogrio._io - INFO - Created 3 records
+2024-11-06 10:55:30 AM - [raw.py:723] - pyogrio._io - INFO - Created 3 records
+2024-11-06 10:55:30 AM - [raw.py:723] - pyogrio._io - INFO - Created 3 records
+2024-11-06 10:55:30 AM - [koswat_handler.py:59] - root - INFO - Exported summary results to: c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_1\scenario_scenario_1
+2024-11-06 10:55:31 AM - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_1\scenario_scenario_1
+2024-11-06 10:55:32 AM - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_1\scenario_scenario_1
+2024-11-06 10:55:33 AM - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_1\scenario_scenario_1
+2024-11-06 10:55:34 AM - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_1\scenario_scenario_1
+2024-11-06 10:55:35 AM - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_1\scenario_scenario_1
+2024-11-06 10:55:35 AM - [koswat_summary_builder.py:118] - root - INFO - Creating analysis for DV_1_2 - scenario  - Scenario_1
+2024-11-06 10:55:35 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement SoilReinforcementProfile
+2024-11-06 10:55:35 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:35 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Grondmaatregel profiel
+2024-11-06 10:55:35 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement VPSReinforcementProfile
+2024-11-06 10:55:35 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:36 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Verticale piping oplossing
+2024-11-06 10:55:36 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement PipingWallReinforcementProfile
+2024-11-06 10:55:36 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kwelscherm
+2024-11-06 10:55:36 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement StabilityWallReinforcementProfile
+2024-11-06 10:55:36 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:36 AM - [calc_library.py:18] - root - WARNING - Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this.
+2024-11-06 10:55:36 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Stabiliteitswand
+2024-11-06 10:55:36 AM - [reinforcement_profile_builder_base.py:64] - root - INFO - Building reinforcement CofferdamReinforcementProfile
+2024-11-06 10:55:36 AM - [reinforcement_profile_builder_base.py:74] - root - INFO - Built reinforcement Kistdam
+2024-11-06 10:55:36 AM - [koswat_summary_location_matrix_builder.py:115] - root - INFO - Initalizing locations-reinforcements matrix.
+2024-11-06 10:55:37 AM - [koswat_summary_location_matrix_builder.py:152] - root - INFO - Finalized locations-reinforcements matrix.
+2024-11-06 10:55:37 AM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Grondmaatregel profiel: 0
+2024-11-06 10:55:37 AM - [order_strategy_clustering.py:70] - root - INFO - Non-compliant clusters found for Kwelscherm: 0
+2024-11-06 10:55:37 AM - [koswat_handler.py:45] - root - INFO - Analysis created.
+2024-11-06 10:55:37 AM - [koswat_handler.py:53] - root - INFO - Exporting csv results to c:\KOSWAT_app\uitvoer\uitvoer_Rali_20241016\dike_DV_1_2\scenario_scenario_1.
+2024-11-06 10:55:37 AM - [koswat_handler.py:109] - root - ERROR - Error while running scenario Scenario_1__DV_1_2, more details: IllegalArgumentException: point array must contain 0 or >1 elements
+
+2024-11-06 10:55:37 AM - [koswat_handler.py:123] - root - INFO - Finalized Koswat.
