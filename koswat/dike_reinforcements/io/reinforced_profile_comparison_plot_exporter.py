@@ -13,9 +13,11 @@ class ReinforcedProfileComparisonPlotExporter(PlotExporterProtocol):
     reinforced_profile: ReinforcementProfileProtocol
 
     def export(self) -> None:
+        _section_name = f"{self.reinforced_profile.old_profile.input_data.dike_section}"
+        _base_name = str(self.reinforced_profile).replace(" ", "_")
         self.export_dir.mkdir(parents=True, exist_ok=True)
         _file_path = self.export_dir.joinpath(
-            str(self.reinforced_profile).replace(" ", "_")
+            f"{_section_name}_{_base_name}"
         ).with_suffix(".png")
 
         # Define canvas

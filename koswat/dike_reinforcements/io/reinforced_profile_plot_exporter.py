@@ -32,15 +32,16 @@ class ReinforcedProfilePlotExporter(PlotExporterProtocol):
         _layers_to_plot.extend(reinforced_profile.old_profile.layers_wrapper.layers)
 
         for _reinf_layer in reinforced_profile.layers_wrapper.layers:
+            _section_name = f"{reinforced_profile.old_profile.input_data.dike_section}"
             _base_name = f"{reinforced_profile}_{_reinf_layer.material_type.name}"
             self._export_layers(
-                export_path.joinpath(f"added_{_base_name}".replace(" ", "_")),
+                export_path.joinpath(f"{_section_name}_added_{_base_name}".replace(" ", "_")),
                 _reinf_layer.new_layer_geometry,
                 _layers_to_plot,
             )
             if isinstance(_reinf_layer, ReinforcementCoatingLayer):
                 self._export_layers(
-                    export_path.joinpath(f"removed_{_base_name}".replace(" ", "_")),
+                    export_path.joinpath(f"{_section_name}_removed_{_base_name}".replace(" ", "_")),
                     _reinf_layer.removal_layer_geometry,
                     _layers_to_plot,
                 )

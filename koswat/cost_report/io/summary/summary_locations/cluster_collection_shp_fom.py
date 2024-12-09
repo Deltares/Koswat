@@ -86,6 +86,7 @@ class ClusterCollectionShpFom:
             cluster_shp_fom: ClusterShpFom,
         ) -> tuple[dict, dict, dict]:
             _base_dict = {
+                "dijkvak": cluster_shp_fom.reinforced_profile.input_data.dike_section,
                 "maatregel": cluster_shp_fom.reinforced_profile.output_name,
                 "lengte": len(cluster_shp_fom.locations),
                 "dijkbasis_oud": cluster_shp_fom.old_profile_width,
