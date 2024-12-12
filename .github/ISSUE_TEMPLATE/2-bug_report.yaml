@@ -1,6 +1,8 @@
 name: Bug Report
 description: Report an incorrect behavior for Koswat.
-labels: [Bug, Needs refinement]
+labels: [bug, "triage required"]
+type: bug
+projects: ["Deltares/9"]
 
 body:
   - type: checkboxes

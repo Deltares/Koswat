@@ -1,7 +1,9 @@
 ---
 name: Feature Request
 description: Suggest an improvement for Koswat
-labels: [Enhancement, Needs refinement]
+labels: [enhancement, "triage required"]
+type: feature
+projects: ["Deltares/9"]
 
 body:
   - type: dropdown
