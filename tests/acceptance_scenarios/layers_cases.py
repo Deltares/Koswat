@@ -34,7 +34,7 @@ class LayersCases(CasesProtocol):
             ],
         ),
     )
-    with_acceptance_criteria = LayersTestCase(
+    with_acc_crit = LayersTestCase(
         case_name="with_default_layers",
         layers_dict=dict(
             base_layer=dict(material=KoswatMaterialType.SAND),
@@ -47,8 +47,6 @@ class LayersCases(CasesProtocol):
 
     # Only cases that should be 'realistic'.
     cases = [
-        pytest.param(with_clay_and_grass.layers_dict, id="With grass and clay layer"),
-        pytest.param(
-            with_acceptance_criteria.layers_dict, id="With acceptance criteria"
-        ),
+        pytest.param(with_clay_and_grass.layers_dict, id="With grass and clay"),
+        pytest.param(with_acc_crit.layers_dict, id="With acc crit"),
     ]
