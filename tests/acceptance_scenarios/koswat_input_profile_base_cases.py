@@ -66,6 +66,7 @@ class InputProfileCases(CasesProtocol):
 
 
 class AcceptanceTestInputProfileCases(CasesProtocol):
+    # Equal ground levels waterside and polderside, no berms
     profile_dijk1 = KoswatInputProfileBase(
         dike_section="dijk1",
         waterside_ground_level=0,
@@ -85,6 +86,7 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         aquifer=-2,
     )
 
+    # Waterside ground level lower than polderside ground level, no berms
     profile_dijk2 = KoswatInputProfileBase(
         dike_section="dijk2",
         waterside_ground_level=-2,
@@ -104,6 +106,7 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         aquifer=-2,
     )
 
+    # Waterside ground level higher than polderside ground level, no berms
     profile_dijk3 = KoswatInputProfileBase(
         dike_section="dijk3",
         waterside_ground_level=0,
@@ -123,6 +126,7 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         aquifer=-2,
     )
 
+    # Waterside ground level lower than polderside, waterside and polderside berm
     profile_dijk4 = KoswatInputProfileBase(
         dike_section="dijk4",
         waterside_ground_level=6.38,
@@ -142,6 +146,7 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         aquifer=6.06,
     )
 
+    # Waterside ground level higher than polderside, polderside berm
     profile_dijk5 = KoswatInputProfileBase(
         dike_section="dijk5",
         waterside_ground_level=7.64,
