@@ -107,7 +107,6 @@ class CofferdamInputProfileCalculation(
     def _calculate_new_input_profile(
         self,
         base_data: KoswatInputProfileBase,
-        soil_settings: KoswatSoilSettings,
         cofferdam_settings: KoswatCofferdamSettings,
         scenario: KoswatScenario,
     ) -> CofferDamInputProfile:
@@ -160,7 +159,6 @@ class CofferdamInputProfileCalculation(
     def build(self) -> CofferDamInputProfile:
         return self._calculate_new_input_profile(
             self.base_profile.input_data,
-            self.reinforcement_settings.soil_settings,
             self.reinforcement_settings.cofferdam_settings,
             self.scenario,
         )
