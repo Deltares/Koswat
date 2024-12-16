@@ -355,7 +355,7 @@ class TestReinforcementProfileBuilderFactory:
         _base_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile,
-                layers_data=LayersCases.with_acc_crit.layers_dict,
+                layers_data=LayersCases.with_acceptance_criteria.layers_dict,
                 p4_x_coordinate=0,
             )
         ).build()
