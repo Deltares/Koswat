@@ -62,7 +62,7 @@ class InputProfileCases(CasesProtocol):
         aquifer=-2,
     )
 
-    cases = [pytest.param(default, id="Def Input Profile")]
+    cases = [pytest.param(default, id="Default Input Profile")]
 
 
 class AcceptanceTestInputProfileCases(CasesProtocol):
@@ -121,4 +121,42 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         factor_settlement=1.2,
         pleistocene=-5,
         aquifer=-2,
+    )
+
+    profile_dijk4 = KoswatInputProfileBase(
+        dike_section="dijk4",
+        waterside_ground_level=6.38,
+        waterside_slope=2.56,
+        waterside_berm_height=6.38,
+        waterside_berm_width=0,
+        crest_height=11.38,
+        crest_width=10.36,
+        polderside_slope=3.57,
+        polderside_berm_height=9.06,
+        polderside_berm_width=19.23,
+        polderside_ground_level=6.45,
+        ground_price_builtup=322.63,
+        ground_price_unbuilt=13.87,
+        factor_settlement=1.2,
+        pleistocene=3.17,
+        aquifer=6.06,
+    )
+
+    profile_dijk5 = KoswatInputProfileBase(
+        dike_section="dijk5",
+        waterside_ground_level=7.64,
+        waterside_slope=2.99,
+        waterside_berm_height=7.64,
+        waterside_berm_width=0,
+        crest_height=11.28,
+        crest_width=2.36,
+        polderside_slope=2.03,
+        polderside_berm_height=10.69,
+        polderside_berm_width=13.27,
+        polderside_ground_level=6.81,
+        ground_price_builtup=322.63,
+        ground_price_unbuilt=13.87,
+        factor_settlement=1.2,
+        pleistocene=3.53,
+        aquifer=6.42,
     )
