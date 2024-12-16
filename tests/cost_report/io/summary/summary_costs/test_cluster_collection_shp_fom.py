@@ -77,6 +77,7 @@ class TestClusterCollectionShpFom:
             assert isinstance(gdf_result, GeoDataFrame)
             assert gdf_result.crs == self._default_crs_projection
             assert list(gdf_result.columns) == [
+                "dijkvak",
                 "maatregel",
                 "lengte",
                 "dijkbasis_oud",
