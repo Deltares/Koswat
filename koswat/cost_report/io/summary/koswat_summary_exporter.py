@@ -34,6 +34,6 @@ class KoswatSummaryExporter(KoswatExporterProtocol):
             )
         except:
             logging.error(
-                "Shapefile error!: %s", 
+                "Shapefile error!: %s",
                 export_path._str,
             )

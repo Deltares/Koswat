@@ -19,12 +19,15 @@ class StrategyLocationInput:
     @property
     def cheapest_reinforcement(self) -> StrategyReinforcementTypeCosts:
         """
-        Gets the `StrategyLocationReinforcementCosts` with the lowest `total_costs` value.
+        Gets the `StrategyLocationReinforcementCosts` with the lowest `total_costs_with_surtax` value.
 
         Returns:
             StrategyLocationReinforcementCosts: The cheapest reinforcement for this location.
         """
-        return min(self.strategy_reinforcement_type_costs, key=lambda x: x.total_costs)
+        return min(
+            self.strategy_reinforcement_type_costs,
+            key=lambda x: x.total_costs_with_surtax,
+        )
 
     @property
     def available_measures(self) -> list[type[ReinforcementProfileProtocol]]:
@@ -53,11 +56,11 @@ class StrategyLocationInput:
             ValueError: The reinforcement type is not available.
 
         Returns:
-            float: The reinforcement costs.
+            float: The reinforcement costs with surtax.
         """
         for _srtc in self.strategy_reinforcement_type_costs:
             if _srtc.reinforcement_type == reinforcement_type:
-                return _srtc.total_costs
+                return _srtc.total_costs_with_surtax
         raise ValueError(
             f"Reinforcement {reinforcement_type.output_name} not available, costs cannot be computed."
         )

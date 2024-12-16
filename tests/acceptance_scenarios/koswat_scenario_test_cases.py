@@ -461,6 +461,7 @@ class ScenarioCasesDijk4(CasesProtocol):
         ),
     ]
 
+
 class ScenarioCasesDijk5(CasesProtocol):
     cases = [
         KoswatScenario(

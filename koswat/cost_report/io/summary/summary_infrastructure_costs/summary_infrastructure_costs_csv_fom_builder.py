@@ -56,11 +56,14 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
     ) -> list[list[Any]]:
         def _get_totals(location: PointSurroundings) -> list[float]:
             return list(
-                sum(
-                    _ilc.total_cost
-                    for _ilc in _infra_cost_per_loc_dict[location][
-                        _profile_type
-                    ].values()
+                round(
+                    sum(
+                        _ilc.total_cost_with_surtax
+                        for _ilc in _infra_cost_per_loc_dict[location][
+                            _profile_type
+                        ].values()
+                    ),
+                    2,
                 )
                 for _profile_type in self._ordered_profile_types
             )
@@ -70,7 +73,12 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             for _infra_type in self._ordered_infra_types:
                 _ilc = _infra_cost_per_loc_dict[location][profile_type][_infra_type]
                 _details.extend(
-                    [_ilc.zone_a, _ilc.zone_a_costs, _ilc.zone_b, _ilc.zone_b_costs]
+                    [
+                        _ilc.zone_a,
+                        round(_ilc.zone_a_costs * _ilc.surtax, 2),
+                        _ilc.zone_b,
+                        round(_ilc.zone_b_costs * _ilc.surtax, 2),
+                    ]
                 )
             return _details
 
@@ -158,8 +166,9 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         _headers = []
         _zone_key = "Zone"
         _length_key = "Lengte (m)"
-        _cost_key = "Kosten (Euro)"
-        _total_cost_key = "Totale kosten (Euro)"
+        _cost_key = "Kosten* (Euro)"
+        _total_cost_key = "Totale kosten* (Euro)"
+        _surtax_note = "*) Kosten incl. opslagfactoren"
 
         # Collect header fragments
         _zones = ["A", "B"]
@@ -186,7 +195,9 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
 
         # Total cost headers per profile type
         _headers[0].extend(self._ordered_profile_types)
-        _headers[1].extend([""] * len(self._ordered_profile_types))
+        _headers[1].extend(
+            [_surtax_note] + [""] * (len(self._ordered_profile_types) - 1)
+        )
         _headers[2].extend([_total_cost_key] * len(self._ordered_profile_types))
 
         # Cost detail headers per profile type, infra type and zone

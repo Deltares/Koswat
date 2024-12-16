@@ -118,7 +118,7 @@ class TestAcceptance:
             "Without ANY surrounding",
             "With Infrastructure",
             "With Obstacles",
-            "With Infrastructure and Obstacles",
+            "With Infra and Obstacles",
         ],
     )
     def _get_surroundings_wrapper_fixture(

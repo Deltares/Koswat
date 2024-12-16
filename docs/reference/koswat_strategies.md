@@ -324,7 +324,7 @@ For example, given the results of the [clustering example](#clustering-example) 
 
 #### Cluster common available measures' cost
 
-Once we have calculated a [cluster's option](#cluster-options) we can determine whether this cluster should be consider as a valid one. This estimation is based on the __cheapest reinforcement's cost__, and to get this value we first need to know which reinforcements are available at all the locations of this option. 
+Once we have calculated a [cluster's option](#cluster-options) we can determine whether this cluster should be consider as a valid one. This estimation is based on the __cheapest reinforcement's cost__ (including surtax), and to get this value we first need to know which reinforcements are available at all the locations of this option. 
 
 We will store this value in the `InfraClusterOption.cluster_costs`. In the current implementation, these costs are added to the `InfraClusterOption` together with the cluster's data (`list[InfraCluster]`).
 
@@ -338,7 +338,7 @@ __Conditions__:
 
 Following the [options example](#cluster-option-example) we can estimate some fictional costs based on the following tables (if a type / location is not mentioned, then assume its cost is zero (`0`)):
 
-| Index | Reinforcement type | base cost |
+| Index | Reinforcement type | base cost incl. surtax |
 | ---- | ---- |---- |
 | 0 | Soil reinforcement | 42 |
 | 1 | Vertical Piping Solution | 420 |
@@ -346,7 +346,7 @@ Following the [options example](#cluster-option-example) we can estimate some fi
 | 3 | Stability Wall | 42.000 |
 | 4 | Cofferdam | 420.000 |
 
-| Location | Reinforcement indices | Infrastructure cost |
+| Location | Reinforcement indices | Infrastructure cost incl. surtax |
 | ---- | ---- | ---- |
 | Location_000 | 0, 1 | 4.200.000 |
 | Location_005 | 0, 1, 2, 3 | 4.200.000 |

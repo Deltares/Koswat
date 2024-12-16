@@ -22,6 +22,12 @@ from koswat.dike.characteristic_points.characteristic_points import Characterist
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
+    ReinforcementInputProfileProtocol,
+)
+from koswat.dike_reinforcements.input_profile.soil.soil_input_profile import (
+    SoilInputProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -104,6 +110,7 @@ def _create_report(
     _reinforced_profile.old_profile.characteristic_points = CharacteristicPoints(
         p_1=Point(0, 0), p_8=Point(4.2, 0)
     )
+    _reinforced_profile.input_data = SoilInputProfile(dike_section="A")
 
     _report = MockSummary()
     _report.report_locations = available_points[0:selected_locations]
@@ -222,6 +229,9 @@ def _get_cluster_shp_fom_factory() -> Iterable[
             points = [(0, 0), (0.42, 0)]
 
         class MockedReinforcedProfile(ReinforcementProfileProtocol):
+            input_data: ReinforcementInputProfileProtocol = SoilInputProfile(
+                dike_section="SectA"
+            )
             output_name: str = _tr.output_name
             old_profile: KoswatProfileProtocol = MockedBaseProfile()
             profile_width: float = new_width
