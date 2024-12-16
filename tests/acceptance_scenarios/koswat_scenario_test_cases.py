@@ -34,7 +34,7 @@ class ScenarioCases(CasesProtocol):
     )
 
     cases = [
-        pytest.param(default, id="Def Scenario"),
+        pytest.param(default, id="Default Scenario"),
         pytest.param(scenario_2, id="Scenario 2"),
         pytest.param(scenario_3, id="Scenario 3"),
     ]
@@ -441,4 +441,34 @@ class ScenarioCasesC(CasesProtocol):
         #     d_p=0,
         #     kruin_breedte=10,
         # ),
+    ]
+
+
+class ScenarioCasesDijk4(CasesProtocol):
+    cases = [
+        KoswatScenario(
+            scenario_name="dijk4",
+            d_h=0.72,
+            d_s=10,
+            d_p=50,
+            waterside_slope=3.56,
+        ),
+    ]
+
+
+class ScenarioCasesDijk5(CasesProtocol):
+    cases = [
+        KoswatScenario(
+            scenario_name="scen1",
+            d_h=0.62,
+            d_s=13.14,
+            d_p=50,
+        ),
+        KoswatScenario(
+            scenario_name="scen2",
+            d_h=0.62,
+            d_s=13.14,
+            d_p=50,
+            waterside_slope=3.00,
+        ),
     ]
