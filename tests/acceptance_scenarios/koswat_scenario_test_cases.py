@@ -36,7 +36,7 @@ class ScenarioCases(CasesProtocol):
     cases = [
         pytest.param(default, id="Default Scenario"),
         pytest.param(scenario_2, id="Scenario 2"),
-        pytest.param(scenario_3, id="Scenerio 3"),
+        pytest.param(scenario_3, id="Scenario 3"),
     ]
 
 
