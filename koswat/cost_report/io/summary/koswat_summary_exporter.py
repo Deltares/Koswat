@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
@@ -27,6 +28,12 @@ class KoswatSummaryExporter(KoswatExporterProtocol):
         SummaryLocationsCsvExporter().export(
             koswat_summary, export_path.joinpath("summary_locations.csv")
         )
-        SummaryLocationsShpExporter().export(
-            koswat_summary, export_path.joinpath("summary_locations")
-        )
+        try:
+            SummaryLocationsShpExporter().export(
+                koswat_summary, export_path.joinpath("summary_locations")
+            )
+        except:
+            logging.error(
+                "Shapefile error!: %s",
+                export_path._str,
+            )
