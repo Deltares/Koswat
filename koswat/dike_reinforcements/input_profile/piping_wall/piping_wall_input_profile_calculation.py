@@ -139,13 +139,13 @@ class PipingWallInputProfileCalculation(
             ):
                 _new_data.polderside_berm_height = (
                     self._calculate_soil_new_polderside_berm_height_piping(
-                        base_data, _new_data, scenario, soil_settings, True
+                        base_data, _new_data, soil_settings, True
                     )
                 )
             else:
                 _new_data.polderside_berm_height = (
                     self._calculate_soil_new_polderside_berm_height_piping(
-                        base_data, _new_data, scenario, soil_settings, False
+                        base_data, _new_data, soil_settings, False
                     )
                 )
         else:
