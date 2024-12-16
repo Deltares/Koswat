@@ -88,11 +88,15 @@ class TestClusterCollectionShpFom:
             # They should be in order, so the following should be correct
             for _idx, _cluster_value in enumerate(gdf_result.values):
                 _ref_data = _clusters_reference_data[_idx]
-                assert _cluster_value[0] == _ref_data.reinforced_profile.output_name
-                assert _cluster_value[1] == len(_ref_data.locations)
-                assert _cluster_value[2] == _ref_data.old_profile_width
-                assert _cluster_value[3] == _ref_data.new_profile_width
-                assert _cluster_value[4] == geometry_lambda(_ref_data)
+                assert (
+                    _cluster_value[0]
+                    == _ref_data.reinforced_profile.input_data.dike_section
+                )
+                assert _cluster_value[1] == _ref_data.reinforced_profile.output_name
+                assert _cluster_value[2] == len(_ref_data.locations)
+                assert _cluster_value[3] == _ref_data.old_profile_width
+                assert _cluster_value[4] == _ref_data.new_profile_width
+                assert _cluster_value[5] == geometry_lambda(_ref_data)
 
         check_gdf(
             _gdf_collection.base_layer,

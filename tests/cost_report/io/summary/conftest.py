@@ -229,8 +229,8 @@ def _get_cluster_shp_fom_factory() -> Iterable[
             points = [(0, 0), (0.42, 0)]
 
         class MockedReinforcedProfile(ReinforcementProfileProtocol):
-            input_data: ReinforcementInputProfileProtocol = SoilReinforcementProfile(
-                dike_section="A"
+            input_data: ReinforcementInputProfileProtocol = SoilInputProfile(
+                dike_section="SectA"
             )
             output_name: str = _tr.output_name
             old_profile: KoswatProfileProtocol = MockedBaseProfile()
