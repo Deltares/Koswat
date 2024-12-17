@@ -1,13 +1,13 @@
 Profile type;Grondmaatregel profiel;Verticale piping oplossing;Kwelscherm;Stabiliteitswand;Kistdam
 Strategy reinforcement order;-1;-1;-1;-1;-1
-Cost per km (Euro/km);2400861.99;1624397.32;5985946.67;5217988.49;9142990.92
-Cost per km incl surtax (Euro/km);5262993.22;3941309.22;11143775.75;15116467.83;29759505.4
+Cost per km (Euro/km);2400861.99;1624397.32;5985839.53;5217988.49;9142990.92
+Cost per km incl surtax (Euro/km);5262993.22;3941309.22;11143506.94;15116467.83;29759505.4
 New grass volume (quantity):;14.79;6.42;3.62;0;0.01
 New grass volume (cost):;184.04;79.81;45.05;0.0;0.16
 New grass volume (cost incl surtax):;461.76;200.24;113.02;0.0;0.45
-New clay volume (quantity):;41.89;24.92;24.18;17.49;22.17
-New clay volume (cost):;756.1;449.88;436.46;315.68;400.12
-New clay volume (cost incl surtax):;1897.04;1128.74;1095.07;876.64;1111.14
+New clay volume (quantity):;41.89;24.92;24.17;17.49;22.17
+New clay volume (cost):;756.1;449.88;436.35;315.68;400.12
+New clay volume (cost incl surtax):;1897.04;1128.74;1094.8;876.64;1111.14
 New core volume (quantity):;37.82;0;32.11;0;0
 New core volume (cost):;415.26;0.0;352.59;0.0;0.0
 New core volume (cost incl surtax):;1041.88;0.0;884.64;0.0;0.0
