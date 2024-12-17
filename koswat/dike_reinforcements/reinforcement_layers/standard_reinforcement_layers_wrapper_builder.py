@@ -1,4 +1,4 @@
-from shapely.geometry import Point, Polygon
+from shapely.geometry import MultiPolygon, Point, Polygon
 
 from koswat.core.geometries.calc_library import (
     as_unified_geometry,
@@ -88,13 +88,30 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
                 _removed_geom = as_unified_geometry(
                     _removed_geom.difference(_wrapped_calc_layer.old_layer_geometry)
                 )
+
             # Calculate the added geometry.
-            _added_geometry = as_unified_geometry(
-                get_normalized_polygon_difference(
-                    _new_coating_layer.material_geometry,
-                    _relative_core_geom.union(_wrapped_calc_layer.outer_geometry),
-                )
+            _relative_base_layer = _relative_core_geom.union(
+                _wrapped_calc_layer.outer_geometry
             )
+            if _new_coating_layer.outer_geometry.contains(_relative_base_layer):
+                _added_geometry = as_unified_geometry(
+                    get_normalized_polygon_difference(
+                        _new_coating_layer.material_geometry, _relative_base_layer
+                    )
+                )
+            else:
+                # Issue KOSWAT-235
+                _waterside_old_geometry = (
+                    _new_coating_layer.material_geometry.intersection(_old_geom)
+                )
+                if isinstance(_waterside_old_geometry, MultiPolygon):
+                    _waterside_old_geometry = _waterside_old_geometry.geoms[0]
+                _remaining_waterside_geometry = get_normalized_polygon_difference(
+                    _waterside_old_geometry, _removed_geom
+                )
+                _added_geometry = get_normalized_polygon_difference(
+                    _new_coating_layer.material_geometry, _remaining_waterside_geometry
+                )
 
             # Create new Reinforced Coating Layer
             _rc_layer = ReinforcementCoatingLayer.from_koswat_coating_layer(
