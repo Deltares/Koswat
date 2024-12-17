@@ -4,20 +4,54 @@ from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
     KoswatSoilSettings,
 )
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class ReinforcementInputProfileCalculationBase(ABC):
+    reinforced_data: KoswatInputProfileBase
     """
     Abstract class to provide common functions to child classes
     """
 
-    def _calculate_soil_new_crest_height(
+    def populate_profile(
+        self, base_data: KoswatInputProfileProtocol, scenario: KoswatScenario
+    ) -> None:
+        self.reinforced_data.dike_section = base_data.dike_section
+
+        self.reinforced_data.waterside_ground_level = base_data.waterside_ground_level
+        self.reinforced_data.waterside_slope = self._calculate_new_waterside_slope(
+            base_data, scenario
+        )
+        self.reinforced_data.waterside_berm_height = (
+            self._calculate_new_waterside_berm_height(base_data, scenario)
+        )
+        self.reinforced_data.waterside_berm_width = base_data.waterside_berm_width
+
+        self.reinforced_data.polderside_ground_level = base_data.polderside_ground_level
+
+        self.reinforced_data.crest_width = scenario.crest_width
+        self.reinforced_data.crest_height = self._calculate_new_crest_height(
+            base_data, scenario
+        )
+
+        self.reinforced_data.ground_price_builtup = base_data.ground_price_builtup
+        self.reinforced_data.ground_price_unbuilt = base_data.ground_price_unbuilt
+        self.reinforced_data.factor_settlement = base_data.factor_settlement
+        self.reinforced_data.pleistocene = base_data.pleistocene
+        self.reinforced_data.aquifer = base_data.aquifer
+
+    def _calculate_new_waterside_slope(
+        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+    ) -> float:
+        return scenario.waterside_slope
+
+    def _calculate_new_crest_height(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         return base_data.crest_height + scenario.d_h
 
-    def _calculate_soil_new_waterside_berm_height(
+    def _calculate_new_waterside_berm_height(
         self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         if base_data.waterside_berm_height > base_data.waterside_ground_level:
@@ -28,11 +62,11 @@ class ReinforcementInputProfileCalculationBase(ABC):
         self,
         base_data: KoswatInputProfileBase,
         scenario: KoswatScenario,
-        dikebase_heigth_new: float,
+        dikebase_height_new: float,
         dikebase_stability_new: float,
     ) -> float:
         _operand = (
-            max(dikebase_heigth_new, dikebase_stability_new)
+            max(dikebase_height_new, dikebase_stability_new)
             - scenario.d_h * scenario.waterside_slope
             - scenario.crest_width
         )
