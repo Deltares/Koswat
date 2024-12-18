@@ -1,8 +1,9 @@
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 
+@runtime_checkable
 class BermCalculatorProtocol(Protocol):
     """
     Protocol for calculating the berm width, height and slope for the polderside or waterside of the dike.

@@ -55,9 +55,6 @@ class BermCalculatorFactory:
             return self._dikebase_piping_new_dict[self._reinforcement_type]
         return self._dikebase_piping_new_dict[InputProfileEnum.NONE]
 
-    def _calculate_new_crest_height(self) -> float:
-        return self.base_data.crest_height + self.scenario.d_h
-
     def _calculate_factors(self):
         _dike_height_old = (
             self.base_data.crest_height - self.base_data.polderside_ground_level
@@ -84,7 +81,9 @@ class BermCalculatorFactory:
         )
 
         self._dike_height_new = (
-            self._calculate_new_crest_height() - self.base_data.polderside_ground_level
+            self.base_data.crest_height
+            + self.scenario.d_h
+            - self.base_data.polderside_ground_level
         )
         self._dikebase_height_new = (
             self.scenario.d_h * self.reinforced_data.waterside_slope
