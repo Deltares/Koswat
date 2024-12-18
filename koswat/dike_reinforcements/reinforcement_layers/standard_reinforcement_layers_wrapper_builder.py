@@ -7,6 +7,7 @@ from koswat.core.geometries.calc_library import (
     get_polygon_surface_points,
     get_relative_core_layer,
 )
+from koswat.dike.layers.base_layer.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
 from koswat.dike.layers.layers_wrapper import (
     KoswatLayersWrapperBuilder,
@@ -55,6 +56,48 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         )
         return _reinforced_base_layer
 
+    def _get_coating_added_geometry(
+        self,
+        new_coating_layer: KoswatLayerProtocol,
+        base_layer: KoswatBaseLayer,
+        relative_base_layer: Polygon,
+    ) -> Polygon:
+        # Due to issue `KOSWAT-235` we found out that when a coating layer intersects its previous
+        # geometry, the resulting added geometry will not be calculated correctly.
+        _res = new_coating_layer.upper_points.intersection(relative_base_layer)
+        if not (isinstance(_res, Polygon) or isinstance(_res, MultiLineString)):
+            return as_unified_geometry(
+                get_normalized_polygon_difference(
+                    new_coating_layer.material_geometry, relative_base_layer
+                )
+            )
+
+        # In those cases, we will manually calculate the "added" material by
+        # intersecting in a horizontal line by the first point that differs
+        # from the **base** geometry with the reinforced one.
+        _first_disjunction = next(
+            (
+                _old_base
+                for (_old_base, _new_base) in zip(
+                    self.layers_data["base_layer"]["geometry"],
+                    base_layer.upper_points.coords,
+                )
+                if _old_base != _new_base
+            ),
+            None,
+        )
+        _intersection_line = LineString(
+            [
+                (
+                    new_coating_layer.upper_points.coords[0][0],
+                    _first_disjunction[1],
+                ),
+                (_first_disjunction),
+            ]
+        )
+
+        return split(new_coating_layer.material_geometry, _intersection_line).geoms[0]
+
     def _get_coating_layers(
         self,
         new_coating_layers: list[KoswatLayerProtocol],
@@ -91,42 +134,11 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
                 )
 
             # Calculate the added geometry.
-            _relative_base_layer = _relative_core_geom.union(
-                _wrapped_calc_layer.outer_geometry
+            _added_geometry = self._get_coating_added_geometry(
+                _new_coating_layer,
+                base_layer,
+                _relative_core_geom.union(_wrapped_calc_layer.outer_geometry),
             )
-            _res = _new_coating_layer.upper_points.intersection(_relative_base_layer)
-            if not (isinstance(_res, Polygon) or isinstance(_res, MultiLineString)):
-                # if _new_coating_layer.outer_geometry.contains(_relative_base_layer):
-                _added_geometry = as_unified_geometry(
-                    get_normalized_polygon_difference(
-                        _new_coating_layer.material_geometry, _relative_base_layer
-                    )
-                )
-            else:
-                # Issue KOSWAT-235
-                _first_disjunction = next(
-                    (
-                        _old_base
-                        for (_old_base, _new_base) in zip(
-                            self.layers_data["base_layer"]["geometry"],
-                            base_layer.upper_points.coords,
-                        )
-                        if _old_base != _new_base
-                    ),
-                    None,
-                )
-                _intersection_line = LineString(
-                    [
-                        (
-                            _new_coating_layer.upper_points.coords[0][0],
-                            _first_disjunction[1],
-                        ),
-                        (_first_disjunction),
-                    ]
-                )
-                _added_geometry = split(
-                    _new_coating_layer.material_geometry, _intersection_line
-                ).geoms[0]
 
             # Create new Reinforced Coating Layer
             _rc_layer = ReinforcementCoatingLayer.from_koswat_coating_layer(

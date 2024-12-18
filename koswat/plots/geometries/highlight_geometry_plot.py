@@ -15,6 +15,7 @@ class HighlightGeometryPlot(KoswatPlotProtocol):
         Returns:
             pyplot.axes: Polygon with its area painted.
         """
+        _color = "#e377c2"
         if isinstance(self.koswat_object, Polygon):
             _x_coords, y_coords = self.koswat_object.exterior.coords.xy
             self.subplot.fill(_x_coords, y_coords)
