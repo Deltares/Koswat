@@ -447,11 +447,17 @@ class ScenarioCasesC(CasesProtocol):
 class ScenarioCasesDijk4(CasesProtocol):
     cases = [
         KoswatScenario(
-            scenario_name="dijk4",
-            d_h=0.72,
-            d_s=10,
+            scenario_name="scen1",
+            d_h=0.29,
+            d_s=12.07,
             d_p=50,
-            waterside_slope=3.56,
+        ),
+        KoswatScenario(
+            scenario_name="scen2",
+            d_h=0.29,
+            d_s=12.07,
+            d_p=50,
+            waterside_slope=2.75,
         ),
     ]
 
