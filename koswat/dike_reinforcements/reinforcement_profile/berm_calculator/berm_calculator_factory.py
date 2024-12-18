@@ -23,6 +23,7 @@ class BermCalculatorFactory:
     """
 
     base_data: KoswatInputProfileProtocol
+    reinforced_data: KoswatInputProfileProtocol
     reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
     _dikebase_piping_old: float
@@ -37,10 +38,12 @@ class BermCalculatorFactory:
     def __init__(
         self,
         base_data: KoswatInputProfileProtocol,
+        reinforced_data: KoswatInputProfileProtocol,
         reinforcement_settings: KoswatReinforcementSettings,
         scenario: KoswatScenario,
     ) -> None:
         self.base_data = base_data
+        self.reinforced_data = reinforced_data
         self.reinforcement_settings = reinforcement_settings
         self.scenario = scenario
 
@@ -84,7 +87,7 @@ class BermCalculatorFactory:
             self._calculate_new_crest_height() - self.base_data.polderside_ground_level
         )
         self._dikebase_height_new = (
-            self.scenario.d_h * self.base_data.waterside_slope
+            self.scenario.d_h * self.reinforced_data.waterside_slope
             + self.base_data.crest_width
             + self._dike_height_new * self.base_data.polderside_slope
         )

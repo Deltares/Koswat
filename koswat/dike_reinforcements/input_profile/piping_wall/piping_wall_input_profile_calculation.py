@@ -78,7 +78,10 @@ class PipingWallInputProfileCalculation(
 
         # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(
-            self.base_profile.input_data, self.reinforcement_settings, self.scenario
+            self.base_profile.input_data,
+            self.reinforced_data,
+            self.reinforcement_settings,
+            self.scenario,
         ).get_berm_calculator(InputProfileEnum.PIPING_WALL)
         (
             self.reinforced_data.polderside_berm_width,
