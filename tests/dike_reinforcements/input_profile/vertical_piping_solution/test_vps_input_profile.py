@@ -28,4 +28,4 @@ class TestVPSInputProfile:
         _ground_price = _profile.ground_price
 
         # 3. Verify expectations
-        assert _ground_price == _builtup
+        assert _ground_price == _unbuilt
