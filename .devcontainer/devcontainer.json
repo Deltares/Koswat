@@ -1,0 +1,20 @@
+{
+    "build": { "dockerfile": "Dockerfile" },
+  
+    "customizations": {
+      "vscode": {
+        "extensions": [
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "ms-python.debugpy",
+            "ms-python.black-formatter",
+            "ms-python.isort",
+            "ms-python.pylint",
+            "ms-vscode.test-adapter-converter",
+            "njpwerner.autodocstring"
+        ]
+      }
+    },
+  
+    "forwardPorts": [3000]
+  }
