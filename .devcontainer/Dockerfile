@@ -19,11 +19,11 @@ ARG CONDA_ENV="${SRC_ROOT}/.env"
 # This location needs to be mounted with your koswat checout:
 # -v {your_koswat_checkout_dir}:/usr/src/app
 WORKDIR $SRC_ROOT/app
-COPY environment.yml $SRC_ROOT/.config/environment.yml
+COPY environment.yml $SRC_ROOT/.devcontainer/environment.yml
 
 RUN conda init bash \
     && . ~/.bashrc \
-    && conda env create -f $SRC_ROOT/.config/environment.yml -p $CONDA_ENV
+    && conda env create -f $SRC_ROOT/.devcontainer/environment.yml -p $CONDA_ENV
 
 # Activate conda environment
 ENV PATH $CONDA_ENV/bin:$PATH

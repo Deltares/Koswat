@@ -24,7 +24,7 @@ jobs:
           miniforge-variant: Mambaforge
           # channels: conda-forge, nodefaults
           # channel-priority: strict
-          environment-file: .config/environment.yml
+          environment-file: .devcontainer/environment.yml
           activate-environment: koswat_env
 
       - name: Install dependencies

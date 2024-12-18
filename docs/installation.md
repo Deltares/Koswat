@@ -37,7 +37,7 @@ docker run -it koswat bash
     1. With [Miniforge](https://conda-forge.org/miniforge/) (our recommendation):    
         ```bash
         cd C:\repos\koswat
-        conda env create -f .config\environment.yml
+        conda env create -f .devcontainer\environment.yml
         conda activate koswat_env
         poetry install
         ```
