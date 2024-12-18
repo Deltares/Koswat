@@ -1,3 +1,4 @@
+from abc import ABC
 from dataclasses import dataclass
 
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
@@ -5,13 +6,14 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
     KoswatReinforcementSettings,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
+from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator import (
     BermCalculatorProtocol,
 )
 
 
 @dataclass
-class BermCalculatorBase(BermCalculatorProtocol):
+class BermCalculatorBase(BermCalculatorProtocol, ABC):
     scenario: KoswatScenario
     reinforcement_settings: KoswatReinforcementSettings
     dikebase_piping_old: float
@@ -21,18 +23,33 @@ class BermCalculatorBase(BermCalculatorProtocol):
     dike_height_new: float
 
     def _calculate_new_polderside_slope(
-        self, base_data: KoswatInputProfileProtocol
+        self,
+        base_data: KoswatInputProfileProtocol,
+        reinforcement_type: InputProfileEnum,
     ) -> float:
-        _operand = (
-            max(self.dikebase_height_new, self.dikebase_stability_new)
-            - self.scenario.d_h * self.scenario.waterside_slope
-            - self.scenario.crest_width
-        )
         _dividend = (
             base_data.crest_height
             - base_data.polderside_ground_level
             + self.scenario.d_h
         )
+
+        if reinforcement_type == InputProfileEnum.STABILITY_WALL:
+            _operand = (
+                self.dikebase_piping_old
+                - self.scenario.d_h * self.scenario.waterside_slope
+                - self.scenario.crest_width
+            )
+            return max(
+                self.reinforcement_settings.stability_wall_settings.steepening_polderside_slope,
+                _operand / _dividend,
+            )
+
+        _operand = (
+            max(self.dikebase_height_new, self.dikebase_stability_new)
+            - self.scenario.d_h * self.scenario.waterside_slope
+            - self.scenario.crest_width
+        )
+
         return _operand / _dividend
 
     def _calculate_new_polderside_berm_height_piping(

@@ -82,26 +82,7 @@ class StabilityWallInputProfileCalculation(
         )
 
     @staticmethod
-    def _calculate_new_polderside_slope(
-        base_data: KoswatInputProfileBase,
-        scenario: KoswatScenario,
-        stability_wall_settings: KoswatStabilityWallSettings,
-        _dikebase_piping_old: float,
-    ) -> float:
-        _operand = (
-            _dikebase_piping_old
-            - scenario.d_h * scenario.waterside_slope
-            - scenario.crest_width
-        )
-        _dividend = (
-            base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
-        )
-        return max(
-            stability_wall_settings.steepening_polderside_slope, _operand / _dividend
-        )
-
     def _determine_construction_type(
-        self,
         transition: float,
         construction_length: float,
     ) -> ConstructionTypeEnum | None:

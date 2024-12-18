@@ -1,10 +1,17 @@
+from dataclasses import dataclass
+
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_protocol import (
     BermCalculatorProtocol,
 )
 
 
+@dataclass
 class DefaultBermCalculator(BermCalculatorProtocol):
+    dikebase_piping_old: float
+    dikebase_piping_new: float
+    dike_height_new: float
+
     def calculate(
         self,
         base_data: KoswatInputProfileProtocol,

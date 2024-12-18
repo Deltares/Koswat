@@ -58,23 +58,6 @@ class ReinforcementInputProfileCalculationBase(ABC):
             return base_data.waterside_berm_height + scenario.d_h
         return base_data.waterside_berm_height
 
-    def _calculate_soil_new_polderside_slope(
-        self,
-        base_data: KoswatInputProfileBase,
-        scenario: KoswatScenario,
-        dikebase_height_new: float,
-        dikebase_stability_new: float,
-    ) -> float:
-        _operand = (
-            max(dikebase_height_new, dikebase_stability_new)
-            - scenario.d_h * scenario.waterside_slope
-            - scenario.crest_width
-        )
-        _dividend = (
-            base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
-        )
-        return _operand / _dividend
-
     def _calculate_soil_new_polderside_berm_height_piping(
         self,
         old_data: KoswatInputProfileBase,

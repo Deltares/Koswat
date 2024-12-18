@@ -8,6 +8,7 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
@@ -35,8 +36,8 @@ class CofferdamInputProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
+    @staticmethod
     def _calculate_length_cofferdam(
-        self,
         old_data: KoswatInputProfileProtocol,
         cofferdam_settings: KoswatCofferdamSettings,
         seepage_length: float,
@@ -63,14 +64,25 @@ class CofferdamInputProfileCalculation(
             1,
         )
 
+    @staticmethod
     def _determine_construction_type(
-        self,
         construction_length: float,
     ) -> ConstructionTypeEnum | None:
         if construction_length == 0:
             return None
         else:
             return ConstructionTypeEnum.KISTDAM
+
+    def _calculate_new_waterside_slope(
+        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+    ) -> float:
+        _operand = (
+            base_data.crest_height - base_data.waterside_ground_level
+        ) * base_data.waterside_slope
+        _dividend = (
+            base_data.crest_height - base_data.waterside_ground_level + scenario.d_h
+        )
+        return _operand / _dividend
 
     def build(self) -> CofferDamInputProfile:
         self.reinforced_data = CofferDamInputProfile()

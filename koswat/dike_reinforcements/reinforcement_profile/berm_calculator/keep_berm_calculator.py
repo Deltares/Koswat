@@ -10,6 +10,9 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 @dataclass
 class KeepBermCalculator(BermCalculatorProtocol):
     scenario: KoswatScenario
+    dikebase_piping_old: float
+    dikebase_piping_new: float
+    dike_height_new: float
 
     def calculate(
         self,
@@ -19,12 +22,14 @@ class KeepBermCalculator(BermCalculatorProtocol):
         _polderside_berm_width = (
             base_data.polderside_berm_width
         )  # maintain current berm polderside
-        _polderside_berm_height = self._calculate_new_polderside_berm_height(base_data)
-        _polderside_slope = self._calculate_new_polderside_slope(base_data)
+        _polderside_berm_height = self._calculate_new_keep_polderside_berm_height(
+            base_data
+        )
+        _polderside_slope = self._calculate_new_keep_polderside_slope(base_data)
 
         return (_polderside_berm_width, _polderside_berm_height, _polderside_slope)
 
-    def _calculate_new_polderside_berm_height(
+    def _calculate_new_keep_polderside_berm_height(
         self, base_data: KoswatInputProfileProtocol
     ) -> float:
         _dike_height_old = base_data.crest_height - base_data.polderside_ground_level
@@ -34,7 +39,7 @@ class KeepBermCalculator(BermCalculatorProtocol):
         _berm_factor_old = _berm_height_old / _dike_height_old
         return base_data.polderside_berm_height + _berm_factor_old * self.scenario.d_h
 
-    def _calculate_new_polderside_slope(
+    def _calculate_new_keep_polderside_slope(
         self, base_data: KoswatInputProfileProtocol
     ) -> float:
         _operand = (

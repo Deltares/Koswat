@@ -3,14 +3,7 @@ from koswat.configuration.settings.koswat_general_settings import ConstructionTy
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
-    KoswatSoilSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
-    KoswatVPSSettings,
-)
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
     ReinforcementInputProfileCalculationBase,
@@ -33,6 +26,10 @@ class VPSInputProfileCalculation(
     base_profile: KoswatProfileProtocol
     reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
+
+    def __init__(self) -> None:
+        self.base_profile = None
+        self.scenario = None
 
     def build(self) -> VPSInputProfile:
         self.reinforced_data = VPSInputProfile()

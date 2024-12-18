@@ -9,9 +9,6 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
-from koswat.dike_reinforcements.input_profile.soil.soil_input_profile_calculation import (
-    SoilInputProfileCalculation,
-)
 from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input_profile_calculation import (
     VPSInputProfileCalculation,
 )
@@ -24,7 +21,6 @@ class TestVPSInputProfileCalculation:
         assert not _calculation.base_profile
         assert not _calculation.scenario
         assert isinstance(_calculation, VPSInputProfileCalculation)
-        assert isinstance(_calculation, SoilInputProfileCalculation)
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
