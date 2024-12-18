@@ -67,7 +67,7 @@ class BermCalculatorBase(BermCalculatorProtocol, ABC):
                 base_data.polderside_berm_height - base_data.polderside_ground_level
             )
         else:
-            _old_berm_height = 0
+            _old_berm_height = 0.0
         _max = max(
             self.reinforcement_settings.soil_settings.min_berm_height,
             _old_berm_height,

@@ -21,7 +21,7 @@ class DefaultBermCalculator(BermCalculatorProtocol):
         base_data: KoswatInputProfileProtocol,
         reinforced_data: KoswatInputProfileProtocol,
     ) -> tuple[float, float, float]:
-        _polderside_berm_width = 0
+        _polderside_berm_width = 0.0
         _polderside_berm_height = base_data.polderside_ground_level
         _polderside_slope = base_data.polderside_slope
 
