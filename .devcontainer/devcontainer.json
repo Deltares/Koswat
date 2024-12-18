@@ -1,6 +1,11 @@
 {
-    "build": { "dockerfile": "Dockerfile" },
-  
+    "build": { 
+      "dockerfile": "Dockerfile" 
+    },
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/usr/src/app,type=bind,consistency=cached"
+    ],
+    "workspaceFolder": "/usr/src/app",
     "customizations": {
       "vscode": {
         "extensions": [
