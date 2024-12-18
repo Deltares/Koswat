@@ -8,6 +8,10 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 
 @dataclass
 class DefaultBermCalculator(BermCalculatorProtocol):
+    """
+    Calculator for the default berm width, height and slope for the polderside of the dike.
+    """
+
     dikebase_piping_old: float
     dikebase_piping_new: float
     dike_height_new: float

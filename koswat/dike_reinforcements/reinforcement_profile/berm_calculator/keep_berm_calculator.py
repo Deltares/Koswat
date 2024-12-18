@@ -9,6 +9,11 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 
 @dataclass
 class KeepBermCalculator(BermCalculatorProtocol):
+    """
+    Calculator for keeping the berm width for the polderside of the dike
+    but calculating the height and slope.
+    """
+
     scenario: KoswatScenario
     dikebase_piping_old: float
     dikebase_piping_new: float

@@ -12,6 +12,11 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 
 @dataclass
 class NoBermCalculator(BermCalculatorBase, BermCalculatorProtocol):
+    """
+    Calculator for the situation where no berm is present on the polderside of the dike
+    but the slope is still calculated.
+    """
+
     reinforcement_type: InputProfileEnum
 
     def calculate(

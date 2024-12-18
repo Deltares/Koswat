@@ -14,6 +14,10 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator import (
 
 @dataclass
 class BermCalculatorBase(BermCalculatorProtocol, ABC):
+    """
+    Base class for calculating the berm height and slope of the polderside of the dike.
+    """
+
     scenario: KoswatScenario
     reinforcement_settings: KoswatReinforcementSettings
     dikebase_piping_old: float

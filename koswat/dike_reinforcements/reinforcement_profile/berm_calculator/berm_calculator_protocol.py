@@ -4,6 +4,11 @@ from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 
 class BermCalculatorProtocol(Protocol):
+    """
+    Protocol for calculating the berm width, height and slope for the polderside or waterside of the dike.
+    The attributes defined here are required as they are requested by some profile calculations.
+    """
+
     dikebase_piping_old: float
     dikebase_piping_new: float
     dike_height_new: float

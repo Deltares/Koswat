@@ -17,6 +17,11 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator import (
 
 
 class BermCalculatorFactory:
+    """
+    Factory to create the correct berm calculator based on the base profile,
+    reinforcement settings, scenario and profile type.
+    """
+
     base_data: KoswatInputProfileProtocol
     reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
@@ -102,6 +107,15 @@ class BermCalculatorFactory:
     def get_berm_calculator(
         self, profile_type: InputProfileEnum
     ) -> BermCalculatorProtocol:
+        """
+        Get the correct berm calculator based on the profile type.
+
+        Args:
+            profile_type (InputProfileEnum): The type of profile.
+
+        Returns:
+            BermCalculatorProtocol: The correct berm calculator.
+        """
 
         self._reinforcement_type = profile_type
 
@@ -115,13 +129,16 @@ class BermCalculatorFactory:
             self._dikebase_height_new, self._dikebase_stability_new
         ):
             return self._get_piping_berm_calculator()
+
         if self._dikebase_stability_new > self._dikebase_height_new:
             if self._berm_old_is_stability:
                 return self._get_stability_berm_calculator()
             return self._get_no_berm_calculator()
+
         return self._get_default_berm_calculator()
 
     def _get_stability_wall_berm_calculator(self) -> BermCalculatorProtocol:
+        # The stability wall has different logic for the berm calculation
         if (
             max(self._dikebase_height_new, self._dikebase_stability_new)
             > self._dikebase_piping_old

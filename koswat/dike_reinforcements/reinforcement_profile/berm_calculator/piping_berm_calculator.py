@@ -11,6 +11,11 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 
 @dataclass
 class PipingBermCalculator(BermCalculatorBase, BermCalculatorProtocol):
+    """
+    Calculator for the berm width, height and slope for the polderside of the dike
+    in case of piping.
+    """
+
     dikebase_piping_new: float
 
     def calculate(
