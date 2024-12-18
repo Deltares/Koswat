@@ -20,6 +20,7 @@ coverage.xml
 
 # Koswat ignore
 tests/test_results/
+tests/test_data/issues/
 site/
 *.log
 
