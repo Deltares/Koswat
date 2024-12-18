@@ -1,5 +1,5 @@
-from shapely import MultiLineString
-from shapely.geometry import MultiPolygon, Point, Polygon
+from shapely.geometry import LineString, MultiLineString, Point, Polygon
+from shapely.ops import split
 
 from koswat.core.geometries.calc_library import (
     as_unified_geometry,
@@ -104,17 +104,29 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
                 )
             else:
                 # Issue KOSWAT-235
-                _waterside_old_geometry = (
-                    _new_coating_layer.material_geometry.intersection(_old_geom)
+                _first_disjunction = next(
+                    (
+                        _old_base
+                        for (_old_base, _new_base) in zip(
+                            self.layers_data["base_layer"]["geometry"],
+                            base_layer.upper_points.coords,
+                        )
+                        if _old_base != _new_base
+                    ),
+                    None,
                 )
-                if isinstance(_waterside_old_geometry, MultiPolygon):
-                    _waterside_old_geometry = _waterside_old_geometry.geoms[0]
-                _remaining_waterside_geometry = get_normalized_polygon_difference(
-                    _waterside_old_geometry, _removed_geom
+                _intersection_line = LineString(
+                    [
+                        (
+                            _new_coating_layer.upper_points.coords[0][0],
+                            _first_disjunction[1],
+                        ),
+                        (_first_disjunction),
+                    ]
                 )
-                _added_geometry = get_normalized_polygon_difference(
-                    _new_coating_layer.material_geometry, _remaining_waterside_geometry
-                )
+                _added_geometry = split(
+                    _new_coating_layer.material_geometry, _intersection_line
+                ).geoms[0]
 
             # Create new Reinforced Coating Layer
             _rc_layer = ReinforcementCoatingLayer.from_koswat_coating_layer(
