@@ -23,7 +23,7 @@ class StabilityBermCalculator(BermCalculatorBase, BermCalculatorProtocol):
         base_data: KoswatInputProfileProtocol,
         reinforced_data: KoswatInputProfileProtocol,
     ) -> tuple[float, float, float]:
-        _polderside_berm_width = self.dikebase_stability_new - self.dike_height_new
+        _polderside_berm_width = self.dikebase_stability_new - self.dikebase_height_new
         _polderside_berm_height = (
             self.berm_factor_old * self.dike_height_new
             + base_data.polderside_ground_level

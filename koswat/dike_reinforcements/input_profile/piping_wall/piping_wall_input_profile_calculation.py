@@ -107,7 +107,7 @@ class PipingWallInputProfileCalculation(
 
         # Settings
         self.reinforced_data.soil_surtax_factor = (
-            self.reinforcement_settings.soil_settings.soil_surtax_factor
+            self.reinforcement_settings.piping_wall_settings.soil_surtax_factor
         )
         self.reinforced_data.constructive_surtax_factor = (
             self.reinforcement_settings.piping_wall_settings.constructive_surtax_factor
