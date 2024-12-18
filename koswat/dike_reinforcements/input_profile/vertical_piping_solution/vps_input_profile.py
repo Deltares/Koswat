@@ -16,4 +16,5 @@ class VPSInputProfile(SoilInputProfile, ReinforcementInputProfileProtocol):
 
     @property
     def ground_price(self) -> float:
-        return self.ground_price_builtup
+        # return self.ground_price_builtup
+        return self.ground_price_unbuilt

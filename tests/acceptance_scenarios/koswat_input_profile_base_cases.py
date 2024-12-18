@@ -126,19 +126,19 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         aquifer=-2,
     )
 
-    # Waterside ground level lower than polderside, waterside and polderside berm
+    # Waterside ground level higher than polderside, waterside and polderside berm
     profile_dijk4 = KoswatInputProfileBase(
         dike_section="dijk4",
-        waterside_ground_level=6.38,
-        waterside_slope=2.56,
-        waterside_berm_height=6.38,
-        waterside_berm_width=0,
-        crest_height=11.38,
-        crest_width=10.36,
-        polderside_slope=3.57,
-        polderside_berm_height=9.06,
-        polderside_berm_width=19.23,
-        polderside_ground_level=6.45,
+        waterside_ground_level=6.28,
+        waterside_slope=2.74,
+        waterside_berm_height=8.9,
+        waterside_berm_width=4.42,
+        crest_height=10.41,
+        crest_width=2.75,
+        polderside_slope=2.07,
+        polderside_berm_height=9.43,
+        polderside_berm_width=14.59,
+        polderside_ground_level=5.17,
         ground_price_builtup=322.63,
         ground_price_unbuilt=13.87,
         factor_settlement=1.2,

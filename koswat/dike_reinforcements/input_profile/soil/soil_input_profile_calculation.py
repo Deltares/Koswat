@@ -30,62 +30,6 @@ class SoilInputProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
-    def _calculate_new_polderside_slope(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
-    ) -> float:
-        """
-        MAX(
-            Binnen_Talud_Oud,
-            (
-                dS
-                -dH*Buiten_Talud_Nieuw
-                -(Kruin_Breedte_Nieuw-Kruin_Breedte_Oud)
-                +(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud)*Binnen_Talud_Oud)
-                /(Kruin_Hoogte_Oud-Binnen_Maaiveld_Oud+dH))
-        """
-        _first_part = scenario.d_h * scenario.waterside_slope
-        _second_part = scenario.crest_width - base_data.crest_width
-        _third_parth = (
-            base_data.crest_height - base_data.polderside_ground_level
-        ) * base_data.polderside_slope
-        _dividend = (
-            base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
-        )
-        _right_side = (
-            scenario.d_s - _first_part - _second_part + _third_parth
-        ) / _dividend
-        return max(base_data.polderside_slope, _right_side)
-
-    def _calculate_new_polderside_berm_height(
-        self,
-        old_data: KoswatInputProfileBase,
-        new_data: KoswatInputProfileBase,
-        scenario: KoswatScenario,
-    ) -> float:
-        if new_data.polderside_berm_width > 0:
-            _max = max(
-                0.5,
-                (old_data.polderside_berm_height - old_data.polderside_ground_level),
-                new_data.polderside_berm_width * 0.05,
-            )
-            return (
-                min(
-                    _max,
-                    0.4
-                    * (
-                        (old_data.crest_height - old_data.polderside_ground_level)
-                        + scenario.d_h
-                    ),
-                )
-                + old_data.polderside_ground_level
-            )
-        return old_data.polderside_ground_level
-
-    def _calculate_new_crest_height(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
-    ) -> float:
-        return base_data.crest_height + scenario.d_h
-
     def _calculate_new_input_profile(
         self,
         base_data: KoswatInputProfileBase,
@@ -95,21 +39,99 @@ class SoilInputProfileCalculation(
         _new_data = SoilInputProfile()
         _new_data.dike_section = base_data.dike_section
         _new_data.waterside_ground_level = base_data.waterside_ground_level
+        _new_data.polderside_ground_level = base_data.polderside_ground_level
         _new_data.waterside_slope = scenario.waterside_slope
-        _new_data.waterside_berm_height = base_data.waterside_berm_height
+        _new_data.waterside_berm_height = (
+            self._calculate_soil_new_waterside_berm_height(base_data, scenario)
+        )
         _new_data.waterside_berm_width = base_data.waterside_berm_width
         _new_data.crest_width = scenario.crest_width
-        _new_data.crest_height = self._calculate_new_crest_height(base_data, scenario)
-        _new_data.polderside_ground_level = base_data.polderside_ground_level
-        _new_data.polderside_slope = self._calculate_new_polderside_slope(
+        _new_data.crest_height = self._calculate_soil_new_crest_height(
             base_data, scenario
         )
-        _new_data.polderside_berm_width = self._calculate_soil_polderside_berm_width(
-            base_data, _new_data, scenario
+
+        _dike_height_old = base_data.crest_height - base_data.polderside_ground_level
+        _berm_height_old = (
+            base_data.polderside_berm_height - base_data.polderside_ground_level
         )
-        _new_data.polderside_berm_height = self._calculate_new_polderside_berm_height(
-            base_data, _new_data, scenario
+        _berm_factor_old = _berm_height_old / _dike_height_old
+        if _berm_factor_old > soil_settings.max_berm_height_factor:
+            _berm_old_is_stability = True
+        else:
+            _berm_old_is_stability = False
+
+        _dikebase_stability_old = (
+            base_data.crest_width
+            + _dike_height_old * base_data.polderside_slope
+            + _berm_old_is_stability * base_data.polderside_berm_width
         )
+        _dikebase_piping_old = (
+            base_data.crest_width
+            + _dike_height_old * base_data.polderside_slope
+            + base_data.polderside_berm_width
+        )
+
+        _dike_height_new = _new_data.crest_height - _new_data.polderside_ground_level
+        _dikebase_heigth_new = (
+            scenario.d_h * _new_data.waterside_slope
+            + _new_data.crest_width
+            + _dike_height_new * base_data.polderside_slope
+        )
+        _dikebase_stability_new = _dikebase_stability_old + scenario.d_s
+        _dikebase_piping_new = _dikebase_piping_old + scenario.d_p
+
+        # Is a berm for piping neccesary?
+        if _dikebase_piping_new > max(_dikebase_heigth_new, _dikebase_stability_new):
+            _new_data.polderside_berm_width = _dikebase_piping_new - max(
+                _dikebase_heigth_new, _dikebase_stability_new
+            )
+            _new_data.polderside_slope = self._calculate_soil_new_polderside_slope(
+                base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new
+            )
+            # extend existing berm?
+            if base_data.polderside_berm_width > 0 and _dikebase_piping_old > max(
+                _dikebase_heigth_new, _dikebase_stability_new
+            ):
+                _new_data.polderside_berm_height = (
+                    self._calculate_soil_new_polderside_berm_height_piping(
+                        base_data, _new_data, scenario, soil_settings, True
+                    )
+                )
+            else:
+                _new_data.polderside_berm_height = (
+                    self._calculate_soil_new_polderside_berm_height_piping(
+                        base_data, _new_data, scenario, soil_settings, False
+                    )
+                )
+        else:
+            # Is measure for stability neccesary?
+            if _dikebase_stability_new > _dikebase_heigth_new:
+                # in case of existing stab berm
+                if _berm_old_is_stability:
+                    _new_data.polderside_berm_width = (
+                        _dikebase_stability_new - _dikebase_heigth_new
+                    )
+                    _new_data.polderside_berm_height = (
+                        _berm_factor_old * _dike_height_new
+                        + _new_data.polderside_ground_level
+                    )
+                    _new_data.polderside_slope = base_data.polderside_slope
+                else:
+                    _new_data.polderside_berm_width = 0
+                    _new_data.polderside_berm_height = base_data.polderside_ground_level
+                    _new_data.polderside_slope = (
+                        self._calculate_soil_new_polderside_slope(
+                            base_data,
+                            scenario,
+                            _dikebase_heigth_new,
+                            _dikebase_stability_new,
+                        )
+                    )
+            else:
+                _new_data.polderside_berm_width = 0
+                _new_data.polderside_berm_height = base_data.polderside_ground_level
+                _new_data.polderside_slope = base_data.polderside_slope
+
         _new_data.ground_price_builtup = base_data.ground_price_builtup
         _new_data.ground_price_unbuilt = base_data.ground_price_unbuilt
         _new_data.factor_settlement = base_data.factor_settlement
