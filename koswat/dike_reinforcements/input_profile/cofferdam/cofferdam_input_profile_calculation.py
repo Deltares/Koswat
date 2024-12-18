@@ -43,13 +43,13 @@ class CofferdamInputProfileCalculation(
         seepage_length: float,
         new_crest_height: float,
     ) -> float:
-        _length_stability = (new_crest_height - 0.5) - (old_data.pleistocene - 1)
-        if seepage_length == 0:
+        _length_stability = (new_crest_height - 0.5) - (old_data.pleistocene - 1.0)
+        if seepage_length == 0.0:
             # Length of wall is not determined by piping.
             _length_piping = 0.0
         else:
             _length_piping = (
-                (seepage_length / 6) + (new_crest_height - 0.5) - old_data.aquifer
+                (seepage_length / 6.0) + (new_crest_height - 0.5) - old_data.aquifer
             )
 
         return round(
@@ -68,13 +68,14 @@ class CofferdamInputProfileCalculation(
     def _determine_construction_type(
         construction_length: float,
     ) -> ConstructionTypeEnum | None:
-        if construction_length == 0:
+        if construction_length == 0.0:
             return None
         else:
             return ConstructionTypeEnum.KISTDAM
 
+    @staticmethod
     def _calculate_new_waterside_slope(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+        base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         _operand = (
             base_data.crest_height - base_data.waterside_ground_level

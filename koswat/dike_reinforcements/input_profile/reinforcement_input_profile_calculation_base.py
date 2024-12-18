@@ -41,25 +41,28 @@ class ReinforcementInputProfileCalculationBase(ABC):
         self.reinforced_data.pleistocene = base_data.pleistocene
         self.reinforced_data.aquifer = base_data.aquifer
 
+    @staticmethod
     def _calculate_new_waterside_slope(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+        base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         return scenario.waterside_slope
 
+    @staticmethod
     def _calculate_new_crest_height(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+        base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         return base_data.crest_height + scenario.d_h
 
+    @staticmethod
     def _calculate_new_waterside_berm_height(
-        self, base_data: KoswatInputProfileBase, scenario: KoswatScenario
+        base_data: KoswatInputProfileBase, scenario: KoswatScenario
     ) -> float:
         if base_data.waterside_berm_height > base_data.waterside_ground_level:
             return base_data.waterside_berm_height + scenario.d_h
         return base_data.waterside_berm_height
 
-    def _calculate_soil_new_polderside_berm_height_piping(
-        self,
+    @staticmethod
+    def _calculate_new_polderside_berm_height_piping(
         old_data: KoswatInputProfileBase,
         new_data: KoswatInputProfileBase,
         soil_settings: KoswatSoilSettings,

@@ -31,10 +31,16 @@ from koswat.dike_reinforcements.input_profile.soil.soil_input_profile import (
 from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.default_berm_calculator import (
+    DefaultBermCalculator,
+)
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.piping_berm_calculator import (
+    PipingBermCalculator,
+)
 
 
-@pytest.fixture
-def valid_scenario() -> Iterator[KoswatScenario]:
+@pytest.fixture(name="valid_scenario")
+def _get_valid_scenario_fixture() -> Iterator[KoswatScenario]:
     yield KoswatScenario(
         scenario_name="Test Scenario",
         scenario_section="Test Section",
@@ -46,8 +52,10 @@ def valid_scenario() -> Iterator[KoswatScenario]:
     )
 
 
-@pytest.fixture
-def valid_reinforcement_settings() -> Iterator[KoswatReinforcementSettings]:
+@pytest.fixture(name="valid_reinforcement_settings")
+def _get_valid_reinforcement_settings_fixture() -> Iterator[
+    KoswatReinforcementSettings
+]:
     yield KoswatReinforcementSettings(
         soil_settings=KoswatSoilSettings(),
         vps_settings=KoswatVPSSettings(polderside_berm_width_vps=10),
@@ -118,4 +126,27 @@ def valid_cofferdam_input_profile() -> Iterator[CofferDamInputProfile]:
         polderside_berm_height=2.0,
         polderside_slope=0.4,
         polderside_berm_width=0.0,
+    )
+
+
+@pytest.fixture
+def valid_default_berm_calculator() -> Iterator[DefaultBermCalculator]:
+    yield DefaultBermCalculator(
+        dikebase_piping_old=12.0, dikebase_piping_new=10.0, dike_height_new=15.0
+    )
+
+
+@pytest.fixture
+def valid_piping_berm_calculator(
+    valid_scenario: KoswatScenario,
+    valid_reinforcement_settings: KoswatReinforcementSettings,
+) -> Iterator[PipingBermCalculator]:
+    yield PipingBermCalculator(
+        scenario=valid_scenario,
+        reinforcement_settings=valid_reinforcement_settings,
+        dikebase_piping_old=12.0,
+        dikebase_piping_new=14.0,
+        dikebase_height_new=15.0,
+        dikebase_stability_new=16.0,
+        dike_height_new=7.0,
     )

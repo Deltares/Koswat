@@ -41,13 +41,13 @@ class PipingWallInputProfileCalculation(
         piping_wall_settings: KoswatPipingWallSettings,
         seepage_length: float,
     ) -> float:
-        if seepage_length == 0:
+        if seepage_length == 0.0:
             # No wall is needed.
-            return 0
+            return 0.0
         _length_piping = (
-            (seepage_length / 6)
+            (seepage_length / 6.0)
             + (old_data.polderside_ground_level - old_data.aquifer)
-            + 1
+            + 1.0
         )
         return round(
             min(

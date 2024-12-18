@@ -1,16 +1,28 @@
+from dataclasses import dataclass
+
 import pytest
 
 from koswat.configuration.settings import KoswatScenario
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
     KoswatVPSSettings,
 )
 from koswat.core.protocols import BuilderProtocol
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
+from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input_profile import (
+    VPSInputProfile,
+)
 from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input_profile_calculation import (
     VPSInputProfileCalculation,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
+    ReinforcementProfile,
 )
 
 
@@ -24,44 +36,43 @@ class TestVPSInputProfileCalculation:
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
-    def test_calculate_new_input_profile(self):
+    def test_build(self, valid_input_data: KoswatInputProfileProtocol):
+        @dataclass
+        class MockSettings(KoswatVPSSettings):
+            polderside_berm_width_vps: float
+
         # 1. Define test data.
-        _scenario = KoswatScenario()
-        _scenario.d_h = 1
-        _scenario.d_p = 30
-        _scenario.crest_width = 5
-        _scenario.waterside_slope = 3
-        _old_profile = KoswatInputProfileBase()
-        _old_profile.waterside_ground_level = 0
-        _old_profile.waterside_slope = 3
-        _old_profile.waterside_berm_height = 0
-        _old_profile.waterside_berm_width = 0
-        _old_profile.crest_height = 6
-        _old_profile.crest_width = 5
-        _old_profile.polderside_slope = 3
-        _old_profile.polderside_berm_height = 0
-        _old_profile.polderside_berm_width = 0
-        _old_profile.polderside_ground_level = 0
-        _vps_settings = KoswatVPSSettings()
-        _vps_settings.polderside_berm_width_vps = 10
-
-        # 2. Run test
-        _new_profile = VPSInputProfileCalculation()._calculate_new_input_profile(
-            _old_profile, _vps_settings, _scenario
+        _calculator = VPSInputProfileCalculation()
+        _calculator.base_profile = ReinforcementProfile(input_data=valid_input_data)
+        _reinforcement_settings = KoswatReinforcementSettings(
+            vps_settings=MockSettings(polderside_berm_width_vps=10.0)
+        )
+        _calculator.reinforcement_settings = _reinforcement_settings
+        _calculator.scenario = KoswatScenario(
+            d_h=12.0, crest_width=6.7, waterside_slope=7.8
         )
 
-        # 3. Verify expectations
-        assert (
-            _new_profile.waterside_ground_level == _old_profile.waterside_ground_level
-        )
-        assert _new_profile.waterside_slope == _old_profile.waterside_slope
-        assert _new_profile.waterside_berm_height == _old_profile.waterside_berm_height
-        assert _new_profile.waterside_berm_width == _old_profile.waterside_berm_width
-        assert _new_profile.crest_height == pytest.approx(7, 0.0001)
-        assert _new_profile.crest_width == _scenario.crest_width
-        assert _new_profile.polderside_slope == pytest.approx(3, 0.0001)
-        assert (
-            _new_profile.polderside_ground_level == _old_profile.polderside_ground_level
-        )
-        assert _new_profile.polderside_berm_width == pytest.approx(10, 0.0001)
-        assert _new_profile.polderside_berm_height == pytest.approx(0.5, 0.0001)
+        # 2. Run test.
+        _result = _calculator.build()
+
+        # 3. Verify Expectations.
+        assert isinstance(_result, VPSInputProfile)
+        assert isinstance(_result, KoswatInputProfileBase)
+        assert isinstance(_result, KoswatInputProfileProtocol)
+
+        assert _result.dike_section == "mocked_section"
+        assert _result.waterside_ground_level == 6.7
+        assert _result.waterside_slope == 7.8
+        assert _result.waterside_berm_height == 19.8
+        assert _result.waterside_berm_width == 8.9
+        assert _result.crest_height == 42.0
+        assert _result.crest_width == 6.7
+        assert _result.polderside_slope == pytest.approx(4.472292)
+        assert _result.polderside_berm_height == 2.8
+        assert _result.polderside_berm_width == 10.0
+        assert _result.polderside_ground_level == 2.3
+        assert _result.ground_price_builtup == 150
+        assert _result.ground_price_unbuilt == 10
+        assert _result.factor_settlement == 1.2
+        assert _result.pleistocene == -6.7
+        assert _result.aquifer == -2.3
