@@ -6,8 +6,8 @@ from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
-@pytest.fixture
-def valid_input_data() -> Iterator[KoswatInputProfileProtocol]:
+@pytest.fixture(name="valid_input_data")
+def _get_valid_input_data_fixture() -> Iterator[KoswatInputProfileProtocol]:
     yield KoswatInputProfileBase(
         dike_section="mocked_section",
         waterside_ground_level=6.7,
