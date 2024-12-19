@@ -95,10 +95,10 @@ class StabilityWallInputProfileCalculation(
         return ConstructionTypeEnum.DIEPWAND
 
     def build(self) -> StabilityWallInputProfile:
-        self.reinforced_data = StabilityWallInputProfile()
-
-        # Standard calculations
-        self.populate_profile(self.base_profile.input_data, self.scenario)
+        self.reinforced_data = self._get_reinforcement_profile(
+            StabilityWallInputProfile, self.base_profile.input_data, self.scenario
+        )
+        assert isinstance(self.reinforced_data, StabilityWallInputProfile)
 
         # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(

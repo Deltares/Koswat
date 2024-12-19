@@ -34,12 +34,12 @@ class VPSInputProfileCalculation(
         self.scenario = None
 
     def build(self) -> VPSInputProfile:
-        self.reinforced_data = VPSInputProfile()
+        self.reinforced_data = self._get_reinforcement_profile(
+            VPSInputProfile, self.base_profile.input_data, self.scenario
+        )
+        assert isinstance(self.reinforced_data, VPSInputProfile)
 
-        # Standard calculations
-        self.populate_profile(self.base_profile.input_data, self.scenario)
-
-        # Berm calculations
+        # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(
             self.base_profile.input_data,
             self.reinforced_data,

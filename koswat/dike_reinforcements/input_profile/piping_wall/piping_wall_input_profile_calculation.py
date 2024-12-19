@@ -73,10 +73,10 @@ class PipingWallInputProfileCalculation(
         return ConstructionTypeEnum.DAMWAND_ONVERANKERD
 
     def build(self) -> PipingWallInputProfile:
-        self.reinforced_data = PipingWallInputProfile()
-
-        # Standard calculations
-        self.populate_profile(self.base_profile.input_data, self.scenario)
+        self.reinforced_data = self._get_reinforcement_profile(
+            PipingWallInputProfile, self.base_profile.input_data, self.scenario
+        )
+        assert isinstance(self.reinforced_data, PipingWallInputProfile)
 
         # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(

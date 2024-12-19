@@ -88,12 +88,12 @@ class CofferdamInputProfileCalculation(
         return _operand / _dividend
 
     def build(self) -> CofferDamInputProfile:
-        self.reinforced_data = CofferDamInputProfile()
+        self.reinforced_data = self._get_reinforcement_profile(
+            CofferDamInputProfile, self.base_profile.input_data, self.scenario
+        )
+        assert isinstance(self.reinforced_data, CofferDamInputProfile)
 
-        # Standard calculations
-        self.populate_profile(self.base_profile.input_data, self.scenario)
-
-        # Berm calculations
+        # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(
             self.base_profile.input_data,
             self.reinforced_data,

@@ -33,10 +33,10 @@ class SoilInputProfileCalculation(
         self.scenario = None
 
     def build(self) -> SoilInputProfile:
-        self.reinforced_data = SoilInputProfile()
-
-        # Standard calculations
-        self.populate_profile(self.base_profile.input_data, self.scenario)
+        self.reinforced_data = self._get_reinforcement_profile(
+            SoilInputProfile, self.base_profile.input_data, self.scenario
+        )
+        assert isinstance(self.reinforced_data, SoilInputProfile)
 
         # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(
