@@ -8,8 +8,8 @@ from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings im
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
+from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
 from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_profile import (
     PipingWallInputProfile,
@@ -39,7 +39,7 @@ class PipingWallInputProfileCalculation(
 
     @staticmethod
     def _calculate_length_piping_wall(
-        old_data: KoswatInputProfileBase,
+        old_data: KoswatInputProfileProtocol,
         piping_wall_settings: KoswatPipingWallSettings,
         seepage_length: float,
     ) -> float:

@@ -10,7 +10,6 @@ from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
     ReinforcementInputProfileCalculationBase,

@@ -10,7 +10,6 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
 )
@@ -77,7 +76,7 @@ class CofferdamInputProfileCalculation(
 
     @staticmethod
     def _calculate_new_waterside_slope(
-        base_data: KoswatInputProfileBase, scenario: KoswatScenario
+        base_data: KoswatInputProfileProtocol, scenario: KoswatScenario
     ) -> float:
         _operand = (
             base_data.crest_height - base_data.waterside_ground_level
