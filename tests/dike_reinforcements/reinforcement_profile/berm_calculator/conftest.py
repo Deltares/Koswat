@@ -57,8 +57,8 @@ def _get_valid_reinforcement_settings_fixture() -> Iterator[
     )
 
 
-@pytest.fixture
-def valid_input_profile() -> Iterator[KoswatInputProfileBase]:
+@pytest.fixture(name="valid_input_profile")
+def _get_valid_input_profile_fixture() -> Iterator[KoswatInputProfileBase]:
     yield KoswatInputProfileBase(
         crest_height=5.0,
         waterside_ground_level=0.0,
@@ -72,8 +72,8 @@ def valid_input_profile() -> Iterator[KoswatInputProfileBase]:
     )
 
 
-@pytest.fixture
-def valid_piping_berm_calculator(
+@pytest.fixture(name="valid_piping_berm_calculator")
+def _get_valid_piping_berm_calculator_fixture(
     valid_scenario: KoswatScenario,
     valid_reinforcement_settings: KoswatReinforcementSettings,
 ) -> Iterator[PipingBermCalculator]:
