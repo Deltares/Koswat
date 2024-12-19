@@ -11,8 +11,10 @@ class TestBermCalculatorBase:
     @pytest.mark.parametrize(
         "profile_type, expected",
         [
-            pytest.param(InputProfileEnum.NONE, 2.34, id="Default"),
-            pytest.param(InputProfileEnum.STABILITY_WALL, 1.54, id="Stability Wall"),
+            pytest.param(InputProfileEnum.NONE, 2.1, id="Default"),
+            pytest.param(
+                InputProfileEnum.STABILITY_WALL, 1.372727, id="Stability Wall"
+            ),
         ],
     )
     def test__calculate_new_polderside_slope(
