@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import List, Optional
-
 from matplotlib import pyplot
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
@@ -27,20 +25,20 @@ class KoswatLayersWrapperPlot(KoswatPlotProtocol):
 
     @classmethod
     def with_layers_list(
-        cls, layers_list: List[KoswatLayerProtocol]
+        cls, layers_list: list[KoswatLayerProtocol]
     ) -> KoswatLayersWrapperPlot:
         """
         Class method to aid the usage of this class with unrelated layers from different wrappers.
 
         Args:
-            layers_list (List[KoswatLayerProtocol]): List of layers to wrap just for plotting.
+            layers_list (list[KoswatLayerProtocol]): List of layers to wrap just for plotting.
 
         Returns:
             KoswatLayersWrapperPlot: Initialized valid instance with custom intenal wrapper `PlotLayersWrapper`.
         """
 
         class PlotLayersWrapper(KoswatLayersWrapperProtocol):
-            layers: List[KoswatLayerProtocol]
+            layers: list[KoswatLayerProtocol]
 
         _plot = cls()
         _wrapper = PlotLayersWrapper()

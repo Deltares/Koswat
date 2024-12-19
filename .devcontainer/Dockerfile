@@ -1,5 +1,5 @@
-# To build this docker run:
-# `docker build -t koswat_dev`
+# To build this docker run (from the top checkout dir):
+# `docker build -t koswat_dev .devcontainer`
 # To run the docker for pytest:
 # `docker run -v {your_koswat_checkout_dir}:/usr/src/app/ -v {koswat_env_dir}:/usr/src/.env -t koswat_dev`
 # `poetry install`
@@ -19,11 +19,11 @@ ARG CONDA_ENV="${SRC_ROOT}/.env"
 # This location needs to be mounted with your koswat checout:
 # -v {your_koswat_checkout_dir}:/usr/src/app
 WORKDIR $SRC_ROOT/app
-COPY environment.yml $SRC_ROOT/.config/environment.yml
+COPY environment.yml $SRC_ROOT/.devcontainer/environment.yml
 
 RUN conda init bash \
     && . ~/.bashrc \
-    && conda env create -f $SRC_ROOT/.config/environment.yml -p $CONDA_ENV
+    && conda env create -f $SRC_ROOT/.devcontainer/environment.yml -p $CONDA_ENV
 
 # Activate conda environment
 ENV PATH $CONDA_ENV/bin:$PATH

@@ -1,7 +1,7 @@
 ---
 name: New Release Request
 description: Suggest a release for Koswat
-labels: [enhancement, "triage required"]
+labels: [release, "triage required"]
 type: task
 projects: ["Deltares/9"]
 
