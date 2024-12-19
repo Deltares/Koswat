@@ -66,7 +66,7 @@ class PipingWallInputProfileCalculation(
     def _determine_construction_type(
         transition: float, construction_length: float
     ) -> ConstructionTypeEnum | None:
-        if construction_length == 0:
+        if construction_length == 0.0:
             return None
         if construction_length <= transition:
             return ConstructionTypeEnum.CB_DAMWAND
