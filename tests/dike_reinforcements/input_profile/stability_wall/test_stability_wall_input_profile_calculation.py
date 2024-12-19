@@ -1,7 +1,12 @@
+from dataclasses import dataclass
+
 import pytest
 
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
+    KoswatReinforcementSettings,
+)
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
     KoswatStabilityWallSettings,
 )
@@ -14,6 +19,9 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 )
 from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile_calculation import (
     StabilityWallInputProfileCalculation,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
+    ReinforcementProfile,
 )
 
 
@@ -28,156 +36,142 @@ class TestStabilityWallInputProfileCalculation:
         assert isinstance(_calculation, BuilderProtocol)
 
     @pytest.mark.parametrize(
-        "soil_polderside_berm_width, expected",
+        "seepage_length, stab_wall, expected",
         [
             pytest.param(
-                0,
-                (13.5, ConstructionTypeEnum.DAMWAND_VERANKERD),
-                id="soil_polderside_berm_width=0",
+                0.0,
+                True,
+                13.5,
+                id="seepage_length=0_stab_wall=True",
+            ),
+            pytest.param(
+                0.0,
+                False,
+                0.0,
+                id="seepage_length=0_stab_wall=False",
             ),
             pytest.param(
                 30.0,
-                (14.5, ConstructionTypeEnum.DIEPWAND),
-                id="soil_polderside_berm_width=30",
+                True,
+                14.5,
+                id="seepage_length=30_stab_wall=True",
+            ),
+            pytest.param(
+                30.0,
+                False,
+                9.0,
+                id="seepage_length=30_stab_wall=False",
             ),
         ],
     )
-    def test_calculate_length_type_stability_wall(
+    def test__calculate_length_stability_wall(
         self,
-        soil_polderside_berm_width: float,
-        expected: tuple[float, ConstructionTypeEnum],
+        seepage_length: float,
+        stab_wall: bool,
+        expected: float,
     ):
+        @dataclass
         class MockInputData(KoswatInputProfileProtocol):
+            polderside_ground_level: float
             pleistocene: float
             aquifer: float
 
+        @dataclass
         class MockSettings(KoswatStabilityWallSettings):
             min_length_stability_wall: float
             max_length_stability_wall: float
 
         # 1. Define test data.
-        _calculator = StabilityWallInputProfileCalculation()
-        _input_data = MockInputData()
-        _input_data.pleistocene = -5
-        _input_data.aquifer = -2
-        _stability_wall_settings = MockSettings()
-        _stability_wall_settings.min_length_stability_wall = 0
-        _stability_wall_settings.max_length_stability_wall = 99
-        _stability_wall_settings.transition_sheetpile_diaphragm_wall = 14
-        _soil_polderside_berm_width = soil_polderside_berm_width
+        _input_data = MockInputData(
+            polderside_ground_level=1.0, pleistocene=-5.0, aquifer=-2.0
+        )
+        _stability_wall_settings = MockSettings(
+            min_length_stability_wall=0,
+            max_length_stability_wall=99,
+        )
         _new_crest_height = 8
 
         # 2. Run test.
-        _length = _calculator._calculate_length_stability_wall(
+        _result = StabilityWallInputProfileCalculation._calculate_length_stability_wall(
             _input_data,
             _stability_wall_settings,
-            _soil_polderside_berm_width,
+            seepage_length,
+            stab_wall,
             _new_crest_height,
         )
-        _type = _calculator._determine_construction_type(
-            _stability_wall_settings.transition_sheetpile_diaphragm_wall, _length
-        )
-        _result = (_length, _type)
 
         # 3. Verify expectations
         assert _result == expected
 
-    def test_calculate_new_crest_height(self):
-        class MockInputData(KoswatInputProfileProtocol):
-            crest_height: float
-
+    @pytest.mark.parametrize(
+        "construction_length, expected",
+        [
+            pytest.param(0.0, None, id="length = 0"),
+            pytest.param(
+                10.0,
+                ConstructionTypeEnum.DAMWAND_VERANKERD,
+                id="0 < length < transition",
+            ),
+            pytest.param(20.0, ConstructionTypeEnum.DIEPWAND, id="length > transition"),
+        ],
+    )
+    def test__determine_construction_type(
+        self, construction_length: float, expected: ConstructionTypeEnum | None
+    ):
         # 1. Define test data.
-        _calculator = StabilityWallInputProfileCalculation()
-        _input_data = MockInputData()
-        _input_data.crest_height = 30
-        _scenario = KoswatScenario()
-        _scenario.d_h = 12
-        _expected_result = 42
+        _transition = 15.0
 
-        # 2. Run test.
-        _result = _calculator._calculate_new_crest_height(_input_data, _scenario)
+        # 2. Run test
+        _result = StabilityWallInputProfileCalculation._determine_construction_type(
+            _transition, construction_length
+        )
 
         # 3. Verify expectations
-        assert _result == _expected_result
+        assert _result == expected
 
-    def test_calculate_new_polderside_slope(self):
-        class MockInputData(KoswatInputProfileProtocol):
-            crest_height: float
-            polderside_ground_level: float
-            polderside_slope: float
-            crest_width: float
-
-        # 1. Define test data.
-        _calculator = StabilityWallInputProfileCalculation()
-        _input_data = MockInputData()
-        _input_data.crest_height = 30
-        _input_data.polderside_ground_level = 2.3
-        _input_data.polderside_slope = 4.5
-        _input_data.crest_width = 5.6
-        _scenario = KoswatScenario()
-        _scenario.d_h = 12
-        _scenario.crest_width = 6.7
-        _scenario.waterside_slope = 7.8
-        _expected_result = 2
-
-        # 2. Run test.
-        _result = _calculator._calculate_new_polderside_slope(_input_data, _scenario)
-
-        # 3. Verify expectations
-        assert _result == _expected_result
-
-    def test_calculate_new_input_profile(self):
-        class MockInputData(KoswatInputProfileProtocol):
-            dike_section: str
-            crest_height: float
-            polderside_berm_width: float
-            polderside_ground_level: float
-            polderside_slope: float
-            crest_width: float
-            waterside_berm_width: float
-            waterside_slope: float
-            ground_price_builtup: float
-            ground_price_unbuilt: float
-            factor_settlement: float
-            pleistocene: float
-            aquifer: float
-
+    def test_build(self, valid_input_data: KoswatInputProfileProtocol):
+        @dataclass
         class MockSettings(KoswatStabilityWallSettings):
             min_length_stability_wall: float
             max_length_stability_wall: float
+            transition_sheetpile_diaphragm_wall: float
 
         # 1. Define test data.
         _calculator = StabilityWallInputProfileCalculation()
-        _input_data = MockInputData()
-        _input_data.dike_section = "mocked_section"
-        _input_data.crest_height = 30
-        _input_data.polderside_berm_width = 8.9
-        _input_data.polderside_ground_level = 2.3
-        _input_data.polderside_slope = 4.5
-        _input_data.crest_width = 5.6
-        _input_data.waterside_ground_level = 6.7
-        _input_data.waterside_berm_height = 7.8
-        _input_data.waterside_berm_width = 8.9
-        _input_data.waterside_slope = 3.4
-        _input_data.ground_price_builtup = 150
-        _input_data.ground_price_unbuilt = 10
-        _input_data.factor_settlement = 1.2
-        _input_data.pleistocene = -6.7
-        _input_data.aquifer = -2.3
-        _stability_wall_settings = MockSettings()
-        _stability_wall_settings.min_length_stability_wall = 0
-        _stability_wall_settings.max_length_stability_wall = 99
-        _scenario = KoswatScenario()
-        _scenario.d_h = 12
-        _scenario.crest_width = 6.7
-        _scenario.waterside_slope = 7.8
+        _calculator.base_profile = ReinforcementProfile(input_data=valid_input_data)
+        _reinforcement_settings = KoswatReinforcementSettings(
+            stability_wall_settings=MockSettings(
+                min_length_stability_wall=0,
+                max_length_stability_wall=99,
+                transition_sheetpile_diaphragm_wall=15,
+            )
+        )
+        _calculator.reinforcement_settings = _reinforcement_settings
+        _calculator.scenario = KoswatScenario(
+            d_h=12.0, crest_width=6.7, waterside_slope=7.8
+        )
 
         # 2. Run test.
-        _result = _calculator._calculate_new_input_profile(
-            _input_data, _stability_wall_settings, _scenario
-        )
+        _result = _calculator.build()
 
         # 3. Verify expectations
         assert isinstance(_result, StabilityWallInputProfile)
         assert isinstance(_result, KoswatInputProfileBase)
         assert isinstance(_result, KoswatInputProfileProtocol)
+
+        assert _result.dike_section == "mocked_section"
+        assert _result.waterside_ground_level == 6.7
+        assert _result.waterside_slope == 7.8
+        assert _result.waterside_berm_height == 19.8
+        assert _result.waterside_berm_width == 8.9
+        assert _result.crest_height == 42
+        assert _result.crest_width == 6.7
+        assert _result.polderside_slope == pytest.approx(0.981108)
+        assert _result.polderside_berm_height == 2.3
+        assert _result.polderside_berm_width == 0.0
+        assert _result.polderside_ground_level == 2.3
+        assert _result.ground_price_builtup == 150
+        assert _result.ground_price_unbuilt == 10
+        assert _result.factor_settlement == 1.2
+        assert _result.pleistocene == -6.7
+        assert _result.aquifer == -2.3

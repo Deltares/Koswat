@@ -16,20 +16,8 @@ from koswat.configuration.io.koswat_input_profile_list_importer import (
     KoswatInputProfileListImporter,
 )
 from koswat.configuration.settings import KoswatScenario
-from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
-    KoswatCofferdamSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings import (
-    KoswatPipingWallSettings,
-)
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
-    KoswatSoilSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
 )
 from koswat.dike.characteristic_points.characteristic_points_builder import (
     CharacteristicPointsBuilder,

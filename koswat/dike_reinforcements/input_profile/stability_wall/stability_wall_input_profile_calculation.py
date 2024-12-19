@@ -1,17 +1,16 @@
+from dataclasses import asdict
+
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
-)
-from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
-    KoswatSoilSettings,
 )
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
     KoswatStabilityWallSettings,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
+from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
     ReinforcementInputProfileCalculationBase,
 )
@@ -20,6 +19,15 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 )
 from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile import (
     StabilityWallInputProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculated_factors import (
+    BermCalculatedFactors,
+)
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_factory import (
+    BermCalculatorFactory,
+)
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.no_berm_calculator import (
+    NoBermCalculator,
 )
 
 
@@ -35,8 +43,8 @@ class StabilityWallInputProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
+    @staticmethod
     def _calculate_length_stability_wall(
-        self,
         old_data: KoswatInputProfileProtocol,
         stability_wall_settings: KoswatStabilityWallSettings,
         seepage_length: float,
@@ -77,161 +85,77 @@ class StabilityWallInputProfileCalculation(
             1,
         )
 
-    def _calculate_new_polderside_slope(
-        self,
-        base_data: KoswatInputProfileBase,
-        scenario: KoswatScenario,
-        stability_wall_settings: KoswatStabilityWallSettings,
-        _dikebase_piping_old: float,
-    ) -> float:
-        _operand = (
-            _dikebase_piping_old
-            - scenario.d_h * scenario.waterside_slope
-            - scenario.crest_width
-        )
-        _dividend = (
-            base_data.crest_height - base_data.polderside_ground_level + scenario.d_h
-        )
-        return max(
-            stability_wall_settings.steepening_polderside_slope, _operand / _dividend
-        )
-
+    @staticmethod
     def _determine_construction_type(
-        self,
-        overgang: float,
+        transition: float,
         construction_length: float,
     ) -> ConstructionTypeEnum | None:
-        if construction_length == 0:
+        if construction_length == 0.0:
             return None
-        elif construction_length <= overgang:
+        if construction_length <= transition:
             return ConstructionTypeEnum.DAMWAND_VERANKERD
-        else:
-            return ConstructionTypeEnum.DIEPWAND
-
-    def _calculate_new_input_profile(
-        self,
-        base_data: KoswatInputProfileProtocol,
-        soil_settings: KoswatSoilSettings,
-        stability_wall_settings: KoswatStabilityWallSettings,
-        scenario: KoswatScenario,
-    ) -> StabilityWallInputProfile:
-        _new_data = StabilityWallInputProfile()
-        _new_data.dike_section = base_data.dike_section
-        _new_data.waterside_ground_level = base_data.waterside_ground_level
-        _new_data.polderside_ground_level = base_data.polderside_ground_level
-        _new_data.waterside_slope = scenario.waterside_slope
-        _new_data.waterside_berm_height = (
-            self._calculate_soil_new_waterside_berm_height(base_data, scenario)
-        )
-        _new_data.waterside_berm_width = base_data.waterside_berm_width
-        _new_data.crest_height = self._calculate_soil_new_crest_height(
-            base_data, scenario
-        )
-        _new_data.crest_width = scenario.crest_width
-
-        _dike_height_old = base_data.crest_height - base_data.polderside_ground_level
-        _berm_height_old = (
-            base_data.polderside_berm_height - base_data.polderside_ground_level
-        )
-        _berm_factor_old = _berm_height_old / _dike_height_old
-
-        if _berm_factor_old > soil_settings.max_berm_height_factor:
-            _berm_old_is_stability = True
-        else:
-            _berm_old_is_stability = False
-
-        _dikebase_stability_old = (
-            base_data.crest_width
-            + _dike_height_old * base_data.polderside_slope
-            + _berm_old_is_stability * base_data.polderside_berm_width
-        )
-        _dikebase_piping_old = (
-            base_data.crest_width
-            + _dike_height_old * base_data.polderside_slope
-            + base_data.polderside_berm_width
-        )
-
-        _dike_height_new = _new_data.crest_height - _new_data.polderside_ground_level
-        _dikebase_heigth_new = (
-            scenario.d_h * _new_data.waterside_slope
-            + _new_data.crest_width
-            + _dike_height_new * base_data.polderside_slope
-        )
-        _dikebase_stability_new = _dikebase_stability_old + scenario.d_s
-        # _dikebase_piping_new = max(
-        #     _dikebase_piping_old, _dikebase_heigth_new, _dikebase_stability_new
-        # )
-        _dikebase_piping_needed = _dikebase_piping_old + scenario.d_p
-
-        # steepening of slope polderside when dikebase height or stability is outside of existing profile
-        if max(_dikebase_heigth_new, _dikebase_stability_new) > _dikebase_piping_old:
-            # stability wall is neccesary here
-            _stab_wall = True
-            _new_data.polderside_berm_width = 0
-            _new_data.polderside_berm_height = base_data.polderside_ground_level
-            _new_data.polderside_slope = self._calculate_new_polderside_slope(base_data, scenario, stability_wall_settings, _dikebase_piping_old)
-        else:
-            # height & stab measure soil fits within the current profile, no wall neccesary
-            _stab_wall = False
-            # Do we have an existing piping berm remaining after the reinforcement?
-            if max(_dikebase_heigth_new, _dikebase_stability_new) < _dikebase_piping_old:
-                _new_data.polderside_berm_width = _dikebase_piping_old - max(_dikebase_heigth_new, _dikebase_stability_new)
-                _new_data.polderside_berm_height = base_data.polderside_berm_height
-                _new_data.polderside_slope = self._calculate_soil_new_polderside_slope(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
-            else:
-                # Is measure for stability neccesary?
-                if _dikebase_stability_new > _dikebase_heigth_new:
-                    # in case of existing stab berm
-                    if _berm_old_is_stability:
-                        _new_data.polderside_berm_width = _dikebase_stability_new - _dikebase_heigth_new
-                        _new_data.polderside_berm_height = _berm_factor_old * _dike_height_new + _new_data.polderside_ground_level
-                        _new_data.polderside_slope = base_data.polderside_slope
-                    else:
-                        _new_data.polderside_berm_width = 0
-                        _new_data.polderside_berm_height = base_data.polderside_ground_level
-                        _new_data.polderside_slope = self._calculate_soil_new_polderside_slope(base_data, scenario, _dikebase_heigth_new, _dikebase_stability_new)
-                else:
-                    _new_data.polderside_berm_width = 0
-                    _new_data.polderside_berm_height = base_data.polderside_ground_level
-                    _new_data.polderside_slope = base_data.polderside_slope
-
-        _new_data.ground_price_builtup = base_data.ground_price_builtup
-        _new_data.ground_price_unbuilt = base_data.ground_price_unbuilt
-        _new_data.factor_settlement = base_data.factor_settlement
-        _new_data.pleistocene = base_data.pleistocene
-        _new_data.aquifer = base_data.aquifer
-
-        _dikebase_piping_realized = (
-            scenario.d_h * _new_data.waterside_slope
-            + _new_data.crest_width
-            + _dike_height_new * _new_data.polderside_slope
-            + _new_data.polderside_berm_width
-        )
-        _seepage_length = max(_dikebase_piping_needed - _dikebase_piping_realized, 0)
-        _new_data.construction_length = self._calculate_length_stability_wall(
-            base_data,
-            stability_wall_settings,
-            _seepage_length,
-            _stab_wall,
-            _new_data.crest_height,
-        )
-        _new_data.construction_type = self._determine_construction_type(
-            stability_wall_settings.transition_sheetpile_diaphragm_wall,
-            _new_data.construction_length,
-        )
-        _new_data.soil_surtax_factor = stability_wall_settings.soil_surtax_factor
-        _new_data.constructive_surtax_factor = (
-            stability_wall_settings.constructive_surtax_factor
-        )
-        _new_data.land_purchase_surtax_factor = (
-            stability_wall_settings.land_purchase_surtax_factor
-        )
-        return _new_data
+        return ConstructionTypeEnum.DIEPWAND
 
     def build(self) -> StabilityWallInputProfile:
-        return self._calculate_new_input_profile(
+        _reinforced_data = self._get_reinforcement_profile(
+            StabilityWallInputProfile, self.base_profile.input_data, self.scenario
+        )
+        assert isinstance(_reinforced_data, StabilityWallInputProfile)
+
+        # Berm calculation
+        _calculated_factors = BermCalculatedFactors.from_calculation_input(
             self.base_profile.input_data,
-            self.reinforcement_settings.soil_settings,
-            self.reinforcement_settings.stability_wall_settings,
+            _reinforced_data,
+            self.reinforcement_settings,
             self.scenario,
         )
+        _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
+            InputProfileEnum.STABILITY_WALL, _calculated_factors
+        )
+        (
+            _reinforced_data.polderside_berm_width,
+            _reinforced_data.polderside_berm_height,
+            _reinforced_data.polderside_slope,
+        ) = asdict(
+            _polderside_berm_calculator.calculate(
+                self.base_profile.input_data, _reinforced_data
+            )
+        ).values()
+
+        # Construction calculations
+        _dikebase_piping_realized = (
+            self.scenario.d_h * _reinforced_data.waterside_slope
+            + _reinforced_data.crest_width
+            + _polderside_berm_calculator.dike_height_new
+            * _reinforced_data.polderside_slope
+            + _reinforced_data.polderside_berm_width
+        )
+        _seepage_length = max(
+            _polderside_berm_calculator.dikebase_piping_new - _dikebase_piping_realized,
+            0,
+        )
+        _stab_wall = isinstance(_polderside_berm_calculator, NoBermCalculator)
+        _reinforced_data.construction_length = self._calculate_length_stability_wall(
+            self.base_profile.input_data,
+            self.reinforcement_settings.stability_wall_settings,
+            _seepage_length,
+            _stab_wall,
+            _reinforced_data.crest_height,
+        )
+        _reinforced_data.construction_type = self._determine_construction_type(
+            self.reinforcement_settings.stability_wall_settings.transition_sheetpile_diaphragm_wall,
+            _reinforced_data.construction_length,
+        )
+
+        # Settings
+        _reinforced_data.soil_surtax_factor = (
+            self.reinforcement_settings.stability_wall_settings.soil_surtax_factor
+        )
+        _reinforced_data.constructive_surtax_factor = (
+            self.reinforcement_settings.stability_wall_settings.constructive_surtax_factor
+        )
+        _reinforced_data.land_purchase_surtax_factor = (
+            self.reinforcement_settings.stability_wall_settings.land_purchase_surtax_factor
+        )
+
+        return _reinforced_data
