@@ -8,6 +8,9 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculated_factors import (
+    BermCalculatedFactors,
+)
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_factory import (
     BermCalculatorFactory,
 )
@@ -32,23 +35,6 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.stability_
 
 
 class TestBermCalculatorFactory:
-    def test_initialize(
-        self,
-        valid_input_profile: KoswatInputProfileProtocol,
-        valid_scenario: KoswatScenario,
-        valid_reinforcement_settings: KoswatReinforcementSettings,
-    ):
-        # 1. Run test
-        _result = BermCalculatorFactory(
-            base_data=valid_input_profile,
-            reinforced_data=valid_input_profile,
-            scenario=valid_scenario,
-            reinforcement_settings=valid_reinforcement_settings,
-        )
-
-        # 2. Verify expectations
-        assert isinstance(_result, BermCalculatorFactory)
-
     @dataclass
     class BermCalculatorCase:
         piping_old: float = 0.0
@@ -155,28 +141,29 @@ class TestBermCalculatorFactory:
     @pytest.mark.parametrize("calculator_case", calculator_cases)
     def test_get_berm_calculator_returns_calculator(
         self,
-        valid_input_profile: KoswatInputProfileProtocol,
         valid_scenario: KoswatScenario,
         valid_reinforcement_settings: KoswatReinforcementSettings,
         calculator_case: BermCalculatorCase,
     ):
         # 1. Define test data
-        _factory = BermCalculatorFactory(
-            base_data=valid_input_profile,
-            reinforced_data=valid_input_profile,
-            scenario=valid_scenario,
+        _factors = BermCalculatedFactors(
             reinforcement_settings=valid_reinforcement_settings,
+            scenario=valid_scenario,
+            dikebase_piping_old=calculator_case.piping_old,
+            dikebase_piping_new_dict={
+                calculator_case.profile_type: calculator_case.piping_new,
+            },
+            dikebase_height_new=calculator_case.height_new,
+            dikebase_stability_new=calculator_case.stability_new,
+            berm_old_is_stability=calculator_case.is_stability,
+            berm_factor_old=None,
+            dike_height_new=None,
         )
-        _factory._dikebase_piping_old = calculator_case.piping_old
-        _factory._dikebase_piping_new_dict[
-            calculator_case.profile_type
-        ] = calculator_case.piping_new
-        _factory._dikebase_height_new = calculator_case.height_new
-        _factory._dikebase_stability_new = calculator_case.stability_new
-        _factory._berm_old_is_stability = calculator_case.is_stability
 
         # 2. Run test
-        _result = _factory.get_berm_calculator(calculator_case.profile_type)
+        _result = BermCalculatorFactory.get_berm_calculator(
+            calculator_case.profile_type, _factors
+        )
 
         # 3. Verify expectations
         assert isinstance(_result, BermCalculatorProtocol)

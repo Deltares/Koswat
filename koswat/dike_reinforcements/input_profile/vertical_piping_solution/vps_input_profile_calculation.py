@@ -16,6 +16,9 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input_profile import (
     VPSInputProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculated_factors import (
+    BermCalculatedFactors,
+)
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_factory import (
     BermCalculatorFactory,
 )
@@ -40,12 +43,15 @@ class VPSInputProfileCalculation(
         assert isinstance(_reinforced_data, VPSInputProfile)
 
         # Berm calculation
-        _polderside_berm_calculator = BermCalculatorFactory(
+        _calculated_factors = BermCalculatedFactors.from_calculation_input(
             self.base_profile.input_data,
             _reinforced_data,
             self.reinforcement_settings,
             self.scenario,
-        ).get_berm_calculator(InputProfileEnum.VPS)
+        )
+        _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
+            InputProfileEnum.VPS, _calculated_factors
+        )
         (
             _reinforced_data.polderside_berm_width,
             _reinforced_data.polderside_berm_height,
