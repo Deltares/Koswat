@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
@@ -109,9 +111,11 @@ class StabilityWallInputProfileCalculation(
             self.reinforced_data.polderside_berm_width,
             self.reinforced_data.polderside_berm_height,
             self.reinforced_data.polderside_slope,
-        ) = _polderside_berm_calculator.calculate(
-            self.base_profile.input_data, self.reinforced_data
-        )
+        ) = asdict(
+            _polderside_berm_calculator.calculate(
+                self.base_profile.input_data, self.reinforced_data
+            )
+        ).values()
 
         # Construction calculations
         _dikebase_piping_realized = (

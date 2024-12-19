@@ -5,6 +5,9 @@ from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_protocol import (
     BermCalculatorProtocol,
 )
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_result import (
+    BermCalculatorResult,
+)
 
 
 @dataclass
@@ -23,7 +26,7 @@ class KeepBermCalculator(BermCalculatorProtocol):
         self,
         base_data: KoswatInputProfileProtocol,
         reinforced_data: KoswatInputProfileProtocol,
-    ) -> tuple[float, float, float]:
+    ) -> BermCalculatorResult:
         _polderside_berm_width = (
             base_data.polderside_berm_width
         )  # maintain current berm polderside
@@ -32,7 +35,11 @@ class KeepBermCalculator(BermCalculatorProtocol):
         )
         _polderside_slope = self._calculate_new_keep_polderside_slope(base_data)
 
-        return (_polderside_berm_width, _polderside_berm_height, _polderside_slope)
+        return BermCalculatorResult(
+            berm_width=_polderside_berm_width,
+            berm_height=_polderside_berm_height,
+            slope=_polderside_slope,
+        )
 
     def _calculate_new_keep_polderside_berm_height(
         self, base_data: KoswatInputProfileProtocol
@@ -42,6 +49,7 @@ class KeepBermCalculator(BermCalculatorProtocol):
             base_data.polderside_berm_height - base_data.polderside_ground_level
         )
         _berm_factor_old = _berm_height_old / _dike_height_old
+
         return base_data.polderside_berm_height + _berm_factor_old * self.scenario.d_h
 
     def _calculate_new_keep_polderside_slope(

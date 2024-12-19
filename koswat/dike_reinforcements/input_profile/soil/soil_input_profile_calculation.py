@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
@@ -47,9 +49,11 @@ class SoilInputProfileCalculation(
             self.reinforced_data.polderside_berm_width,
             self.reinforced_data.polderside_berm_height,
             self.reinforced_data.polderside_slope,
-        ) = _polderside_berm_calculator.calculate(
-            self.base_profile.input_data, self.reinforced_data
-        )
+        ) = asdict(
+            _polderside_berm_calculator.calculate(
+                self.base_profile.input_data, self.reinforced_data
+            )
+        ).values()
 
         # Settings
         self.reinforced_data.soil_surtax_factor = (

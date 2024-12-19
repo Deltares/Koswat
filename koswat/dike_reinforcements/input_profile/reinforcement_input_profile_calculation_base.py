@@ -73,12 +73,14 @@ class ReinforcementInputProfileCalculationBase(ABC):
                 old_data.polderside_berm_height - old_data.polderside_ground_level
             )
         else:
-            _old_berm_height = 0
+            _old_berm_height = 0.0
+
         _max = max(
             soil_settings.min_berm_height,
             _old_berm_height,
             new_data.polderside_berm_width * soil_settings.factor_increase_berm_height,
         )
+
         return (
             min(
                 _max,

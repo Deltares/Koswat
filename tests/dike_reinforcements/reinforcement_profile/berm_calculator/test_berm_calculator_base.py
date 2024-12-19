@@ -2,8 +2,8 @@ import pytest
 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
-from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.default_berm_calculator import (
-    DefaultBermCalculator,
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.piping_berm_calculator import (
+    PipingBermCalculator,
 )
 
 
@@ -17,7 +17,7 @@ class TestBermCalculatorBase:
     )
     def test__calculate_new_polderside_slope(
         self,
-        valid_piping_berm_calculator: DefaultBermCalculator,
+        valid_piping_berm_calculator: PipingBermCalculator,
         valid_input_profile: KoswatInputProfileProtocol,
         profile_type: InputProfileEnum,
         expected: float,
@@ -36,7 +36,7 @@ class TestBermCalculatorBase:
     )
     def test__calculate_new_polderside_berm_height_piping(
         self,
-        valid_piping_berm_calculator: DefaultBermCalculator,
+        valid_piping_berm_calculator: PipingBermCalculator,
         valid_input_profile: KoswatInputProfileProtocol,
         extend_existing: bool,
         expected: float,

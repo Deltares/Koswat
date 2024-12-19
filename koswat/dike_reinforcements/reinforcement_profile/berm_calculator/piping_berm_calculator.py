@@ -7,6 +7,9 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_protocol import (
     BermCalculatorProtocol,
 )
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_result import (
+    BermCalculatorResult,
+)
 
 
 @dataclass
@@ -22,7 +25,7 @@ class PipingBermCalculator(BermCalculatorBase, BermCalculatorProtocol):
         self,
         base_data: KoswatInputProfileProtocol,
         reinforced_data: KoswatInputProfileProtocol,
-    ) -> tuple[float, float, float]:
+    ) -> BermCalculatorResult:
         _polderside_berm_width = self.dikebase_piping_new - max(
             self.dikebase_height_new, self.dikebase_stability_new
         )
@@ -44,4 +47,8 @@ class PipingBermCalculator(BermCalculatorBase, BermCalculatorProtocol):
                 False,
             )
 
-        return (_polderside_berm_width, _polderside_berm_height, _polderside_slope)
+        return BermCalculatorResult(
+            berm_width=_polderside_berm_width,
+            berm_height=_polderside_berm_height,
+            slope=_polderside_slope,
+        )

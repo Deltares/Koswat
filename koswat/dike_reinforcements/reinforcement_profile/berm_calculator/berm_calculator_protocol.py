@@ -1,6 +1,9 @@
 from typing import Protocol, runtime_checkable
 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_result import (
+    BermCalculatorResult,
+)
 
 
 @runtime_checkable
@@ -18,7 +21,7 @@ class BermCalculatorProtocol(Protocol):
         self,
         base_data: KoswatInputProfileProtocol,
         reinforced_data: KoswatInputProfileProtocol,
-    ) -> tuple[float, float, float]:
+    ) -> BermCalculatorResult:
         """
         Calculate the berm width, height and slope for the polderside or waterside of the dike.
 
@@ -27,5 +30,5 @@ class BermCalculatorProtocol(Protocol):
             reinforced_data (KoswatInputProfileProtocol): The reinforced profile data.
 
         Returns:
-            tuple[float, float, float]: The berm width, height and slope.
+            BermCalculatorResult: Object containing the berm width, height and slope.
         """
