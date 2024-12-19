@@ -62,7 +62,7 @@ exclude = '''
     | \.github          # root of the project
     | \.env
     | \.venv
-    | \.config
+    | \.devcontainer
     | .pytest_cache
     | .scannerwork
     | .vscode
@@ -75,7 +75,7 @@ exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
-skip = [".git", ".github", ".env", ".venv", ".config", ".pytest_cache", ".scannerwork", ".vscode", "site"]
+skip = [".git", ".github", ".env", ".venv", ".devcontainer", ".pytest_cache", ".scannerwork", ".vscode", "site"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
