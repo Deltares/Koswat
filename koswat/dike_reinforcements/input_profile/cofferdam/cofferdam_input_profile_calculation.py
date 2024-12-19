@@ -87,47 +87,47 @@ class CofferdamInputProfileCalculation(
         return _operand / _dividend
 
     def build(self) -> CofferDamInputProfile:
-        self.reinforced_data = self._get_reinforcement_profile(
+        _reinforced_data = self._get_reinforcement_profile(
             CofferDamInputProfile, self.base_profile.input_data, self.scenario
         )
-        assert isinstance(self.reinforced_data, CofferDamInputProfile)
+        assert isinstance(_reinforced_data, CofferDamInputProfile)
 
         # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(
             self.base_profile.input_data,
-            self.reinforced_data,
+            _reinforced_data,
             self.reinforcement_settings,
             self.scenario,
         ).get_berm_calculator(InputProfileEnum.COFFERDAM)
         (
-            self.reinforced_data.polderside_berm_width,
-            self.reinforced_data.polderside_berm_height,
-            self.reinforced_data.polderside_slope,
+            _reinforced_data.polderside_berm_width,
+            _reinforced_data.polderside_berm_height,
+            _reinforced_data.polderside_slope,
         ) = asdict(
             _polderside_berm_calculator.calculate(
-                self.base_profile.input_data, self.reinforced_data
+                self.base_profile.input_data, _reinforced_data
             )
         ).values()
 
         # Construction calculations
         _seepage_length = self.scenario.d_p
-        self.reinforced_data.construction_length = self._calculate_length_cofferdam(
+        _reinforced_data.construction_length = self._calculate_length_cofferdam(
             self.base_profile.input_data,
             self.reinforcement_settings.cofferdam_settings,
             _seepage_length,
-            self.reinforced_data.crest_height,
+            _reinforced_data.crest_height,
         )
-        self.reinforced_data.construction_type = self._determine_construction_type(
-            self.reinforced_data.construction_length
+        _reinforced_data.construction_type = self._determine_construction_type(
+            _reinforced_data.construction_length
         )
 
         # Settings
-        self.reinforced_data.soil_surtax_factor = (
+        _reinforced_data.soil_surtax_factor = (
             self.reinforcement_settings.cofferdam_settings.soil_surtax_factor
         )
-        self.reinforced_data.constructive_surtax_factor = (
+        _reinforced_data.constructive_surtax_factor = (
             self.reinforcement_settings.cofferdam_settings.constructive_surtax_factor
         )
-        self.reinforced_data.land_purchase_surtax_factor = None
+        _reinforced_data.land_purchase_surtax_factor = None
 
-        return self.reinforced_data
+        return _reinforced_data
