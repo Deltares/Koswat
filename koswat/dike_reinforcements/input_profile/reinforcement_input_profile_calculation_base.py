@@ -8,7 +8,6 @@ from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 
 
 class ReinforcementInputProfileCalculationBase(ABC):
-    reinforced_data: KoswatInputProfileProtocol
     """
     Abstract class to provide common functions to child classes
     """

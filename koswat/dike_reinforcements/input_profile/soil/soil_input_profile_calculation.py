@@ -33,35 +33,35 @@ class SoilInputProfileCalculation(
         self.scenario = None
 
     def build(self) -> SoilInputProfile:
-        self.reinforced_data = self._get_reinforcement_profile(
+        _reinforced_data = self._get_reinforcement_profile(
             SoilInputProfile, self.base_profile.input_data, self.scenario
         )
-        assert isinstance(self.reinforced_data, SoilInputProfile)
+        assert isinstance(_reinforced_data, SoilInputProfile)
 
         # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(
             self.base_profile.input_data,
-            self.reinforced_data,
+            _reinforced_data,
             self.reinforcement_settings,
             self.scenario,
         ).get_berm_calculator(InputProfileEnum.SOIL)
         (
-            self.reinforced_data.polderside_berm_width,
-            self.reinforced_data.polderside_berm_height,
-            self.reinforced_data.polderside_slope,
+            _reinforced_data.polderside_berm_width,
+            _reinforced_data.polderside_berm_height,
+            _reinforced_data.polderside_slope,
         ) = asdict(
             _polderside_berm_calculator.calculate(
-                self.base_profile.input_data, self.reinforced_data
+                self.base_profile.input_data, _reinforced_data
             )
         ).values()
 
         # Settings
-        self.reinforced_data.soil_surtax_factor = (
+        _reinforced_data.soil_surtax_factor = (
             self.reinforcement_settings.soil_settings.soil_surtax_factor
         )
-        self.reinforced_data.constructive_surtax_factor = None
-        self.reinforced_data.land_purchase_surtax_factor = (
+        _reinforced_data.constructive_surtax_factor = None
+        _reinforced_data.land_purchase_surtax_factor = (
             self.reinforcement_settings.soil_settings.land_purchase_surtax_factor
         )
 
-        return self.reinforced_data
+        return _reinforced_data

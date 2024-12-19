@@ -57,12 +57,12 @@ class TestBermCalculatorFactory:
         stability_new: float = 0.0
         is_stability: bool = False
         profile_type: InputProfileEnum = InputProfileEnum.NONE
-        calculator: type[BermCalculatorProtocol] = None
+        expected_calculator: type[BermCalculatorProtocol] = None
 
     calculator_cases = [
         pytest.param(
             BermCalculatorCase(
-                calculator=DefaultBermCalculator,
+                expected_calculator=DefaultBermCalculator,
             ),
             id="Default: Default",
         ),
@@ -71,7 +71,7 @@ class TestBermCalculatorFactory:
                 piping_new=10.0,
                 height_new=9.0,
                 stability_new=8.0,
-                calculator=PipingBermCalculator,
+                expected_calculator=PipingBermCalculator,
             ),
             id="Default: Piping",
         ),
@@ -80,7 +80,7 @@ class TestBermCalculatorFactory:
                 stability_new=10.0,
                 height_new=9.0,
                 is_stability=True,
-                calculator=StabilityBermCalculator,
+                expected_calculator=StabilityBermCalculator,
             ),
             id="Default: Stability",
         ),
@@ -88,14 +88,14 @@ class TestBermCalculatorFactory:
             BermCalculatorCase(
                 stability_new=10.0,
                 height_new=9.0,
-                calculator=NoBermCalculator,
+                expected_calculator=NoBermCalculator,
             ),
             id="Default: No Berm",
         ),
         pytest.param(
             BermCalculatorCase(
                 profile_type=InputProfileEnum.COFFERDAM,
-                calculator=KeepBermCalculator,
+                expected_calculator=KeepBermCalculator,
             ),
             id="Cofferdam profile: Keep",
         ),
@@ -105,7 +105,7 @@ class TestBermCalculatorFactory:
                 stability_new=9.0,
                 piping_old=8.0,
                 profile_type=InputProfileEnum.STABILITY_WALL,
-                calculator=NoBermCalculator,
+                expected_calculator=NoBermCalculator,
             ),
             id="Stability profile: No Berm 1",
         ),
@@ -115,7 +115,7 @@ class TestBermCalculatorFactory:
                 stability_new=9.0,
                 piping_old=11.0,
                 profile_type=InputProfileEnum.STABILITY_WALL,
-                calculator=PipingBermCalculator,
+                expected_calculator=PipingBermCalculator,
             ),
             id="Stability profile: Piping",
         ),
@@ -126,7 +126,7 @@ class TestBermCalculatorFactory:
                 piping_old=10.0,
                 profile_type=InputProfileEnum.STABILITY_WALL,
                 is_stability=True,
-                calculator=StabilityBermCalculator,
+                expected_calculator=StabilityBermCalculator,
             ),
             id="Stability profile: Stability",
         ),
@@ -136,7 +136,7 @@ class TestBermCalculatorFactory:
                 stability_new=10.0,
                 piping_old=10.0,
                 profile_type=InputProfileEnum.STABILITY_WALL,
-                calculator=NoBermCalculator,
+                expected_calculator=NoBermCalculator,
             ),
             id="Stability profile: No Berm 2",
         ),
@@ -146,7 +146,7 @@ class TestBermCalculatorFactory:
                 stability_new=9.0,
                 piping_old=10.0,
                 profile_type=InputProfileEnum.STABILITY_WALL,
-                calculator=DefaultBermCalculator,
+                expected_calculator=DefaultBermCalculator,
             ),
             id="Stability profile: Default",
         ),
@@ -180,4 +180,4 @@ class TestBermCalculatorFactory:
 
         # 3. Verify expectations
         assert isinstance(_result, BermCalculatorProtocol)
-        assert isinstance(_result, calculator_case.calculator)
+        assert isinstance(_result, calculator_case.expected_calculator)

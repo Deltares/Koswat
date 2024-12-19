@@ -73,25 +73,25 @@ class PipingWallInputProfileCalculation(
         return ConstructionTypeEnum.DAMWAND_ONVERANKERD
 
     def build(self) -> PipingWallInputProfile:
-        self.reinforced_data = self._get_reinforcement_profile(
+        _reinforced_data = self._get_reinforcement_profile(
             PipingWallInputProfile, self.base_profile.input_data, self.scenario
         )
-        assert isinstance(self.reinforced_data, PipingWallInputProfile)
+        assert isinstance(_reinforced_data, PipingWallInputProfile)
 
         # Berm calculation
         _polderside_berm_calculator = BermCalculatorFactory(
             self.base_profile.input_data,
-            self.reinforced_data,
+            _reinforced_data,
             self.reinforcement_settings,
             self.scenario,
         ).get_berm_calculator(InputProfileEnum.PIPING_WALL)
         (
-            self.reinforced_data.polderside_berm_width,
-            self.reinforced_data.polderside_berm_height,
-            self.reinforced_data.polderside_slope,
+            _reinforced_data.polderside_berm_width,
+            _reinforced_data.polderside_berm_height,
+            _reinforced_data.polderside_slope,
         ) = asdict(
             _polderside_berm_calculator.calculate(
-                self.base_profile.input_data, self.reinforced_data
+                self.base_profile.input_data, _reinforced_data
             )
         ).values()
 
@@ -102,25 +102,25 @@ class PipingWallInputProfileCalculation(
         _seepage_length = max(
             _dikebase_piping_needed - _polderside_berm_calculator.dikebase_piping_new, 0
         )
-        self.reinforced_data.construction_length = self._calculate_length_piping_wall(
+        _reinforced_data.construction_length = self._calculate_length_piping_wall(
             self.base_profile.input_data,
             self.reinforcement_settings.piping_wall_settings,
             _seepage_length,
         )
-        self.reinforced_data.construction_type = self._determine_construction_type(
+        _reinforced_data.construction_type = self._determine_construction_type(
             self.reinforcement_settings.piping_wall_settings.transition_cbwall_sheetpile,
-            self.reinforced_data.construction_length,
+            _reinforced_data.construction_length,
         )
 
         # Settings
-        self.reinforced_data.soil_surtax_factor = (
+        _reinforced_data.soil_surtax_factor = (
             self.reinforcement_settings.piping_wall_settings.soil_surtax_factor
         )
-        self.reinforced_data.constructive_surtax_factor = (
+        _reinforced_data.constructive_surtax_factor = (
             self.reinforcement_settings.piping_wall_settings.constructive_surtax_factor
         )
-        self.reinforced_data.land_purchase_surtax_factor = (
+        _reinforced_data.land_purchase_surtax_factor = (
             self.reinforcement_settings.piping_wall_settings.land_purchase_surtax_factor
         )
 
-        return self.reinforced_data
+        return _reinforced_data
