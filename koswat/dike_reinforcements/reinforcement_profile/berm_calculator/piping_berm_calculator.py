@@ -30,8 +30,9 @@ class PipingBermCalculator(BermCalculatorBase, BermCalculatorProtocol):
             self.dikebase_height_new, self.dikebase_stability_new
         )
         _polderside_slope = self._calculate_new_polderside_slope(base_data, None)
-        # extend existing berm?
+        # Store value in reinforced_data to be used in _calculate_new_polderside_berm_height_piping
         reinforced_data.polderside_berm_width = _polderside_berm_width
+        # Extend existing berm?
         if base_data.polderside_berm_width > 0 and self.dikebase_piping_old > max(
             self.dikebase_height_new, self.dikebase_stability_new
         ):

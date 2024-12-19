@@ -6,7 +6,6 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 )
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
@@ -17,7 +16,6 @@ class ReinforcementInputProfileCalculationProtocol(BuilderProtocol, Protocol):
     base_profile: KoswatProfileProtocol
     reinforcement_settings: KoswatReinforcementSettings
     scenario: KoswatScenario
-    reinforced_data: KoswatInputProfileBase
 
     def build(self) -> ReinforcementInputProfileProtocol:
         """
