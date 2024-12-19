@@ -180,9 +180,9 @@ class TestQuantityCostParametersBuilder:
 
     def _get_mocked_reinforcement(self) -> ReinforcementProfileProtocol:
         class MockedReinforcementInput(ReinforcementInputProfileProtocol):
-            ground_price_builtup: float = 0
-            ground_price_unbuilt: float = 0
-            construction_length: float = 0
+            ground_price_builtup: float = 0.0
+            ground_price_unbuilt: float = 0.0
+            construction_length: float = 0.0
             construction_type: ConstructionTypeEnum | None = None
             soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
             constructive_surtax_factor: SurtaxFactorEnum | None = None
