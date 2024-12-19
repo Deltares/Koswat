@@ -12,7 +12,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 
 @dataclass
 class SoilInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol):
-    construction_length: float = 0
+    construction_length: float = 0.0
     construction_type: ConstructionTypeEnum | None = None
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     constructive_surtax_factor: SurtaxFactorEnum | None = None

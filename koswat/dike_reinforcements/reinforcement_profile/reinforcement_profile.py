@@ -16,7 +16,6 @@ class ReinforcementProfile(ReinforcementProfileProtocol, KoswatProfileBase):
     input_data: ReinforcementInputProfileProtocol
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
-    new_ground_level_surface: float
 
     @property
     def new_ground_level_surface(self) -> float:

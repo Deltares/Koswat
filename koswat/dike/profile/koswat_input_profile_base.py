@@ -15,10 +15,10 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     waterside_berm_width: float = math.nan
     crest_height: float = math.nan
     crest_width: float = math.nan
+    polderside_ground_level: float = math.nan
     polderside_slope: float = math.nan
     polderside_berm_height: float = math.nan
     polderside_berm_width: float = math.nan
-    polderside_ground_level: float = math.nan
     ground_price_builtup: float = math.nan
     ground_price_unbuilt: float = math.nan
     factor_settlement: float = math.nan
