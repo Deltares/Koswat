@@ -8,7 +8,7 @@
   ],
   // `git config --global core.autocrlf true` prevents git from showing differences on ALL files when running
   // in the koswat (linux) container
-  "postStartCommand": "poetry install & git config --global core.autocrlf true",
+  "postStartCommand": "bash .devcontainer/postCreateCommand.sh",
   "customizations": {
     "vscode": {
       "extensions": [
