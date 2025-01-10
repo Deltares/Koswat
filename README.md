@@ -52,7 +52,7 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 
 ### Development mode
 
-Please check our related [contributing wiki page](https://github.com/Deltares/Koswat/wiki/Contributing#setting-up-the-development-environment)
+Please check our related [contributing wiki page](https://github.com/Deltares/Koswat/wiki/Contributing)
 
 #### Read the docs documentation.
 
