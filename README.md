@@ -51,28 +51,8 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 
 
 ### Development mode
-1. Checkout the code from github in a directory of your choice. You can either do this by downloading the source zip or (better) using git, for instance:
-    ```bash
-    cd C:\repos
-    git clone https://github.com/Deltares/Koswat.git koswat
-    ```
-    | Note, the above steps are based on a Windows setup. If you are not familiar with Git we recommend using the [GitHub desktop tool](https://desktop.github.com/).
 
-2. Navigate to your Koswat repository and then install the koswat package with your preferred step:
-
-    1. With [Anaconda (miniforge)](https://conda-forge.org/miniforge/) (our recommendation):    
-        ```bash
-        cd C:\repos\koswat
-        conda env create -f .devcontainer\environment.yml
-        conda activate koswat_env
-        poetry install
-        ```
-    2. With `pypi`:
-        ```bash
-        cd C:\repos\koswat
-        pip install .
-        ```
-        | Note, this will not install `Poetry`, which is required to properly maintain the interdependencies of `Koswat` tool.
+Please check our related [contributing wiki page](#https://github.com/Deltares/Koswat/wiki/Contributing#setting-up-the-development-environment)
 
 #### Read the docs documentation.
 
