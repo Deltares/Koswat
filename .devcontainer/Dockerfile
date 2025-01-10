@@ -27,6 +27,7 @@ RUN conda init bash \
 
 # Activate conda environment
 ENV PATH=$CONDA_ENV/bin:$PATH
+RUN conda activate ${CONDA_ENV} & poetry config virtualenvs.create false
 RUN echo conda init && echo "conda activate ${CONDA_ENV}" >>  ~/.bashrc
 # This ensures it's available also for `sh` instead of `bash`.
 RUN echo "conda activate ${CONDA_ENV}" > ~/.profile
