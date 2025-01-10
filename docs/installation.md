@@ -13,6 +13,7 @@ pip install git+https://github.com/Deltares/Koswat.git
 
 2. Specific Koswat version, add `@version-tag` to the previous command, for instance install tag `v0.11.0` (__MVP__ pre-release):
 ```bash
+
 pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 ```
 | You can also do the above with a commit-hash for development branches (e.g.:`@0504c06`)
