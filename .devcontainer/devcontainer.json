@@ -11,8 +11,8 @@
   // `git config --global core.autocrlf true` prevents git from showing differences on ALL files when running
   // in the koswat (linux) container
   // `git config --global --add safe.directory ${containerWorkspaceFolder}` allows git to sync with the devcontainer.
-  "postStartCommand": "poetry install & git config --global core.autocrlf true & git config --global --add safe.directory ${containerWorkspaceFolder}",
-  // "postStartCommand": "bash .devcontainer/postCreateCommand.sh",
+  // "postStartCommand": "poetry install & git config --global core.autocrlf true & git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "postStartCommand": "bash .devcontainer/postCreateCommand.sh",
   "customizations": {
     "vscode": {
       "extensions": [
