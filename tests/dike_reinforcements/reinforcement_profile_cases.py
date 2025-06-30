@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from koswat.configuration.settings.koswat_general_settings import ConstructionTypeEnum
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
@@ -50,8 +50,12 @@ class ReinforcementProfileCaseCombination:
     reinforcement_profile_type: type[ReinforcementProfileProtocol]
     expectation: ReinforcementProfileCaseExpectation
     p4_x_coordinate: int = 0
-    koswat_layers_case: LayersTestCase = LayersCases.without_layers
-    input_profile_case: KoswatInputProfileProtocol = InputProfileCases.default
+    koswat_layers_case: LayersTestCase = field(
+        default_factory=lambda: LayersCases.without_layers
+    )
+    input_profile_case: KoswatInputProfileProtocol = field(
+        default_factory=lambda: InputProfileCases.default
+    )
 
 
 reinforcement_profile_cases = [
