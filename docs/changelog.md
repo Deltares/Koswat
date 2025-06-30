@@ -33,6 +33,41 @@
 - docu corrections
 - docu corrections
 
+## v0.15.0 (2025-06-27)
+
+### Feat
+
+- extend calculations for having berm as part of input profile (#218)
+- use costs_with_surtax in infra strategy (#229)
+- 213 extend summary report with reinforcement order (#215)
+- generate strategies intermediate results (#208)
+- create strategy to select reinforcements based on subclusters (#206)
+- 90 implement logic to sort/filter the reinforcement types (#202)
+- create new strategy based on infrastructures (#197)
+- 188 add reinforcements to strategy_input (#201)
+- Modify strategylocationreinforcement to include all related costs (#199)
+- export locations report into a shp file instead (#185)
+- [161] Connect koswat workflow with infrastructures cost export (#167)
+- update summarycostscsvfombuilder (#166)
+- 155 create new SummaryInfrastructureCostsCsvFomBuilder (#157)
+- [132] add infrastructure cost to the multilocation profile report (#151)
+- 143 add the new input profile to the corresponding builders include expanding ini (#144)
+- refactor surroundings fom and dom [132] (#140)
+- 136 add new measure (profile)
+- 129 remove deprecated shapely.geometry.almost_equals
+
+### Fix
+
+- postcreatecommand
+- correct construction of StrategyReinforcementInput instances (#228)
+- 224 ordering strategy not as expected (#225)
+- Corrected buffering lower limit and max reinforcement for clustering. (#222)
+- improve performance infra cost summation (#205)
+- 180 adjust calculation wall length for stability screen and cofferdam (#187)
+- 171 total infrastructure cost in summary costcsv seems to be wrong (#182)
+- 177 errors when getting total infrastructure per zone (#178)
+- surroundings matrix does not include entries between infrastructures (#173)
+
 ## v0.14.1 (2023-11-08)
 
 ## v0.14.0 (2023-11-07)
