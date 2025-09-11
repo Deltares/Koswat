@@ -18,8 +18,14 @@ classifiers = [
   'Topic :: Scientific/Engineering :: Physics',
   'Topic :: Scientific/Engineering :: Hydrology',
 ]
+
 dependencies = ["click", "matplotlib", "pyshp", "shapely", "geopandas"]
 requires-python = ">= 3.13, <3.14"
+
+[project.urls]
+DOCUMENTATION = "https://deltares.github.io/Koswat/"
+Repository = "https://github.com/Deltares/koswat"
+
 
 [build-system]
 build-backend = "hatchling.build"
@@ -27,7 +33,7 @@ requires = ["hatchling"]
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
 
 [tool.pixi.pypi-dependencies]
 koswat = { path = ".", editable = true }
@@ -57,21 +63,25 @@ mkdocs = ">=1.4.3, <2"
 myst-parser = ">=1.0.0, <2"
 mkdocstrings-python = ">=1.0.0, <2"
 
+[tool.pixi.feature.docs.tasks]
+build-docs = "mkdocs"
+
 [tool.pixi.feature.dev.dependencies]
 isort = ">=5.10.1, <6"
 urllib3 = "1.26.*"
 commitizen = ">=4.8.4,<5"
 black = ">=25.1.0,<26"
 
-[tool.pixi.feature.docs.tasks]
-build-docs = "mkdocs"
+[tool.pixi.feature.dev.tasks]
+isort = "isort"
+black = "black"
+
 
 [tool.pixi.environments]
 default = { solve-group = "default" }
 test = { features = ["test"], solve-group = "default" }
 docs = { features = ["docs"], solve-group = "default" }
 dev = { features = ["dev", "docs", "test"], solve-group = "default" }
-
 
 [tool.black]
 line-length = 88
@@ -96,7 +106,7 @@ exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
-skip = [".git", ".github", ".env", ".venv", ".devcontainer", ".pytest_cache", ".scannerwork", ".vscode", "site"]
+skip = [".git", ".github", ".pixi", ".env", ".venv", ".devcontainer", ".pytest_cache", ".scannerwork", ".vscode", "site"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
