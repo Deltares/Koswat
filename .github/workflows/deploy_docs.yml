@@ -18,16 +18,9 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v2
 
-      - name: Setup environment
-        uses: conda-incubator/setup-miniconda@v2
+      - uses: prefix-dev/setup-pixi@v0.9.0
         with:
-          miniforge-variant: Miniforge3
-          # channels: conda-forge, nodefaults
-          # channel-priority: strict
-          environment-file: .devcontainer/environment.yml
-          activate-environment: koswat_env
-
-      - name: Install dependencies
-        run: poetry install --without dev,test
-
-      - run: poetry run mkdocs gh-deploy --force
+          pixi-version: v0.49.0
+          cache: true
+      
+      - run: pixi run mkdocs gh-deploy --force
