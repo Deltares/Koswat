@@ -13,24 +13,15 @@ ARG SRC_ROOT="/usr/src"
 
 # For persisting the environment remember to mount it as well:
 # -v {your_local_tmp_dir}:/usr/src/.env
-ARG CONDA_ENV="${SRC_ROOT}/.env"
+# ARG CONDA_ENV="${SRC_ROOT}/.env"
 
-# Install conda environment
 # This location needs to be mounted with your koswat checout:
 # -v {your_koswat_checkout_dir}:/usr/src/app
 WORKDIR $SRC_ROOT/app
 COPY environment.yml $SRC_ROOT/.devcontainer/environment.yml
 
-RUN conda init bash \
-    && . ~/.bashrc \
-    && conda env create -f $SRC_ROOT/.devcontainer/environment.yml -p $CONDA_ENV
-
-# Activate conda environment
-ENV PATH=$CONDA_ENV/bin:$PATH
-RUN conda activate ${CONDA_ENV} & poetry config virtualenvs.create false
-RUN echo conda init && echo "conda activate ${CONDA_ENV}" >>  ~/.bashrc
-# This ensures it's available also for `sh` instead of `bash`.
-RUN echo "conda activate ${CONDA_ENV}" > ~/.profile
+RUN wget -qO- https://pixi.sh/install.sh | sh
+ENV PATH="/root/.pixi/bin":$PATH
 
 # Define the endpoint
 CMD [ "/bin/bash" ]
