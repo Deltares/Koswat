@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - master
+      - fix/254-migrate-from-poetry-to-pixi
     
 jobs:
   install-package:
-    # if: "${{ (!startsWith(github.event.head_commit.message, 'chore: autoformat isort & black')) && (!startsWith(github.event.head_commit.message, 'bump:')) }}"
+    if: "${{ (!startsWith(github.event.head_commit.message, 'chore: autoformat isort & black')) && (!startsWith(github.event.head_commit.message, 'bump:')) }}"
     strategy:
       fail-fast: false
       matrix:
