@@ -22,5 +22,6 @@ jobs:
         with:
           pixi-version: v0.49.0
           cache: true
+          cache-write: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
       
       - run: pixi run mkdocs gh-deploy --force
