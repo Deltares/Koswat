@@ -34,8 +34,10 @@ platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
 
 [tool.pixi.pypi-dependencies]
 koswat = { path = ".", editable = true }
+build = "*"
 
 [tool.pixi.tasks]
+pypi-build = "python -m build --wheel --outdir dist/"
 
 [tool.pixi.dependencies]
 python = ">=3.11,<3.14"
