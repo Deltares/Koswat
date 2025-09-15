@@ -19,9 +19,6 @@ classifiers = [
   'Topic :: Scientific/Engineering :: Hydrology',
 ]
 
-dependencies = ["click", "matplotlib", "pyshp", "shapely", "geopandas"]
-requires-python = ">= 3.13, <3.14"
-
 [project.urls]
 DOCUMENTATION = "https://deltares.github.io/Koswat/"
 Repository = "https://github.com/Deltares/koswat"
@@ -40,6 +37,7 @@ koswat = { path = ".", editable = true }
 [tool.pixi.tasks]
 
 [tool.pixi.dependencies]
+python = ">=3.11,<3.14"
 click = ">=8.2.1,<9"
 matplotlib = ">=3.7.0,<4"
 pyshp = ">=3.0.1,<4"
@@ -77,22 +75,23 @@ black = "black"
 
 [tool.pixi.feature.py311.dependencies]
 python = "3.11.*"
+
 [tool.pixi.feature.py312.dependencies]
 python = "3.12.*"
+
 [tool.pixi.feature.py313.dependencies]
 python = "3.13.*"
-[tool.pixi.feature.py314.dependencies]
-python = "3.14.*"
 
 [tool.pixi.environments]
 default = { solve-group = "default" }
 test = { features = ["test"], solve-group = "default" }
 docs = { features = ["docs"], solve-group = "default" }
 dev = { features = ["dev", "docs", "test"], solve-group = "default" }
-py311 = { features = ["py311"], solve-group = "default" }
-py312 = { features = ["py312"], solve-group = "default" }
-py313 = { features = ["py313"], solve-group = "default" }
-py314 = { features = ["py314"], solve-group = "default" }
+py311 = ["py311", "default"]
+py312 = ["py312", "default"]
+py313 = ["py313", "default"]
+
+
 
 [tool.black]
 line-length = 88
