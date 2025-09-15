@@ -7027,7 +7027,7 @@ packages:
 - pypi: ./
   name: koswat
   version: 0.15.0
-  sha256: 73902055d56398d3f04191285ef2814fe5340022722bc02ae8db5c9efb37aa4b
+  sha256: db3ddd1d030c4c0c2747465aaf3b34ec94adb6c54338f4c130d065caaf4643c5
   editable: true
 - conda: https://conda.anaconda.org/conda-forge/linux-64/krb5-1.21.3-h659f571_0.conda
   sha256: 99df692f7a8a5c27cd14b5fb1374ee55e756631b9c3d659ed3ee60830249b238

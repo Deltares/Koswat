@@ -2,8 +2,8 @@
 name = "koswat"
 version = "0.15.0"
 description = "Koswat, from the dutch combination of words `Kosts-Wat` (what are the costs). Analyzes all the possible dikes reinforcements based on a provided traject, with surrounding constructions, and what their related costs will be."
-authors = [{name = "Carles S. Soriano Pérez", email = "carles.sorianoperez@deltares.com"}]
-maintainers = [{name = "Peter de Grave", email = "peter.degrave@deltares.com"}]
+authors = [{name = "Carles S. Soriano Pérez", email = "carles.sorianoperez@deltares.com"}, {name = "Peter de Grave", email = "peter.degrave@deltares.com"}]
+maintainers = [{name = "Ardt Klapwijk", email = "ardt.klapwijk@deltares.com"}]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 keywords = ["civil-engineering", "dikes", "flood-defence", "deltares"]
@@ -20,8 +20,9 @@ classifiers = [
 ]
 
 [project.urls]
-DOCUMENTATION = "https://deltares.github.io/Koswat/"
-Repository = "https://github.com/Deltares/koswat"
+documentation = "https://deltares.github.io/Koswat/"
+repository = "https://github.com/Deltares/koswat"
+issues = "https://github.com/Deltares/koswat/issues"
 
 [build-system]
 build-backend = "hatchling.build"
