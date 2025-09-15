@@ -22,6 +22,18 @@ classifiers = [
 dependencies = ["click", "matplotlib", "pyshp", "shapely", "geopandas"]
 requires-python = ">= 3.13, <3.14"
 
+[feature.py311.dependencies]
+python = "3.11.*"
+[feature.py312.dependencies]
+python = "3.12.*"
+[feature.py313.dependencies]
+python = "3.13.*"
+
+[environments]
+py311 = ["py311"]
+py312 = ["py312"]
+py313 = ["py313"]
+
 [project.urls]
 DOCUMENTATION = "https://deltares.github.io/Koswat/"
 Repository = "https://github.com/Deltares/koswat"
