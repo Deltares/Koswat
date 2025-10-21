@@ -211,7 +211,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
     def _import_dike_input_profiles_list(
         self, profile_dir: Path, dike_selection: list[str], layers_info: dict
-    ) -> list[KoswatProfileProtocol]:
+    ) -> list[KoswatInputProfileBase]:
         if not profile_dir.is_dir():
             logging.error("Dike input profiles folder not found at %s", profile_dir)
             return []
@@ -230,9 +230,10 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _profile_list = list(
             map(
                 to_koswat_profile,
-                KoswatInputProfileListImporter(
-                    dike_selection=dike_selection
-                ).import_from(profile_dir),
+                filter(
+                    profile_is_selected,
+                    KoswatInputProfileListImporter().import_from(profile_dir),
+                ),
             )
         )
         return _profile_list
