@@ -75,7 +75,12 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement
 )
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
-from tests import get_custom_testcase_results_dir, get_testcase_results_dir, test_data
+from tests import (
+    get_custom_testcase_results_dir,
+    get_testcase_results_dir,
+    test_data,
+    test_data_acceptance,
+)
 from tests.acceptance_scenarios.layers_cases import LayersCases
 from tests.dike_reinforcements import validated_reinforced_profile
 from tests.dike_reinforcements.reinforcement_profile_cases import (
@@ -118,8 +123,8 @@ def scenario_ini_file() -> list[pytest.param]:
     return list(map(_to_pytest_param, _scenarios))
 
 
-def input_profile_data_csv_file() -> list[pytest.param]:
-    _csv_file = test_data / "acceptance" / "csv" / "dike_input_profiles.csv"
+def input_profile_data_json_dir() -> list[pytest.param]:
+    _json_dir = test_data_acceptance.joinpath("json", "dikesection_input")
 
     def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
         return pytest.param(
@@ -127,12 +132,12 @@ def input_profile_data_csv_file() -> list[pytest.param]:
         )
 
     return list(
-        map(_to_pytest_param, KoswatInputProfileListImporter().import_from(_csv_file))
+        map(_to_pytest_param, KoswatInputProfileListImporter().import_from(_json_dir))
     )[:2]
 
 
 _scenarios = scenario_ini_file()
-_input_profiles = input_profile_data_csv_file()
+_input_profiles = input_profile_data_json_dir()
 
 
 class TestReinforcementProfileBuilderFactory:

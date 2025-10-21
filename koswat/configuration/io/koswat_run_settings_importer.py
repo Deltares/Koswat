@@ -54,6 +54,7 @@ from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
@@ -64,14 +65,14 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def import_from(self, from_path: Path) -> KoswatRunSettings:
         # First get the FOM
-        logging.info("Importing INI configuration from {}".format(from_path))
+        logging.info("Importing INI configuration from %s", from_path)
         _general_settings = self._import_general_settings(from_path)
         _output_dir = _general_settings.analysis_section.analysis_output_dir
         _dike_selected_sections = self._import_selected_dike_section_names(
             _general_settings.analysis_section.dike_selection_txt_file
         )
         _input_profile_cases = self._import_dike_input_profiles_list(
-            csv_file=_general_settings.analysis_section.input_profiles_csv_file,
+            profile_dir=_general_settings.analysis_section.input_profiles_json_dir,
             dike_selection=_dike_selected_sections,
             layers_info=self._get_layers_info(_general_settings.dike_profile_section),
         )
@@ -80,7 +81,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             include_taxes=_general_settings.analysis_section.include_taxes,
         )
         _scenario_fom_list = self._import_scenario_fom_list(
-            _general_settings.analysis_section.scenarios_ini_file,
+            _general_settings.analysis_section.scenarios_ini_dir,
             _dike_selected_sections,
         )
         _surroundings_fom = self._import_surroundings_wrapper(
@@ -110,7 +111,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def _get_run_settings(
         self,
         reinforcement_settings: KoswatReinforcementSettings,
-        input_profiles: list[KoswatProfileBase],
+        input_profiles: list[KoswatProfileProtocol],
         fom_scenario_list: list[KoswatSectionScenariosIniFom],
         costs_settings: KoswatCostsSettings,
         surroundings_fom: list[SurroundingsWrapper],
@@ -130,9 +131,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             )
             if not _fom_scenario:
                 logging.warning(
-                    "No scenario found for selected section {}.".format(
-                        _ip.input_data.dike_section
-                    )
+                    "No scenario found for selected section %s.",
+                    _ip.input_data.dike_section,
                 )
                 continue
 
@@ -149,7 +149,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
             # Create new run scenario setting
             logging.info(
-                "Creating scenarios for profile {}.".format(_ip.input_data.dike_section)
+                "Creating scenarios for profile %s.", _ip.input_data.dike_section
             )
             for _sub_scenario in _fom_scenario.section_scenarios:
                 _run_scenario = KoswatRunScenarioSettings()
@@ -161,14 +161,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 _run_scenario.output_dir = _dike_output_dir / (
                     "scenario_" + _sub_scenario.scenario_name.lower()
                 )
-                logging.info(
-                    "Created sub scenario {}.".format(_sub_scenario.scenario_name)
-                )
+                logging.info("Created sub scenario %s.", _sub_scenario.scenario_name)
                 _run_settings.run_scenarios.append(_run_scenario)
         logging.info(
-            "Finished generating koswat scenarios. A total of {} scenarios were created.".format(
-                len(_run_settings.run_scenarios)
-            )
+            "Finished generating koswat scenarios. A total of %d scenarios were created.",
+            len(_run_settings.run_scenarios),
         )
         return _run_settings
 
@@ -213,12 +210,10 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
 
     def _import_dike_input_profiles_list(
-        self, csv_file: Path, dike_selection: list[str], layers_info: dict
-    ) -> list[KoswatInputProfileBase]:
-        if not csv_file.is_file():
-            logging.error(
-                "Dike input profiles csv file not found at {}".format(csv_file)
-            )
+        self, profile_dir: Path, dike_selection: list[str], layers_info: dict
+    ) -> list[KoswatProfileProtocol]:
+        if not profile_dir.is_dir():
+            logging.error("Dike input profiles folder not found at %s", profile_dir)
             return []
 
         def profile_is_selected(profile_data: KoswatInputProfileBase) -> bool:
@@ -226,7 +221,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
         def to_koswat_profile(
             profile_data: KoswatInputProfileBase,
-        ) -> KoswatProfileBase:
+        ) -> KoswatProfileProtocol:
             return KoswatProfileBuilder.with_data(
                 dict(
                     input_profile_data=profile_data,
@@ -240,7 +235,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 to_koswat_profile,
                 filter(
                     profile_is_selected,
-                    KoswatInputProfileListImporter().import_from(csv_file),
+                    KoswatInputProfileListImporter().import_from(profile_dir),
                 ),
             )
         )
@@ -248,7 +243,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
     def _import_selected_dike_section_names(self, txt_file: Path) -> list[str]:
         if not txt_file.is_file():
-            logging.error("Dike selection txt file not found at {}".format(txt_file))
+            logging.error("Dike selection txt file not found at %s", txt_file)
             return []
         _reader = KoswatTxtReader()
         _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
@@ -258,7 +253,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         self, ini_file: Path, include_taxes: bool
     ) -> KoswatCostsSettings:
         if not ini_file.is_file():
-            logging.error("Dike costs ini file not found at {}".format(ini_file))
+            logging.error("Dike costs ini file not found at %s", ini_file)
             return None
         _importer = KoswatCostsImporter()
         _importer.include_taxes = include_taxes

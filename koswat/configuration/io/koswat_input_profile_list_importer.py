@@ -1,15 +1,16 @@
 from pathlib import Path
-from typing import List
 
-from koswat.configuration.io.csv.koswat_input_profiles_csv_reader import (
-    KoswatInputProfilesCsvReader,
+from koswat.configuration.io.json.koswat_input_profile_json_reader import (
+    KoswatInputProfileJsonReader,
 )
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 
 class KoswatInputProfileListImporter(KoswatImporterProtocol):
-    def _get_koswat_input_profile_base(self, fom_dict: dict) -> KoswatInputProfileBase:
+    def _get_koswat_input_profile_base(
+        self, fom_dict: dict[str, str | float]
+    ) -> KoswatInputProfileBase:
         _input_profile = KoswatInputProfileBase()
         _input_profile.dike_section = fom_dict["dijksectie"]
         _input_profile.waterside_ground_level = float(fom_dict["buiten_maaiveld"])
@@ -27,13 +28,14 @@ class KoswatInputProfileListImporter(KoswatImporterProtocol):
         _input_profile.factor_settlement = float(fom_dict["factorzetting"])
         _input_profile.pleistocene = float(fom_dict["pleistoceen"])
         _input_profile.aquifer = float(fom_dict["aquifer"])
+        _input_profile.top_layer_thickness = float(fom_dict["dikte_deklaag"])
         return _input_profile
 
-    def import_from(self, from_path: Path) -> List[KoswatInputProfileBase]:
-        _profile_input_list = KoswatInputProfilesCsvReader().read(from_path)
-        return list(
-            map(
-                self._get_koswat_input_profile_base,
-                _profile_input_list.input_profile_fom_list,
+    def import_from(self, from_path: Path) -> list[KoswatInputProfileBase]:
+        _profile_input_list = []
+        for file in from_path.glob("*.json"):
+            _profile_input = KoswatInputProfileJsonReader().read(file)
+            _profile_input_list.append(
+                self._get_koswat_input_profile_base(_profile_input.input_profile_fom)
             )
-        )
+        return _profile_input_list

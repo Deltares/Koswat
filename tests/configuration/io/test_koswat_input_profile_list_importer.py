@@ -29,8 +29,9 @@ class TestKoswatInputProfileListImporter:
             "grondprijs_bebouwd": "111",
             "grondprijs_onbebouwd": "11",
             "factorzetting": "1.1",
-            "pleistoceen": "-1.1",
-            "aquifer": "-2.2",
+            "pleistoceen": "-3.3",
+            "aquifer": "-2.1",
+            "dikte_deklaag": "1.2",
         }
 
         # 2. Run test.
@@ -52,5 +53,6 @@ class TestKoswatInputProfileListImporter:
         assert _input_profile_base.ground_price_builtup == 111
         assert _input_profile_base.ground_price_unbuilt == 11
         assert _input_profile_base.factor_settlement == 1.1
-        assert _input_profile_base.pleistocene == -1.1
-        assert _input_profile_base.aquifer == -2.2
+        assert _input_profile_base.pleistocene == -3.3
+        assert _input_profile_base.aquifer == -2.1
+        assert _input_profile_base.top_layer_thickness == 1.2

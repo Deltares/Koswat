@@ -9,7 +9,6 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
-from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from tests import test_data
 
 
@@ -19,13 +18,13 @@ class TestKoswatRunSettingsImporter:
         assert isinstance(_importer, KoswatRunSettingsImporter)
         assert isinstance(_importer, KoswatImporterProtocol)
 
-    def test_import_dike_input_profiles_lists_without_csv_file(self):
+    def test_import_dike_input_profiles_lists_without_json_files(self):
         # 1. Define test data.
-        _csv_file = Path(__file__).parent
+        _json_folder = Path(__file__).parent
         _importer = KoswatRunSettingsImporter()
 
         # 2. Run test.
-        _result = _importer._import_dike_input_profiles_list(_csv_file, None, None)
+        _result = _importer._import_dike_input_profiles_list(_json_folder, None, None)
 
         # 3. Verify final expectations.
         assert _result == []
