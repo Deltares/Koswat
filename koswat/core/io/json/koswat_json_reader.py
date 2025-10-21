@@ -6,8 +6,6 @@ from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
 class KoswatJsonReader(KoswatReaderProtocol):
-    separator: str = ";"
-
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix == ".json"
 
