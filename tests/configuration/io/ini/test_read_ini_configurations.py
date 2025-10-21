@@ -86,10 +86,10 @@ class TestReadIniConfigurations:
         assert _ini_fom.analysis_section.dike_section_location_shp_file == Path(
             "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
-        assert _ini_fom.analysis_section.input_profiles_csv_file == Path(
-            "c:\\fake_drive\\Invoer\\InputPerDijkvak_WV21_KOSWAT_v2022_DR10.csv"
+        assert _ini_fom.analysis_section.input_profiles_json_dir == Path(
+            "c:\\fake_drive\\Invoer\\json\\dikesection_input"
         )
-        assert _ini_fom.analysis_section.scenarios_ini_file == Path(
+        assert _ini_fom.analysis_section.scenarios_ini_dir == Path(
             "c:\\fake_drive\\Invoer\\Scenarios"
         )
         assert _ini_fom.analysis_section.costs_ini_file == Path(
