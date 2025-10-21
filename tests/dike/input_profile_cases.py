@@ -19,6 +19,7 @@ default_case = KoswatInputProfileBase.from_dict(
         factor_settlement=1.2,
         pleistocene=-5,
         aquifer=-2,
+        top_level_thickness=3,
     )
 )
 
