@@ -16,12 +16,17 @@ jobs:
         shell: bash -l {0}
     steps:
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - uses: prefix-dev/setup-pixi@v0.9.0
         with:
-          pixi-version: v0.49.0
-          cache: true
-          cache-write: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
-      
-      - run: pixi run mkdocs gh-deploy --force
+          miniforge-variant: Miniforge3
+          # channels: conda-forge, nodefaults
+          # channel-priority: strict
+          environment-file: .devcontainer/environment.yml
+          activate-environment: koswat_env
+
+      - name: Install dependencies
+        run: poetry install --without dev,test
+
+      - run: poetry run mkdocs gh-deploy --force
