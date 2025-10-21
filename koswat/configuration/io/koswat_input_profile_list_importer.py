@@ -33,7 +33,7 @@ class KoswatInputProfileListImporter(KoswatImporterProtocol):
 
     def import_from(self, from_path: Path) -> list[KoswatInputProfileBase]:
         _profile_input_list = []
-        for file in from_path.iterdir():
+        for file in from_path.glob("*.json"):
             _profile_input = KoswatInputProfileJsonReader().read(file)
             _profile_input_list.append(
                 self._get_koswat_input_profile_base(_profile_input.input_profile_fom)
