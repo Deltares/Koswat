@@ -17,14 +17,14 @@ class TestKoswatInputProfileJsonReader:
     def test_given_valid_file_read(self):
         # 1. Define test data
         _reader = KoswatInputProfileJsonReader()
-        _test_dir = test_data_acceptance.joinpath(
-            "json", "dikesectie_input", "10-1-1-A-1-A.json"
+        _test_file = test_data_acceptance.joinpath(
+            "json", "dikesection_input", "10-1-1-A-1-A.json"
         )
-        assert _test_dir.is_dir()
+        assert _test_file.is_file()
 
         # 2. Run test.
-        _csv_fom = _reader.read(_test_dir)
+        _json_fom = _reader.read(_test_file)
 
         # 3. Verify expectations.
-        assert isinstance(_csv_fom, KoswatInputProfileJsonFom)
-        assert _csv_fom.is_valid()
+        assert isinstance(_json_fom, KoswatInputProfileJsonFom)
+        assert _json_fom.is_valid()
