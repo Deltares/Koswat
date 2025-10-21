@@ -71,7 +71,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _general_settings.analysis_section.dike_selection_txt_file
         )
         _input_profile_cases = self._import_dike_input_profiles_list(
-            csv_file=_general_settings.analysis_section.input_profiles_csv_file,
+            profile_dir=_general_settings.analysis_section.input_profiles_json_dir,
             dike_selection=_dike_selected_sections,
             layers_info=self._get_layers_info(_general_settings.dike_profile_section),
         )
@@ -80,7 +80,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             include_taxes=_general_settings.analysis_section.include_taxes,
         )
         _scenario_fom_list = self._import_scenario_fom_list(
-            _general_settings.analysis_section.scenarios_ini_file,
+            _general_settings.analysis_section.scenarios_ini_dir,
             _dike_selected_sections,
         )
         _surroundings_fom = self._import_surroundings_wrapper(
@@ -213,12 +213,10 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
 
     def _import_dike_input_profiles_list(
-        self, csv_file: Path, dike_selection: list[str], layers_info: dict
+        self, profile_dir: Path, dike_selection: list[str], layers_info: dict
     ) -> list[KoswatInputProfileBase]:
-        if not csv_file.is_file():
-            logging.error(
-                "Dike input profiles csv file not found at {}".format(csv_file)
-            )
+        if not profile_dir.is_dir():
+            logging.error("Dike input profiles folder not found at %s", profile_dir)
             return []
 
         def profile_is_selected(profile_data: KoswatInputProfileBase) -> bool:
@@ -240,7 +238,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 to_koswat_profile,
                 filter(
                     profile_is_selected,
-                    KoswatInputProfileListImporter().import_from(csv_file),
+                    KoswatInputProfileListImporter().import_from(profile_dir),
                 ),
             )
         )

@@ -1,13 +1,11 @@
-from typing import List
+from dataclasses import dataclass, field
 
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
-class KoswatInputProfilesCsvFom(FileObjectModelProtocol):
-    input_profile_fom_list: List[dict]
-
-    def __init__(self) -> None:
-        self.input_profile_fom_list = []
+@dataclass
+class KoswatInputProfileJsonFom(FileObjectModelProtocol):
+    input_profile_fom: dict[str, str | float] = field(default_factory=dict)
 
     def is_valid(self) -> bool:
-        return self.input_profile_fom_list and any(self.input_profile_fom_list)
+        return self.input_profile_fom
