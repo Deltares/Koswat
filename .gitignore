@@ -25,4 +25,8 @@ site/
 *.log
 
 # Local configurations files covered in pyproject.toml
-pytest.ini 
+pytest.ini
+
+# pixi environments
+.pixi/*
+!.pixi/config.toml

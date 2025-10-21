@@ -1,36 +1,22 @@
 # To build this docker run (from the top checkout dir):
 # `docker build -t koswat_dev .devcontainer`
 # To run the docker for pytest:
-# `docker run -v {your_koswat_checkout_dir}:/usr/src/app/ -v {koswat_env_dir}:/usr/src/.env -t koswat_dev`
-# `poetry install`
-# `poetry run pytest -m {your_pytest_arguments}`
+# `docker run -v {your_koswat_checkout_dir}:/usr/src/app/ -t koswat_dev`
+# `pixi install`
+# `pixi run pytest -m {your_pytest_arguments}`
 
-FROM condaforge/miniforge3:latest
+FROM ghcr.io/prefix-dev/pixi:latest
 
 RUN apt-get update && apt-get install libgl1 -y
 
 ARG SRC_ROOT="/usr/src"
 
-# For persisting the environment remember to mount it as well:
-# -v {your_local_tmp_dir}:/usr/src/.env
-ARG CONDA_ENV="${SRC_ROOT}/.env"
+# Set PIXI_HOME to a location inside the source root
+ENV PIXI_HOME=$SRC_ROOT/.pixi
 
-# Install conda environment
-# This location needs to be mounted with your koswat checout:
+# This location needs to be mounted with your koswat checkout:
 # -v {your_koswat_checkout_dir}:/usr/src/app
 WORKDIR $SRC_ROOT/app
-COPY environment.yml $SRC_ROOT/.devcontainer/environment.yml
-
-RUN conda init bash \
-    && . ~/.bashrc \
-    && conda env create -f $SRC_ROOT/.devcontainer/environment.yml -p $CONDA_ENV
-
-# Activate conda environment
-ENV PATH=$CONDA_ENV/bin:$PATH
-RUN conda activate ${CONDA_ENV} & poetry config virtualenvs.create false
-RUN echo conda init && echo "conda activate ${CONDA_ENV}" >>  ~/.bashrc
-# This ensures it's available also for `sh` instead of `bash`.
-RUN echo "conda activate ${CONDA_ENV}" > ~/.profile
 
 # Define the endpoint
 CMD [ "/bin/bash" ]
