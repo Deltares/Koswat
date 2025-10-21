@@ -24,7 +24,6 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     factor_settlement: float = math.nan
     pleistocene: float = math.nan
     aquifer: float = math.nan
-    top_layer_thickness: float = math.nan
 
     @property
     def ground_price(self) -> float:
