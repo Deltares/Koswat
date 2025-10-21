@@ -216,9 +216,6 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             logging.error("Dike input profiles folder not found at %s", profile_dir)
             return []
 
-        def profile_is_selected(profile_data: KoswatInputProfileBase) -> bool:
-            return profile_data.dike_section in dike_selection
-
         def to_koswat_profile(
             profile_data: KoswatInputProfileBase,
         ) -> KoswatProfileProtocol:
@@ -233,10 +230,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _profile_list = list(
             map(
                 to_koswat_profile,
-                filter(
-                    profile_is_selected,
-                    KoswatInputProfileListImporter().import_from(profile_dir),
-                ),
+                KoswatInputProfileListImporter(
+                    dike_selection=dike_selection
+                ).import_from(profile_dir),
             )
         )
         return _profile_list
@@ -262,8 +258,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def _import_scenario_fom_list(
         self, scenario_dir: Path, dike_selections: list[str]
     ) -> list[KoswatSectionScenariosIniFom]:
-        _reader = KoswatSectionScenarioListIniDirReader()
-        _reader.dike_selection = dike_selections
+        _reader = KoswatSectionScenarioListIniDirReader(dike_selection=dike_selections)
         return _reader.read(scenario_dir)
 
     def _import_surroundings_wrapper(
