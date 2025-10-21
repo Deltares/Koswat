@@ -1,0 +1,20 @@
+{
+    "Dijkprofiel": {
+        "Buiten_Maaiveld": 0.7,
+        "Buiten_Berm_Lengte": 0,
+        "Buiten_Berm_Hoogte": 0.7,
+        "Buiten_Talud": 3.17,
+        "Kruin_Breedte": 4.35,
+        "Kruin_Hoogte": 5.33,
+        "Binnen_Talud": 3.22,
+        "Binnen_Maaiveld": 0.5,
+        "Binnen_Berm_Lengte": 0.0,
+        "Binnen_Berm_Hoogte": 0.5,
+        "Grondprijs_Bebouwd": 176.62,
+        "Grondprijs_Onbebouwd": 9.22,
+        "FactorZetting": 1.2,
+        "Pleistoceen": -3.62,
+        "Aquifer": -1.58,
+        "Dikte_Deklaag": 2.04
+    }
+}
