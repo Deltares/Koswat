@@ -1,10 +1,8 @@
-from typing import List
-
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
-class KoswatInputProfilesCsvFom(FileObjectModelProtocol):
-    input_profile_fom_list: List[dict]
+class KoswatInputProfileJsonFom(FileObjectModelProtocol):
+    input_profile_fom_list: list[dict[str, str]]
 
     def __init__(self) -> None:
         self.input_profile_fom_list = []
