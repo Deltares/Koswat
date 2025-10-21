@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - fix/254-migrate-from-poetry-to-pixi
     
 jobs:
   install-package:
