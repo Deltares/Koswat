@@ -15,8 +15,8 @@ from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 class AnalysisSectionFom(KoswatIniFomProtocol):
     dike_selection_txt_file: Path
     dike_section_location_shp_file: Path
-    input_profiles_csv_file: Path
-    scenarios_ini_file: Path
+    input_profiles_json_dir: Path
+    scenarios_ini_dir: Path
     costs_ini_file: Path
     analysis_output_dir: Path
     include_taxes: bool
@@ -35,8 +35,8 @@ class AnalysisSectionFom(KoswatIniFomProtocol):
         _section = cls()
         _section.dike_selection_txt_file = Path(ini_config["dijksecties_selectie"])
         _section.dike_section_location_shp_file = Path(ini_config["dijksectie_ligging"])
-        _section.input_profiles_csv_file = Path(ini_config["dijksectie_invoer"])
-        _section.scenarios_ini_file = Path(ini_config["scenario_invoer"])
+        _section.input_profiles_json_dir = Path(ini_config["dijksectie_invoer"])
+        _section.scenarios_ini_dir = Path(ini_config["scenario_invoer"])
         _section.costs_ini_file = Path(ini_config["eenheidsprijzen"])
         _section.analysis_output_dir = Path(ini_config["uitvoerfolder"])
         _section.include_taxes = ini_config.getboolean("btw")
