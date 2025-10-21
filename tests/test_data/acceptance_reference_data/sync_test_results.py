@@ -1,8 +1,7 @@
-from os import getcwd
 from pathlib import Path
 from shutil import copy2, copytree, rmtree
 
-_tests_dir = Path(getcwd()).joinpath("tests")
+_tests_dir = Path(__file__).parent.parent.parent
 _test_data_path = _tests_dir.joinpath("test_data", "acceptance_reference_data")
 _test_results_path = _tests_dir.joinpath("test_results", "sandbox_acceptance_case")
 
