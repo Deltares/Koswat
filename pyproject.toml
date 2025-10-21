@@ -38,9 +38,6 @@ platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
 koswat = { path = ".", editable = true }
 build = "*"
 
-[tool.pixi.tasks]
-pypi-build = "python -m build --wheel --outdir dist/"
-
 [tool.pixi.dependencies]
 python = ">=3.11,<3.14"
 click = ">=8.2.1,<9"
@@ -68,17 +65,19 @@ myst-parser = ">=1.0.0, <2"
 mkdocstrings-python = ">=1.0.0, <2"
 
 [tool.pixi.feature.docs.tasks]
-build-docs = "mkdocs"
+build-docs = "mkdocs build"
 
 [tool.pixi.feature.dev.dependencies]
 isort = ">=5.10.1, <6"
 urllib3 = "1.26.*"
 commitizen = ">=4.8.4,<5"
 black = ">=25.1.0,<26"
+packaging = ">=25.0,<26"
 
 [tool.pixi.feature.dev.tasks]
 isort = "isort"
 black = "black"
+build = "python -m build --outdir dist/"
 
 [tool.pixi.feature.py311.dependencies]
 python = "3.11.*"
