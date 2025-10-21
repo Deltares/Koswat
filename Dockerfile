@@ -12,9 +12,6 @@ COPY koswat /koswat_src/koswat
 
 # Install the required packages
 RUN pip install koswat
-# RUN pip install poetry
-# RUN poetry config virtualenvs.create false
-# RUN poetry install --without dev,docs,test
 RUN apt-get clean autoclean
 
 # Define the endpoint
