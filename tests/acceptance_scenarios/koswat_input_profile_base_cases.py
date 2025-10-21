@@ -164,5 +164,4 @@ class AcceptanceTestInputProfileCases(CasesProtocol):
         factor_settlement=1.2,
         pleistocene=3.53,
         aquifer=6.42,
-        top_layer_thickness=4.4,
     )
