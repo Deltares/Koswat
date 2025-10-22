@@ -29,6 +29,17 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
+    def test_import_dike_input_profiles_lists_missing_folder(self):
+        # 1. Define test data.
+        _json_folder = Path("non_existing_folder")
+        _importer = KoswatRunSettingsImporter()
+
+        # 2. Run test.
+        _result = _importer._import_dike_input_profiles_list(_json_folder, None, None)
+
+        # 3. Verify final expectations.
+        assert _result == []
+
     def test_import_selected_dike_section_names_without_txt_file(self):
         # 1. Define test data.
         _txt_file = Path(__file__).parent
