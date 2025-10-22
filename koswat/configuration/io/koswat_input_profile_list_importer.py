@@ -39,24 +39,18 @@ class KoswatInputProfileListImporter(KoswatImporterProtocol):
     def import_from(self, from_path: Path) -> list[KoswatInputProfileBase]:
         _files = list(from_path.glob("*.json"))
 
-        # Check if for all selected dike sections files exist
-        if self.dike_selection:
-            _missing_sections = [
-                _section
-                for _section in self.dike_selection
-                if _section not in (_file.stem for _file in _files)
-            ]
-            if _missing_sections:
+        _profile_input_list = []
+        for _section in self.dike_selection if self.dike_selection else []:
+            if _section not in (_file.stem for _file in _files):
                 logging.error(
-                    "The following selected dike sections were not found in the input profile files: %s",
-                    ", ".join(_missing_sections),
+                    "The selected dike section %s was not found in the input profile files.",
+                    _section,
                 )
 
-        # Read the files for the selected dike sections
-        _profile_input_list = []
-        for _file in _files:
-            if self.dike_selection and _file.stem not in self.dike_selection:
+            _file = from_path.joinpath(f"{_section}.json")
+            if not _file.exists():
                 continue
+
             _profile_input = KoswatInputProfileJsonReader().read(_file)
             _profile_input_list.append(
                 self._get_koswat_input_profile_base(_profile_input.input_profile_fom)

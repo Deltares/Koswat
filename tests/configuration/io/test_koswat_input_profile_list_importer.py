@@ -73,7 +73,7 @@ class TestKoswatInputProfileListImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test_import_from_with_no_selection_imports_all(self):
+    def test_import_from_with_no_selection_imports_nothing(self):
         # 1. Define test data.
         _json_folder = test_data_acceptance.joinpath("json", "dikesection_input")
         _expected_count = len(list(_json_folder.glob("*.json")))
@@ -83,7 +83,7 @@ class TestKoswatInputProfileListImporter:
         _result = _importer.import_from(_json_folder)
 
         # 3. Verify final expectations.
-        assert len(_result) == _expected_count
+        assert _result == []
 
     def test_import_from_with_selection_imports_selected(self):
         # 1. Define test data.
