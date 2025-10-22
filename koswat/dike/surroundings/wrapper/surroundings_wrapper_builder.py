@@ -15,6 +15,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder import (
     PointSurroundingsListPoldersideBuilder,
 )
+from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -46,11 +47,12 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     def _get_polderside_surroundings_from_fom(
         self, csv_fom_name: str
     ) -> list[PointSurroundings]:
-        if csv_fom_name not in self.surroundings_csv_fom_collection:
+        _normalized_csv_fom_name = csv_fom_name.upper()
+        if _normalized_csv_fom_name not in self.surroundings_csv_fom_collection:
             return []
         return PointSurroundingsListPoldersideBuilder(
             koswat_shp_fom=self.location_shp_fom,
-            koswat_csv_fom=self.surroundings_csv_fom_collection[csv_fom_name],
+            koswat_csv_fom=self.surroundings_csv_fom_collection[_normalized_csv_fom_name],
         ).build()
 
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:

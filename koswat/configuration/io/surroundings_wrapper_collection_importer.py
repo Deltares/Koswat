@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
 
+from koswat.configuration.io.csv.koswat_simplified_surroundings_csv import KoswatSimplifiedSurroundingsCsvReader
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
@@ -20,6 +21,8 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
+from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
+from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
@@ -82,41 +85,18 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
 
         return _surroundings_wrappers
 
-    def _map_surrounding_type(self, surrounding_type: str) -> str:
-        _normalized = surrounding_type.lower().strip()
-        _translations = dict(
-            bebouwing_binnendijks="buildings_polderside",
-            bebouwing_buitendijks="buildings_waterside",
-            spoor_binnendijks="railways_polderside",
-            spoor_buitendijks="railways_waterside",
-            water_binnendijks="waters_polderside",
-            water_buitendijks="waters_waterside",
-            wegen_binnendijks_klasse2="roads_class_2_polderside",
-            wegen_binnendijks_klasse7="roads_class_7_polderside",
-            wegen_binnendijks_klasse24="roads_class_24_polderside",
-            wegen_binnendijks_klasse47="roads_class_47_polderside",
-            wegen_binnendijks_klasseonbekend="roads_class_unknown_polderside",
-            wegen_buitendijks_klasse2="roads_class_2_waterside",
-            wegen_buitendijks_klasse7="roads_class_7_waterside",
-            wegen_buitendijks_klasse24="roads_class_24_waterside",
-            wegen_buitendijks_klasse47="roads_class_47_waterside",
-            wegen_buitendijks_klasseonbekend="roads_class_unknown_waterside",
-        )
-        _translation = _translations.get(_normalized, None)
-        if not _translation:
-            _error = "No mapping found for {}".format(surrounding_type)
-            logging.error(_error)
-            raise ValueError(_error)
-        return _translation
-
     def _csv_file_to_fom(
         self, csv_file: Path, traject_name: str
-    ) -> tuple[str, KoswatSurroundingsCsvFom]:
-        _surrounding_csv_fom = KoswatSurroundingsCsvReader().read(csv_file)
-        _surrounding_csv_fom.traject = traject_name
-        _surrounding_type = self._map_surrounding_type(
+    ) -> tuple[SurroundingsEnum, KoswatSurroundingsCsvFom]:
+        _surrounding_type = SurroundingsEnum.translate(
             csv_file.stem.replace(f"T_{traject_name}_", "")
         )
+        _reader = KoswatSurroundingsCsvReader
+        if _surrounding_type.surrounding_type == SurroundingsObstacle:
+            _reader = KoswatSimplifiedSurroundingsCsvReader
+            
+        _surrounding_csv_fom = _reader.read(csv_file)
+        _surrounding_csv_fom.traject = traject_name
         return _surrounding_type, _surrounding_csv_fom
 
     def _csv_dir_to_fom(
@@ -126,5 +106,5 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         _imported_csv_foms = {}
         for _csv_file in csv_dir.glob("*.csv"):
             _type, _csv_fom = self._csv_file_to_fom(_csv_file, csv_dir.stem)
-            _imported_csv_foms[_type] = _csv_fom
+            _imported_csv_foms[_type.name] = _csv_fom
         return _imported_csv_foms
