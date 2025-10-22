@@ -95,7 +95,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         if _surrounding_type.surrounding_type == SurroundingsObstacle:
             _reader = KoswatSimplifiedSurroundingsCsvReader
             
-        _surrounding_csv_fom = _reader.read(csv_file)
+        _surrounding_csv_fom = _reader().read(csv_file)
         _surrounding_csv_fom.traject = traject_name
         return _surrounding_type, _surrounding_csv_fom
 

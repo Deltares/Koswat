@@ -1,5 +1,3 @@
-import math
-import re
 from pathlib import Path
 
 from shapely import Point
