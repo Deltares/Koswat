@@ -12,8 +12,8 @@ from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
-from koswat.configuration.io.koswat_input_profile_list_importer import (
-    KoswatInputProfileListImporter,
+from koswat.configuration.io.koswat_dike_section_input_list_importer import (
+    KoswatDikeSectionInputListImporter,
 )
 from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
@@ -135,9 +135,9 @@ def input_profile_data_json_dir() -> list[pytest.param]:
     return list(
         map(
             _to_pytest_param,
-            KoswatInputProfileListImporter(dike_selection=_dike_selection).import_from(
-                _json_dir
-            ),
+            KoswatDikeSectionInputListImporter(
+                dike_selection=_dike_selection
+            ).import_from(_json_dir),
         )
     )[:2]
 
