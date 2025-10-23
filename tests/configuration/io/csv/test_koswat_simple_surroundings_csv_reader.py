@@ -1,6 +1,6 @@
 import pytest
 
-from koswat.configuration.io.csv.koswat_simplified_surroundings_csv import KoswatSimpleSurroundingsCsvReader
+from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import KoswatSimpleSurroundingsCsvReader
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
@@ -19,7 +19,7 @@ class TestKoswatSimpleSurroundingsCsvReader:
         # 1. Define test data
         _reader = KoswatSimpleSurroundingsCsvReader()
         _test_file = test_data.joinpath(
-            "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks_new_format.csv"
+            "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks_simple_format.csv"
         )
         assert _test_file.is_file()
 

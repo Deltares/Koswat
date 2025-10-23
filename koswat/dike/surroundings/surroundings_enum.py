@@ -1,3 +1,4 @@
+from __future__ import annotations
 from enum import Enum
 from dataclasses import dataclass
 
@@ -29,7 +30,7 @@ class SurroundingsEnum(SurroundingEnumType, Enum):
     ROADS_CLASS_UNKNOWN_WATERSIDE = SurroundingsInfrastructure
 
     @classmethod
-    def translate(cls, surrounding_type_str: str) -> "SurroundingsEnum":
+    def translate(cls, surrounding_type_str: str) -> SurroundingsEnum:
         normalized = surrounding_type_str.lower().strip()
         translations = {
             "bebouwing_binnendijks": cls.BUILDINGS_POLDERSIDE,

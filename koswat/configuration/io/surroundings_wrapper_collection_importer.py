@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
 
-from koswat.configuration.io.csv.koswat_simple_surroundings_csv import KoswatSimpleSurroundingsCsvReader
+from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import KoswatSimpleSurroundingsCsvReader
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
