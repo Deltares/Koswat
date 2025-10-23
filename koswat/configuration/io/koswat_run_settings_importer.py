@@ -167,6 +167,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             logging.info(
                 "Creating scenarios for profile %s.", _ip.input_data.dike_section
             )
+            # Get section reinforcement settings
             _section_reinforcement_settings = (
                 self._override_reinforcement_settings_for_section(
                     reinforcement_settings, _ds
@@ -215,7 +216,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             soil_settings=self._override_object_settings(
                 base_settings.soil_settings, section_input.soil_measure
             ),
-            vps_settings=self.self._override_object_settings(
+            vps_settings=self._override_object_settings(
                 base_settings.vps_settings, section_input.vps
             ),
             piping_wall_settings=self._override_object_settings(
