@@ -10,4 +10,4 @@ class KoswatJsonFom(KoswatJsonFomProtocol):
     content: dict[str, Any] = field(default_factory=dict)
 
     def is_valid(self) -> bool:
-        return self.file_stem and self.content
+        return self.file_stem != "" and self.content is not None
