@@ -68,10 +68,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         logging.info("Importing INI configuration from %s", from_path)
         _general_settings = self._import_general_settings(from_path)
         _output_dir = _general_settings.analysis_section.analysis_output_dir
+
         _dike_selected_sections = self._import_selected_dike_section_names(
             _general_settings.analysis_section.dike_selection_txt_file
         )
-        _input_profile_cases = self._import_dike_input_profiles_list(
+        _input_profile_cases = self._import_dike_sections_input_list(
             profile_dir=_general_settings.analysis_section.input_profiles_json_dir,
             dike_selection=_dike_selected_sections,
             layers_info=self._get_layers_info(_general_settings.dike_profile_section),
@@ -209,7 +210,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             ],
         )
 
-    def _import_dike_input_profiles_list(
+    def _import_dike_sections_input_list(
         self, profile_dir: Path, dike_selection: list[str], layers_info: dict
     ) -> list[KoswatProfileProtocol]:
         if not profile_dir.is_dir():

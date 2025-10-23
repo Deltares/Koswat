@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any
 
-from koswat.configuration.io.json.koswat_input_profile_json_fom import (
+from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatInputProfileJsonFom,
 )
 from koswat.core.io.json.koswat_json_reader import KoswatJsonReader

@@ -1,4 +1,4 @@
-from koswat.configuration.io.json.koswat_input_profile_json_fom import (
+from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatInputProfileJsonFom,
 )
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol

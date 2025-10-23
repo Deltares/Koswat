@@ -2,7 +2,7 @@ import logging
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from koswat.configuration.io.json.koswat_input_profile_json_reader import (
+from koswat.configuration.io.json.koswat_dike_section_input_json_reader import (
     KoswatInputProfileJsonReader,
 )
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
