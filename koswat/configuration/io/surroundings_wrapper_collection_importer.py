@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
 
-from koswat.configuration.io.csv.koswat_simplified_surroundings_csv import KoswatSimplifiedSurroundingsCsvReader
+from koswat.configuration.io.csv.koswat_simplified_surroundings_csv import KoswatSimpleSurroundingsCsvReader
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
@@ -93,7 +93,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         )
         _reader = KoswatSurroundingsCsvReader
         if _surrounding_type.surrounding_type == SurroundingsObstacle:
-            _reader = KoswatSimplifiedSurroundingsCsvReader
+            _reader = KoswatSimpleSurroundingsCsvReader
             
         _surrounding_csv_fom = _reader().read(csv_file)
         _surrounding_csv_fom.traject = traject_name

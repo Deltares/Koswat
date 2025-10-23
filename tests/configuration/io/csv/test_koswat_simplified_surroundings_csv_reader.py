@@ -1,6 +1,6 @@
 import pytest
 
-from koswat.configuration.io.csv.koswat_simplified_surroundings_csv import KoswatSimplifiedSurroundingsCsvReader
+from koswat.configuration.io.csv.koswat_simplified_surroundings_csv import KoswatSimpleSurroundingsCsvReader
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
@@ -9,15 +9,15 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests import test_data
 
 
-class TestKoswatSimplifiedSurroundingsCsvReader:
+class TestKoswatSimpleSurroundingsCsvReader:
     def test_initialize(self):
-        _csv_reader = KoswatSimplifiedSurroundingsCsvReader()
-        assert isinstance(_csv_reader, KoswatSimplifiedSurroundingsCsvReader)
+        _csv_reader = KoswatSimpleSurroundingsCsvReader()
+        assert isinstance(_csv_reader, KoswatSimpleSurroundingsCsvReader)
         assert isinstance(_csv_reader, KoswatReaderProtocol)
 
     def test_read_given_valid_file(self):
         # 1. Define test data
-        _reader = KoswatSimplifiedSurroundingsCsvReader()
+        _reader = KoswatSimpleSurroundingsCsvReader()
         _test_file = test_data.joinpath(
             "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks_new_format.csv"
         )
@@ -41,7 +41,7 @@ class TestKoswatSimplifiedSurroundingsCsvReader:
         distance_weights = [500, 200, 0, 0]
 
         # 2. Run test.
-        _point_surroundings = KoswatSimplifiedSurroundingsCsvReader()._build_point_surroundings(
+        _point_surroundings = KoswatSimpleSurroundingsCsvReader()._build_point_surroundings(
             entry=[
                 _traject_order,
                 _section,

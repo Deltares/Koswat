@@ -10,7 +10,15 @@ from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointObstacleSurroundings, PointSurroundings
 
 
-class KoswatSimplifiedSurroundingsCsvReader(KoswatReaderProtocol):
+class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
+    """
+    Imports surroundings expecting simplified format.
+    
+    E.g.:
+        Sectie;Xcoord;Ycoord;dist_binnen;dist_buiten;angle_binnen;angle_buiten
+        A;199186.66;515698.01;500;500;-76.0;104.0
+    """
+
     def read(self, file_path: Path) -> KoswatSurroundingsCsvFom:
         _csv_fom = KoswatCsvReader().read(file_path)
 
