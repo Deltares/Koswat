@@ -10,7 +10,7 @@ from koswat.configuration.io.config_sections.pipingwall_reinforcement_section_fo
 from koswat.configuration.io.config_sections.soil_reinforcement_section_fom import (
     SoilReinforcementSectionFom,
 )
-from koswat.configuration.io.config_sections.stability_wall_reinforcement_settings import (
+from koswat.configuration.io.config_sections.stability_wall_reinforcement_section_fom import (
     StabilitywallReinforcementSectionFom,
 )
 from koswat.configuration.io.config_sections.vps_reinforcement_section_fom import (
