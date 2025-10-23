@@ -83,7 +83,6 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                         e_info,
                     )
 
-        print( f"Imported {len(_surroundings_wrappers)} surroundings wrappers." )
         return _surroundings_wrappers
 
     def _csv_file_to_fom(
