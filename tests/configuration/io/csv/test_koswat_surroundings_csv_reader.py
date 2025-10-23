@@ -21,7 +21,7 @@ class TestKoswatSurroundingsCsvReader:
         # 1. Define test data
         _reader = KoswatSurroundingsCsvReader()
         _test_file = test_data.joinpath(
-            "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks.csv"
+            "csv_reader", "Omgeving", "T_10_3_bebouwing.csv"
         )
         assert _test_file.is_file()
 

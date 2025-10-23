@@ -58,7 +58,7 @@ Goal: TODO
 
 Inputs:
 - Realistic run settings.
-- Obstacles (NO infrastructures) from `test_data\csv_reader\Omgeving\T_10_3_bebouwing_binnendijks.csv`
+- Obstacles (NO infrastructures) from `test_data\csv_reader\Omgeving\T_10_3_bebouwing.csv`
 - Locations from `test_data\shp_reader\Dijkvak\Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp`.
 
 Validations:

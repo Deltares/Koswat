@@ -157,7 +157,7 @@ class TestPointSurroundingsListPoldersideBuilder:
     def test_from_files_then_build_returns_expected_model(self):
         # 1. Define test data.
         _csv_test_file = test_data.joinpath(
-            "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks.csv"
+            "csv_reader", "Omgeving", "T_10_3_bebouwing.csv"
         )
         _shp_test_file = test_data.joinpath(
             "shp_reader",
