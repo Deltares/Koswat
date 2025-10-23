@@ -18,11 +18,11 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
         # First three columns are section, x and y coordinate.
         _koswat_fom = KoswatSurroundingsCsvFom()
-        _koswat_fom.distances_list = self._get_surroundings_distances(
+        _distances_list = self._get_surroundings_distances(
             _csv_fom.headers[3:]
         )
         _koswat_fom.points_surroundings_list = self._build_points_surroundings_list(
-            _koswat_fom.distances_list, _csv_fom.entries
+            _distances_list, _csv_fom.entries
         )
         return _koswat_fom
 
