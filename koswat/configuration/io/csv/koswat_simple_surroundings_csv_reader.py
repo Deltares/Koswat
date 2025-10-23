@@ -7,7 +7,8 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
-from koswat.dike.surroundings.point.point_surroundings import PointObstacleSurroundings, PointSurroundings
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
+from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
