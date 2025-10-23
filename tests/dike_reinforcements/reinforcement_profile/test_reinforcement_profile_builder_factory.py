@@ -125,6 +125,7 @@ def scenario_ini_file() -> list[pytest.param]:
 
 def input_profile_data_json_dir() -> list[pytest.param]:
     _json_dir = test_data_acceptance.joinpath("json", "dikesection_input")
+    _dike_selection = [f.stem for f in _json_dir.glob("*.json")]
 
     def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
         return pytest.param(
@@ -132,7 +133,12 @@ def input_profile_data_json_dir() -> list[pytest.param]:
         )
 
     return list(
-        map(_to_pytest_param, KoswatInputProfileListImporter().import_from(_json_dir))
+        map(
+            _to_pytest_param,
+            KoswatInputProfileListImporter(dike_selection=_dike_selection).import_from(
+                _json_dir
+            ),
+        )
     )[:2]
 
 
