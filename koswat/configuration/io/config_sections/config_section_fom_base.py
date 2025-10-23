@@ -1,7 +1,7 @@
 import abc
 import math
 from configparser import SectionProxy
-from typing import Optional
+from typing import Any, Optional
 
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
@@ -41,7 +41,7 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
         return _section
 
     @classmethod
-    def from_dict(cls, input_dict: dict) -> FileObjectModelProtocol:
+    def from_dict(cls, input_dict: dict[str, Any]) -> FileObjectModelProtocol:
         """
         Create an instance of the class from a dictionary (e.g., from JSON).
 
@@ -53,8 +53,20 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
         """
         _section = cls()
         for key, attr in cls._float_mappings.items():
-            setattr(_section, attr, float(input_dict.get(key, math.nan)))
+            setattr(
+                _section,
+                attr,
+                float(input_dict.get(key)) if key in input_dict else None,
+            )
         for key, attr in cls._surtax_mappings.items():
-            setattr(_section, attr, cls._get_surtax_factor(input_dict.get(key, None)))
+            setattr(
+                _section,
+                attr,
+                (
+                    cls._get_surtax_factor(input_dict.get(key))
+                    if key in input_dict
+                    else None
+                ),
+            )
 
         return _section
