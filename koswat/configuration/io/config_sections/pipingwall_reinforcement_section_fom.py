@@ -13,9 +13,9 @@ class PipingwallReinforcementSectionFom(ConfigSectionFomBase):
     land_purchase_surtax_factor: SurtaxFactorEnum
 
     _float_mappings = dict(
-        min_lengte_pijpwand="min_length_piping_wall",
+        min_lengte_kwelscherm="min_length_piping_wall",
         overgang_cbwand_damwand="transition_cbwall_sheetpile",
-        max_lengte_pijpwand="max_length_piping_wall",
+        max_lengte_kwelscherm="max_length_piping_wall",
     )
     _surtax_mappings = dict(
         opslagfactor_grond="soil_surtax_factor",
