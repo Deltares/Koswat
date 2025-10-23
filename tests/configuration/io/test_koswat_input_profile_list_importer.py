@@ -1,8 +1,5 @@
 from pathlib import Path
 
-from koswat.configuration.io.koswat_input_profile_list_importer import (
-    KoswatInputProfileListImporter,
-)
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from tests import test_data_acceptance
@@ -58,7 +55,7 @@ class TestKoswatInputProfileListImporter:
         assert _input_profile_base.factor_settlement == 1.1
         assert _input_profile_base.pleistocene == -3.3
         assert _input_profile_base.aquifer == -2.1
-        assert _input_profile_base.top_layer_thickness == 1.2
+        assert _input_profile_base.thickness_cover_layer == 1.2
 
     def test_import_from_without_files_imports_nothing(self, empty_dir: Path):
         # 1. Define test data.

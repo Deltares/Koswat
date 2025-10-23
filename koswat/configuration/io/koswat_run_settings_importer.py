@@ -15,9 +15,12 @@ from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
     SectionScenarioFom,
 )
+from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
+    KoswatDikeSectionInputJsonFom,
+)
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
-from koswat.configuration.io.koswat_input_profile_list_importer import (
-    KoswatInputProfileListImporter,
+from koswat.configuration.io.koswat_dike_section_input_list_importer import (
+    KoswatDikeSectionInputListImporter,
 )
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
@@ -54,9 +57,7 @@ from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.material.koswat_material_type import KoswatMaterialType
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
@@ -72,10 +73,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _dike_selected_sections = self._import_selected_dike_section_names(
             _general_settings.analysis_section.dike_selection_txt_file
         )
-        _input_profile_cases = self._import_dike_sections_input_list(
+        _dike_section_input_list = self._import_dike_section_input_list(
             profile_dir=_general_settings.analysis_section.input_profiles_json_dir,
             dike_selection=_dike_selected_sections,
-            layers_info=self._get_layers_info(_general_settings.dike_profile_section),
         )
         _dike_costs = self._import_dike_costs(
             ini_file=_general_settings.analysis_section.costs_ini_file,
@@ -98,8 +98,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         # Then convert to DOM
         logging.info("Mapping data to Koswat Settings")
         _run_settings = self._get_run_settings(
+            _general_settings.dike_profile_section,
             _reinforcement_settings,
-            _input_profile_cases,
+            _dike_section_input_list,
             _scenario_fom_list,
             _dike_costs,
             _surroundings_fom,
@@ -111,8 +112,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
     def _get_run_settings(
         self,
+        dike_profile_section: DikeProfileSectionFom,
         reinforcement_settings: KoswatReinforcementSettings,
-        input_profiles: list[KoswatProfileProtocol],
+        dike_section_input_list: list[KoswatDikeSectionInputJsonFom],
         fom_scenario_list: list[KoswatSectionScenariosIniFom],
         costs_settings: KoswatCostsSettings,
         surroundings_fom: list[SurroundingsWrapper],
@@ -120,7 +122,16 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     ) -> KoswatRunSettings:
         _run_settings = KoswatRunSettings()
         _run_settings.output_dir = output_dir
-        for _ip in input_profiles:
+        for _ds in dike_section_input_list:
+            # Build input profile from section input
+            _ip = KoswatProfileBuilder.with_data(
+                dict(
+                    input_profile_data=_ds.input_profile,
+                    layers_data=self._get_layers_info(dike_profile_section),
+                    profile_type=KoswatProfileBase,
+                ),
+            ).build()
+
             # Find this input profile scenarios.
             _fom_scenario = next(
                 (
@@ -152,11 +163,16 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             logging.info(
                 "Creating scenarios for profile %s.", _ip.input_data.dike_section
             )
+            _section_reinforcement_settings = (
+                self._override_reinforcement_settings_for_section(
+                    reinforcement_settings, _ds
+                )
+            )
             for _sub_scenario in _fom_scenario.section_scenarios:
                 _run_scenario = KoswatRunScenarioSettings()
                 _run_scenario.input_profile_case = _ip
                 _run_scenario.scenario = self._get_koswat_scenario(_sub_scenario, _ip)
-                _run_scenario.reinforcement_settings = reinforcement_settings
+                _run_scenario.reinforcement_settings = _section_reinforcement_settings
                 _run_scenario.surroundings = _surrounding
                 _run_scenario.costs_setting = costs_settings
                 _run_scenario.output_dir = _dike_output_dir / (
@@ -164,11 +180,45 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 )
                 logging.info("Created sub scenario %s.", _sub_scenario.scenario_name)
                 _run_settings.run_scenarios.append(_run_scenario)
+
         logging.info(
             "Finished generating koswat scenarios. A total of %d scenarios were created.",
             len(_run_settings.run_scenarios),
         )
         return _run_settings
+
+    def _override_reinforcement_settings_for_section(
+        self,
+        base_settings: KoswatReinforcementSettings,
+        section_input: KoswatDikeSectionInputJsonFom,
+    ) -> KoswatReinforcementSettings:
+        def _override_settings(
+            base_section: object, override_section: object
+        ) -> object:
+            for _key, _value in override_section.__dict__.items():
+                if hasattr(base_section, _key) and _value not in (None, math.nan):
+                    setattr(base_section, _key, _value)
+            return base_section
+
+        _new_settings = KoswatReinforcementSettings(
+            soil_settings=_override_settings(
+                base_settings.soil_settings, section_input.soil_measure
+            ),
+            vps_settings=_override_settings(
+                base_settings.vps_settings, section_input.vps
+            ),
+            piping_wall_settings=_override_settings(
+                base_settings.piping_wall_settings, section_input.piping_wall
+            ),
+            stability_wall_settings=_override_settings(
+                base_settings.stability_wall_settings, section_input.stability_wall
+            ),
+            cofferdam_settings=_override_settings(
+                base_settings.cofferdam_settings, section_input.cofferdam
+            ),
+        )
+
+        return _new_settings
 
     def _import_general_settings(self, ini_config_file: Path) -> KoswatGeneralIniFom:
         reader = KoswatIniReader()
@@ -210,33 +260,18 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             ],
         )
 
-    def _import_dike_sections_input_list(
-        self, profile_dir: Path, dike_selection: list[str], layers_info: dict
-    ) -> list[KoswatProfileProtocol]:
+    def _import_dike_section_input_list(
+        self,
+        profile_dir: Path,
+        dike_selection: list[str],
+    ) -> list[KoswatDikeSectionInputJsonFom]:
         if not profile_dir.is_dir():
-            logging.error("Dike input profiles folder not found at %s", profile_dir)
+            logging.error("Dike input folder not found at %s", profile_dir)
             return []
 
-        def to_koswat_profile(
-            profile_data: KoswatInputProfileBase,
-        ) -> KoswatProfileProtocol:
-            return KoswatProfileBuilder.with_data(
-                dict(
-                    input_profile_data=profile_data,
-                    layers_data=layers_info,
-                    profile_type=KoswatProfileBase,
-                )
-            ).build()
-
-        _profile_list = list(
-            map(
-                to_koswat_profile,
-                KoswatInputProfileListImporter(
-                    dike_selection=dike_selection
-                ).import_from(profile_dir),
-            )
-        )
-        return _profile_list
+        return KoswatDikeSectionInputListImporter(
+            dike_selection=dike_selection
+        ).import_from(profile_dir)
 
     def _import_selected_dike_section_names(self, txt_file: Path) -> list[str]:
         if not txt_file.is_file():

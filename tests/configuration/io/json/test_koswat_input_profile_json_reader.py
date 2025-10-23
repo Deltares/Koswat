@@ -1,8 +1,8 @@
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
-    KoswatInputProfileJsonFom,
+    KoswatDikeSectionInputJsonFom,
 )
 from koswat.configuration.io.json.koswat_dike_section_input_json_reader import (
-    KoswatInputProfileJsonReader,
+    KoswatDikeSectionInputJsonReader,
 )
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 from tests import test_data_acceptance
@@ -10,13 +10,13 @@ from tests import test_data_acceptance
 
 class TestKoswatInputProfileJsonReader:
     def test_initialize(self):
-        _reader = KoswatInputProfileJsonReader()
-        assert isinstance(_reader, KoswatInputProfileJsonReader)
+        _reader = KoswatDikeSectionInputJsonReader()
+        assert isinstance(_reader, KoswatDikeSectionInputJsonReader)
         assert isinstance(_reader, KoswatReaderProtocol)
 
     def test_given_valid_file_read(self):
         # 1. Define test data
-        _reader = KoswatInputProfileJsonReader()
+        _reader = KoswatDikeSectionInputJsonReader()
         _test_file = test_data_acceptance.joinpath(
             "json", "dikesection_input", "10-1-1-A-1-A.json"
         )
@@ -26,5 +26,5 @@ class TestKoswatInputProfileJsonReader:
         _json_fom = _reader.read(_test_file)
 
         # 3. Verify expectations.
-        assert isinstance(_json_fom, KoswatInputProfileJsonFom)
+        assert isinstance(_json_fom, KoswatDikeSectionInputJsonFom)
         assert _json_fom.is_valid()

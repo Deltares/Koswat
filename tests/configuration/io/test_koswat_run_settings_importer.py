@@ -24,7 +24,7 @@ class TestKoswatRunSettingsImporter:
         _importer = KoswatRunSettingsImporter()
 
         # 2. Run test.
-        _result = _importer._import_dike_sections_input_list(_json_folder, None, None)
+        _result = _importer._get_dike_section_input_list(_json_folder, None, None)
 
         # 3. Verify final expectations.
         assert _result == []
@@ -35,7 +35,7 @@ class TestKoswatRunSettingsImporter:
         _importer = KoswatRunSettingsImporter()
 
         # 2. Run test.
-        _result = _importer._import_dike_sections_input_list(_json_folder, None, None)
+        _result = _importer._get_dike_section_input_list(_json_folder, None, None)
 
         # 3. Verify final expectations.
         assert _result == []

@@ -29,7 +29,5 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
         default_factory=CofferdamReinforcementSectionFom
     )
 
-    input_dict: dict[str, dict[str, str | float]] = field(default_factory=dict)
-
     def is_valid(self) -> bool:
         return self.dike_section
