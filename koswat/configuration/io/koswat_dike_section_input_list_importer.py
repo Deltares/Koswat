@@ -12,7 +12,7 @@ from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 
 
 @dataclass(kw_only=True)
-class KoswatInputProfileListImporter(KoswatImporterProtocol):
+class KoswatDikeSectionInputListImporter(KoswatImporterProtocol):
     dike_selection: list[str] = field(default_factory=list)
 
     def import_from(self, from_path: Path) -> list[KoswatDikeSectionInputJsonFom]:
