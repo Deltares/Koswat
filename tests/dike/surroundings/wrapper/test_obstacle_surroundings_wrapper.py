@@ -24,14 +24,9 @@ class TestObstacleSurroundingsWrapper:
         assert not _wrapper.obstacle_locations
 
         # Supported surroundings are initialized.
-        assert isinstance(_wrapper.buildings_polderside, SurroundingsObstacle)
-        assert isinstance(_wrapper.railways_polderside, SurroundingsObstacle)
-        assert isinstance(_wrapper.waters_polderside, SurroundingsObstacle)
-
-        # Unsupported surroundings are not initialized.
-        assert not _wrapper.buildings_waterside
-        assert not _wrapper.railways_waterside
-        assert not _wrapper.waters_waterside
+        assert isinstance(_wrapper.buildings, SurroundingsObstacle)
+        assert isinstance(_wrapper.railways, SurroundingsObstacle)
+        assert isinstance(_wrapper.waters, SurroundingsObstacle)
 
     @pytest.mark.parametrize(
         "obstacles_distance_list",

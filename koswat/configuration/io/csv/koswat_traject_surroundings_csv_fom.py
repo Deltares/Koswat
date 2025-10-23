@@ -9,7 +9,6 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
     points_surroundings_list: list[PointSurroundings] = field(
         default_factory=lambda: []
     )
-    distances_list: list[float] = field(default_factory=lambda: [])
     traject: str = ""
 
     def is_valid(self) -> bool:

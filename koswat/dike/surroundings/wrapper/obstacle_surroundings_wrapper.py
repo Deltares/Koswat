@@ -20,21 +20,15 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
 
-    # Polderside
-    buildings_polderside: SurroundingsObstacle = field(
+    buildings: SurroundingsObstacle = field(
         default_factory=SurroundingsObstacle
     )
-    railways_polderside: SurroundingsObstacle = field(
+    railways: SurroundingsObstacle = field(
         default_factory=SurroundingsObstacle
     )
-    waters_polderside: SurroundingsObstacle = field(
+    waters: SurroundingsObstacle = field(
         default_factory=SurroundingsObstacle
     )
-
-    # Dikeside (not yet supported)
-    buildings_waterside: SurroundingsObstacle = None
-    railways_waterside: SurroundingsObstacle = None
-    waters_waterside: SurroundingsObstacle = None
 
     @property
     def obstacle_locations(self) -> list[PointSurroundings]:
