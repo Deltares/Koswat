@@ -15,7 +15,12 @@ class PointObstacleSurroundings(PointSurroundings):
     angle_outside: float = math.nan
 
     def __hash__(self):
-        return super().__hash__()
+        """
+        Overriding of the "magic" hash operator required
+        so that `PointObstacleSurroundings` can be used as a key in a python dict.
+        It cannot be inherited from the parent class as the child class adds new properties.
+        """
+        return hash((self.section, self.traject_order, self.location))
 
     @property
     def closest_obstacle(self) -> float:
