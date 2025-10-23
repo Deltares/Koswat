@@ -127,7 +127,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _ip = KoswatProfileBuilder.with_data(
                 dict(
                     input_profile_data=_ds.input_profile,
-                    layers_data=self._get_layers_info(dike_profile_section),
+                    layers_data=self._get_layers_info(
+                        self._override_profile_settings_for_section(
+                            dike_profile_section, _ds.input_profile
+                        )
+                    ),
                     profile_type=KoswatProfileBase,
                 ),
             ).build()
@@ -187,33 +191,40 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
         return _run_settings
 
+    def _override_object_settings(
+        self, base_object: object, override_object: object
+    ) -> object:
+        for _key, _value in override_object.__dict__.items():
+            if hasattr(base_object, _key) and _value not in (None, math.nan):
+                setattr(base_object, _key, _value)
+        return base_object
+
+    def _override_profile_settings_for_section(
+        self,
+        base_profile: DikeProfileSectionFom,
+        section_input: DikeProfileSectionFom,
+    ) -> DikeProfileSectionFom:
+        return self._override_object_settings(base_profile, section_input)
+
     def _override_reinforcement_settings_for_section(
         self,
         base_settings: KoswatReinforcementSettings,
         section_input: KoswatDikeSectionInputJsonFom,
     ) -> KoswatReinforcementSettings:
-        def _override_settings(
-            base_section: object, override_section: object
-        ) -> object:
-            for _key, _value in override_section.__dict__.items():
-                if hasattr(base_section, _key) and _value not in (None, math.nan):
-                    setattr(base_section, _key, _value)
-            return base_section
-
         _new_settings = KoswatReinforcementSettings(
-            soil_settings=_override_settings(
+            soil_settings=self._override_object_settings(
                 base_settings.soil_settings, section_input.soil_measure
             ),
-            vps_settings=_override_settings(
+            vps_settings=self.self._override_object_settings(
                 base_settings.vps_settings, section_input.vps
             ),
-            piping_wall_settings=_override_settings(
+            piping_wall_settings=self._override_object_settings(
                 base_settings.piping_wall_settings, section_input.piping_wall
             ),
-            stability_wall_settings=_override_settings(
+            stability_wall_settings=self._override_object_settings(
                 base_settings.stability_wall_settings, section_input.stability_wall
             ),
-            cofferdam_settings=_override_settings(
+            cofferdam_settings=self._override_object_settings(
                 base_settings.cofferdam_settings, section_input.cofferdam
             ),
         )
