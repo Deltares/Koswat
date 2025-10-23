@@ -3,6 +3,7 @@ from typing import Callable, Iterator
 import pytest
 from shapely.geometry import Point
 
+from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import KoswatSimpleSurroundingsCsvReader
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
@@ -173,7 +174,7 @@ class TestPointSurroundingsListPoldersideBuilder:
 
         # 2. Run test
         _point_surroundings = PointSurroundingsListBuilder(
-            koswat_csv_fom=KoswatSurroundingsCsvReader().read(_csv_test_file),
+            koswat_csv_fom=KoswatSimpleSurroundingsCsvReader().read(_csv_test_file),
             koswat_shp_fom=_koswat_wrapper_shp_fom[0],
         ).build()
 
