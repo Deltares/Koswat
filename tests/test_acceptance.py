@@ -281,7 +281,7 @@ class TestAcceptance:
         # 1. Define test data.
         _test_dir = get_testcase_results_dir(request)
         _csv_surroundings_file = test_data.joinpath(
-            "csv_reader", "Omgeving", "T_10_3_bebouwing_binnendijks.csv"
+            "csv_reader", "Omgeving", "T_10_3_bebouwing.csv"
         )
         _shp_trajects_file = test_data.joinpath(
             "shp_reader",
