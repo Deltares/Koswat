@@ -13,7 +13,7 @@ class VPSReinforcementSectionFom(ConfigSectionFomBase):
     _float_mappings = dict(
         binnen_berm_breedte_vps="polderside_berm_width_vps",
     )
-    _enum_mappings = dict(
+    _surtax_mappings = dict(
         opslag_factor_grond="soil_surtax_factor",
         opslagfactor_constructief="constructive_surtax_factor",
         opslagfactor_grondaankoop="land_purchase_surtax_factor",
