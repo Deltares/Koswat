@@ -18,9 +18,9 @@ class TestKoswatRunSettingsImporter:
         assert isinstance(_importer, KoswatRunSettingsImporter)
         assert isinstance(_importer, KoswatImporterProtocol)
 
-    def test_import_dike_input_profiles_lists_without_json_files(self):
+    def test_import_dike_input_profiles_lists_without_json_files(self, empty_dir: Path):
         # 1. Define test data.
-        _json_folder = Path(__file__).parent
+        _json_folder = empty_dir
         _importer = KoswatRunSettingsImporter()
 
         # 2. Run test.
@@ -40,9 +40,9 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test_import_selected_dike_section_names_without_txt_file(self):
+    def test_import_selected_dike_section_names_without_txt_file(self, empty_dir: Path):
         # 1. Define test data.
-        _txt_file = Path(__file__).parent
+        _txt_file = empty_dir
         _importer = KoswatRunSettingsImporter()
 
         # 2. Run test.
@@ -52,9 +52,11 @@ class TestKoswatRunSettingsImporter:
         assert _result == []
 
     @pytest.mark.parametrize("include_taxes", [(True), (False)])
-    def test_import_dike_costs_without_ini_file(self, include_taxes: bool):
+    def test_import_dike_costs_without_ini_file(
+        self, include_taxes: bool, empty_dir: Path
+    ):
         # 1. Define test data.
-        _txt_file = Path(__file__).parent
+        _txt_file = empty_dir
         _importer = KoswatRunSettingsImporter()
 
         # 2. Run test.

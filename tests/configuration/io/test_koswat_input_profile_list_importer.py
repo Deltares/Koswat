@@ -60,9 +60,9 @@ class TestKoswatInputProfileListImporter:
         assert _input_profile_base.aquifer == -2.1
         assert _input_profile_base.top_layer_thickness == 1.2
 
-    def test_import_from_without_files_imports_nothing(self):
+    def test_import_from_without_files_imports_nothing(self, empty_dir: Path):
         # 1. Define test data.
-        _json_folder = Path(__file__).parent
+        _json_folder = empty_dir
         _importer = KoswatInputProfileListImporter(
             dike_selection=["10-1-1-A-1-A", "10-1-2-A-1-A"]
         )
@@ -76,7 +76,6 @@ class TestKoswatInputProfileListImporter:
     def test_import_from_with_no_selection_imports_nothing(self):
         # 1. Define test data.
         _json_folder = test_data_acceptance.joinpath("json", "dikesection_input")
-        _expected_count = len(list(_json_folder.glob("*.json")))
         _importer = KoswatInputProfileListImporter()
 
         # 2. Run test.
@@ -89,11 +88,12 @@ class TestKoswatInputProfileListImporter:
         # 1. Define test data.
         _json_folder = test_data_acceptance.joinpath("json", "dikesection_input")
         _dike_selection = ["10-1-1-A-1-A", "10-1-2-A-1-A"]
+        _expected_count = len(_dike_selection)
         _importer = KoswatInputProfileListImporter(dike_selection=_dike_selection)
 
         # 2. Run test.
         _result = _importer.import_from(_json_folder)
 
         # 3. Verify final expectations.
-        assert len(_result) == len(_dike_selection)
+        assert len(_result) == _expected_count
         assert all(_profile.dike_section in _dike_selection for _profile in _result)
