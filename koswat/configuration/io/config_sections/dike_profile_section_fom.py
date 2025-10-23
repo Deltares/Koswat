@@ -1,17 +1,14 @@
-from configparser import SectionProxy
-
-from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
-from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
-from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
+from koswat.configuration.io.config_sections.config_section_fom_base import (
+    ConfigSectionFomBase,
+)
 
 
-class DikeProfileSectionFom(KoswatIniFomProtocol, KoswatJsonFomProtocol):
+class DikeProfileSectionFom(ConfigSectionFomBase):
     thickness_grass_layer: float
     thickness_clay_layer: float
 
-    @classmethod
-    def from_ini(cls, ini_config: SectionProxy) -> FileObjectModelProtocol:
-        _section = cls()
-        _section.thickness_grass_layer = ini_config.getfloat("dikte_graslaag")
-        _section.thickness_clay_layer = ini_config.getfloat("dikte_kleilaag")
-        return _section
+    _float_mappings: dict = dict(
+        dikte_graslaag="thickness_grass_layer",
+        dikte_kleilaag="thickness_clay_layer",
+    )
+    _surtax_mappings: dict = dict()

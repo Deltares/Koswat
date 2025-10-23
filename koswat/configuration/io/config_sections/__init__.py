@@ -1,6 +1,9 @@
 from koswat.configuration.io.config_sections.cofferdam_reinforcement_section_fom import (
     CofferdamReinforcementSectionFom,
 )
+from koswat.configuration.io.config_sections.dike_profile_section_fom import (
+    DikeProfileSectionFom,
+)
 from koswat.configuration.io.config_sections.pipingwall_reinforcement_section_fom import (
     PipingwallReinforcementSectionFom,
 )
