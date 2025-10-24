@@ -1,27 +1,25 @@
 import pytest
 
+from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import KoswatSimpleSurroundingsCsvReader
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
-)
-from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
-    KoswatSurroundingsCsvReader,
 )
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests import test_data
 
 
-class TestKoswatSurroundingsCsvReader:
+class TestKoswatSimpleSurroundingsCsvReader:
     def test_initialize(self):
-        _csv_reader = KoswatSurroundingsCsvReader()
-        assert isinstance(_csv_reader, KoswatSurroundingsCsvReader)
+        _csv_reader = KoswatSimpleSurroundingsCsvReader()
+        assert isinstance(_csv_reader, KoswatSimpleSurroundingsCsvReader)
         assert isinstance(_csv_reader, KoswatReaderProtocol)
 
     def test_read_given_valid_file(self):
         # 1. Define test data
-        _reader = KoswatSurroundingsCsvReader()
+        _reader = KoswatSimpleSurroundingsCsvReader()
         _test_file = test_data.joinpath(
-            "csv_reader", "Omgeving", "T_10_1_wegen_binnendijks_klasse2.csv"
+            "csv_reader", "Omgeving", "T_10_3_bebouwing.csv"
         )
         assert _test_file.is_file()
 
@@ -32,33 +30,18 @@ class TestKoswatSurroundingsCsvReader:
         assert isinstance(_csv_fom, KoswatSurroundingsCsvFom)
         assert _csv_fom.is_valid()
 
-    @pytest.mark.parametrize(
-        "distance_weights, expected_matrix",
-        [
-            pytest.param(
-                [0, 0, 2, 0, 0, 4, 0],
-                {10: 0, 15: 2, 25: 0, 30: 4},
-                id="More than one weight.",
-            ),
-            pytest.param(
-                [0, 0, 0, 0, 0, 0, 2], {30: 0, 35: 2}, id="Only one weight available."
-            ),
-        ],
-    )
     def test_when_build_point_surroundings_then_reduced_surroundings_matrix(
-        self, distance_weights: list[float], expected_matrix: dict[int, float]
+        self
     ):
         # 1. Define test data.
         _section = "Dummy"
         _traject_order = -1
         _location_x = 4.2
         _location_y = 2.4
-        _distances_list = [5, 10, 15, 20, 25, 30, 35]
-        assert len(distance_weights) == len(_distances_list)
-        assert all(_key in _distances_list for _key in expected_matrix.keys())
+        distance_weights = [500, 200, 0, 0]
 
         # 2. Run test.
-        _point_surroundings = KoswatSurroundingsCsvReader()._build_point_surroundings(
+        _point_surroundings = KoswatSimpleSurroundingsCsvReader()._build_point_surroundings(
             entry=[
                 _traject_order,
                 _section,
@@ -66,7 +49,6 @@ class TestKoswatSurroundingsCsvReader:
                 _location_y,
                 *distance_weights,
             ],
-            distances_list=_distances_list,
         )
 
         # 3. Verify expectations.
@@ -75,4 +57,9 @@ class TestKoswatSurroundingsCsvReader:
         assert _point_surroundings.traject_order == _traject_order
         assert _point_surroundings.location.x == _location_x
         assert _point_surroundings.location.y == _location_y
-        assert _point_surroundings.surroundings_matrix == expected_matrix
+        assert _point_surroundings.surroundings_matrix == []
+        assert _point_surroundings.inside_distance == 500
+        assert _point_surroundings.outside_distance == 200
+        assert _point_surroundings.angle_inside == 0
+        assert _point_surroundings.angle_outside == 0
+        assert _point_surroundings.closest_obstacle == _point_surroundings.inside_distance

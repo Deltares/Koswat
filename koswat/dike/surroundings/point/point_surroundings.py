@@ -114,3 +114,4 @@ class PointSurroundings:
             return _total_width
 
         return list(map(matrix_idx_for_limits, zone_limit_collection))
+

@@ -123,7 +123,7 @@ class TestKoswatSummaryBuilder:
                 apply_buildings=True,
                 reinforcement_min_buffer=10,
                 reinforcement_min_separation=50,
-                buildings_polderside=SurroundingsObstacle(points=[_p_surrounding]),
+                buildings=SurroundingsObstacle(points=[_p_surrounding]),
             )
         )
         _run_settings.costs_setting = KoswatCostsSettings()
