@@ -1,3 +1,4 @@
+import copy
 import logging
 import math
 from pathlib import Path
@@ -220,10 +221,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def _override_object_settings(
         self, base_object: object, override_object: object
     ) -> object:
+        _new_object = copy.deepcopy(base_object)
         for _key, _value in override_object.__dict__.items():
             if hasattr(base_object, _key) and _value not in (None, math.nan):
-                setattr(base_object, _key, _value)
-        return base_object
+                setattr(_new_object, _key, _value)
+        return _new_object
 
     def _override_profile_settings_for_section(
         self,
@@ -275,19 +277,18 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _input_profile_list = []
         _reinforcement_settings_list = []
         for _section_settings in _section_settings_list:
-            _input_profile = KoswatProfileBuilder.with_data(
+            _section_profile_settings = self._override_profile_settings_for_section(
+                general_settings.dike_profile_section,
+                _section_settings.input_profile,
+            )
+            _section_input_profile = KoswatProfileBuilder.with_data(
                 dict(
-                    input_profile_data=_section_settings.input_profile,
-                    layers_data=self._get_layers_info(
-                        self._override_profile_settings_for_section(
-                            general_settings.dike_profile_section,
-                            _section_settings.input_profile,
-                        )
-                    ),
+                    input_profile_data=_section_profile_settings,
+                    layers_data=self._get_layers_info(_section_profile_settings),
                     profile_type=KoswatProfileBase,
                 ),
             ).build()
-            _input_profile_list.append(_input_profile)
+            _input_profile_list.append(_section_input_profile)
 
             _reinforcement_settings_list.append(
                 self._override_reinforcement_settings_for_section(
