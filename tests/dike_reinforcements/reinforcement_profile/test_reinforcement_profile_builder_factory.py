@@ -12,6 +12,9 @@ from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
 from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
     KoswatSectionScenariosIniFom,
 )
+from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
+    KoswatDikeSectionInputJsonFom,
+)
 from koswat.configuration.io.koswat_dike_section_input_list_importer import (
     KoswatDikeSectionInputListImporter,
 )
@@ -127,9 +130,10 @@ def input_profile_data_json_dir() -> list[pytest.param]:
     _json_dir = test_data_acceptance.joinpath("json", "dikesection_input")
     _dike_selection = [f.stem for f in _json_dir.glob("*.json")]
 
-    def _to_pytest_param(input_profile: KoswatInputProfileBase) -> pytest.param:
+    def _to_pytest_param(section_input: KoswatDikeSectionInputJsonFom) -> pytest.param:
         return pytest.param(
-            input_profile, id="Input_{}".format(input_profile.dike_section)
+            section_input.input_profile,
+            id="Input_{}".format(section_input.dike_section),
         )
 
     return list(
