@@ -44,6 +44,8 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
     def from_dict(cls, input_dict: dict[str, Any]) -> FileObjectModelProtocol:
         """
         Create an instance of the class from a dictionary (e.g., from JSON).
+        Note no defaults are assigned here, so missing values will be None.
+        Reason for this is to avoid overriding defaults from other configuration layers.
 
         Args:
             input_dict (dict): Dictionary containing the configuration.
