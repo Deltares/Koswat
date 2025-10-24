@@ -1,0 +1,58 @@
+{
+    "Dijkprofiel": {
+        "Buiten_Maaiveld": 0.61,
+        "Buiten_Berm_Lengte": 0,
+        "Buiten_Berm_Hoogte": 0.59,
+        "Buiten_Talud": 3.53,
+        "Kruin_Breedte": 3.98,
+        "Kruin_Hoogte": 4.22,
+        "Binnen_Talud": 2.41,
+        "Binnen_Maaiveld": 2.81,
+        "Binnen_Berm_Lengte": 0,
+        "Binnen_Berm_Hoogte": 2.83,
+        "Grondprijs_Bebouwd": 176.61,
+        "Grondprijs_Onbebouwd": 9.23,
+        "FactorZetting": 1.21,
+        "Pleistoceen": -5.07,
+        "Aquifer": -2.07,
+        "Dikte_Deklaag": 3.1,
+        "Dikte_Graslaag": 0.31,
+        "Dikte_Kleilaag": 0.51
+    },
+    "Grondmaatregel": {
+        "Opslagfactor_Grond" : "Moeilijk",
+        "Opslagfactor_Grondaankoop": "Makkelijk",
+        "Min_Bermhoogte": 0.51,
+        "Max_Bermhoogte_Factor": 0.41,
+        "Factor_Toename_Bermhoogte": 0.051
+    },
+    "VerticalePipingOplossing": {
+        "Opslagfactor_Grond": "Makkelijk",
+        "Opslagfactor_Constructief": "Makkelijk",
+        "Opslagfactor_Grondaankoop": "Moeilijk",
+        "Binnen_Berm_Breedte_VPS": 11
+    },
+    "Kwelscherm": {
+        "Opslagfactor_Grond": "Moeilijk",
+        "Opslagfactor_Constructief": "Makkelijk",
+        "Opslagfactor_Grondaankoop": "Makkelijk",
+        "Min_Lengte_Kwelscherm": 5,
+        "Overgang_CBwand_Damwand": 95,
+        "Max_Lengte_Kwelscherm": 30
+    },
+    "Stabiliteitswand": {
+        "Opslagfactor_Grond": "Moeilijk",
+        "Opslagfactor_Constructief": "Makkelijk",
+        "Opslagfactor_Grondaankoop": "Moeilijk",
+        "Versteiling_Binnentalud": 2.1,
+        "Min_Lengte_Stabiliteitswand": 6,
+        "Overgang_Damwand_Diepwand": 25,
+        "Max_Lengte_Stabiliteitswand": 30
+    },
+    "Kistdam": {
+        "Opslagfactor_Grond": "Moeilijk",
+        "Opslagfactor_Constructief": "Moeilijk",
+        "Min_Lengte_Kistdam": 6,
+        "Max_Lengte_Kistdam": 26
+    }
+}
