@@ -53,7 +53,7 @@ def _compare_koswat_input_profile(
             "constructive_surtax_factor",
             "land_purchase_surtax_factor",
         ]
-        if not almost_equal(_new_data_dict[key], value)
+        and not almost_equal(_new_data_dict[key], value)
     ]
 
 
