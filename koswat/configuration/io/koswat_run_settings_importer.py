@@ -1,4 +1,3 @@
-import copy
 import logging
 import math
 from pathlib import Path
@@ -217,15 +216,6 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 ),
             ],
         )
-
-    def _override_object_settings(
-        self, base_object: object, override_object: object
-    ) -> object:
-        _new_object = copy.deepcopy(base_object)
-        for _key, _value in override_object.__dict__.items():
-            if hasattr(base_object, _key) and _value not in (None, math.nan):
-                setattr(_new_object, _key, _value)
-        return _new_object
 
     def _override_reinforcement_settings_for_section(
         self,
