@@ -1,4 +1,3 @@
-import copy
 import logging
 import math
 from pathlib import Path
@@ -218,23 +217,6 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             ],
         )
 
-    def _override_object_settings(
-        self, base_object: object, override_object: object
-    ) -> object:
-        _new_object = copy.deepcopy(base_object)
-        for _key, _value in override_object.__dict__.items():
-            if hasattr(base_object, _key) and _value not in (None, math.nan):
-                setattr(_new_object, _key, _value)
-        return _new_object
-
-    def _override_profile_settings_for_section(
-        self,
-        base_profile: DikeProfileSectionFom,
-        section_input: DikeProfileSectionFom,
-    ) -> DikeProfileSectionFom:
-        # Override base profile settings with section-specific input where provided
-        return self._override_object_settings(base_profile, section_input)
-
     def _override_reinforcement_settings_for_section(
         self,
         base_settings: KoswatReinforcementSettings,
@@ -242,20 +224,18 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     ) -> KoswatReinforcementSettings:
         # Override base reinforcement settings with section-specific input where provided
         _new_settings = KoswatReinforcementSettings(
-            soil_settings=self._override_object_settings(
-                base_settings.soil_settings, section_input.soil_measure
+            soil_settings=section_input.soil_measure.set_defaults(
+                base_settings.soil_settings
             ),
-            vps_settings=self._override_object_settings(
-                base_settings.vps_settings, section_input.vps
+            vps_settings=section_input.vps.set_defaults(base_settings.vps_settings),
+            piping_wall_settings=section_input.piping_wall.set_defaults(
+                base_settings.piping_wall_settings
             ),
-            piping_wall_settings=self._override_object_settings(
-                base_settings.piping_wall_settings, section_input.piping_wall
+            stability_wall_settings=section_input.stability_wall.set_defaults(
+                base_settings.stability_wall_settings
             ),
-            stability_wall_settings=self._override_object_settings(
-                base_settings.stability_wall_settings, section_input.stability_wall
-            ),
-            cofferdam_settings=self._override_object_settings(
-                base_settings.cofferdam_settings, section_input.cofferdam
+            cofferdam_settings=section_input.cofferdam.set_defaults(
+                base_settings.cofferdam_settings
             ),
         )
         return _new_settings
@@ -277,9 +257,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _input_profile_list = []
         _reinforcement_settings_list = []
         for _section_settings in _section_settings_list:
-            _section_profile_settings = self._override_profile_settings_for_section(
-                general_settings.dike_profile_section,
-                _section_settings.input_profile,
+            _section_profile_settings = _section_settings.input_profile.set_defaults(
+                general_settings.dike_profile_section
             )
             _section_input_profile = KoswatProfileBuilder.with_data(
                 dict(
