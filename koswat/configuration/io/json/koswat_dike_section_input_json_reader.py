@@ -3,7 +3,7 @@ from pathlib import Path
 from koswat.configuration.io.config_sections import (
     CofferdamReinforcementSectionFom,
     DikeProfileSectionFom,
-    PipingwallReinforcementSectionFom,
+    PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilitywallReinforcementSectionFom,
     VPSReinforcementSectionFom,
@@ -38,7 +38,7 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             vps=VPSReinforcementSectionFom.from_dict(
                 _json_fom.content.get("verticalepipingoplossing", dict())
             ),
-            piping_wall=PipingwallReinforcementSectionFom.from_dict(
+            piping_wall=PipingWallReinforcementSectionFom.from_dict(
                 _json_fom.content.get("kwelscherm", dict())
             ),
             stability_wall=StabilitywallReinforcementSectionFom.from_dict(

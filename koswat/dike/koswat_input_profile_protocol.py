@@ -8,6 +8,7 @@ from koswat.core.protocols.data_object_model_protocol import DataObjectModelProt
 @runtime_checkable
 class KoswatInputProfileProtocol(DataObjectModelProtocol, Protocol):
     dike_section: str
+    active: bool
     waterside_ground_level: float
     waterside_slope: float
     waterside_berm_height: float

@@ -5,6 +5,7 @@ from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEn
 
 
 class PipingwallReinforcementSectionFom(ConfigSectionFomBase):
+    active: bool
     min_length_piping_wall: float
     transition_cbwall_sheetpile: float
     max_length_piping_wall: float
@@ -12,6 +13,9 @@ class PipingwallReinforcementSectionFom(ConfigSectionFomBase):
     constructive_surtax_factor: SurtaxFactorEnum
     land_purchase_surtax_factor: SurtaxFactorEnum
 
+    _bool_mappings = dict(
+        actief="active",
+    )
     _float_mappings = dict(
         min_lengte_kwelscherm="min_length_piping_wall",
         overgang_cbwand_damwand="transition_cbwall_sheetpile",

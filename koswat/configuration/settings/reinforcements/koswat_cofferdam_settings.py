@@ -10,6 +10,7 @@ class KoswatCofferdamSettings(KoswatConfigProtocol):
     Settings related to Cofferdam reinforcement
     """
 
+    active: bool = True
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     constructive_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     min_length_cofferdam: float = 0

@@ -5,12 +5,16 @@ from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEn
 
 
 class SoilReinforcementSectionFom(ConfigSectionFomBase):
+    active: bool
     min_berm_height: float
     max_berm_height_factor: float
     factor_increase_berm_height: float
     soil_surtax_factor: SurtaxFactorEnum
     land_purchase_surtax_factor: SurtaxFactorEnum
 
+    _bool_mappings = dict(
+        actief="active",
+    )
     _float_mappings = dict(
         min_bermhoogte="min_berm_height",
         max_bermhoogte_factor="max_berm_height_factor",

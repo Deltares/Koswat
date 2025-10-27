@@ -12,6 +12,7 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
     Base class for configuration section file object models.
     """
 
+    _bool_mappings: dict
     _surtax_mappings: dict
     _float_mappings: dict
 
@@ -33,6 +34,8 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
             FileObjectModelProtocol: The created instance.
         """
         _section = cls()
+        for key, attr in cls._bool_mappings.items():
+            setattr(_section, attr, ini_config.getboolean(key, fallback=False))
         for key, attr in cls._float_mappings.items():
             setattr(_section, attr, ini_config.getfloat(key, fallback=math.nan))
         for key, attr in cls._surtax_mappings.items():
@@ -54,6 +57,10 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
             FileObjectModelProtocol: The created instance.
         """
         _section = cls()
+        for key, attr in cls._bool_mappings.items():
+            setattr(
+                _section, attr, bool(input_dict.get(key)) if key in input_dict else None
+            )
         for key, attr in cls._float_mappings.items():
             setattr(
                 _section,

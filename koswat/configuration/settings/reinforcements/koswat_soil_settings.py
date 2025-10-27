@@ -10,6 +10,7 @@ class KoswatSoilSettings(KoswatConfigProtocol):
     Settings related to Soil reinforcement
     """
 
+    active: bool = True
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     min_berm_height: float = 0.5

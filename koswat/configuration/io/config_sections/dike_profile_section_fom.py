@@ -6,6 +6,7 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
 class DikeProfileSectionFom(ConfigSectionFomBase, KoswatInputProfileBase):
 
+    _bool_mappings = dict()
     _float_mappings = dict(
         buiten_maaiveld="waterside_ground_level",
         buiten_talud="waterside_slope",

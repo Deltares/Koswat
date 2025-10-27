@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from koswat.configuration.io.config_sections import (
     CofferdamReinforcementSectionFom,
     DikeProfileSectionFom,
-    PipingwallReinforcementSectionFom,
+    PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilitywallReinforcementSectionFom,
     VPSReinforcementSectionFom,
@@ -19,8 +19,8 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
         default_factory=SoilReinforcementSectionFom
     )
     vps: VPSReinforcementSectionFom = field(default_factory=VPSReinforcementSectionFom)
-    piping_wall: PipingwallReinforcementSectionFom = field(
-        default_factory=PipingwallReinforcementSectionFom
+    piping_wall: PipingWallReinforcementSectionFom = field(
+        default_factory=PipingWallReinforcementSectionFom
     )
     stability_wall: StabilitywallReinforcementSectionFom = field(
         default_factory=StabilitywallReinforcementSectionFom

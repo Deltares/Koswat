@@ -5,6 +5,7 @@ from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEn
 
 
 class StabilitywallReinforcementSectionFom(ConfigSectionFomBase):
+    active: bool
     steepening_polderside_slope: float
     min_length_stability_wall: float
     transition_sheetpile_diaphragm_wall: float
@@ -13,6 +14,9 @@ class StabilitywallReinforcementSectionFom(ConfigSectionFomBase):
     constructive_surtax_factor: SurtaxFactorEnum
     land_purchase_surtax_factor: SurtaxFactorEnum
 
+    _bool_mappings = dict(
+        actief="active",
+    )
     _float_mappings = dict(
         versteiling_binnentalud="steepening_polderside_slope",
         min_lengte_stabiliteitswand="min_length_stability_wall",

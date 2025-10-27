@@ -10,6 +10,7 @@ class KoswatVPSSettings(KoswatConfigProtocol):
     Settings related to Vertical Piping Solution reinforcement
     """
 
+    active: bool = True
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     constructive_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL

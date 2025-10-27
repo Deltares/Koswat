@@ -9,11 +9,17 @@ from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEn
 
 class TestConfigSectionFomBase:
     class DummyConfigSection(ConfigSectionFomBase):
+        some_bool: bool
+        other_bool: bool
         some_float: float
         other_float: float
         some_surtax: SurtaxFactorEnum
         other_surtax: SurtaxFactorEnum
 
+        _bool_mappings = dict(
+            bool_one="some_bool",
+            bool_two="other_bool",
+        )
         _float_mappings = dict(
             float_one="some_float",
             float_two="other_float",
@@ -23,13 +29,18 @@ class TestConfigSectionFomBase:
             surtax_two="other_surtax",
         )
 
+        @staticmethod
+        def get_test_data_dict():
+            return {
+                "bool_one": True,
+                "float_one": "2.5",
+                "surtax_one": "Moeilijk",
+            }
+
     def test_from_ini(self):
         # 1. Define test data
         _config_parser = configparser.ConfigParser()
-        _config_parser["section"] = {
-            "float_one": 2.5,
-            "surtax_one": "MOEILIJK",
-        }
+        _config_parser["section"] = self.DummyConfigSection.get_test_data_dict()
         _ini_data = _config_parser["section"]
 
         # 2. Execute test
@@ -45,10 +56,7 @@ class TestConfigSectionFomBase:
 
     def test_from_dict(self):
         # 1. Define test data
-        _ini_data = {
-            "float_one": 2.5,
-            "surtax_one": "MOEILIJK",
-        }
+        _ini_data = self.DummyConfigSection.get_test_data_dict()
 
         # 2. Execute test
         _section = self.DummyConfigSection.from_dict(_ini_data)
