@@ -15,8 +15,7 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
     _surtax_mappings: dict
     _float_mappings: dict
 
-    @staticmethod
-    def _get_surtax_factor(input_str: Optional[str]) -> SurtaxFactorEnum:
+    def _get_surtax_factor(self, input_str: Optional[str]) -> SurtaxFactorEnum:
         if not input_str:
             return SurtaxFactorEnum.NORMAAL
         return SurtaxFactorEnum[input_str.upper()]
@@ -36,7 +35,9 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
         for key, attr in cls._float_mappings.items():
             setattr(_section, attr, ini_config.getfloat(key, fallback=math.nan))
         for key, attr in cls._surtax_mappings.items():
-            setattr(_section, attr, cls._get_surtax_factor(ini_config.get(key, None)))
+            setattr(
+                _section, attr, _section._get_surtax_factor(ini_config.get(key, None))
+            )
 
         return _section
 
@@ -65,7 +66,7 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
                 _section,
                 attr,
                 (
-                    cls._get_surtax_factor(input_dict.get(key))
+                    _section._get_surtax_factor(input_dict.get(key))
                     if key in input_dict
                     else None
                 ),

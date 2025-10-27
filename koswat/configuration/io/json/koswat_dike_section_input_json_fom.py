@@ -30,4 +30,4 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     )
 
     def is_valid(self) -> bool:
-        return self.dike_section
+        return self.dike_section != ""
