@@ -5,6 +5,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests import test_data
 
@@ -53,6 +54,7 @@ class TestKoswatSimpleSurroundingsCsvReader:
 
         # 3. Verify expectations.
         assert isinstance(_point_surroundings, PointSurroundings)
+        assert isinstance(_point_surroundings, PointObstacleSurroundings)
         assert _point_surroundings.section == _section
         assert _point_surroundings.traject_order == _traject_order
         assert _point_surroundings.location.x == _location_x
@@ -62,4 +64,4 @@ class TestKoswatSimpleSurroundingsCsvReader:
         assert _point_surroundings.outside_distance == 200
         assert _point_surroundings.angle_inside == 0
         assert _point_surroundings.angle_outside == 0
-        assert _point_surroundings.closest_obstacle == _point_surroundings.inside_distance
+        assert _point_surroundings.closest_obstacle == _point_surroundings.outside_distance
