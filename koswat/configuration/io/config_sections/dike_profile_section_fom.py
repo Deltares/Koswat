@@ -1,3 +1,7 @@
+import math
+from configparser import SectionProxy
+from typing import Any
+
 from koswat.configuration.io.config_sections.config_section_fom_base import (
     ConfigSectionFomBase,
 )
@@ -26,4 +30,15 @@ class DikeProfileSectionFom(ConfigSectionFomBase, KoswatInputProfileBase):
         dikte_graslaag="thickness_grass_layer",
         dikte_kleilaag="thickness_clay_layer",
     )
-    _surtax_mappings = dict()
+
+    @classmethod
+    def from_ini(cls, ini_config: SectionProxy) -> "DikeProfileSectionFom":
+        _section = cls()
+        _section._set_float_values(dict(ini_config), cls._float_mappings, math.nan)
+        return _section
+
+    @classmethod
+    def from_dict(cls, input_dict: dict[str, Any]) -> "DikeProfileSectionFom":
+        _section = cls()
+        _section._set_float_values(input_dict, cls._float_mappings, None)
+        return _section

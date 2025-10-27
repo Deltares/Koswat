@@ -1,3 +1,7 @@
+import math
+from configparser import SectionProxy
+from typing import Any
+
 from koswat.configuration.io.config_sections.config_section_fom_base import (
     ConfigSectionFomBase,
 )
@@ -20,3 +24,19 @@ class SoilReinforcementSectionFom(ConfigSectionFomBase):
         opslagfactor_grond="soil_surtax_factor",
         opslagfactor_grondaankoop="land_purchase_surtax_factor",
     )
+
+    @classmethod
+    def from_ini(cls, ini_config: SectionProxy) -> "SoilReinforcementSectionFom":
+        _section = cls()
+        _section._set_float_values(dict(ini_config), cls._float_mappings, math.nan)
+        _section._set_surtax_factor_values(
+            dict(ini_config), cls._surtax_mappings, SurtaxFactorEnum.NORMAAL
+        )
+        return _section
+
+    @classmethod
+    def from_dict(cls, input_dict: dict[str, Any]) -> "SoilReinforcementSectionFom":
+        _section = cls()
+        _section._set_float_values(input_dict, cls._float_mappings, None)
+        _section._set_surtax_factor_values(input_dict, cls._surtax_mappings, None)
+        return _section

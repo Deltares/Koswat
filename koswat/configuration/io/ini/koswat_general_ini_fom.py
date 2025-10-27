@@ -7,7 +7,7 @@ from pathlib import Path
 from koswat.configuration.io.config_sections import (
     CofferdamReinforcementSectionFom,
     DikeProfileSectionFom,
-    PipingwallReinforcementSectionFom,
+    PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilitywallReinforcementSectionFom,
     VPSReinforcementSectionFom,
@@ -110,7 +110,7 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
     dike_profile_section: DikeProfileSectionFom
     soil_measure_section: SoilReinforcementSectionFom
     vps_section: VPSReinforcementSectionFom
-    piping_wall_section: PipingwallReinforcementSectionFom
+    piping_wall_section: PipingWallReinforcementSectionFom
     stability_wall_section: StabilitywallReinforcementSectionFom
     cofferdam_section: CofferdamReinforcementSectionFom
     surroundings_section: SurroundingsSectionFom
@@ -132,7 +132,7 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
         _general_ini.vps_section = VPSReinforcementSectionFom.from_ini(
             ini_config["VerticalePipingOplossing"]
         )
-        _general_ini.piping_wall_section = PipingwallReinforcementSectionFom.from_ini(
+        _general_ini.piping_wall_section = PipingWallReinforcementSectionFom.from_ini(
             ini_config["Kwelscherm"]
         )
         _general_ini.stability_wall_section = (

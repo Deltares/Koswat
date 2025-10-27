@@ -12,16 +12,9 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
     Base class for configuration section file object models.
     """
 
-    _surtax_mappings: dict
-    _float_mappings: dict
-
-    def _get_surtax_factor(self, input_str: Optional[str]) -> SurtaxFactorEnum:
-        if not input_str:
-            return SurtaxFactorEnum.NORMAAL
-        return SurtaxFactorEnum[input_str.upper()]
-
     @classmethod
-    def from_ini(cls, ini_config: SectionProxy) -> FileObjectModelProtocol:
+    @abc.abstractmethod
+    def from_ini(cls, ini_config: SectionProxy) -> "ConfigSectionFomBase":
         """
         Create an instance of the class from an INI configuration section.
 
@@ -31,18 +24,10 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
         Returns:
             FileObjectModelProtocol: The created instance.
         """
-        _section = cls()
-        for key, attr in cls._float_mappings.items():
-            setattr(_section, attr, ini_config.getfloat(key, fallback=math.nan))
-        for key, attr in cls._surtax_mappings.items():
-            setattr(
-                _section, attr, _section._get_surtax_factor(ini_config.get(key, None))
-            )
-
-        return _section
 
     @classmethod
-    def from_dict(cls, input_dict: dict[str, Any]) -> FileObjectModelProtocol:
+    @abc.abstractmethod
+    def from_dict(cls, input_dict: dict[str, Any]) -> "ConfigSectionFomBase":
         """
         Create an instance of the class from a dictionary (e.g., from JSON).
         Note no defaults are assigned here, so missing values will be None.
@@ -54,22 +39,50 @@ class ConfigSectionFomBase(FileObjectModelProtocol, abc.ABC):
         Returns:
             FileObjectModelProtocol: The created instance.
         """
-        _section = cls()
-        for key, attr in cls._float_mappings.items():
+
+    def _set_float_values(
+        self,
+        config: dict[str, Any],
+        mappings: dict[str, str],
+        default: Optional[float] = None,
+    ) -> None:
+        for key, attr in mappings.items():
+            _input_value = config.get(key, default)
             setattr(
-                _section,
-                attr,
-                float(input_dict.get(key)) if key in input_dict else None,
-            )
-        for key, attr in cls._surtax_mappings.items():
-            setattr(
-                _section,
+                self,
                 attr,
                 (
-                    _section._get_surtax_factor(input_dict.get(key))
-                    if key in input_dict
-                    else None
+                    float(config.get(key, default))
+                    if _input_value != default
+                    else default
                 ),
             )
 
-        return _section
+    def _set_surtax_factor_values(
+        self,
+        config: dict[str, Any],
+        mappings: dict[str, str],
+        default: Optional[SurtaxFactorEnum] = None,
+    ) -> None:
+        for key, attr in mappings.items():
+            _input_str = config.get(key, default.name if default else None)
+            setattr(
+                self,
+                attr,
+                SurtaxFactorEnum[_input_str.upper()] if _input_str else default,
+            )
+
+    def set_defaults(self, defaults: "ConfigSectionFomBase") -> "ConfigSectionFomBase":
+        """
+        Override current settings with defaults where current settings are missing.
+
+        Args:
+            defaults (ConfigSectionFomBase): Object containing default settings.
+
+        Returns:
+            ConfigSectionFomBase: Object with settings overridden by defaults, where needed.
+        """
+        for _key, _value in defaults.__dict__.items():
+            if getattr(self, _key) in ("", None, math.nan):
+                setattr(self, _key, _value)
+        return self

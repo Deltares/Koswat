@@ -132,7 +132,7 @@ class TestKoswatRunSettingsImporter:
                     assert _profile.input_data.dike_section == _config_values
                 elif _config_section == "input_profile":
                     for _key, _value in _config_values.__dict__.items():
-                        if _value not in (None, math.nan):
+                        if _value not in ("", None, math.nan):
                             assert getattr(_profile.input_data, _key) == _value
                 else:
                     _reinforcement_settings_section = getattr(

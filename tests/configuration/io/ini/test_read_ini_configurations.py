@@ -17,7 +17,7 @@ from koswat.configuration.io.ini.koswat_general_ini_fom import (
     DikeProfileSectionFom,
     InfrastructureSectionFom,
     KoswatGeneralIniFom,
-    PipingwallReinforcementSectionFom,
+    PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilitywallReinforcementSectionFom,
     SurroundingsSectionFom,
@@ -132,7 +132,7 @@ class TestReadIniConfigurations:
 
         # Kwelscherm section
         assert isinstance(
-            _ini_fom.piping_wall_section, PipingwallReinforcementSectionFom
+            _ini_fom.piping_wall_section, PipingWallReinforcementSectionFom
         )
         assert (
             _ini_fom.piping_wall_section.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
