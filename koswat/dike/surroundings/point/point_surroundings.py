@@ -1,3 +1,4 @@
+from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 
@@ -40,6 +41,21 @@ class PointSurroundings:
             __value.section,
             __value.traject_order,
         )
+
+    def merge(self, other: PointSurroundings) -> None:
+        """
+        Merges another `PointSurroundings` into this one by updating the
+        `surroundings_matrix` with the values from the other one.
+
+        Args:
+            other (PointSurroundings): The other `PointSurroundings` to merge.
+        """
+
+        for _s_key, _s_value in other.surroundings_matrix.items():
+            if _s_key in self.surroundings_matrix:
+                self.surroundings_matrix[_s_key] += _s_value
+            else:
+                self.surroundings_matrix[_s_key] = _s_value
 
     @property
     def closest_obstacle(self) -> float:

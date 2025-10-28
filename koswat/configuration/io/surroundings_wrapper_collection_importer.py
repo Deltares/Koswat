@@ -106,5 +106,8 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         _imported_csv_foms = {}
         for _csv_file in csv_dir.glob("*.csv"):
             _type, _csv_fom = self._csv_file_to_fom(_csv_file, csv_dir.stem)
-            _imported_csv_foms[_type.name] = _csv_fom
+            if _type.name in _imported_csv_foms:
+                _imported_csv_foms[_type.name].merge(_csv_fom)
+            else:
+                _imported_csv_foms[_type.name] = _csv_fom
         return _imported_csv_foms
