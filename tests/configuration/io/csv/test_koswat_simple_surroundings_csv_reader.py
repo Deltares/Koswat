@@ -64,4 +64,4 @@ class TestKoswatSimpleSurroundingsCsvReader:
         assert _point_surroundings.outside_distance == 200
         assert _point_surroundings.angle_inside == 0
         assert _point_surroundings.angle_outside == 0
-        assert _point_surroundings.closest_obstacle == _point_surroundings.outside_distance
+        assert _point_surroundings.closest_obstacle == _point_surroundings.inside_distance

@@ -31,4 +31,4 @@ class PointObstacleSurroundings(PointSurroundings):
             float: Distance to the closest surrounding.
         """
 
-        return self.outside_distance
+        return self.inside_distance
