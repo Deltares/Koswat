@@ -1,46 +1,69 @@
 import math
-from configparser import SectionProxy
-from typing import Any
+from typing import Any, Optional
 
-from koswat.configuration.io.config_sections.config_section_fom_base import (
-    ConfigSectionFomBase,
+from koswat.configuration.io.config_sections.config_section_fom_protocol import (
+    ConfigSectionFomProtocol,
 )
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
+from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
+    KoswatVPSSettings,
+)
 
 
-class VPSReinforcementSectionFom(ConfigSectionFomBase):
-    active: bool
-    polderside_berm_width_vps: float
-    soil_surtax_factor: SurtaxFactorEnum
-    constructive_surtax_factor: SurtaxFactorEnum
-    land_purchase_surtax_factor: SurtaxFactorEnum
+class VPSReinforcementSectionFom(ConfigSectionFomProtocol, KoswatVPSSettings):
+    def _set_properties_from_dict(
+        self, input_dict: dict[str, Any], set_def: bool
+    ) -> None:
+        def _get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
+            if input_val:
+                return SurtaxFactorEnum[input_val.upper()]
+            return SurtaxFactorEnum.NORMAAL if set_def else None
 
-    _bool_mappings = dict(
-        actief="active",
-    )
-    _float_mappings = dict(
-        binnen_berm_breedte_vps="polderside_berm_width_vps",
-    )
-    _surtax_mappings = dict(
-        opslag_factor_grond="soil_surtax_factor",
-        opslagfactor_constructief="constructive_surtax_factor",
-        opslagfactor_grondaankoop="land_purchase_surtax_factor",
-    )
-
-    @classmethod
-    def from_ini(cls, ini_config: SectionProxy) -> "VPSReinforcementSectionFom":
-        _section = cls()
-        _section._set_bool_values(dict(ini_config), cls._bool_mappings, False)
-        _section._set_float_values(dict(ini_config), cls._float_mappings, math.nan)
-        _section._set_surtax_factor_values(
-            dict(ini_config), cls._surtax_mappings, SurtaxFactorEnum.NORMAAL
+        self.soil_surtax_factor = _get_enum(input_dict.get("opslagfactor_grond", None))
+        self.constructive_surtax_factor = _get_enum(
+            input_dict.get("opslagfactor_constructief", None)
         )
+        self.land_purchase_surtax_factor = _get_enum(
+            input_dict.get("min_lengte_kistdam", None)
+        )
+
+        def _get_float(input_val: Optional[str]) -> float:
+            if input_val is not None:
+                return float(input_val)
+            return math.nan if set_def else None
+
+        self.polderside_berm_width_vps = _get_float(
+            input_dict.get("binnen_berm_breedte_vps", None)
+        )
+
+    @classmethod
+    def from_config(cls, input_dict: dict[str, Any]) -> "VPSReinforcementSectionFom":
+        _section = cls()
+        _section._set_properties_from_dict(input_dict, set_def=False)
         return _section
 
     @classmethod
-    def from_dict(cls, input_dict: dict[str, Any]) -> "VPSReinforcementSectionFom":
+    def from_config_set_defaults(
+        cls, input_dict: dict[str, Any]
+    ) -> "VPSReinforcementSectionFom":
         _section = cls()
-        _section._set_bool_values(input_dict, cls._bool_mappings, None)
-        _section._set_float_values(input_dict, cls._float_mappings, None)
-        _section._set_surtax_factor_values(input_dict, cls._surtax_mappings, None)
+        _section._set_properties_from_dict(input_dict, set_def=True)
         return _section
+
+    def merge(
+        self, other: "VPSReinforcementSectionFom|KoswatVPSSettings"
+    ) -> "VPSReinforcementSectionFom":
+        if not isinstance(other, (VPSReinforcementSectionFom, KoswatVPSSettings)):
+            raise TypeError(
+                "Can only merge with another VPSReinforcementSectionFom instance."
+            )
+
+        def _merge_attr(attr_name: str) -> None:
+            this_value = getattr(self, attr_name)
+            if this_value is None:
+                setattr(self, attr_name, getattr(other, attr_name))
+
+        for _attr in vars(self).keys():
+            _merge_attr(_attr)
+
+        return self
