@@ -29,22 +29,22 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
         _json_fom = KoswatJsonReader().read(file_path)
         _dike_section_input_fom = KoswatDikeSectionInputJsonFom(
             dike_section=_json_fom.file_stem,
-            input_profile=DikeProfileSectionFom.from_dict(
+            input_profile=DikeProfileSectionFom.from_config(
                 _json_fom.content.get("dijkprofiel", dict())
             ),
-            soil_measure=SoilReinforcementSectionFom.from_dict(
+            soil_measure=SoilReinforcementSectionFom.from_config(
                 _json_fom.content.get("grondmaatregel", dict())
             ),
-            vps=VPSReinforcementSectionFom.from_dict(
+            vps=VPSReinforcementSectionFom.from_config(
                 _json_fom.content.get("verticalepipingoplossing", dict())
             ),
-            piping_wall=PipingWallReinforcementSectionFom.from_dict(
+            piping_wall=PipingWallReinforcementSectionFom.from_config(
                 _json_fom.content.get("kwelscherm", dict())
             ),
-            stability_wall=StabilitywallReinforcementSectionFom.from_dict(
+            stability_wall=StabilitywallReinforcementSectionFom.from_config(
                 _json_fom.content.get("stabiliteitswand", dict())
             ),
-            cofferdam=CofferdamReinforcementSectionFom.from_dict(
+            cofferdam=CofferdamReinforcementSectionFom.from_config(
                 _json_fom.content.get("kistdam", dict())
             ),
         )
