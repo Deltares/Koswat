@@ -1,8 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 
-from matplotlib.pylab import f
-
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
@@ -18,6 +16,15 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
         return any(self.points_surroundings_list)
     
     def merge(self, other: KoswatSurroundingsCsvFom) -> None:
+        """
+        Merge another KoswatSurroundingsCsvFom into this one.
+
+        Args:
+            other (KoswatSurroundingsCsvFom): The other KoswatSurroundingsCsvFom to merge.
+
+        Raises:
+            ValueError: If the trajects of the two objects do not match.
+        """
         if other.traject != self.traject:
             raise ValueError("Cannot merge surroundings fom with different trajects.")
 

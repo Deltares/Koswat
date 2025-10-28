@@ -66,13 +66,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
             for _matched_ps in _lmatches:
                 if math.isnan(_matched_ps.closest_obstacle):
                     continue
-                if _matched_ps.inside_distance < _ps_copy.inside_distance or math.isnan(
-                    _ps_copy.inside_distance
-                ):
-                    _ps_copy.inside_distance = _matched_ps.inside_distance
-                if _matched_ps.outside_distance < _ps_copy.outside_distance or math.isnan(
-                    _ps_copy.outside_distance):
-                    _ps_copy.outside_distance = _matched_ps.outside_distance
+                _matched_ps.merge(_ps_copy)
         return _obstacle_locations
 
     def get_locations_at_safe_distance(
