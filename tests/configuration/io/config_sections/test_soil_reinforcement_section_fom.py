@@ -27,6 +27,7 @@ class TestSoilReinforcementSectionFom:
 
         # 3. Verify expectations
         assert isinstance(_section, ConfigSectionFomProtocol)
+        assert _section.active
         assert _section.min_berm_height == 2.5
         assert _section.max_berm_height_factor is None
         assert _section.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
@@ -43,6 +44,7 @@ class TestSoilReinforcementSectionFom:
 
         # 3. Verify expectations
         assert isinstance(_section, ConfigSectionFomProtocol)
+        assert _section.active
         assert _section.min_berm_height == 2.5
         assert math.isnan(_section.max_berm_height_factor)
         assert _section.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK

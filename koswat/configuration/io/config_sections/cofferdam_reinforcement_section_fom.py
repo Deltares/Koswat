@@ -16,7 +16,14 @@ class CofferdamReinforcementSectionFom(
     def _set_properties_from_dict(
         self, input_dict: dict[str, Any], set_def: bool
     ) -> None:
-        def _get_enum(input_val: Optional[str]) -> Optional[SurtaxFactorEnum]:
+        def _get_bool(input_val: Optional[str]) -> bool:
+            if input_val is not None:
+                return bool(input_val)
+            return False if set_def else None
+        
+        self.active = _get_bool(input_dict.get("actief", None))
+        
+        def _get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
             if input_val:
                 return SurtaxFactorEnum[input_val.upper()]
             return SurtaxFactorEnum.NORMAAL if set_def else None
@@ -26,7 +33,7 @@ class CofferdamReinforcementSectionFom(
             input_dict.get("opslagfactor_constructief", None)
         )
 
-        def _get_float(input_val: Optional[str]) -> Optional[float]:
+        def _get_float(input_val: Optional[str]) -> float:
             if input_val is not None:
                 return float(input_val)
             return math.nan if set_def else None
