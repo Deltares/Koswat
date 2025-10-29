@@ -63,7 +63,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
                 continue
             _ps_copy = copy.deepcopy(_lmatches[0])
             _obstacle_locations.append(_ps_copy)
-            for _matched_ps in _lmatches:
+            for _matched_ps in _lmatches[1:]:
                 if math.isnan(_matched_ps.closest_obstacle):
                     continue
                 _matched_ps.merge(_ps_copy)
