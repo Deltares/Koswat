@@ -16,16 +16,16 @@ COPY README.md LICENSE pyproject.toml pixi.lock /koswat_src/
 COPY koswat /koswat_src/koswat
 
 # Install the python=3.13 environment
-RUN pixi install --locked -e py313 && pixi shell -e py313
-RUN pixi add pip && pixi run pip list --format=freeze > requirements.txt
+RUN pixi install --locked -e py313
+RUN pixi run -e py313 pip list --format=freeze > requirements.txt
 
 FROM python:3.13-slim
 
 WORKDIR /app
 COPY --from=BUILD /koswat_src/ /app
 
-RUN pip install -r requirements.txt
-RUN pip install .
+# RUN pip install -r requirements.txt
+# RUN pip install .
 
 # Define the endpoint
 CMD ["koswat", "--help"]
