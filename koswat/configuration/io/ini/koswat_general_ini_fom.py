@@ -63,7 +63,7 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
-        _types = ini_config["types"].lower().strip().split(",")
+        _types = ini_config.get("omgevingtypes", "").lower().strip().split(",")
         _section = cls(
             surroundings_database_dir=Path(ini_config["omgevingsdatabases"]),
             construction_distance=ini_config.getfloat("constructieafstand"),
