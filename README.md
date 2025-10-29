@@ -39,12 +39,12 @@ __Important!__ The following installation steps are written based on a Windows e
 When you only require the koswat package to be used as a whole, and not for developments, we advise to directly use the latest greatest release, or directly the latest available version from `Master` as follows:
 
 1. Latest available `Master`:
-```bash
+```console
 pip install git+https://github.com/Deltares/Koswat.git
 ```
 
 2. Specific Koswat version, add `@version-tag` to the previous command, for instance install tag `v0.11.0` (__MVP__ pre-release):
-```bash
+```console
 pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 ```
 | You can also do the above with a commit-hash for development branches (e.g.:`@0504c06`)
@@ -58,7 +58,7 @@ Please check our related [contributing wiki page](https://github.com/Deltares/Ko
 #### Read the docs documentation.
 
 Documentation for the project is currently only available with a manual step. You can do this if you installed the project following the steps of the [development mode](#development-mode). Then execute the `MkDocs` build and serve step:
-```cli
+```console
 poetry run mkdocs build
 poetry run mkdocs serve
 ```
@@ -68,7 +68,7 @@ poetry run mkdocs serve
 ### As a package
 When using `Koswat` as a package you can run it directly from the command line as follows:
 
-```cli
+```console
 python -m koswat --input_file path\\to\\your\\koswat.ini --log_output path\\to\\your\\output\\dir
 ```
 The arguments are:
@@ -76,36 +76,37 @@ The arguments are:
 - `--log_output` (optional): Absolute path to the location of where the `koswat.log` will be written. If not specified it will be written at the root of the execution directory.
 
 It is also possible to check all the above possibilities via the `--help` argument in the command line:
-```cli
+```console
 python -m koswat --help
 ```
 
 ### Podman / docker
 
-First you need to build the koswat docker image by any of the following two ways:
+1. First you need to build the koswat docker image by any of the following two ways:
 
 - You can either it from a local checkout:
-```bash
-podman build -t koswat .
-```
-- Or from our Deltares registry:
-```bash
-podman pull containers.deltares.nl/gfs/koswat:latest
-```
+    ```console
+    podman build -t koswat .
+    ```
 
-You can now proceed to run the tool, we will make use of our test data ( `tests/test_data/acceptance` ), so you can copy it to a local test directory (`{your_data_to_run_directory}`):
+- Or from our Deltares registry (although this step is not really needed):
+    ```console
+    podman pull containers.deltares.nl/gfs/koswat:latest
+    ```
 
-```bash
-podman run -it -v {your_data_to_run_directory}:/run_data koswat --input_file /run_data/koswat_general.ini
-```
-or
+2. You can now proceed to run the tool, we will make use of our test data ( `tests/test_data/acceptance` ), so you can copy it to a local test directory (`{your_data_to_run_directory}`):
 
-```bash
-podman run -it -v {your_data_to_run_directory}:/run_data containers.deltares.nl/gfs/koswat:latest --input_file /run_data/koswat_general.ini
-```
+- With the your local image:
+    ```console
+    podman run -it -v {your_data_to_run_directory}:/run_data koswat --input_file /run_data/koswat_general.ini
+    ```
+- Or using the remote image instead:
+    ```console
+    podman run -it -v {your_data_to_run_directory}:/run_data containers.deltares.nl/gfs/koswat:latest --input_file /run_data/koswat_general.ini
+    ```
 
 Which will result in something like this:
-```bash
+```console
 {date and time} - [koswat_handler.py:119] - root - INFO - Initialized Koswat.                                                                                             
 {date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing INI configuration from /test_data/koswat_general.ini                                     
 {date and time} - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from /test_data/koswat_costs.ini.                                                
@@ -128,6 +129,6 @@ Which will result in something like this:
 {date and time} - [koswat_handler.py:123] - root - INFO - Finalized Koswat.
 ```
 
-> [!IMPORTANT]:
+> [!IMPORTANT]
 > At the moment this docker requires that all the paths defined in the `koswat_general.ini` are relative to the mounted data. So in our case we  had to modify them such as `Dijksecties_Selectie = /run_data/koswat_dike_selection.txt` and so on for each of them.
 > Otherwise it will not work.
