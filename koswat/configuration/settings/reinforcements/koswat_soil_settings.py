@@ -33,7 +33,7 @@ class KoswatSoilSettings(KoswatConfigProtocol):
         Returns:
             KoswatSoilSettings: The instance with defaults set.
         """
-        if not issubclass(type(other), KoswatSoilSettings):
+        if not isinstance(other, KoswatSoilSettings):
             raise TypeError("Can only merge with another KoswatSoilSettings instance.")
 
         def _set_default(this_value: Any, other_value: Any) -> Any:

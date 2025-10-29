@@ -34,7 +34,7 @@ class KoswatCofferdamSettings(KoswatConfigProtocol):
         Returns:
             KoswatCofferdamSettings: The instance with defaults set.
         """
-        if not issubclass(type(other), KoswatCofferdamSettings):
+        if not isinstance(other, KoswatCofferdamSettings):
             raise TypeError(
                 "Can only merge with another KoswatCofferdamSettings instance."
             )

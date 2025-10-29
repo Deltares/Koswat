@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Any
 
+from numpy import isin
+
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 
@@ -36,7 +38,7 @@ class KoswatPipingWallSettings(KoswatConfigProtocol):
         Returns:
             KoswatPipingWallSettings: The instance with defaults set.
         """
-        if not issubclass(type(other), KoswatPipingWallSettings):
+        if not isinstance(other, KoswatPipingWallSettings):
             raise TypeError(
                 "Can only merge with another KoswatPipingWallSettings instance."
             )

@@ -46,7 +46,7 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
         Returns:
             KoswatInputProfileBase: The instance with defaults set.
         """
-        if not issubclass(type(other), KoswatInputProfileBase):
+        if not isinstance(other, KoswatInputProfileBase):
             raise TypeError(
                 "Can only merge with another KoswatInputProfileBase instance."
             )

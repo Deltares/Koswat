@@ -38,7 +38,7 @@ class KoswatStabilityWallSettings(KoswatConfigProtocol):
         Returns:
             KoswatStabilityWallSettings: The instance with defaults set.
         """
-        if not issubclass(type(other), KoswatStabilityWallSettings):
+        if not isinstance(other, KoswatStabilityWallSettings):
             raise TypeError(
                 "Can only merge with another KoswatStabilityWallSettings instance."
             )

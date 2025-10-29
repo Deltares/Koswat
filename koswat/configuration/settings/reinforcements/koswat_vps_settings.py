@@ -32,7 +32,7 @@ class KoswatVPSSettings(KoswatConfigProtocol):
         Returns:
             KoswatVPSSettings: The instance with defaults set.
         """
-        if not issubclass(type(other), KoswatVPSSettings):
+        if not isinstance(other, KoswatVPSSettings):
             raise TypeError("Can only merge with another KoswatVPSSettings instance.")
 
         def _set_default(this_value: Any, other_value: Any) -> Any:
