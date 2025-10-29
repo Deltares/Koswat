@@ -16,6 +16,7 @@ class SurroundingsEnum(SurroundingsEnumType, Enum):
     BUILDINGS = SurroundingsObstacle, "bebouwing"
     RAILWAYS = SurroundingsObstacle, "spoorwegen"
     WATERS = SurroundingsObstacle, "water"
+    CUSTOM = SurroundingsObstacle, "custom"
 
     # Extended format
     ROADS_CLASS_2_POLDERSIDE = SurroundingsInfrastructure, "wegen_binnendijks_klasse2"

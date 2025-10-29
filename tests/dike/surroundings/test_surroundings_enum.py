@@ -11,6 +11,7 @@ class TestSurroundingsEnum:
                                 pytest.param("bebouwing", SurroundingsEnum.BUILDINGS, SurroundingsObstacle, "buildings"),
                                 pytest.param("spoorwegen", SurroundingsEnum.RAILWAYS, SurroundingsObstacle, "railways"),
                                 pytest.param("water", SurroundingsEnum.WATERS, SurroundingsObstacle, "waters"),
+                                pytest.param("custom", SurroundingsEnum.CUSTOM, SurroundingsObstacle, "custom"),
                                 pytest.param("wegen_binnendijks_klasse2", SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE, SurroundingsInfrastructure, "roads_class_2_polderside"),
                                 pytest.param("wegen_binnendijks_klasse7", SurroundingsEnum.ROADS_CLASS_7_POLDERSIDE, SurroundingsInfrastructure, "roads_class_7_polderside"),
                                 pytest.param("wegen_binnendijks_klasse24", SurroundingsEnum.ROADS_CLASS_24_POLDERSIDE, SurroundingsInfrastructure, "roads_class_24_polderside"),
