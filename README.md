@@ -96,7 +96,7 @@ python -m koswat --help
 
 2. You can now proceed to run the tool, we will make use of our test data ( `tests/test_data/acceptance` ), so you can copy it to a local test directory (`{your_data_to_run_directory}`):
 
-- With the your local image:
+- With your local image:
     ```console
     podman run -it -v {your_data_to_run_directory}:/run_data koswat --input_file /run_data/koswat_general.ini
     ```
