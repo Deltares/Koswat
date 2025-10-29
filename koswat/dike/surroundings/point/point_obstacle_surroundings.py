@@ -3,6 +3,7 @@ import math
 from dataclasses import dataclass
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
+
 @dataclass
 class PointObstacleSurroundings(PointSurroundings):
     """
@@ -24,10 +25,17 @@ class PointObstacleSurroundings(PointSurroundings):
         return hash((self.section, self.traject_order, self.location))
 
     def merge(self, other: PointObstacleSurroundings) -> None:
-        self.inside_distance = min(self.inside_distance, other.inside_distance)
-        self.outside_distance = min(self.outside_distance, other.outside_distance)
-        self.angle_inside = min(self.angle_inside, other.angle_inside)
-        self.angle_outside = min(self.angle_outside, other.angle_outside)
+        def _get_min_value(value_1: float, value_2: float) -> float:
+            if math.isnan(value_1):
+                return value_2
+            if math.isnan(value_2):
+                return value_1
+            return min(value_1, value_2)
+
+        self.inside_distance = _get_min_value(self.inside_distance, other.inside_distance)
+        self.outside_distance = _get_min_value(self.outside_distance, other.outside_distance)
+        self.angle_inside = _get_min_value(self.angle_inside, other.angle_inside)
+        self.angle_outside = _get_min_value(self.angle_outside, other.angle_outside)
 
     @property
     def closest_obstacle(self) -> float:
