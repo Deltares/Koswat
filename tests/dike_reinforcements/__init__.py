@@ -1,3 +1,6 @@
+from enum import Enum
+from math import isnan
+
 import pytest
 from shapely.geometry import Point, Polygon
 
@@ -10,8 +13,14 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
-def almost_equal(left_value: float, right_value: float) -> bool:
-    return abs(left_value - right_value) <= 0.01
+def almost_equal(
+    left_value: Enum | float | str, right_value: Enum | float | str
+) -> bool:
+    if isinstance(left_value, float) and isinstance(right_value, float):
+        return abs(left_value - right_value) <= 0.01 or (
+            isnan(left_value) and isnan(right_value)
+        )
+    return left_value == right_value
 
 
 def _compare_points(new_points: list[Point], expected_points: list[Point]) -> list[str]:
@@ -40,13 +49,6 @@ def _compare_koswat_input_profile(
         for key, value in _exp_data_dict.items()
         if key
         not in [
-            "dike_section",
-            "ground_price_builtup",
-            "ground_price_unbuilt",
-            "factor_settlement",
-            "pleistocene",
-            "aquifer",
-            "construction_type",
             "soil_surtax_factor",
             "constructive_surtax_factor",
             "land_purchase_surtax_factor",
