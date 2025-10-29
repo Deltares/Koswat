@@ -1,8 +1,10 @@
-import math
 from typing import Any, Optional
 
 from koswat.configuration.io.config_sections.config_section_fom_protocol import (
     ConfigSectionFomProtocol,
+)
+from koswat.configuration.io.config_sections.config_section_helper import (
+    SectionConfigHelper,
 )
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
@@ -18,9 +20,7 @@ class VPSReinforcementSectionFom(ConfigSectionFomProtocol, KoswatVPSSettings):
         _section = cls()
 
         def _get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
-            if input_val:
-                return SurtaxFactorEnum[input_val.upper()]
-            return SurtaxFactorEnum.NORMAAL if set_defaults else None
+            return SectionConfigHelper.get_enum(input_val, set_defaults)
 
         _section.soil_surtax_factor = _get_enum(
             input_dict.get("opslagfactor_grond", None)
@@ -33,9 +33,7 @@ class VPSReinforcementSectionFom(ConfigSectionFomProtocol, KoswatVPSSettings):
         )
 
         def _get_float(input_val: Optional[str]) -> float:
-            if input_val is not None:
-                return float(input_val)
-            return math.nan if set_defaults else None
+            return SectionConfigHelper.get_float(input_val, set_defaults)
 
         _section.polderside_berm_width_vps = _get_float(
             input_dict.get("binnen_berm_breedte_vps", None)

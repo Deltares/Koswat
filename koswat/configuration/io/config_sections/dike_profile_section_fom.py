@@ -1,8 +1,10 @@
-import math
 from typing import Any, Optional
 
 from koswat.configuration.io.config_sections.config_section_fom_protocol import (
     ConfigSectionFomProtocol,
+)
+from koswat.configuration.io.config_sections.config_section_helper import (
+    SectionConfigHelper,
 )
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 
@@ -14,10 +16,12 @@ class DikeProfileSectionFom(ConfigSectionFomProtocol, KoswatInputProfileBase):
     ) -> "DikeProfileSectionFom":
         _section = cls()
 
+        _section.dike_section = SectionConfigHelper.get_string(
+            input_dict.get("dijkvak", None), set_defaults
+        )
+
         def _get_float(input_val: Optional[str]) -> float:
-            if input_val is not None:
-                return float(input_val)
-            return math.nan if set_defaults else None
+            return SectionConfigHelper.get_float(input_val, set_defaults)
 
         _section.waterside_ground_level = _get_float(
             input_dict.get("buiten_maaiveld", None)
