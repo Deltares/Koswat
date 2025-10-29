@@ -3,6 +3,7 @@ import math
 from dataclasses import dataclass, field
 from itertools import chain, groupby
 
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
@@ -31,7 +32,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     )
 
     @property
-    def obstacle_locations(self) -> list[PointSurroundings]:
+    def obstacle_locations(self) -> list[PointObstacleSurroundings]:
         """
         Overlay of locations of the different `ObstacleSurroundings` that are present.
         Buildings need to be present as input (leading for location coordinates).
@@ -44,30 +45,29 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         _surroundings_obstacles = list(
             filter(
                 lambda x: isinstance(x, SurroundingsObstacle),
-                self.surroundings_collection.values(),
+                [self.buildings, self.railways, self.waters],
             )
         )
 
-        def ps_sorting_key(ps_to_sort: PointSurroundings) -> int:
+        def ps_sorting_key(ps_to_sort: PointObstacleSurroundings) -> int:
             return ps_to_sort.__hash__()
 
         _ps_keyfunc = ps_sorting_key
-        _point_surroundings = sorted(
+        _point_obstacle_surroundings = sorted(
             chain(*list(map(lambda x: x.points, _surroundings_obstacles))),
             key=_ps_keyfunc,
         )
         _obstacle_locations = []
-        for _, _matches in groupby(_point_surroundings, key=_ps_keyfunc):
+        for _, _matches in groupby(_point_obstacle_surroundings, key=_ps_keyfunc):
             _lmatches = list(_matches)
             if not any(_lmatches):
                 continue
             _ps_copy = copy.deepcopy(_lmatches[0])
-            _ps_copy.surroundings_matrix = {}
             _obstacle_locations.append(_ps_copy)
-            for _matched_ps in _lmatches:
+            for _matched_ps in _lmatches[1:]:
                 if math.isnan(_matched_ps.closest_obstacle):
                     continue
-                _ps_copy.surroundings_matrix[_matched_ps.closest_obstacle] = 1
+                _matched_ps.merge(_ps_copy)
         return _obstacle_locations
 
     def get_locations_at_safe_distance(

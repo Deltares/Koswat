@@ -1,3 +1,4 @@
+from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 
@@ -41,24 +42,20 @@ class PointSurroundings:
             __value.traject_order,
         )
 
-    @property
-    def closest_obstacle(self) -> float:
+    def merge(self, other: PointSurroundings) -> None:
         """
-        Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
+        Merges another `PointSurroundings` into this one by updating the
+        `surroundings_matrix` with the values from the other one.
 
-        Returns:
-            float: Distance to the closest surrounding.
+        Args:
+            other (PointSurroundings): The other `PointSurroundings` to merge.
         """
 
-        return min(
-            (
-                _s_key
-                for _s_key, _s_value in self.surroundings_matrix.items()
-                # Ensure we do return a key which actually has a surrounding.
-                if _s_value > 0
-            ),
-            default=math.nan,
-        )
+        for _s_key, _s_value in other.surroundings_matrix.items():
+            if _s_key in self.surroundings_matrix:
+                self.surroundings_matrix[_s_key] += _s_value
+            else:
+                self.surroundings_matrix[_s_key] = _s_value
 
     def get_total_infrastructure_per_zone(
         self, *zone_limit_collection: tuple[float, float]

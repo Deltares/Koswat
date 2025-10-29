@@ -15,7 +15,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder import (
     PointSurroundingsListBuilder,
 )
-from koswat.dike.surroundings.surroundings_enum import SurroundingEnumType, SurroundingsEnum
+from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
