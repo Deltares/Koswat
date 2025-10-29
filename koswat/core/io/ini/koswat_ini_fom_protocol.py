@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from configparser import ConfigParser
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
-
+@runtime_checkable
 class KoswatIniFomProtocol(FileObjectModelProtocol, Protocol):
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:

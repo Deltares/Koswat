@@ -59,17 +59,20 @@ class SurroundingsSectionFom(KoswatIniFomProtocol):
     buildings: bool
     railways: bool
     waters: bool
+    custom: bool = False
 
     @classmethod
     def from_config(cls, ini_config: ConfigParser) -> KoswatIniFomProtocol:
+        _types = ini_config["types"].lower().strip().split(",")
         _section = cls(
             surroundings_database_dir=Path(ini_config["omgevingsdatabases"]),
             construction_distance=ini_config.getfloat("constructieafstand"),
             construction_buffer=ini_config.getfloat("constructieovergang"),
-            waterside=ini_config.getboolean("buitendijks"),
-            buildings=ini_config.getboolean("bebouwing"),
-            railways=ini_config.getboolean("spoorwegen"),
-            waters=ini_config.getboolean("water"),
+            waterside="buitendijks" in _types,
+            buildings="bebouwing" in _types,
+            railways="spoorwegen" in _types,
+            waters="water" in _types,
+            custom="custom" in _types,
         )
         return _section
 
