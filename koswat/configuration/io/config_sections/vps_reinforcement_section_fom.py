@@ -11,59 +11,34 @@ from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
 
 
 class VPSReinforcementSectionFom(ConfigSectionFomProtocol, KoswatVPSSettings):
-    def _set_properties_from_dict(
-        self, input_dict: dict[str, Any], set_def: bool
-    ) -> None:
+    @classmethod
+    def from_config(
+        cls, input_dict: dict[str, Any], set_defaults: bool
+    ) -> "VPSReinforcementSectionFom":
+        _section = cls()
+
         def _get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
             if input_val:
                 return SurtaxFactorEnum[input_val.upper()]
-            return SurtaxFactorEnum.NORMAAL if set_def else None
+            return SurtaxFactorEnum.NORMAAL if set_defaults else None
 
-        self.soil_surtax_factor = _get_enum(input_dict.get("opslagfactor_grond", None))
-        self.constructive_surtax_factor = _get_enum(
+        _section.soil_surtax_factor = _get_enum(
+            input_dict.get("opslagfactor_grond", None)
+        )
+        _section.constructive_surtax_factor = _get_enum(
             input_dict.get("opslagfactor_constructief", None)
         )
-        self.land_purchase_surtax_factor = _get_enum(
+        _section.land_purchase_surtax_factor = _get_enum(
             input_dict.get("min_lengte_kistdam", None)
         )
 
         def _get_float(input_val: Optional[str]) -> float:
             if input_val is not None:
                 return float(input_val)
-            return math.nan if set_def else None
+            return math.nan if set_defaults else None
 
-        self.polderside_berm_width_vps = _get_float(
+        _section.polderside_berm_width_vps = _get_float(
             input_dict.get("binnen_berm_breedte_vps", None)
         )
 
-    @classmethod
-    def from_config(cls, input_dict: dict[str, Any]) -> "VPSReinforcementSectionFom":
-        _section = cls()
-        _section._set_properties_from_dict(input_dict, set_def=False)
         return _section
-
-    @classmethod
-    def from_config_set_defaults(
-        cls, input_dict: dict[str, Any]
-    ) -> "VPSReinforcementSectionFom":
-        _section = cls()
-        _section._set_properties_from_dict(input_dict, set_def=True)
-        return _section
-
-    def merge(
-        self, other: "VPSReinforcementSectionFom|KoswatVPSSettings"
-    ) -> "VPSReinforcementSectionFom":
-        if not isinstance(other, (VPSReinforcementSectionFom, KoswatVPSSettings)):
-            raise TypeError(
-                "Can only merge with another VPSReinforcementSectionFom instance."
-            )
-
-        def _merge_attr(attr_name: str) -> None:
-            this_value = getattr(self, attr_name)
-            if this_value is None:
-                setattr(self, attr_name, getattr(other, attr_name))
-
-        for _attr in vars(self).keys():
-            _merge_attr(_attr)
-
-        return self

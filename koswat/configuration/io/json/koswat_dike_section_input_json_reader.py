@@ -30,22 +30,23 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
         _dike_section_input_fom = KoswatDikeSectionInputJsonFom(
             dike_section=_json_fom.file_stem,
             input_profile=DikeProfileSectionFom.from_config(
-                _json_fom.content.get("dijkprofiel", dict())
+                _json_fom.content.get("dijkprofiel", dict()), set_defaults=False
             ),
             soil_measure=SoilReinforcementSectionFom.from_config(
-                _json_fom.content.get("grondmaatregel", dict())
+                _json_fom.content.get("grondmaatregel", dict()), set_defaults=False
             ),
             vps=VPSReinforcementSectionFom.from_config(
-                _json_fom.content.get("verticalepipingoplossing", dict())
+                _json_fom.content.get("verticalepipingoplossing", dict()),
+                set_defaults=False,
             ),
             piping_wall=PipingWallReinforcementSectionFom.from_config(
-                _json_fom.content.get("kwelscherm", dict())
+                _json_fom.content.get("kwelscherm", dict()), set_defaults=False
             ),
             stability_wall=StabilitywallReinforcementSectionFom.from_config(
-                _json_fom.content.get("stabiliteitswand", dict())
+                _json_fom.content.get("stabiliteitswand", dict()), set_defaults=False
             ),
             cofferdam=CofferdamReinforcementSectionFom.from_config(
-                _json_fom.content.get("kistdam", dict())
+                _json_fom.content.get("kistdam", dict()), set_defaults=False
             ),
         )
         _dike_section_input_fom.input_profile.dike_section = (

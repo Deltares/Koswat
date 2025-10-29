@@ -11,60 +11,35 @@ from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
 
 
 class SoilReinforcementSectionFom(ConfigSectionFomProtocol, KoswatSoilSettings):
-    def _set_properties_from_dict(
-        self, input_dict: dict[str, Any], set_def: bool
-    ) -> None:
+    @classmethod
+    def from_config(
+        cls, input_dict: dict[str, Any], set_defaults: bool
+    ) -> "SoilReinforcementSectionFom":
+        _section = cls()
+
         def _get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
             if input_val:
                 return SurtaxFactorEnum[input_val.upper()]
-            return SurtaxFactorEnum.NORMAAL if set_def else None
+            return SurtaxFactorEnum.NORMAAL if set_defaults else None
 
-        self.soil_surtax_factor = _get_enum(input_dict.get("opslagfactor_grond", None))
-        self.land_purchase_surtax_factor = _get_enum(
+        _section.soil_surtax_factor = _get_enum(
+            input_dict.get("opslagfactor_grond", None)
+        )
+        _section.land_purchase_surtax_factor = _get_enum(
             input_dict.get("opslagfactor_grondaankoop", None)
         )
 
         def _get_float(input_val: Optional[str]) -> float:
             if input_val is not None:
                 return float(input_val)
-            return math.nan if set_def else None
+            return math.nan if set_defaults else None
 
-        self.min_berm_height = _get_float(input_dict.get("min_bermhoogte", None))
-        self.max_berm_height_factor = _get_float(
+        _section.min_berm_height = _get_float(input_dict.get("min_bermhoogte", None))
+        _section.max_berm_height_factor = _get_float(
             input_dict.get("max_bermhoogte_factor", None)
         )
-        self.factor_increase_berm_height = _get_float(
+        _section.factor_increase_berm_height = _get_float(
             input_dict.get("factor_toename_bermhoogte", None)
         )
 
-    @classmethod
-    def from_config(cls, input_dict: dict[str, Any]) -> "SoilReinforcementSectionFom":
-        _section = cls()
-        _section._set_properties_from_dict(input_dict, set_def=False)
         return _section
-
-    @classmethod
-    def from_config_set_defaults(
-        cls, input_dict: dict[str, Any]
-    ) -> "SoilReinforcementSectionFom":
-        _section = cls()
-        _section._set_properties_from_dict(input_dict, set_def=True)
-        return _section
-
-    def merge(
-        self, other: "KoswatSoilSettings|SoilReinforcementSectionFom"
-    ) -> "SoilReinforcementSectionFom":
-        if not isinstance(other, (KoswatSoilSettings, SoilReinforcementSectionFom)):
-            raise TypeError(
-                "Can only merge with another SoilReinforcementSectionFom instance."
-            )
-
-        def _merge_attr(attr_name: str) -> None:
-            this_value = getattr(self, attr_name)
-            if this_value is None:
-                setattr(self, attr_name, getattr(other, attr_name))
-
-        for _attr in vars(self).keys():
-            _merge_attr(_attr)
-
-        return self

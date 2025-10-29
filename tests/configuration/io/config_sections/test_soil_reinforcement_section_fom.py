@@ -22,7 +22,9 @@ class TestSoilReinforcementSectionFom:
         _config_data = _test_config
 
         # 2. Execute test
-        _section = SoilReinforcementSectionFom.from_config(_config_data)
+        _section = SoilReinforcementSectionFom.from_config(
+            _config_data, set_defaults=False
+        )
 
         # 3. Verify expectations
         assert isinstance(_section, ConfigSectionFomProtocol)
@@ -38,7 +40,9 @@ class TestSoilReinforcementSectionFom:
         _ini_data = _config_parser["section"]
 
         # 2. Execute test
-        _section = SoilReinforcementSectionFom.from_config_set_defaults(_ini_data)
+        _section = SoilReinforcementSectionFom.from_config(
+            dict(_ini_data), set_defaults=True
+        )
 
         # 3. Verify expectations
         assert isinstance(_section, ConfigSectionFomProtocol)
