@@ -1,3 +1,4 @@
+import math
 from shapely.geometry import Point
 
 from koswat.configuration.settings.costs.koswat_costs_settings import (
@@ -10,6 +11,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
     MultiLocationProfileCostReport,
 )
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
@@ -31,9 +33,9 @@ class TestMultiLocationProfileCostReportBuilder:
         _builder = MultiLocationProfileCostReportBuilder()
         _builder.surroundings = SurroundingsWrapper()
         _builder.koswat_costs_settings = KoswatCostsSettings()
-        _p_surrounding = PointSurroundings()
-        _p_surrounding.surroundings_matrix = {}
-        _p_surrounding.location = Point(2.4, 4.2)
+        _p_surrounding = PointObstacleSurroundings(
+            inside_distance=math.nan, outside_distance=math.nan, location=Point(2.4, 4.2)
+        )
         _builder.surroundings.obstacle_surroundings_wrapper.apply_buildings = True
         _builder.surroundings.obstacle_surroundings_wrapper.buildings.points = [
             _p_surrounding
