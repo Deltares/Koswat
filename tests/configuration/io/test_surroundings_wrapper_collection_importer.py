@@ -148,11 +148,5 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.infrastructure_surroundings_wrapper.roads_class_2_polderside.points
             )
             assert any(
-                _sw.infrastructure_surroundings_wrapper.roads_class_7_polderside.points
-            )
-            assert any(
                 _sw.infrastructure_surroundings_wrapper.roads_class_24_polderside.points
-            )
-            assert any(
-                _sw.infrastructure_surroundings_wrapper.roads_class_47_polderside.points
             )

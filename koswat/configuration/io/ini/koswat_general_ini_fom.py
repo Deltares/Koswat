@@ -123,33 +123,27 @@ class KoswatGeneralIniFom(KoswatIniFomProtocol):
         _general_ini.analysis_section = AnalysisSectionFom.from_config(
             ini_config["Analyse"]
         )
-        _general_ini.dike_profile_section = (
-            DikeProfileSectionFom.from_config_set_defaults(
-                dict(ini_config["Dijkprofiel"])
-            )
+        _general_ini.dike_profile_section = DikeProfileSectionFom.from_config(
+            dict(ini_config["Dijkprofiel"]), set_defaults=True
         )
-        _general_ini.soil_measure_section = (
-            SoilReinforcementSectionFom.from_config_set_defaults(
-                dict(ini_config["Grondmaatregel"])
-            )
+        _general_ini.soil_measure_section = SoilReinforcementSectionFom.from_config(
+            dict(ini_config["Grondmaatregel"]), set_defaults=True
         )
-        _general_ini.vps_section = VPSReinforcementSectionFom.from_config_set_defaults(
-            dict(ini_config["VerticalePipingOplossing"])
+        _general_ini.vps_section = VPSReinforcementSectionFom.from_config(
+            dict(ini_config["VerticalePipingOplossing"]), set_defaults=True
         )
         _general_ini.piping_wall_section = (
-            PipingWallReinforcementSectionFom.from_config_set_defaults(
-                dict(ini_config["Kwelscherm"])
+            PipingWallReinforcementSectionFom.from_config(
+                dict(ini_config["Kwelscherm"]), set_defaults=True
             )
         )
         _general_ini.stability_wall_section = (
-            StabilitywallReinforcementSectionFom.from_config_set_defaults(
-                dict(ini_config["Stabiliteitswand"])
+            StabilitywallReinforcementSectionFom.from_config(
+                dict(ini_config["Stabiliteitswand"]), set_defaults=True
             )
         )
-        _general_ini.cofferdam_section = (
-            CofferdamReinforcementSectionFom.from_config_set_defaults(
-                dict(ini_config["Kistdam"])
-            )
+        _general_ini.cofferdam_section = CofferdamReinforcementSectionFom.from_config(
+            dict(ini_config["Kistdam"]), set_defaults=True
         )
         _general_ini.surroundings_section = SurroundingsSectionFom.from_config(
             ini_config["Omgeving"]

@@ -29,15 +29,15 @@ class TestObstacleSurroundingsWrapper:
         assert isinstance(_wrapper.waters, SurroundingsObstacle)
 
     @pytest.mark.parametrize(
-        "obstacles_distance_list",
+        "obstacles_distance",
         [
-            pytest.param([24], id="Surroundings WITH obstacles at distance 24"),
-            pytest.param([], id="Surroundings WITHOUT obstacles"),
+            pytest.param(24, id="Surroundings WITH obstacles at distance 24"),
+            pytest.param(0, id="Surroundings WITHOUT obstacles"),
         ],
     )
     def test_when_get_locations_after_distance_given_safe_obstacles_returns_surrounding_point(
         self,
-        obstacles_distance_list: list[float],
+        obstacles_distance: float,
         buildings_obstacle_surroundings_fixture: Callable[
             [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
         ],
@@ -45,9 +45,9 @@ class TestObstacleSurroundingsWrapper:
         # 1. Define test data.
         _location = Point(2.4, 2.4)
         _wrapper = buildings_obstacle_surroundings_fixture(
-            [(_location, obstacles_distance_list)]
+            [(_location, obstacles_distance)]
         )
-        _safe_distance = min(obstacles_distance_list, default=0) - 1
+        _safe_distance = obstacles_distance - 1
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(
@@ -62,20 +62,20 @@ class TestObstacleSurroundingsWrapper:
     def test_when_get_locations_after_distance_given_unsafe_obstacles_returns_nothing(
         self,
         buildings_obstacle_surroundings_fixture: Callable[
-            [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
+            [list[tuple[Point, float]]], ObstacleSurroundingsWrapper
         ],
     ):
         # 1. Define test data.
-        _obstacles_distance_list = [24]
+        _obstacles_distance = 24
         _location = Point(2.4, 2.4)
 
         _wrapper = buildings_obstacle_surroundings_fixture(
-            [(_location, _obstacles_distance_list)]
+            [(_location, _obstacles_distance)]
         )
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(
-            min(_obstacles_distance_list) + 1
+            _obstacles_distance + 1
         )
 
         # 3. Verify expectations.

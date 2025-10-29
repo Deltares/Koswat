@@ -56,6 +56,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         for _shp_traject, _location_list in groupby(
             _dike_location_shp, lambda x: x.dike_traject
         ):
+            # Map SHP traject name to CSV directory name.
             _csv_traject = _shp_traject.replace("-", "_").strip()
             _csv_dir = self.surroundings_section_fom.surroundings_database_dir.joinpath(
                 _csv_traject
@@ -66,6 +67,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                 )
                 continue
 
+            # Build surroundings wrappers for all locations in the traject.
             _surroundings_wrapper_builder = SurroundingsWrapperBuilder(
                 surroundings_section_fom=self.surroundings_section_fom,
                 infrastructure_section_fom=self.infrastructure_section_fom,
@@ -103,6 +105,16 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         self,
         csv_dir: Path,
     ) -> dict[str, KoswatSurroundingsCsvFom]:
+        """
+        Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
+        `KoswatSurroundingsCsvFom` objects, grouped by their type name.
+
+        Args:
+            csv_dir (Path): The directory containing the CSV files.
+
+        Returns:
+            dict[str, KoswatSurroundingsCsvFom]: A dictionary of `KoswatSurroundingsCsvFom` objects, grouped by their type name.
+        """
         _imported_csv_foms = {}
         for _csv_file in csv_dir.glob("*.csv"):
             _type, _csv_fom = self._csv_file_to_fom(_csv_file, csv_dir.stem)

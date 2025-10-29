@@ -1,3 +1,4 @@
+import math
 from shapely.geometry import Point
 
 from koswat.configuration.settings.costs.koswat_costs_settings import (
@@ -19,6 +20,7 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.cost_report.summary.koswat_summary_builder import KoswatSummaryBuilder
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
@@ -112,8 +114,8 @@ class TestKoswatSummaryBuilder:
     def test_build(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
-        _p_surrounding = PointSurroundings(
-            surroundings_matrix={}, location=Point(2.4, 4.2)
+        _p_surrounding = PointObstacleSurroundings(
+            inside_distance=math.nan, outside_distance=math.nan, location=Point(2.4, 4.2)
         )
         _run_settings = KoswatRunScenarioSettings()
         _run_settings.scenario = ScenarioCases.default
