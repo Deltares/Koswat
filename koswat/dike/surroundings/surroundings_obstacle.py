@@ -10,9 +10,8 @@ from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObst
 class SurroundingsObstacle(KoswatSurroundingsProtocol):
     """
     Defines surroundings point collections that cannot be repaired or replaced.
-    The `PointObstacleSurroundings` contain a matrix (dictionary) where the keys
-    represent the distances to an obstacle, and the values a `1` (obstacle present)
-    or a `0` (obstacle not present).
+    The `PointObstacleSurroundings` contain the closest distance to an obstacle
+    both inside and outside the polder.
     """
 
     points: list[PointObstacleSurroundings] = field(default_factory=lambda: [])
