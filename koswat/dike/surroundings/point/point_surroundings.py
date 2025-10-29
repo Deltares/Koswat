@@ -57,25 +57,6 @@ class PointSurroundings:
             else:
                 self.surroundings_matrix[_s_key] = _s_value
 
-    @property
-    def closest_obstacle(self) -> float:
-        """
-        Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
-
-        Returns:
-            float: Distance to the closest surrounding.
-        """
-
-        return min(
-            (
-                _s_key
-                for _s_key, _s_value in self.surroundings_matrix.items()
-                # Ensure we do return a key which actually has a surrounding.
-                if _s_value > 0
-            ),
-            default=math.nan,
-        )
-
     def get_total_infrastructure_per_zone(
         self, *zone_limit_collection: tuple[float, float]
     ) -> list[float]:
