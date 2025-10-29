@@ -1,13 +1,15 @@
-from koswat.configuration.io.json.koswat_input_profile_json_fom import (
-    KoswatInputProfileJsonFom,
+from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
+    KoswatDikeSectionInputJsonFom,
 )
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
 class TestKoswatInputProfileJsonFom:
     def test_initialize(self):
-        _csv_fom = KoswatInputProfileJsonFom()
-        assert isinstance(_csv_fom, KoswatInputProfileJsonFom)
+        # 1. Execute test
+        _csv_fom = KoswatDikeSectionInputJsonFom()
+
+        # 2. Verify expectations
+        assert isinstance(_csv_fom, KoswatDikeSectionInputJsonFom)
         assert isinstance(_csv_fom, FileObjectModelProtocol)
-        assert _csv_fom.input_profile_fom == {}
         assert not _csv_fom.is_valid()

@@ -1,0 +1,21 @@
+{
+    "Dijkprofiel": {
+        "Binnen_Maaiveld": 2.81,
+        "Dikte_Graslaag": 0.31
+    },
+    "Grondmaatregel": {
+        "Opslagfactor_Grond" : "Moeilijk"
+    },
+    "VerticalePipingOplossing": {
+        "Binnen_Berm_Breedte_VPS": 11
+    },
+    "Kwelscherm": {
+        "Min_Lengte_Kwelscherm": 5,
+        "Overgang_CBwand_Damwand": 95,
+        "Max_Lengte_Kwelscherm": 30
+    },
+    "Kistdam": {
+        "Opslagfactor_Grond": "Moeilijk",
+        "Max_Lengte_Kistdam": 26
+    }
+}
