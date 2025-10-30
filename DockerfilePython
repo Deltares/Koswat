@@ -1,29 +1,13 @@
-# To build this docker run:
-# `docker build -t koswat`
+FROM python:3.13-alpine3.22
 
-# To run koswat in the container:
-# `docker run 
-#   -v {your_koswat_data_project}:/mnt/koswat_data koswat 
-#   --input_file /mnt/koswat_data/koswat_general.ini`
-
-FROM python:3.13-slim as BUILD
-
-RUN curl -fsSL https://pixi.sh/install.sh | sh
-
+# Copy the directories with the local koswat.
 WORKDIR /app
 COPY README.md LICENSE pyproject.toml pixi.lock /app/
 COPY koswat /app/koswat
 
-RUN pixi install --locked -e py313
-RUN pixi run -e py313 pip list --format=freeze > /app/requirements.txt
+RUN pip install .
 
-FROM python:3.13-slim as FINAL
-
-WORKDIR /app
-COPY --from=BUILD /app /app
-
-# RUN pip install -r requirements.txt
-# RUN pip install .
-
-# Define the endpoint
-CMD ["sh"]
+# set the entrypoint to the shell-hook script (activate the environment and run the command)
+# no more pixi needed in the prod container
+# ENTRYPOINT ["/bin/bash", "/shell-hook.sh"]
+CMD ["koswat", "--help"]

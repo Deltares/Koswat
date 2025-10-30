@@ -8,15 +8,13 @@
 
 FROM ghcr.io/prefix-dev/pixi:latest as BUILD
 
-RUN apt-get update && apt-get install libgl1 -y
-
 # Copy the directories with the local koswat.
 WORKDIR /koswat_src
 COPY README.md LICENSE pyproject.toml pixi.lock /koswat_src/
 COPY koswat /koswat_src/koswat
 
 # Install the python=3.13 environment
-RUN pixi install --locked -e py313
+RUN pixi install -e py313
 RUN pixi run -e py313 pip list --format=freeze > requirements.txt
 
 FROM python:3.13-slim

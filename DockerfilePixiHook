@@ -1,0 +1,27 @@
+FROM ghcr.io/prefix-dev/pixi:latest AS build
+
+# Copy the directories with the local koswat.
+WORKDIR /app
+COPY README.md LICENSE pyproject.toml pixi.lock /app/
+COPY koswat /app/koswat
+
+RUN pixi install -e py313
+# Create the shell-hook bash script to activate the environment
+RUN pixi shell-hook -e py313 > /shell-hook.sh
+
+# extend the shell-hook script to run the command passed to the container
+RUN echo 'exec "$@"' >> /shell-hook.sh
+
+FROM python:3.13-alpine3.22 AS production
+
+WORKDIR /app
+COPY --from=build /app/.pixi/envs/py313 /app/.pixi/envs/py313
+COPY --from=build /shell-hook.sh /shell-hook.sh
+COPY --from=build /app /app
+EXPOSE 8000
+
+# set the entrypoint to the shell-hook script (activate the environment and run the command)
+# no more pixi needed in the prod container
+# ENTRYPOINT ["/bin/bash", "/shell-hook.sh"]
+
+CMD ["koswat", "--help"]

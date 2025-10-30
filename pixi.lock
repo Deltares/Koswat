@@ -8722,13 +8722,14 @@ packages:
 - pypi: ./
   name: koswat
   version: 0.15.0
-  sha256: d3a75746e7359a65548bdd706c5e09ba2bd5317bbe7368fe3f273188ca6f6ccd
+  sha256: 16a2423c4ab9d278c716c7ef6f0502c7992c72c157d3b0ca8fe829b1deaf13fe
   requires_dist:
   - click
   - matplotlib
   - pyshp
   - shapely
   - geopandas
+  - more-itertools
   requires_python: '>=3.11,<3.14'
   editable: true
 - conda: https://conda.anaconda.org/conda-forge/linux-64/krb5-1.21.3-h659f571_0.conda
