@@ -1,23 +1,10 @@
-# To build this docker run:
-# `docker build -t koswat`
-
-# To run koswat in the container:
-# `docker run 
-#   -v {your_koswat_data_project}:/mnt/koswat_data koswat 
-#   --input_file /mnt/koswat_data/koswat_general.ini`
-
-FROM ghcr.io/prefix-dev/pixi:latest
-
-RUN apt-get update && apt-get install libgl1 -y
-
-# Copy the directories with the local koswat.
-WORKDIR /koswat_src
-COPY README.md LICENSE pyproject.toml pixi.lock /koswat_src/
-COPY koswat /koswat_src/koswat
-
-# Install the python=3.13 environment
-RUN pixi install --locked -e py313
-
-# Define the endpoint
-ENTRYPOINT [ "pixi", "run", "python", "-m", "koswat" ]
-CMD [ "--help" ]
+# --- Build stage ---FROM ghcr.io/prefix-dev/pixi:latest AS builder
+WORKDIR /appCOPY pyproject.toml pixi.lock README.md LICENSE .COPY koswat /app/koswat
+# Install dependencies and build packageRUN pixi install --locked -e py313RUN pixi run python -m build
+# --- Runtime stage ---FROM python:3.13-slim AS runtime
+WORKDIR /app
+# System dependencies (only what’s needed)RUN apt-get update && apt-get install -y --no-install-recommends libgl1 && rm -rf /var/lib/apt/lists/*
+# Copy built wheel from builderCOPY --from=builder /app/dist/*.whl /tmp/
+# Install koswat packageRUN pip install /tmp/*.whl && rm /tmp/*.whl
+# Default workdir for data mountingVOLUME /mnt/koswat_dataWORKDIR /mnt/koswat_data
+ENTRYPOINT ["python", "-m", "koswat"]CMD ["--help"]
