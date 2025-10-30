@@ -44,7 +44,9 @@ class SectionConfigHelper:
         return SurtaxFactorEnum.NORMAAL if set_default else None
 
     @staticmethod
-    def get_float(input_val: Optional[str], set_default: bool) -> Optional[float]:
+    def get_float(
+        input_val: Optional[str | float], set_default: bool
+    ) -> Optional[float]:
         """
         Converts a string to a float value.
 
@@ -60,7 +62,7 @@ class SectionConfigHelper:
         return math.nan if set_default else None
 
     @staticmethod
-    def get_bool(input_val: Optional[str], set_default: bool) -> Optional[bool]:
+    def get_bool(input_val: Optional[str | bool], set_default: bool) -> Optional[bool]:
         """
         Converts a string to a boolean value.
 
@@ -72,5 +74,7 @@ class SectionConfigHelper:
             Optional[bool]: Corresponding boolean value or None.
         """
         if input_val is not None:
+            if isinstance(input_val, bool):
+                return input_val
             return input_val.lower() == "true"
         return False if set_default else None
