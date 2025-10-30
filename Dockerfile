@@ -5,25 +5,17 @@
 # `docker run 
 #   -v {your_koswat_data_project}:/mnt/koswat_data koswat 
 #   --input_file /mnt/koswat_data/koswat_general.ini`
-
-FROM ghcr.io/prefix-dev/pixi:latest as BUILD
-
-# Copy the directories with the local koswat.
-WORKDIR /koswat_src
-COPY README.md LICENSE pyproject.toml pixi.lock /koswat_src/
-COPY koswat /koswat_src/koswat
-
-# Install the python=3.13 environment
-RUN pixi install -e py313
-RUN pixi run -e py313 pip list --format=freeze > requirements.txt
+# Replace `{your_koswat_data_project}` with the path to your local koswat data project.
+# Ensure all the paths within koswat_general.ini are relative to (and include) `/mnt/koswat_data/`
 
 FROM python:3.13-slim
 
-WORKDIR /app
-COPY --from=BUILD /koswat_src/ /app
+# Copy the directories with the local koswat.
+COPY README.md LICENSE pyproject.toml /app/
+COPY koswat /app/koswat
 
-# RUN pip install -r requirements.txt
-# RUN pip install .
+# Install koswat and its dependencies.
+RUN pip install --upgrade pip && pip install /app
 
-# Define the endpoint
-CMD ["koswat", "--help"]
+# Set the entrypoint to run koswat as a module.
+ENTRYPOINT [ "python", "-m", "koswat" ]
