@@ -1,3 +1,4 @@
+import configparser
 import math
 from pathlib import Path
 
@@ -12,8 +13,9 @@ from koswat.configuration.io.koswat_run_settings_importer import (
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
+from koswat.configuration.settings.koswat_run_settings import KoswatRunSettings
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
-from tests import test_data
+from tests import test_data, test_results
 
 
 class TestKoswatRunSettingsImporter:
@@ -22,7 +24,7 @@ class TestKoswatRunSettingsImporter:
         assert isinstance(_importer, KoswatRunSettingsImporter)
         assert isinstance(_importer, KoswatImporterProtocol)
 
-    def test_import_dike_section_input_list_without_json_files(self, empty_dir: Path):
+    def test__import_dike_section_input_list_without_json_files(self, empty_dir: Path):
         # 1. Define test data.
         _json_folder = empty_dir
         _importer = KoswatRunSettingsImporter()
@@ -33,7 +35,7 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test_import_dike_section_input_list_missing_folder(self):
+    def test__import_dike_section_input_list_missing_folder(self):
         # 1. Define test data.
         _json_folder = Path("non_existing_folder")
         _importer = KoswatRunSettingsImporter()
@@ -44,7 +46,9 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test_import_selected_dike_section_names_without_txt_file(self, empty_dir: Path):
+    def test__import_selected_dike_section_names_without_txt_file(
+        self, empty_dir: Path
+    ):
         # 1. Define test data.
         _txt_file = empty_dir.joinpath("non_existing_file.txt")
         _importer = KoswatRunSettingsImporter()
@@ -55,7 +59,7 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test_import_selected_dike_section_names_with_emtpy_txt_file(
+    def test__import_selected_dike_section_names_with_emtpy_txt_file(
         self, empty_file: Path
     ):
         # 1. Define test data.
@@ -69,7 +73,7 @@ class TestKoswatRunSettingsImporter:
         assert _result == []
 
     @pytest.mark.parametrize("include_taxes", [(True), (False)])
-    def test_import_dike_costs_without_ini_file(
+    def test__import_dike_costs_without_ini_file(
         self, include_taxes: bool, empty_dir: Path
     ):
         # 1. Define test data.
@@ -91,11 +95,34 @@ class TestKoswatRunSettingsImporter:
         _config = KoswatRunSettingsImporter().import_from(_ini_file)
 
         # 3. Verify final expectations.
+        assert isinstance(_config, KoswatRunSettings)
         assert isinstance(_config.run_scenarios, list)
         assert all(
             isinstance(_rs, KoswatRunScenarioSettings) for _rs in _config.run_scenarios
         )
         assert isinstance(_config.output_dir, Path)
+
+    def test_koswat_run_settings_importer_build_without_dike_sections(
+        self, empty_file: Path
+    ):
+        # 1. Define test data
+        # Overwrite section selection with empty file
+        _ini_file = test_data.joinpath("acceptance", "koswat_general.ini")
+        _temp_file = test_results.joinpath("koswat_general_temp.ini")
+        _ini_config = configparser.ConfigParser()
+        _ini_config.read(_ini_file)
+        _ini_config["Analyse"]["Dijksecties_Selectie"] = str(empty_file)
+        with open(_temp_file, "w", encoding="utf8") as _file:
+            _ini_config.write(_file)
+
+        assert _temp_file.is_file()
+
+        # 2. Run test
+        _config = KoswatRunSettingsImporter().import_from(_temp_file)
+
+        # 3. Verify expectations
+        assert isinstance(_config, KoswatRunSettings)
+        assert _config.run_scenarios == []
 
     def test__get_dike_section_input_overrides_defaults(self):
         # 1. Define test data
