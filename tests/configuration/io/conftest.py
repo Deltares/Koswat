@@ -30,4 +30,4 @@ def empty_file() -> Iterator[Path]:
 
     yield _temp_file
 
-    rmtree(_temp_dir)
+    rmtree(_temp_file)
