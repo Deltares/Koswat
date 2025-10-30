@@ -72,5 +72,5 @@ class SectionConfigHelper:
             Optional[bool]: Corresponding boolean value or None.
         """
         if input_val is not None:
-            return input_val.lower == "true"
+            return input_val.lower() == "true"
         return False if set_default else None
