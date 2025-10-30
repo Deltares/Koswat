@@ -42,6 +42,7 @@ class KoswatSoilSettings(KoswatConfigProtocol):
                 return other_value
             return this_value
 
+        self.active = _set_default(self.active, other.active)
         self.soil_surtax_factor = _set_default(
             self.soil_surtax_factor, other.soil_surtax_factor
         )

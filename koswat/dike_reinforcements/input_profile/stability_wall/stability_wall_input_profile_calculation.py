@@ -101,6 +101,8 @@ class StabilityWallInputProfileCalculation(
             StabilityWallInputProfile, self.base_profile.input_data, self.scenario
         )
         assert isinstance(_reinforced_data, StabilityWallInputProfile)
+        
+        _reinforced_data.active = self.reinforcement_settings.stability_wall_settings.active
 
         # Berm calculation
         _calculated_factors = BermCalculatedFactors.from_calculation_input(
