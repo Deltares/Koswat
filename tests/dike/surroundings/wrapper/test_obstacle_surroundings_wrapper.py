@@ -27,6 +27,7 @@ class TestObstacleSurroundingsWrapper:
         assert isinstance(_wrapper.buildings, SurroundingsObstacle)
         assert isinstance(_wrapper.railways, SurroundingsObstacle)
         assert isinstance(_wrapper.waters, SurroundingsObstacle)
+        assert isinstance(_wrapper.custom_obstacles, SurroundingsObstacle)
 
     @pytest.mark.parametrize(
         "obstacles_distance",

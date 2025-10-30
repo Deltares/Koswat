@@ -13,11 +13,6 @@ from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
 
 @dataclass
 class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
-    apply_waterside: bool = False
-    apply_buildings: bool = False
-    apply_railways: bool = False
-    apply_waters: bool = False
-
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
 
@@ -28,6 +23,9 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         default_factory=SurroundingsObstacle
     )
     waters: SurroundingsObstacle = field(
+        default_factory=SurroundingsObstacle
+    )
+    custom_obstacle: SurroundingsObstacle = field(
         default_factory=SurroundingsObstacle
     )
 
@@ -45,7 +43,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         _surroundings_obstacles = list(
             filter(
                 lambda x: isinstance(x, SurroundingsObstacle),
-                [self.buildings, self.railways, self.waters],
+                [self.buildings, self.railways, self.waters, self.custom_obstacle],
             )
         )
 

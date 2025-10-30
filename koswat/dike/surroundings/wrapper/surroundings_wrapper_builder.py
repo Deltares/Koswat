@@ -57,23 +57,24 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
         _obs_wrapper = ObstacleSurroundingsWrapper(
             reinforcement_min_separation=self.surroundings_section_fom.construction_distance,
-            reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
-            apply_waterside=self.surroundings_section_fom.waterside,
-            apply_buildings=self.surroundings_section_fom.buildings,
-            apply_railways=self.surroundings_section_fom.railways,
-            apply_waters=self.surroundings_section_fom.waters,
+            reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer
         )
         # Buildings polderside should always be present to determine the location coordinates.
         _obs_wrapper.buildings.points = (
             self._get_surroundings_from_fom(SurroundingsEnum.BUILDINGS)
         )
-        if _obs_wrapper.apply_railways:
+        if self.surroundings_section_fom.railways:
             _obs_wrapper.railways.points = (
                 self._get_surroundings_from_fom(SurroundingsEnum.RAILWAYS)
             )
-        if _obs_wrapper.apply_waters:
+        if self.surroundings_section_fom.waters:
             _obs_wrapper.waters.points = (
                 self._get_surroundings_from_fom(SurroundingsEnum.WATERS)
+            )
+
+        if any(self.surroundings_section_fom.custom_obstacles):
+            _obs_wrapper.custom_obstacle.points = (
+                self._get_surroundings_from_fom(SurroundingsEnum.CUSTOM_OBSTACLES)
             )
 
         return _obs_wrapper
