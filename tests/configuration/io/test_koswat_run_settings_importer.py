@@ -13,7 +13,7 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
-from tests import test_data, test_data_acceptance
+from tests import test_data
 
 
 class TestKoswatRunSettingsImporter:
@@ -46,7 +46,20 @@ class TestKoswatRunSettingsImporter:
 
     def test_import_selected_dike_section_names_without_txt_file(self, empty_dir: Path):
         # 1. Define test data.
-        _txt_file = empty_dir
+        _txt_file = empty_dir.joinpath("non_existing_file.txt")
+        _importer = KoswatRunSettingsImporter()
+
+        # 2. Run test.
+        _result = _importer._import_selected_dike_section_names(_txt_file)
+
+        # 3. Verify final expectations.
+        assert _result == []
+
+    def test_import_selected_dike_section_names_with_emtpy_txt_file(
+        self, empty_file: Path
+    ):
+        # 1. Define test data.
+        _txt_file = empty_file
         _importer = KoswatRunSettingsImporter()
 
         # 2. Run test.
