@@ -25,7 +25,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     waters: SurroundingsObstacle = field(
         default_factory=SurroundingsObstacle
     )
-    custom_obstacle: SurroundingsObstacle = field(
+    custom_obstacles: SurroundingsObstacle = field(
         default_factory=SurroundingsObstacle
     )
 
@@ -43,7 +43,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         _surroundings_obstacles = list(
             filter(
                 lambda x: isinstance(x, SurroundingsObstacle),
-                [self.buildings, self.railways, self.waters, self.custom_obstacle],
+                [self.buildings, self.railways, self.waters, self.custom_obstacles],
             )
         )
 
