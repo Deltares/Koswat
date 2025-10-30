@@ -75,3 +75,24 @@ class TestConfigSectionHelper:
 
         # 2. Verify expectations
         assert _result == expected or (math.isnan(_result) and math.isnan(expected))
+
+    @pytest.mark.parametrize(
+        "set_defaults, input_val, expected",
+        [
+            pytest.param(True, None, False, id="None with default"),
+            pytest.param(False, None, None, id="None without default"),
+            pytest.param(True, "True", True, id="Value with default"),
+            pytest.param(False, "True", True, id="Value without default"),
+        ],
+    )
+    def test_get_bool(
+        self,
+        set_defaults: bool,
+        input_val: Optional[str],
+        expected: Optional[float],
+    ):
+        # 1. Execute test
+        _result = SectionConfigHelper.get_bool(input_val, set_defaults)
+
+        # 2. Verify expectations
+        assert _result == expected
