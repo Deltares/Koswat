@@ -12,6 +12,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 
 @dataclass
 class VPSInputProfile(KoswatInputProfileBase, ReinforcementInputProfileProtocol):
+    active: bool = True
     construction_length: float = 0.0
     construction_type: ConstructionTypeEnum | None = None
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL

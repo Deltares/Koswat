@@ -39,6 +39,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 reinforcement_type=type(
                     locations_profile.profile_cost_report.reinforced_profile
                 ),
+                active=locations_profile.profile_cost_report.reinforced_profile.input_data.active,
                 base_costs_with_surtax=locations_profile.profile_cost_report.total_cost_with_surtax,
             )
 
@@ -84,6 +85,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 )
             return StrategyReinforcementInput(
                 reinforcement_type=reinforcement_cost.reinforcement_type,
+                active=reinforcement_cost.active,
                 base_costs_with_surtax=reinforcement_cost.base_costs_with_surtax,
                 ground_level_surface=_reinforcement.new_ground_level_surface,
             )
@@ -129,7 +131,9 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
         # 4. Sort matrix by traject order for normalized usage in Koswat.
         def to_strategy_location(
-            matrix_tuple: tuple[PointSurroundings, list[StrategyReinforcementTypeCosts]]
+            matrix_tuple: tuple[
+                PointSurroundings, list[StrategyReinforcementTypeCosts]
+            ],
         ) -> StrategyLocationInput:
             return StrategyLocationInput(
                 point_surrounding=matrix_tuple[0],
