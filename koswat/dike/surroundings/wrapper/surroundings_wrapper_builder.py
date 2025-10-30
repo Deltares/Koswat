@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
-from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
-    KoswatSurroundingsCsvFom,
-)
-from koswat.configuration.io.ini.koswat_general_ini_fom import (
+from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     SurroundingsSectionFom,
+)
+from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
+    KoswatSurroundingsCsvFom,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -64,26 +64,26 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             apply_waters=self.surroundings_section_fom.waters,
         )
         # Buildings polderside should always be present to determine the location coordinates.
-        _obs_wrapper.buildings.points = (
-            self._get_surroundings_from_fom(SurroundingsEnum.BUILDINGS)
+        _obs_wrapper.buildings.points = self._get_surroundings_from_fom(
+            SurroundingsEnum.BUILDINGS
         )
         if _obs_wrapper.apply_railways:
-            _obs_wrapper.railways.points = (
-                self._get_surroundings_from_fom(SurroundingsEnum.RAILWAYS)
+            _obs_wrapper.railways.points = self._get_surroundings_from_fom(
+                SurroundingsEnum.RAILWAYS
             )
         if _obs_wrapper.apply_waters:
-            _obs_wrapper.waters.points = (
-                self._get_surroundings_from_fom(SurroundingsEnum.WATERS)
+            _obs_wrapper.waters.points = self._get_surroundings_from_fom(
+                SurroundingsEnum.WATERS
             )
 
         return _obs_wrapper
-
 
     def _get_surroundings_infrastructure(
         self, surrounding_enum: SurroundingsEnum
     ) -> SurroundingsInfrastructure:
         _mapped_name = (
-            surrounding_enum.name.lower().replace("_polderside", "_width")
+            surrounding_enum.name.lower()
+            .replace("_polderside", "_width")
             .replace("class_unknown", "unknown")
             .replace("class_", "class")
         )

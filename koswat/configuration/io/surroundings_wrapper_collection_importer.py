@@ -3,16 +3,18 @@ from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
 
-from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import KoswatSimpleSurroundingsCsvReader
+from koswat.configuration.io.config_sections import (
+    InfrastructureSectionFom,
+    SurroundingsSectionFom,
+)
+from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import (
+    KoswatSimpleSurroundingsCsvReader,
+)
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
-)
-from koswat.configuration.io.ini.koswat_general_ini_fom import (
-    InfrastructureSectionFom,
-    SurroundingsSectionFom,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -96,7 +98,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         _reader = KoswatSurroundingsCsvReader
         if _surrounding_type.surrounding_type == SurroundingsObstacle:
             _reader = KoswatSimpleSurroundingsCsvReader
-            
+
         _surrounding_csv_fom = _reader().read(csv_file)
         _surrounding_csv_fom.traject = traject_name
         return _surrounding_type, _surrounding_csv_fom
