@@ -95,6 +95,8 @@ class CofferdamInputProfileCalculation(
         )
         assert isinstance(_reinforced_data, CofferDamInputProfile)
 
+        _reinforced_data.active = self.reinforcement_settings.cofferdam_settings.active
+
         # Berm calculation
         _calculated_factors = BermCalculatedFactors.from_calculation_input(
             self.base_profile.input_data,

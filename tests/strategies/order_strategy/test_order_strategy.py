@@ -63,6 +63,53 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
+    def test_get_order_strategy_given_example_ignores_inactive_reinforcement(
+        self,
+        example_strategy_input: StrategyInput,
+    ):
+        # 1. Define test data.
+        example_strategy_input.strategy_reinforcements[2].active = False  # PipingWall
+        _expected_result = [
+            SoilReinforcementProfile,
+            VPSReinforcementProfile,
+            StabilityWallReinforcementProfile,
+            CofferdamReinforcementProfile,
+        ]
+        _strategy = OrderStrategy()
+
+        # 2. Run test.
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
+            example_strategy_input.strategy_reinforcements
+        )
+
+        # 3. Verify expectations
+        assert _reinforcements == _expected_result
+        assert _reinforcements[-1] == CofferdamReinforcementProfile
+
+    def test_get_strategy_order_given_example_does_not_ignore_last_reinforcement(
+        self,
+        example_strategy_input: StrategyInput,
+    ):
+        # 1. Define test data.
+        example_strategy_input.strategy_reinforcements[2].active = False  # PipingWall
+        example_strategy_input.strategy_reinforcements[-1].active = False  # Cofferdam
+        _expected_result = [
+            SoilReinforcementProfile,
+            VPSReinforcementProfile,
+            StabilityWallReinforcementProfile,
+            CofferdamReinforcementProfile,
+        ]
+        _strategy = OrderStrategy()
+
+        # 2. Run test.
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
+            example_strategy_input.strategy_reinforcements
+        )
+
+        # 3. Verify expectations
+        assert _reinforcements == _expected_result
+        assert _reinforcements[-1] == CofferdamReinforcementProfile
+
     @pytest.mark.parametrize(
         "idx", range(len(_default_reinforcements) - 1), ids=_default_reinforcements[:-1]
     )
@@ -129,11 +176,9 @@ class TestOrderStrategy:
             example_strategy_input.strategy_reinforcements[0].ground_level_surface * 2
         )
         # 3rd reinforcement is more expensive than and equally restrictive as the 1st and should be filtered out
-        example_strategy_input.strategy_reinforcements[
-            2
-        ].ground_level_surface = example_strategy_input.strategy_reinforcements[
-            0
-        ].ground_level_surface
+        example_strategy_input.strategy_reinforcements[2].ground_level_surface = (
+            example_strategy_input.strategy_reinforcements[0].ground_level_surface
+        )
         _expected_result = deepcopy(self._default_reinforcements)
         _expected_result = [
             SoilReinforcementProfile,

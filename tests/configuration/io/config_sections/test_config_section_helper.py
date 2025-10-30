@@ -60,14 +60,16 @@ class TestConfigSectionHelper:
         [
             pytest.param(True, None, math.nan, id="None with default"),
             pytest.param(False, None, None, id="None without default"),
-            pytest.param(True, "24.42", 24.42, id="Value with default"),
-            pytest.param(False, "24.42", 24.42, id="Value without default"),
+            pytest.param(True, "24.42", 24.42, id="String value with default"),
+            pytest.param(False, "24.42", 24.42, id="String value without default"),
+            pytest.param(True, 24.42, 24.42, id="Float value with default"),
+            pytest.param(False, 24.42, 24.42, id="Float value without default"),
         ],
     )
     def test_get_float(
         self,
         set_defaults: bool,
-        input_val: Optional[str],
+        input_val: Optional[str | float],
         expected: Optional[float],
     ):
         # 1. Execute test
@@ -75,3 +77,26 @@ class TestConfigSectionHelper:
 
         # 2. Verify expectations
         assert _result == expected or (math.isnan(_result) and math.isnan(expected))
+
+    @pytest.mark.parametrize(
+        "set_defaults, input_val, expected",
+        [
+            pytest.param(True, None, False, id="None with default"),
+            pytest.param(False, None, None, id="None without default"),
+            pytest.param(True, "True", True, id="String value with default"),
+            pytest.param(False, "True", True, id="String value without default"),
+            pytest.param(True, True, True, id="Boolean value with default"),
+            pytest.param(False, True, True, id="Boolean value without default"),
+        ],
+    )
+    def test_get_bool(
+        self,
+        set_defaults: bool,
+        input_val: Optional[str | bool],
+        expected: Optional[float],
+    ):
+        # 1. Execute test
+        _result = SectionConfigHelper.get_bool(input_val, set_defaults)
+
+        # 2. Verify expectations
+        assert _result == expected

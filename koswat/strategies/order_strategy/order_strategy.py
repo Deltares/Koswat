@@ -32,9 +32,9 @@ class OrderStrategy(StrategyProtocol):
     reinforcement_order: list[type[ReinforcementProfileProtocol]]
 
     @staticmethod
-    def get_default_order_for_reinforcements() -> list[
-        type[ReinforcementProfileProtocol]
-    ]:
+    def get_default_order_for_reinforcements() -> (
+        list[type[ReinforcementProfileProtocol]]
+    ):
         """
         Give the default order for reinforcements types,
         assuming they are sorted from cheapest to most expensive
@@ -58,6 +58,7 @@ class OrderStrategy(StrategyProtocol):
         """
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
         possibly removing reinforcement types that are more expensive and more restrictive than others.
+        Inactive reinforcements are ignored.
         Cofferdam should always be the last reinforcement type.
 
         Input:
@@ -69,15 +70,18 @@ class OrderStrategy(StrategyProtocol):
         if not strategy_reinforcements:
             return []
 
-        def split_reinforcements() -> tuple[
-            list[StrategyReinforcementInput], list[StrategyReinforcementInput]
-        ]:
+        def split_reinforcements() -> (
+            tuple[list[StrategyReinforcementInput], list[StrategyReinforcementInput]]
+        ):
             _last, _other = [], []
             for obj in strategy_reinforcements:
                 if not obj:
                     continue
                 if obj.reinforcement_type == CofferdamReinforcementProfile:
                     _last.append(obj)
+                    continue
+                if not obj.active:
+                    continue
                 else:
                     _other.append(obj)
 

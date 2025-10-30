@@ -45,8 +45,12 @@ class TestKoswatSummaryLocationMatrixBuilder:
         assert len(_strategy_reinforcements) == 0
 
     def test_given_profile_report_list_then_returns_expected_matrix(self):
+        class MockedInputData:
+            active: bool = True
+
         class MyMockedReinforcementProfile(ReinforcementProfileProtocol):
             output_name: str = "MockedReinforcementProfile"
+            input_data: MockedInputData = MockedInputData()
             new_ground_level_surface: float = 42.0
 
         # 1. Define test data.

@@ -10,6 +10,7 @@ class TestKoswatSoilSettings:
     @pytest.fixture
     def empty_soil_settings(self) -> KoswatSoilSettings:
         return KoswatSoilSettings(
+            active=None,
             soil_surtax_factor=None,
             land_purchase_surtax_factor=None,
             min_berm_height=None,
