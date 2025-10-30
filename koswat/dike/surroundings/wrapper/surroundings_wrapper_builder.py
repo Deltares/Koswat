@@ -74,7 +74,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
         if any(self.surroundings_section_fom.custom_obstacles):
             _obs_wrapper.custom_obstacles.points = (
-                self._get_surroundings_from_fom(SurroundingsEnum.CUSTOM_OBSTACLES)
+                self._get_surroundings_from_fom(SurroundingsEnum.CUSTOM)
             )
 
         return _obs_wrapper

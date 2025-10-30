@@ -129,7 +129,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             if _surrounding_type.name in _imported_csv_foms:
                 # If already imported the same type, then merge with existing FOM. 
                 # Specially designed to handle custom surrounding types split over multiple files.
-                _imported_csv_foms[_surrounding_type.name] = _imported_csv_foms[_surrounding_type.name].merge(_csv_fom)
+                _imported_csv_foms[_surrounding_type.name].merge(_csv_fom)
             else:
                 _imported_csv_foms[_surrounding_type.name] = _csv_fom
 
