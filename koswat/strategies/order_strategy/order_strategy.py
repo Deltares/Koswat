@@ -79,6 +79,7 @@ class OrderStrategy(StrategyProtocol):
                     continue
                 if obj.reinforcement_type == CofferdamReinforcementProfile:
                     _last.append(obj)
+                    continue
                 if not obj.active:
                     continue
                 else:
