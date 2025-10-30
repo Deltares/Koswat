@@ -13,6 +13,7 @@ class ReinforcementInputProfileProtocol(KoswatInputProfileProtocol, Protocol):
     Just an alias to distinguish from a regular `KoswatInputProfileProtocol`.
     """
 
+    active: bool
     construction_length: float
     construction_type: ConstructionTypeEnum | None
     soil_surtax_factor: SurtaxFactorEnum

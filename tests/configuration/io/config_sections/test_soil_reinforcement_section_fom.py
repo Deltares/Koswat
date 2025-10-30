@@ -10,6 +10,7 @@ from koswat.configuration.io.config_sections.soil_reinforcement_section_fom impo
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 
 _test_config = {
+    "actief": "True",
     "min_bermhoogte": 2.5,
     "opslagfactor_grond": "MOEILIJK",
 }
@@ -28,6 +29,7 @@ class TestSoilReinforcementSectionFom:
 
         # 3. Verify expectations
         assert isinstance(_section, ConfigSectionFomProtocol)
+        assert _section.active is True
         assert _section.min_berm_height == 2.5
         assert _section.max_berm_height_factor is None
         assert _section.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
@@ -46,6 +48,7 @@ class TestSoilReinforcementSectionFom:
 
         # 3. Verify expectations
         assert isinstance(_section, ConfigSectionFomProtocol)
+        assert _section.active is True
         assert _section.min_berm_height == 2.5
         assert math.isnan(_section.max_berm_height_factor)
         assert _section.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
