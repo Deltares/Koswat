@@ -80,6 +80,8 @@ class PipingWallInputProfileCalculation(
             PipingWallInputProfile, self.base_profile.input_data, self.scenario
         )
         assert isinstance(_reinforced_data, PipingWallInputProfile)
+        
+        _reinforced_data.active = self.reinforcement_settings.piping_wall_settings.active
 
         # Berm calculation
         _calculated_factors = BermCalculatedFactors.from_calculation_input(

@@ -40,6 +40,8 @@ class SoilInputProfileCalculation(
             SoilInputProfile, self.base_profile.input_data, self.scenario
         )
         assert isinstance(_reinforced_data, SoilInputProfile)
+        
+        _reinforced_data.active = self.reinforcement_settings.soil_settings.active
 
         # Berm calculation
         _calculated_factors = BermCalculatedFactors.from_calculation_input(

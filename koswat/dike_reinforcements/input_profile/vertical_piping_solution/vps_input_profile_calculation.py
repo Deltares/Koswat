@@ -42,6 +42,8 @@ class VPSInputProfileCalculation(
         )
         assert isinstance(_reinforced_data, VPSInputProfile)
 
+        _reinforced_data.active = self.reinforcement_settings.vps_settings.active
+
         # Berm calculation
         _calculated_factors = BermCalculatedFactors.from_calculation_input(
             self.base_profile.input_data,

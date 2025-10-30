@@ -20,6 +20,7 @@
         "Dikte_Kleilaag": 0.51
     },
     "Grondmaatregel": {
+        "Actief": true,
         "Opslagfactor_Grond" : "Moeilijk",
         "Opslagfactor_Grondaankoop": "Makkelijk",
         "Min_Bermhoogte": 0.51,
@@ -27,12 +28,14 @@
         "Factor_Toename_Bermhoogte": 0.051
     },
     "VerticalePipingOplossing": {
+        "Actief": true,
         "Opslagfactor_Grond": "Makkelijk",
         "Opslagfactor_Constructief": "Makkelijk",
         "Opslagfactor_Grondaankoop": "Moeilijk",
         "Binnen_Berm_Breedte_VPS": 11
     },
     "Kwelscherm": {
+        "Actief": true,
         "Opslagfactor_Grond": "Moeilijk",
         "Opslagfactor_Constructief": "Makkelijk",
         "Opslagfactor_Grondaankoop": "Makkelijk",
@@ -41,6 +44,7 @@
         "Max_Lengte_Kwelscherm": 30
     },
     "Stabiliteitswand": {
+        "Actief": true,
         "Opslagfactor_Grond": "Moeilijk",
         "Opslagfactor_Constructief": "Makkelijk",
         "Opslagfactor_Grondaankoop": "Moeilijk",
@@ -50,6 +54,7 @@
         "Max_Lengte_Stabiliteitswand": 30
     },
     "Kistdam": {
+        "Actief": true,
         "Opslagfactor_Grond": "Moeilijk",
         "Opslagfactor_Constructief": "Moeilijk",
         "Min_Lengte_Kistdam": 6,
