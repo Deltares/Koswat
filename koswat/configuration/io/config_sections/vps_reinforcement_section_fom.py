@@ -19,6 +19,10 @@ class VPSReinforcementSectionFom(ConfigSectionFomProtocol, KoswatVPSSettings):
     ) -> "VPSReinforcementSectionFom":
         _section = cls()
 
+        _section.active = SectionConfigHelper.get_bool(
+            input_dict.get("actief", None), set_defaults
+        )
+
         def _get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
             return SectionConfigHelper.get_enum(input_val, set_defaults)
 
