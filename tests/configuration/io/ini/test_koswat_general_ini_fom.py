@@ -15,7 +15,6 @@ class TestSurroundingsSectionFom:
             buildings=True,
             railways=True,
             waters=True,
-            custom=True,
         )
 
         # 2. Verify expectations.
@@ -27,7 +26,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.buildings is True
         assert _surroundings_section_fom.railways is True
         assert _surroundings_section_fom.waters is True
-        assert _surroundings_section_fom.custom is True
+        assert _surroundings_section_fom.custom_obstacles == []
 
     def test_from_config_without_omgevingtypes(self):
            # 1. Define test data.
@@ -50,7 +49,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.buildings is False
         assert _surroundings_section_fom.railways is False
         assert _surroundings_section_fom.waters is False
-        assert _surroundings_section_fom.custom is False
+        assert _surroundings_section_fom.custom_obstacles == []
 
     def test_from_config_with_omgevingtypes(self):
         # 1. Define test data.
@@ -59,7 +58,7 @@ class TestSurroundingsSectionFom:
             "omgevingsdatabases": "/some/path",
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
-            "omgevingtypes": "buitendijks,bebouwing,spoorwegen,water,custom"
+            "omgevingtypes": "buitendijks,bebouwing,spoorwegen,water,camping,wildlife"
         }
 
         # 2. Run test.
@@ -74,4 +73,4 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.buildings is True
         assert _surroundings_section_fom.railways is True
         assert _surroundings_section_fom.waters is True
-        assert _surroundings_section_fom.custom is True
+        assert _surroundings_section_fom.custom_obstacles == ["camping", "wildlife"]

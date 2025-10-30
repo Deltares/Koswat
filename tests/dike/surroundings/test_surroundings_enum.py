@@ -33,13 +33,12 @@ class TestSurroundingsEnum:
         assert _result.dutch_text == input_str
         assert _result.name.lower() == expected_name
 
-    def test_translate_unknown_type_raises_value_error(self):
+    def test_translate_unknown_type_returns_custom(self):
         # 1. Define test data.
-        _expected_error = "No mapping found for unknown_type"
+        _expected_enum = SurroundingsEnum.CUSTOM
 
         # 2. Run test.
-        with pytest.raises(ValueError) as exc_info:
-            SurroundingsEnum.translate("unknown_type")
-        
-        # 3. Verify results.
-        assert str(exc_info.value) == _expected_error
+        _result = SurroundingsEnum.translate("unknown_type")
+
+        # 3. Verify results. 
+        assert _result == _expected_enum
