@@ -98,18 +98,18 @@ python -m koswat --help
 
 - With your local image:
     ```console
-    podman run -it -v {your_data_to_run_directory}:/run_data koswat --input_file /run_data/koswat_general.ini
+    podman run -it -v {your_data_to_run_directory}:/run_data koswat --input_file /run_data/koswat_general.json
     ```
 - Or using the remote image instead:
     ```console
-    podman run -it -v {your_data_to_run_directory}:/run_data containers.deltares.nl/gfs/koswat:latest --input_file /run_data/koswat_general.ini
+    podman run -it -v {your_data_to_run_directory}:/run_data containers.deltares.nl/gfs/koswat:latest --input_file /run_data/koswat_general.json
     ```
 
 Which will result in something like this:
 ```console
 {date and time} - [koswat_handler.py:119] - root - INFO - Initialized Koswat.                                                                                             
-{date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing INI configuration from /test_data/koswat_general.ini                                     
-{date and time} - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from /test_data/koswat_costs.ini.                                                
+{date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing INI configuration from /test_data/koswat_general.json                                
+{date and time} - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from /test_data/koswat_costs.json.                                                
 {date and time} - [koswat_run_settings_importer.py:100] - root - INFO - Importing INI configuration completed.                                                            
 {date and time} - [koswat_run_settings_importer.py:103] - root - INFO - Mapping data to Koswat Settings
 {date and time} - [koswat_run_settings_importer.py:158] - root - INFO - Creating scenarios for profile 10-1-1-A-1-A.
@@ -130,5 +130,5 @@ Which will result in something like this:
 ```
 
 > [!IMPORTANT]
-> At the moment this docker requires that all the paths defined in the `koswat_general.ini` are relative to the mounted data. So in our case we  had to modify them such as `Dijksecties_Selectie = /run_data/koswat_dike_selection.txt` and so on for each of them.
+> At the moment this docker requires that all the paths defined in the `koswat_general.json` are relative to the mounted data. So in our case we  had to modify them such as `Dijksecties_Selectie = /run_data/koswat_dike_selection.txt` and so on for each of them.
 > Otherwise it will not work.

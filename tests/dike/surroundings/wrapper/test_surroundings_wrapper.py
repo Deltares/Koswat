@@ -3,7 +3,7 @@ from typing import Iterator
 
 import pytest
 
-from koswat.configuration.io.ini.koswat_general_ini_fom import (
+from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     SurroundingsSectionFom,
 )

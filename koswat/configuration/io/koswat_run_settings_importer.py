@@ -2,8 +2,7 @@ import logging
 import math
 from pathlib import Path
 
-from koswat.configuration.io.ini import KoswatGeneralIniFom
-from koswat.configuration.io.ini.koswat_general_ini_fom import (
+from koswat.configuration.io.config_sections import (
     DikeProfileSectionFom,
     InfrastructureSectionFom,
     SurroundingsSectionFom,
@@ -18,6 +17,7 @@ from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
 )
+from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.koswat_dike_section_input_list_importer import (
     KoswatDikeSectionInputListImporter,
@@ -54,7 +54,7 @@ from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings
 from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
     KoswatVPSSettings,
 )
-from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -179,13 +179,13 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
         return _run_settings
 
-    def _import_general_settings(self, ini_config_file: Path) -> KoswatGeneralIniFom:
-        reader = KoswatIniReader()
-        reader.koswat_ini_fom_type = KoswatGeneralIniFom
-        return reader.read(ini_config_file)
+    def _import_general_settings(self, input_config_file: Path) -> KoswatGeneralJsonFom:
+        reader = KoswatJsonReader()
+        _json_fom = reader.read(input_config_file)
+        return KoswatGeneralJsonFom.from_config(_json_fom.content)
 
     def _get_reinforcement_settings(
-        self, general_settings: KoswatGeneralIniFom
+        self, general_settings: KoswatGeneralJsonFom
     ) -> KoswatReinforcementSettings:
         _reinforcement_settings = KoswatReinforcementSettings(
             soil_settings=KoswatSoilSettings(
@@ -243,7 +243,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         return _new_settings
 
     def _get_dike_section_input(
-        self, general_settings: KoswatGeneralIniFom, dike_selection: list[str]
+        self, general_settings: KoswatGeneralJsonFom, dike_selection: list[str]
     ) -> tuple[list[KoswatProfileProtocol], list[KoswatReinforcementSettings]]:
         # Get the section input data
         _profile_dir = general_settings.analysis_section.input_profiles_json_dir

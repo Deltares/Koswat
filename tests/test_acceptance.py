@@ -8,11 +8,11 @@ import cv2
 import numpy as np
 import pytest
 
-from koswat.configuration.io.ini.koswat_general_ini_fom import (
+from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
-    KoswatGeneralIniFom,
     SurroundingsSectionFom,
 )
+from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
@@ -41,7 +41,7 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
@@ -95,11 +95,12 @@ class TestAcceptance:
     @pytest.fixture(name="koswat_acceptance_settings")
     def _get_koswat_acceptance_settings_fixtures(
         self,
-    ) -> Iterator[Callable[[], tuple[KoswatGeneralIniFom, KoswatCostsSettings]]]:
+    ) -> Iterator[Callable[[], tuple[KoswatGeneralJsonFom, KoswatCostsSettings]]]:
         # Config parser to map the settings to a real case
-        _koswat_general_settings: KoswatGeneralIniFom = KoswatIniReader(
-            koswat_ini_fom_type=KoswatGeneralIniFom
-        ).read(test_data_acceptance.joinpath("koswat_general.ini"))
+        _json = KoswatJsonReader().read(
+            test_data_acceptance.joinpath("koswat_general.json")
+        )
+        _koswat_general_settings = KoswatGeneralJsonFom.from_config(_json.content)
 
         # It is easier returning the costs directly than the FOM,
         # as there's no direct converter from `KoswatCostsIniFom` to `KoswatCosts`
@@ -124,7 +125,7 @@ class TestAcceptance:
     def _get_surroundings_wrapper_fixture(
         self,
         koswat_acceptance_settings: Callable[
-            [], tuple[KoswatGeneralIniFom, KoswatCostsSettings]
+            [], tuple[KoswatGeneralJsonFom, KoswatCostsSettings]
         ],
         request: pytest.FixtureRequest,
     ) -> Iterable[tuple[SurroundingsWrapper, KoswatCostsSettings, Path]]:
