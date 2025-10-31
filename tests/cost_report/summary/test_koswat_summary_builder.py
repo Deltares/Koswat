@@ -122,7 +122,6 @@ class TestKoswatSummaryBuilder:
         _run_settings.reinforcement_settings = KoswatReinforcementSettings()
         _run_settings.surroundings = SurroundingsWrapper(
             obstacle_surroundings_wrapper=ObstacleSurroundingsWrapper(
-                apply_buildings=True,
                 reinforcement_min_buffer=10,
                 reinforcement_min_separation=50,
                 buildings=SurroundingsObstacle(points=[_p_surrounding]),

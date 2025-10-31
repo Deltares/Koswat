@@ -74,6 +74,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         _dike_selected_sections = self._import_selected_dike_section_names(
             _general_settings.analysis_section.dike_selection_txt_file
         )
+        if not _dike_selected_sections:
+            return KoswatRunSettings()
 
         (_input_profile_cases, _reinforcement_settings_list) = (
             self._get_dike_section_input(
@@ -295,6 +297,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         if not txt_file.is_file():
             logging.error("Dike selection txt file not found at %s", txt_file)
             return []
+
         _reader = KoswatTxtReader()
         _reader.koswat_txt_fom_type = KoswatDikeSelectionTxtFom
         return _reader.read(txt_file).dike_sections

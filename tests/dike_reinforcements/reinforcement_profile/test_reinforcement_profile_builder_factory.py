@@ -118,9 +118,10 @@ def scenario_ini_file() -> list[pytest.param]:
         )
 
     _scenarios = []
-    for _fom_scenario_wrapper in KoswatSectionScenarioListIniDirReader().read(
-        scenarios_dir
-    ):
+    _reader = KoswatSectionScenarioListIniDirReader(
+        dike_selection=[f.stem for f in scenarios_dir.glob("*.ini")]
+    )
+    for _fom_scenario_wrapper in _reader.read(scenarios_dir):
         _scenarios = _scenarios + list(_to_koswat_scenario(_fom_scenario_wrapper))
 
     return list(map(_to_pytest_param, _scenarios))

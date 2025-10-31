@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
     KoswatSectionScenarioListIniDirReader,
 )
@@ -17,9 +19,9 @@ class TestKoswatScenarioListIniDirReader:
         assert isinstance(_reader, KoswatReaderProtocol)
         assert _reader.dike_selection == []
 
-    def test_selected_scenario_not_selected_scenario(self):
+    def test__selected_scenario_empty_selection(self):
         # 1. Define test data
-        _reader = KoswatSectionScenarioListIniDirReader()
+        _reader = KoswatSectionScenarioListIniDirReader(dike_selection=[])
         _test_file = test_data / "acceptance" / "scenarios" / "10-1-1-A-1-A.ini"
         assert _test_file.exists()
 
@@ -27,10 +29,9 @@ class TestKoswatScenarioListIniDirReader:
         _selected = _reader._selected_scenario(_test_file)
 
         # 3. Verify expectations.
-        # All will be selected.
-        assert _selected == True
+        assert _selected == False
 
-    def test_selected_scenario_selected_scenario(self):
+    def test__selected_scenario_other_selection(self):
         # 1. Define test data
         _reader = KoswatSectionScenarioListIniDirReader(
             dike_selection=["dumb_scenario"]
@@ -44,7 +45,19 @@ class TestKoswatScenarioListIniDirReader:
         # 3. Verify expectations.
         assert _selected == False
 
-    def test_get_scenario(self):
+    def test__selected_scenario_valid_selection(self):
+        # 1. Define test data
+        _reader = KoswatSectionScenarioListIniDirReader(dike_selection=["10-1-1-A-1-A"])
+        _test_file = test_data / "acceptance" / "scenarios" / "10-1-1-A-1-A.ini"
+        assert _test_file.exists()
+
+        # 2. Run test.
+        _selected = _reader._selected_scenario(_test_file)
+
+        # 3. Verify expectations.
+        assert _selected == True
+
+    def test__get_scenario(self):
         # 1. Define test data
         _reader = KoswatSectionScenarioListIniDirReader()
         _test_file = test_data / "acceptance" / "scenarios" / "10-1-1-A-1-A.ini"
@@ -63,7 +76,7 @@ class TestKoswatScenarioListIniDirReader:
 
     def test_read(self):
         # 1. Define test data
-        _reader = KoswatSectionScenarioListIniDirReader()
+        _reader = KoswatSectionScenarioListIniDirReader(dike_selection=["10-1-1-A-1-A"])
         _test_dir = test_data / "acceptance" / "scenarios"
         assert _test_dir.exists()
 

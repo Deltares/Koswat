@@ -1,3 +1,4 @@
+from pathlib import Path
 import shutil
 from typing import Iterator
 
@@ -24,12 +25,17 @@ from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from tests import get_fixturerequest_case_name, test_data, test_results
 
-_surroundings_analysis_path = test_data.joinpath("acceptance", "surroundings_analysis")
-_surroundings_test_cases = [
-    pytest.param(_sap, id=f"Case - {_sap.stem}")
-    for _sap in _surroundings_analysis_path.glob("*")
-    if _sap.is_dir()
-]
+def get_surroundings_test_cases(surroundings_dir: Path) -> list[pytest.param]:
+    return [
+        pytest.param(_sap, id=f"Case - {_sap.stem}")
+        for _sap in surroundings_dir.glob("*")
+        if _sap.is_dir()
+    ]
+
+_surroundings_test_cases = get_surroundings_test_cases(test_data.joinpath("acceptance", "surroundings_analysis"))
+# These test cases are basically the same as the normal ones, we just replaced `spoorwegen` and `waters` with `campings` and `wildlife`.
+# We expect therefore the same results as in the normal test cases.
+_custom_surroundings_test_cases = get_surroundings_test_cases(test_data.joinpath("acceptance", "custom_surroundings_analysis"))
 
 
 class TestSurroundingsWrapperCollectionImporter:
@@ -50,6 +56,17 @@ class TestSurroundingsWrapperCollectionImporter:
         assert not _importer.surroundings_section_fom
         assert not _importer.infrastructure_section_fom
 
+    def _create_local_surroundings_dir_copy(
+        self, request: pytest.FixtureRequest, surroundings_path: Path
+    ) -> Path:
+        # Create a copy of the directory in a temporary location
+        _case_name = get_fixturerequest_case_name(request)
+        _temp_dir = test_results.joinpath(_case_name, surroundings_path.stem)
+        if _temp_dir.parent.exists():
+            shutil.rmtree(_temp_dir.parent)
+        shutil.copytree(surroundings_path, _temp_dir)
+        return _temp_dir
+
     @pytest.fixture(
         name="surroundings_section_fom_fixture",
         params=[_stc.values for _stc in _surroundings_test_cases],
@@ -58,14 +75,7 @@ class TestSurroundingsWrapperCollectionImporter:
     def _get_surroundings_section_fom_fixture(
         self, request: pytest.FixtureRequest
     ) -> Iterator[SurroundingsSectionFom]:
-
-        # Create a copy of the directory in a temporary location
-        _case_name = get_fixturerequest_case_name(request)
-        _surroundings_path = request.param[0]
-        _temp_dir = test_results.joinpath(_case_name, _surroundings_path.stem)
-        if _temp_dir.parent.exists():
-            shutil.rmtree(_temp_dir.parent)
-        shutil.copytree(_surroundings_path, _temp_dir)
+        _temp_dir = self._create_local_surroundings_dir_copy(request, request.param[0])
 
         # Yield the surroundings section.
         # Remember! The database dir is the parent as in theory more
@@ -138,6 +148,89 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.obstacle_surroundings_wrapper, ObstacleSurroundingsWrapper
             )
             assert any(_sw.obstacle_surroundings_wrapper.obstacle_locations)
+
+            # Infrastructure Surroundings
+            assert isinstance(
+                _sw.infrastructure_surroundings_wrapper,
+                InfrastructureSurroundingsWrapper,
+            )
+            assert any(
+                _sw.infrastructure_surroundings_wrapper.roads_class_2_polderside.points
+            )
+            assert any(
+                _sw.infrastructure_surroundings_wrapper.roads_class_24_polderside.points
+            )
+
+
+    @pytest.fixture(
+        name="custom_surroundings_section_fom_fixture",
+        params=[_stc.values for _stc in _custom_surroundings_test_cases],
+        ids=[_stc.id for _stc in _custom_surroundings_test_cases],
+    )
+    def _get_custom_surroundings_section_fom_fixture(
+        self, request: pytest.FixtureRequest
+    ) -> Iterator[SurroundingsSectionFom]:
+        _temp_dir = self._create_local_surroundings_dir_copy(request, request.param[0])
+
+        # Yield the surroundings section.
+        # Remember! The database dir is the parent as in theory more
+        # traject's surroundings are available in said dir.
+        yield SurroundingsSectionFom(
+            surroundings_database_dir=_temp_dir.parent,
+            construction_distance=50,
+            construction_buffer=10,
+            waterside=True,
+            buildings=True,
+            railways=True,
+            waters=True,
+            custom_obstacles=["campings", "wildlife"]
+        )
+
+        # Remove the temporary directory.
+        shutil.rmtree(_temp_dir)
+
+    def test_given_valid_custom_surroundings_path_when_import_from_returns_surrounding_wrapper(
+        self,
+        custom_surroundings_section_fom_fixture: SurroundingsSectionFom,
+        infrastructure_section_fom_fixture: InfrastructureSectionFom,
+    ):
+        # 1. Define test data.
+        assert isinstance(custom_surroundings_section_fom_fixture, SurroundingsSectionFom)
+
+        _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
+        assert _shp_file.is_file()
+
+        _builder = SurroundingsWrapperCollectionImporter(
+            surroundings_section_fom=custom_surroundings_section_fom_fixture,
+            infrastructure_section_fom=infrastructure_section_fom_fixture,
+            traject_loc_shp_file=_shp_file,
+            selected_locations=[
+                # For traject 10-1
+                "10-1-3-C-1-D-1",
+                "10-1-3-C-1-A",
+                # For traject 10-2
+                "10-1-4-C-1-B",
+                "10-1-4-B-1-B-1",
+                # For traject 10-3
+                "10-1-2-A-1-A",
+                "10-1-1-A-1-A",
+            ],
+        )
+
+        # 2. Run test.
+        _surroundings_wrapper_list = _builder.build()
+
+        # 3. Verify expectations (specific for the case present in the test data).
+        assert len(_surroundings_wrapper_list) == 2
+        for _sw in _surroundings_wrapper_list:
+            assert isinstance(_sw, SurroundingsWrapper)
+
+            # Obstacle Surroundings
+            assert isinstance(
+                _sw.obstacle_surroundings_wrapper, ObstacleSurroundingsWrapper
+            )
+            assert any(_sw.obstacle_surroundings_wrapper.obstacle_locations)
+            assert any(_sw.obstacle_surroundings_wrapper.custom_obstacles.points)
 
             # Infrastructure Surroundings
             assert isinstance(
