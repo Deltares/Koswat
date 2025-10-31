@@ -1,5 +1,5 @@
-from pathlib import Path
 import shutil
+from pathlib import Path
 from typing import Iterator
 
 import pytest
@@ -25,6 +25,7 @@ from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from tests import get_fixturerequest_case_name, test_data, test_results
 
+
 def get_surroundings_test_cases(surroundings_dir: Path) -> list[pytest.param]:
     return [
         pytest.param(_sap, id=f"Case - {_sap.stem}")
@@ -32,16 +33,22 @@ def get_surroundings_test_cases(surroundings_dir: Path) -> list[pytest.param]:
         if _sap.is_dir()
     ]
 
-_surroundings_test_cases = get_surroundings_test_cases(test_data.joinpath("acceptance", "surroundings_analysis"))
+
+_surroundings_test_cases = get_surroundings_test_cases(
+    test_data.joinpath("acceptance", "surroundings_analysis")
+)
 # These test cases are basically the same as the normal ones, we just replaced `spoorwegen` and `waters` with `campings` and `wildlife`.
 # We expect therefore the same results as in the normal test cases.
-_custom_surroundings_test_cases = get_surroundings_test_cases(test_data.joinpath("acceptance", "custom_surroundings_analysis"))
+_custom_surroundings_test_cases = get_surroundings_test_cases(
+    test_data.joinpath("acceptance", "custom_surroundings_analysis")
+)
 
 
 class TestSurroundingsWrapperCollectionImporter:
     def test_initialize(self):
         # !. Define dummy importer.
         _importer = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=None,
             infrastructure_section_fom=None,
             surroundings_section_fom=None,
             traject_loc_shp_file=None,
@@ -68,20 +75,30 @@ class TestSurroundingsWrapperCollectionImporter:
         return _temp_dir
 
     @pytest.fixture(
-        name="surroundings_section_fom_fixture",
+        name="local_surroundings_dir_copy_fixture",
         params=[_stc.values for _stc in _surroundings_test_cases],
         ids=[_stc.id for _stc in _surroundings_test_cases],
     )
-    def _get_surroundings_section_fom_fixture(
+    def _get_local_surroundings_dir_copy_fixture(
         self, request: pytest.FixtureRequest
-    ) -> Iterator[SurroundingsSectionFom]:
-        _temp_dir = self._create_local_surroundings_dir_copy(request, request.param[0])
-
-        # Yield the surroundings section.
+    ) -> Iterator[Path]:
         # Remember! The database dir is the parent as in theory more
         # traject's surroundings are available in said dir.
+        _temp_dir = self._create_local_surroundings_dir_copy(request, request.param[0])
+
+        yield _temp_dir.parent
+
+        # Remove the temporary directory.
+        shutil.rmtree(_temp_dir)
+
+    @pytest.fixture(
+        name="surroundings_section_fom_fixture",
+    )
+    def _get_surroundings_section_fom_fixture(
+        self,
+    ) -> Iterator[SurroundingsSectionFom]:
+        # Yield the surroundings section.
         yield SurroundingsSectionFom(
-            surroundings_database_dir=_temp_dir.parent,
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
@@ -90,13 +107,10 @@ class TestSurroundingsWrapperCollectionImporter:
             waters=True,
         )
 
-        # Remove the temporary directory.
-        shutil.rmtree(_temp_dir)
-
     @pytest.fixture(name="infrastructure_section_fom_fixture")
     def _get_infrastructure_section_fom(self) -> Iterator[InfrastructureSectionFom]:
         yield InfrastructureSectionFom(
-            infrastructure=True,
+            active=True,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
             buffer_waterside=0.42,
@@ -109,6 +123,7 @@ class TestSurroundingsWrapperCollectionImporter:
 
     def test_given_valid_surroundings_path_when_import_from_returns_surrounding_wrapper(
         self,
+        local_surroundings_dir_copy_fixture: Path,
         surroundings_section_fom_fixture: SurroundingsSectionFom,
         infrastructure_section_fom_fixture: InfrastructureSectionFom,
     ):
@@ -119,6 +134,7 @@ class TestSurroundingsWrapperCollectionImporter:
         assert _shp_file.is_file()
 
         _builder = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=local_surroundings_dir_copy_fixture,
             surroundings_section_fom=surroundings_section_fom_fixture,
             infrastructure_section_fom=infrastructure_section_fom_fixture,
             traject_loc_shp_file=_shp_file,
@@ -161,46 +177,56 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.infrastructure_surroundings_wrapper.roads_class_24_polderside.points
             )
 
-
     @pytest.fixture(
-        name="custom_surroundings_section_fom_fixture",
+        name="local_custom_surroundings_dir_copy_fixture",
         params=[_stc.values for _stc in _custom_surroundings_test_cases],
         ids=[_stc.id for _stc in _custom_surroundings_test_cases],
     )
-    def _get_custom_surroundings_section_fom_fixture(
+    def _get_local_custom_surroundings_dir_copy_fixture(
         self, request: pytest.FixtureRequest
-    ) -> Iterator[SurroundingsSectionFom]:
-        _temp_dir = self._create_local_surroundings_dir_copy(request, request.param[0])
-
-        # Yield the surroundings section.
+    ) -> Iterator[Path]:
         # Remember! The database dir is the parent as in theory more
         # traject's surroundings are available in said dir.
+        _temp_dir = self._create_local_surroundings_dir_copy(request, request.param[0])
+
+        yield _temp_dir.parent
+
+        # Remove the temporary directory.
+        shutil.rmtree(_temp_dir)
+
+    @pytest.fixture(
+        name="custom_surroundings_section_fom_fixture",
+    )
+    def _get_custom_surroundings_section_fom_fixture(
+        self,
+    ) -> Iterator[SurroundingsSectionFom]:
+        # Yield the surroundings section.
         yield SurroundingsSectionFom(
-            surroundings_database_dir=_temp_dir.parent,
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
             buildings=True,
             railways=True,
             waters=True,
-            custom_obstacles=["campings", "wildlife"]
+            custom_obstacles=["campings", "wildlife"],
         )
-
-        # Remove the temporary directory.
-        shutil.rmtree(_temp_dir)
 
     def test_given_valid_custom_surroundings_path_when_import_from_returns_surrounding_wrapper(
         self,
+        local_custom_surroundings_dir_copy_fixture: Path,
         custom_surroundings_section_fom_fixture: SurroundingsSectionFom,
         infrastructure_section_fom_fixture: InfrastructureSectionFom,
     ):
         # 1. Define test data.
-        assert isinstance(custom_surroundings_section_fom_fixture, SurroundingsSectionFom)
+        assert isinstance(
+            custom_surroundings_section_fom_fixture, SurroundingsSectionFom
+        )
 
         _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
         assert _shp_file.is_file()
 
         _builder = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=local_custom_surroundings_dir_copy_fixture,
             surroundings_section_fom=custom_surroundings_section_fom_fixture,
             infrastructure_section_fom=infrastructure_section_fom_fixture,
             traject_loc_shp_file=_shp_file,

@@ -163,7 +163,7 @@ class TestKoswatGeneralJsonFom:
 
         # Infrastructuur section
         assert isinstance(_config_fom.infrastructuur_section, InfrastructureSectionFom)
-        assert _config_fom.infrastructuur_section.infrastructure == False
+        assert _config_fom.infrastructuur_section.active == False
         assert (
             _config_fom.infrastructuur_section.surtax_factor_roads
             == SurtaxFactorEnum.NORMAAL

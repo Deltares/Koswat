@@ -70,7 +70,7 @@ class TestSurroundingsWrapper:
 
         # Generate Infrastructures section file model
         _infrastructure_settings = InfrastructureSectionFom(
-            infrastructure=True,
+            active=True,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
             buffer_waterside=0.24,
