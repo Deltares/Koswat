@@ -2,7 +2,7 @@
     "Analyse": {
         "Dijksecties_Selectie": "tests/test_data/acceptance/koswat_dike_selection.txt",
         "Dijksectie_Ligging": "tests/test_data/acceptance/shp/dike_locations.shp",
-        "Dijksectie_Invoer": "tests/test_data/acceptance/json/dikesection_input",
+        "Dijksectie_Invoer": "tests/test_data/acceptance/dike_section_input",
         "Scenario_Invoer": "tests/test_data/acceptance/scenarios",
         "Eenheidsprijzen": "tests/test_data/acceptance/koswat_costs.ini",
         "Uitvoerfolder": "tests/test_results/acceptance/results_output",
