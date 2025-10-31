@@ -14,9 +14,7 @@ class KoswatSectionScenarioListIniDirReader(KoswatReaderProtocol):
     dike_selection: list[str] = field(default_factory=list)
 
     def _selected_scenario(self, scenario_file: Path) -> bool:
-        if scenario_file.stem not in self.dike_selection:
-            return False
-        return True
+        return scenario_file.stem in self.dike_selection
 
     def _get_scenario(self, scenario_file: Path) -> KoswatSectionScenariosIniFom:
         _reader = KoswatIniReader()

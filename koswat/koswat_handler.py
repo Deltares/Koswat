@@ -33,7 +33,7 @@ class KoswatHandler:
         """
         _log_path = Path("koswat.log")
         if log_output:
-            _log_path = Path(log_output) / "koswat.log"
+            _log_path = Path(log_output).joinpath(_log_path)
         self._log_path = _log_path
 
     def _generate_summary(
@@ -50,13 +50,13 @@ class KoswatHandler:
     ) -> None:
         # Export analysis results (csv and plots)
         settings.output_dir.mkdir(parents=True, exist_ok=True)
-        logging.info("Exporting csv results to {}.".format(settings.output_dir))
+        logging.info("Exporting csv results to %s.", settings.output_dir)
         if not summary.locations_profile_report_list:
-            logging.error("No summary was genarted for {}".format(settings.name))
+            logging.error("No summary was genarted for %s", settings.name)
             return
         # Export analysis csv.
         KoswatSummaryExporter().export(summary, settings.output_dir)
-        logging.info("Exported summary results to: {}".format(settings.output_dir))
+        logging.info("Exported summary results to: %s", settings.output_dir)
 
     def _generate_plots(
         self, settings: KoswatRunScenarioSettings, summary: KoswatSummary
@@ -68,14 +68,11 @@ class KoswatHandler:
                 _mlp_plot.cost_report = _multi_report
                 _mlp_plot.export_dir = settings.output_dir
                 _mlp_plot.export()
-                logging.info(
-                    "Exported comparison plots to: {}".format(settings.output_dir)
-                )
+                logging.info("Exported comparison plots to: %s", settings.output_dir)
             except Exception as e_info:
                 logging.error(
-                    "Failed to export report comparison plots for {}.".format(
-                        _multi_report.profile_type_name
-                    )
+                    "Failed to export report comparison plots for %s.",
+                    _multi_report.profile_type_name,
                 )
                 logging.error(e_info)
 
@@ -90,7 +87,7 @@ class KoswatHandler:
         def _as_path(ini_file: str) -> Optional[Path]:
             _ini = Path(ini_file)
             if not _ini.is_file():
-                logging.error("File not found at {}".format(analysis_file))
+                logging.error("File not found at %s", analysis_file)
                 raise FileNotFoundError(_ini)
             return _ini
 
@@ -98,6 +95,9 @@ class KoswatHandler:
         self._run_settings = KoswatRunSettingsImporter().import_from(
             _as_path(analysis_file)
         )
+        if not self._run_settings.run_scenarios:
+            logging.error("No run scenarios found for %s", analysis_file)
+            return
 
         # Run data
         for _run_scenario in self._run_settings.run_scenarios:
@@ -107,9 +107,9 @@ class KoswatHandler:
                 self._generate_plots(_run_scenario, _summary)
             except Exception as e_info:
                 logging.error(
-                    "Error while running scenario {}, more details: {}".format(
-                        _run_scenario.name, e_info
-                    )
+                    "Error while running scenario %s, more details: %s",
+                    _run_scenario.name,
+                    e_info,
                 )
                 if __debug__:
                     raise
