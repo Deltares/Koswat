@@ -1,4 +1,3 @@
-from configparser import ConfigParser
 from pathlib import Path
 
 from koswat.configuration.io.config_sections.surroundings_section_fom import (
@@ -33,8 +32,7 @@ class TestSurroundingsSectionFom:
 
     def test_from_config_without_omgevingtypes(self):
         # 1. Define test data.
-        ini_config = ConfigParser()
-        ini_config["SurroundingsSectionFom"] = {
+        _surroundings_config = {
             "omgevingsdatabases": "/some/path",
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
@@ -42,7 +40,7 @@ class TestSurroundingsSectionFom:
 
         # 2. Run test.
         _surroundings_section_fom = SurroundingsSectionFom.from_config(
-            ini_config["SurroundingsSectionFom"]
+            _surroundings_config
         )
 
         # 3. Verify expectations.
@@ -58,17 +56,23 @@ class TestSurroundingsSectionFom:
 
     def test_from_config_with_omgevingtypes(self):
         # 1. Define test data.
-        ini_config = ConfigParser()
-        ini_config["SurroundingsSectionFom"] = {
+        _surroundings_config = {
             "omgevingsdatabases": "/some/path",
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
-            "omgevingtypes": "buitendijks,bebouwing,spoorwegen,water,camping,wildlife",
+            "omgevingtypes": [
+                "buitendijks",
+                "bebouwing",
+                "spoorwegen",
+                "water",
+                "camping",
+                "wildlife",
+            ],
         }
 
         # 2. Run test.
         _surroundings_section_fom = SurroundingsSectionFom.from_config(
-            ini_config["SurroundingsSectionFom"]
+            _surroundings_config
         )
 
         # 3. Verify expectations.
