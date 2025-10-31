@@ -1,4 +1,5 @@
 import configparser
+import json
 import math
 from pathlib import Path
 
@@ -86,13 +87,13 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == None
 
-    def test_koswat_run_settings_importer_build_from_valid_ini(self):
+    def test_koswat_run_settings_importer_build_from_valid_json(self):
         # 1. Define test data.
-        _ini_file = test_data.joinpath("acceptance", "koswat_general.ini")
-        assert _ini_file.is_file()
+        _config_file = test_data.joinpath("acceptance", "koswat_general.json")
+        assert _config_file.is_file()
 
         # 2. Run test.
-        _config = KoswatRunSettingsImporter().import_from(_ini_file)
+        _config = KoswatRunSettingsImporter().import_from(_config_file)
 
         # 3. Verify final expectations.
         assert isinstance(_config, KoswatRunSettings)
@@ -107,13 +108,12 @@ class TestKoswatRunSettingsImporter:
     ):
         # 1. Define test data
         # Overwrite section selection with empty file
-        _ini_file = test_data.joinpath("acceptance", "koswat_general.ini")
-        _temp_file = test_results.joinpath("koswat_general_temp.ini")
-        _ini_config = configparser.ConfigParser()
-        _ini_config.read(_ini_file)
-        _ini_config["Analyse"]["Dijksecties_Selectie"] = str(empty_file)
+        _config_file = test_data.joinpath("acceptance", "koswat_general.json")
+        _temp_file = test_results.joinpath("koswat_general_temp.json")
+        _config = json.loads(_config_file.read_text(encoding="utf8"))
+        _config["Analyse"]["Dijksecties_Selectie"] = str(empty_file)
         with open(_temp_file, "w", encoding="utf8") as _file:
-            _ini_config.write(_file)
+            json.dump(_config, _file, indent=4)
 
         assert _temp_file.is_file()
 
@@ -128,7 +128,7 @@ class TestKoswatRunSettingsImporter:
         # 1. Define test data
         _importer = KoswatRunSettingsImporter()
         _general_settings = _importer._import_general_settings(
-            test_data.joinpath("section_input", "koswat_general.ini")
+            test_data.joinpath("section_input", "koswat_general.json")
         )
         _dike_selection = [
             "all_section_settings",

@@ -33,16 +33,22 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
             infrastructure_costs_0dh=InfraCostsEnum[
                 input_config["infrakosten_0dh"].upper()
             ],
-            buffer_waterside=SectionConfigHelper.get_float(["buffer_buitendijks"]),
-            roads_class2_width=SectionConfigHelper.get_float(["wegen_klasse2_breedte"]),
+            buffer_waterside=SectionConfigHelper.get_float(
+                input_config["buffer_buitendijks"]
+            ),
+            roads_class2_width=SectionConfigHelper.get_float(
+                input_config["wegen_klasse2_breedte"]
+            ),
             roads_class24_width=SectionConfigHelper.get_float(
-                ["wegen_klasse24_breedte"]
+                input_config["wegen_klasse24_breedte"]
             ),
             roads_class47_width=SectionConfigHelper.get_float(
-                ["wegen_klasse47_breedte"]
+                input_config["wegen_klasse47_breedte"]
             ),
-            roads_class7_width=SectionConfigHelper.get_float(["wegen_klasse7_breedte"]),
+            roads_class7_width=SectionConfigHelper.get_float(
+                input_config["wegen_klasse7_breedte"]
+            ),
             roads_unknown_width=SectionConfigHelper.get_float(
-                ["wegen_onbekend_breedte"]
+                input_config["wegen_onbekend_breedte"]
             ),
         )

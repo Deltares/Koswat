@@ -21,12 +21,9 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
 
     @classmethod
     def from_config(cls, input_config: dict[str, Any]) -> "SurroundingsSectionFom":
-        def get_surrounding_type_list(ini_string: str) -> list[str]:
-            if not ini_string:
-                return []
-            return [name.strip() for name in ini_string.lower().strip().split(",")]
-
-        _types = get_surrounding_type_list(input_config.get("omgevingtypes", ""))
+        _types = [
+            _type.lower().strip() for _type in input_config.get("omgevingtypes", [])
+        ]
 
         def pop_surrounding_type(type_name: str) -> bool:
             if type_name in _types:
