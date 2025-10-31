@@ -36,7 +36,6 @@ from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol im
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_protocol import (
     KoswatLayersWrapperProtocol,
 )
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
