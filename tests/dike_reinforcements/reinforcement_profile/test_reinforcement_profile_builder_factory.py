@@ -36,7 +36,6 @@ from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol im
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_protocol import (
     KoswatLayersWrapperProtocol,
 )
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
@@ -128,7 +127,7 @@ def scenario_ini_file() -> list[pytest.param]:
 
 
 def input_profile_data_json_dir() -> list[pytest.param]:
-    _json_dir = test_data_acceptance.joinpath("json", "dikesection_input")
+    _json_dir = test_data_acceptance.joinpath("dike_section_input")
     _dike_selection = [f.stem for f in _json_dir.glob("*.json")]
 
     def _to_pytest_param(section_input: KoswatDikeSectionInputJsonFom) -> pytest.param:
