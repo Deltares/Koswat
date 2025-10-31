@@ -42,6 +42,7 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
     KoswatReinforcementSettings,
 )
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
@@ -97,9 +98,10 @@ class TestAcceptance:
         self,
     ) -> Iterator[Callable[[], tuple[KoswatGeneralJsonFom, KoswatCostsSettings]]]:
         # Config parser to map the settings to a real case
-        _koswat_general_settings: KoswatGeneralJsonFom = KoswatIniReader(
-            koswat_ini_fom_type=KoswatGeneralJsonFom
-        ).read(test_data_acceptance.joinpath("koswat_general.ini"))
+        _json = KoswatJsonReader().read(
+            test_data_acceptance.joinpath("koswat_general.json")
+        )
+        _koswat_general_settings = KoswatGeneralJsonFom.from_config(_json.content)
 
         # It is easier returning the costs directly than the FOM,
         # as there's no direct converter from `KoswatCostsIniFom` to `KoswatCosts`

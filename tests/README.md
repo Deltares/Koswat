@@ -75,7 +75,7 @@ A limited number of cases is tested, using the default dike profile (`InputProfi
 Goal: Validate the calculations for locations with obstacles and infrastructures work correctly.
 
 Inputs:
-- Configs from `koswat_general.ini` and `koswat_costs.ini` in `test_data\acceptance`.
+- Configs from `koswat_general.json` and `koswat_costs.ini` in `test_data\acceptance`.
 - Surroundings from `test_data\acceptance\surroundings_analysis\10_3`.
 - Locations from `test_data\shp_reader\Dijkvak\Dijkringlijnen_KOSWAT_Totaal_2017_10_3_Dijkvak.shp`.
 
