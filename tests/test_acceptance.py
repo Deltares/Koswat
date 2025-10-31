@@ -41,7 +41,6 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (

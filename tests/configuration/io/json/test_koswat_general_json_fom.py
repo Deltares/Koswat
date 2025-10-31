@@ -45,7 +45,7 @@ class TestKoswatGeneralJsonFom:
             "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
         assert _config_fom.analysis_section.input_profiles_json_dir == Path(
-            "c:\\fake_drive\\Invoer\\json\\dikesection_input"
+            "c:\\fake_drive\\Invoer\\dike_section_input"
         )
         assert _config_fom.analysis_section.scenarios_ini_dir == Path(
             "c:\\fake_drive\\Invoer\\Scenarios"

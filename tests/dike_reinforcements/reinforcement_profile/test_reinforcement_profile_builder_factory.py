@@ -128,7 +128,7 @@ def scenario_ini_file() -> list[pytest.param]:
 
 
 def input_profile_data_json_dir() -> list[pytest.param]:
-    _json_dir = test_data_acceptance.joinpath("json", "dikesection_input")
+    _json_dir = test_data_acceptance.joinpath("dike_section_input")
     _dike_selection = [f.stem for f in _json_dir.glob("*.json")]
 
     def _to_pytest_param(section_input: KoswatDikeSectionInputJsonFom) -> pytest.param:
