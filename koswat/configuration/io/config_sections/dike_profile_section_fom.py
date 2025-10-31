@@ -46,10 +46,10 @@ class DikeProfileSectionFom(ConfigSectionFomProtocol, KoswatInputProfileBase):
             input_dict.get("binnen_berm_lengte", None)
         )
         _section.ground_price_builtup = _get_float(
-            input_dict.get("grondprijs_bebouwd", None)
+            input_dict.get("grondaankoop_bebouwd", None)
         )
         _section.ground_price_unbuilt = _get_float(
-            input_dict.get("grondprijs_onbebouwd", None)
+            input_dict.get("grondaankoop_onbebouwd", None)
         )
         _section.factor_settlement = _get_float(input_dict.get("factorzetting", None))
         _section.pleistocene = _get_float(input_dict.get("pleistoceen", None))

@@ -19,7 +19,7 @@ classifiers = [
   'Topic :: Scientific/Engineering :: Hydrology',
 ]
 requires-python = ">=3.11,<3.14"
-dependencies = ["click", "matplotlib", "pyshp", "shapely", "geopandas"]
+dependencies = ["click", "matplotlib", "pyshp", "shapely", "geopandas", "more-itertools"]
 
 [project.urls]
 documentation = "https://deltares.github.io/Koswat/"
