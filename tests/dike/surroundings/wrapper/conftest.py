@@ -26,7 +26,6 @@ def _get_buildings_fixture() -> Iterable[
         ]
         _obstacle = SurroundingsObstacle(points=_points)
         return ObstacleSurroundingsWrapper(
-            apply_buildings=True,
             buildings=_obstacle,
         )
 

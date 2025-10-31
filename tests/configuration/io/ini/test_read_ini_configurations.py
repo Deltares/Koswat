@@ -35,7 +35,7 @@ from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
 from tests import test_data
 
-test_ini_reader_data = test_data / "ini_reader"
+test_ini_reader_data = test_data.joinpath("ini_reader")
 
 
 class TestReadIniConfigurations:
@@ -67,7 +67,7 @@ class TestReadIniConfigurations:
 
     def test_koswat_ini_read_general_ini(self):
         # 1. Define test data.
-        _test_file_path = test_ini_reader_data / "koswat_general.ini"
+        _test_file_path = test_ini_reader_data.joinpath("koswat_general.ini")
         _ini_reader = KoswatIniReader()
         _ini_reader.koswat_ini_fom_type = KoswatGeneralIniFom
 

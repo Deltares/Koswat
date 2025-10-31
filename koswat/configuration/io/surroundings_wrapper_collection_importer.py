@@ -71,7 +71,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             _surroundings_wrapper_builder = SurroundingsWrapperBuilder(
                 surroundings_section_fom=self.surroundings_section_fom,
                 infrastructure_section_fom=self.infrastructure_section_fom,
-                surroundings_csv_fom_collection=self._csv_dir_to_fom(_csv_dir),
+                surroundings_csv_fom_collection=self._csv_dir_to_fom(_csv_dir, self.surroundings_section_fom.custom_obstacles),
                 location_shp_fom=None,
             )
             for _location in _location_list:
@@ -88,22 +88,19 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         return _surroundings_wrappers
 
     def _csv_file_to_fom(
-        self, csv_file: Path, traject_name: str
-    ) -> tuple[SurroundingsEnum, KoswatSurroundingsCsvFom]:
-        _surrounding_type = SurroundingsEnum.translate(
-            csv_file.stem.replace(f"T_{traject_name}_", "")
-        )
+        self, csv_file: Path, surrounding_type: SurroundingsEnum
+    ) -> KoswatSurroundingsCsvFom:
+
         _reader = KoswatSurroundingsCsvReader
-        if _surrounding_type.surrounding_type == SurroundingsObstacle:
+        if surrounding_type.surrounding_type == SurroundingsObstacle:
             _reader = KoswatSimpleSurroundingsCsvReader
             
-        _surrounding_csv_fom = _reader().read(csv_file)
-        _surrounding_csv_fom.traject = traject_name
-        return _surrounding_type, _surrounding_csv_fom
+        return _reader().read(csv_file)
 
     def _csv_dir_to_fom(
         self,
         csv_dir: Path,
+        custom_obstacles: list[str]
     ) -> dict[str, KoswatSurroundingsCsvFom]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
@@ -111,12 +108,29 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
 
         Args:
             csv_dir (Path): The directory containing the CSV files.
+            custom_obstacles (list[str]): A list of custom obstacle names.
 
         Returns:
             dict[str, KoswatSurroundingsCsvFom]: A dictionary of `KoswatSurroundingsCsvFom` objects, grouped by their type name.
         """
         _imported_csv_foms = {}
-        for _csv_file in csv_dir.glob("*.csv"):
-            _type, _csv_fom = self._csv_file_to_fom(_csv_file, csv_dir.stem)
-            _imported_csv_foms[_type.name] = _csv_fom
+        _traject_name = csv_dir.stem
+        for _csv_file in csv_dir.glob("*.csv"):      
+            # Map CSV file name to surrounding type.      
+            _surrounding_type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
+            _surrounding_type = SurroundingsEnum.translate(_surrounding_type_name)
+            if _surrounding_type == SurroundingsEnum.CUSTOM and _surrounding_type_name not in custom_obstacles:
+                # In case of custom surrounding types, only import those that are defined in the ini file.
+                logging.info(f"Skipping custom surrounding type {_surrounding_type_name} as it is not defined in the ini file.")
+                continue
+            
+            # Get FOM from CSV file.
+            _csv_fom = self._csv_file_to_fom(_csv_file, _surrounding_type)
+            if _surrounding_type.name in _imported_csv_foms:
+                # If already imported the same type, then merge with existing FOM. 
+                # Specially designed to handle custom surrounding types split over multiple files.
+                _imported_csv_foms[_surrounding_type.name].merge(_csv_fom)
+            else:
+                _imported_csv_foms[_surrounding_type.name] = _csv_fom
+
         return _imported_csv_foms

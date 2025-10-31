@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum, auto
+import logging
 
 from koswat.dike.surroundings.surroundings_infrastructure import SurroundingsInfrastructure
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
@@ -16,6 +17,7 @@ class SurroundingsEnum(SurroundingsEnumType, Enum):
     BUILDINGS = SurroundingsObstacle, "bebouwing"
     RAILWAYS = SurroundingsObstacle, "spoorwegen"
     WATERS = SurroundingsObstacle, "water"
+    CUSTOM = SurroundingsObstacle, "custom"
 
     # Extended format
     ROADS_CLASS_2_POLDERSIDE = SurroundingsInfrastructure, "wegen_binnendijks_klasse2"
@@ -31,10 +33,18 @@ class SurroundingsEnum(SurroundingsEnumType, Enum):
 
     @classmethod
     def translate(cls, surrounding_type_str: str) -> SurroundingsEnum:
+        """
+        Translates a string representation of a surrounding type into a SurroundingsEnum.
+        When not found, it defaults to CUSTOM.
+
+        Args:
+            surrounding_type_str (str): The string representation of the surrounding type.
+
+        Returns:
+            SurroundingsEnum: The corresponding SurroundingsEnum member.
+        """
         normalized = surrounding_type_str.lower().strip()
-        _translation = next((item for item in cls if item.dutch_text == normalized), None)
-        if not _translation:
-            error = f"No mapping found for {surrounding_type_str}"
-            raise ValueError(error)
+        _translation = next((item for item in cls if item.dutch_text == normalized), cls.CUSTOM)
+        logging.info(f"Surrounding type: {surrounding_type_str} is mapped to {_translation.name.lower()}")
         return _translation
 
