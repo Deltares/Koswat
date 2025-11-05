@@ -8,10 +8,10 @@ from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
 from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 _test_dict = {
-    "dH": "0.1",
-    "dS": "1.2",
-    "dP": "2.3",
-    "Buitentalud": "3.4",
+    "dh": "0.1",
+    "ds": "1.2",
+    "dp": "2.3",
+    "buitentalud": "3.4",
     "kruinbreedte": "4.5",
 }
 
