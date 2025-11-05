@@ -23,9 +23,6 @@ from koswat.configuration.io.ini.koswat_general_ini_fom import (
     SurroundingsSectionFom,
     VPSReinforcementSectionFom,
 )
-from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
-    KoswatSectionScenariosIniFom,
-)
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
@@ -44,9 +41,6 @@ class TestReadIniConfigurations:
         [
             pytest.param("koswat_general.ini", KoswatGeneralIniFom, id="General INI"),
             pytest.param("koswat_costs.ini", KoswatCostsIniFom, id="Costs INI"),
-            pytest.param(
-                "koswat_scenario.ini", KoswatSectionScenariosIniFom, id="Scenario INI"
-            ),
         ],
     )
     def test_koswat_ini_reader_returns_fom_instance(
@@ -350,32 +344,3 @@ class TestReadIniConfigurations:
         assert _ini_fom.construction_cost_cofferdam.z_factor == -74.602
         assert _ini_fom.construction_cost_cofferdam.f_factor == 0
         assert _ini_fom.construction_cost_cofferdam.g_factor == 0
-
-    def test_koswat_ini_read_scenario_ini(self):
-        # 1. Define test data.
-        _test_file_path = test_ini_reader_data / "koswat_scenario.ini"
-        _ini_reader = KoswatIniReader()
-        _ini_reader.koswat_ini_fom_type = KoswatSectionScenariosIniFom
-
-        # 2. Run test
-        _ini_fom = _ini_reader.read(_test_file_path)
-
-        # 3. Validate expectations.
-        assert isinstance(_ini_fom, KoswatSectionScenariosIniFom)
-
-        # Scenarios
-        assert len(_ini_fom.section_scenarios) == 2
-
-        # Scenario 0
-        assert _ini_fom.section_scenarios[0].d_h == 0.5
-        assert _ini_fom.section_scenarios[0].d_s == 10
-        assert _ini_fom.section_scenarios[0].d_p == 50
-        assert _ini_fom.section_scenarios[0].waterside_slope == None
-        assert _ini_fom.section_scenarios[0].crest_width == None
-
-        # Scenario 1
-        assert _ini_fom.section_scenarios[1].d_h == 1
-        assert _ini_fom.section_scenarios[1].d_s == 15
-        assert _ini_fom.section_scenarios[1].d_p == 75
-        assert _ini_fom.section_scenarios[1].waterside_slope == 4
-        assert _ini_fom.section_scenarios[1].crest_width == 10

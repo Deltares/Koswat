@@ -1,12 +1,14 @@
 from __future__ import annotations
 
-from configparser import ConfigParser
-from typing import List, Optional
+from typing import Any, Optional
 
-from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
+from koswat.configuration.io.config_sections.config_section_helper import (
+    SectionConfigHelper,
+)
+from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 
-class SectionScenarioFom(KoswatIniFomProtocol):
+class SectionScenarioFom(KoswatJsonFomProtocol):
     scenario_name: str
     d_h: float
     d_s: float
@@ -16,29 +18,33 @@ class SectionScenarioFom(KoswatIniFomProtocol):
     crest_width: Optional[float]
 
     @classmethod
-    def from_config(cls, ini_config: ConfigParser) -> SectionScenarioFom:
+    def from_config(cls, input_config: dict[str, Any]) -> SectionScenarioFom:
         _section = cls()
         # Retrieves the values as written (and expected) in the ini file.
         _section.scenario_name = ""
-        _section.d_h = ini_config.getfloat("dH")
-        _section.d_s = ini_config.getfloat("dS")
-        _section.d_p = ini_config.getfloat("dP")
-        _section.waterside_slope = ini_config.getfloat("Buitentalud")
-        _section.crest_width = ini_config.getfloat("kruinbreedte")
+        _section.d_h = SectionConfigHelper.get_float(input_config["dh"])
+        _section.d_s = SectionConfigHelper.get_float(input_config["ds"])
+        _section.d_p = SectionConfigHelper.get_float(input_config["dp"])
+        _section.waterside_slope = SectionConfigHelper.get_float(
+            input_config.get("buitentalud", None)
+        )
+        _section.crest_width = SectionConfigHelper.get_float(
+            input_config.get("kruinbreedte", None)
+        )
         return _section
 
 
-class KoswatSectionScenariosIniFom(KoswatIniFomProtocol):
-    section_scenarios: List[SectionScenarioFom]
+class KoswatSectionScenariosJsonFom(KoswatJsonFomProtocol):
+    section_scenarios: list[SectionScenarioFom]
     scenario_dike_section: str
 
     @classmethod
-    def from_config(cls, ini_config: ConfigParser) -> KoswatSectionScenariosIniFom:
-        _ini_fom = cls()
-        _ini_fom.section_scenarios = []
-        _ini_fom.scenario_dike_section = ""
-        for _section_name in ini_config.sections():
-            _new_section = SectionScenarioFom.from_config(ini_config[_section_name])
-            _new_section.scenario_name = _section_name
-            _ini_fom.section_scenarios.append(_new_section)
-        return _ini_fom
+    def from_config(cls, input_config: dict[str, Any]) -> KoswatSectionScenariosJsonFom:
+        _section_scenario_fom = cls()
+        _section_scenario_fom.section_scenarios = []
+        _section_scenario_fom.scenario_dike_section = ""
+        for _scenario_name in input_config.keys():
+            _new_scenario = SectionScenarioFom.from_config(input_config[_scenario_name])
+            _new_scenario.scenario_name = _scenario_name
+            _section_scenario_fom.section_scenarios.append(_new_scenario)
+        return _section_scenario_fom
