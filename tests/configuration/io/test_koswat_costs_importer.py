@@ -29,7 +29,7 @@ class TestKoswatCostsImporter:
         # 1. Define test data
         _importer = KoswatCostsImporter()
         _expected_err = "A boolean value is expected for `include_taxes`."
-        _test_file = test_data / "ini_reader" / "koswat_costs.ini"
+        _test_file = test_data.joinpath("json_reader", "koswat_costs.json")
         assert _test_file.is_file()
         assert _importer.include_taxes == None
 

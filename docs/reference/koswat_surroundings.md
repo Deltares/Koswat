@@ -56,7 +56,7 @@ Infrastructures are mostly "roads". Contrary to the [obstacles](#obstacles) thes
 
 - The width of the infrastructure (taken from the `Koswat_general.ini` settings),
 - The length of the infrastructure at that location (the values in the columns `afst_{x}m`),
-- The required technique (repair, displace, nothing) for the type of infrastructure (also from `koswat_general.ini` settings) and its related costs (`koswat_costs.ini`).
+- The required technique (repair, displace, nothing) for the type of infrastructure (also from `koswat_general.ini` settings) and its related costs (`koswat_costs.json`).
 
 With the above values we know what's the __affected area__ of an infrastructure when a reinforced profile needs to be applied and therefore can estimate their costs.
 
