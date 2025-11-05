@@ -45,7 +45,7 @@ class SectionConfigHelper:
 
     @staticmethod
     def get_float(
-        input_val: Optional[str | float], set_default: bool
+        input_val: Optional[str | float], set_default: Optional[bool] = True
     ) -> Optional[float]:
         """
         Converts a string to a float value.
