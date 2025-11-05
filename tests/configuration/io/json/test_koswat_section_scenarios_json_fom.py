@@ -1,5 +1,3 @@
-from configparser import ConfigParser
-
 from koswat.configuration.io.json.koswat_section_scenario_json_fom import (
     KoswatSectionScenariosJsonFom,
     SectionScenarioFom,
