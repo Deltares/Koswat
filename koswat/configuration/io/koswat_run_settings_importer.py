@@ -85,7 +85,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
 
         _dike_costs = self._import_dike_costs(
-            ini_file=_general_settings.analysis_section.costs_ini_file,
+            ini_file=_general_settings.analysis_section.costs_json_file,
             include_taxes=_general_settings.analysis_section.include_taxes,
         )
         _scenario_fom_list = self._import_scenario_fom_list(

@@ -3,14 +3,6 @@ from typing import Type
 
 import pytest
 
-from koswat.configuration.io.ini.koswat_costs_ini_fom import (
-    ConstructionCostsSectionFom,
-    DikeProfileCostsSectionFom,
-    InfrastructureCostsSectionFom,
-    KoswatCostsIniFom,
-    SurtaxCostsSectionFom,
-    UnitPricesSectionFom,
-)
 from koswat.configuration.io.ini.koswat_general_ini_fom import (
     AnalysisSectionFom,
     CofferdamReinforcementSectionFom,
@@ -43,7 +35,6 @@ class TestReadIniConfigurations:
         "test_file, ini_fom_type",
         [
             pytest.param("koswat_general.ini", KoswatGeneralIniFom, id="General INI"),
-            pytest.param("koswat_costs.ini", KoswatCostsIniFom, id="Costs INI"),
             pytest.param(
                 "koswat_scenario.ini", KoswatSectionScenariosIniFom, id="Scenario INI"
             ),
@@ -87,13 +78,13 @@ class TestReadIniConfigurations:
             "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
         assert _ini_fom.analysis_section.input_profiles_json_dir == Path(
-            "c:\\fake_drive\\Invoer\\json\\dikesection_input"
+            "c:\\fake_drive\\Invoer\\dikesection_input"
         )
         assert _ini_fom.analysis_section.scenarios_ini_dir == Path(
             "c:\\fake_drive\\Invoer\\Scenarios"
         )
-        assert _ini_fom.analysis_section.costs_ini_file == Path(
-            "c:\\fake_drive\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
+        assert _ini_fom.analysis_section.costs_json_file == Path(
+            "c:\\fake_drive\\Invoer\\Eenheidsprijzen2017.json"
         )
         assert _ini_fom.analysis_section.analysis_output_dir == Path(
             "c:\\fake_drive\\Uitvoer"
