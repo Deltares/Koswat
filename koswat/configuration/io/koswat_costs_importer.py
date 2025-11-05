@@ -29,7 +29,8 @@ class KoswatCostsImporter(KoswatImporterProtocol):
 
     def _get_costs_fom(self, config_file: Path) -> KoswatCostsJsonFom:
         reader = KoswatJsonReader()
-        return reader.read(config_file)
+        _json_fom = reader.read(config_file)
+        return KoswatCostsJsonFom.from_config(_json_fom.content)
 
     def import_from(self, from_path: Path) -> KoswatCostsSettings:
         if not from_path.is_file():

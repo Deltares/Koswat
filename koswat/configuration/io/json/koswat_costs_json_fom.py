@@ -202,7 +202,7 @@ class KoswatCostsJsonFom(KoswatJsonFomProtocol):
     construction_cost_cofferdam: ConstructionCostsSectionFom
 
     @classmethod
-    def from_config(cls, input_config: dict[str, Any]) -> KoswatJsonFomProtocol:
+    def from_config(cls, input_config: dict[str, Any]) -> "KoswatCostsJsonFom":
         _costs_fom = cls()
         _costs_fom.unit_prices_section = UnitPricesSectionFom.from_config(
             input_config["eenheidsprijzen"]
