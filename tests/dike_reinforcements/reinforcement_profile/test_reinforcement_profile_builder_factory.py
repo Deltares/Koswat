@@ -6,14 +6,14 @@ from typing import Iterable
 
 import pytest
 
-from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
-    KoswatSectionScenarioListIniDirReader,
-)
-from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
-    KoswatSectionScenariosIniFom,
-)
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
+)
+from koswat.configuration.io.json.koswat_scenario_list_json_dir_reader import (
+    KoswatSectionScenarioListJsonDirReader,
+)
+from koswat.configuration.io.json.koswat_section_scenario_json_fom import (
+    KoswatSectionScenariosJsonFom,
 )
 from koswat.configuration.io.koswat_dike_section_input_list_importer import (
     KoswatDikeSectionInputListImporter,
@@ -36,7 +36,6 @@ from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol im
 from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_protocol import (
     KoswatLayersWrapperProtocol,
 )
-from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.profile.koswat_profile_builder import KoswatProfileBuilder
 from koswat.dike_reinforcements import ReinforcementProfileBuilderFactory
@@ -93,11 +92,11 @@ from tests.dike_reinforcements.reinforcement_profile_cases import (
 )
 
 
-def scenario_ini_file() -> list[pytest.param]:
+def scenario_json_file() -> list[pytest.param]:
     scenarios_dir = test_data / "acceptance" / "scenarios"
 
     def _to_koswat_scenario(
-        scenario_data: KoswatSectionScenariosIniFom,
+        scenario_data: KoswatSectionScenariosJsonFom,
     ) -> Iterable[KoswatScenario]:
         for _section_scenario in scenario_data.section_scenarios:
             _scenario = KoswatScenario(
@@ -118,8 +117,8 @@ def scenario_ini_file() -> list[pytest.param]:
         )
 
     _scenarios = []
-    _reader = KoswatSectionScenarioListIniDirReader(
-        dike_selection=[f.stem for f in scenarios_dir.glob("*.ini")]
+    _reader = KoswatSectionScenarioListJsonDirReader(
+        dike_selection=[f.stem for f in scenarios_dir.glob("*.json")]
     )
     for _fom_scenario_wrapper in _reader.read(scenarios_dir):
         _scenarios = _scenarios + list(_to_koswat_scenario(_fom_scenario_wrapper))
@@ -128,7 +127,7 @@ def scenario_ini_file() -> list[pytest.param]:
 
 
 def input_profile_data_json_dir() -> list[pytest.param]:
-    _json_dir = test_data_acceptance.joinpath("json", "dikesection_input")
+    _json_dir = test_data_acceptance.joinpath("dike_section_input")
     _dike_selection = [f.stem for f in _json_dir.glob("*.json")]
 
     def _to_pytest_param(section_input: KoswatDikeSectionInputJsonFom) -> pytest.param:
@@ -147,7 +146,7 @@ def input_profile_data_json_dir() -> list[pytest.param]:
     )[:2]
 
 
-_scenarios = scenario_ini_file()
+_scenarios = scenario_json_file()
 _input_profiles = input_profile_data_json_dir()
 
 

@@ -8,11 +8,11 @@ import cv2
 import numpy as np
 import pytest
 
-from koswat.configuration.io.ini.koswat_general_ini_fom import (
+from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
-    KoswatGeneralIniFom,
     SurroundingsSectionFom,
 )
+from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
@@ -41,7 +41,7 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_report import (
     InfrastructureLocationProfileCostReport,
@@ -95,18 +95,19 @@ class TestAcceptance:
     @pytest.fixture(name="koswat_acceptance_settings")
     def _get_koswat_acceptance_settings_fixtures(
         self,
-    ) -> Iterator[Callable[[], tuple[KoswatGeneralIniFom, KoswatCostsSettings]]]:
+    ) -> Iterator[Callable[[], tuple[KoswatGeneralJsonFom, KoswatCostsSettings]]]:
         # Config parser to map the settings to a real case
-        _koswat_general_settings: KoswatGeneralIniFom = KoswatIniReader(
-            koswat_ini_fom_type=KoswatGeneralIniFom
-        ).read(test_data_acceptance.joinpath("koswat_general.ini"))
+        _json = KoswatJsonReader().read(
+            test_data_acceptance.joinpath("koswat_general.json")
+        )
+        _koswat_general_settings = KoswatGeneralJsonFom.from_config(_json.content)
 
         # It is easier returning the costs directly than the FOM,
-        # as there's no direct converter from `KoswatCostsIniFom` to `KoswatCosts`
+        # as there's no direct converter from `KoswatCostsJsonFom` to `KoswatCosts`
         _costs_importer = KoswatCostsImporter()
         _costs_importer.include_taxes = True
         _koswat_costs = _costs_importer.import_from(
-            test_data_acceptance.joinpath("koswat_costs.ini")
+            test_data_acceptance.joinpath("koswat_costs.json")
         )
 
         yield lambda: (_koswat_general_settings, _koswat_costs)
@@ -124,7 +125,7 @@ class TestAcceptance:
     def _get_surroundings_wrapper_fixture(
         self,
         koswat_acceptance_settings: Callable[
-            [], tuple[KoswatGeneralIniFom, KoswatCostsSettings]
+            [], tuple[KoswatGeneralJsonFom, KoswatCostsSettings]
         ],
         request: pytest.FixtureRequest,
     ) -> Iterable[tuple[SurroundingsWrapper, KoswatCostsSettings, Path]]:
@@ -156,15 +157,15 @@ class TestAcceptance:
         # Generate surroundings section File Object Model.
         _koswat_general_settings, _koswat_costs = koswat_acceptance_settings()
         _surroundings_settings = _koswat_general_settings.surroundings_section
-        _surroundings_settings.surroundings_database_dir = _temp_dir.parent
         _surroundings_settings.buildings = _include_obstacles
 
         # Generate Infrastructures section file model
         _infrastructure_settings = _koswat_general_settings.infrastructuur_section
-        _infrastructure_settings.infrastructure = _include_infras
+        _infrastructure_settings.active = _include_infras
 
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=_temp_dir.parent,
             infrastructure_section_fom=_infrastructure_settings,
             surroundings_section_fom=_surroundings_settings,
             selected_locations=[],
@@ -300,7 +301,6 @@ class TestAcceptance:
         _surroundings_section = SurroundingsSectionFom(
             construction_distance=50,
             construction_buffer=10,
-            surroundings_database_dir=_test_dir,
             waterside=False,
             buildings=True,
             railways=False,
@@ -308,7 +308,7 @@ class TestAcceptance:
         )
 
         _infrastructure_section = InfrastructureSectionFom(
-            infrastructure=False,
+            active=False,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
             buffer_waterside=0,
@@ -320,6 +320,7 @@ class TestAcceptance:
         )
 
         _surroundings = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=_test_dir,
             infrastructure_section_fom=_infrastructure_section,
             surroundings_section_fom=_surroundings_section,
             traject_loc_shp_file=_shp_trajects_file,
