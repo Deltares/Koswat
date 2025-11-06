@@ -7,17 +7,17 @@ from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     SurroundingsSectionFom,
 )
-from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
-    KoswatSectionScenarioListIniDirReader,
-)
-from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
-    KoswatSectionScenariosIniFom,
-    SectionScenarioFom,
-)
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
 )
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
+from koswat.configuration.io.json.koswat_scenario_list_json_dir_reader import (
+    KoswatSectionScenarioListJsonDirReader,
+)
+from koswat.configuration.io.json.koswat_section_scenario_json_fom import (
+    KoswatSectionScenariosJsonFom,
+    SectionScenarioFom,
+)
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.koswat_dike_section_input_list_importer import (
     KoswatDikeSectionInputListImporter,
@@ -120,7 +120,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         self,
         reinforcement_settings_list: list[KoswatReinforcementSettings],
         input_profiles: list[KoswatProfileProtocol],
-        fom_scenario_list: list[KoswatSectionScenariosIniFom],
+        fom_scenario_list: list[KoswatSectionScenariosJsonFom],
         costs_settings: KoswatCostsSettings,
         surroundings_fom: list[SurroundingsWrapper],
         output_dir: Path,
@@ -315,8 +315,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
     def _import_scenario_fom_list(
         self, scenario_dir: Path, dike_selections: list[str]
-    ) -> list[KoswatSectionScenariosIniFom]:
-        _reader = KoswatSectionScenarioListIniDirReader(dike_selection=dike_selections)
+    ) -> list[KoswatSectionScenariosJsonFom]:
+        _reader = KoswatSectionScenarioListJsonDirReader(dike_selection=dike_selections)
         return _reader.read(scenario_dir)
 
     def _import_surroundings_wrapper(
