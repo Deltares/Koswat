@@ -11,92 +11,143 @@ from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEn
 
 class TestConfigSectionHelper:
     @pytest.mark.parametrize(
-        "set_defaults, input_val, expected",
+        "input_val, expected",
         [
-            pytest.param(True, None, "", id="None with default"),
-            pytest.param(False, None, None, id="None without default"),
-            pytest.param(True, "input_string", "input_string", id="Value with default"),
-            pytest.param(
-                False, "input_string", "input_string", id="Value without default"
-            ),
+            pytest.param(None, None, id="None"),
+            pytest.param("input_string", "input_string", id="Value"),
         ],
     )
-    def test_get_string(
-        self, set_defaults: bool, input_val: Optional[str], expected: Optional[str]
+    def test_get_string_without_default(
+        self, input_val: Optional[str], expected: Optional[str]
     ):
         # 1. Execute test
-        _result = SectionConfigHelper.get_string(input_val, set_defaults)
+        _result = SectionConfigHelper.get_string_without_default(input_val)
 
         # 2. Verify expectations
         assert _result == expected
 
     @pytest.mark.parametrize(
-        "set_defaults, input_val, expected",
+        "input_val, expected",
         [
-            pytest.param(True, None, SurtaxFactorEnum.NORMAAL, id="None with default"),
-            pytest.param(False, None, None, id="None without default"),
-            pytest.param(
-                True, "MOEILIJK", SurtaxFactorEnum.MOEILIJK, id="Value with default"
-            ),
-            pytest.param(
-                False, "MOEILIJK", SurtaxFactorEnum.MOEILIJK, id="Value without default"
-            ),
+            pytest.param(None, "", id="None"),
+            pytest.param("input_string", "input_string", id="Value"),
         ],
     )
-    def test_get_enum(
+    def test_get_string(self, input_val: Optional[str], expected: Optional[str]):
+        # 1. Execute test
+        _result = SectionConfigHelper.get_string(input_val)
+
+        # 2. Verify expectations
+        assert _result == expected
+
+    @pytest.mark.parametrize(
+        "input_val, expected",
+        [
+            pytest.param(None, None, id="None"),
+            pytest.param("MOEILIJK", SurtaxFactorEnum.MOEILIJK, id="Value"),
+        ],
+    )
+    def test_get_enum_without_default(
         self,
-        set_defaults: bool,
         input_val: Optional[str],
         expected: Optional[SurtaxFactorEnum],
     ):
         # 1. Execute test
-        _result = SectionConfigHelper.get_enum(input_val, set_defaults)
+        _result = SectionConfigHelper.get_enum_without_default(input_val)
 
         # 2. Verify expectations
         assert _result == expected
 
     @pytest.mark.parametrize(
-        "set_defaults, input_val, expected",
+        "input_val, expected",
         [
-            pytest.param(True, None, math.nan, id="None with default"),
-            pytest.param(False, None, None, id="None without default"),
-            pytest.param(True, "24.42", 24.42, id="String value with default"),
-            pytest.param(False, "24.42", 24.42, id="String value without default"),
-            pytest.param(True, 24.42, 24.42, id="Float value with default"),
-            pytest.param(False, 24.42, 24.42, id="Float value without default"),
+            pytest.param(None, SurtaxFactorEnum.NORMAAL, id="None"),
+            pytest.param("MOEILIJK", SurtaxFactorEnum.MOEILIJK, id="Value"),
         ],
     )
-    def test_get_float(
+    def test_get_enum(
         self,
-        set_defaults: bool,
+        input_val: Optional[str],
+        expected: Optional[SurtaxFactorEnum],
+    ):
+        # 1. Execute test
+        _result = SectionConfigHelper.get_enum(input_val)
+
+        # 2. Verify expectations
+        assert _result == expected
+
+    @pytest.mark.parametrize(
+        "input_val, expected",
+        [
+            pytest.param(None, None, id="None"),
+            pytest.param("24.42", 24.42, id="String"),
+            pytest.param(24.42, 24.42, id="Float"),
+        ],
+    )
+    def test_get_float_without_default(
+        self,
         input_val: Optional[str | float],
         expected: Optional[float],
     ):
         # 1. Execute test
-        _result = SectionConfigHelper.get_float(input_val, set_defaults)
+        _result = SectionConfigHelper.get_float_without_default(input_val)
 
         # 2. Verify expectations
         assert _result == expected or (math.isnan(_result) and math.isnan(expected))
 
     @pytest.mark.parametrize(
-        "set_defaults, input_val, expected",
+        "input_val, expected",
         [
-            pytest.param(True, None, False, id="None with default"),
-            pytest.param(False, None, None, id="None without default"),
-            pytest.param(True, "True", True, id="String value with default"),
-            pytest.param(False, "True", True, id="String value without default"),
-            pytest.param(True, True, True, id="Boolean value with default"),
-            pytest.param(False, True, True, id="Boolean value without default"),
+            pytest.param(None, math.nan, id="None"),
+            pytest.param("24.42", 24.42, id="String"),
+            pytest.param(24.42, 24.42, id="Float"),
         ],
     )
-    def test_get_bool(
+    def test_get_float(
         self,
-        set_defaults: bool,
+        input_val: Optional[str | float],
+        expected: Optional[float],
+    ):
+        # 1. Execute test
+        _result = SectionConfigHelper.get_float(input_val)
+
+        # 2. Verify expectations
+        assert _result == expected or (math.isnan(_result) and math.isnan(expected))
+
+    @pytest.mark.parametrize(
+        "input_val, expected",
+        [
+            pytest.param(None, None, id="None"),
+            pytest.param("True", True, id="String"),
+            pytest.param(True, True, id="Boolean"),
+        ],
+    )
+    def test_get_bool_without_default(
+        self,
         input_val: Optional[str | bool],
         expected: Optional[float],
     ):
         # 1. Execute test
-        _result = SectionConfigHelper.get_bool(input_val, set_defaults)
+        _result = SectionConfigHelper.get_bool_without_default(input_val)
+
+        # 2. Verify expectations
+        assert _result == expected
+
+    @pytest.mark.parametrize(
+        "input_val, expected",
+        [
+            pytest.param(None, False, id="None"),
+            pytest.param("True", True, id="String"),
+            pytest.param(True, True, id="Boolean"),
+        ],
+    )
+    def test_get_bool(
+        self,
+        input_val: Optional[str | bool],
+        expected: Optional[float],
+    ):
+        # 1. Execute test
+        _result = SectionConfigHelper.get_bool(input_val)
 
         # 2. Verify expectations
         assert _result == expected

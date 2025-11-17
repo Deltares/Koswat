@@ -10,69 +10,105 @@ class SectionConfigHelper:
     """
 
     @staticmethod
-    def get_string(
-        input_val: Optional[str], set_default: Optional[bool] = True
-    ) -> Optional[str]:
+    def get_string_without_default(input_val: Optional[str]) -> Optional[str]:
+        """
+        Returns the input string or None.
+
+        Args:
+            input_val (Optional[str]): Input string.
+
+        Returns:
+            Optional[str]: Input string or None.
+        """
+        if input_val is not None:
+            return input_val
+        return None
+
+    @staticmethod
+    def get_string(input_val: Optional[str]) -> str:
         """
         Returns the input string or a default value.
 
         Args:
             input_val (Optional[str]): Input string.
-            set_default (bool): Whether to set a default value.
 
         Returns:
-            Optional[str]: Input string or default value.
+            str: Input string. Default is an empty string.
         """
-        if input_val is not None:
-            return input_val
-        return "" if set_default else None
+        _val = SectionConfigHelper.get_string_without_default(input_val)
+        return _val if _val is not None else ""
 
     @staticmethod
-    def get_enum(
-        input_val: Optional[str], set_default: Optional[bool] = True
+    def get_enum_without_default(
+        input_val: Optional[str],
     ) -> Optional[SurtaxFactorEnum]:
         """
-        Converts a string to an enum value.
+        Converts a string to an enum value or None.
 
         Args:
             input_val (Optional[str]): Input string.
-            set_default (bool): Whether to set a default value.
 
         Returns:
             Optional[SurtaxFactorEnum]: Corresponding enum value or None.
         """
         if input_val:
             return SurtaxFactorEnum[input_val.upper()]
-        return SurtaxFactorEnum.NORMAAL if set_default else None
+        return None
 
     @staticmethod
-    def get_float(
-        input_val: Optional[str | float], set_default: Optional[bool] = True
-    ) -> Optional[float]:
+    def get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
         """
-        Converts a string to a float value.
+        Converts a string to an enum value.
 
         Args:
             input_val (Optional[str]): Input string.
-            set_default (bool): Whether to set a default value.
+
+        Returns:
+            SurtaxFactorEnum: Corresponding enum value. Default is SurtaxFactorEnum.NORMAAL.
+        """
+        _val = SectionConfigHelper.get_enum_without_default(input_val)
+        return _val if _val is not None else SurtaxFactorEnum.NORMAAL
+
+    @staticmethod
+    def get_float_without_default(
+        input_val: Optional[str | float],
+    ) -> Optional[float]:
+        """
+        Converts a string to a float value or None.
+
+        Args:
+            input_val (Optional[str | float]): Input string or float.
 
         Returns:
             Optional[float]: Corresponding float value or None.
         """
         if input_val is not None:
             return float(input_val)
-        return math.nan if set_default else None
+        return None
 
     @staticmethod
-    def get_bool(
-        input_val: Optional[str | bool], set_default: Optional[bool] = True
-    ) -> Optional[bool]:
+    def get_float(input_val: Optional[str | float]) -> float:
         """
-        Converts a string to a boolean value.
+        Converts a string to a float value.
 
         Args:
-            input_val (Optional[str]): Input string.
-            set_default (bool): Whether to set a default value.
+            input_val (Optional[str | float]): Input string or float.
+
+        Returns:
+            float: Corresponding float value. Default is math.nan.
+        """
+        _val = SectionConfigHelper.get_float_without_default(input_val)
+        return _val if _val is not None else math.nan
+
+    @staticmethod
+    def get_bool_without_default(
+        input_val: Optional[str | bool],
+    ) -> Optional[bool]:
+        """
+        Converts a string to a boolean value or None.
+
+        Args:
+            input_val (Optional[str | bool]): Input string or boolean.
 
         Returns:
             Optional[bool]: Corresponding boolean value or None.
@@ -81,4 +117,18 @@ class SectionConfigHelper:
             if isinstance(input_val, bool):
                 return input_val
             return input_val.lower() == "true"
-        return False if set_default else None
+        return None
+
+    @staticmethod
+    def get_bool(input_val: Optional[str | bool]) -> bool:
+        """
+        Converts a string to a boolean value.
+
+        Args:
+            input_val (Optional[str | bool]): Input string or boolean.
+
+        Returns:
+            bool: Corresponding boolean value. Default is False.
+        """
+        _val = SectionConfigHelper.get_bool_without_default(input_val)
+        return _val if _val is not None else False
