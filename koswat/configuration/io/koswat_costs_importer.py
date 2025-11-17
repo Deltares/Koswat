@@ -3,9 +3,9 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from koswat.configuration.io.ini.koswat_costs_ini_fom import (
+from koswat.configuration.io.json.koswat_costs_json_fom import (
     ConstructionCostsSectionFom,
-    KoswatCostsIniFom,
+    KoswatCostsJsonFom,
 )
 from koswat.configuration.settings.costs.construction_costs_settings import (
     ConstructionFactors,
@@ -17,7 +17,7 @@ from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
     SurtaxCostsSettings,
 )
-from koswat.core.io.ini.koswat_ini_reader import KoswatIniReader
+from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 
 
@@ -27,10 +27,10 @@ class KoswatCostsImporter(KoswatImporterProtocol):
     def __init__(self) -> None:
         self.include_taxes = None
 
-    def _get_costs_fom(self, ini_file: Path) -> KoswatCostsIniFom:
-        reader = KoswatIniReader()
-        reader.koswat_ini_fom_type = KoswatCostsIniFom
-        return reader.read(ini_file)
+    def _get_costs_fom(self, config_file: Path) -> KoswatCostsJsonFom:
+        reader = KoswatJsonReader()
+        _json_fom = reader.read(config_file)
+        return KoswatCostsJsonFom.from_config(_json_fom.content)
 
     def import_from(self, from_path: Path) -> KoswatCostsSettings:
         if not from_path.is_file():
@@ -56,7 +56,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         return _costs_settings
 
     def _get_dike_profile_costs_settings(
-        self, fom_costs: KoswatCostsIniFom
+        self, fom_costs: KoswatCostsJsonFom
     ) -> DikeProfileCostsSettings:
         _settings = DikeProfileCostsSettings()
         _settings.added_layer_grass_m3 = (
@@ -92,7 +92,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         return _settings
 
     def _get_infrastructure_costs_settings(
-        self, fom_costs: KoswatCostsIniFom
+        self, fom_costs: KoswatCostsJsonFom
     ) -> InfrastructureCostsSettings:
         _settings = InfrastructureCostsSettings()
         _settings.removing_roads_klasse2 = (
@@ -127,7 +127,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         )
         return _settings
 
-    def _get_surtax_costs(self, fom_costs: KoswatCostsIniFom) -> SurtaxCostsSettings:
+    def _get_surtax_costs(self, fom_costs: KoswatCostsJsonFom) -> SurtaxCostsSettings:
         _settings = SurtaxCostsSettings()
         _fom_settings = (
             fom_costs.surtax_costs_incl_tax_section
@@ -149,7 +149,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         return _settings
 
     def _get_construction_costs(
-        self, fom_costs: KoswatCostsIniFom
+        self, fom_costs: KoswatCostsJsonFom
     ) -> ConstructionCostsSettings:
         def _construction_fom_to_construction_factor(
             ini_fom: ConstructionCostsSectionFom,

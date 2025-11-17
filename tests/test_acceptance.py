@@ -103,11 +103,11 @@ class TestAcceptance:
         _koswat_general_settings = KoswatGeneralJsonFom.from_config(_json.content)
 
         # It is easier returning the costs directly than the FOM,
-        # as there's no direct converter from `KoswatCostsIniFom` to `KoswatCosts`
+        # as there's no direct converter from `KoswatCostsJsonFom` to `KoswatCosts`
         _costs_importer = KoswatCostsImporter()
         _costs_importer.include_taxes = True
         _koswat_costs = _costs_importer.import_from(
-            test_data_acceptance.joinpath("koswat_costs.ini")
+            test_data_acceptance.joinpath("koswat_costs.json")
         )
 
         yield lambda: (_koswat_general_settings, _koswat_costs)
