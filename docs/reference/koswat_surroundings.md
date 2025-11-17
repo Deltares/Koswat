@@ -12,7 +12,7 @@ We categorize these structures in the following two types:
 |:--:|
 |Image 1. Surroundings representation|
 
-To define said surroundings we make use of `.csv` files, each file for a specific type of surrounding that needs to be "enabled" in the `koswat_general.ini` settings file.
+To define said surroundings we make use of `.csv` files, each file for a specific type of surrounding that needs to be "enabled" in the `koswat_general.json` settings file.
 
 In addition, surroundings can be defined for the inside or the outside of a dike. At the current `Koswat` version (unreleased `v0.15.0`) we __only support__ surroundings in the inside of a dike ( `binnendijks`).
 
@@ -54,9 +54,9 @@ As reminder, at the moment we only support 'inside the dike's' surroundings.
 
 Infrastructures are mostly "roads". Contrary to the [obstacles](#obstacles) these infrastructures do not become a boundary for a reinforcement and they will simply be either displaced or repaired when applying a reinforcement requires their space. When this occurs, it is reflected as additional costs for the given type of reinforcement at that location. In short, these costs are calculated based on:
 
-- The width of the infrastructure (taken from the `Koswat_general.ini` settings),
+- The width of the infrastructure (taken from the `Koswat_general.json` settings),
 - The length of the infrastructure at that location (the values in the columns `afst_{x}m`),
-- The required technique (repair, displace, nothing) for the type of infrastructure (also from `koswat_general.ini` settings) and its related costs (`koswat_costs.json`).
+- The required technique (repair, displace, nothing) for the type of infrastructure (also from `koswat_general.json` settings) and its related costs (`koswat_costs.json`).
 
 With the above values we know what's the __affected area__ of an infrastructure when a reinforced profile needs to be applied and therefore can estimate their costs.
 

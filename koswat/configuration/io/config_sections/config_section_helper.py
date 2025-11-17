@@ -10,7 +10,9 @@ class SectionConfigHelper:
     """
 
     @staticmethod
-    def get_string(input_val: Optional[str], set_default: bool) -> Optional[str]:
+    def get_string(
+        input_val: Optional[str], set_default: Optional[bool] = True
+    ) -> Optional[str]:
         """
         Returns the input string or a default value.
 
@@ -27,7 +29,7 @@ class SectionConfigHelper:
 
     @staticmethod
     def get_enum(
-        input_val: Optional[str], set_default: bool
+        input_val: Optional[str], set_default: Optional[bool] = True
     ) -> Optional[SurtaxFactorEnum]:
         """
         Converts a string to an enum value.
@@ -62,7 +64,9 @@ class SectionConfigHelper:
         return math.nan if set_default else None
 
     @staticmethod
-    def get_bool(input_val: Optional[str | bool], set_default: bool) -> Optional[bool]:
+    def get_bool(
+        input_val: Optional[str | bool], set_default: Optional[bool] = True
+    ) -> Optional[bool]:
         """
         Converts a string to a boolean value.
 

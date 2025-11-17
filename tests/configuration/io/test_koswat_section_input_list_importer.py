@@ -28,7 +28,7 @@ class TestKoswatDikeSectionInputListImporter:
 
     def test_import_from_with_no_selection_imports_nothing(self):
         # 1. Define test data.
-        _json_folder = test_data_acceptance.joinpath("json", "dikesection_input")
+        _json_folder = test_data_acceptance.joinpath("dike_section_input")
         _importer = KoswatDikeSectionInputListImporter()
 
         # 2. Run test.
@@ -39,7 +39,7 @@ class TestKoswatDikeSectionInputListImporter:
 
     def test_import_from_with_selection_imports_selected(self):
         # 1. Define test data.
-        _json_folder = test_data_acceptance.joinpath("json", "dikesection_input")
+        _json_folder = test_data_acceptance.joinpath("dike_section_input")
         _dike_selection = ["10-1-1-A-1-A", "10-1-2-A-1-A"]
         _expected_count = len(_dike_selection)
         _importer = KoswatDikeSectionInputListImporter(dike_selection=_dike_selection)

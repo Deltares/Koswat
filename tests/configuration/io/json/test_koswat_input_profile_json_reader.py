@@ -18,7 +18,7 @@ class TestKoswatInputProfileJsonReader:
         # 1. Define test data
         _reader = KoswatDikeSectionInputJsonReader()
         _test_file = test_data_acceptance.joinpath(
-            "json", "dikesection_input", "10-1-1-A-1-A.json"
+            "dike_section_input", "10-1-1-A-1-A.json"
         )
         assert _test_file.is_file()
 
