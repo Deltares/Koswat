@@ -3,16 +3,18 @@ from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
 
-from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import KoswatSimpleSurroundingsCsvReader
+from koswat.configuration.io.config_sections import (
+    InfrastructureSectionFom,
+    SurroundingsSectionFom,
+)
+from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import (
+    KoswatSimpleSurroundingsCsvReader,
+)
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
     KoswatSurroundingsCsvReader,
-)
-from koswat.configuration.io.ini.koswat_general_ini_fom import (
-    InfrastructureSectionFom,
-    SurroundingsSectionFom,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -71,7 +73,9 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             _surroundings_wrapper_builder = SurroundingsWrapperBuilder(
                 surroundings_section_fom=self.surroundings_section_fom,
                 infrastructure_section_fom=self.infrastructure_section_fom,
-                surroundings_csv_fom_collection=self._csv_dir_to_fom(_csv_dir, self.surroundings_section_fom.custom_obstacles),
+                surroundings_csv_fom_collection=self._csv_dir_to_fom(
+                    _csv_dir, self.surroundings_section_fom.custom_obstacles
+                ),
                 location_shp_fom=None,
             )
             for _location in _location_list:
@@ -94,13 +98,11 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         _reader = KoswatSurroundingsCsvReader
         if surrounding_type.surrounding_type == SurroundingsObstacle:
             _reader = KoswatSimpleSurroundingsCsvReader
-            
+
         return _reader().read(csv_file)
 
     def _csv_dir_to_fom(
-        self,
-        csv_dir: Path,
-        custom_obstacles: list[str]
+        self, csv_dir: Path, custom_obstacles: list[str]
     ) -> dict[str, KoswatSurroundingsCsvFom]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
@@ -115,19 +117,24 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         """
         _imported_csv_foms = {}
         _traject_name = csv_dir.stem
-        for _csv_file in csv_dir.glob("*.csv"):      
-            # Map CSV file name to surrounding type.      
+        for _csv_file in csv_dir.glob("*.csv"):
+            # Map CSV file name to surrounding type.
             _surrounding_type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
             _surrounding_type = SurroundingsEnum.translate(_surrounding_type_name)
-            if _surrounding_type == SurroundingsEnum.CUSTOM and _surrounding_type_name not in custom_obstacles:
+            if (
+                _surrounding_type == SurroundingsEnum.CUSTOM
+                and _surrounding_type_name not in custom_obstacles
+            ):
                 # In case of custom surrounding types, only import those that are defined in the ini file.
-                logging.info(f"Skipping custom surrounding type {_surrounding_type_name} as it is not defined in the ini file.")
+                logging.info(
+                    f"Skipping custom surrounding type {_surrounding_type_name} as it is not defined in the ini file."
+                )
                 continue
-            
+
             # Get FOM from CSV file.
             _csv_fom = self._csv_file_to_fom(_csv_file, _surrounding_type)
             if _surrounding_type.name in _imported_csv_foms:
-                # If already imported the same type, then merge with existing FOM. 
+                # If already imported the same type, then merge with existing FOM.
                 # Specially designed to handle custom surrounding types split over multiple files.
                 _imported_csv_foms[_surrounding_type.name].merge(_csv_fom)
             else:

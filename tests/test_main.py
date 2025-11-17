@@ -28,7 +28,7 @@ class TestMain:
         Keep it in mind when updating the reference data!
         """
         # 1. Define test data.
-        _valid_path = test_data.joinpath("acceptance", "koswat_general.ini")
+        _valid_path = test_data.joinpath("acceptance", "koswat_general.json")
         assert _valid_path.is_file()
         # Ensure we have a clean results dir.
         _results_dir = test_results.joinpath("acceptance")
