@@ -92,6 +92,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _dike_selected_sections,
         )
         _surroundings_fom = self._import_surroundings_wrapper(
+            _general_settings.analysis_section.surroundings_database_dir,
             _general_settings.surroundings_section,
             _general_settings.infrastructuur_section,
             _general_settings.analysis_section.dike_section_location_shp_file,
@@ -319,12 +320,14 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
 
     def _import_surroundings_wrapper(
         self,
+        surroundings_database_dir: Path,
         surroundings_section: SurroundingsSectionFom,
         infrastructure_section: InfrastructureSectionFom,
         traject_shp_file: Path,
         dike_selections: list[str],
     ) -> list[SurroundingsWrapper]:
         _builder = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=surroundings_database_dir,
             infrastructure_section_fom=infrastructure_section,
             traject_loc_shp_file=traject_shp_file,
             selected_locations=dike_selections,

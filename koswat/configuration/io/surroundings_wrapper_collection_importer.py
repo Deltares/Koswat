@@ -39,6 +39,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
     the protocol's signatures it inherits from the `BuilderProtocol` instead.
     """
 
+    surroundings_database_dir: Path
     surroundings_section_fom: SurroundingsSectionFom
     infrastructure_section_fom: InfrastructureSectionFom
 
@@ -60,9 +61,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         ):
             # Map SHP traject name to CSV directory name.
             _csv_traject = _shp_traject.replace("-", "_").strip()
-            _csv_dir = self.surroundings_section_fom.surroundings_database_dir.joinpath(
-                _csv_traject
-            )
+            _csv_dir = self.surroundings_database_dir.joinpath(_csv_traject)
             if not _csv_dir.is_dir():
                 logging.warning(
                     "No surroundings files found for traject %s", _shp_traject

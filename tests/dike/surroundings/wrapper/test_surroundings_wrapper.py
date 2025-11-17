@@ -1,4 +1,5 @@
 import shutil
+from pathlib import Path
 from typing import Iterator
 
 import pytest
@@ -59,7 +60,6 @@ class TestSurroundingsWrapper:
 
         # Generate surroundings section File Object Model.
         _surroundings_settings = SurroundingsSectionFom(
-            surroundings_database_dir=_temp_dir.parent,
             construction_distance=float("nan"),
             construction_buffer=float("nan"),
             waterside=False,
@@ -70,7 +70,7 @@ class TestSurroundingsWrapper:
 
         # Generate Infrastructures section file model
         _infrastructure_settings = InfrastructureSectionFom(
-            infrastructure=True,
+            active=True,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
             buffer_waterside=0.24,
@@ -83,6 +83,7 @@ class TestSurroundingsWrapper:
 
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=_temp_dir.parent,
             infrastructure_section_fom=_infrastructure_settings,
             surroundings_section_fom=_surroundings_settings,
             selected_locations=["10-1-3-C-1-D-1"],
