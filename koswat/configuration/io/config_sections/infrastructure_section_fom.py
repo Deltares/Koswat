@@ -13,7 +13,7 @@ from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 @dataclass
 class InfrastructureSectionFom(KoswatJsonFomProtocol):
-    infrastructure: bool
+    active: bool
     surtax_factor_roads: SurtaxFactorEnum
     infrastructure_costs_0dh: InfraCostsEnum
     buffer_waterside: float
@@ -26,7 +26,7 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
     @classmethod
     def from_config(cls, input_config: dict[str, Any]) -> "InfrastructureSectionFom":
         return cls(
-            infrastructure=SectionConfigHelper.get_bool(input_config["infrastructuur"]),
+            active=SectionConfigHelper.get_bool(input_config["actief"]),
             surtax_factor_roads=SurtaxFactorEnum[
                 input_config["opslagfactor_wegen"].upper()
             ],

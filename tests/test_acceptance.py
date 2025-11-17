@@ -157,15 +157,15 @@ class TestAcceptance:
         # Generate surroundings section File Object Model.
         _koswat_general_settings, _koswat_costs = koswat_acceptance_settings()
         _surroundings_settings = _koswat_general_settings.surroundings_section
-        _surroundings_settings.surroundings_database_dir = _temp_dir.parent
         _surroundings_settings.buildings = _include_obstacles
 
         # Generate Infrastructures section file model
         _infrastructure_settings = _koswat_general_settings.infrastructuur_section
-        _infrastructure_settings.infrastructure = _include_infras
+        _infrastructure_settings.active = _include_infras
 
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=_temp_dir.parent,
             infrastructure_section_fom=_infrastructure_settings,
             surroundings_section_fom=_surroundings_settings,
             selected_locations=[],
@@ -301,7 +301,6 @@ class TestAcceptance:
         _surroundings_section = SurroundingsSectionFom(
             construction_distance=50,
             construction_buffer=10,
-            surroundings_database_dir=_test_dir,
             waterside=False,
             buildings=True,
             railways=False,
@@ -309,7 +308,7 @@ class TestAcceptance:
         )
 
         _infrastructure_section = InfrastructureSectionFom(
-            infrastructure=False,
+            active=False,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
             buffer_waterside=0,
@@ -321,6 +320,7 @@ class TestAcceptance:
         )
 
         _surroundings = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=_test_dir,
             infrastructure_section_fom=_infrastructure_section,
             surroundings_section_fom=_surroundings_section,
             traject_loc_shp_file=_shp_trajects_file,
