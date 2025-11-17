@@ -54,7 +54,7 @@ class TestKoswatGeneralJsonFom:
         assert _config_fom.analysis_section.surroundings_database_dir == Path(
             "c:\\fake_drive\\Invoer\\Omgevingsanalyses"
         )
-        assert _config_fom.analysis_section.costs_ini_file == Path(
+        assert _config_fom.analysis_section.costs_json_file == Path(
             "c:\\fake_drive\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
         )
         assert _config_fom.analysis_section.analysis_output_dir == Path(

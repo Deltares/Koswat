@@ -16,12 +16,18 @@ class DikeProfileSectionFom(ConfigSectionFomProtocol, KoswatInputProfileBase):
     ) -> "DikeProfileSectionFom":
         _section = cls()
 
-        _section.dike_section = SectionConfigHelper.get_string(
-            input_dict.get("dijkvak", None), set_defaults
-        )
+        _section_name = input_dict.get("dijkvak", None)
+        if set_defaults:
+            _section.dike_section = SectionConfigHelper.get_string(_section_name)
+        else:
+            _section.dike_section = SectionConfigHelper.get_string_without_default(
+                _section_name
+            )
 
         def _get_float(input_val: Optional[str]) -> float:
-            return SectionConfigHelper.get_float(input_val, set_defaults)
+            if set_defaults:
+                return SectionConfigHelper.get_float(input_val)
+            return SectionConfigHelper.get_float_without_default(input_val)
 
         _section.waterside_ground_level = _get_float(
             input_dict.get("buiten_maaiveld", None)

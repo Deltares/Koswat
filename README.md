@@ -108,7 +108,7 @@ python -m koswat --help
 Which will result in something like this:
 ```console
 {date and time} - [koswat_handler.py:119] - root - INFO - Initialized Koswat.                                                                                             
-{date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing INI configuration from /test_data/koswat_general.json                                
+{date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing CSV configuration from /test_data/koswat_general.json                                     
 {date and time} - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from /test_data/koswat_costs.json.                                                
 {date and time} - [koswat_run_settings_importer.py:100] - root - INFO - Importing INI configuration completed.                                                            
 {date and time} - [koswat_run_settings_importer.py:103] - root - INFO - Mapping data to Koswat Settings

@@ -4,8 +4,8 @@
         "Dijksecties_Selectie": "tests/test_data/acceptance/koswat_dike_selection.txt",
         "Dijksectie_Invoer": "tests/test_data/section_input/dike_section_input",
         "Scenario_Invoer": "tests/test_data/acceptance/scenarios",
+        "Eenheidsprijzen": "tests/test_data/acceptance/koswat_costs.json",
         "Omgevingsdatabases": "tests/test_data/acceptance/surroundings_analysis",
-        "Eenheidsprijzen": "tests/test_data/acceptance/koswat_costs.ini",
         "Uitvoerfolder": "tests/test_results/section_input/results_output",
         "BTW": true
     },

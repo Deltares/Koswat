@@ -14,8 +14,8 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
     dike_selection_txt_file: Path
     input_profiles_json_dir: Path
     scenarios_ini_dir: Path
+    costs_json_file: Path
     surroundings_database_dir: Path
-    costs_ini_file: Path
     analysis_output_dir: Path
     include_taxes: bool
 
@@ -26,8 +26,8 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
             dike_selection_txt_file=Path(input_config["dijksecties_selectie"]),
             input_profiles_json_dir=Path(input_config["dijksectie_invoer"]),
             scenarios_ini_dir=Path(input_config["scenario_invoer"]),
+            costs_json_file=Path(input_config["eenheidsprijzen"]),
             surroundings_database_dir=Path(input_config["omgevingsdatabases"]),
-            costs_ini_file=Path(input_config["eenheidsprijzen"]),
             analysis_output_dir=Path(input_config["uitvoerfolder"]),
             include_taxes=SectionConfigHelper.get_bool(input_config["btw"]),
         )
