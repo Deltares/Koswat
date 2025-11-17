@@ -67,7 +67,7 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def import_from(self, from_path: Path) -> KoswatRunSettings:
         # First get the FOM
-        logging.info("Importing INI configuration from %s", from_path)
+        logging.info("Importing CSV configuration from %s", from_path)
         _general_settings = self._import_general_settings(from_path)
         _output_dir = _general_settings.analysis_section.analysis_output_dir
 
@@ -99,7 +99,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             [_s.scenario_dike_section for _s in _scenario_fom_list],
         )
 
-        logging.info("Importing INI configuration completed.")
+        logging.info("Importing CSV configuration completed.")
 
         # Then convert to DOM
         logging.info("Mapping data to Koswat Settings")
