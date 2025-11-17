@@ -4,11 +4,11 @@
 When using `Koswat` as a package you can run it directly from the command line as follows:
 
 ```cli
-python -m koswat --input_file path\\to\\your\\koswat.ini --log_output path\\to\\your\\output\\dir
+python -m koswat --input_file path\\to\\your\\koswat.json --log_output path\\to\\your\\output\\dir
 ```
 The arguments are:
 
-- `--input_file` (required): Absolute path to the location of your general `koswat.ini` file.
+- `--input_file` (required): Absolute path to the location of your general `koswat.json` file.
 - `--log_output` (optional): Absolute path to the location of where the `koswat.log` will be written. If not specified it will be written at the root of the execution directory.
 
 It is also possible to check all the above possibilities via the `--help` argument in the command line:

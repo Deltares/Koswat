@@ -124,9 +124,9 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                 _surrounding_type == SurroundingsEnum.CUSTOM
                 and _surrounding_type_name not in custom_obstacles
             ):
-                # In case of custom surrounding types, only import those that are defined in the ini file.
+                # In case of custom surrounding types, only import those that are defined in the config file.
                 logging.info(
-                    f"Skipping custom surrounding type {_surrounding_type_name} as it is not defined in the ini file."
+                    f"Skipping custom surrounding type {_surrounding_type_name} as it is not defined in the config file."
                 )
                 continue
 

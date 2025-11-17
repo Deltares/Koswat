@@ -10,6 +10,7 @@ from koswat.configuration.io.config_sections import (
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
 )
+from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.json.koswat_scenario_list_json_dir_reader import (
     KoswatSectionScenarioListJsonDirReader,
 )
@@ -84,11 +85,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
 
         _dike_costs = self._import_dike_costs(
-            ini_file=_general_settings.analysis_section.costs_json_file,
+            config_file=_general_settings.analysis_section.costs_json_file,
             include_taxes=_general_settings.analysis_section.include_taxes,
         )
         _scenario_fom_list = self._import_scenario_fom_list(
-            _general_settings.analysis_section.scenarios_ini_dir,
+            _general_settings.analysis_section.scenarios_json_dir,
             _dike_selected_sections,
         )
         _surroundings_fom = self._import_surroundings_wrapper(
@@ -303,14 +304,14 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         return _reader.read(txt_file).dike_sections
 
     def _import_dike_costs(
-        self, ini_file: Path, include_taxes: bool
+        self, config_file: Path, include_taxes: bool
     ) -> KoswatCostsSettings:
-        if not ini_file.is_file():
-            logging.error("Dike costs ini file not found at %s", ini_file)
+        if not config_file.is_file():
+            logging.error("Dike costs config file not found at %s", config_file)
             return None
         _importer = KoswatCostsImporter()
         _importer.include_taxes = include_taxes
-        return _importer.import_from(ini_file)
+        return _importer.import_from(config_file)
 
     def _import_scenario_fom_list(
         self, scenario_dir: Path, dike_selections: list[str]

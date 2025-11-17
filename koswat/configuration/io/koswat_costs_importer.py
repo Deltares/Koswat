@@ -34,7 +34,7 @@ class KoswatCostsImporter(KoswatImporterProtocol):
 
     def import_from(self, from_path: Path) -> KoswatCostsSettings:
         if not from_path.is_file():
-            _error = "Costs ini file not found at {}.".format(from_path)
+            _error = "Costs json file not found at {}.".format(from_path)
             raise FileNotFoundError(_error)
         if self.include_taxes is None:
             raise ValueError("A boolean value is expected for `include_taxes`.")
@@ -152,14 +152,14 @@ class KoswatCostsImporter(KoswatImporterProtocol):
         self, fom_costs: KoswatCostsJsonFom
     ) -> ConstructionCostsSettings:
         def _construction_fom_to_construction_factor(
-            ini_fom: ConstructionCostsSectionFom,
+            config_fom: ConstructionCostsSectionFom,
         ) -> ConstructionFactors:
             _construction_factors = ConstructionFactors()
-            _construction_factors.c_factor = ini_fom.c_factor
-            _construction_factors.d_factor = ini_fom.d_factor
-            _construction_factors.z_factor = ini_fom.z_factor
-            _construction_factors.f_factor = ini_fom.f_factor
-            _construction_factors.g_factor = ini_fom.g_factor
+            _construction_factors.c_factor = config_fom.c_factor
+            _construction_factors.d_factor = config_fom.d_factor
+            _construction_factors.z_factor = config_fom.z_factor
+            _construction_factors.f_factor = config_fom.f_factor
+            _construction_factors.g_factor = config_fom.g_factor
             return _construction_factors
 
         _settings = ConstructionCostsSettings()

@@ -337,7 +337,7 @@ class TestAcceptance:
         ).build()
 
         # IMPORTANT!!!
-        # These are not (entirely) the values from the acceptance `.ini` files!
+        # These are not (entirely) the values from the acceptance `.json` files!
         _run_settings = KoswatRunScenarioSettings(
             scenario=scenario_case,
             reinforcement_settings=_reinforcement_settings,

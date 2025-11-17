@@ -15,7 +15,7 @@ class TestKoswatCostsImporter:
     def test_import_from_without_path_raises_error(self):
         # 1. Define test data
         _importer = KoswatCostsImporter()
-        _expected_err = "Costs ini file not found at {}.".format(test_data)
+        _expected_err = "Costs json file not found at {}.".format(test_data)
         assert not test_data.is_file()
 
         # 2. Run test.

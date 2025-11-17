@@ -20,7 +20,7 @@ class SectionScenarioFom(KoswatJsonFomProtocol):
     @classmethod
     def from_config(cls, input_config: dict[str, Any]) -> SectionScenarioFom:
         _section = cls()
-        # Retrieves the values as written (and expected) in the ini file.
+        # Retrieves the values as written (and expected) in the config file.
         _section.scenario_name = ""
         _section.d_h = SectionConfigHelper.get_float(input_config["dh"])
         _section.d_s = SectionConfigHelper.get_float(input_config["ds"])

@@ -73,7 +73,7 @@ class TestKoswatRunSettingsImporter:
         assert _result == []
 
     @pytest.mark.parametrize("include_taxes", [(True), (False)])
-    def test__import_dike_costs_without_ini_file(
+    def test__import_dike_costs_without_json_file(
         self, include_taxes: bool, empty_dir: Path
     ):
         # 1. Define test data.

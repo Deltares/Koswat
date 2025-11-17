@@ -8,7 +8,7 @@ First of all, let's write the workflow as a pipeline:
 
 ```
 CLI call 
--> Import of ini files 
+-> Import of config files 
 -> Run scenarios 
     -> Generate reinforcement profiles 
     -> Calculate reinforcement costs 
@@ -25,7 +25,7 @@ CLI call
 
 This step is very straightforward, the command line will run the method `run_analysis`, which will initiate the `KoswatHandler` and start an analysis.
 
-## Import of ini files
+## Import of config files
 This step comprehends of several more steps. Usually, for each of the file imports an internal workflow will happen:
 
 `File -> Import -> File Object Model -> Build -> Data Object Model`
