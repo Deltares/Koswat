@@ -98,11 +98,11 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         self,
     ) -> InfrastructureSurroundingsWrapper:
         _infra_wrapper = InfrastructureSurroundingsWrapper(
-            infrastructures_considered=self.infrastructure_section_fom.infrastructure,
+            infrastructures_considered=self.infrastructure_section_fom.active,
             surtax_cost_factor=self.infrastructure_section_fom.surtax_factor_roads,
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrastructure_costs_0dh,
         )
-        if self.infrastructure_section_fom.infrastructure:
+        if self.infrastructure_section_fom.active:
             _infra_wrapper.roads_class_2_polderside = (
                 self._get_surroundings_infrastructure(
                     SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE

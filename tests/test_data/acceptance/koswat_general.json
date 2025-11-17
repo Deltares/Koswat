@@ -1,16 +1,20 @@
 {
     "Analyse": {
-        "Dijksecties_Selectie": "tests/test_data/acceptance/koswat_dike_selection.txt",
         "Dijksectie_Ligging": "tests/test_data/acceptance/shp/dike_locations.shp",
+        "Dijksecties_Selectie": "tests/test_data/acceptance/koswat_dike_selection.txt",
         "Dijksectie_Invoer": "tests/test_data/acceptance/dike_section_input",
         "Scenario_Invoer": "tests/test_data/acceptance/scenarios",
         "Eenheidsprijzen": "tests/test_data/acceptance/koswat_costs.json",
+        "Omgevingsdatabases": "tests/test_data/acceptance/surroundings_analysis",
         "Uitvoerfolder": "tests/test_results/acceptance/results_output",
         "BTW": true
     },
     "Dijkprofiel": {
         "Dikte_Graslaag": 0.3,
-        "Dikte_Kleilaag": 0.5
+        "Dikte_Kleilaag": 0.5,
+        "FactorZetting" : 1.2,
+        "Grondprijs_Bebouwd": 200,
+        "Grondprijs_Onbebouwd": 10
     },
     "Grondmaatregel": {
         "Actief": true,
@@ -54,13 +58,12 @@
         "Max_Lengte_Kistdam": 25
     },
     "Omgeving": {
-        "Omgevingsdatabases": "tests/test_data/acceptance/surroundings_analysis",
         "ConstructieAfstand": 50,
         "ConstructieOvergang": 10,
         "OmgevingTypes": ["Bebouwing", "Water"]
     },
     "Infrastructuur": {
-        "Infrastructuur": false,
+        "Actief": false,
         "Opslagfactor_Wegen": "Normaal",
         "Infrakosten_0dh": "Geen",
         "Buffer_buitendijks": 0,

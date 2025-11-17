@@ -38,17 +38,21 @@ class TestKoswatGeneralJsonFom:
         # Analysis section
         assert isinstance(_config_fom.analysis_section, AnalysisSectionFom)
         # These paths are not included in the test dir so None will be mapped in the FOM.
-        assert _config_fom.analysis_section.dike_selection_txt_file == Path(
-            "c:\\fake_drive\\Invoer\\ini files\\DijksectieSelectie.txt"
-        )
         assert _config_fom.analysis_section.dike_section_location_shp_file == Path(
             "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
+        )
+        assert _config_fom.analysis_section.dike_selection_txt_file == Path(
+            "c:\\fake_drive\\Invoer\\ini files\\DijksectieSelectie.txt"
         )
         assert _config_fom.analysis_section.input_profiles_json_dir == Path(
             "c:\\fake_drive\\Invoer\\dike_section_input"
         )
         assert _config_fom.analysis_section.scenarios_ini_dir == Path(
             "c:\\fake_drive\\Invoer\\Scenarios"
+        )
+        # No databaes loaded because the path is not included in the test data.
+        assert _config_fom.analysis_section.surroundings_database_dir == Path(
+            "c:\\fake_drive\\Invoer\\Omgevingsanalyses"
         )
         assert _config_fom.analysis_section.costs_json_file == Path(
             "c:\\fake_drive\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
@@ -150,10 +154,6 @@ class TestKoswatGeneralJsonFom:
 
         # Omgeving section
         assert isinstance(_config_fom.surroundings_section, SurroundingsSectionFom)
-        # No databaes loaded because the path is not included in the test data.
-        assert _config_fom.surroundings_section.surroundings_database_dir == Path(
-            "c:\\fake_drive\\Invoer\\Omgevingsanalyses"
-        )
         assert _config_fom.surroundings_section.construction_distance == 50
         assert _config_fom.surroundings_section.construction_buffer == 10
         assert _config_fom.surroundings_section.waterside is False
@@ -163,7 +163,7 @@ class TestKoswatGeneralJsonFom:
 
         # Infrastructuur section
         assert isinstance(_config_fom.infrastructuur_section, InfrastructureSectionFom)
-        assert _config_fom.infrastructuur_section.infrastructure == False
+        assert _config_fom.infrastructuur_section.active == False
         assert (
             _config_fom.infrastructuur_section.surtax_factor_roads
             == SurtaxFactorEnum.NORMAAL

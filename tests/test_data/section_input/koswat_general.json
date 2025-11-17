@@ -1,10 +1,11 @@
 {
     "Analyse": {
-        "Dijksecties_Selectie": "tests/test_data/acceptance/koswat_dike_selection.txt",
         "Dijksectie_Ligging": "tests/test_data/acceptance/shp/dike_locations.shp",
+        "Dijksecties_Selectie": "tests/test_data/acceptance/koswat_dike_selection.txt",
         "Dijksectie_Invoer": "tests/test_data/section_input/dike_section_input",
         "Scenario_Invoer": "tests/test_data/acceptance/scenarios",
         "Eenheidsprijzen": "tests/test_data/acceptance/koswat_costs.json",
+        "Omgevingsdatabases": "tests/test_data/acceptance/surroundings_analysis",
         "Uitvoerfolder": "tests/test_results/section_input/results_output",
         "BTW": true
     },
@@ -70,7 +71,6 @@
         "Max_Lengte_Kistdam": 25
     },
     "Omgeving": {
-        "Omgevingsdatabases": "tests/test_data/acceptance/surroundings_analysis",
         "ConstructieAfstand": 50,
         "ConstructieOvergang": 10,
         "OmgevingTypes": [
@@ -78,7 +78,7 @@
         ]
     },
     "Infrastructuur": {
-        "Infrastructuur": false,
+        "Actief": false,
         "Opslagfactor_Wegen": "Normaal",
         "Infrakosten_0dh": "Geen",
         "Buffer_buitendijks": 0,

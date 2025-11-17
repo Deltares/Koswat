@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Any
 
 from koswat.configuration.io.config_sections.config_section_helper import (
@@ -10,7 +9,6 @@ from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 @dataclass
 class SurroundingsSectionFom(KoswatJsonFomProtocol):
-    surroundings_database_dir: Path
     construction_distance: float
     construction_buffer: float
     waterside: bool
@@ -32,7 +30,6 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             return False
 
         _section = cls(
-            surroundings_database_dir=Path(input_config["omgevingsdatabases"]),
             construction_distance=SectionConfigHelper.get_float(
                 input_config["constructieafstand"]
             ),
