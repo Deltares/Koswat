@@ -12,9 +12,10 @@
 ::: koswat.core.io.csv.koswat_csv_reader
 ::: koswat.core.io.csv.koswat_csv_writer
 
-## INI module
-::: koswat.core.io.ini.koswat_ini_fom_protocol
-::: koswat.core.io.ini.koswat_ini_reader
+## JSON module
+::: koswat.core.io.json.koswat_json_fom_protocol
+::: koswat.core.io.json.koswat_json_fom
+::: koswat.core.io.json.koswat_json_reader
 
 ## TXT module
 ::: koswat.core.io.txt.koswat_txt_fom_protocol

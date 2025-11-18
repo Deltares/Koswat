@@ -13,7 +13,7 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
     dike_section_location_shp_file: Path
     dike_selection_txt_file: Path
     input_profiles_json_dir: Path
-    scenarios_ini_dir: Path
+    scenarios_json_dir: Path
     costs_json_file: Path
     surroundings_database_dir: Path
     analysis_output_dir: Path
@@ -25,7 +25,7 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
             dike_section_location_shp_file=Path(input_config["dijksectie_ligging"]),
             dike_selection_txt_file=Path(input_config["dijksecties_selectie"]),
             input_profiles_json_dir=Path(input_config["dijksectie_invoer"]),
-            scenarios_ini_dir=Path(input_config["scenario_invoer"]),
+            scenarios_json_dir=Path(input_config["scenario_invoer"]),
             costs_json_file=Path(input_config["eenheidsprijzen"]),
             surroundings_database_dir=Path(input_config["omgevingsdatabases"]),
             analysis_output_dir=Path(input_config["uitvoerfolder"]),

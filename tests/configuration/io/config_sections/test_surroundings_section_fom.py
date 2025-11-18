@@ -1,9 +1,7 @@
-from pathlib import Path
-
 from koswat.configuration.io.config_sections.surroundings_section_fom import (
     SurroundingsSectionFom,
 )
-from koswat.core.io.ini.koswat_ini_fom_protocol import KoswatIniFomProtocol
+from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 
 class TestSurroundingsSectionFom:
@@ -19,7 +17,7 @@ class TestSurroundingsSectionFom:
         )
 
         # 2. Verify expectations.
-        assert isinstance(_surroundings_section_fom, KoswatIniFomProtocol)
+        assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
@@ -41,7 +39,7 @@ class TestSurroundingsSectionFom:
         )
 
         # 3. Verify expectations.
-        assert isinstance(_surroundings_section_fom, KoswatIniFomProtocol)
+        assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is False
@@ -71,7 +69,7 @@ class TestSurroundingsSectionFom:
         )
 
         # 3. Verify expectations.
-        assert isinstance(_surroundings_section_fom, KoswatIniFomProtocol)
+        assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True

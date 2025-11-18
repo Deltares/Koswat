@@ -14,7 +14,7 @@ Currently the detailed documentation is only reachable when building it locally,
 
 ## Features
 
-- Dike profile generation based on data from the koswat `ini` file.
+- Dike profile generation based on data from the koswat `json` file.
 - Calculation of all possible reinforcement profiles.
 - Filtering of reinforcement profiles based on their surroundings.
 - Cost calculation for added and removed material per layer per reinforcement.
@@ -69,10 +69,10 @@ poetry run mkdocs serve
 When using `Koswat` as a package you can run it directly from the command line as follows:
 
 ```console
-python -m koswat --input_file path\\to\\your\\koswat.ini --log_output path\\to\\your\\output\\dir
+python -m koswat --input_file path\\to\\your\\koswat.json --log_output path\\to\\your\\output\\dir
 ```
 The arguments are:
-- `--input_file` (required): Absolute path to the location of your general `koswat.ini` file.
+- `--input_file` (required): Absolute path to the location of your general `koswat.json` file.
 - `--log_output` (optional): Absolute path to the location of where the `koswat.log` will be written. If not specified it will be written at the root of the execution directory.
 
 It is also possible to check all the above possibilities via the `--help` argument in the command line:
@@ -110,7 +110,7 @@ Which will result in something like this:
 {date and time} - [koswat_handler.py:119] - root - INFO - Initialized Koswat.                                                                                             
 {date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing CSV configuration from /test_data/koswat_general.json                                     
 {date and time} - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from /test_data/koswat_costs.json.                                                
-{date and time} - [koswat_run_settings_importer.py:100] - root - INFO - Importing INI configuration completed.                                                            
+{date and time} - [koswat_run_settings_importer.py:100] - root - INFO - Importing JSON configuration completed.                                                            
 {date and time} - [koswat_run_settings_importer.py:103] - root - INFO - Mapping data to Koswat Settings
 {date and time} - [koswat_run_settings_importer.py:158] - root - INFO - Creating scenarios for profile 10-1-1-A-1-A.
 {date and time} - [koswat_run_settings_importer.py:171] - root - INFO - Created sub scenario Scenario1.

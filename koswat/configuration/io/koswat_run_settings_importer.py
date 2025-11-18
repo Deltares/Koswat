@@ -7,17 +7,17 @@ from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     SurroundingsSectionFom,
 )
-from koswat.configuration.io.ini.koswat_scenario_list_ini_dir_reader import (
-    KoswatSectionScenarioListIniDirReader,
-)
-from koswat.configuration.io.ini.koswat_section_scenarios_ini_fom import (
-    KoswatSectionScenariosIniFom,
-    SectionScenarioFom,
-)
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
 )
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
+from koswat.configuration.io.json.koswat_scenario_list_json_dir_reader import (
+    KoswatSectionScenarioListJsonDirReader,
+)
+from koswat.configuration.io.json.koswat_section_scenario_json_fom import (
+    KoswatSectionScenariosJsonFom,
+    SectionScenarioFom,
+)
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.koswat_dike_section_input_list_importer import (
     KoswatDikeSectionInputListImporter,
@@ -85,11 +85,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         )
 
         _dike_costs = self._import_dike_costs(
-            ini_file=_general_settings.analysis_section.costs_json_file,
+            config_file=_general_settings.analysis_section.costs_json_file,
             include_taxes=_general_settings.analysis_section.include_taxes,
         )
         _scenario_fom_list = self._import_scenario_fom_list(
-            _general_settings.analysis_section.scenarios_ini_dir,
+            _general_settings.analysis_section.scenarios_json_dir,
             _dike_selected_sections,
         )
         _surroundings_fom = self._import_surroundings_wrapper(
@@ -120,7 +120,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         self,
         reinforcement_settings_list: list[KoswatReinforcementSettings],
         input_profiles: list[KoswatProfileProtocol],
-        fom_scenario_list: list[KoswatSectionScenariosIniFom],
+        fom_scenario_list: list[KoswatSectionScenariosJsonFom],
         costs_settings: KoswatCostsSettings,
         surroundings_fom: list[SurroundingsWrapper],
         output_dir: Path,
@@ -304,19 +304,19 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         return _reader.read(txt_file).dike_sections
 
     def _import_dike_costs(
-        self, ini_file: Path, include_taxes: bool
+        self, config_file: Path, include_taxes: bool
     ) -> KoswatCostsSettings:
-        if not ini_file.is_file():
-            logging.error("Dike costs ini file not found at %s", ini_file)
+        if not config_file.is_file():
+            logging.error("Dike costs config file not found at %s", config_file)
             return None
         _importer = KoswatCostsImporter()
         _importer.include_taxes = include_taxes
-        return _importer.import_from(ini_file)
+        return _importer.import_from(config_file)
 
     def _import_scenario_fom_list(
         self, scenario_dir: Path, dike_selections: list[str]
-    ) -> list[KoswatSectionScenariosIniFom]:
-        _reader = KoswatSectionScenarioListIniDirReader(dike_selection=dike_selections)
+    ) -> list[KoswatSectionScenariosJsonFom]:
+        _reader = KoswatSectionScenarioListJsonDirReader(dike_selection=dike_selections)
         return _reader.read(scenario_dir)
 
     def _import_surroundings_wrapper(

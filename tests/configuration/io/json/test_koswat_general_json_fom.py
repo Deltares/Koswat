@@ -42,12 +42,12 @@ class TestKoswatGeneralJsonFom:
             "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
         )
         assert _config_fom.analysis_section.dike_selection_txt_file == Path(
-            "c:\\fake_drive\\Invoer\\ini files\\DijksectieSelectie.txt"
+            "c:\\fake_drive\\Invoer\\json files\\DijksectieSelectie.txt"
         )
         assert _config_fom.analysis_section.input_profiles_json_dir == Path(
             "c:\\fake_drive\\Invoer\\dike_section_input"
         )
-        assert _config_fom.analysis_section.scenarios_ini_dir == Path(
+        assert _config_fom.analysis_section.scenarios_json_dir == Path(
             "c:\\fake_drive\\Invoer\\Scenarios"
         )
         # No databaes loaded because the path is not included in the test data.
@@ -55,7 +55,7 @@ class TestKoswatGeneralJsonFom:
             "c:\\fake_drive\\Invoer\\Omgevingsanalyses"
         )
         assert _config_fom.analysis_section.costs_json_file == Path(
-            "c:\\fake_drive\\Invoer\\ini files\\Eenheidsprijzen2017.ini"
+            "c:\\fake_drive\\Invoer\\json files\\Eenheidsprijzen2017.json"
         )
         assert _config_fom.analysis_section.analysis_output_dir == Path(
             "c:\\fake_drive\\Uitvoer"

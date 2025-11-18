@@ -56,7 +56,7 @@ class TestMain:
         reason="Only meant to run locally with issue cases.",
     )
     @pytest.mark.parametrize(
-        "ini_file_location",
+        "config_file_location",
         [
             pytest.param(
                 issues_tests.joinpath("KOSWAT_220", "KOSWAT_analyse_RaLi.ini"),
@@ -64,16 +64,16 @@ class TestMain:
             )
         ],
     )
-    def test_given_issue_case(self, ini_file_location: Path):
+    def test_given_issue_case(self, config_file_location: Path):
         # 1. Define test data.
-        assert ini_file_location.is_file()
+        assert config_file_location.is_file()
         # Ensure we have a clean results dir.
-        _log_dir = ini_file_location.parent.joinpath("log_output")
+        _log_dir = config_file_location.parent.joinpath("log_output")
         if _log_dir.exists():
             shutil.rmtree(_log_dir)
         _log_dir.mkdir(parents=True)
 
-        _cli_arg = f'--input_file "{ini_file_location}" --log_output "{_log_dir}"'
+        _cli_arg = f'--input_file "{config_file_location}" --log_output "{_log_dir}"'
 
         # 2. Run test.
         _run_result = CliRunner().invoke(

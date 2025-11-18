@@ -39,11 +39,11 @@ class TestSoilReinforcementSectionFom:
         # 1. Define test data
         _config_parser = configparser.ConfigParser()
         _config_parser["section"] = _test_config
-        _ini_data = _config_parser["section"]
+        _config_data = _config_parser["section"]
 
         # 2. Execute test
         _section = SoilReinforcementSectionFom.from_config(
-            dict(_ini_data), set_defaults=True
+            dict(_config_data), set_defaults=True
         )
 
         # 3. Verify expectations

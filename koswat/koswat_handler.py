@@ -78,18 +78,18 @@ class KoswatHandler:
 
     def run_analysis(self, analysis_file: str) -> None:
         """
-        Runs a Koswat analysis using the provided `*.ini` file `analysis_file`.
+        Runs a Koswat analysis using the provided `*.json` file `analysis_file`.
 
         Args:
-            analysis_file (str): Location of the main koswat analysis ini file.
+            analysis_file (str): Location of the main koswat analysis json file.
         """
 
-        def _as_path(ini_file: str) -> Optional[Path]:
-            _ini = Path(ini_file)
-            if not _ini.is_file():
+        def _as_path(config_file: str) -> Optional[Path]:
+            _config_file = Path(config_file)
+            if not _config_file.is_file():
                 logging.error("File not found at %s", analysis_file)
-                raise FileNotFoundError(_ini)
-            return _ini
+                raise FileNotFoundError(_config_file)
+            return _config_file
 
         # Import data.
         self._run_settings = KoswatRunSettingsImporter().import_from(

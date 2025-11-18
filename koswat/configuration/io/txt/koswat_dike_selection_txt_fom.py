@@ -10,6 +10,6 @@ class KoswatDikeSelectionTxtFom(KoswatTxtFomProtocol):
 
     @classmethod
     def from_text(cls, file_text: str) -> KoswatDikeSelectionTxtFom:
-        _ini_fom = cls()
-        _ini_fom.dike_sections = file_text.splitlines(keepends=False)
-        return _ini_fom
+        _txt_fom = cls()
+        _txt_fom.dike_sections = file_text.splitlines(keepends=False)
+        return _txt_fom
