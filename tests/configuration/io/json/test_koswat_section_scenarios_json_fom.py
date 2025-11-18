@@ -34,7 +34,7 @@ class TestKoswatSectionScenarioJsonFom:
 
     def test_from_config(self):
         # 1. Run test
-        _config_fom = SectionScenarioFom.from_config(_test_dict)
+        _config_fom = SectionScenarioFom.from_config(_test_dict, "")
 
         # 2. Verify expectations
         _validate_test_section_scenario(_config_fom, "")

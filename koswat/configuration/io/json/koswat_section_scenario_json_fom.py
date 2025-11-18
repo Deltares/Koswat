@@ -18,10 +18,12 @@ class SectionScenarioFom(KoswatJsonFomProtocol):
     crest_width: Optional[float]
 
     @classmethod
-    def from_config(cls, input_config: dict[str, Any]) -> SectionScenarioFom:
+    def from_config(
+        cls, input_config: dict[str, Any], scenario_name: str
+    ) -> SectionScenarioFom:
         _section = cls()
         # Retrieves the values as written (and expected) in the config file.
-        _section.scenario_name = ""
+        _section.scenario_name = scenario_name
         _section.d_h = SectionConfigHelper.get_float(input_config["dh"])
         _section.d_s = SectionConfigHelper.get_float(input_config["ds"])
         _section.d_p = SectionConfigHelper.get_float(input_config["dp"])
@@ -43,8 +45,10 @@ class KoswatSectionScenariosJsonFom(KoswatJsonFomProtocol):
         _section_scenario_fom = cls()
         _section_scenario_fom.section_scenarios = []
         _section_scenario_fom.scenario_dike_section = ""
-        for _scenario_name in input_config.keys():
-            _new_scenario = SectionScenarioFom.from_config(input_config[_scenario_name])
-            _new_scenario.scenario_name = _scenario_name
-            _section_scenario_fom.section_scenarios.append(_new_scenario)
+        _section_scenario_fom.section_scenarios = [
+            SectionScenarioFom.from_config(
+                input_config=input_config[_scenario_name], scenario_name=_scenario_name
+            )
+            for _scenario_name in input_config.keys()
+        ]
         return _section_scenario_fom
