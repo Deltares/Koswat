@@ -29,10 +29,7 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     def total_cost(self) -> float:
         if not self.infrastructure_location_costs:
             return 0.0
-        return (
-            self.infrastructure_location_costs.zone_a_costs
-            + self.infrastructure_location_costs.zone_b_costs
-        )
+        return self.infrastructure_location_costs.total_cost
 
     @property
     def total_cost_with_surtax(self) -> float:

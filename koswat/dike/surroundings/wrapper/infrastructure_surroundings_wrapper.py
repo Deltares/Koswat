@@ -50,7 +50,7 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
         )
     )
 
-    # Dikeside infrastructures (not supported yet)
+    # Waterside infrastructures (not supported yet)
     roads_class_2_waterside: SurroundingsInfrastructure = None
     roads_class_7_waterside: SurroundingsInfrastructure = None
     roads_class_24_waterside: SurroundingsInfrastructure = None
