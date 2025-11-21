@@ -55,11 +55,11 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
             if not any(_lmatches):
                 continue
             _ps_copy = copy.deepcopy(_lmatches[0])
-            _obstacle_locations.append(_ps_copy)
             for _matched_ps in _lmatches[1:]:
                 if math.isnan(_matched_ps.closest_obstacle):
                     continue
                 _ps_copy.merge(_matched_ps)
+            _obstacle_locations.append(_ps_copy)
         return _obstacle_locations
 
     def get_locations_at_safe_distance(
