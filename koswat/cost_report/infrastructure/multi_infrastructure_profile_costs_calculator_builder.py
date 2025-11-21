@@ -58,27 +58,27 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     ) -> tuple[float, float]:
         if not self.cost_settings:
             return (math.nan, math.nan)
-        if "_class_2_" in infrastructure_name:
+        if "_class2_" in infrastructure_name:
             return (
                 self.cost_settings.adding_roads_klasse2,
                 self.cost_settings.removing_roads_klasse2,
             )
-        if "_class_7_" in infrastructure_name:
+        if "_class7_" in infrastructure_name:
             return (
                 self.cost_settings.adding_roads_klasse7,
                 self.cost_settings.removing_roads_klasse7,
             )
-        if "_class_24_" in infrastructure_name:
+        if "_class24_" in infrastructure_name:
             return (
                 self.cost_settings.adding_roads_klasse24,
                 self.cost_settings.removing_roads_klasse24,
             )
-        if "_class_47_" in infrastructure_name:
+        if "_class47_" in infrastructure_name:
             return (
                 self.cost_settings.adding_roads_klasse47,
                 self.cost_settings.removing_roads_klasse47,
             )
-        if "_class_unknown_" in infrastructure_name:
+        if "_unknown_" in infrastructure_name:
             return (
                 self.cost_settings.adding_roads_unknown,
                 self.cost_settings.removing_roads_unknown,
