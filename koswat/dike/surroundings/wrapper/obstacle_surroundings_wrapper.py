@@ -3,7 +3,9 @@ import math
 from dataclasses import dataclass, field
 from itertools import chain, groupby
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
+from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+    PointObstacleSurroundings,
+)
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
@@ -16,18 +18,10 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
 
-    buildings: SurroundingsObstacle = field(
-        default_factory=SurroundingsObstacle
-    )
-    railways: SurroundingsObstacle = field(
-        default_factory=SurroundingsObstacle
-    )
-    waters: SurroundingsObstacle = field(
-        default_factory=SurroundingsObstacle
-    )
-    custom_obstacles: SurroundingsObstacle = field(
-        default_factory=SurroundingsObstacle
-    )
+    buildings: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
+    railways: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
+    waters: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
+    custom_obstacles: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
 
     @property
     def obstacle_locations(self) -> list[PointObstacleSurroundings]:
@@ -65,7 +59,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
             for _matched_ps in _lmatches[1:]:
                 if math.isnan(_matched_ps.closest_obstacle):
                     continue
-                _matched_ps.merge(_ps_copy)
+                _ps_copy.merge(_matched_ps)
         return _obstacle_locations
 
     def get_locations_at_safe_distance(
