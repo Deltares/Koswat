@@ -57,6 +57,8 @@ class TestClusterShapeFom:
         _cluster = cluster_shp_fom_factory(
             [_first_xy, _last_xy], SoilReinforcementProfile, 0.0
         )
+        _cluster.left_neighbour_extent = _left_extent
+        _cluster.right_neighbour_extent = _right_extent
 
         # 2. Run test.
         _points = _cluster.points_with_neighbour_extent
