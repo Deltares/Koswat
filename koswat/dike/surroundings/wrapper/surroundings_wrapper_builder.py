@@ -80,17 +80,18 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         return _obs_wrapper
 
     def _get_surroundings_infrastructure(
-        self, surrounding_enum: SurroundingsEnum
+        self, surroundings_enum: SurroundingsEnum
     ) -> SurroundingsInfrastructure:
+        # Map the enum name to the corresponding attribute name in InfrastructureSectionFom
         _mapped_name = (
-            surrounding_enum.name.lower()
+            surroundings_enum.name.lower()
             .replace("_polderside", "_width")
             .replace("class_unknown", "unknown")
             .replace("class_", "class")
         )
         return SurroundingsInfrastructure(
-            infrastructure_name=_mapped_name,
-            points=self._get_surroundings_from_fom(surrounding_enum),
+            infrastructure_name=surroundings_enum.name,
+            points=self._get_surroundings_from_fom(surroundings_enum),
             infrastructure_width=getattr(self.infrastructure_section_fom, _mapped_name),
         )
 
