@@ -19,6 +19,7 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
+from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -58,27 +59,27 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     ) -> tuple[float, float]:
         if not self.cost_settings:
             return (math.nan, math.nan)
-        if "_class2_" in infrastructure_name:
+        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE.name:
             return (
                 self.cost_settings.adding_roads_klasse2,
                 self.cost_settings.removing_roads_klasse2,
             )
-        if "_class7_" in infrastructure_name:
+        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_7_POLDERSIDE.name:
             return (
                 self.cost_settings.adding_roads_klasse7,
                 self.cost_settings.removing_roads_klasse7,
             )
-        if "_class24_" in infrastructure_name:
+        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_24_POLDERSIDE.name:
             return (
                 self.cost_settings.adding_roads_klasse24,
                 self.cost_settings.removing_roads_klasse24,
             )
-        if "_class47_" in infrastructure_name:
+        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_47_POLDERSIDE.name:
             return (
                 self.cost_settings.adding_roads_klasse47,
                 self.cost_settings.removing_roads_klasse47,
             )
-        if "_unknown_" in infrastructure_name:
+        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_UNKNOWN_POLDERSIDE.name:
             return (
                 self.cost_settings.adding_roads_unknown,
                 self.cost_settings.removing_roads_unknown,

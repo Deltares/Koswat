@@ -4,6 +4,7 @@ from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
 )
+from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -26,27 +27,27 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     # Polderside infrastructures
     roads_class_2_polderside: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name="roads_class_2_polderside"
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE.name
         )
     )
     roads_class_7_polderside: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name="roads_class_7_polderside"
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_7_POLDERSIDE.name
         )
     )
     roads_class_24_polderside: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name="roads_class_24_polderside"
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_24_POLDERSIDE.name
         )
     )
     roads_class_47_polderside: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name="roads_class_47_polderside"
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_47_POLDERSIDE.name
         )
     )
     roads_class_unknown_polderside: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name="roads_class_unknown_polderside"
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_UNKNOWN_POLDERSIDE.name
         )
     )
 
