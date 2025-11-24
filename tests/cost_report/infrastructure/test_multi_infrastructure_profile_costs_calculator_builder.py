@@ -75,7 +75,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             non_rising_dike_costs_factor=dh0_factor,
             roads_class_unknown_polderside=_infrastructure,
         )
-        _infrastructure.infrastructure_name = "roads_class_unknown_polderside"
+        _infrastructure.infrastructure_name = "ROADS_CLASS_UNKNOWN_POLDERSIDE"
 
         _adding_roads = 24.0
         _removing_roads = 12.0
