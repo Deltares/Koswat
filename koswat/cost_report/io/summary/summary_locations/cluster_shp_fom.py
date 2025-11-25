@@ -1,6 +1,7 @@
 from dataclasses import dataclass
+from typing import Optional
 
-from shapely import LineString
+from shapely import LineString, Point
 
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -14,6 +15,24 @@ from koswat.strategies.strategy_location_reinforcement import (
 class ClusterShpFom:
     locations: list[StrategyLocationReinforcement]
     reinforced_profile: ReinforcementProfileProtocol
+    left_neighbour_extent: Optional[Point] = None
+    right_neighbour_extent: Optional[Point] = None
+
+    @property
+    def points_with_neighbour_extent(self) -> list[Point]:
+        """
+        The locations including points halfway to the left and right neighbour locations,
+        if available.
+
+        Returns:
+            list[Point]: List of points with extent halfway to neighbours included.
+        """
+        _points = [_l.location.location for _l in self.locations]
+        if self.left_neighbour_extent:
+            _points.insert(0, self.left_neighbour_extent)
+        if self.right_neighbour_extent:
+            _points.append(self.right_neighbour_extent)
+        return _points
 
     @property
     def old_profile_width(self) -> float:
@@ -38,7 +57,7 @@ class ClusterShpFom:
         Returns:
             LineString: Geometry representing the cluster coordinates.
         """
-        return LineString([_l.location.location for _l in self.locations])
+        return LineString(_l for _l in self.points_with_neighbour_extent)
 
     def get_buffered_geometry(self, width: float) -> LineString:
         """
@@ -52,3 +71,29 @@ class ClusterShpFom:
             LineString: Resulting `base_geometry` with a buffer.
         """
         return self.base_geometry.buffer(-width, cap_style=2, single_sided=True)
+
+    @staticmethod
+    def add_neighbour_extent(
+        left_cluster: "ClusterShpFom", right_cluster: "ClusterShpFom"
+    ) -> None:
+        """
+        Adds the left and right neighbour locations to the given clusters.
+
+        Args:
+            left_cluster (ClusterShpFom): The left cluster to add the right neighbour to.
+            right_cluster (ClusterShpFom): The right cluster to add the left neighbour to.
+        """
+
+        def interpolate_points(point_a: Point, point_b: Point) -> Point:
+            _x = (point_a.x + point_b.x) / 2
+            _y = (point_a.y + point_b.y) / 2
+            return Point(_x, _y)
+
+        left_cluster.right_neighbour_extent = interpolate_points(
+            left_cluster.locations[-1].location.location,
+            right_cluster.locations[0].location.location,
+        )
+        right_cluster.left_neighbour_extent = interpolate_points(
+            left_cluster.locations[-1].location.location,
+            right_cluster.locations[0].location.location,
+        )

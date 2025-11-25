@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from itertools import groupby
+from itertools import groupby, pairwise
 from typing import Callable, Type
 
 from geopandas import GeoDataFrame
@@ -51,7 +51,7 @@ class ClusterCollectionShpFom:
         def to_cluster_shp_fom(
             key_group_tuple: tuple[
                 Type[ReinforcementProfileProtocol], list[StrategyLocationReinforcement]
-            ]
+            ],
         ) -> ClusterShpFom:
             return ClusterShpFom(
                 locations=list(key_group_tuple[1]),
@@ -60,7 +60,7 @@ class ClusterCollectionShpFom:
                 ).profile_cost_report.reinforced_profile,
             )
 
-        return cls(
+        _cluster_collection = cls(
             clusters=list(
                 map(
                     to_cluster_shp_fom,
@@ -71,6 +71,12 @@ class ClusterCollectionShpFom:
                 )
             )
         )
+
+        # Add neighbour extent to clusters
+        for _cluster in pairwise(_cluster_collection.clusters):
+            ClusterShpFom.add_neighbour_extent(_cluster[0], _cluster[1])
+
+        return _cluster_collection
 
     def generate_geodataframes(self) -> ClusterGeoDataFrameOutputFom:
         """
