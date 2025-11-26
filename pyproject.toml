@@ -22,7 +22,7 @@ requires-python = ">=3.11,<3.14"
 dependencies = ["click", "matplotlib", "pyshp", "shapely", "geopandas", "more-itertools"]
 
 [project.urls]
-website = "https://github.com/Deltares/koswat"
+homepage = "https://github.com/Deltares/koswat"
 documentation = "https://deltares.github.io/Koswat/"
 repository = "https://github.com/Deltares/koswat"
 issues = "https://github.com/Deltares/koswat/issues"
