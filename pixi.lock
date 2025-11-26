@@ -8718,7 +8718,7 @@ packages:
 - pypi: ./
   name: koswat
   version: 0.15.0
-  sha256: 89437f5631422444f5201eb5c7e6f90ff36e7f555e2d92b0ec959223a9d6c6a6
+  sha256: 3fd757bd1ba3b81fe7cf55d8bad65a9edf90b2e9e55787b6dbf6b36c849d967b
   requires_dist:
   - click
   - matplotlib

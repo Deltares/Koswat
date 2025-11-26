@@ -2,8 +2,8 @@
 name = "koswat"
 version = "0.15.0"
 description = "Koswat, from the dutch combination of words `Kosts-Wat` (what are the costs). Analyzes all the possible dikes reinforcements based on a provided traject, with surrounding constructions, and what their related costs will be."
-authors = [{name = "Carles S. Soriano Pérez", email = "carles.sorianoperez@deltares.nl"}, {name = "Peter de Grave", email = "peter.degrave@deltares.nl"}]
-maintainers = [{name = "Ardt Klapwijk", email = "ardt.klapwijk@deltares.nl"}]
+authors = [{name = "Peter de Grave", email = "peter.degrave@deltares.nl"}]
+maintainers = [{name = "Carles S. Soriano Pérez", email = "carles.sorianoperez@deltares.nl"}, {name = "Ardt Klapwijk", email = "ardt.klapwijk@deltares.nl"}]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 keywords = ["civil-engineering", "dikes", "flood-defence", "deltares"]
@@ -22,6 +22,7 @@ requires-python = ">=3.11,<3.14"
 dependencies = ["click", "matplotlib", "pyshp", "shapely", "geopandas", "more-itertools"]
 
 [project.urls]
+website = "https://github.com/Deltares/koswat"
 documentation = "https://deltares.github.io/Koswat/"
 repository = "https://github.com/Deltares/koswat"
 issues = "https://github.com/Deltares/koswat/issues"
