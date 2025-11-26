@@ -8,7 +8,7 @@ from koswat.koswat_handler import KoswatHandler
 
 ### Below is the documentation for the commandline interface, see the CLICK-package.
 
-@click.group()
+@click.command()
 @click.option("--input_file", default=None, help="Full path to the config input file.")
 @click.option(
     "--log_output",
