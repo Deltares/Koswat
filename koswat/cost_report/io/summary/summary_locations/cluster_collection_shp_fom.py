@@ -39,10 +39,7 @@ class ClusterCollectionShpFom:
 
         Args:
             koswat_summary (KoswatSummary): The summary containing the information to export.
-            cluster_criteria (Callable[
-                [StrategyLocationReinforcement],
-                type[ReinforcementProfileProtocol]
-            ]): (Lambda) Function criteria to group the locations by reinforcement type.
+            cluster_criteria (Callable[[StrategyLocationReinforcement],type[ReinforcementProfileProtocol]]): (Lambda) Function criteria to group the locations by reinforcement type.
 
         Returns:
             ClusterCollectionShpFom: Dataclass instance that can be directly exported into `.shp`.
