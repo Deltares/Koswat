@@ -18,12 +18,13 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 ```
 | You can also do the above with a commit-hash for development branches (e.g.:`@0504c06`)
 
-3. Using [docker](https://www.docker.com/) (requires checking the repository in a directory):
+3. Using [docker](https://www.docker.com/) or [podman](https://podman.io/) (for both is required checking the repository in a directory):
 ```bash
 cd <your koswat checked out directory>
 docker build -t koswat:latest -f Dockerimage .
 docker run -it koswat bash
 ```
+| For podman installations use the command `podman` instead of `docker`.
 
 ## For developers
 
