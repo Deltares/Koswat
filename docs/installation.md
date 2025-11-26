@@ -1,7 +1,7 @@
 # Installation
 
-> [!IMPORTANT]
-> The following installation steps are written based on a Windows environment. When using other systems (which should be possible) it might be required to use different commands. However, the fundamental of the installation steps should remain the same. This meaning, no additional packages or libraries should be required. If problems would arose during your installation, please contact the maintainers of the tool.
+!!! Important
+    The following installation steps are written based on a Windows environment. When using other systems (which should be possible) it might be required to use different commands. However, the fundamental of the installation steps should remain the same. This meaning, no additional packages or libraries should be required. If problems would arose during your installation, please contact the maintainers of the tool.
 
 ## Pypi installation
 
@@ -12,11 +12,12 @@ Ensure you have a valid python environment with pip. If you are using conda you 
 ```console
 conda create -n koswat_env python==3.13 pip
 ```
-> Note: At the time of writing of this document koswat is supported for `python>=3.11,<3.14`.
+!!! note
+    At the time of writing of this document koswat is supported for `python>=3.11,<3.14`.
 
 ### Installation
 
-Koswat is not published at a package repository such as [Pypi], however you can install it directly from GitHub as follows:
+Koswat is not published at a package repository such as [Pypi](https://pypi.org/), however you can install it directly from GitHub as follows:
 
 1. Latest available (`master`):
     ```bash
@@ -27,8 +28,8 @@ Koswat is not published at a package repository such as [Pypi], however you can 
     ```bash
     pip install git+https://github.com/Deltares/Koswat.git@v0.15.0
     ```
-    > You can also do the above with a commit-hash for development branches (e.g.:`06e3f27
- `)
+!!! note
+    You can also do the above with a commit-hash for development branches (e.g.:`06e3f27`)
 
 
 Either way, installation should start immediately:
@@ -54,4 +55,4 @@ Summary: Koswat, from the dutch combination of words `Kosts-Wat` (what are the c
 
 ## Docker installation
 
-For docker installation (and usage) check [Koswat](docker.md).
+For docker installation (and usage) check our [koswat docker reference](docker.md).

@@ -2,8 +2,8 @@
 
 Koswat can also be used via command line tool with [docker](https://www.docker.com/) or [podman](https://podman.io/). To do so you will have first to [build the image](#build-koswat-docker-image) and then [run the built container](#run-koswat-docker-container).
 
-> [!INFO]
-> This guideline assumes you have a podman installation, when using docker you only need to replace our `podman` command with `docker`.
+!!! note
+    This guideline assumes you have a podman installation, when using docker you only need to replace our `podman` command with `docker`.
 
 ## Build koswat docker image
 
@@ -16,9 +16,9 @@ The koswat container needs to be built before we can run it, this is not strictl
     ```
 
 - From our Deltares registry (as mentioned this step is not really needed):
-    ```console
-    podman pull containers.deltares.nl/gfs/koswat:latest
-    ```
+```console
+podman pull containers.deltares.nl/gfs/koswat:latest
+```
 
 ## Run koswat docker container
 
@@ -26,9 +26,9 @@ You can now proceed to run the tool, we will make use of our example data ( `exa
 
 Running through docker requires that we **mount** the model data that we will use, this is done with the flag `-v {your_data_location}:/{mounted_data_location}`. 
 
-> [!IMPORTANT]
-> At the moment this docker requires that all the paths defined in the `koswat_general.json` are relative to the mounted data. So in our case we  had to modify them such as `Dijksecties_Selectie = /run_data/koswat_dike_selection.txt` and so on for each of them.
-> Otherwise __it will not work__.
+!!! important
+    At the moment this docker requires that all the paths defined in the `koswat_general.json` are relative to the mounted data. So in our case we  had to modify them such as `Dijksecties_Selectie = /run_data/koswat_dike_selection.txt` and so on for each of them.
+    Otherwise __it will not work__.
 
 - With your local image:
     ```console
