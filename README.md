@@ -1,9 +1,12 @@
 # KOSWAT
+
 [![Python 3.13](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/downloads/release/python-3135/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![ci-install-package](https://github.com/Deltares/Koswat/actions/workflows/ci_installation.yml/badge.svg)](https://github.com/Deltares/Koswat/actions/workflows/ci_installation.yml)
 ![TeamCity build status](https://dpcbuild.deltares.nl/app/rest/builds/buildType:id:Koswat_ContinuousIntegrationBuild_RunFastTests/statusIcon.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_Koswat&metric=alert_status&token=87fdd0648c19800b4b5fc11334461a7fb602bf20)](https://sonarcloud.io/summary/new_code?id=Deltares_Koswat)
+[![GitHub Pages documentation](https://github.com/Deltares/koswat/actions/workflows/deploy_docs.yml/badge.svg)](https://github.com/Deltares/koswat/actions/workflows/deploy_docs.yml)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Deltares/koswat/jupyter-binder)
 <!-- ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Deltares/Koswat)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Deltares/Koswat) -->
 <!-- [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Deltares/Koswat?quickstart=1) -->
@@ -54,14 +57,6 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 ### Development mode
 
 Please check our related [contributing wiki page](https://github.com/Deltares/Koswat/wiki/Contributing)
-
-#### Read the docs documentation.
-
-Documentation for the project is currently only available with a manual step. You can do this if you installed the project following the steps of the [development mode](#development-mode). Then execute the `MkDocs` build and serve step:
-```console
-poetry run mkdocs build
-poetry run mkdocs serve
-```
 
 ## Endpoint usage
  
