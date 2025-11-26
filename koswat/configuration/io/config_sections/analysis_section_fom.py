@@ -24,7 +24,7 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
         
         def resolve_path(input_path: str) -> Path:
             _path = Path(input_path)
-            if not _path.is_absolute() and parent_path is not None and parent_path.exists():
+            if parent_path is not None and parent_path.exists() and not _path.is_relative_to(parent_path):
                 _path = parent_path.joinpath(_path)
             return _path
         
