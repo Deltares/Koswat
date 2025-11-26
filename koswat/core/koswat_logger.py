@@ -26,7 +26,7 @@ class KoswatLogger:
 
     def _get_logger(self) -> logging.Logger:
         """
-        Gets the ra2ce logger which by default is the root logging.Logger.
+        Gets the koswat logger which by default is the root logging.Logger.
 
         Returns:
 
