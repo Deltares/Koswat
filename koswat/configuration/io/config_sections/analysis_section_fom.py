@@ -20,14 +20,21 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
     include_taxes: bool
 
     @classmethod
-    def from_config(cls, input_config: dict[str, Any]) -> "AnalysisSectionFom":
+    def from_config(cls, input_config: dict[str, Any], parent_path: Path) -> "AnalysisSectionFom":
+        
+        def resolve_path(input_path: str) -> Path:
+            _path = Path(input_path)
+            if not _path.is_absolute() and parent_path is not None and parent_path.exists():
+                _path = parent_path.joinpath(_path)
+            return _path
+        
         return cls(
-            dike_section_location_shp_file=Path(input_config["dijksectie_ligging"]),
-            dike_selection_txt_file=Path(input_config["dijksecties_selectie"]),
-            input_profiles_json_dir=Path(input_config["dijksectie_invoer"]),
-            scenarios_json_dir=Path(input_config["scenario_invoer"]),
-            costs_json_file=Path(input_config["eenheidsprijzen"]),
-            surroundings_database_dir=Path(input_config["omgevingsdatabases"]),
-            analysis_output_dir=Path(input_config["uitvoerfolder"]),
+            dike_section_location_shp_file=resolve_path(input_config["dijksectie_ligging"]),
+            dike_selection_txt_file=resolve_path(input_config["dijksecties_selectie"]),
+            input_profiles_json_dir=resolve_path(input_config["dijksectie_invoer"]),
+            scenarios_json_dir=resolve_path(input_config["scenario_invoer"]),
+            costs_json_file=resolve_path(input_config["eenheidsprijzen"]),
+            surroundings_database_dir=resolve_path(input_config["omgevingsdatabases"]),
+            analysis_output_dir=resolve_path(input_config["uitvoerfolder"]),
             include_taxes=SectionConfigHelper.get_bool(input_config["btw"]),
         )
