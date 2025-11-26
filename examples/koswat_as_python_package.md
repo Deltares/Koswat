@@ -1,4 +1,8 @@
-# Use case: Koswat as python package
+# Use case: Koswat from command line
+
+## Requirements
+
+This step requires that you have python running in your system 
 
 ## Installation
 
