@@ -1,9 +1,12 @@
 # KOSWAT
+
 [![Python 3.13](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/downloads/release/python-3135/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![ci-install-package](https://github.com/Deltares/Koswat/actions/workflows/ci_installation.yml/badge.svg)](https://github.com/Deltares/Koswat/actions/workflows/ci_installation.yml)
 ![TeamCity build status](https://dpcbuild.deltares.nl/app/rest/builds/buildType:id:Koswat_ContinuousIntegrationBuild_RunFastTests/statusIcon.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_Koswat&metric=alert_status&token=87fdd0648c19800b4b5fc11334461a7fb602bf20)](https://sonarcloud.io/summary/new_code?id=Deltares_Koswat)
+[![GitHub Pages documentation](https://github.com/Deltares/koswat/actions/workflows/deploy_docs.yml/badge.svg)](https://github.com/Deltares/koswat/actions/workflows/deploy_docs.yml)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Deltares/koswat/jupyter-binder)
 <!-- ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Deltares/Koswat)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Deltares/Koswat) -->
 <!-- [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Deltares/Koswat?quickstart=1) -->
@@ -11,6 +14,13 @@
 ## Detailed documentation
 
 Currently the detailed documentation is only reachable when building it locally, to do so check the section [read the docs documentation](#read-the-docs-documentation).
+
+Quick reference:
+- [Contributing wiki page](https://github.com/Deltares/Koswat/wiki/Contributing)
+- [Installation](https://deltares.github.io/Koswat/installation.html)
+- [User manual](https://deltares.github.io/Koswat/usage.html)
+    - [Examples](https://deltares.github.io/Koswat/examples.html)
+- [Docker](https://deltares.github.io/Koswat/docker.html)
 
 ## Features
 
@@ -49,20 +59,6 @@ pip install git+https://github.com/Deltares/Koswat.git@v0.11.0
 ```
 | You can also do the above with a commit-hash for development branches (e.g.:`@0504c06`)
 
-
-
-### Development mode
-
-Please check our related [contributing wiki page](https://github.com/Deltares/Koswat/wiki/Contributing)
-
-#### Read the docs documentation.
-
-Documentation for the project is currently only available with a manual step. You can do this if you installed the project following the steps of the [development mode](#development-mode). Then execute the `MkDocs` build and serve step:
-```console
-poetry run mkdocs build
-poetry run mkdocs serve
-```
-
 ## Endpoint usage
  
 ### As a package
@@ -79,56 +75,3 @@ It is also possible to check all the above possibilities via the `--help` argume
 ```console
 python -m koswat --help
 ```
-
-### Podman / docker
-
-1. First you need to build the koswat docker image by any of the following two ways:
-
-- You can either it from a local checkout:
-    ```console
-    podman build -t koswat .
-    ```
-
-- Or from our Deltares registry (although this step is not really needed):
-    ```console
-    podman pull containers.deltares.nl/gfs/koswat:latest
-    ```
-
-2. You can now proceed to run the tool, we will make use of our test data ( `tests/test_data/acceptance` ), so you can copy it to a local test directory (`{your_data_to_run_directory}`):
-
-- With your local image:
-    ```console
-    podman run -it -v {your_data_to_run_directory}:/run_data koswat --input_file /run_data/koswat_general.json
-    ```
-- Or using the remote image instead:
-    ```console
-    podman run -it -v {your_data_to_run_directory}:/run_data containers.deltares.nl/gfs/koswat:latest --input_file /run_data/koswat_general.json
-    ```
-
-Which will result in something like this:
-```console
-{date and time} - [koswat_handler.py:119] - root - INFO - Initialized Koswat.                                                                                             
-{date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing CSV configuration from /test_data/koswat_general.json                                     
-{date and time} - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from /test_data/koswat_costs.json.                                                
-{date and time} - [koswat_run_settings_importer.py:100] - root - INFO - Importing JSON configuration completed.                                                            
-{date and time} - [koswat_run_settings_importer.py:103] - root - INFO - Mapping data to Koswat Settings
-{date and time} - [koswat_run_settings_importer.py:158] - root - INFO - Creating scenarios for profile 10-1-1-A-1-A.
-{date and time} - [koswat_run_settings_importer.py:171] - root - INFO - Created sub scenario Scenario1.
-{date and time} - [koswat_run_settings_importer.py:171] - root - INFO - Created sub scenario Scenario2.
-{date and time} - [koswat_run_settings_importer.py:140] - root - WARNING - No scenario found for selected section 10-1-2-A-1-A.
-{date and time} - [koswat_run_settings_importer.py:140] - root - WARNING - No scenario found for selected section 10-1-3-A-1-B-1.
-{date and time} - [koswat_run_settings_importer.py:174] - root - INFO - Finished generating koswat scenarios. A total of 2 scenarios were created.
-{date and time} - [koswat_run_settings_importer.py:112] - root - INFO - Settings import completed.
-...
-{date and time} - [koswat_handler.py:59] - root - INFO - Exported summary results to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2
-{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2
-{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2
-{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2
-{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2
-{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2
-{date and time} - [koswat_handler.py:123] - root - INFO - Finalized Koswat.
-```
-
-> [!IMPORTANT]
-> At the moment this docker requires that all the paths defined in the `koswat_general.json` are relative to the mounted data. So in our case we  had to modify them such as `Dijksecties_Selectie = /run_data/koswat_dike_selection.txt` and so on for each of them.
-> Otherwise it will not work.
