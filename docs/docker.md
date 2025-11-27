@@ -27,8 +27,7 @@ You can now proceed to run the tool, we will make use of our example data ( `exa
 Running through docker requires that we **mount** the model data that we will use, this is done with the flag `-v {your_data_location}:/{mounted_data_location}`. 
 
 !!! important
-    At the moment this docker requires that all the paths defined in the `koswat_general.json` are relative to the mounted data. So in our case we  had to modify them such as `Dijksecties_Selectie = /run_data/koswat_dike_selection.txt` and so on for each of them.
-    Otherwise __it will not work__.
+    Make sure all the paths defined in the `koswat_general.json` are relative to it. Otherwise __it will not work__.
 
 - With your local image:
     ```console
