@@ -87,3 +87,18 @@ class TestMain:
         assert (
             _log.read_text().find("ERROR") == -1
         ), "ERROR found in the log, run was not succesful."
+
+    def test_show_version(self):
+        # 1. Define test data.
+        _cli_arg = "--version"
+        _expected_output = f"version {__main__.__version__}"
+
+        # 2. Run test.        
+        _run_result = CliRunner().invoke(
+            __main__.run_analysis,
+            _cli_arg,
+        )
+
+        # 3. Verify final expectations.
+        assert _run_result.exit_code == 0
+        assert _expected_output in _run_result.output
