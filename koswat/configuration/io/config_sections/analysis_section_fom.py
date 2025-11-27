@@ -1,6 +1,5 @@
 from dataclasses import dataclass
-import os
-from pathlib import Path, PosixPath, WindowsPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 from koswat.configuration.io.config_sections.config_section_helper import (
@@ -24,17 +23,10 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
     def from_config(cls, input_config: dict[str, Any], parent_path: Path) -> "AnalysisSectionFom":
         # We build the paths relative to the parent path of the main config file.
         # UNLESS they are already absolute paths.
-
-        def is_absolute_path(input_path: str) -> bool:
-            if os.name == "nt":
-                # On Windows we need to check for both PosixPath and WindowsPath
-                 return WindowsPath(input_path).is_absolute()
-            return PosixPath(input_path).is_absolute() 
-
         def resolve_path(input_path: str) -> Path:
-            if is_absolute_path(input_path):
-                # Using a windows path in a unix system will return false here.
+            if PureWindowsPath(input_path).is_absolute() or PurePosixPath(input_path).is_absolute():
                 return Path(input_path)
+            
             return parent_path.joinpath(input_path)
         
         return cls(
