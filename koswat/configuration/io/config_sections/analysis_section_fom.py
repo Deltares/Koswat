@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any
 
 from koswat.configuration.io.config_sections.config_section_helper import (
@@ -23,8 +23,8 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
     def from_config(cls, input_config: dict[str, Any], parent_path: Path) -> "AnalysisSectionFom":
         
         def resolve_path(input_path: str) -> Path:
-            _path = Path(input_path)
-            if parent_path is not None and parent_path.exists() and not _path.is_relative_to(parent_path):
+            _path = PurePath(input_path)
+            if _path.is_absolute() and parent_path is not None and parent_path.exists():
                 _path = parent_path.joinpath(_path)
             return _path
         
