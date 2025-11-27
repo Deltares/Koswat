@@ -23,10 +23,9 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
     def from_config(cls, input_config: dict[str, Any], parent_path: Path) -> "AnalysisSectionFom":
         
         def resolve_path(input_path: str) -> Path:
-            _path = PurePath(input_path)
-            if _path.is_absolute() and parent_path is not None and parent_path.exists():
-                _path = parent_path.joinpath(_path)
-            return _path
+            if not PurePath(input_path).is_absolute() and parent_path is not None and parent_path.exists():
+                return Path(parent_path.joinpath(input_path))
+            return Path(input_path)
         
         return cls(
             dike_section_location_shp_file=resolve_path(input_config["dijksectie_ligging"]),
