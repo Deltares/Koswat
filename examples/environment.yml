@@ -5,5 +5,11 @@ channels:
 dependencies:
   - conda-forge::python=3.13
   - conda-forge::pip
+  - ipyleaflet
+  - ipywidgets
+  - ipyfilechooser
+  - leafmap
+  - voila
+  - IPython
   - pip:
     - git+https://github.com/Deltares/koswat.git
