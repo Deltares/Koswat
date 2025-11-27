@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Surroundings - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Surroundings";
+        var mkdocs_page_input_path = "reference/koswat_surroundings.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Surroundings</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#surroundings-csv-files">Surroundings .csv files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#obstacles">Obstacles</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#obstacle-types">Obstacle types</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#infrastructures">Infrastructures</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#infrastructures-types">Infrastructures types</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#surroundings-in-the-code">Surroundings in the code</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Koswat docstrings</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Surroundings</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_surroundings.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="surroundings">Surroundings<a class="headerlink" href="#surroundings" title="Permanent link">&para;</a></h1>
+<p>In koswat's real domain, a dike is surrounded by all sort of surroundings, these could be nature or human-built structures. During our analyisis we make use of (<code>.shp</code>) maps where a dike's traject is shown together with all the human-built structures in its proximity. </p>
+<p>We categorize these structures in the following two types:</p>
+<ul>
+<li><a href="#obstacles">Obstacles</a>, surroundings that <strong>cannot</strong> be modified in any way.</li>
+<li><a href="#infrastructures">Infrastructures</a>, as opposite to the obstacles, surroundings that can be repaired or removed and added again (elsewhere).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Koswat dike surroundings representation" src="imgs/dike_traject_with_surroundings.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 1. Surroundings representation</td>
+</tr>
+</tbody>
+</table>
+<p>To define said surroundings we make use of <code>.csv</code> files, each file for a specific type of surrounding that needs to be "enabled" in the <code>koswat_general.json</code> settings file.</p>
+<p>In addition, surroundings can be defined for the inside or the outside of a dike. At the current <code>Koswat</code> version (unreleased <code>v0.15.0</code>) we <strong>only support</strong> surroundings in the inside of a dike ( <code>binnendijks</code>).</p>
+<h2 id="surroundings-csv-files">Surroundings <code>.csv</code> files<a class="headerlink" href="#surroundings-csv-files" title="Permanent link">&para;</a></h2>
+<p>The surroundings files follow all the same format both in naming and content. </p>
+<p>Their file name has the form of <code>T{dike_traject}_{type_of_surrounding}.csv</code>:
+- The <code>{dike_traject}</code> is the dike's traject code name, usually something like <code>10_1</code>,
+- the <code>{type_of_surrounding}</code> is the name of surrounding that will be imported (check further in the corresponding subsections of <a href="#obstacle-types">obstacles</a> and <a href="#infrastructure-types">infrastructure</a>).</p>
+<p>Their headers are divided in the following columns:</p>
+<ul>
+<li><code>SECTIE</code>, section of the location in the dike's traject,</li>
+<li><code>Xcoord</code>, x coordinate of the location,</li>
+<li><code>Ycoord</code>, y coordinate of the location, </li>
+<li><code>afst_{x}m</code>, distance from the reference point of the location, where 'x' are all the values between <code>5</code> and <code>200</code> with steps of 5, thus 40 columns. The values in these cells define whether there are obstacles or infrastructures at this distance or not and in <code>Koswat</code> are usually built in the <code>SurroundingsPoint.surroundings_matrix</code>, each type of surrounding interprets the weights in a different manner.</li>
+</ul>
+<h2 id="obstacles">Obstacles<a class="headerlink" href="#obstacles" title="Permanent link">&para;</a></h2>
+<p>An obstacle usually represents a building. Because they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
+The distance from the reference point of the dike to the closes point of the obstacle is given.</p>
+<p>The values in the columns <code>afst_{x}m</code> are either <code>1</code> or <code>0</code> and are simply interpreted as having a surrounding or not. Thus ignoring other characteristics of the surrounding and just focusing on its presence.</p>
+<h3 id="obstacle-types">Obstacle types<a class="headerlink" href="#obstacle-types" title="Permanent link">&para;</a></h3>
+<p>Currently we identify and support the following surroundings as written in the <code>.csv</code> file names:</p>
+<ul>
+<li><code>bebouwing_binnendijks</code> (buildings), </li>
+<li><code>spoorwegen_binnendijks</code> (railways),</li>
+<li><code>waters_binnendijks</code> (waters),</li>
+</ul>
+<p>As reminder, at the moment we only support 'inside the dike's' surroundings.</p>
+<h2 id="infrastructures">Infrastructures<a class="headerlink" href="#infrastructures" title="Permanent link">&para;</a></h2>
+<p>Infrastructures are mostly "roads". Contrary to the <a href="#obstacles">obstacles</a> these infrastructures do not become a boundary for a reinforcement and they will simply be either displaced or repaired when applying a reinforcement requires their space. When this occurs, it is reflected as additional costs for the given type of reinforcement at that location. In short, these costs are calculated based on:</p>
+<ul>
+<li>The width of the infrastructure (taken from the <code>Koswat_general.json</code> settings),</li>
+<li>The length of the infrastructure at that location (the values in the columns <code>afst_{x}m</code>),</li>
+<li>The required technique (repair, displace, nothing) for the type of infrastructure (also from <code>koswat_general.json</code> settings) and its related costs (<code>koswat_costs.json</code>).</li>
+</ul>
+<p>With the above values we know what's the <strong>affected area</strong> of an infrastructure when a reinforced profile needs to be applied and therefore can estimate their costs.</p>
+<p>The distance from the reference point of the dike to the center point of the infrastructure is given.</p>
+<h3 id="infrastructures-types">Infrastructures types<a class="headerlink" href="#infrastructures-types" title="Permanent link">&para;</a></h3>
+<p>Currently we identify and support the following surroundings as written in the <code>.csv</code> file names:</p>
+<ul>
+<li><code>wegen_binnendijks_klasse2</code> (roads class 2),</li>
+<li><code>wegen_binnendijks_klasse7</code> (roads class 7),</li>
+<li><code>wegen_binnendijks_klasse24</code> (roads class 24),</li>
+<li><code>wegen_binnendijks_klasse47</code> (roads class 47),</li>
+<li><code>wegen_binnendijks_klasseonbekend</code> (roads of unknown class),</li>
+</ul>
+<p>As reminder, at the moment we only support 'inside the dike's' surroundings.</p>
+<h2 id="surroundings-in-the-code">Surroundings in the code<a class="headerlink" href="#surroundings-in-the-code" title="Permanent link">&para;</a></h2>
+<p>But, how are these surroundings represented in the code? As earlier described, we distinguish surroundings by either <a href="#obstacles">obstacles</a> or <a href="#infrastructures">infrastructures</a>. This is also reflected in the code where we create a general <a href="koswat_docstrings/dike/surroundings.html">SurroundingsWrapper</a>, which as the name states, wraps the obstacle and infrastructure surroundings in separate properties, each implementing an specialitzation of the <code>BaseSurroundingsWrapper</code> so that: </p>
+<ul>
+<li><code>ObstacleSurroundingsWrapper</code> will wrap all the supported <a href="#obstacle-types">obstacle types</a>, in separate properties of type <code>SurroundingsObstacle</code>.</li>
+<li><code>InfrastructureSurroundingsWrapper</code> will wrap all the supported <a href="#infrastructures-types">infrastructure types</a>, in separate properties of type <code>SurroundingsInfrastructure</code>.</li>
+</ul>
+<p>A simple diagram illustrating the above can be seen in the image below:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Koswat surroundings in the code" src="imgs/surroundings_diagram.drawio.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 2. Surroundings code-wise</td>
+</tr>
+</tbody>
+</table>
+<p>More detailed information can be found in the corresponding <a href="https://github.com/Deltares/Koswat/blob/86630ecc065aaa06890ac63a22b00f780fc98b3c/koswat/dike/surroundings">surroundings subproject</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="koswat_strategies.html" class="btn btn-neutral float-left" title="Strategies"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="koswat_docstrings/cost_report.html" class="btn btn-neutral float-right" title="Cost report module">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="koswat_strategies.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="koswat_docstrings/cost_report.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

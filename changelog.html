@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Changelog - Koswat</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Changelog";
+        var mkdocs_page_input_path = "changelog.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Changelog</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#feat">Feat</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fix">Fix</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Koswat docstrings</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Changelog</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/changelog.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="release-2023-2023-11-07">Release-2023 (2023-11-07)<a class="headerlink" href="#release-2023-2023-11-07" title="Permanent link">&para;</a></h2>
+<h3 id="feat">Feat<a class="headerlink" href="#feat" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Added order_strategy submodule for determining reinforcement features across a dike traject based on default order</li>
+<li>Added new class to better handle / generate the location-reinforcement matrix</li>
+</ul>
+<h3 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h3>
+<ul>
+<li>improve rounding</li>
+<li>improve rounding</li>
+<li>improve rounding</li>
+<li>show cost per km if no locations present</li>
+<li>add @property to total_cost</li>
+<li>add @property to total_cost</li>
+<li>add @property to total_cost</li>
+<li>test on presence of construction costs</li>
+<li>correct return type</li>
+<li>Added logic to plot new layer surfaces when they are either a <code>LineString</code> or a <code>MultiLineString</code></li>
+<li>corrected berm width calculations (#114)</li>
+<li>corrected berm width calculations</li>
+<li>merge leftovers</li>
+<li>rename "raise" to "surtax" throughout KOSWAT</li>
+<li>rename "raise" to "surtax" throughout KOSWAT</li>
+<li>correct symbol name</li>
+<li>correct symbol name</li>
+<li>typo comment</li>
+<li>typo comment</li>
+<li>Added logic to avoid creating added / removed layers geometries when there were no modifications</li>
+<li>Added default values as math.nan for koswatscenario</li>
+<li>We now replace not-provided values from a KoswatScenario when calculating new reinforcements</li>
+<li>docu corrections</li>
+<li>docu corrections</li>
+<li>docu corrections</li>
+</ul>
+<h2 id="v0150-2025-06-27">v0.15.0 (2025-06-27)<a class="headerlink" href="#v0150-2025-06-27" title="Permanent link">&para;</a></h2>
+<h3 id="feat_1">Feat<a class="headerlink" href="#feat_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>extend calculations for having berm as part of input profile (#218)</li>
+<li>use costs_with_surtax in infra strategy (#229)</li>
+<li>213 extend summary report with reinforcement order (#215)</li>
+<li>generate strategies intermediate results (#208)</li>
+<li>create strategy to select reinforcements based on subclusters (#206)</li>
+<li>90 implement logic to sort/filter the reinforcement types (#202)</li>
+<li>create new strategy based on infrastructures (#197)</li>
+<li>188 add reinforcements to strategy_input (#201)</li>
+<li>Modify strategylocationreinforcement to include all related costs (#199)</li>
+<li>export locations report into a shp file instead (#185)</li>
+<li>[161] Connect koswat workflow with infrastructures cost export (#167)</li>
+<li>update summarycostscsvfombuilder (#166)</li>
+<li>155 create new SummaryInfrastructureCostsCsvFomBuilder (#157)</li>
+<li>[132] add infrastructure cost to the multilocation profile report (#151)</li>
+<li>143 add the new input profile to the corresponding builders include expanding ini (#144)</li>
+<li>refactor surroundings fom and dom [132] (#140)</li>
+<li>136 add new measure (profile)</li>
+<li>129 remove deprecated shapely.geometry.almost_equals</li>
+</ul>
+<h3 id="fix_1">Fix<a class="headerlink" href="#fix_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>postcreatecommand</li>
+<li>correct construction of StrategyReinforcementInput instances (#228)</li>
+<li>224 ordering strategy not as expected (#225)</li>
+<li>Corrected buffering lower limit and max reinforcement for clustering. (#222)</li>
+<li>improve performance infra cost summation (#205)</li>
+<li>180 adjust calculation wall length for stability screen and cofferdam (#187)</li>
+<li>171 total infrastructure cost in summary costcsv seems to be wrong (#182)</li>
+<li>177 errors when getting total infrastructure per zone (#178)</li>
+<li>surroundings matrix does not include entries between infrastructures (#173)</li>
+</ul>
+<h2 id="v0141-2023-11-08">v0.14.1 (2023-11-08)<a class="headerlink" href="#v0141-2023-11-08" title="Permanent link">&para;</a></h2>
+<h2 id="v0140-2023-11-07">v0.14.0 (2023-11-07)<a class="headerlink" href="#v0140-2023-11-07" title="Permanent link">&para;</a></h2>
+<h3 id="feat_2">Feat<a class="headerlink" href="#feat_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Added order_strategy submodule for determining reinforcement features across a dike traject based on default order</li>
+<li>Added new class to better handle / generate the location-reinforcement matrix</li>
+</ul>
+<h3 id="fix_2">Fix<a class="headerlink" href="#fix_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>improve rounding</li>
+<li>improve rounding</li>
+<li>improve rounding</li>
+<li>show cost per km if no locations present</li>
+<li>add @property to total_cost</li>
+<li>add @property to total_cost</li>
+<li>add @property to total_cost</li>
+<li>test on presence of construction costs</li>
+<li>correct return type</li>
+<li>Added logic to plot new layer surfaces when they are either a <code>LineString</code> or a <code>MultiLineString</code></li>
+<li>corrected berm width calculations (#114)</li>
+<li>corrected berm width calculations</li>
+<li>merge leftovers</li>
+<li>rename "raise" to "surtax" throughout KOSWAT</li>
+<li>rename "raise" to "surtax" throughout KOSWAT</li>
+<li>correct symbol name</li>
+<li>correct symbol name</li>
+<li>typo comment</li>
+<li>typo comment</li>
+<li>Added logic to avoid creating added / removed layers geometries when there were no modifications</li>
+<li>Added default values as math.nan for koswatscenario</li>
+<li>We now replace not-provided values from a KoswatScenario when calculating new reinforcements</li>
+<li>docu corrections</li>
+<li>docu corrections</li>
+<li>docu corrections</li>
+</ul>
+<h2 id="v0130-2023-01-31">v0.13.0 (2023-01-31)<a class="headerlink" href="#v0130-2023-01-31" title="Permanent link">&para;</a></h2>
+<h3 id="feat_3">Feat<a class="headerlink" href="#feat_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>volume_cost_parameters_builder.py</strong>: We now calculate the costs based on the ini input file</li>
+</ul>
+<h2 id="v0121-2023-01-27">v0.12.1 (2023-01-27)<a class="headerlink" href="#v0121-2023-01-27" title="Permanent link">&para;</a></h2>
+<h3 id="fix_3">Fix<a class="headerlink" href="#fix_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>calc_library.py</strong>: Standrad reinforcement calculation now uses a different method to make sure the added geometry is normalized</li>
+</ul>
+<h2 id="v0120-2023-01-26">v0.12.0 (2023-01-26)<a class="headerlink" href="#v0120-2023-01-26" title="Permanent link">&para;</a></h2>
+<h3 id="feat_4">Feat<a class="headerlink" href="#feat_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/cost_report</strong>: Koswat Summary now includes all available locations even if they are not suitable for any reinforcement profile. Adapted the rest of the classes to generate a proper matrix also during export</li>
+</ul>
+<h2 id="v0117-2023-01-25">v0.11.7 (2023-01-25)<a class="headerlink" href="#v0117-2023-01-25" title="Permanent link">&para;</a></h2>
+<h3 id="fix_4">Fix<a class="headerlink" href="#fix_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>calc_library.py</strong>: We now check whether the last point intersects with the line drawn between the first two points to avoid precission issues</li>
+</ul>
+<h2 id="v0116-2023-01-25">v0.11.6 (2023-01-25)<a class="headerlink" href="#v0116-2023-01-25" title="Permanent link">&para;</a></h2>
+<h3 id="fix_5">Fix<a class="headerlink" href="#fix_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>calc_library.py;koswat_coating_layer_builder.py</strong>: We now round up the coordinates of the calculated layers to avoid precision issues</li>
+<li><strong>calc_library.py</strong>: Corrected collection of surface points, added extra plot for reinforced profiles</li>
+</ul>
+<h2 id="v0115-2023-01-12">v0.11.5 (2023-01-12)<a class="headerlink" href="#v0115-2023-01-12" title="Permanent link">&para;</a></h2>
+<h3 id="fix_6">Fix<a class="headerlink" href="#fix_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>calc_library</strong>: Small correction to avoid crashing when trying to order multiline strings</li>
+</ul>
+<h2 id="v0114-2023-01-12">v0.11.4 (2023-01-12)<a class="headerlink" href="#v0114-2023-01-12" title="Permanent link">&para;</a></h2>
+<h3 id="fix_7">Fix<a class="headerlink" href="#fix_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>standard_reinforcement_layers_wrapper_builder</strong>: Fixed sand layer added surface not being correct</li>
+<li><strong>calc_library.py</strong>: After doing a geometry union the resulting geometry gets now their points in order</li>
+</ul>
+<h2 id="v0113-2023-01-12">v0.11.3 (2023-01-12)<a class="headerlink" href="#v0113-2023-01-12" title="Permanent link">&para;</a></h2>
+<h3 id="fix_8">Fix<a class="headerlink" href="#fix_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/configuration</strong>: Fixed creation of scenarios based on selected dike sections</li>
+</ul>
+<h2 id="v0112-2022-12-21">v0.11.2 (2022-12-21)<a class="headerlink" href="#v0112-2022-12-21" title="Permanent link">&para;</a></h2>
+<h2 id="v0111-2022-12-20">v0.11.1 (2022-12-20)<a class="headerlink" href="#v0111-2022-12-20" title="Permanent link">&para;</a></h2>
+<h3 id="fix_9">Fix<a class="headerlink" href="#fix_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/<strong>main</strong>.py</strong>: Renamed main file to fit to python main expected module</li>
+</ul>
+<h2 id="v0110-2022-12-20">v0.11.0 (2022-12-20)<a class="headerlink" href="#v0110-2022-12-20" title="Permanent link">&para;</a></h2>
+<h3 id="feat_5">Feat<a class="headerlink" href="#feat_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/koswat_handler.py</strong>: We now accept a log_output argument to specify the directory where to save the koswat run log.</li>
+</ul>
+<h2 id="v0100-2022-12-20">v0.10.0 (2022-12-20)<a class="headerlink" href="#v0100-2022-12-20" title="Permanent link">&para;</a></h2>
+<h3 id="feat_6">Feat<a class="headerlink" href="#feat_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/configuration/converters</strong>: Created converters fom to dom</li>
+<li><strong>koswat/configuration/io/converters/</strong>: Added configuration converters for the analysis section. We can now generate input profiles from the ini files</li>
+<li><strong>koswat/configuration/io/csv</strong>: Added import of KoswatInputProfiles</li>
+<li><strong>KoswatHandler;KoswatLogger</strong>: Added handler and logger for koswat runs from CLI</li>
+</ul>
+<h3 id="fix_10">Fix<a class="headerlink" href="#fix_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/geometries/calc_library.py</strong>: We now order the points of the geometries so that calculations can be done correctly</li>
+<li><strong>koswat/calculations</strong>: Corrected profile calculation for all types and their tests. These changes come directly from Peter de Grave</li>
+<li><strong>koswat/configuration/io/koswat_run_settings_importer.py</strong>: corrected filtering of selected input profiles</li>
+<li><strong>koswat_dike_locations_shp_reader.py</strong>: Fixed enumerating a filtered list instead of filtering after enumerating</li>
+<li><strong>KoswatSurroundingsConverter</strong>: Fixed return as it was only giving the latest mapped FOM</li>
+<li><strong>configuration/io/converters</strong>: Fixed return of data and adapted tests</li>
+<li><strong>koswat_analysis_converter.py</strong>: Small fix to converter</li>
+<li><strong>koswat_General_settings.py</strong>: Fix validation for surroundings</li>
+<li><strong>koswat/calculations</strong>: Fixed calculations due to new profile input property</li>
+<li><strong>KoswatMaterialType</strong>: Minor fix regarding usage of new KoswatMaterialType</li>
+<li><strong>KoswatMaterialType</strong>: Adapted code to use the enum instead of strings</li>
+</ul>
+<h3 id="refactor">Refactor<a class="headerlink" href="#refactor" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/configuration/io</strong>: Moved converters into io</li>
+<li><strong>koswat/dike/surroundings/io/shp</strong>: Moved shp reader and fom to surroundings module</li>
+<li><strong>koswat/configuration</strong>: Integrating mapping of files to fom's during settings import</li>
+<li><strong>koswat/dike/surroundings/io</strong>: Moved previous CSV reader into a concrete module within dike/surroundings. Created protocols for csv reading so it can be repurposed</li>
+<li><strong>KoswatMaterialType</strong>: Made koswat material into an enum. Adapted code overall in the source</li>
+</ul>
+<h2 id="v090-2022-12-12">v0.9.0 (2022-12-12)<a class="headerlink" href="#v090-2022-12-12" title="Permanent link">&para;</a></h2>
+<h3 id="feat_7">Feat<a class="headerlink" href="#feat_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>KoswatGeneralSettings</strong>: Created DOM for koswat general settings configuration</li>
+<li><strong>KoswatConfigurationIniImporter</strong>: We can now map all different ini fom classes to the config class</li>
+<li><strong>koswat/configuration</strong>: Created koswat configuration module and related class KoswatConfiguration to encapsulate all require information for a koswat analysis</li>
+<li><strong>KoswatScenarioIniFom</strong>: It is now possible to read a KoswatScenarioIniFom from file</li>
+<li><strong>KoswatDikeSelectionIniFom</strong>: It is now possible to read a Dike Selection INI file into its corresponding FOM</li>
+<li><strong>KoswatCostsIniFom</strong>: Added logic to fully implement reading of a KoswatCostsIniFom file</li>
+<li><strong>KoswatCostsIniFom</strong>: Added koswat costs ini file</li>
+<li><strong>KoswatIniReader</strong>: Created koswat ini reader and initial approach to reading the general Koswat INI file</li>
+</ul>
+<h3 id="fix_11">Fix<a class="headerlink" href="#fix_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>KoswatCosts</strong>: Added class conversion to dictionary</li>
+</ul>
+<h3 id="refactor_1">Refactor<a class="headerlink" href="#refactor_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/configuration/models</strong>: Moved configuration data object models into their own module. Fixed / grouped imports</li>
+<li><strong>KoswatDikeSelection</strong>: Koswat dike selection now implements a new type KoswatDikeSelectionTxtFom with related reader</li>
+<li><strong>koswat_scenario</strong>: Moved koswat scenario into koswat/configuration</li>
+<li><strong>koswat/io</strong>: Adapted export / import fom protocol</li>
+</ul>
+<h2 id="v082-2022-12-09">v0.8.2 (2022-12-09)<a class="headerlink" href="#v082-2022-12-09" title="Permanent link">&para;</a></h2>
+<h3 id="fix_12">Fix<a class="headerlink" href="#fix_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>KoswatLayerProtocol</strong>: we now have two different geometries for a layer, so that the profile with the layer and the stand alone representation of it are better reached</li>
+</ul>
+<h2 id="v081-2022-11-21">v0.8.1 (2022-11-21)<a class="headerlink" href="#v081-2022-11-21" title="Permanent link">&para;</a></h2>
+<h3 id="fix_13">Fix<a class="headerlink" href="#fix_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>SummaryMatrixCsvExporter</strong>: We now provide NANs when volume parameter is not defined</li>
+<li><strong>summary_matrix_csv_exporter</strong>: We now correctly export all required information to the csv for the user</li>
+</ul>
+<h2 id="v080-2022-11-19">v0.8.0 (2022-11-19)<a class="headerlink" href="#v080-2022-11-19" title="Permanent link">&para;</a></h2>
+<h3 id="feat_8">Feat<a class="headerlink" href="#feat_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>KoswatPlotContext</strong>: Created plot context handler so it's easier to initialize and close plots</li>
+</ul>
+<h2 id="v070-2022-11-18">v0.7.0 (2022-11-18)<a class="headerlink" href="#v070-2022-11-18" title="Permanent link">&para;</a></h2>
+<h3 id="feat_9">Feat<a class="headerlink" href="#feat_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/cost_report/io/plots/</strong>: Added module for cost_report export plots logic</li>
+<li><strong>koswat_profile_plot.py</strong>: We can now set a unique color for layers_wrapper and profile plots</li>
+<li><strong>koswat/plots/dike/</strong>: Extracted dike plotting logic into separate classes</li>
+<li><strong>koswat/plots/geometries</strong>: Created module with plotting for regular geometries from shapely</li>
+</ul>
+<h3 id="fix_14">Fix<a class="headerlink" href="#fix_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/plots/utils.py</strong>: Replaced wrapper as it is not a good approach</li>
+<li><strong>characteristic_points_builder.py</strong>: Resolved a circular dependency</li>
+</ul>
+<h3 id="refactor_2">Refactor<a class="headerlink" href="#refactor_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/calculations/io/</strong>: Extracted plot exporters from calculations into their corresponding directory</li>
+<li><strong>koswat/plots</strong>: Create concrete module for plotting</li>
+<li><strong>koswat/io</strong>: Moved io files into their corresponding modules</li>
+</ul>
+<h2 id="v060-2022-11-11">v0.6.0 (2022-11-11)<a class="headerlink" href="#v060-2022-11-11" title="Permanent link">&para;</a></h2>
+<h3 id="feat_10">Feat<a class="headerlink" href="#feat_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>VolumeCalculationParameters</strong>: Included all operations required to for volume calculation</li>
+<li><strong>ReinforcementProfileProtocol</strong>: Added new property to retrieve the new ground level surface</li>
+<li><strong>OutsideSlopeReinforcementLayersWrapperBuilder</strong>: Added builder for for the outside slope reinforcement layers wrapper</li>
+<li><strong>StandardReinforcemetnLayersWrapperBuilder</strong>: Added logic to generate the geometries of a standard reinforcement dike</li>
+<li><strong>ReinforcementLayersWrapper</strong>: We now have dedicated builders for the LayersWrapper associated with a Reinforcement</li>
+<li><strong>ReinforcementProfileBuilderProtocol</strong>: Created protocol for better hierarchy</li>
+<li><strong>CoatingLayerCostReport</strong>: Extended usage of previous StandardLayerCostReport so that other reinforcements can also use it</li>
+<li>Added logic to extract the surface of a layer</li>
+<li><strong>LayerCostReportProtocol;StandardLayerCostReportBuilder</strong>: Extracted standard layer cost report builder logic into separate class. Added protocol to represent the layer cost reports</li>
+<li><strong>koswat/geometries; standard_layer_cost_report</strong>: Implemented logic for StandardLayer cost calculation</li>
+<li><strong>OutsideSlopeReinforcementProfileProtocol;StandardReinforcementProfileProtocol</strong>: Added protocols to represent the different types of reinforcement - per volume; Added tests for factory</li>
+<li><strong>LayerCostReportbuilderFactory</strong>: Added logic to retrieve the corresponding LayerCostReportBuilderProtocol; Adapted tests and related imports</li>
+<li><strong>LayerCostReportBuilderFactory</strong>: Introduced layer cost report builder factory for the different types of volume calculators available</li>
+</ul>
+<h3 id="fix_15">Fix<a class="headerlink" href="#fix_15" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PipingWallReinforcementProfileCalculation</strong>: Solved wrong calculation of the Length Piping Wall</li>
+<li><strong>StabilityWallReinforcementProfileCalculation</strong>: Corrected calculation of the length stability wall property</li>
+<li>StabilityWall calculation was not properly mapped</li>
+<li><strong>OutsideSlopeProfileCostReportBuilder</strong>: Now we properly calculate the added core layer</li>
+<li><strong>OutsideSlopeProfileCostReportBuilder</strong>: Calculation of the 'kistdam' layers is now done properly</li>
+</ul>
+<h3 id="refactor_3">Refactor<a class="headerlink" href="#refactor_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/calculations</strong>: Moved calculations into their respecitve reinforcement types</li>
+<li>Starting to move logic of added / removed layers to the calculation module</li>
+<li><strong>cost_report</strong>: Moved layer factory to profile factory as the logic should be in a higher level</li>
+</ul>
+<h2 id="v051-2022-10-11">v0.5.1 (2022-10-11)<a class="headerlink" href="#v051-2022-10-11" title="Permanent link">&para;</a></h2>
+<h3 id="fix_16">Fix<a class="headerlink" href="#fix_16" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>SummaryMatrixCsvExporter</strong>: We now export the locations in order of import</li>
+</ul>
+<h2 id="v050-2022-10-11">v0.5.0 (2022-10-11)<a class="headerlink" href="#v050-2022-10-11" title="Permanent link">&para;</a></h2>
+<h3 id="feat_11">Feat<a class="headerlink" href="#feat_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>SummaryMatrixCsvExporter</strong>: We now also export the CsvFom into a file</li>
+<li><strong>SummaryMatrixCsvFom;SummaryMatrixCsvExporter</strong>: Added Summary Matrix Csv Fom and Exporter initial logic</li>
+<li><strong>CofferDamInputProfile</strong>: Added concrete input profile for CofferDamReinforcementProfile</li>
+<li><strong>calculations/cofferdam;CofferdamReinforcementProfileCalculation;CofferdamReinforcementProfile</strong>: Added Cofferdam Reinforcement Profile and Calculation to the calculations module. Added information to the summary to also build their report.</li>
+<li><strong>StabilityWallInputProfile;StabilityWallReinforcementProfileCalculation</strong>: Created both concrete input profile and profile calculation for StabilityWallReinforcementProfile</li>
+<li><strong>StabilityWallReinforcemetnProfile</strong>: Added StabilityWallReinforcementProfile type</li>
+<li><strong>PipingWallInputProfile</strong>: Created dedicated input profile for PipingWall</li>
+<li><strong>KoswatInputProfileProtocol</strong>: Made a Koswat Input Profile protocol to manage better concrete input profiles. Adapted existing code and tests</li>
+<li><strong>PipingWallReinforcementProfileCalculation</strong>: Added calculation for PipingWall Reinforcement Profile</li>
+<li><strong>PipingWall</strong>: Added PipingWallReinforcementProfile class</li>
+<li><strong>ReinforcementProfileProtocol</strong>: Introduced ReinforcementProfileProtocol as a sub protocol of KoswatProfileProtocol. Adapted existent classes and tests. Moved existing calculations into calculations\soil</li>
+</ul>
+<h3 id="fix_17">Fix<a class="headerlink" href="#fix_17" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>CofferdamReinforcementProfileCalculation</strong>: P4 x coordinate set to 0 for all builds from this calculation</li>
+<li><strong>KoswatProfileBuilder</strong>: Removed paramater from build method to make it complier to the BuilderProtocol</li>
+</ul>
+<h2 id="v040-2022-10-07">v0.4.0 (2022-10-07)<a class="headerlink" href="#v040-2022-10-07" title="Permanent link">&para;</a></h2>
+<h3 id="feat_12">Feat<a class="headerlink" href="#feat_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>MultiLocationMultiProfileCostBuilder</strong>: Added new report to summarize reports of profile per location.</li>
+<li><strong>ListMultiLocationProfileCostBuilder</strong>: It is now possible to make a report for multiple locations and multiple possible profiles</li>
+<li><strong>KoswatBuildingsPolderside.get_classify_surroundings</strong>: We can now retrieve all points classified by their distance to the closest building</li>
+<li><strong>KoswatSurroundings</strong>: Added wrapper class for surroundings and a builder for it. Extended other <code>koswat/surrounding</code> builder classes to be initialized from files.</li>
+<li><strong>KoswatCsvFomBuilder;Koswat\surroundings</strong>: We can now map the csv data to surrounding points and their distances to buildings. Adapted related code</li>
+<li><strong>KoswatCsvReader</strong>: It is possible to read a CSV file into a <code>FileObjectModelProtocol</code> instance of <code>KoswatCsvFom</code>. Added new methods to fom and reader protocols, adapted related classes</li>
+<li><strong>KoswatShpReader</strong>: Added KoswatShpReader to read from a shapefile. Added reader protocol and io module</li>
+</ul>
+<h3 id="refactor_4">Refactor<a class="headerlink" href="#refactor_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat/surroundings</strong>: Moved files into separate module</li>
+<li><strong>dike</strong>: Renamed profiles module to dike for a more coherent approach</li>
+<li><strong>cost_report</strong>: Moved directories into a better  tree structure</li>
+<li><strong>koswat/cost_report</strong>: Seggregated module into builders and reports.</li>
+<li><strong>koswat/cost_report</strong>: Extracted reports into their own modules</li>
+<li><strong>ProfileCostBuilder</strong>: Profile cost builder is independent of the profile type. All types of new profiles are calculated and then a report is done for each of them"</li>
+</ul>
+<h2 id="v030-2022-10-03">v0.3.0 (2022-10-03)<a class="headerlink" href="#v030-2022-10-03" title="Permanent link">&para;</a></h2>
+<h3 id="feat_13">Feat<a class="headerlink" href="#feat_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>CharacteristicPoints</strong>: Created characteristic points to replace the previous 'ProtocolSide' related classes. Introduced builder to allow initial or reinforced profile creation</li>
+<li><strong>KoswatLayersBuilder</strong>: We now can create layers based on the provided depth</li>
+<li><strong>ProfileReinforcementCostBuilder</strong>: Generates a cost report for the new profile based on the extra required volume</li>
+<li><strong>KoswatReport</strong>: Added KoswatReport to generate costs overviews</li>
+<li>It is now possible to create layers from a dictionary</li>
+<li><strong>koswat_layers;koswat_profile_builder</strong>: Added new class to represent the layers of a profile, their material and so on.</li>
+<li><strong>koswat/calculations</strong>: Added profile reinforcement calculation</li>
+<li><strong>koswat/profiles</strong>: Added koswat profiles and related properties. They can now be built from an input profile</li>
+</ul>
+<h2 id="v020-2022-09-27">v0.2.0 (2022-09-27)<a class="headerlink" href="#v020-2022-09-27" title="Permanent link">&para;</a></h2>
+<h3 id="feat_14">Feat<a class="headerlink" href="#feat_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>koswat</strong>: Initial commit. Created Initial architecture and basic tests for the structure given. Added version control through commitizen</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="index.html" class="btn btn-neutral float-left" title="Koswat"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="docker.html" class="btn btn-neutral float-right" title="Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="docker.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
