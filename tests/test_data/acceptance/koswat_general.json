@@ -6,7 +6,7 @@
         "Scenario_Invoer": "scenarios",
         "Eenheidsprijzen": "koswat_costs.json",
         "Omgevingsdatabases": "surroundings_analysis",
-        "Uitvoerfolder": "../../test_results/results_output",
+        "Uitvoerfolder": "../../test_results/acceptance/results_output",
         "BTW": true
     },
     "Dijkprofiel": {
