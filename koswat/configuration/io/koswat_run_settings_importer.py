@@ -183,7 +183,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def _import_general_settings(self, input_config_file: Path) -> KoswatGeneralJsonFom:
         reader = KoswatJsonReader()
         _json_fom = reader.read(input_config_file)
-        return KoswatGeneralJsonFom.from_config(_json_fom.content)
+        return KoswatGeneralJsonFom.from_json(_json_fom)
 
     def _get_reinforcement_settings(
         self, general_settings: KoswatGeneralJsonFom

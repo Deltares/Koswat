@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from koswat.configuration.io.config_sections import (
@@ -12,6 +13,7 @@ from koswat.configuration.io.config_sections import (
     SurroundingsSectionFom,
     VPSReinforcementSectionFom,
 )
+from koswat.core.io.json.koswat_json_fom import KoswatJsonFom
 from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 
@@ -28,44 +30,49 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
     infrastructuur_section: InfrastructureSectionFom
 
     @classmethod
-    def from_config(cls, input_config: dict[str, Any]) -> "KoswatGeneralJsonFom":
+    def from_file(cls, file_path: str) -> "KoswatGeneralJsonFom":
+        pass
+
+    @classmethod
+    def from_json(cls, koswat_config_fom: KoswatJsonFom) -> "KoswatGeneralJsonFom":
         """
         Creates an instance of `KoswatGeneralJsonFom` from a general configuration dictionary.
 
         Args:
-            input_config (dict[str, Any]): Input configuration.
+            koswat_config_fom (KoswatJsonFom): Input configuration.
 
         Returns:
             KoswatGeneralJsonFom: Created object with parsed config settings.
         """
+        json_config = koswat_config_fom.content
         return cls(
-            analysis_section=AnalysisSectionFom.from_config(input_config["analyse"]),
+            analysis_section=AnalysisSectionFom.from_config(json_config["analyse"], koswat_config_fom.file_path.parent),
             dike_profile_section=DikeProfileSectionFom.from_config(
-                input_config["dijkprofiel"], set_defaults=True
+                json_config["dijkprofiel"], set_defaults=True
             ),
             soil_measure_section=SoilReinforcementSectionFom.from_config(
-                input_config["grondmaatregel"], set_defaults=True
+                json_config["grondmaatregel"], set_defaults=True
             ),
             vps_section=VPSReinforcementSectionFom.from_config(
-                input_config["verticalepipingoplossing"], set_defaults=True
+                json_config["verticalepipingoplossing"], set_defaults=True
             ),
             piping_wall_section=(
                 PipingWallReinforcementSectionFom.from_config(
-                    input_config["kwelscherm"], set_defaults=True
+                    json_config["kwelscherm"], set_defaults=True
                 )
             ),
             stability_wall_section=(
                 StabilitywallReinforcementSectionFom.from_config(
-                    input_config["stabiliteitswand"], set_defaults=True
+                    json_config["stabiliteitswand"], set_defaults=True
                 )
             ),
             cofferdam_section=CofferdamReinforcementSectionFom.from_config(
-                dict(input_config["kistdam"]), set_defaults=True
+                dict(json_config["kistdam"]), set_defaults=True
             ),
             surroundings_section=SurroundingsSectionFom.from_config(
-                input_config["omgeving"]
+                json_config["omgeving"]
             ),
             infrastructuur_section=InfrastructureSectionFom.from_config(
-                input_config["infrastructuur"]
+                json_config["infrastructuur"]
             ),
         )

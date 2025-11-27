@@ -27,5 +27,5 @@ class KoswatJsonReader(KoswatReaderProtocol):
             }
 
         return KoswatJsonFom(
-            file_stem=file_path.stem, content=_normalize_keys(_json_content)
+            file_path=file_path, content=_normalize_keys(_json_content)
         )

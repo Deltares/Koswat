@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from koswat.configuration.io.config_sections import (
@@ -30,7 +31,7 @@ class TestKoswatGeneralJsonFom:
 
         # 2. Run test
         _json = _json_reader.read(_test_file_path)
-        _config_fom = KoswatGeneralJsonFom.from_config(_json.content)
+        _config_fom = KoswatGeneralJsonFom.from_json(_json)
 
         # 3. Validate expectations.
         assert isinstance(_config_fom, KoswatGeneralJsonFom)
