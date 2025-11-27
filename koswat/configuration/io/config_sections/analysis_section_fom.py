@@ -21,12 +21,16 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
 
     @classmethod
     def from_config(cls, input_config: dict[str, Any], parent_path: Path) -> "AnalysisSectionFom":
-        
+        # We build the paths relative to the parent path of the main config file.
+        # UNLESS they are already absolute paths.
+
         def resolve_path(input_path: str) -> Path:
             _path = Path(input_path)
-            if not parent_path or not parent_path.exists() or not _path.parent in parent_path.parents:
+            if _path.is_absolute():
+                # Using a windows path in a unix system will return false here.
                 return _path
-            return parent_path.joinpath(_path.name)
+            
+            return parent_path.joinpath(input_path)
         
         return cls(
             dike_section_location_shp_file=resolve_path(input_config["dijksectie_ligging"]),
