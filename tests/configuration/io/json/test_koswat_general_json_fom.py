@@ -27,6 +27,10 @@ class TestKoswatGeneralJsonFom:
         # 1. Define test data.
         _test_file_path = test_json_reader_data.joinpath("koswat_general.json")
         _json_reader = KoswatJsonReader()
+        _expected_dike_section_location_shp_file = Path(
+            "c:\\fake_drive\\Invoer\\Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
+        )
+        assert _expected_dike_section_location_shp_file.is_absolute()
 
         # 2. Run test
         _json = _json_reader.read(_test_file_path)
