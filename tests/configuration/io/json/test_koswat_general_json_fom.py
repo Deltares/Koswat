@@ -31,6 +31,7 @@ class TestKoswatGeneralJsonFom:
         _expected_dike_section_location_shp_file = Path(
                 "fake_drive", "Invoer", "Dijkringlijnen_KOSWAT_2017_WV21_DR10.shp"
             )
+        _expected_dike_section_location_shp_file.is_absolute()
         if os.name == "nt":
             _expected_dike_section_location_shp_file = Path("c:\\") / _expected_dike_section_location_shp_file
 
