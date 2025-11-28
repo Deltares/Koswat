@@ -70,6 +70,7 @@ class TestSurroundingsWrapperCollectionImporter:
     ) -> Path:
         # Create a copy of the directory in a temporary location
         _case_name = get_fixturerequest_case_name(request)
+        # Add randomizer to prevent name clashes
         _case_name = (
             _case_name
             + "_"
