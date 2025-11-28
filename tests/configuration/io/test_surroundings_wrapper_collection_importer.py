@@ -1,5 +1,7 @@
 import shutil
+import string
 from pathlib import Path
+from random import choices
 from typing import Iterator
 
 import pytest
@@ -68,6 +70,11 @@ class TestSurroundingsWrapperCollectionImporter:
     ) -> Path:
         # Create a copy of the directory in a temporary location
         _case_name = get_fixturerequest_case_name(request)
+        _case_name = (
+            _case_name
+            + "_"
+            + "".join(choices(string.ascii_uppercase + string.digits, k=4))
+        )
         _temp_dir = test_results.joinpath(_case_name, surroundings_path.stem)
         if _temp_dir.parent.exists():
             shutil.rmtree(_temp_dir.parent)
