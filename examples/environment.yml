@@ -5,7 +5,6 @@ channels:
 dependencies:
   - conda-forge::python=3.13
   - conda-forge::pip
-  - conda-forge::itables
   - conda-forge::ipyleaflet
   - conda-forge::ipywidgets
   - conda-forge::ipyfilechooser
@@ -14,3 +13,4 @@ dependencies:
   - conda-forge::IPython
   - pip:
     - git+https://github.com/Deltares/koswat.git
+    - itables
