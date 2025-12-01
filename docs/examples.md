@@ -5,3 +5,5 @@ You can run all our examples in a [koswat binder environment](https://mybinder.o
 - Simple runs:
     - [Koswat from command line](https://github.com/Deltares/Koswat/blob/jupyter-binder/koswat_run_as_command_line.md)
     - [Koswat as python package](https://github.com/Deltares/Koswat/blob/jupyter-binder/koswat_run_as_python_package.ipynb)
+
+- [Advanced manual](https://github.com/Deltares/Koswat/blob/jupyter-binder/KOSWAT_Handleiding.ipynb)
