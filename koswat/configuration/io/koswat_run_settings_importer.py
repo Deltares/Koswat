@@ -1,3 +1,24 @@
+"""
+                    GNU GENERAL PUBLIC LICENSE
+                      Version 3, 29 June 2007
+
+    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+    Copyright (C) 2025 Stichting Deltares
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 import logging
 import math
 from pathlib import Path
@@ -183,7 +204,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def _import_general_settings(self, input_config_file: Path) -> KoswatGeneralJsonFom:
         reader = KoswatJsonReader()
         _json_fom = reader.read(input_config_file)
-        return KoswatGeneralJsonFom.from_config(_json_fom.content)
+        return KoswatGeneralJsonFom.from_json(_json_fom)
 
     def _get_reinforcement_settings(
         self, general_settings: KoswatGeneralJsonFom

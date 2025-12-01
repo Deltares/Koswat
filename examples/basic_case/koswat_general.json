@@ -1,12 +1,12 @@
 {
     "Analyse": {
-        "Dijksectie_Ligging": "basic_case/shp/dike_locations.shp",
-        "Dijksecties_Selectie": "basic_case/koswat_dike_selection.txt",
-        "Dijksectie_Invoer": "basic_case/dike_section_input",
-        "Scenario_Invoer": "basic_case/scenarios",
-        "Eenheidsprijzen": "basic_case/koswat_costs.json",
-        "Omgevingsdatabases": "basic_case/surroundings_analysis",
-        "Uitvoerfolder": "basic_case/results_output",
+        "Dijksectie_Ligging": "shp/dike_locations.shp",
+        "Dijksecties_Selectie": "koswat_dike_selection.txt",
+        "Dijksectie_Invoer": "dike_section_input",
+        "Scenario_Invoer": "scenarios",
+        "Eenheidsprijzen": "koswat_costs.json",
+        "Omgevingsdatabases": "surroundings_analysis",
+        "Uitvoerfolder": "results_output",
         "BTW": true
     },
     "Dijkprofiel": {

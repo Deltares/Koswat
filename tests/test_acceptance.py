@@ -100,7 +100,7 @@ class TestAcceptance:
         _json = KoswatJsonReader().read(
             test_data_acceptance.joinpath("koswat_general.json")
         )
-        _koswat_general_settings = KoswatGeneralJsonFom.from_config(_json.content)
+        _koswat_general_settings = KoswatGeneralJsonFom.from_json(_json)
 
         # It is easier returning the costs directly than the FOM,
         # as there's no direct converter from `KoswatCostsJsonFom` to `KoswatCosts`
