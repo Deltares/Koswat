@@ -1,0 +1,119 @@
+{
+  "build": "hfa2b4ca_3",
+  "build_number": 3,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [
+    "openmp 21.1.2|21.1.2.*",
+    "intel-openmp <0.0a0"
+  ],
+  "depends": [
+    "ucrt >=10.0.20348.0",
+    "vc >=14.3,<15",
+    "vc14_runtime >=14.44.35208"
+  ],
+  "extracted_package_dir": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\llvm-openmp-21.1.2-hfa2b4ca_3",
+  "files": [
+    "Library/bin/libiomp5md.dll",
+    "Library/bin/libomp.dll",
+    "Library/include/omp.h",
+    "Library/include/omp_lib.h",
+    "Library/include/ompx.h",
+    "Library/lib/clang/18/include/omp.h",
+    "Library/lib/clang/19/include/omp.h",
+    "Library/lib/clang/20/include/omp.h",
+    "Library/lib/libiomp5md.lib",
+    "Library/lib/libomp.lib",
+    ".nonadmin"
+  ],
+  "fn": "llvm-openmp-21.1.2-hfa2b4ca_3.conda",
+  "license": "Apache-2.0 WITH LLVM-exception",
+  "link": {
+    "source": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\llvm-openmp-21.1.2-hfa2b4ca_3",
+    "type": 1
+  },
+  "md5": "166437478d1ec2f9815180e86a3acebd",
+  "name": "llvm-openmp",
+  "package_tarball_full_path": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\llvm-openmp-21.1.2-hfa2b4ca_3.conda",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Library/bin/libiomp5md.dll",
+        "path_type": "hardlink",
+        "sha256": "580b88f90bc9397ff8db00c58a78338109b8d8e385e9072cefd744574fc00265",
+        "sha256_in_prefix": "580b88f90bc9397ff8db00c58a78338109b8d8e385e9072cefd744574fc00265",
+        "size_in_bytes": 154624
+      },
+      {
+        "_path": "Library/bin/libomp.dll",
+        "path_type": "hardlink",
+        "sha256": "d3df6d9302512bb3f83a0ac74cfebb0735594c75c12d0c653b48ed086fbfe8ed",
+        "sha256_in_prefix": "d3df6d9302512bb3f83a0ac74cfebb0735594c75c12d0c653b48ed086fbfe8ed",
+        "size_in_bytes": 670208
+      },
+      {
+        "_path": "Library/include/omp.h",
+        "path_type": "hardlink",
+        "sha256": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "sha256_in_prefix": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "size_in_bytes": 26395
+      },
+      {
+        "_path": "Library/include/omp_lib.h",
+        "path_type": "hardlink",
+        "sha256": "0271c83c4aeaf44710b98292aace83f586fa073b1a18d807db194a5d64244866",
+        "sha256_in_prefix": "0271c83c4aeaf44710b98292aace83f586fa073b1a18d807db194a5d64244866",
+        "size_in_bytes": 55660
+      },
+      {
+        "_path": "Library/include/ompx.h",
+        "path_type": "hardlink",
+        "sha256": "713e8ca738021ac3ce8b744da2dd4bcc19eb5895dd20a5c1949e1e2dd6760f23",
+        "sha256_in_prefix": "713e8ca738021ac3ce8b744da2dd4bcc19eb5895dd20a5c1949e1e2dd6760f23",
+        "size_in_bytes": 7960
+      },
+      {
+        "_path": "Library/lib/clang/18/include/omp.h",
+        "path_type": "hardlink",
+        "sha256": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "sha256_in_prefix": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "size_in_bytes": 26395
+      },
+      {
+        "_path": "Library/lib/clang/19/include/omp.h",
+        "path_type": "hardlink",
+        "sha256": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "sha256_in_prefix": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "size_in_bytes": 26395
+      },
+      {
+        "_path": "Library/lib/clang/20/include/omp.h",
+        "path_type": "hardlink",
+        "sha256": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "sha256_in_prefix": "d4d962372a5dbe8732c267899edd934336ff17218c05e51477e5395d0273c653",
+        "size_in_bytes": 26395
+      },
+      {
+        "_path": "Library/lib/libiomp5md.lib",
+        "path_type": "hardlink",
+        "sha256": "8df5d0a3e444d433e699f9a48311d90c64c3ca616280843afc89336e040cbfcc",
+        "sha256_in_prefix": "8df5d0a3e444d433e699f9a48311d90c64c3ca616280843afc89336e040cbfcc",
+        "size_in_bytes": 188826
+      },
+      {
+        "_path": "Library/lib/libomp.lib",
+        "path_type": "hardlink",
+        "sha256": "8df5d0a3e444d433e699f9a48311d90c64c3ca616280843afc89336e040cbfcc",
+        "sha256_in_prefix": "8df5d0a3e444d433e699f9a48311d90c64c3ca616280843afc89336e040cbfcc",
+        "size_in_bytes": 188826
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "7fb9351d8b566dac4c3f7f20aaf200edfeb8d123ca98be5abe80e38e13f09ee5",
+  "size": 348046,
+  "subdir": "win-64",
+  "timestamp": 1759429290000,
+  "url": "https://conda.anaconda.org/conda-forge/win-64/llvm-openmp-21.1.2-hfa2b4ca_3.conda",
+  "version": "21.1.2"
+}

@@ -1,0 +1,122 @@
+{
+  "build": "pyhd8ed1ab_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch",
+  "constrains": [],
+  "depends": [
+    "backports.tarfile",
+    "python >=3.9"
+  ],
+  "extracted_package_dir": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\jaraco.context-6.0.1-pyhd8ed1ab_0",
+  "files": [
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/INSTALLER",
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/LICENSE",
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/METADATA",
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/RECORD",
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/REQUESTED",
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/WHEEL",
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/direct_url.json",
+    "Lib/site-packages/jaraco.context-6.0.1.dist-info/top_level.txt",
+    "Lib/site-packages/jaraco/context/__init__.py",
+    "Lib/site-packages/jaraco/context/py.typed",
+    ".nonadmin",
+    "Lib/site-packages/jaraco/context/__pycache__/__init__.cpython-313.pyc"
+  ],
+  "fn": "jaraco.context-6.0.1-pyhd8ed1ab_0.conda",
+  "license": "MIT",
+  "link": {
+    "source": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\jaraco.context-6.0.1-pyhd8ed1ab_0",
+    "type": 1
+  },
+  "md5": "bcc023a32ea1c44a790bbf1eae473486",
+  "name": "jaraco.context",
+  "noarch": "python",
+  "package_tarball_full_path": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\jaraco.context-6.0.1-pyhd8ed1ab_0.conda",
+  "package_type": "noarch_python",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "sha256_in_prefix": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
+        "sha256_in_prefix": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
+        "size_in_bytes": 1023
+      },
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "d26a3370cf94caf9a22d3790aaaf05d6a15befc748d54e1d2c5232a47b931f49",
+        "sha256_in_prefix": "d26a3370cf94caf9a22d3790aaaf05d6a15befc748d54e1d2c5232a47b931f49",
+        "size_in_bytes": 4039
+      },
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "db777213265b9ddbca0afdc832f6566b617a23a974b921883e7989f0fd280412",
+        "sha256_in_prefix": "db777213265b9ddbca0afdc832f6566b617a23a974b921883e7989f0fd280412",
+        "size_in_bytes": 934
+      },
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "3d9504c5d7fbd548bfb28ebb417a724ae1ed0a2dfe277c2f1783912ba93f4bc5",
+        "sha256_in_prefix": "3d9504c5d7fbd548bfb28ebb417a724ae1ed0a2dfe277c2f1783912ba93f4bc5",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "a2709a725b15fc825978ad66b3ed818a34667df83358595ec7e23f401d5c7d28",
+        "sha256_in_prefix": "a2709a725b15fc825978ad66b3ed818a34667df83358595ec7e23f401d5c7d28",
+        "size_in_bytes": 110
+      },
+      {
+        "_path": "site-packages/jaraco.context-6.0.1.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "d099cddcb7d71f82c845f5cbf9014e18227341664edc42f1e11d5dfe5a2ea103",
+        "sha256_in_prefix": "d099cddcb7d71f82c845f5cbf9014e18227341664edc42f1e11d5dfe5a2ea103",
+        "size_in_bytes": 7
+      },
+      {
+        "_path": "site-packages/jaraco/context/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "09e531ed9fb1cc6fe0334cce5cc48ba907cf37ffdc02f3ef947410ab9cf19af3",
+        "sha256_in_prefix": "09e531ed9fb1cc6fe0334cce5cc48ba907cf37ffdc02f3ef947410ab9cf19af3",
+        "size_in_bytes": 9434
+      },
+      {
+        "_path": "site-packages/jaraco/context/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "Lib/site-packages/jaraco/context/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "bfaba92cd33a0ae2488ab64a1d4e062bcf52b26a71f88292c62386ccac4789d7",
+  "size": 12483,
+  "subdir": "noarch",
+  "timestamp": 1733382698000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/jaraco.context-6.0.1-pyhd8ed1ab_0.conda",
+  "version": "6.0.1"
+}

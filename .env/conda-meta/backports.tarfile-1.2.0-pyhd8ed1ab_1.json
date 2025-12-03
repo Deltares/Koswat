@@ -1,0 +1,153 @@
+{
+  "build": "pyhd8ed1ab_1",
+  "build_number": 1,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch",
+  "constrains": [],
+  "depends": [
+    "backports",
+    "python >=3.9"
+  ],
+  "extracted_package_dir": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\backports.tarfile-1.2.0-pyhd8ed1ab_1",
+  "files": [
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/INSTALLER",
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/LICENSE",
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/METADATA",
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/RECORD",
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/REQUESTED",
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/WHEEL",
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/direct_url.json",
+    "Lib/site-packages/backports.tarfile-1.2.0.dist-info/top_level.txt",
+    "Lib/site-packages/backports/tarfile/__init__.py",
+    "Lib/site-packages/backports/tarfile/__main__.py",
+    "Lib/site-packages/backports/tarfile/compat/__init__.py",
+    "Lib/site-packages/backports/tarfile/compat/py38.py",
+    ".nonadmin",
+    "Lib/site-packages/backports/tarfile/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/backports/tarfile/__pycache__/__main__.cpython-313.pyc",
+    "Lib/site-packages/backports/tarfile/compat/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/backports/tarfile/compat/__pycache__/py38.cpython-313.pyc"
+  ],
+  "fn": "backports.tarfile-1.2.0-pyhd8ed1ab_1.conda",
+  "license": "MIT",
+  "link": {
+    "source": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\backports.tarfile-1.2.0-pyhd8ed1ab_1",
+    "type": 1
+  },
+  "md5": "df837d654933488220b454c6a3b0fad6",
+  "name": "backports.tarfile",
+  "noarch": "python",
+  "package_tarball_full_path": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\backports.tarfile-1.2.0-pyhd8ed1ab_1.conda",
+  "package_type": "noarch_python",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "sha256_in_prefix": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
+        "sha256_in_prefix": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
+        "size_in_bytes": 1023
+      },
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "ba967c0736400eaa67e5c1e0a4efc9e8794140e638ffebcdf9445791039ff440",
+        "sha256_in_prefix": "ba967c0736400eaa67e5c1e0a4efc9e8794140e638ffebcdf9445791039ff440",
+        "size_in_bytes": 2002
+      },
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "1dc4b2cebb1ac42d010aed253ace97a9bec11b7486752a38d614b3e9fde98111",
+        "sha256_in_prefix": "1dc4b2cebb1ac42d010aed253ace97a9bec11b7486752a38d614b3e9fde98111",
+        "size_in_bytes": 1461
+      },
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "3d9504c5d7fbd548bfb28ebb417a724ae1ed0a2dfe277c2f1783912ba93f4bc5",
+        "sha256_in_prefix": "3d9504c5d7fbd548bfb28ebb417a724ae1ed0a2dfe277c2f1783912ba93f4bc5",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "442cbac6341f481129c1d28f5cd567bfcc7a07a657d0e4987eb0adea9041425d",
+        "sha256_in_prefix": "442cbac6341f481129c1d28f5cd567bfcc7a07a657d0e4987eb0adea9041425d",
+        "size_in_bytes": 113
+      },
+      {
+        "_path": "site-packages/backports.tarfile-1.2.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "7068da2cc3a8051d452b4029a23b73595995893b49ec91882bf1f05e212cbed5",
+        "sha256_in_prefix": "7068da2cc3a8051d452b4029a23b73595995893b49ec91882bf1f05e212cbed5",
+        "size_in_bytes": 10
+      },
+      {
+        "_path": "site-packages/backports/tarfile/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "3f07f6a9421f0744a89493c229cc77bf3dd412efda89db38838b007f1cbde2a8",
+        "sha256_in_prefix": "3f07f6a9421f0744a89493c229cc77bf3dd412efda89db38838b007f1cbde2a8",
+        "size_in_bytes": 108491
+      },
+      {
+        "_path": "site-packages/backports/tarfile/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "630da8193d5a7ebcf6781b24cdd3d82fc45e07fde5880a6684590dd846c399ce",
+        "sha256_in_prefix": "630da8193d5a7ebcf6781b24cdd3d82fc45e07fde5880a6684590dd846c399ce",
+        "size_in_bytes": 59
+      },
+      {
+        "_path": "site-packages/backports/tarfile/compat/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/backports/tarfile/compat/py38.py",
+        "path_type": "hardlink",
+        "sha256": "898932b7f82f5a32f31944c90fd4ee4df30c8ce93e7abb17666465bd060ddaa1",
+        "sha256_in_prefix": "898932b7f82f5a32f31944c90fd4ee4df30c8ce93e7abb17666465bd060ddaa1",
+        "size_in_bytes": 568
+      },
+      {
+        "_path": "Lib/site-packages/backports/tarfile/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/backports/tarfile/__pycache__/__main__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/backports/tarfile/compat/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/backports/tarfile/compat/__pycache__/py38.cpython-313.pyc",
+        "path_type": "pyc_file"
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "a0f41db6d7580cec3c850e5d1b82cb03197dd49a3179b1cee59c62cd2c761b36",
+  "size": 32786,
+  "subdir": "noarch",
+  "timestamp": 1733325872000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/backports.tarfile-1.2.0-pyhd8ed1ab_1.conda",
+  "version": "1.2.0"
+}

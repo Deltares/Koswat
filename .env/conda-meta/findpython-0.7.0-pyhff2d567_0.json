@@ -1,0 +1,359 @@
+{
+  "build": "pyhff2d567_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch",
+  "constrains": [],
+  "depends": [
+    "packaging >=20",
+    "platformdirs >=4.3.6",
+    "python >=3.9"
+  ],
+  "extracted_package_dir": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\findpython-0.7.0-pyhff2d567_0",
+  "files": [
+    "Lib/site-packages/findpython-0.7.0.dist-info/INSTALLER",
+    "Lib/site-packages/findpython-0.7.0.dist-info/METADATA",
+    "Lib/site-packages/findpython-0.7.0.dist-info/RECORD",
+    "Lib/site-packages/findpython-0.7.0.dist-info/REQUESTED",
+    "Lib/site-packages/findpython-0.7.0.dist-info/WHEEL",
+    "Lib/site-packages/findpython-0.7.0.dist-info/direct_url.json",
+    "Lib/site-packages/findpython-0.7.0.dist-info/entry_points.txt",
+    "Lib/site-packages/findpython-0.7.0.dist-info/licenses/LICENSE",
+    "Lib/site-packages/findpython/__init__.py",
+    "Lib/site-packages/findpython/__main__.py",
+    "Lib/site-packages/findpython/__version__.py",
+    "Lib/site-packages/findpython/finder.py",
+    "Lib/site-packages/findpython/pep514tools/__init__.py",
+    "Lib/site-packages/findpython/pep514tools/__main__.py",
+    "Lib/site-packages/findpython/pep514tools/_registry.py",
+    "Lib/site-packages/findpython/pep514tools/environment.py",
+    "Lib/site-packages/findpython/providers/__init__.py",
+    "Lib/site-packages/findpython/providers/asdf.py",
+    "Lib/site-packages/findpython/providers/base.py",
+    "Lib/site-packages/findpython/providers/macos.py",
+    "Lib/site-packages/findpython/providers/path.py",
+    "Lib/site-packages/findpython/providers/pyenv.py",
+    "Lib/site-packages/findpython/providers/rye.py",
+    "Lib/site-packages/findpython/providers/uv.py",
+    "Lib/site-packages/findpython/providers/winreg.py",
+    "Lib/site-packages/findpython/python.py",
+    "Lib/site-packages/findpython/utils.py",
+    ".nonadmin",
+    "Lib/site-packages/findpython/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/findpython/__pycache__/__main__.cpython-313.pyc",
+    "Lib/site-packages/findpython/__pycache__/__version__.cpython-313.pyc",
+    "Lib/site-packages/findpython/__pycache__/finder.cpython-313.pyc",
+    "Lib/site-packages/findpython/pep514tools/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/findpython/pep514tools/__pycache__/__main__.cpython-313.pyc",
+    "Lib/site-packages/findpython/pep514tools/__pycache__/_registry.cpython-313.pyc",
+    "Lib/site-packages/findpython/pep514tools/__pycache__/environment.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/asdf.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/base.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/macos.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/path.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/pyenv.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/rye.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/uv.cpython-313.pyc",
+    "Lib/site-packages/findpython/providers/__pycache__/winreg.cpython-313.pyc",
+    "Lib/site-packages/findpython/__pycache__/python.cpython-313.pyc",
+    "Lib/site-packages/findpython/__pycache__/utils.cpython-313.pyc",
+    "Scripts/findpython-script.py",
+    "Scripts/findpython.exe"
+  ],
+  "fn": "findpython-0.7.0-pyhff2d567_0.conda",
+  "license": "MIT",
+  "link": {
+    "source": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\findpython-0.7.0-pyhff2d567_0",
+    "type": 1
+  },
+  "md5": "79a4031d3858229c9792bb6f25c939c4",
+  "name": "findpython",
+  "noarch": "python",
+  "package_tarball_full_path": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\findpython-0.7.0-pyhff2d567_0.conda",
+  "package_type": "noarch_python",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "sha256_in_prefix": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "8f3761bb0a3c43c25b6e090bc0db0d51d5d4c17623cf1d7ecf1ebb73a72660db",
+        "sha256_in_prefix": "8f3761bb0a3c43c25b6e090bc0db0d51d5d4c17623cf1d7ecf1ebb73a72660db",
+        "size_in_bytes": 5421
+      },
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "532ff4a9f064d3b1159f0e93cc710186d8f7925f18da952e90026649d4879e42",
+        "sha256_in_prefix": "532ff4a9f064d3b1159f0e93cc710186d8f7925f18da952e90026649d4879e42",
+        "size_in_bytes": 3455
+      },
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "b527d1673447b61bafeefc6923869e86b74df6c70b8e4f9d08990f2f3907c468",
+        "sha256_in_prefix": "b527d1673447b61bafeefc6923869e86b74df6c70b8e4f9d08990f2f3907c468",
+        "size_in_bytes": 90
+      },
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "ad2917a8a9086491b2366425ec34067946a88d56f812f9a1b74ac1f0d8e673f0",
+        "sha256_in_prefix": "ad2917a8a9086491b2366425ec34067946a88d56f812f9a1b74ac1f0d8e673f0",
+        "size_in_bytes": 106
+      },
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/entry_points.txt",
+        "path_type": "hardlink",
+        "sha256": "5bbe078583322863f5b65e3cc1f62c02fce2b1389fefcec5f5071de63cabe35d",
+        "sha256_in_prefix": "5bbe078583322863f5b65e3cc1f62c02fce2b1389fefcec5f5071de63cabe35d",
+        "size_in_bytes": 72
+      },
+      {
+        "_path": "site-packages/findpython-0.7.0.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "da09d04078d69825b0f2a7686cbd6452a6789a6edc9122ac3d8b52c6ca256398",
+        "sha256_in_prefix": "da09d04078d69825b0f2a7686cbd6452a6789a6edc9122ac3d8b52c6ca256398",
+        "size_in_bytes": 1075
+      },
+      {
+        "_path": "site-packages/findpython/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "1d7ccd5eddf072b1980362e6c5171ff55feddab635f1bf8938e19f59f12dc2d6",
+        "sha256_in_prefix": "1d7ccd5eddf072b1980362e6c5171ff55feddab635f1bf8938e19f59f12dc2d6",
+        "size_in_bytes": 1917
+      },
+      {
+        "_path": "site-packages/findpython/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "8ebec2eab94d37c6b2048b0cd47f543bc0f617229eb8be9d0b5559428fe7bb81",
+        "sha256_in_prefix": "8ebec2eab94d37c6b2048b0cd47f543bc0f617229eb8be9d0b5559428fe7bb81",
+        "size_in_bytes": 2880
+      },
+      {
+        "_path": "site-packages/findpython/__version__.py",
+        "path_type": "hardlink",
+        "sha256": "45a00d19b46ee5efaf7a1c17235f907b68203cf7ecd5341a663d3bd8975b2e4e",
+        "sha256_in_prefix": "45a00d19b46ee5efaf7a1c17235f907b68203cf7ecd5341a663d3bd8975b2e4e",
+        "size_in_bytes": 22
+      },
+      {
+        "_path": "site-packages/findpython/finder.py",
+        "path_type": "hardlink",
+        "sha256": "d2643b96abe5ff7d4ee84ae1093c12ba224e7761cd595732ac349d60bd93632c",
+        "sha256_in_prefix": "d2643b96abe5ff7d4ee84ae1093c12ba224e7761cd595732ac349d60bd93632c",
+        "size_in_bytes": 8069
+      },
+      {
+        "_path": "site-packages/findpython/pep514tools/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "c6c3bb2d7c96cef5c78ad98635cdf01c9ff3c309d3e8605483d25cee2b4141e1",
+        "sha256_in_prefix": "c6c3bb2d7c96cef5c78ad98635cdf01c9ff3c309d3e8605483d25cee2b4141e1",
+        "size_in_bytes": 442
+      },
+      {
+        "_path": "site-packages/findpython/pep514tools/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "abe258af209da937eadf44fadd56f65325888f915bcadcced66835cdc7bed413",
+        "sha256_in_prefix": "abe258af209da937eadf44fadd56f65325888f915bcadcced66835cdc7bed413",
+        "size_in_bytes": 254
+      },
+      {
+        "_path": "site-packages/findpython/pep514tools/_registry.py",
+        "path_type": "hardlink",
+        "sha256": "440f865f06d358767270e1951dea34378e25f5ac7c8622ffc20f0b33ecfda229",
+        "sha256_in_prefix": "440f865f06d358767270e1951dea34378e25f5ac7c8622ffc20f0b33ecfda229",
+        "size_in_bytes": 6634
+      },
+      {
+        "_path": "site-packages/findpython/pep514tools/environment.py",
+        "path_type": "hardlink",
+        "sha256": "4a048eb958aba4a90e5e1632f5509d5449c4c1ae9d476d496834df525b7d2d19",
+        "sha256_in_prefix": "4a048eb958aba4a90e5e1632f5509d5449c4c1ae9d476d496834df525b7d2d19",
+        "size_in_bytes": 4638
+      },
+      {
+        "_path": "site-packages/findpython/providers/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "089401243737a019f2f385f0572bd2de38834cefc2275f2004f76c7e0ad0fdb6",
+        "sha256_in_prefix": "089401243737a019f2f385f0572bd2de38834cefc2275f2004f76c7e0ad0fdb6",
+        "size_in_bytes": 910
+      },
+      {
+        "_path": "site-packages/findpython/providers/asdf.py",
+        "path_type": "hardlink",
+        "sha256": "ecc8ea198bb977fc16accf634a271fe6157da986a8c046045ea75088ec936525",
+        "sha256_in_prefix": "ecc8ea198bb977fc16accf634a271fe6157da986a8c046045ea75088ec936525",
+        "size_in_bytes": 1256
+      },
+      {
+        "_path": "site-packages/findpython/providers/base.py",
+        "path_type": "hardlink",
+        "sha256": "d5165c8d7bb38c3bf8eab93a4621bd7762dabe070649bc8b8c4e0ee9c1aa7413",
+        "sha256_in_prefix": "d5165c8d7bb38c3bf8eab93a4621bd7762dabe070649bc8b8c4e0ee9c1aa7413",
+        "size_in_bytes": 2027
+      },
+      {
+        "_path": "site-packages/findpython/providers/macos.py",
+        "path_type": "hardlink",
+        "sha256": "8216e657572eccdc9d5635e316e1000464aa7fb70e752411090a3c5475fe590f",
+        "sha256_in_prefix": "8216e657572eccdc9d5635e316e1000464aa7fb70e752411090a3c5475fe590f",
+        "size_in_bytes": 957
+      },
+      {
+        "_path": "site-packages/findpython/providers/path.py",
+        "path_type": "hardlink",
+        "sha256": "e0d6a47df9bb8ce247accec6b2369d5553e1e099d7ed3be189055151fcfc494d",
+        "sha256_in_prefix": "e0d6a47df9bb8ce247accec6b2369d5553e1e099d7ed3be189055151fcfc494d",
+        "size_in_bytes": 860
+      },
+      {
+        "_path": "site-packages/findpython/providers/pyenv.py",
+        "path_type": "hardlink",
+        "sha256": "a6c396d458b5ba86f090d9dd9ecff8882b10b5d900f0ce9206641f7b38ef57fd",
+        "sha256_in_prefix": "a6c396d458b5ba86f090d9dd9ecff8882b10b5d900f0ce9206641f7b38ef57fd",
+        "size_in_bytes": 1270
+      },
+      {
+        "_path": "site-packages/findpython/providers/rye.py",
+        "path_type": "hardlink",
+        "sha256": "55269db2d392a511cd2526080b463e2a0ddd4bb08d339813838cbc79ed771f5a",
+        "sha256_in_prefix": "55269db2d392a511cd2526080b463e2a0ddd4bb08d339813838cbc79ed771f5a",
+        "size_in_bytes": 1243
+      },
+      {
+        "_path": "site-packages/findpython/providers/uv.py",
+        "path_type": "hardlink",
+        "sha256": "10531e3a244f2ae3e330bb579d070f6e2cef37280bbd878de5858ce30f9b24d6",
+        "sha256_in_prefix": "10531e3a244f2ae3e330bb579d070f6e2cef37280bbd878de5858ce30f9b24d6",
+        "size_in_bytes": 575
+      },
+      {
+        "_path": "site-packages/findpython/providers/winreg.py",
+        "path_type": "hardlink",
+        "sha256": "35352d562d8ba4a89198cbe5c467ee1cc385c4a85cdb9a32783b4ce8a0ed8c80",
+        "sha256_in_prefix": "35352d562d8ba4a89198cbe5c467ee1cc385c4a85cdb9a32783b4ce8a0ed8c80",
+        "size_in_bytes": 1800
+      },
+      {
+        "_path": "site-packages/findpython/python.py",
+        "path_type": "hardlink",
+        "sha256": "f40bb04609addb10407145694c0da5c8ccb5dda2ab8b6fde815c59b35fcd587b",
+        "sha256_in_prefix": "f40bb04609addb10407145694c0da5c8ccb5dda2ab8b6fde815c59b35fcd587b",
+        "size_in_bytes": 8295
+      },
+      {
+        "_path": "site-packages/findpython/utils.py",
+        "path_type": "hardlink",
+        "sha256": "bc39339eb049a4f9751d7e11d9c415253529ad25ab5423f8c0beeea765a50f22",
+        "sha256_in_prefix": "bc39339eb049a4f9751d7e11d9c415253529ad25ab5423f8c0beeea765a50f22",
+        "size_in_bytes": 4533
+      },
+      {
+        "_path": "Lib/site-packages/findpython/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/__pycache__/__main__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/__pycache__/__version__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/__pycache__/finder.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/pep514tools/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/pep514tools/__pycache__/__main__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/pep514tools/__pycache__/_registry.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/pep514tools/__pycache__/environment.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/asdf.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/base.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/macos.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/path.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/pyenv.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/rye.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/uv.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/providers/__pycache__/winreg.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/__pycache__/python.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/findpython/__pycache__/utils.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Scripts/findpython-script.py",
+        "path_type": "windows_python_entry_point_script"
+      },
+      {
+        "_path": "Scripts/findpython.exe",
+        "path_type": "windows_python_entry_point_exe"
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "4c7c675ead44a1fc747e8662de2b0aff13ed9156f7a67085709122d3c56c7302",
+  "size": 22710,
+  "subdir": "noarch",
+  "timestamp": 1751542456000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/findpython-0.7.0-pyhff2d567_0.conda",
+  "version": "0.7.0"
+}

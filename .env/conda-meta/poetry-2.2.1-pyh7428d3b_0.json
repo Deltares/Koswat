@@ -1,0 +1,2635 @@
+{
+  "build": "pyh7428d3b_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/noarch",
+  "constrains": [],
+  "depends": [
+    "__win",
+    "cachecontrol >=0.14.0,<0.15.0",
+    "cachecontrol-with-filecache",
+    "cleo >=2.1.0,<3.0.0",
+    "dulwich >=0.24.0,<0.25.0",
+    "findpython >=0.6.2,<0.8.0",
+    "httpx <1,>=0.27.0",
+    "importlib-metadata >=4.4,<8.7",
+    "keyring >=25.1.0,<26.0.0",
+    "packaging >=24.2",
+    "pbs-installer >=2025.1.6,<2026.0.0",
+    "pkginfo >=1.12,<2.0",
+    "platformdirs >=3.0.0,<5",
+    "poetry-core 2.2.1",
+    "pyproject_hooks >=1.0.0,<2.0.0",
+    "python >=3.10,<4.0",
+    "python-build >=1.2.1,<2.0.0",
+    "python-fastjsonschema >=2.18.0,<3.0.0",
+    "python-installer >=0.7.0,<0.8.0",
+    "requests >=2.26,<3.0",
+    "requests-toolbelt >=1.0.0,<2.0.0",
+    "shellingham >=1.5,<2.0",
+    "tomli >=2.0.1,<3.0.0",
+    "tomlkit >=0.11.4,<1.0.0",
+    "trove-classifiers >=2022.5.19",
+    "virtualenv >=20.26.6",
+    "zstandard >=0.21.0"
+  ],
+  "extracted_package_dir": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\poetry-2.2.1-pyh7428d3b_0",
+  "files": [
+    "Lib/site-packages/poetry-2.2.1.dist-info/INSTALLER",
+    "Lib/site-packages/poetry-2.2.1.dist-info/METADATA",
+    "Lib/site-packages/poetry-2.2.1.dist-info/RECORD",
+    "Lib/site-packages/poetry-2.2.1.dist-info/REQUESTED",
+    "Lib/site-packages/poetry-2.2.1.dist-info/WHEEL",
+    "Lib/site-packages/poetry-2.2.1.dist-info/direct_url.json",
+    "Lib/site-packages/poetry-2.2.1.dist-info/entry_points.txt",
+    "Lib/site-packages/poetry-2.2.1.dist-info/licenses/LICENSE",
+    "Lib/site-packages/poetry/__main__.py",
+    "Lib/site-packages/poetry/__version__.py",
+    "Lib/site-packages/poetry/config/__init__.py",
+    "Lib/site-packages/poetry/config/config.py",
+    "Lib/site-packages/poetry/config/config_source.py",
+    "Lib/site-packages/poetry/config/dict_config_source.py",
+    "Lib/site-packages/poetry/config/file_config_source.py",
+    "Lib/site-packages/poetry/config/source.py",
+    "Lib/site-packages/poetry/console/__init__.py",
+    "Lib/site-packages/poetry/console/application.py",
+    "Lib/site-packages/poetry/console/command_loader.py",
+    "Lib/site-packages/poetry/console/commands/__init__.py",
+    "Lib/site-packages/poetry/console/commands/about.py",
+    "Lib/site-packages/poetry/console/commands/add.py",
+    "Lib/site-packages/poetry/console/commands/build.py",
+    "Lib/site-packages/poetry/console/commands/cache/__init__.py",
+    "Lib/site-packages/poetry/console/commands/cache/clear.py",
+    "Lib/site-packages/poetry/console/commands/cache/list.py",
+    "Lib/site-packages/poetry/console/commands/check.py",
+    "Lib/site-packages/poetry/console/commands/command.py",
+    "Lib/site-packages/poetry/console/commands/config.py",
+    "Lib/site-packages/poetry/console/commands/debug/__init__.py",
+    "Lib/site-packages/poetry/console/commands/debug/info.py",
+    "Lib/site-packages/poetry/console/commands/debug/resolve.py",
+    "Lib/site-packages/poetry/console/commands/debug/tags.py",
+    "Lib/site-packages/poetry/console/commands/env/__init__.py",
+    "Lib/site-packages/poetry/console/commands/env/activate.py",
+    "Lib/site-packages/poetry/console/commands/env/info.py",
+    "Lib/site-packages/poetry/console/commands/env/list.py",
+    "Lib/site-packages/poetry/console/commands/env/remove.py",
+    "Lib/site-packages/poetry/console/commands/env/use.py",
+    "Lib/site-packages/poetry/console/commands/env_command.py",
+    "Lib/site-packages/poetry/console/commands/group_command.py",
+    "Lib/site-packages/poetry/console/commands/init.py",
+    "Lib/site-packages/poetry/console/commands/install.py",
+    "Lib/site-packages/poetry/console/commands/installer_command.py",
+    "Lib/site-packages/poetry/console/commands/lock.py",
+    "Lib/site-packages/poetry/console/commands/new.py",
+    "Lib/site-packages/poetry/console/commands/publish.py",
+    "Lib/site-packages/poetry/console/commands/python/__init__.py",
+    "Lib/site-packages/poetry/console/commands/python/install.py",
+    "Lib/site-packages/poetry/console/commands/python/list.py",
+    "Lib/site-packages/poetry/console/commands/python/remove.py",
+    "Lib/site-packages/poetry/console/commands/remove.py",
+    "Lib/site-packages/poetry/console/commands/run.py",
+    "Lib/site-packages/poetry/console/commands/search.py",
+    "Lib/site-packages/poetry/console/commands/self/__init__.py",
+    "Lib/site-packages/poetry/console/commands/self/add.py",
+    "Lib/site-packages/poetry/console/commands/self/install.py",
+    "Lib/site-packages/poetry/console/commands/self/lock.py",
+    "Lib/site-packages/poetry/console/commands/self/remove.py",
+    "Lib/site-packages/poetry/console/commands/self/self_command.py",
+    "Lib/site-packages/poetry/console/commands/self/show/__init__.py",
+    "Lib/site-packages/poetry/console/commands/self/show/plugins.py",
+    "Lib/site-packages/poetry/console/commands/self/sync.py",
+    "Lib/site-packages/poetry/console/commands/self/update.py",
+    "Lib/site-packages/poetry/console/commands/show.py",
+    "Lib/site-packages/poetry/console/commands/source/__init__.py",
+    "Lib/site-packages/poetry/console/commands/source/add.py",
+    "Lib/site-packages/poetry/console/commands/source/remove.py",
+    "Lib/site-packages/poetry/console/commands/source/show.py",
+    "Lib/site-packages/poetry/console/commands/sync.py",
+    "Lib/site-packages/poetry/console/commands/update.py",
+    "Lib/site-packages/poetry/console/commands/version.py",
+    "Lib/site-packages/poetry/console/events/__init__.py",
+    "Lib/site-packages/poetry/console/events/console_events.py",
+    "Lib/site-packages/poetry/console/exceptions.py",
+    "Lib/site-packages/poetry/console/logging/__init__.py",
+    "Lib/site-packages/poetry/console/logging/filters.py",
+    "Lib/site-packages/poetry/console/logging/formatters/__init__.py",
+    "Lib/site-packages/poetry/console/logging/formatters/builder_formatter.py",
+    "Lib/site-packages/poetry/console/logging/formatters/formatter.py",
+    "Lib/site-packages/poetry/console/logging/io_formatter.py",
+    "Lib/site-packages/poetry/console/logging/io_handler.py",
+    "Lib/site-packages/poetry/exceptions.py",
+    "Lib/site-packages/poetry/factory.py",
+    "Lib/site-packages/poetry/inspection/__init__.py",
+    "Lib/site-packages/poetry/inspection/info.py",
+    "Lib/site-packages/poetry/inspection/lazy_wheel.py",
+    "Lib/site-packages/poetry/installation/__init__.py",
+    "Lib/site-packages/poetry/installation/chef.py",
+    "Lib/site-packages/poetry/installation/chooser.py",
+    "Lib/site-packages/poetry/installation/executor.py",
+    "Lib/site-packages/poetry/installation/installer.py",
+    "Lib/site-packages/poetry/installation/operations/__init__.py",
+    "Lib/site-packages/poetry/installation/operations/install.py",
+    "Lib/site-packages/poetry/installation/operations/operation.py",
+    "Lib/site-packages/poetry/installation/operations/uninstall.py",
+    "Lib/site-packages/poetry/installation/operations/update.py",
+    "Lib/site-packages/poetry/installation/wheel_installer.py",
+    "Lib/site-packages/poetry/json/__init__.py",
+    "Lib/site-packages/poetry/json/schemas/poetry.json",
+    "Lib/site-packages/poetry/layouts/__init__.py",
+    "Lib/site-packages/poetry/layouts/layout.py",
+    "Lib/site-packages/poetry/layouts/src.py",
+    "Lib/site-packages/poetry/locations.py",
+    "Lib/site-packages/poetry/masonry/__init__.py",
+    "Lib/site-packages/poetry/masonry/api.py",
+    "Lib/site-packages/poetry/masonry/builders/__init__.py",
+    "Lib/site-packages/poetry/masonry/builders/editable.py",
+    "Lib/site-packages/poetry/mixology/__init__.py",
+    "Lib/site-packages/poetry/mixology/assignment.py",
+    "Lib/site-packages/poetry/mixology/failure.py",
+    "Lib/site-packages/poetry/mixology/incompatibility.py",
+    "Lib/site-packages/poetry/mixology/incompatibility_cause.py",
+    "Lib/site-packages/poetry/mixology/partial_solution.py",
+    "Lib/site-packages/poetry/mixology/result.py",
+    "Lib/site-packages/poetry/mixology/set_relation.py",
+    "Lib/site-packages/poetry/mixology/term.py",
+    "Lib/site-packages/poetry/mixology/version_solver.py",
+    "Lib/site-packages/poetry/packages/__init__.py",
+    "Lib/site-packages/poetry/packages/dependency_package.py",
+    "Lib/site-packages/poetry/packages/direct_origin.py",
+    "Lib/site-packages/poetry/packages/locker.py",
+    "Lib/site-packages/poetry/packages/package_collection.py",
+    "Lib/site-packages/poetry/packages/transitive_package_info.py",
+    "Lib/site-packages/poetry/plugins/__init__.py",
+    "Lib/site-packages/poetry/plugins/application_plugin.py",
+    "Lib/site-packages/poetry/plugins/base_plugin.py",
+    "Lib/site-packages/poetry/plugins/plugin.py",
+    "Lib/site-packages/poetry/plugins/plugin_manager.py",
+    "Lib/site-packages/poetry/poetry.py",
+    "Lib/site-packages/poetry/publishing/__init__.py",
+    "Lib/site-packages/poetry/publishing/hash_manager.py",
+    "Lib/site-packages/poetry/publishing/publisher.py",
+    "Lib/site-packages/poetry/publishing/uploader.py",
+    "Lib/site-packages/poetry/puzzle/__init__.py",
+    "Lib/site-packages/poetry/puzzle/exceptions.py",
+    "Lib/site-packages/poetry/puzzle/provider.py",
+    "Lib/site-packages/poetry/puzzle/solver.py",
+    "Lib/site-packages/poetry/puzzle/transaction.py",
+    "Lib/site-packages/poetry/py.typed",
+    "Lib/site-packages/poetry/pyproject/__init__.py",
+    "Lib/site-packages/poetry/pyproject/toml.py",
+    "Lib/site-packages/poetry/repositories/__init__.py",
+    "Lib/site-packages/poetry/repositories/abstract_repository.py",
+    "Lib/site-packages/poetry/repositories/cached_repository.py",
+    "Lib/site-packages/poetry/repositories/exceptions.py",
+    "Lib/site-packages/poetry/repositories/http_repository.py",
+    "Lib/site-packages/poetry/repositories/installed_repository.py",
+    "Lib/site-packages/poetry/repositories/legacy_repository.py",
+    "Lib/site-packages/poetry/repositories/link_sources/__init__.py",
+    "Lib/site-packages/poetry/repositories/link_sources/base.py",
+    "Lib/site-packages/poetry/repositories/link_sources/html.py",
+    "Lib/site-packages/poetry/repositories/link_sources/json.py",
+    "Lib/site-packages/poetry/repositories/lockfile_repository.py",
+    "Lib/site-packages/poetry/repositories/parsers/__init__.py",
+    "Lib/site-packages/poetry/repositories/parsers/html_page_parser.py",
+    "Lib/site-packages/poetry/repositories/parsers/pypi_search_parser.py",
+    "Lib/site-packages/poetry/repositories/pypi_repository.py",
+    "Lib/site-packages/poetry/repositories/repository.py",
+    "Lib/site-packages/poetry/repositories/repository_pool.py",
+    "Lib/site-packages/poetry/repositories/single_page_repository.py",
+    "Lib/site-packages/poetry/toml/__init__.py",
+    "Lib/site-packages/poetry/toml/exceptions.py",
+    "Lib/site-packages/poetry/toml/file.py",
+    "Lib/site-packages/poetry/utils/__init__.py",
+    "Lib/site-packages/poetry/utils/_compat.py",
+    "Lib/site-packages/poetry/utils/authenticator.py",
+    "Lib/site-packages/poetry/utils/cache.py",
+    "Lib/site-packages/poetry/utils/constants.py",
+    "Lib/site-packages/poetry/utils/dependency_specification.py",
+    "Lib/site-packages/poetry/utils/env/__init__.py",
+    "Lib/site-packages/poetry/utils/env/base_env.py",
+    "Lib/site-packages/poetry/utils/env/env_manager.py",
+    "Lib/site-packages/poetry/utils/env/exceptions.py",
+    "Lib/site-packages/poetry/utils/env/generic_env.py",
+    "Lib/site-packages/poetry/utils/env/mock_env.py",
+    "Lib/site-packages/poetry/utils/env/null_env.py",
+    "Lib/site-packages/poetry/utils/env/python/__init__.py",
+    "Lib/site-packages/poetry/utils/env/python/exceptions.py",
+    "Lib/site-packages/poetry/utils/env/python/installer.py",
+    "Lib/site-packages/poetry/utils/env/python/manager.py",
+    "Lib/site-packages/poetry/utils/env/python/providers.py",
+    "Lib/site-packages/poetry/utils/env/script_strings.py",
+    "Lib/site-packages/poetry/utils/env/site_packages.py",
+    "Lib/site-packages/poetry/utils/env/system_env.py",
+    "Lib/site-packages/poetry/utils/env/virtual_env.py",
+    "Lib/site-packages/poetry/utils/extras.py",
+    "Lib/site-packages/poetry/utils/helpers.py",
+    "Lib/site-packages/poetry/utils/isolated_build.py",
+    "Lib/site-packages/poetry/utils/log_utils.py",
+    "Lib/site-packages/poetry/utils/password_manager.py",
+    "Lib/site-packages/poetry/utils/patterns.py",
+    "Lib/site-packages/poetry/utils/pip.py",
+    "Lib/site-packages/poetry/utils/threading.py",
+    "Lib/site-packages/poetry/utils/wheel.py",
+    "Lib/site-packages/poetry/vcs/__init__.py",
+    "Lib/site-packages/poetry/vcs/git/__init__.py",
+    "Lib/site-packages/poetry/vcs/git/backend.py",
+    "Lib/site-packages/poetry/vcs/git/system.py",
+    "Lib/site-packages/poetry/version/__init__.py",
+    "Lib/site-packages/poetry/version/version_selector.py",
+    ".nonadmin",
+    "Lib/site-packages/poetry/__pycache__/__main__.cpython-313.pyc",
+    "Lib/site-packages/poetry/__pycache__/__version__.cpython-313.pyc",
+    "Lib/site-packages/poetry/config/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/config/__pycache__/config.cpython-313.pyc",
+    "Lib/site-packages/poetry/config/__pycache__/config_source.cpython-313.pyc",
+    "Lib/site-packages/poetry/config/__pycache__/dict_config_source.cpython-313.pyc",
+    "Lib/site-packages/poetry/config/__pycache__/file_config_source.cpython-313.pyc",
+    "Lib/site-packages/poetry/config/__pycache__/source.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/__pycache__/application.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/__pycache__/command_loader.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/about.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/add.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/build.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/cache/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/cache/__pycache__/clear.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/cache/__pycache__/list.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/check.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/command.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/config.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/debug/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/debug/__pycache__/info.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/debug/__pycache__/resolve.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/debug/__pycache__/tags.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/env/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/env/__pycache__/activate.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/env/__pycache__/info.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/env/__pycache__/list.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/env/__pycache__/remove.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/env/__pycache__/use.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/env_command.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/group_command.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/init.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/install.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/installer_command.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/lock.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/new.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/publish.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/python/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/python/__pycache__/install.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/python/__pycache__/list.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/python/__pycache__/remove.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/remove.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/run.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/search.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/add.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/install.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/lock.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/remove.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/self_command.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/show/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/show/__pycache__/plugins.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/sync.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/self/__pycache__/update.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/show.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/source/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/source/__pycache__/add.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/source/__pycache__/remove.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/source/__pycache__/show.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/sync.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/update.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/commands/__pycache__/version.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/events/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/events/__pycache__/console_events.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/__pycache__/exceptions.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/logging/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/logging/__pycache__/filters.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/logging/formatters/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/logging/formatters/__pycache__/builder_formatter.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/logging/formatters/__pycache__/formatter.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/logging/__pycache__/io_formatter.cpython-313.pyc",
+    "Lib/site-packages/poetry/console/logging/__pycache__/io_handler.cpython-313.pyc",
+    "Lib/site-packages/poetry/__pycache__/exceptions.cpython-313.pyc",
+    "Lib/site-packages/poetry/__pycache__/factory.cpython-313.pyc",
+    "Lib/site-packages/poetry/inspection/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/inspection/__pycache__/info.cpython-313.pyc",
+    "Lib/site-packages/poetry/inspection/__pycache__/lazy_wheel.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/__pycache__/chef.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/__pycache__/chooser.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/__pycache__/executor.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/__pycache__/installer.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/operations/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/operations/__pycache__/install.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/operations/__pycache__/operation.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/operations/__pycache__/uninstall.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/operations/__pycache__/update.cpython-313.pyc",
+    "Lib/site-packages/poetry/installation/__pycache__/wheel_installer.cpython-313.pyc",
+    "Lib/site-packages/poetry/json/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/layouts/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/layouts/__pycache__/layout.cpython-313.pyc",
+    "Lib/site-packages/poetry/layouts/__pycache__/src.cpython-313.pyc",
+    "Lib/site-packages/poetry/__pycache__/locations.cpython-313.pyc",
+    "Lib/site-packages/poetry/masonry/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/masonry/__pycache__/api.cpython-313.pyc",
+    "Lib/site-packages/poetry/masonry/builders/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/masonry/builders/__pycache__/editable.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/assignment.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/failure.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/incompatibility.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/incompatibility_cause.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/partial_solution.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/result.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/set_relation.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/term.cpython-313.pyc",
+    "Lib/site-packages/poetry/mixology/__pycache__/version_solver.cpython-313.pyc",
+    "Lib/site-packages/poetry/packages/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/packages/__pycache__/dependency_package.cpython-313.pyc",
+    "Lib/site-packages/poetry/packages/__pycache__/direct_origin.cpython-313.pyc",
+    "Lib/site-packages/poetry/packages/__pycache__/locker.cpython-313.pyc",
+    "Lib/site-packages/poetry/packages/__pycache__/package_collection.cpython-313.pyc",
+    "Lib/site-packages/poetry/packages/__pycache__/transitive_package_info.cpython-313.pyc",
+    "Lib/site-packages/poetry/plugins/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/plugins/__pycache__/application_plugin.cpython-313.pyc",
+    "Lib/site-packages/poetry/plugins/__pycache__/base_plugin.cpython-313.pyc",
+    "Lib/site-packages/poetry/plugins/__pycache__/plugin.cpython-313.pyc",
+    "Lib/site-packages/poetry/plugins/__pycache__/plugin_manager.cpython-313.pyc",
+    "Lib/site-packages/poetry/__pycache__/poetry.cpython-313.pyc",
+    "Lib/site-packages/poetry/publishing/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/publishing/__pycache__/hash_manager.cpython-313.pyc",
+    "Lib/site-packages/poetry/publishing/__pycache__/publisher.cpython-313.pyc",
+    "Lib/site-packages/poetry/publishing/__pycache__/uploader.cpython-313.pyc",
+    "Lib/site-packages/poetry/puzzle/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/puzzle/__pycache__/exceptions.cpython-313.pyc",
+    "Lib/site-packages/poetry/puzzle/__pycache__/provider.cpython-313.pyc",
+    "Lib/site-packages/poetry/puzzle/__pycache__/solver.cpython-313.pyc",
+    "Lib/site-packages/poetry/puzzle/__pycache__/transaction.cpython-313.pyc",
+    "Lib/site-packages/poetry/pyproject/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/pyproject/__pycache__/toml.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/abstract_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/cached_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/exceptions.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/http_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/installed_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/legacy_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/link_sources/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/link_sources/__pycache__/base.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/link_sources/__pycache__/html.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/link_sources/__pycache__/json.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/lockfile_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/parsers/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/parsers/__pycache__/html_page_parser.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/parsers/__pycache__/pypi_search_parser.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/pypi_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/repository_pool.cpython-313.pyc",
+    "Lib/site-packages/poetry/repositories/__pycache__/single_page_repository.cpython-313.pyc",
+    "Lib/site-packages/poetry/toml/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/toml/__pycache__/exceptions.cpython-313.pyc",
+    "Lib/site-packages/poetry/toml/__pycache__/file.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/_compat.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/authenticator.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/cache.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/constants.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/dependency_specification.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/base_env.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/env_manager.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/exceptions.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/generic_env.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/mock_env.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/null_env.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/python/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/python/__pycache__/exceptions.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/python/__pycache__/installer.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/python/__pycache__/manager.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/python/__pycache__/providers.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/script_strings.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/site_packages.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/system_env.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/env/__pycache__/virtual_env.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/extras.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/helpers.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/isolated_build.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/log_utils.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/password_manager.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/patterns.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/pip.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/threading.cpython-313.pyc",
+    "Lib/site-packages/poetry/utils/__pycache__/wheel.cpython-313.pyc",
+    "Lib/site-packages/poetry/vcs/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/vcs/git/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/vcs/git/__pycache__/backend.cpython-313.pyc",
+    "Lib/site-packages/poetry/vcs/git/__pycache__/system.cpython-313.pyc",
+    "Lib/site-packages/poetry/version/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/poetry/version/__pycache__/version_selector.cpython-313.pyc",
+    "Scripts/poetry-script.py",
+    "Scripts/poetry.exe"
+  ],
+  "fn": "poetry-2.2.1-pyh7428d3b_0.conda",
+  "license": "MIT",
+  "link": {
+    "source": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\poetry-2.2.1-pyh7428d3b_0",
+    "type": 1
+  },
+  "md5": "4f7ec8f05120eca6234cdf927dd46fa5",
+  "name": "poetry",
+  "noarch": "python",
+  "package_tarball_full_path": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\poetry-2.2.1-pyh7428d3b_0.conda",
+  "package_type": "noarch_python",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "sha256_in_prefix": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "fde0cb819f7297ff9eeba2295f4e2ab073f4d1e4b6a4fe5f8bce98fa7ab3b236",
+        "sha256_in_prefix": "fde0cb819f7297ff9eeba2295f4e2ab073f4d1e4b6a4fe5f8bce98fa7ab3b236",
+        "size_in_bytes": 7371
+      },
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "cc87be42959922a16d9b7e2f6515714ddb254567a9bf864b6064539720c96829",
+        "sha256_in_prefix": "cc87be42959922a16d9b7e2f6515714ddb254567a9bf864b6064539720c96829",
+        "size_in_bytes": 29871
+      },
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "ce9d029fb26c1685f6013b4e86d685608884dab985003e0e70c86d5248bc5b75",
+        "sha256_in_prefix": "ce9d029fb26c1685f6013b4e86d685608884dab985003e0e70c86d5248bc5b75",
+        "size_in_bytes": 88
+      },
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "f5d410467aedd73a4293a98d15a5d7968c36936234753bfbb83f6fedbbdfd0f2",
+        "sha256_in_prefix": "f5d410467aedd73a4293a98d15a5d7968c36936234753bfbb83f6fedbbdfd0f2",
+        "size_in_bytes": 67
+      },
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/entry_points.txt",
+        "path_type": "hardlink",
+        "sha256": "93fa9206d7204b010e8b28711a29d9e5d8dd739dd90333a5dd103271393ffa6a",
+        "sha256_in_prefix": "93fa9206d7204b010e8b28711a29d9e5d8dd739dd90333a5dd103271393ffa6a",
+        "size_in_bytes": 58
+      },
+      {
+        "_path": "site-packages/poetry-2.2.1.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "1786f071a510648a24695f295117f02bae0bbf0fb7c6730aafe9c93a3e4bf7ee",
+        "sha256_in_prefix": "1786f071a510648a24695f295117f02bae0bbf0fb7c6730aafe9c93a3e4bf7ee",
+        "size_in_bytes": 1070
+      },
+      {
+        "_path": "site-packages/poetry/__main__.py",
+        "path_type": "hardlink",
+        "sha256": "17f64b8c4002166484aa0928bb1e723c76c3f6e9904c3016c2f2e90456e8d233",
+        "sha256_in_prefix": "17f64b8c4002166484aa0928bb1e723c76c3f6e9904c3016c2f2e90456e8d233",
+        "size_in_bytes": 146
+      },
+      {
+        "_path": "site-packages/poetry/__version__.py",
+        "path_type": "hardlink",
+        "sha256": "83b8ed9ab506fccc0c96d772dec4f302aae1881734dddb1b88b3bcacded7604e",
+        "sha256_in_prefix": "83b8ed9ab506fccc0c96d772dec4f302aae1881734dddb1b88b3bcacded7604e",
+        "size_in_bytes": 121
+      },
+      {
+        "_path": "site-packages/poetry/config/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/config/config.py",
+        "path_type": "hardlink",
+        "sha256": "6cec3898f5f34367ca8b73f09c7f7091c0c6c9442ddcebe218da4df20d8a4368",
+        "sha256_in_prefix": "6cec3898f5f34367ca8b73f09c7f7091c0c6c9442ddcebe218da4df20d8a4368",
+        "size_in_bytes": 13872
+      },
+      {
+        "_path": "site-packages/poetry/config/config_source.py",
+        "path_type": "hardlink",
+        "sha256": "a1a6485a89be2df9470217f8aaa83591dc4e61a4c0b672bdf1bbe5882b35bbdc",
+        "sha256_in_prefix": "a1a6485a89be2df9470217f8aaa83591dc4e61a4c0b672bdf1bbe5882b35bbdc",
+        "size_in_bytes": 2590
+      },
+      {
+        "_path": "site-packages/poetry/config/dict_config_source.py",
+        "path_type": "hardlink",
+        "sha256": "2d44d5f620a9273dd4780fc3587c5d55164b5d136143ee2f12ff2761eb0cee2e",
+        "sha256_in_prefix": "2d44d5f620a9273dd4780fc3587c5d55164b5d136143ee2f12ff2761eb0cee2e",
+        "size_in_bytes": 1448
+      },
+      {
+        "_path": "site-packages/poetry/config/file_config_source.py",
+        "path_type": "hardlink",
+        "sha256": "9a94103f3b15f57a9dcd8b5beec4ecefeaae21de124d3091cd4db9040555d903",
+        "sha256_in_prefix": "9a94103f3b15f57a9dcd8b5beec4ecefeaae21de124d3091cd4db9040555d903",
+        "size_in_bytes": 2961
+      },
+      {
+        "_path": "site-packages/poetry/config/source.py",
+        "path_type": "hardlink",
+        "sha256": "d60634bb71d99663d6274418d50f319d0f7e8043b7964d2b17014ab5e74c2063",
+        "sha256_in_prefix": "d60634bb71d99663d6274418d50f319d0f7e8043b7964d2b17014ab5e74c2063",
+        "size_in_bytes": 1154
+      },
+      {
+        "_path": "site-packages/poetry/console/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/application.py",
+        "path_type": "hardlink",
+        "sha256": "69d1d777fac82510788f132442caed884ef9850898404497f9b5a123aeeec82b",
+        "sha256_in_prefix": "69d1d777fac82510788f132442caed884ef9850898404497f9b5a123aeeec82b",
+        "size_in_bytes": 22268
+      },
+      {
+        "_path": "site-packages/poetry/console/command_loader.py",
+        "path_type": "hardlink",
+        "sha256": "0ec5f972e6d87ba39090766b51f188a93f216a8c3d4178cd2662d9c4c4356dc6",
+        "sha256_in_prefix": "0ec5f972e6d87ba39090766b51f188a93f216a8c3d4178cd2662d9c4c4356dc6",
+        "size_in_bytes": 615
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/about.py",
+        "path_type": "hardlink",
+        "sha256": "01e3b145705ac070dd5ac14c8d0fc6a79c26fe4c3ccac0d1003d48339355ba75",
+        "sha256_in_prefix": "01e3b145705ac070dd5ac14c8d0fc6a79c26fe4c3ccac0d1003d48339355ba75",
+        "size_in_bytes": 679
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/add.py",
+        "path_type": "hardlink",
+        "sha256": "079f1370ba9a41290d59fb60340e0b6d6c9a76ee941bceaa254e102bf31060b2",
+        "sha256_in_prefix": "079f1370ba9a41290d59fb60340e0b6d6c9a76ee941bceaa254e102bf31060b2",
+        "size_in_bytes": 17061
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/build.py",
+        "path_type": "hardlink",
+        "sha256": "4e8a6c18d70ab475fa57ae9c7d0824c1792c3221d445171e3bfa92e5e2c05fd1",
+        "sha256_in_prefix": "4e8a6c18d70ab475fa57ae9c7d0824c1792c3221d445171e3bfa92e5e2c05fd1",
+        "size_in_bytes": 8038
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/cache/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/cache/clear.py",
+        "path_type": "hardlink",
+        "sha256": "4f3797947c8f7233860c0dca0a617d9005b76f1c2edf1aec9c2cb72c30993d8d",
+        "sha256_in_prefix": "4f3797947c8f7233860c0dca0a617d9005b76f1c2edf1aec9c2cb72c30993d8d",
+        "size_in_bytes": 2665
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/cache/list.py",
+        "path_type": "hardlink",
+        "sha256": "e83bee87ce812ac8b65f8291e03ec335c5fd5125bd06577ae3521ff3497a1063",
+        "sha256_in_prefix": "e83bee87ce812ac8b65f8291e03ec335c5fd5125bd06577ae3521ff3497a1063",
+        "size_in_bytes": 634
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/check.py",
+        "path_type": "hardlink",
+        "sha256": "bd45701f00ae6e0394e30948f11a238afa5ad98b5593ccf28ef7a53fda74d56a",
+        "sha256_in_prefix": "bd45701f00ae6e0394e30948f11a238afa5ad98b5593ccf28ef7a53fda74d56a",
+        "size_in_bytes": 6955
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/command.py",
+        "path_type": "hardlink",
+        "sha256": "3fc74c92ba6b11ea853ca9837f314a89c97a7d0536d087f3065d54d79b92c723",
+        "sha256_in_prefix": "3fc74c92ba6b11ea853ca9837f314a89c97a7d0536d087f3065d54d79b92c723",
+        "size_in_bytes": 1294
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/config.py",
+        "path_type": "hardlink",
+        "sha256": "78b948e2f5c3c284c70ef85b00f2a880290c1e7485509c1cfa0acbd4a697b7b5",
+        "sha256_in_prefix": "78b948e2f5c3c284c70ef85b00f2a880290c1e7485509c1cfa0acbd4a697b7b5",
+        "size_in_bytes": 15571
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/debug/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/debug/info.py",
+        "path_type": "hardlink",
+        "sha256": "b7a03c03baede3daccb5b1831b5fae7844a9b38f316016f02994bb6f978a7d18",
+        "sha256_in_prefix": "b7a03c03baede3daccb5b1831b5fae7844a9b38f316016f02994bb6f978a7d18",
+        "size_in_bytes": 764
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/debug/resolve.py",
+        "path_type": "hardlink",
+        "sha256": "345b9fc7141c515f30e6358f3b6857696266f50e8ce142bd5d3215a9d964ceb5",
+        "sha256_in_prefix": "345b9fc7141c515f30e6358f3b6857696266f50e8ce142bd5d3215a9d964ceb5",
+        "size_in_bytes": 4700
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/debug/tags.py",
+        "path_type": "hardlink",
+        "sha256": "641c316ccfd2de83d41ebbb53c59447891929bfe8f6530f89f33a25a451fb4f5",
+        "sha256_in_prefix": "641c316ccfd2de83d41ebbb53c59447891929bfe8f6530f89f33a25a451fb4f5",
+        "size_in_bytes": 532
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/env/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/env/activate.py",
+        "path_type": "hardlink",
+        "sha256": "d6f84f81cd1a674d66b09da6b62be43fe094713af6e7335ce6b6c841439c262a",
+        "sha256_in_prefix": "d6f84f81cd1a674d66b09da6b62be43fe094713af6e7335ce6b6c841439c262a",
+        "size_in_bytes": 2160
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/env/info.py",
+        "path_type": "hardlink",
+        "sha256": "049a5546fb3f6620d79f70ccda0ae76fd091e710c0a261d717d3ddfe5acb2ea5",
+        "sha256_in_prefix": "049a5546fb3f6620d79f70ccda0ae76fd091e710c0a261d717d3ddfe5acb2ea5",
+        "size_in_bytes": 2688
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/env/list.py",
+        "path_type": "hardlink",
+        "sha256": "2cda9c8129eb8fa781acda5ef223295522a2b04fb2464ae99294249df5084c53",
+        "sha256_in_prefix": "2cda9c8129eb8fa781acda5ef223295522a2b04fb2464ae99294249df5084c53",
+        "size_in_bytes": 987
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/env/remove.py",
+        "path_type": "hardlink",
+        "sha256": "3a4596c7077002438e4dd68337f4b457c7a705f7787d47304cba043f7f62f58f",
+        "sha256_in_prefix": "3a4596c7077002438e4dd68337f4b457c7a705f7787d47304cba043f7f62f58f",
+        "size_in_bytes": 2345
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/env/use.py",
+        "path_type": "hardlink",
+        "sha256": "b9c5e6b05c86cc734857f0f106ad09d69df218580f7d82b7dbd372f5e6639477",
+        "sha256_in_prefix": "b9c5e6b05c86cc734857f0f106ad09d69df218580f7d82b7dbd372f5e6639477",
+        "size_in_bytes": 877
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/env_command.py",
+        "path_type": "hardlink",
+        "sha256": "fe5ff59200d240590f12c4a839b6172a1efdcdb255a6a428b84b82ada4d8d5a7",
+        "sha256_in_prefix": "fe5ff59200d240590f12c4a839b6172a1efdcdb255a6a428b84b82ada4d8d5a7",
+        "size_in_bytes": 544
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/group_command.py",
+        "path_type": "hardlink",
+        "sha256": "c09dba52800c66f8062aacff1bd26d9085dadf18d30defdb3e74f5a810578cea",
+        "sha256_in_prefix": "c09dba52800c66f8062aacff1bd26d9085dadf18d30defdb3e74f5a810578cea",
+        "size_in_bytes": 4438
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/init.py",
+        "path_type": "hardlink",
+        "sha256": "abaef95c3cf73ce4c0630fc65f12bba06e9143a63e30116fd0f763664df74faa",
+        "sha256_in_prefix": "abaef95c3cf73ce4c0630fc65f12bba06e9143a63e30116fd0f763664df74faa",
+        "size_in_bytes": 18781
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/install.py",
+        "path_type": "hardlink",
+        "sha256": "d1235757f02aaafa1a31486e1e89b995820de434968eeaebd35bcc3bfcc33fdd",
+        "sha256_in_prefix": "d1235757f02aaafa1a31486e1e89b995820de434968eeaebd35bcc3bfcc33fdd",
+        "size_in_bytes": 8429
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/installer_command.py",
+        "path_type": "hardlink",
+        "sha256": "408cf3e2adbc22b7e467d0785e097dce527e8dcadf1115f135e107a87bf593c9",
+        "sha256_in_prefix": "408cf3e2adbc22b7e467d0785e097dce527e8dcadf1115f135e107a87bf593c9",
+        "size_in_bytes": 1130
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/lock.py",
+        "path_type": "hardlink",
+        "sha256": "71ec77803f95b7ebaf7ece1a4423b9befc1668725fbdf2bcda0aee70738c0212",
+        "sha256_in_prefix": "71ec77803f95b7ebaf7ece1a4423b9befc1668725fbdf2bcda0aee70738c0212",
+        "size_in_bytes": 1136
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/new.py",
+        "path_type": "hardlink",
+        "sha256": "a8851c9970cb25d77b51b03ad22934a4a570c1760259309af65cfc1ca91226e3",
+        "sha256_in_prefix": "a8851c9970cb25d77b51b03ad22934a4a570c1760259309af65cfc1ca91226e3",
+        "size_in_bytes": 2835
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/publish.py",
+        "path_type": "hardlink",
+        "sha256": "7a364c6c95a97287169b08853cf71dd14fc4bf11342fc87b85c5340cb6579434",
+        "sha256_in_prefix": "7a364c6c95a97287169b08853cf71dd14fc4bf11342fc87b85c5340cb6579434",
+        "size_in_bytes": 3394
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/python/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/python/install.py",
+        "path_type": "hardlink",
+        "sha256": "358850ada08eed5ebec094f74b40c1a3bac6d5009a003e83eef2dff5b50e091b",
+        "sha256_in_prefix": "358850ada08eed5ebec094f74b40c1a3bac6d5009a003e83eef2dff5b50e091b",
+        "size_in_bytes": 4501
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/python/list.py",
+        "path_type": "hardlink",
+        "sha256": "8bf66038fad54eb7788b953c5cbe39282129c5c3ec5178f52650ac0dffceb941",
+        "sha256_in_prefix": "8bf66038fad54eb7788b953c5cbe39282129c5c3ec5178f52650ac0dffceb941",
+        "size_in_bytes": 3983
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/python/remove.py",
+        "path_type": "hardlink",
+        "sha256": "9a13a72a0550a636f8e89347a7bee255df765aa256ee35dda953aee86c150aea",
+        "sha256_in_prefix": "9a13a72a0550a636f8e89347a7bee255df765aa256ee35dda953aee86c150aea",
+        "size_in_bytes": 2969
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/remove.py",
+        "path_type": "hardlink",
+        "sha256": "95679acdd04990d24e345b9474ea6407cca950f2bbf96b1189c911f3071b2f73",
+        "sha256_in_prefix": "95679acdd04990d24e345b9474ea6407cca950f2bbf96b1189c911f3071b2f73",
+        "size_in_bytes": 7466
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/run.py",
+        "path_type": "hardlink",
+        "sha256": "f011e9d99016d56e76a080370dbb3b1bcce61918313b3347b30cddd622e6aaa7",
+        "sha256_in_prefix": "f011e9d99016d56e76a080370dbb3b1bcce61918313b3347b30cddd622e6aaa7",
+        "size_in_bytes": 3364
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/search.py",
+        "path_type": "hardlink",
+        "sha256": "44570eb9e73005c290c9b86e01e5a4dd98022ddc7b282f0a15394ac59c3af377",
+        "sha256_in_prefix": "44570eb9e73005c290c9b86e01e5a4dd98022ddc7b282f0a15394ac59c3af377",
+        "size_in_bytes": 1616
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/add.py",
+        "path_type": "hardlink",
+        "sha256": "124eb7f4c2a12dc5075a3f1a0a4fba77bea4b6a1d67ec355a7039d8875c31040",
+        "sha256_in_prefix": "124eb7f4c2a12dc5075a3f1a0a4fba77bea4b6a1d67ec355a7039d8875c31040",
+        "size_in_bytes": 1412
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/install.py",
+        "path_type": "hardlink",
+        "sha256": "809ea76a105dcb11b099f8eeef28b96fe282979f95d3f8389a5e4ceffdb3e781",
+        "sha256_in_prefix": "809ea76a105dcb11b099f8eeef28b96fe282979f95d3f8389a5e4ceffdb3e781",
+        "size_in_bytes": 1354
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/lock.py",
+        "path_type": "hardlink",
+        "sha256": "db1ad3a42aecf597d9566eabb7b6394bb8b48aa8472cf98323057a9781ade6d2",
+        "sha256_in_prefix": "db1ad3a42aecf597d9566eabb7b6394bb8b48aa8472cf98323057a9781ade6d2",
+        "size_in_bytes": 642
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/remove.py",
+        "path_type": "hardlink",
+        "sha256": "8e0446353ca32e9a45bc5ea493f45a539e92ea69416d0096b167701647b31563",
+        "sha256_in_prefix": "8e0446353ca32e9a45bc5ea493f45a539e92ea69416d0096b167701647b31563",
+        "size_in_bytes": 772
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/self_command.py",
+        "path_type": "hardlink",
+        "sha256": "c9db92811f2fbd687d6ab738fbdf04d73ee20ead283c47a50fbacbee83ea86ab",
+        "sha256_in_prefix": "c9db92811f2fbd687d6ab738fbdf04d73ee20ead283c47a50fbacbee83ea86ab",
+        "size_in_bytes": 5146
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/show/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "1e6415234dad0788a5edb97b108ec4ca41f5c9b0ff7f498f4af91feffe419aad",
+        "sha256_in_prefix": "1e6415234dad0788a5edb97b108ec4ca41f5c9b0ff7f498f4af91feffe419aad",
+        "size_in_bytes": 1440
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/show/plugins.py",
+        "path_type": "hardlink",
+        "sha256": "ecc86f68965e7c90614a4e54cee3b1c44cf9fd25a65a965118776471eee1d512",
+        "sha256_in_prefix": "ecc86f68965e7c90614a4e54cee3b1c44cf9fd25a65a965118776471eee1d512",
+        "size_in_bytes": 3990
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/sync.py",
+        "path_type": "hardlink",
+        "sha256": "be8f6768c0fd64ad0caaa453487fd0e2035d0583cacaeb4e7e64329de7d09cad",
+        "sha256_in_prefix": "be8f6768c0fd64ad0caaa453487fd0e2035d0583cacaeb4e7e64329de7d09cad",
+        "size_in_bytes": 1043
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/self/update.py",
+        "path_type": "hardlink",
+        "sha256": "ead951fe637e0c3523e3bccd38f3c7c5203fd9904f7e453e3d272923973621a7",
+        "sha256_in_prefix": "ead951fe637e0c3523e3bccd38f3c7c5203fd9904f7e453e3d272923973621a7",
+        "size_in_bytes": 2036
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/show.py",
+        "path_type": "hardlink",
+        "sha256": "fdfd58418ad62804a0317f78040ca845f6d247e13a59eb589a9a17eddd8d7ff2",
+        "sha256_in_prefix": "fdfd58418ad62804a0317f78040ca845f6d247e13a59eb589a9a17eddd8d7ff2",
+        "size_in_bytes": 23790
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/source/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/source/add.py",
+        "path_type": "hardlink",
+        "sha256": "ffbab22e03f3b8b453c196bd7114e04884f43338418689726f178311925447df",
+        "sha256_in_prefix": "ffbab22e03f3b8b453c196bd7114e04884f43338418689726f178311925447df",
+        "size_in_bytes": 3812
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/source/remove.py",
+        "path_type": "hardlink",
+        "sha256": "425dce87ccb86db760e331053d355b09a820219a8eb6a0d2a97c00089dde77e2",
+        "sha256_in_prefix": "425dce87ccb86db760e331053d355b09a820219a8eb6a0d2a97c00089dde77e2",
+        "size_in_bytes": 1280
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/source/show.py",
+        "path_type": "hardlink",
+        "sha256": "c7352f391577660be9b55a679aaf287c0e858c6877aa5bd9df6e5a131c0d368d",
+        "sha256_in_prefix": "c7352f391577660be9b55a679aaf287c0e858c6877aa5bd9df6e5a131c0d368d",
+        "size_in_bytes": 2380
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/sync.py",
+        "path_type": "hardlink",
+        "sha256": "dc7535182a7e1e1092ed9857f0e8a88f6ca0fbaab610d0e5d312c501f2d14e37",
+        "sha256_in_prefix": "dc7535182a7e1e1092ed9857f0e8a88f6ca0fbaab610d0e5d312c501f2d14e37",
+        "size_in_bytes": 1181
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/update.py",
+        "path_type": "hardlink",
+        "sha256": "7b09ef54e5ed52a6b2a4f8ca8c4b11fe99f7d4d3277beec035b18cf7b8aa1760",
+        "sha256_in_prefix": "7b09ef54e5ed52a6b2a4f8ca8c4b11fe99f7d4d3277beec035b18cf7b8aa1760",
+        "size_in_bytes": 1788
+      },
+      {
+        "_path": "site-packages/poetry/console/commands/version.py",
+        "path_type": "hardlink",
+        "sha256": "37768d476be9bf30394a6ba60703c2095b0bff372d447619cc1d28eb3933917d",
+        "sha256_in_prefix": "37768d476be9bf30394a6ba60703c2095b0bff372d447619cc1d28eb3933917d",
+        "size_in_bytes": 4259
+      },
+      {
+        "_path": "site-packages/poetry/console/events/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/events/console_events.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "2f7a928399254d22daa0b1704da928a8ee4646bcd0d98b9bcaf07df1f32a9311",
+        "sha256_in_prefix": "2f7a928399254d22daa0b1704da928a8ee4646bcd0d98b9bcaf07df1f32a9311",
+        "size_in_bytes": 7669
+      },
+      {
+        "_path": "site-packages/poetry/console/logging/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/console/logging/filters.py",
+        "path_type": "hardlink",
+        "sha256": "8854fccc360b1e5ea23fe80dfd2e4e9c208cd6414ad3a17d182270c134e8de05",
+        "sha256_in_prefix": "8854fccc360b1e5ea23fe80dfd2e4e9c208cd6414ad3a17d182270c134e8de05",
+        "size_in_bytes": 99
+      },
+      {
+        "_path": "site-packages/poetry/console/logging/formatters/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "069be8452b7c70ec6969df409d973efd67c80bd2e1c791fe9102c335d53a9767",
+        "sha256_in_prefix": "069be8452b7c70ec6969df409d973efd67c80bd2e1c791fe9102c335d53a9767",
+        "size_in_bytes": 336
+      },
+      {
+        "_path": "site-packages/poetry/console/logging/formatters/builder_formatter.py",
+        "path_type": "hardlink",
+        "sha256": "2303624d03735e3f19a38e704be227636282a95c29939e0ea1b117454b15e856",
+        "sha256_in_prefix": "2303624d03735e3f19a38e704be227636282a95c29939e0ea1b117454b15e856",
+        "size_in_bytes": 788
+      },
+      {
+        "_path": "site-packages/poetry/console/logging/formatters/formatter.py",
+        "path_type": "hardlink",
+        "sha256": "2b7ecd4d9e5a710c48c007474fa1ef2e69147350689ff1b783f237a31eb48c75",
+        "sha256_in_prefix": "2b7ecd4d9e5a710c48c007474fa1ef2e69147350689ff1b783f237a31eb48c75",
+        "size_in_bytes": 174
+      },
+      {
+        "_path": "site-packages/poetry/console/logging/io_formatter.py",
+        "path_type": "hardlink",
+        "sha256": "9b10f7ac093ff967fe7afae09b5c18717e9151ce6759626dd988590dfc0e5ab6",
+        "sha256_in_prefix": "9b10f7ac093ff967fe7afae09b5c18717e9151ce6759626dd988590dfc0e5ab6",
+        "size_in_bytes": 2180
+      },
+      {
+        "_path": "site-packages/poetry/console/logging/io_handler.py",
+        "path_type": "hardlink",
+        "sha256": "2b19cd83ba573c3f039c343c2390dc547d411d9389adf8488e630285457cf461",
+        "sha256_in_prefix": "2b19cd83ba573c3f039c343c2390dc547d411d9389adf8488e630285457cf461",
+        "size_in_bytes": 702
+      },
+      {
+        "_path": "site-packages/poetry/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "ccae5f1e56d1020b6cc8ca7a049f425968bd2f6dc513ca4c7f3c98475e8f4bfa",
+        "sha256_in_prefix": "ccae5f1e56d1020b6cc8ca7a049f425968bd2f6dc513ca4c7f3c98475e8f4bfa",
+        "size_in_bytes": 76
+      },
+      {
+        "_path": "site-packages/poetry/factory.py",
+        "path_type": "hardlink",
+        "sha256": "1d14689907c194d144c984f428ee8ad4b49f6622b69688408c5521f02d25144e",
+        "sha256_in_prefix": "1d14689907c194d144c984f428ee8ad4b49f6622b69688408c5521f02d25144e",
+        "size_in_bytes": 12047
+      },
+      {
+        "_path": "site-packages/poetry/inspection/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/inspection/info.py",
+        "path_type": "hardlink",
+        "sha256": "36ceab27b9405210f19bb27e888a97bc5232d90c32e8c61ddb08b1b40466a58f",
+        "sha256_in_prefix": "36ceab27b9405210f19bb27e888a97bc5232d90c32e8c61ddb08b1b40466a58f",
+        "size_in_bytes": 19367
+      },
+      {
+        "_path": "site-packages/poetry/inspection/lazy_wheel.py",
+        "path_type": "hardlink",
+        "sha256": "be0c96638fd52ec6e0cb64e4300c2a52fdc005258e02796ab747ba80f101e70c",
+        "sha256_in_prefix": "be0c96638fd52ec6e0cb64e4300c2a52fdc005258e02796ab747ba80f101e70c",
+        "size_in_bytes": 29798
+      },
+      {
+        "_path": "site-packages/poetry/installation/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "b55ebd358fae4e5d12e8394ab0ed43fd8ecc71ba27bab5b7d533c35bbe79ef13",
+        "sha256_in_prefix": "b55ebd358fae4e5d12e8394ab0ed43fd8ecc71ba27bab5b7d533c35bbe79ef13",
+        "size_in_bytes": 114
+      },
+      {
+        "_path": "site-packages/poetry/installation/chef.py",
+        "path_type": "hardlink",
+        "sha256": "87581c5828382659c6601df029febe13457e0f7808cffa9de0214f568455c9f9",
+        "sha256_in_prefix": "87581c5828382659c6601df029febe13457e0f7808cffa9de0214f568455c9f9",
+        "size_in_bytes": 3665
+      },
+      {
+        "_path": "site-packages/poetry/installation/chooser.py",
+        "path_type": "hardlink",
+        "sha256": "b86cf5dfa02c65650b5610d6f8c0e17f76126374e0f129c45cffbb2055f1d2d0",
+        "sha256_in_prefix": "b86cf5dfa02c65650b5610d6f8c0e17f76126374e0f129c45cffbb2055f1d2d0",
+        "size_in_bytes": 13361
+      },
+      {
+        "_path": "site-packages/poetry/installation/executor.py",
+        "path_type": "hardlink",
+        "sha256": "f45f08fcd8a88b68f9fbfd5ff676de5f6b2a616e2512d7cc776e974669f021da",
+        "sha256_in_prefix": "f45f08fcd8a88b68f9fbfd5ff676de5f6b2a616e2512d7cc776e974669f021da",
+        "size_in_bytes": 35721
+      },
+      {
+        "_path": "site-packages/poetry/installation/installer.py",
+        "path_type": "hardlink",
+        "sha256": "21e5bd02bfefa1c392a9e7fe9cdc3fe09bc532b464d27526bd997adbc7bcb37d",
+        "sha256_in_prefix": "21e5bd02bfefa1c392a9e7fe9cdc3fe09bc532b464d27526bd997adbc7bcb37d",
+        "size_in_bytes": 12957
+      },
+      {
+        "_path": "site-packages/poetry/installation/operations/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "601655a013ce5c6d28884216dd0528ba4f62e8e5ef7c326d4295e4a22085f477",
+        "sha256_in_prefix": "601655a013ce5c6d28884216dd0528ba4f62e8e5ef7c326d4295e4a22085f477",
+        "size_in_bytes": 262
+      },
+      {
+        "_path": "site-packages/poetry/installation/operations/install.py",
+        "path_type": "hardlink",
+        "sha256": "94b010d3099c2fbe5189d7d5dde01555882a72128a376b4d2a5d27c6453ee71a",
+        "sha256_in_prefix": "94b010d3099c2fbe5189d7d5dde01555882a72128a376b4d2a5d27c6453ee71a",
+        "size_in_bytes": 906
+      },
+      {
+        "_path": "site-packages/poetry/installation/operations/operation.py",
+        "path_type": "hardlink",
+        "sha256": "18cf4916d3a89d05a15e192a116b9ea6836b0e3ffee371c355b213673194ffd1",
+        "sha256_in_prefix": "18cf4916d3a89d05a15e192a116b9ea6836b0e3ffee371c355b213673194ffd1",
+        "size_in_bytes": 1197
+      },
+      {
+        "_path": "site-packages/poetry/installation/operations/uninstall.py",
+        "path_type": "hardlink",
+        "sha256": "0197ca5967ebb7fb11c50989ffd9d79a68b941f733da603fb1e0a8725e8b6e36",
+        "sha256_in_prefix": "0197ca5967ebb7fb11c50989ffd9d79a68b941f733da603fb1e0a8725e8b6e36",
+        "size_in_bytes": 953
+      },
+      {
+        "_path": "site-packages/poetry/installation/operations/update.py",
+        "path_type": "hardlink",
+        "sha256": "dc2bd8cfe00f8d39e800814b35995eb009d12a931b57d3818cc5243ec85164cc",
+        "sha256_in_prefix": "dc2bd8cfe00f8d39e800814b35995eb009d12a931b57d3818cc5243ec85164cc",
+        "size_in_bytes": 1540
+      },
+      {
+        "_path": "site-packages/poetry/installation/wheel_installer.py",
+        "path_type": "hardlink",
+        "sha256": "70af41cf35ea728e556cbffe2d93a7532b24f5165708b24fe701978edff49903",
+        "sha256_in_prefix": "70af41cf35ea728e556cbffe2d93a7532b24f5165708b24fe701978edff49903",
+        "size_in_bytes": 4008
+      },
+      {
+        "_path": "site-packages/poetry/json/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "75a59764c1c0bb0a39d6fc74d79168e95dfd18da3e60017ebd1053bb1118ca0b",
+        "sha256_in_prefix": "75a59764c1c0bb0a39d6fc74d79168e95dfd18da3e60017ebd1053bb1118ca0b",
+        "size_in_bytes": 977
+      },
+      {
+        "_path": "site-packages/poetry/json/schemas/poetry.json",
+        "path_type": "hardlink",
+        "sha256": "9ef6b93b6e95f183d6a760498604c7041919a911029f7945bc96e03a528fb2cf",
+        "sha256_in_prefix": "9ef6b93b6e95f183d6a760498604c7041919a911029f7945bc96e03a528fb2cf",
+        "size_in_bytes": 11821
+      },
+      {
+        "_path": "site-packages/poetry/layouts/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "215ddcc896cd3db2cd40d44c33406a668039d8c5f07c858c54342b2492d2f0eb",
+        "sha256_in_prefix": "215ddcc896cd3db2cd40d44c33406a668039d8c5f07c858c54342b2492d2f0eb",
+        "size_in_bytes": 310
+      },
+      {
+        "_path": "site-packages/poetry/layouts/layout.py",
+        "path_type": "hardlink",
+        "sha256": "253963869425fad6fe7c07a4fe45baaff7e79702e948a9975bd95c4cdfa0ecb3",
+        "sha256_in_prefix": "253963869425fad6fe7c07a4fe45baaff7e79702e948a9975bd95c4cdfa0ecb3",
+        "size_in_bytes": 7340
+      },
+      {
+        "_path": "site-packages/poetry/layouts/src.py",
+        "path_type": "hardlink",
+        "sha256": "db15456de8c2cb7b1af8b9b71d1cd7891b5316af269d745d84aaf7aa2afd3561",
+        "sha256_in_prefix": "db15456de8c2cb7b1af8b9b71d1cd7891b5316af269d745d84aaf7aa2afd3561",
+        "size_in_bytes": 202
+      },
+      {
+        "_path": "site-packages/poetry/locations.py",
+        "path_type": "hardlink",
+        "sha256": "62c3dbc633f6eb91fb868d81852382a2ebf7ba823d647f5418a6404f14f753ed",
+        "sha256_in_prefix": "62c3dbc633f6eb91fb868d81852382a2ebf7ba823d647f5418a6404f14f753ed",
+        "size_in_bytes": 597
+      },
+      {
+        "_path": "site-packages/poetry/masonry/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/masonry/api.py",
+        "path_type": "hardlink",
+        "sha256": "671b8e4cf0c2bf8590322a2535af3f757ada169cd823b5170b9b6ec8d44a159e",
+        "sha256_in_prefix": "671b8e4cf0c2bf8590322a2535af3f757ada169cd823b5170b9b6ec8d44a159e",
+        "size_in_bytes": 497
+      },
+      {
+        "_path": "site-packages/poetry/masonry/builders/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "f16b1f9d3607f0e95a123a027a6b94a178df6795b696cae5d9cd9b8ae82967d1",
+        "sha256_in_prefix": "f16b1f9d3607f0e95a123a027a6b94a178df6795b696cae5d9cd9b8ae82967d1",
+        "size_in_bytes": 374
+      },
+      {
+        "_path": "site-packages/poetry/masonry/builders/editable.py",
+        "path_type": "hardlink",
+        "sha256": "855ad0ad7a583aa198d0de8673eb4155f52477f93f549b32e73c08f1668c5880",
+        "sha256_in_prefix": "855ad0ad7a583aa198d0de8673eb4155f52477f93f549b32e73c08f1668c5880",
+        "size_in_bytes": 9443
+      },
+      {
+        "_path": "site-packages/poetry/mixology/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "b6e6b3d42782b83b75031d8c1c35b01e38ce908b4e8d6c428504d33e84668a70",
+        "sha256_in_prefix": "b6e6b3d42782b83b75031d8c1c35b01e38ce908b4e8d6c428504d33e84668a70",
+        "size_in_bytes": 467
+      },
+      {
+        "_path": "site-packages/poetry/mixology/assignment.py",
+        "path_type": "hardlink",
+        "sha256": "e0d105f8f2cf62055c99038fb53b060c80ceea9512f6fefbc26dbb4c3597f81b",
+        "sha256_in_prefix": "e0d105f8f2cf62055c99038fb53b060c80ceea9512f6fefbc26dbb4c3597f81b",
+        "size_in_bytes": 1555
+      },
+      {
+        "_path": "site-packages/poetry/mixology/failure.py",
+        "path_type": "hardlink",
+        "sha256": "7062ac1e415c18d7516718b4f9c1c4c35f5e717fe67a6961f4cdaa3b2ec7633c",
+        "sha256_in_prefix": "7062ac1e415c18d7516718b4f9c1c4c35f5e717fe67a6961f4cdaa3b2ec7633c",
+        "size_in_bytes": 11850
+      },
+      {
+        "_path": "site-packages/poetry/mixology/incompatibility.py",
+        "path_type": "hardlink",
+        "sha256": "329c490a41dfd95ad1a52e6a52b8bd12a6128336150dcbd3ca4bf5f5e156543a",
+        "sha256_in_prefix": "329c490a41dfd95ad1a52e6a52b8bd12a6128336150dcbd3ca4bf5f5e156543a",
+        "size_in_bytes": 15400
+      },
+      {
+        "_path": "site-packages/poetry/mixology/incompatibility_cause.py",
+        "path_type": "hardlink",
+        "sha256": "391e2da306c21171f107f662ae54726c61ae4530876f999206c3cb9e43ae180a",
+        "sha256_in_prefix": "391e2da306c21171f107f662ae54726c61ae4530876f999206c3cb9e43ae180a",
+        "size_in_bytes": 1968
+      },
+      {
+        "_path": "site-packages/poetry/mixology/partial_solution.py",
+        "path_type": "hardlink",
+        "sha256": "bfeece2231f367d4464aba361f4d83916595f7b3ce050dfe54fb322e7243552a",
+        "sha256_in_prefix": "bfeece2231f367d4464aba361f4d83916595f7b3ce050dfe54fb322e7243552a",
+        "size_in_bytes": 7138
+      },
+      {
+        "_path": "site-packages/poetry/mixology/result.py",
+        "path_type": "hardlink",
+        "sha256": "23833682bef7db82e711f99f106717dfecd42aa6bbfb17ac55220ee729139e19",
+        "sha256_in_prefix": "23833682bef7db82e711f99f106717dfecd42aa6bbfb17ac55220ee729139e19",
+        "size_in_bytes": 676
+      },
+      {
+        "_path": "site-packages/poetry/mixology/set_relation.py",
+        "path_type": "hardlink",
+        "sha256": "fc756c2ba3ea05a62aa982e44b67715015a1533c96b1184042959cdfd6f27853",
+        "sha256_in_prefix": "fc756c2ba3ea05a62aa982e44b67715015a1533c96b1184042959cdfd6f27853",
+        "size_in_bytes": 211
+      },
+      {
+        "_path": "site-packages/poetry/mixology/term.py",
+        "path_type": "hardlink",
+        "sha256": "bad8729ba19d816d2d9a4e36e65d1b65472f46777c1fc8ed404ef53ba9b3d6cb",
+        "sha256_in_prefix": "bad8729ba19d816d2d9a4e36e65d1b65472f46777c1fc8ed404ef53ba9b3d6cb",
+        "size_in_bytes": 7429
+      },
+      {
+        "_path": "site-packages/poetry/mixology/version_solver.py",
+        "path_type": "hardlink",
+        "sha256": "eb397173a5ad68190d7dc4ea82a15e78e699e0760f668475f936155e3b02b927",
+        "sha256_in_prefix": "eb397173a5ad68190d7dc4ea82a15e78e699e0760f668475f936155e3b02b927",
+        "size_in_bytes": 26690
+      },
+      {
+        "_path": "site-packages/poetry/packages/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "b7ceaeefb739aa5cbe549da0bcbfe3f7c3c853eab00a77a3f830499fd202adae",
+        "sha256_in_prefix": "b7ceaeefb739aa5cbe549da0bcbfe3f7c3c853eab00a77a3f830499fd202adae",
+        "size_in_bytes": 273
+      },
+      {
+        "_path": "site-packages/poetry/packages/dependency_package.py",
+        "path_type": "hardlink",
+        "sha256": "4c7ff27ea30351f62684048fdc4fd95e1844dccda4df5fc1d62394a6eda45abe",
+        "sha256_in_prefix": "4c7ff27ea30351f62684048fdc4fd95e1844dccda4df5fc1d62394a6eda45abe",
+        "size_in_bytes": 1343
+      },
+      {
+        "_path": "site-packages/poetry/packages/direct_origin.py",
+        "path_type": "hardlink",
+        "sha256": "381a88e11c03c56104643b1ad603524a7110127e4f61f55822cc1923082a146c",
+        "sha256_in_prefix": "381a88e11c03c56104643b1ad603524a7110127e4f61f55822cc1923082a146c",
+        "size_in_bytes": 3572
+      },
+      {
+        "_path": "site-packages/poetry/packages/locker.py",
+        "path_type": "hardlink",
+        "sha256": "a44201566e341f018af7e2aa5ba37ba2c546906b4c1095f972823f94868a338c",
+        "sha256_in_prefix": "a44201566e341f018af7e2aa5ba37ba2c546906b4c1095f972823f94868a338c",
+        "size_in_bytes": 22985
+      },
+      {
+        "_path": "site-packages/poetry/packages/package_collection.py",
+        "path_type": "hardlink",
+        "sha256": "8bac7748573c9e69054b287d52d2958f289eb9728e67e5b179dfa3cb68164e55",
+        "sha256_in_prefix": "8bac7748573c9e69054b287d52d2958f289eb9728e67e5b179dfa3cb68164e55",
+        "size_in_bytes": 897
+      },
+      {
+        "_path": "site-packages/poetry/packages/transitive_package_info.py",
+        "path_type": "hardlink",
+        "sha256": "9e4995a36b97c357bcc680d326004905698a5dbe90f633a18d3be5850b21f8ff",
+        "sha256_in_prefix": "9e4995a36b97c357bcc680d326004905698a5dbe90f633a18d3be5850b21f8ff",
+        "size_in_bytes": 783
+      },
+      {
+        "_path": "site-packages/poetry/plugins/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "03671789cd69e9b6a77a4df3b893fff0a8d0d21f8bbf6aef16b7723112469e8d",
+        "sha256_in_prefix": "03671789cd69e9b6a77a4df3b893fff0a8d0d21f8bbf6aef16b7723112469e8d",
+        "size_in_bytes": 185
+      },
+      {
+        "_path": "site-packages/poetry/plugins/application_plugin.py",
+        "path_type": "hardlink",
+        "sha256": "835d09eca984d34a6ea3e061ecd54c0a09d73c97a5ecc1db2dc45a351bf6b83a",
+        "sha256_in_prefix": "835d09eca984d34a6ea3e061ecd54c0a09d73c97a5ecc1db2dc45a351bf6b83a",
+        "size_in_bytes": 687
+      },
+      {
+        "_path": "site-packages/poetry/plugins/base_plugin.py",
+        "path_type": "hardlink",
+        "sha256": "01668535560f2283a058d5f5d701d03a084189b5460150e3d33896578ffdcfc7",
+        "sha256_in_prefix": "01668535560f2283a058d5f5d701d03a084189b5460150e3d33896578ffdcfc7",
+        "size_in_bytes": 424
+      },
+      {
+        "_path": "site-packages/poetry/plugins/plugin.py",
+        "path_type": "hardlink",
+        "sha256": "ef1ed22449b04f70219221bd3d4f5dffe633199d19f76be8f27ff5154d9f94dc",
+        "sha256_in_prefix": "ef1ed22449b04f70219221bd3d4f5dffe633199d19f76be8f27ff5154d9f94dc",
+        "size_in_bytes": 452
+      },
+      {
+        "_path": "site-packages/poetry/plugins/plugin_manager.py",
+        "path_type": "hardlink",
+        "sha256": "52d8e7846f9b7d66c3f7939c4767c8e2bc6b81287079844e1d3228470cf59383",
+        "sha256_in_prefix": "52d8e7846f9b7d66c3f7939c4767c8e2bc6b81287079844e1d3228470cf59383",
+        "size_in_bytes": 11109
+      },
+      {
+        "_path": "site-packages/poetry/poetry.py",
+        "path_type": "hardlink",
+        "sha256": "64c767f6d7268f4c71748c4451dfbcdafdbad90fb2fa5f1e6ae1aaebc5385e48",
+        "sha256_in_prefix": "64c767f6d7268f4c71748c4451dfbcdafdbad90fb2fa5f1e6ae1aaebc5385e48",
+        "size_in_bytes": 2399
+      },
+      {
+        "_path": "site-packages/poetry/publishing/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "5dbae5240f5ba72f8d1ee7cbcc4e39e677609aae98537441337550fd7b317044",
+        "sha256_in_prefix": "5dbae5240f5ba72f8d1ee7cbcc4e39e677609aae98537441337550fd7b317044",
+        "size_in_bytes": 112
+      },
+      {
+        "_path": "site-packages/poetry/publishing/hash_manager.py",
+        "path_type": "hardlink",
+        "sha256": "e9a39ca36ac6ca57e4046a4afd9d494ea6023d4c9bcd0f15ae14b28433350bc0",
+        "sha256_in_prefix": "e9a39ca36ac6ca57e4046a4afd9d494ea6023d4c9bcd0f15ae14b28433350bc0",
+        "size_in_bytes": 1825
+      },
+      {
+        "_path": "site-packages/poetry/publishing/publisher.py",
+        "path_type": "hardlink",
+        "sha256": "e3beeddfd5617af8994c2eba5cec4a41a027d0994198f66388bed2513350d3e1",
+        "sha256_in_prefix": "e3beeddfd5617af8994c2eba5cec4a41a027d0994198f66388bed2513350d3e1",
+        "size_in_bytes": 2933
+      },
+      {
+        "_path": "site-packages/poetry/publishing/uploader.py",
+        "path_type": "hardlink",
+        "sha256": "2a8132517105af726a82632b1be0771c5fc374b0f1165eb5a9e1a0fa9c793216",
+        "sha256_in_prefix": "2a8132517105af726a82632b1be0771c5fc374b0f1165eb5a9e1a0fa9c793216",
+        "size_in_bytes": 11532
+      },
+      {
+        "_path": "site-packages/poetry/puzzle/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e802b0fa74d60cca2dd72f1abd73bd18d95ff74ff9150026d094a04929b85120",
+        "sha256_in_prefix": "e802b0fa74d60cca2dd72f1abd73bd18d95ff74ff9150026d094a04929b85120",
+        "size_in_bytes": 99
+      },
+      {
+        "_path": "site-packages/poetry/puzzle/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "f5404e4cf9f13b2b07c21a459a846ae755507377d6c6ae9793b71a9a28af79bc",
+        "sha256_in_prefix": "f5404e4cf9f13b2b07c21a459a846ae755507377d6c6ae9793b71a9a28af79bc",
+        "size_in_bytes": 788
+      },
+      {
+        "_path": "site-packages/poetry/puzzle/provider.py",
+        "path_type": "hardlink",
+        "sha256": "48dacb6e56773a5c72b92f3015c167b802b041979d9f8f0473144d898f943184",
+        "sha256_in_prefix": "48dacb6e56773a5c72b92f3015c167b802b041979d9f8f0473144d898f943184",
+        "size_in_bytes": 41831
+      },
+      {
+        "_path": "site-packages/poetry/puzzle/solver.py",
+        "path_type": "hardlink",
+        "sha256": "c4fd83d50ef3dd6ff55e7b2d86328bd9184a292272c8e7471cf14751db275775",
+        "sha256_in_prefix": "c4fd83d50ef3dd6ff55e7b2d86328bd9184a292272c8e7471cf14751db275775",
+        "size_in_bytes": 18913
+      },
+      {
+        "_path": "site-packages/poetry/puzzle/transaction.py",
+        "path_type": "hardlink",
+        "sha256": "f40722b93584f8d6b7463653ef3e5d9dbff38508003d07c0e4320921eb67ae9d",
+        "sha256_in_prefix": "f40722b93584f8d6b7463653ef3e5d9dbff38508003d07c0e4320921eb67ae9d",
+        "size_in_bytes": 7842
+      },
+      {
+        "_path": "site-packages/poetry/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/pyproject/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/pyproject/toml.py",
+        "path_type": "hardlink",
+        "sha256": "d40bef320c6957322cf9ecf98e0294abd6b0b1c1ab3f978eff69445ff146d393",
+        "sha256_in_prefix": "d40bef320c6957322cf9ecf98e0294abd6b0b1c1ab3f978eff69445ff146d393",
+        "size_in_bytes": 1740
+      },
+      {
+        "_path": "site-packages/poetry/repositories/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "2eaab1dfe06f705d757a59e2da872492099f3440937ecea835ec1a993b202b82",
+        "sha256_in_prefix": "2eaab1dfe06f705d757a59e2da872492099f3440937ecea835ec1a993b202b82",
+        "size_in_bytes": 198
+      },
+      {
+        "_path": "site-packages/poetry/repositories/abstract_repository.py",
+        "path_type": "hardlink",
+        "sha256": "3b68923f97c56819f593361eabedb02d9e151bc10d5b0147987ec7b8de7d21e4",
+        "sha256_in_prefix": "3b68923f97c56819f593361eabedb02d9e151bc10d5b0147987ec7b8de7d21e4",
+        "size_in_bytes": 749
+      },
+      {
+        "_path": "site-packages/poetry/repositories/cached_repository.py",
+        "path_type": "hardlink",
+        "sha256": "3b2cdea61e656c1548af7815649b417386bba858708782f985dbf4b588904f9b",
+        "sha256_in_prefix": "3b2cdea61e656c1548af7815649b417386bba858708782f985dbf4b588904f9b",
+        "size_in_bytes": 2461
+      },
+      {
+        "_path": "site-packages/poetry/repositories/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "e1c1c3a58182ecd234339e2d51d86cf9c18701a010d800189fa5ec72813a74f7",
+        "sha256_in_prefix": "e1c1c3a58182ecd234339e2d51d86cf9c18701a010d800189fa5ec72813a74f7",
+        "size_in_bytes": 178
+      },
+      {
+        "_path": "site-packages/poetry/repositories/http_repository.py",
+        "path_type": "hardlink",
+        "sha256": "3d86e64782b88179635b5d8c0678fe38bf44710a97a531cd34bff49c693dd975",
+        "sha256_in_prefix": "3d86e64782b88179635b5d8c0678fe38bf44710a97a531cd34bff49c693dd975",
+        "size_in_bytes": 17305
+      },
+      {
+        "_path": "site-packages/poetry/repositories/installed_repository.py",
+        "path_type": "hardlink",
+        "sha256": "a2ae871b2d8c72e0f5a502829e44ebb836321a3d765a0398dff2efe542ace9bc",
+        "sha256_in_prefix": "a2ae871b2d8c72e0f5a502829e44ebb836321a3d765a0398dff2efe542ace9bc",
+        "size_in_bytes": 11270
+      },
+      {
+        "_path": "site-packages/poetry/repositories/legacy_repository.py",
+        "path_type": "hardlink",
+        "sha256": "b76d1c5c4416c851e3cf4f6b2bd4827bb6cd7e7588de04b1119f81b2f8bf3b5d",
+        "sha256_in_prefix": "b76d1c5c4416c851e3cf4f6b2bd4827bb6cd7e7588de04b1119f81b2f8bf3b5d",
+        "size_in_bytes": 4938
+      },
+      {
+        "_path": "site-packages/poetry/repositories/link_sources/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/repositories/link_sources/base.py",
+        "path_type": "hardlink",
+        "sha256": "15a4c32c48c3a13196f90f1f2f07e51830e36750389e14e27ba381b71b824203",
+        "sha256_in_prefix": "15a4c32c48c3a13196f90f1f2f07e51830e36750389e14e27ba381b71b824203",
+        "size_in_bytes": 3868
+      },
+      {
+        "_path": "site-packages/poetry/repositories/link_sources/html.py",
+        "path_type": "hardlink",
+        "sha256": "6a29d9ecf1be0d9c868541c9c18047ccb05d979cebc705958c61380d5da54d81",
+        "sha256_in_prefix": "6a29d9ecf1be0d9c868541c9c18047ccb05d979cebc705958c61380d5da54d81",
+        "size_in_bytes": 3424
+      },
+      {
+        "_path": "site-packages/poetry/repositories/link_sources/json.py",
+        "path_type": "hardlink",
+        "sha256": "5ca25fff40d30a8a2580c469053126d28aa16267142309a8c0edb3f68d0338ee",
+        "sha256_in_prefix": "5ca25fff40d30a8a2580c469053126d28aa16267142309a8c0edb3f68d0338ee",
+        "size_in_bytes": 1850
+      },
+      {
+        "_path": "site-packages/poetry/repositories/lockfile_repository.py",
+        "path_type": "hardlink",
+        "sha256": "31de3649246696820edc40e9a050799f2fd2df9a84d7490a385c564595fddb2b",
+        "sha256_in_prefix": "31de3649246696820edc40e9a050799f2fd2df9a84d7490a385c564595fddb2b",
+        "size_in_bytes": 549
+      },
+      {
+        "_path": "site-packages/poetry/repositories/parsers/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/repositories/parsers/html_page_parser.py",
+        "path_type": "hardlink",
+        "sha256": "df26b8863d815f7eb7a7a30594e595600281d9a76a8d8e1b6b5ec9b627203fb7",
+        "sha256_in_prefix": "df26b8863d815f7eb7a7a30594e595600281d9a76a8d8e1b6b5ec9b627203fb7",
+        "size_in_bytes": 596
+      },
+      {
+        "_path": "site-packages/poetry/repositories/parsers/pypi_search_parser.py",
+        "path_type": "hardlink",
+        "sha256": "c9b4d1998240b9ac2c5450e89877a9441506e9fbb22bf77ac48308a2627b69b0",
+        "sha256_in_prefix": "c9b4d1998240b9ac2c5450e89877a9441506e9fbb22bf77ac48308a2627b69b0",
+        "size_in_bytes": 2480
+      },
+      {
+        "_path": "site-packages/poetry/repositories/pypi_repository.py",
+        "path_type": "hardlink",
+        "sha256": "8c3dd4107bb91c0199d14356af9e4e453f0a77c17555a7ce638b86c86b285ede",
+        "sha256_in_prefix": "8c3dd4107bb91c0199d14356af9e4e453f0a77c17555a7ce638b86c86b285ede",
+        "size_in_bytes": 8410
+      },
+      {
+        "_path": "site-packages/poetry/repositories/repository.py",
+        "path_type": "hardlink",
+        "sha256": "f19a879244ed44a1ff1fd8afca26cff5926aad1029c9832c7f4abca12707b40e",
+        "sha256_in_prefix": "f19a879244ed44a1ff1fd8afca26cff5926aad1029c9832c7f4abca12707b40e",
+        "size_in_bytes": 3821
+      },
+      {
+        "_path": "site-packages/poetry/repositories/repository_pool.py",
+        "path_type": "hardlink",
+        "sha256": "df21bc55dd47ff6850ee0b3f1827bc9e5533e218dba429f3f81f9315395a2216",
+        "sha256_in_prefix": "df21bc55dd47ff6850ee0b3f1827bc9e5533e218dba429f3f81f9315395a2216",
+        "size_in_bytes": 6110
+      },
+      {
+        "_path": "site-packages/poetry/repositories/single_page_repository.py",
+        "path_type": "hardlink",
+        "sha256": "4800ef35ad366ed19c298e68a111d45ba92371220f22f9fb69f02cceb2c1aa87",
+        "sha256_in_prefix": "4800ef35ad366ed19c298e68a111d45ba92371220f22f9fb69f02cceb2c1aa87",
+        "size_in_bytes": 727
+      },
+      {
+        "_path": "site-packages/poetry/toml/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "cc71f175409ecb74794473931d672ed54ffd3d9e75cc7b91b2e49e6d7d22a4d3",
+        "sha256_in_prefix": "cc71f175409ecb74794473931d672ed54ffd3d9e75cc7b91b2e49e6d7d22a4d3",
+        "size_in_bytes": 157
+      },
+      {
+        "_path": "site-packages/poetry/toml/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "45d3d53178bfdb20285b3335a8008007c7f53b140494567bc163936626216a3f",
+        "sha256_in_prefix": "45d3d53178bfdb20285b3335a8008007c7f53b140494567bc163936626216a3f",
+        "size_in_bytes": 190
+      },
+      {
+        "_path": "site-packages/poetry/toml/file.py",
+        "path_type": "hardlink",
+        "sha256": "97ad93d016347f970ee473dad3ab39b9bd3349123aa0204d5f87e2d24e2701bc",
+        "sha256_in_prefix": "97ad93d016347f970ee473dad3ab39b9bd3349123aa0204d5f87e2d24e2701bc",
+        "size_in_bytes": 872
+      },
+      {
+        "_path": "site-packages/poetry/utils/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/utils/_compat.py",
+        "path_type": "hardlink",
+        "sha256": "f88523b9d4dd9e716c1bbefc3d59c5db9568615b9a6ff77c880187736728e245",
+        "sha256_in_prefix": "f88523b9d4dd9e716c1bbefc3d59c5db9568615b9a6ff77c880187736728e245",
+        "size_in_bytes": 1442
+      },
+      {
+        "_path": "site-packages/poetry/utils/authenticator.py",
+        "path_type": "hardlink",
+        "sha256": "afdd74f6630b1181db68f7c35791eb37a6e750b7f1025a610cc6ca8f222157ea",
+        "sha256_in_prefix": "afdd74f6630b1181db68f7c35791eb37a6e750b7f1025a610cc6ca8f222157ea",
+        "size_in_bytes": 17016
+      },
+      {
+        "_path": "site-packages/poetry/utils/cache.py",
+        "path_type": "hardlink",
+        "sha256": "09a5cbb3351253a583420f0c1079b58dd745d99cca8a65fc25a782de348a23e1",
+        "sha256_in_prefix": "09a5cbb3351253a583420f0c1079b58dd745d99cca8a65fc25a782de348a23e1",
+        "size_in_bytes": 10168
+      },
+      {
+        "_path": "site-packages/poetry/utils/constants.py",
+        "path_type": "hardlink",
+        "sha256": "7f9896157cac576d3a94ba1a94d07131a9a3fa6e4d8fae87073259e40fcb403f",
+        "sha256_in_prefix": "7f9896157cac576d3a94ba1a94d07131a9a3fa6e4d8fae87073259e40fcb403f",
+        "size_in_bytes": 302
+      },
+      {
+        "_path": "site-packages/poetry/utils/dependency_specification.py",
+        "path_type": "hardlink",
+        "sha256": "6e8b5f2a3a382f236a5904b42ec33c39f2dd2981dd2c3926c692446415d6c416",
+        "sha256_in_prefix": "6e8b5f2a3a382f236a5904b42ec33c39f2dd2981dd2c3926c692446415d6c416",
+        "size_in_bytes": 7636
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "0b4a22bb03b5faa2ead3bcd89b5e9f7fe58ab64b1b1638109854f3bbf6797ab7",
+        "sha256_in_prefix": "0b4a22bb03b5faa2ead3bcd89b5e9f7fe58ab64b1b1638109854f3bbf6797ab7",
+        "size_in_bytes": 3477
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/base_env.py",
+        "path_type": "hardlink",
+        "sha256": "e3e0261d84b3b01d6bcf2daa96019ac17ba9cbddb5e8cf5869bc49e765a08ef3",
+        "sha256_in_prefix": "e3e0261d84b3b01d6bcf2daa96019ac17ba9cbddb5e8cf5869bc49e765a08ef3",
+        "size_in_bytes": 16441
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/env_manager.py",
+        "path_type": "hardlink",
+        "sha256": "a58d50d9a34bcf87b6c3605e81d81dc6f6c4ef20bf3e2618949c2b5721791079",
+        "sha256_in_prefix": "a58d50d9a34bcf87b6c3605e81d81dc6f6c4ef20bf3e2618949c2b5721791079",
+        "size_in_bytes": 22203
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "595c8bba544d26f7536a9a37cbd58a60e6a84b2d7965987a177a2cfc57bd2387",
+        "sha256_in_prefix": "595c8bba544d26f7536a9a37cbd58a60e6a84b2d7965987a177a2cfc57bd2387",
+        "size_in_bytes": 862
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/generic_env.py",
+        "path_type": "hardlink",
+        "sha256": "86d8da4f6040a8d1a53757df2d73a17010ca429b00c49625534289b6c83297be",
+        "sha256_in_prefix": "86d8da4f6040a8d1a53757df2d73a17010ca429b00c49625534289b6c83297be",
+        "size_in_bytes": 3162
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/mock_env.py",
+        "path_type": "hardlink",
+        "sha256": "269cc35fe1c2635387dffe0ddf3ad9b8bcff75ed61535658ae8025f883f59bfb",
+        "sha256_in_prefix": "269cc35fe1c2635387dffe0ddf3ad9b8bcff75ed61535658ae8025f883f59bfb",
+        "size_in_bytes": 2633
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/null_env.py",
+        "path_type": "hardlink",
+        "sha256": "b96d20e1fbea0a86a91c698d5944e03e2696740adcb2516d837a9eea9a8284ce",
+        "sha256_in_prefix": "b96d20e1fbea0a86a91c698d5944e03e2696740adcb2516d837a9eea9a8284ce",
+        "size_in_bytes": 1304
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/python/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "225c617a43bc064e3665e949f3cdd4878a7b43b36034222deaf18d4eff2b57df",
+        "sha256_in_prefix": "225c617a43bc064e3665e949f3cdd4878a7b43b36034222deaf18d4eff2b57df",
+        "size_in_bytes": 110
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/python/exceptions.py",
+        "path_type": "hardlink",
+        "sha256": "7868e704ef99841a7d760ecd6f93fbdf36a294f16fd7ab02b8c5a0b1f8f9f30b",
+        "sha256_in_prefix": "7868e704ef99841a7d760ecd6f93fbdf36a294f16fd7ab02b8c5a0b1f8f9f30b",
+        "size_in_bytes": 1374
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/python/installer.py",
+        "path_type": "hardlink",
+        "sha256": "8db529d0a551b56039e5cb7f9f5e0b16154189fe4febb514faf2871f019dbb27",
+        "sha256_in_prefix": "8db529d0a551b56039e5cb7f9f5e0b16154189fe4febb514faf2871f019dbb27",
+        "size_in_bytes": 3709
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/python/manager.py",
+        "path_type": "hardlink",
+        "sha256": "175d10ca20ca5999963978dc88dbf06eae912e4e87db93c7dcfbd76d0be406a9",
+        "sha256_in_prefix": "175d10ca20ca5999963978dc88dbf06eae912e4e87db93c7dcfbd76d0be406a9",
+        "size_in_bytes": 10624
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/python/providers.py",
+        "path_type": "hardlink",
+        "sha256": "71441de4f5b50b8f15b5f26fa5ff244f760e8d5a40b1b61fea546cfea1de2627",
+        "sha256_in_prefix": "71441de4f5b50b8f15b5f26fa5ff244f760e8d5a40b1b61fea546cfea1de2627",
+        "size_in_bytes": 2933
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/script_strings.py",
+        "path_type": "hardlink",
+        "sha256": "28f282f97c8ef4f70bbdd373e36f7729689d07b5fc10fc32f1ec06466c7ad0ac",
+        "sha256_in_prefix": "28f282f97c8ef4f70bbdd373e36f7729689d07b5fc10fc32f1ec06466c7ad0ac",
+        "size_in_bytes": 3139
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/site_packages.py",
+        "path_type": "hardlink",
+        "sha256": "f00a186aa2d76e071d8e9a62c341dac3a0533da1925c75277dc115106f2ac25a",
+        "sha256_in_prefix": "f00a186aa2d76e071d8e9a62c341dac3a0533da1925c75277dc115106f2ac25a",
+        "size_in_bytes": 7221
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/system_env.py",
+        "path_type": "hardlink",
+        "sha256": "e7406ec839db0211f17dafa7b1f9879f39d9df41b5cf13717e25d9881fa7544c",
+        "sha256_in_prefix": "e7406ec839db0211f17dafa7b1f9879f39d9df41b5cf13717e25d9881fa7544c",
+        "size_in_bytes": 2577
+      },
+      {
+        "_path": "site-packages/poetry/utils/env/virtual_env.py",
+        "path_type": "hardlink",
+        "sha256": "8f6bf28eadb003cf4e6f2faa00af365b2a27f28e2d150542fde96f6d079f2eb9",
+        "sha256_in_prefix": "8f6bf28eadb003cf4e6f2faa00af365b2a27f28e2d150542fde96f6d079f2eb9",
+        "size_in_bytes": 5874
+      },
+      {
+        "_path": "site-packages/poetry/utils/extras.py",
+        "path_type": "hardlink",
+        "sha256": "bfb0d6642ab1e1c5e934c782539dcd087f488bfa85cdcdc7dbf38bd8ff290f15",
+        "sha256_in_prefix": "bfb0d6642ab1e1c5e934c782539dcd087f488bfa85cdcdc7dbf38bd8ff290f15",
+        "size_in_bytes": 1787
+      },
+      {
+        "_path": "site-packages/poetry/utils/helpers.py",
+        "path_type": "hardlink",
+        "sha256": "c3fb88fb5fd3066859ccb18d618bb4206162f76526830d8a6a08cfbf5126be6d",
+        "sha256_in_prefix": "c3fb88fb5fd3066859ccb18d618bb4206162f76526830d8a6a08cfbf5126be6d",
+        "size_in_bytes": 12441
+      },
+      {
+        "_path": "site-packages/poetry/utils/isolated_build.py",
+        "path_type": "hardlink",
+        "sha256": "7c9090dc6b88c18931c97bf8966b76656b6df3a42f2ff6d7e89face2753b6d95",
+        "sha256_in_prefix": "7c9090dc6b88c18931c97bf8966b76656b6df3a42f2ff6d7e89face2753b6d95",
+        "size_in_bytes": 7339
+      },
+      {
+        "_path": "site-packages/poetry/utils/log_utils.py",
+        "path_type": "hardlink",
+        "sha256": "686b0ef432d5bb27df04b1b2f2096bf3b11de3627c4302e5e952702e3fcfab2f",
+        "sha256_in_prefix": "686b0ef432d5bb27df04b1b2f2096bf3b11de3627c4302e5e952702e3fcfab2f",
+        "size_in_bytes": 942
+      },
+      {
+        "_path": "site-packages/poetry/utils/password_manager.py",
+        "path_type": "hardlink",
+        "sha256": "ca70f8b15be9aacb231a7cb015bf9273b3d0cb51cd638da5107ddada9fbf560e",
+        "sha256_in_prefix": "ca70f8b15be9aacb231a7cb015bf9273b3d0cb51cd638da5107ddada9fbf560e",
+        "size_in_bytes": 10076
+      },
+      {
+        "_path": "site-packages/poetry/utils/patterns.py",
+        "path_type": "hardlink",
+        "sha256": "428ca46a2347614ed1a92b6412d2ece616b8bb559cad38eef48a1a1fb91c1d95",
+        "sha256_in_prefix": "428ca46a2347614ed1a92b6412d2ece616b8bb559cad38eef48a1a1fb91c1d95",
+        "size_in_bytes": 407
+      },
+      {
+        "_path": "site-packages/poetry/utils/pip.py",
+        "path_type": "hardlink",
+        "sha256": "3752be10f3d9b7f9e33983bdfcbd7bbf68837a543585748cfcb34350523c7d22",
+        "sha256_in_prefix": "3752be10f3d9b7f9e33983bdfcbd7bbf68837a543585748cfcb34350523c7d22",
+        "size_in_bytes": 1434
+      },
+      {
+        "_path": "site-packages/poetry/utils/threading.py",
+        "path_type": "hardlink",
+        "sha256": "a07b8e3b0ee6b9ef311c448a9a779f0c54b1cfd32cc28cd619b7fc5533599027",
+        "sha256_in_prefix": "a07b8e3b0ee6b9ef311c448a9a779f0c54b1cfd32cc28cd619b7fc5533599027",
+        "size_in_bytes": 2420
+      },
+      {
+        "_path": "site-packages/poetry/utils/wheel.py",
+        "path_type": "hardlink",
+        "sha256": "d361ff358e52d4cb9401350b101e36bde0103838e5d26c8012b4b0db5ae13f49",
+        "sha256_in_prefix": "d361ff358e52d4cb9401350b101e36bde0103838e5d26c8012b4b0db5ae13f49",
+        "size_in_bytes": 1371
+      },
+      {
+        "_path": "site-packages/poetry/vcs/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/vcs/git/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "21c690a25d6e59498b61cd5dd072f3a1fc2e4cb9d9f4aff71a68ea775c6f5057",
+        "sha256_in_prefix": "21c690a25d6e59498b61cd5dd072f3a1fc2e4cb9d9f4aff71a68ea775c6f5057",
+        "size_in_bytes": 95
+      },
+      {
+        "_path": "site-packages/poetry/vcs/git/backend.py",
+        "path_type": "hardlink",
+        "sha256": "08f0726ef677528a560e039a71417d8061c1384c7bb59d984d2327638e2966f0",
+        "sha256_in_prefix": "08f0726ef677528a560e039a71417d8061c1384c7bb59d984d2327638e2966f0",
+        "size_in_bytes": 21164
+      },
+      {
+        "_path": "site-packages/poetry/vcs/git/system.py",
+        "path_type": "hardlink",
+        "sha256": "0de6cfa628936a4867d51f1e9f5cc844af6776d9680babd9c485a11092506162",
+        "sha256_in_prefix": "0de6cfa628936a4867d51f1e9f5cc844af6776d9680babd9c485a11092506162",
+        "size_in_bytes": 1523
+      },
+      {
+        "_path": "site-packages/poetry/version/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "site-packages/poetry/version/version_selector.py",
+        "path_type": "hardlink",
+        "sha256": "72f486a9b82618b8e61904b4c455bd4ce5e63f726239a35c72d9410d40f1586b",
+        "sha256_in_prefix": "72f486a9b82618b8e61904b4c455bd4ce5e63f726239a35c72d9410d40f1586b",
+        "size_in_bytes": 1579
+      },
+      {
+        "_path": "Lib/site-packages/poetry/__pycache__/__main__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/__pycache__/__version__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/config/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/config/__pycache__/config.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/config/__pycache__/config_source.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/config/__pycache__/dict_config_source.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/config/__pycache__/file_config_source.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/config/__pycache__/source.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/__pycache__/application.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/__pycache__/command_loader.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/about.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/add.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/build.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/cache/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/cache/__pycache__/clear.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/cache/__pycache__/list.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/check.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/command.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/config.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/debug/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/debug/__pycache__/info.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/debug/__pycache__/resolve.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/debug/__pycache__/tags.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/env/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/env/__pycache__/activate.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/env/__pycache__/info.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/env/__pycache__/list.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/env/__pycache__/remove.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/env/__pycache__/use.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/env_command.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/group_command.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/init.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/install.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/installer_command.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/lock.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/new.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/publish.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/python/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/python/__pycache__/install.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/python/__pycache__/list.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/python/__pycache__/remove.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/remove.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/run.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/search.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/add.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/install.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/lock.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/remove.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/self_command.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/show/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/show/__pycache__/plugins.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/sync.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/self/__pycache__/update.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/show.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/source/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/source/__pycache__/add.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/source/__pycache__/remove.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/source/__pycache__/show.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/sync.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/update.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/commands/__pycache__/version.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/events/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/events/__pycache__/console_events.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/__pycache__/exceptions.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/logging/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/logging/__pycache__/filters.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/logging/formatters/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/logging/formatters/__pycache__/builder_formatter.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/logging/formatters/__pycache__/formatter.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/logging/__pycache__/io_formatter.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/console/logging/__pycache__/io_handler.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/__pycache__/exceptions.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/__pycache__/factory.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/inspection/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/inspection/__pycache__/info.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/inspection/__pycache__/lazy_wheel.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/__pycache__/chef.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/__pycache__/chooser.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/__pycache__/executor.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/__pycache__/installer.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/operations/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/operations/__pycache__/install.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/operations/__pycache__/operation.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/operations/__pycache__/uninstall.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/operations/__pycache__/update.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/installation/__pycache__/wheel_installer.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/json/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/layouts/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/layouts/__pycache__/layout.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/layouts/__pycache__/src.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/__pycache__/locations.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/masonry/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/masonry/__pycache__/api.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/masonry/builders/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/masonry/builders/__pycache__/editable.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/assignment.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/failure.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/incompatibility.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/incompatibility_cause.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/partial_solution.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/result.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/set_relation.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/term.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/mixology/__pycache__/version_solver.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/packages/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/packages/__pycache__/dependency_package.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/packages/__pycache__/direct_origin.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/packages/__pycache__/locker.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/packages/__pycache__/package_collection.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/packages/__pycache__/transitive_package_info.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/plugins/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/plugins/__pycache__/application_plugin.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/plugins/__pycache__/base_plugin.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/plugins/__pycache__/plugin.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/plugins/__pycache__/plugin_manager.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/__pycache__/poetry.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/publishing/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/publishing/__pycache__/hash_manager.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/publishing/__pycache__/publisher.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/publishing/__pycache__/uploader.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/puzzle/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/puzzle/__pycache__/exceptions.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/puzzle/__pycache__/provider.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/puzzle/__pycache__/solver.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/puzzle/__pycache__/transaction.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/pyproject/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/pyproject/__pycache__/toml.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/abstract_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/cached_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/exceptions.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/http_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/installed_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/legacy_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/link_sources/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/link_sources/__pycache__/base.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/link_sources/__pycache__/html.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/link_sources/__pycache__/json.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/lockfile_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/parsers/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/parsers/__pycache__/html_page_parser.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/parsers/__pycache__/pypi_search_parser.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/pypi_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/repository_pool.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/repositories/__pycache__/single_page_repository.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/toml/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/toml/__pycache__/exceptions.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/toml/__pycache__/file.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/_compat.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/authenticator.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/cache.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/constants.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/dependency_specification.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/base_env.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/env_manager.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/exceptions.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/generic_env.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/mock_env.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/null_env.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/python/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/python/__pycache__/exceptions.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/python/__pycache__/installer.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/python/__pycache__/manager.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/python/__pycache__/providers.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/script_strings.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/site_packages.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/system_env.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/env/__pycache__/virtual_env.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/extras.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/helpers.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/isolated_build.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/log_utils.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/password_manager.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/patterns.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/pip.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/threading.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/utils/__pycache__/wheel.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/vcs/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/vcs/git/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/vcs/git/__pycache__/backend.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/vcs/git/__pycache__/system.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/version/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Lib/site-packages/poetry/version/__pycache__/version_selector.cpython-313.pyc",
+        "path_type": "pyc_file"
+      },
+      {
+        "_path": "Scripts/poetry-script.py",
+        "path_type": "windows_python_entry_point_script"
+      },
+      {
+        "_path": "Scripts/poetry.exe",
+        "path_type": "windows_python_entry_point_exe"
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "conda-forge::poetry",
+  "sha256": "35d26f554403f4226c73f6399bb16b5a121acc91a7d5fe781fd5efef62634bd3",
+  "size": 187942,
+  "subdir": "noarch",
+  "timestamp": 1758529679000,
+  "url": "https://conda.anaconda.org/conda-forge/noarch/poetry-2.2.1-pyh7428d3b_0.conda",
+  "version": "2.2.1"
+}

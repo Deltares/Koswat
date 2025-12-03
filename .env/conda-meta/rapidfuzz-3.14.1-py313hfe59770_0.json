@@ -1,0 +1,895 @@
+{
+  "build": "py313hfe59770_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [
+    "numpy",
+    "python >=3.13,<3.14.0a0",
+    "python_abi 3.13.* *_cp313",
+    "ucrt >=10.0.20348.0",
+    "vc >=14.3,<15",
+    "vc14_runtime >=14.44.35208"
+  ],
+  "extracted_package_dir": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\rapidfuzz-3.14.1-py313hfe59770_0",
+  "files": [
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/INSTALLER",
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/METADATA",
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/RECORD",
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/REQUESTED",
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/WHEEL",
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/direct_url.json",
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/entry_points.txt",
+    "Lib/site-packages/rapidfuzz-3.14.1.dist-info/licenses/LICENSE",
+    "Lib/site-packages/rapidfuzz/__init__.py",
+    "Lib/site-packages/rapidfuzz/__init__.pyi",
+    "Lib/site-packages/rapidfuzz/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/_common_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/_feature_detector.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/_utils.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/fuzz.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/fuzz_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/process.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/process_cpp.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/process_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/utils.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pycache__/utils_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pyinstaller/__init__.py",
+    "Lib/site-packages/rapidfuzz/__pyinstaller/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pyinstaller/__pycache__/test_rapidfuzz_packaging.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/__pyinstaller/test_rapidfuzz_packaging.py",
+    "Lib/site-packages/rapidfuzz/_common_py.py",
+    "Lib/site-packages/rapidfuzz/_feature_detector.py",
+    "Lib/site-packages/rapidfuzz/_feature_detector_cpp.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/_utils.py",
+    "Lib/site-packages/rapidfuzz/distance/DamerauLevenshtein.py",
+    "Lib/site-packages/rapidfuzz/distance/DamerauLevenshtein.pyi",
+    "Lib/site-packages/rapidfuzz/distance/DamerauLevenshtein_py.py",
+    "Lib/site-packages/rapidfuzz/distance/Hamming.py",
+    "Lib/site-packages/rapidfuzz/distance/Hamming.pyi",
+    "Lib/site-packages/rapidfuzz/distance/Hamming_py.py",
+    "Lib/site-packages/rapidfuzz/distance/Indel.py",
+    "Lib/site-packages/rapidfuzz/distance/Indel.pyi",
+    "Lib/site-packages/rapidfuzz/distance/Indel_py.py",
+    "Lib/site-packages/rapidfuzz/distance/Jaro.py",
+    "Lib/site-packages/rapidfuzz/distance/Jaro.pyi",
+    "Lib/site-packages/rapidfuzz/distance/JaroWinkler.py",
+    "Lib/site-packages/rapidfuzz/distance/JaroWinkler.pyi",
+    "Lib/site-packages/rapidfuzz/distance/JaroWinkler_py.py",
+    "Lib/site-packages/rapidfuzz/distance/Jaro_py.py",
+    "Lib/site-packages/rapidfuzz/distance/LCSseq.py",
+    "Lib/site-packages/rapidfuzz/distance/LCSseq.pyi",
+    "Lib/site-packages/rapidfuzz/distance/LCSseq_py.py",
+    "Lib/site-packages/rapidfuzz/distance/Levenshtein.py",
+    "Lib/site-packages/rapidfuzz/distance/Levenshtein.pyi",
+    "Lib/site-packages/rapidfuzz/distance/Levenshtein_py.py",
+    "Lib/site-packages/rapidfuzz/distance/OSA.py",
+    "Lib/site-packages/rapidfuzz/distance/OSA.pyi",
+    "Lib/site-packages/rapidfuzz/distance/OSA_py.py",
+    "Lib/site-packages/rapidfuzz/distance/Postfix.py",
+    "Lib/site-packages/rapidfuzz/distance/Postfix.pyi",
+    "Lib/site-packages/rapidfuzz/distance/Postfix_py.py",
+    "Lib/site-packages/rapidfuzz/distance/Prefix.py",
+    "Lib/site-packages/rapidfuzz/distance/Prefix.pyi",
+    "Lib/site-packages/rapidfuzz/distance/Prefix_py.py",
+    "Lib/site-packages/rapidfuzz/distance/__init__.py",
+    "Lib/site-packages/rapidfuzz/distance/__init__.pyi",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/DamerauLevenshtein.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/DamerauLevenshtein_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Hamming.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Hamming_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Indel.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Indel_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Jaro.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/JaroWinkler.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/JaroWinkler_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Jaro_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/LCSseq.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/LCSseq_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Levenshtein.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Levenshtein_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/OSA.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/OSA_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Postfix.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Postfix_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Prefix.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/Prefix_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/__init__.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/_initialize.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/_initialize_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/__pycache__/metrics_py.cpython-313.pyc",
+    "Lib/site-packages/rapidfuzz/distance/_initialize.py",
+    "Lib/site-packages/rapidfuzz/distance/_initialize.pyi",
+    "Lib/site-packages/rapidfuzz/distance/_initialize_cpp.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/distance/_initialize_py.py",
+    "Lib/site-packages/rapidfuzz/distance/metrics_cpp.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/distance/metrics_cpp_avx2.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/distance/metrics_py.py",
+    "Lib/site-packages/rapidfuzz/fuzz.py",
+    "Lib/site-packages/rapidfuzz/fuzz.pyi",
+    "Lib/site-packages/rapidfuzz/fuzz_cpp.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/fuzz_cpp_avx2.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/fuzz_py.py",
+    "Lib/site-packages/rapidfuzz/process.py",
+    "Lib/site-packages/rapidfuzz/process.pyi",
+    "Lib/site-packages/rapidfuzz/process_cpp.py",
+    "Lib/site-packages/rapidfuzz/process_cpp_impl.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/process_py.py",
+    "Lib/site-packages/rapidfuzz/py.typed",
+    "Lib/site-packages/rapidfuzz/utils.py",
+    "Lib/site-packages/rapidfuzz/utils.pyi",
+    "Lib/site-packages/rapidfuzz/utils_cpp.cp313-win_amd64.pyd",
+    "Lib/site-packages/rapidfuzz/utils_py.py",
+    ".nonadmin"
+  ],
+  "fn": "rapidfuzz-3.14.1-py313hfe59770_0.conda",
+  "license": "MIT",
+  "link": {
+    "source": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\rapidfuzz-3.14.1-py313hfe59770_0",
+    "type": 1
+  },
+  "md5": "9e42b4dff9ba3c21c9be80881bc9f22a",
+  "name": "rapidfuzz",
+  "package_tarball_full_path": "C:\\Users\\stouten\\AppData\\Local\\miniconda3\\pkgs\\rapidfuzz-3.14.1-py313hfe59770_0.conda",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "sha256_in_prefix": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "621c880c177a095c37a9e247495ef6b428ee39c0f0fe68d3d6749919f998fd82",
+        "sha256_in_prefix": "621c880c177a095c37a9e247495ef6b428ee39c0f0fe68d3d6749919f998fd82",
+        "size_in_bytes": 12288
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "784b9038acbd491df161cc38786a0efde7cdea01b1f825ccca72085434fd51ed",
+        "sha256_in_prefix": "784b9038acbd491df161cc38786a0efde7cdea01b1f825ccca72085434fd51ed",
+        "size_in_bytes": 8386
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "be42f7c1322486365add19845d7db486574da7a43caadc118eb5d6e8ae6cc3f4",
+        "sha256_in_prefix": "be42f7c1322486365add19845d7db486574da7a43caadc118eb5d6e8ae6cc3f4",
+        "size_in_bytes": 106
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "accb2207066a111e205d3b22aec8da89acd81092eb4aadd2c050d9e751279d94",
+        "sha256_in_prefix": "accb2207066a111e205d3b22aec8da89acd81092eb4aadd2c050d9e751279d94",
+        "size_in_bytes": 70
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/entry_points.txt",
+        "path_type": "hardlink",
+        "sha256": "866661a89859c6bccaa5ab3ab5bfe400a50413df79dabe20aa424e57ababbedd",
+        "sha256_in_prefix": "866661a89859c6bccaa5ab3ab5bfe400a50413df79dabe20aa424e57ababbedd",
+        "size_in_bytes": 71
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz-3.14.1.dist-info/licenses/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "f34ccdffdff56fc417785915eedf18601d5479755df3c472b2c754c29802d683",
+        "sha256_in_prefix": "f34ccdffdff56fc417785915eedf18601d5479755df3c472b2c754c29802d683",
+        "size_in_bytes": 1092
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "0eaa709d28361d4ce37785d6252e6308edd769ebae1affd00dde60af5e68b79b",
+        "sha256_in_prefix": "0eaa709d28361d4ce37785d6252e6308edd769ebae1affd00dde60af5e68b79b",
+        "size_in_bytes": 836
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__init__.pyi",
+        "path_type": "hardlink",
+        "sha256": "e8d3680a8c2d5866c70511d9f8a3ee9975d2a64db1e2dacf992b435aa93d3ae8",
+        "sha256_in_prefix": "e8d3680a8c2d5866c70511d9f8a3ee9975d2a64db1e2dacf992b435aa93d3ae8",
+        "size_in_bytes": 201
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "bce3693406e767919ba04f06daa4f022688c0bb284b88359e94270d0b3f0fca6",
+        "sha256_in_prefix": "bce3693406e767919ba04f06daa4f022688c0bb284b88359e94270d0b3f0fca6",
+        "size_in_bytes": 1212
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/_common_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "bfb6f1c15f54d3b1227e50d7cb4c9759dc4e6443b8992dfc7a61c934539416b6",
+        "sha256_in_prefix": "bfb6f1c15f54d3b1227e50d7cb4c9759dc4e6443b8992dfc7a61c934539416b6",
+        "size_in_bytes": 2832
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/_feature_detector.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "c34c8d7e65dd8c81749d4ec0a2b3eb732f958f03266377a4a5792982c9c9197b",
+        "sha256_in_prefix": "c34c8d7e65dd8c81749d4ec0a2b3eb732f958f03266377a4a5792982c9c9197b",
+        "size_in_bytes": 530
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/_utils.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "96b5b7dab60c3e6533c6d4abbbf7bb5c8d28ae408ece23fe7cf47780d1e31dc0",
+        "sha256_in_prefix": "96b5b7dab60c3e6533c6d4abbbf7bb5c8d28ae408ece23fe7cf47780d1e31dc0",
+        "size_in_bytes": 3006
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/fuzz.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "b00627bb3e9bc5c7cc43df39f51df4276de2b6815ad33fad0bd37312702f1da7",
+        "sha256_in_prefix": "b00627bb3e9bc5c7cc43df39f51df4276de2b6815ad33fad0bd37312702f1da7",
+        "size_in_bytes": 2427
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/fuzz_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "c405045a5fd3d32708d0da5ad9798846f2b3a033fc5913a2814f6bf98422b8f6",
+        "sha256_in_prefix": "c405045a5fd3d32708d0da5ad9798846f2b3a033fc5913a2814f6bf98422b8f6",
+        "size_in_bytes": 24968
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/process.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "c5c0e4c22c2d767529ca645aec6cdd2a51827b1d1c5af2dae8c82e5be8f9b50e",
+        "sha256_in_prefix": "c5c0e4c22c2d767529ca645aec6cdd2a51827b1d1c5af2dae8c82e5be8f9b50e",
+        "size_in_bytes": 2023
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/process_cpp.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "e2b4e70975ab2bec26cddba3df1d11703cfd0075a809586a08486e6691b453d5",
+        "sha256_in_prefix": "e2b4e70975ab2bec26cddba3df1d11703cfd0075a809586a08486e6691b453d5",
+        "size_in_bytes": 2742
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/process_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "35a77d698e99b8af3e0bc2eafa87d6197dcabf7a2caae6d27675908945e3bb40",
+        "sha256_in_prefix": "35a77d698e99b8af3e0bc2eafa87d6197dcabf7a2caae6d27675908945e3bb40",
+        "size_in_bytes": 24974
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/utils.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "3bfdca6847c25d3faf8ffaef699b677c7f01a73eca4e09ca516a3822b47252bf",
+        "sha256_in_prefix": "3bfdca6847c25d3faf8ffaef699b677c7f01a73eca4e09ca516a3822b47252bf",
+        "size_in_bytes": 1769
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pycache__/utils_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "6c9794562c4e9f6435fa8e256c6ba3f3e01d838703a19b8c3420293bc7ee2f80",
+        "sha256_in_prefix": "6c9794562c4e9f6435fa8e256c6ba3f3e01d838703a19b8c3420293bc7ee2f80",
+        "size_in_bytes": 891
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pyinstaller/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "78d8cc6481cb11d780ace9aa8d1817ae1931b24bf1800409a1672a83e71ea8fb",
+        "sha256_in_prefix": "78d8cc6481cb11d780ace9aa8d1817ae1931b24bf1800409a1672a83e71ea8fb",
+        "size_in_bytes": 132
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pyinstaller/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "668b16c4c5cd807ee8e120c247cc7896eb33e372f5cfcdf28fe3f162b7299ab0",
+        "sha256_in_prefix": "668b16c4c5cd807ee8e120c247cc7896eb33e372f5cfcdf28fe3f162b7299ab0",
+        "size_in_bytes": 466
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pyinstaller/__pycache__/test_rapidfuzz_packaging.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "5516b46d2a97be9abbe6c556098c05083fb297a0a76d91d259f848caa83f730e",
+        "sha256_in_prefix": "5516b46d2a97be9abbe6c556098c05083fb297a0a76d91d259f848caa83f730e",
+        "size_in_bytes": 1305
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/__pyinstaller/test_rapidfuzz_packaging.py",
+        "path_type": "hardlink",
+        "sha256": "881b2c22d08d755669afb2560c9b79cfb74852cc9d96bbae3ecdaa78ba458399",
+        "sha256_in_prefix": "881b2c22d08d755669afb2560c9b79cfb74852cc9d96bbae3ecdaa78ba458399",
+        "size_in_bytes": 1114
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/_common_py.py",
+        "path_type": "hardlink",
+        "sha256": "c5b7230cfd60f3e5e4f08907c08a7f09de1ea7f2b71d2c0571b87348a6f98e21",
+        "sha256_in_prefix": "c5b7230cfd60f3e5e4f08907c08a7f09de1ea7f2b71d2c0571b87348a6f98e21",
+        "size_in_bytes": 1773
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/_feature_detector.py",
+        "path_type": "hardlink",
+        "sha256": "bd39df4c1f897e58dbaeea71b2fb1ae4041c6409061e0ec55c1834a48dff6158",
+        "sha256_in_prefix": "bd39df4c1f897e58dbaeea71b2fb1ae4041c6409061e0ec55c1834a48dff6158",
+        "size_in_bytes": 332
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/_feature_detector_cpp.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "c2d646062e50bd2cfd8146c2f4976fd8f0e21fa9ef5adf08d00cd4deade41a98",
+        "sha256_in_prefix": "c2d646062e50bd2cfd8146c2f4976fd8f0e21fa9ef5adf08d00cd4deade41a98",
+        "size_in_bytes": 33280
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/_utils.py",
+        "path_type": "hardlink",
+        "sha256": "4ae2b532b977305842391149be972b4eacd4aa488bb4d8954f8d89fe6e52c069",
+        "sha256_in_prefix": "4ae2b532b977305842391149be972b4eacd4aa488bb4d8954f8d89fe6e52c069",
+        "size_in_bytes": 2307
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/DamerauLevenshtein.py",
+        "path_type": "hardlink",
+        "sha256": "2e272fa1a21a77809ac10b8a9c6ed424f80d57bc8bdb494d5df8f50a42ed9a48",
+        "sha256_in_prefix": "2e272fa1a21a77809ac10b8a9c6ed424f80d57bc8bdb494d5df8f50a42ed9a48",
+        "size_in_bytes": 4055
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/DamerauLevenshtein.pyi",
+        "path_type": "hardlink",
+        "sha256": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "sha256_in_prefix": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "size_in_bytes": 1904
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/DamerauLevenshtein_py.py",
+        "path_type": "hardlink",
+        "sha256": "fb374c338befef40e4e551c085b8de0794e939debe6346c54b4b986d2041f459",
+        "sha256_in_prefix": "fb374c338befef40e4e551c085b8de0794e939debe6346c54b4b986d2041f459",
+        "size_in_bytes": 6591
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Hamming.py",
+        "path_type": "hardlink",
+        "sha256": "fdd8fdfb5b9b7eab4a080da1ec9b7365af4d7e120a7db7d2b4d7ab0aec2f4860",
+        "sha256_in_prefix": "fdd8fdfb5b9b7eab4a080da1ec9b7365af4d7e120a7db7d2b4d7ab0aec2f4860",
+        "size_in_bytes": 4392
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Hamming.pyi",
+        "path_type": "hardlink",
+        "sha256": "4e3a17b7d972b0cf7e64e79d8a30a28b9d311867631a5cf6dfd2d6c74c1b61e6",
+        "sha256_in_prefix": "4e3a17b7d972b0cf7e64e79d8a30a28b9d311867631a5cf6dfd2d6c74c1b61e6",
+        "size_in_bytes": 2769
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Hamming_py.py",
+        "path_type": "hardlink",
+        "sha256": "1407a890c08e716dd46fc5e53bab6c1d65a974959250a55b2423590a73fea662",
+        "sha256_in_prefix": "1407a890c08e716dd46fc5e53bab6c1d65a974959250a55b2423590a73fea662",
+        "size_in_bytes": 9081
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Indel.py",
+        "path_type": "hardlink",
+        "sha256": "0be642c83ddd39a98a22fb7596d343ae828f4aa6cc878cc2e056ae76176f1e4a",
+        "sha256_in_prefix": "0be642c83ddd39a98a22fb7596d343ae828f4aa6cc878cc2e056ae76176f1e4a",
+        "size_in_bytes": 4296
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Indel.pyi",
+        "path_type": "hardlink",
+        "sha256": "c63b35b1d7edec071b1ce87dae9f691f415a9807ff4eb376ab258174c5e4f8d1",
+        "sha256_in_prefix": "c63b35b1d7edec071b1ce87dae9f691f415a9807ff4eb376ab258174c5e4f8d1",
+        "size_in_bytes": 2593
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Indel_py.py",
+        "path_type": "hardlink",
+        "sha256": "a04fa199bf76a3e6b9c585376e3e9442dbd496327809fe956235c02304adcd60",
+        "sha256_in_prefix": "a04fa199bf76a3e6b9c585376e3e9442dbd496327809fe956235c02304adcd60",
+        "size_in_bytes": 9935
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Jaro.py",
+        "path_type": "hardlink",
+        "sha256": "92307fafa0815497d48d1882891903aed765a1543d6a4da1510078e27225bcdd",
+        "sha256_in_prefix": "92307fafa0815497d48d1882891903aed765a1543d6a4da1510078e27225bcdd",
+        "size_in_bytes": 3575
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Jaro.pyi",
+        "path_type": "hardlink",
+        "sha256": "2298cb82f87bde36a526230c36ac1ce934a693b53dc84fc95cb3f7439eb4e463",
+        "sha256_in_prefix": "2298cb82f87bde36a526230c36ac1ce934a693b53dc84fc95cb3f7439eb4e463",
+        "size_in_bytes": 1908
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/JaroWinkler.py",
+        "path_type": "hardlink",
+        "sha256": "dd1459e0136df51b382802e040d62ca7c1c2059e0174cc4c39c8ab9cc1b0c6fa",
+        "sha256_in_prefix": "dd1459e0136df51b382802e040d62ca7c1c2059e0174cc4c39c8ab9cc1b0c6fa",
+        "size_in_bytes": 3831
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/JaroWinkler.pyi",
+        "path_type": "hardlink",
+        "sha256": "e570be6397d816798834cd03c36f4181152fcc57e71b4ec756bb82af02f8305f",
+        "sha256_in_prefix": "e570be6397d816798834cd03c36f4181152fcc57e71b4ec756bb82af02f8305f",
+        "size_in_bytes": 2164
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/JaroWinkler_py.py",
+        "path_type": "hardlink",
+        "sha256": "08903d2261103c6a914e85e08de8dd5044bddcbe494597fd80691b56e5fa01b5",
+        "sha256_in_prefix": "08903d2261103c6a914e85e08de8dd5044bddcbe494597fd80691b56e5fa01b5",
+        "size_in_bytes": 6481
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Jaro_py.py",
+        "path_type": "hardlink",
+        "sha256": "d667b156c7ed4c647386372d7d41ee686dc3f0cf13f68003b8ef42a8aa2295e5",
+        "sha256_in_prefix": "d667b156c7ed4c647386372d7d41ee686dc3f0cf13f68003b8ef42a8aa2295e5",
+        "size_in_bytes": 7345
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/LCSseq.py",
+        "path_type": "hardlink",
+        "sha256": "b60eb6146f0fccfc5819d871e36f3151f71df1c8046a507f866ab17392be65cc",
+        "sha256_in_prefix": "b60eb6146f0fccfc5819d871e36f3151f71df1c8046a507f866ab17392be65cc",
+        "size_in_bytes": 4392
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/LCSseq.pyi",
+        "path_type": "hardlink",
+        "sha256": "c63b35b1d7edec071b1ce87dae9f691f415a9807ff4eb376ab258174c5e4f8d1",
+        "sha256_in_prefix": "c63b35b1d7edec071b1ce87dae9f691f415a9807ff4eb376ab258174c5e4f8d1",
+        "size_in_bytes": 2593
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/LCSseq_py.py",
+        "path_type": "hardlink",
+        "sha256": "987dc95cabd79655d7dd3b3a75a19f7432865a8e55d711e423d472586555c391",
+        "sha256_in_prefix": "987dc95cabd79655d7dd3b3a75a19f7432865a8e55d711e423d472586555c391",
+        "size_in_bytes": 11504
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Levenshtein.py",
+        "path_type": "hardlink",
+        "sha256": "50918b72cf5d5cbdb990e8db8ba4ce0941d77fab86325193592a2dc515dfdc95",
+        "sha256_in_prefix": "50918b72cf5d5cbdb990e8db8ba4ce0941d77fab86325193592a2dc515dfdc95",
+        "size_in_bytes": 4584
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Levenshtein.pyi",
+        "path_type": "hardlink",
+        "sha256": "ec2fa75a7ff210e4688fe228a30d01b2668b9e9287ede8ffe6c9b2905b707273",
+        "sha256_in_prefix": "ec2fa75a7ff210e4688fe228a30d01b2668b9e9287ede8ffe6c9b2905b707273",
+        "size_in_bytes": 3678
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Levenshtein_py.py",
+        "path_type": "hardlink",
+        "sha256": "7f881a8360420024865cf55ed209c69d87f90832c0772aa1bdfe5c525f69b515",
+        "sha256_in_prefix": "7f881a8360420024865cf55ed209c69d87f90832c0772aa1bdfe5c525f69b515",
+        "size_in_bytes": 17103
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/OSA.py",
+        "path_type": "hardlink",
+        "sha256": "0f3912951ac44e109ff3373d382239b6036a180ceeb16727e5c604d910152bae",
+        "sha256_in_prefix": "0f3912951ac44e109ff3373d382239b6036a180ceeb16727e5c604d910152bae",
+        "size_in_bytes": 3543
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/OSA.pyi",
+        "path_type": "hardlink",
+        "sha256": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "sha256_in_prefix": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "size_in_bytes": 1904
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/OSA_py.py",
+        "path_type": "hardlink",
+        "sha256": "0460f8f7002335b039c6a86b5080f8be403bc9a789de35e58ec13ad1259b1228",
+        "sha256_in_prefix": "0460f8f7002335b039c6a86b5080f8be403bc9a789de35e58ec13ad1259b1228",
+        "size_in_bytes": 6251
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Postfix.py",
+        "path_type": "hardlink",
+        "sha256": "4284e56cb8238fad420ccfebc9c143a1aa778004515973aeeafc08c38d58d101",
+        "sha256_in_prefix": "4284e56cb8238fad420ccfebc9c143a1aa778004515973aeeafc08c38d58d101",
+        "size_in_bytes": 3671
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Postfix.pyi",
+        "path_type": "hardlink",
+        "sha256": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "sha256_in_prefix": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "size_in_bytes": 1904
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Postfix_py.py",
+        "path_type": "hardlink",
+        "sha256": "cb058ed0ce6cc025a48d9aa3a76c0a30467bfc657c67dd4844c7bcff364679a4",
+        "sha256_in_prefix": "cb058ed0ce6cc025a48d9aa3a76c0a30467bfc657c67dd4844c7bcff364679a4",
+        "size_in_bytes": 5039
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Prefix.py",
+        "path_type": "hardlink",
+        "sha256": "d88bb9efb5a769808709077c8adefa80393ad10c51765168d1c40122d099cd6c",
+        "sha256_in_prefix": "d88bb9efb5a769808709077c8adefa80393ad10c51765168d1c40122d099cd6c",
+        "size_in_bytes": 3639
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Prefix.pyi",
+        "path_type": "hardlink",
+        "sha256": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "sha256_in_prefix": "6cc4741e6db9d768d775c057c537cf40e6709c9a2708863c5f64497e45ec1338",
+        "size_in_bytes": 1904
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/Prefix_py.py",
+        "path_type": "hardlink",
+        "sha256": "987b56df0443d23a25efa3670ce80800b32fb2520db46249f62a59ef5dec95d4",
+        "sha256_in_prefix": "987b56df0443d23a25efa3670ce80800b32fb2520db46249f62a59ef5dec95d4",
+        "size_in_bytes": 5015
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "82984a593508d825bee0e63f03d00e833d1d6ffb1be24c52a91af6d0fc6c5f6c",
+        "sha256_in_prefix": "82984a593508d825bee0e63f03d00e833d1d6ffb1be24c52a91af6d0fc6c5f6c",
+        "size_in_bytes": 621
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__init__.pyi",
+        "path_type": "hardlink",
+        "sha256": "c17e7de2884f6788004a6bcaa5ba2f0d61f6041f48715a2346ab45d323e3cef8",
+        "sha256_in_prefix": "c17e7de2884f6788004a6bcaa5ba2f0d61f6041f48715a2346ab45d323e3cef8",
+        "size_in_bytes": 571
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/DamerauLevenshtein.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "1290486984ffc64d1f09228f32c0cc6040f28a3346bdf88c80e448d660dedfd3",
+        "sha256_in_prefix": "1290486984ffc64d1f09228f32c0cc6040f28a3346bdf88c80e448d660dedfd3",
+        "size_in_bytes": 2205
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/DamerauLevenshtein_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "fe4f4d4a1c8e1096b68bbb760f964ef526e1390af4da542554b80762a23fa8f3",
+        "sha256_in_prefix": "fe4f4d4a1c8e1096b68bbb760f964ef526e1390af4da542554b80762a23fa8f3",
+        "size_in_bytes": 6879
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Hamming.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "ec56ba40569ed976cd9aab071df39a370716ba6ab639e7742566f39f5492b031",
+        "sha256_in_prefix": "ec56ba40569ed976cd9aab071df39a370716ba6ab639e7742566f39f5492b031",
+        "size_in_bytes": 2302
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Hamming_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "9123db14f3c59a83f59b08af01ad366590893930caf07cc0f4953c8315339fd6",
+        "sha256_in_prefix": "9123db14f3c59a83f59b08af01ad366590893930caf07cc0f4953c8315339fd6",
+        "size_in_bytes": 9654
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Indel.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "32b500e2f50e67ac17ec7d17f7513231c5521a3b4be17b9c9886d36b148be6f2",
+        "sha256_in_prefix": "32b500e2f50e67ac17ec7d17f7513231c5521a3b4be17b9c9886d36b148be6f2",
+        "size_in_bytes": 2288
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Indel_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "ab4cec0dc99393e3e546dc7b66eb164e7970f0733f0dcbe49be34751e1c68a4b",
+        "sha256_in_prefix": "ab4cec0dc99393e3e546dc7b66eb164e7970f0733f0dcbe49be34751e1c68a4b",
+        "size_in_bytes": 9946
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Jaro.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "55b284794efadfeb7e16c7b0b7c22f95668a98fbc998887c31fc74514f2c90b5",
+        "sha256_in_prefix": "55b284794efadfeb7e16c7b0b7c22f95668a98fbc998887c31fc74514f2c90b5",
+        "size_in_bytes": 2131
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/JaroWinkler.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "b828f582f1d557debbfa8dc1ab57101b8b0daeca795c8d98855b16f88fc23b0a",
+        "sha256_in_prefix": "b828f582f1d557debbfa8dc1ab57101b8b0daeca795c8d98855b16f88fc23b0a",
+        "size_in_bytes": 2170
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/JaroWinkler_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "831b970979f9270a3b0d331bab912726fbee3f48d25498eb59c9b0b7c233aa80",
+        "sha256_in_prefix": "831b970979f9270a3b0d331bab912726fbee3f48d25498eb59c9b0b7c233aa80",
+        "size_in_bytes": 6175
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Jaro_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "644074de20c3528740ec11f37a22c5ee22abbb34628fd7134468d6f680fa309a",
+        "sha256_in_prefix": "644074de20c3528740ec11f37a22c5ee22abbb34628fd7134468d6f680fa309a",
+        "size_in_bytes": 6967
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/LCSseq.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "d5d4571538f814f024c122b4659bb1491d28f0f602bc754e88de0e89af166c84",
+        "sha256_in_prefix": "d5d4571538f814f024c122b4659bb1491d28f0f602bc754e88de0e89af166c84",
+        "size_in_bytes": 2301
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/LCSseq_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "5266569b494799d7f352a7c292ca6a79bbb115d217044ea036626c8a30f57b3a",
+        "sha256_in_prefix": "5266569b494799d7f352a7c292ca6a79bbb115d217044ea036626c8a30f57b3a",
+        "size_in_bytes": 11984
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Levenshtein.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "c64c16b576aaf1ee1c29322ea7ae17eb72de789e09f0a27e1ac0e9d2e17f4379",
+        "sha256_in_prefix": "c64c16b576aaf1ee1c29322ea7ae17eb72de789e09f0a27e1ac0e9d2e17f4379",
+        "size_in_bytes": 2330
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Levenshtein_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "7e53236918b7965a4d01b94c914a22228d44f39c926dd9da2403cc5b92677b83",
+        "sha256_in_prefix": "7e53236918b7965a4d01b94c914a22228d44f39c926dd9da2403cc5b92677b83",
+        "size_in_bytes": 17119
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/OSA.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "c5e5eb0fd3d84dc330d1f1a3efe83959d5cc9e63c7a211797dda5257dea7374d",
+        "sha256_in_prefix": "c5e5eb0fd3d84dc330d1f1a3efe83959d5cc9e63c7a211797dda5257dea7374d",
+        "size_in_bytes": 2126
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/OSA_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "8f48adb1a95fd7f041747d61148f30f8890a72a5d6e74b2303154df122637b49",
+        "sha256_in_prefix": "8f48adb1a95fd7f041747d61148f30f8890a72a5d6e74b2303154df122637b49",
+        "size_in_bytes": 6424
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Postfix.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "9593af6eeec0871a302b0e925e61f72f82f9078b33552b71ad897c802c010695",
+        "sha256_in_prefix": "9593af6eeec0871a302b0e925e61f72f82f9078b33552b71ad897c802c010695",
+        "size_in_bytes": 2146
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Postfix_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "8ff9810b2e375d46a3e2ff641a4d606734903e15f875b34b499603b7b466fdaf",
+        "sha256_in_prefix": "8ff9810b2e375d46a3e2ff641a4d606734903e15f875b34b499603b7b466fdaf",
+        "size_in_bytes": 5201
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Prefix.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "e07a4b4a9f426802e60feee3740e69227da21c3959be34d1de5fb2d107edde90",
+        "sha256_in_prefix": "e07a4b4a9f426802e60feee3740e69227da21c3959be34d1de5fb2d107edde90",
+        "size_in_bytes": 2141
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/Prefix_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "d3ae09988c4c94eab790462a2b990e2bdc11fd836e55d8f79b504fa7cc6123f6",
+        "sha256_in_prefix": "d3ae09988c4c94eab790462a2b990e2bdc11fd836e55d8f79b504fa7cc6123f6",
+        "size_in_bytes": 5137
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/__init__.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "54d18a46b83e3d6955ff4678f556c41634c340523a8a30f67a2bdfc656408da9",
+        "sha256_in_prefix": "54d18a46b83e3d6955ff4678f556c41634c340523a8a30f67a2bdfc656408da9",
+        "size_in_bytes": 673
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/_initialize.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "b50212de8ed5ea41488109b0a63c9ce4524a206c6226d2da72e7b8885bf74b8f",
+        "sha256_in_prefix": "b50212de8ed5ea41488109b0a63c9ce4524a206c6226d2da72e7b8885bf74b8f",
+        "size_in_bytes": 2135
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/_initialize_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "757de70ebdcbb9b30eab494cc4aac9f0666e9351a6511ffe10e89b877f0b77aa",
+        "sha256_in_prefix": "757de70ebdcbb9b30eab494cc4aac9f0666e9351a6511ffe10e89b877f0b77aa",
+        "size_in_bytes": 35191
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/__pycache__/metrics_py.cpython-313.pyc",
+        "path_type": "hardlink",
+        "sha256": "b33cc007f9fda018b221198abcbe7569c72f18b227d534e0a5cc3be1dad30137",
+        "sha256_in_prefix": "b33cc007f9fda018b221198abcbe7569c72f18b227d534e0a5cc3be1dad30137",
+        "size_in_bytes": 6177
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/_initialize.py",
+        "path_type": "hardlink",
+        "sha256": "50ac0a2131150d3be3ecc89636c98f2410cdef1828c15c25cca9651230f3a680",
+        "sha256_in_prefix": "50ac0a2131150d3be3ecc89636c98f2410cdef1828c15c25cca9651230f3a680",
+        "size_in_bytes": 3074
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/_initialize.pyi",
+        "path_type": "hardlink",
+        "sha256": "37ba28ce742dad085928d675506b635327fa2e23ffbdbb5209615ae3d2bd7c90",
+        "sha256_in_prefix": "37ba28ce742dad085928d675506b635327fa2e23ffbdbb5209615ae3d2bd7c90",
+        "size_in_bytes": 3998
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/_initialize_cpp.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "9eb7c864736b543293f513c953d2987338a1034764391708125faca94f4341e2",
+        "sha256_in_prefix": "9eb7c864736b543293f513c953d2987338a1034764391708125faca94f4341e2",
+        "size_in_bytes": 227328
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/_initialize_py.py",
+        "path_type": "hardlink",
+        "sha256": "23fcfee786af0fce041351c0eca8d3f1a9dde061ce408fa8dad2bd646e9e62c2",
+        "sha256_in_prefix": "23fcfee786af0fce041351c0eca8d3f1a9dde061ce408fa8dad2bd646e9e62c2",
+        "size_in_bytes": 26320
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/metrics_cpp.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "be8ca6cd6c5e6d60ee6a718ec1730a8376da85661762b09bcd91637db3fb1ef9",
+        "sha256_in_prefix": "be8ca6cd6c5e6d60ee6a718ec1730a8376da85661762b09bcd91637db3fb1ef9",
+        "size_in_bytes": 1531904
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/metrics_cpp_avx2.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "0a95bc949aa333ac4196df8facdbe6de4944db754dbb0a0fcd8fda4ea67f97d1",
+        "sha256_in_prefix": "0a95bc949aa333ac4196df8facdbe6de4944db754dbb0a0fcd8fda4ea67f97d1",
+        "size_in_bytes": 1538048
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/distance/metrics_py.py",
+        "path_type": "hardlink",
+        "sha256": "1847c33808245febcaadd340d26c78eff8e2dbce983d8be1eb39176b66f2d2fc",
+        "sha256_in_prefix": "1847c33808245febcaadd340d26c78eff8e2dbce983d8be1eb39176b66f2d2fc",
+        "size_in_bytes": 9037
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/fuzz.py",
+        "path_type": "hardlink",
+        "sha256": "82438cf1bfe4279c9aab57abfec02a5c93fac1b649a27f66b15d8be84c064b6e",
+        "sha256_in_prefix": "82438cf1bfe4279c9aab57abfec02a5c93fac1b649a27f66b15d8be84c064b6e",
+        "size_in_bytes": 4625
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/fuzz.pyi",
+        "path_type": "hardlink",
+        "sha256": "f08dc026d5f9d159686da02016daa25e0d7ea5bcda440f5d15229ecefef38145",
+        "sha256_in_prefix": "f08dc026d5f9d159686da02016daa25e0d7ea5bcda440f5d15229ecefef38145",
+        "size_in_bytes": 4811
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/fuzz_cpp.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "ed8cab188a199e321d1772ecfcaf163cfcb303cfa91019a1d0368e1adc8053f1",
+        "sha256_in_prefix": "ed8cab188a199e321d1772ecfcaf163cfcb303cfa91019a1d0368e1adc8053f1",
+        "size_in_bytes": 894464
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/fuzz_cpp_avx2.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "27a72bd0504da8796441337e87692f231c3cced17c8a39811e2fe4604bb2cec9",
+        "sha256_in_prefix": "27a72bd0504da8796441337e87692f231c3cced17c8a39811e2fe4604bb2cec9",
+        "size_in_bytes": 897024
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/fuzz_py.py",
+        "path_type": "hardlink",
+        "sha256": "a5ad94b0617b096f9f3b221c1a0bff94fb4b07a7956ee52a1a5200e2ec7660ac",
+        "sha256_in_prefix": "a5ad94b0617b096f9f3b221c1a0bff94fb4b07a7956ee52a1a5200e2ec7660ac",
+        "size_in_bytes": 25826
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/process.py",
+        "path_type": "hardlink",
+        "sha256": "272953fad6018703f9ebaa74ccef8ed994f4a7ed245b77025206e70823a855c4",
+        "sha256_in_prefix": "272953fad6018703f9ebaa74ccef8ed994f4a7ed245b77025206e70823a855c4",
+        "size_in_bytes": 2672
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/process.pyi",
+        "path_type": "hardlink",
+        "sha256": "07ca8cfd53aef110af759000eed361067f56ee80762897d3fd4e6a781f414334",
+        "sha256_in_prefix": "07ca8cfd53aef110af759000eed361067f56ee80762897d3fd4e6a781f414334",
+        "size_in_bytes": 17246
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/process_cpp.py",
+        "path_type": "hardlink",
+        "sha256": "b805db1ddfd4546d3239a16f55b64a819cd02e90d6b5e209c42b18e8c79444a5",
+        "sha256_in_prefix": "b805db1ddfd4546d3239a16f55b64a819cd02e90d6b5e209c42b18e8c79444a5",
+        "size_in_bytes": 2530
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/process_cpp_impl.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "556a6710938a20f6f6e9e58f6d1b55611e2224c533f2797bbb48ea438d485aa1",
+        "sha256_in_prefix": "556a6710938a20f6f6e9e58f6d1b55611e2224c533f2797bbb48ea438d485aa1",
+        "size_in_bytes": 507392
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/process_py.py",
+        "path_type": "hardlink",
+        "sha256": "762d804b6127e95cc8ae9a20d87fafb2f6ae6989cc671078696079f66298ee7b",
+        "sha256_in_prefix": "762d804b6127e95cc8ae9a20d87fafb2f6ae6989cc671078696079f66298ee7b",
+        "size_in_bytes": 26646
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/py.typed",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/utils.py",
+        "path_type": "hardlink",
+        "sha256": "eebb363420922f6fe66a776fc52124725cb95966f4451e20c4a39d6192626af1",
+        "sha256_in_prefix": "eebb363420922f6fe66a776fc52124725cb95966f4451e20c4a39d6192626af1",
+        "size_in_bytes": 1910
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/utils.pyi",
+        "path_type": "hardlink",
+        "sha256": "af3da5c61c50bbe066ea03f10438f005b36cda80418c0acfe8f11895671a1394",
+        "sha256_in_prefix": "af3da5c61c50bbe066ea03f10438f005b36cda80418c0acfe8f11895671a1394",
+        "size_in_bytes": 304
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/utils_cpp.cp313-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "9d23904ed1a3a72299ba01f77069b15891b8ab40f3f5bf88e966901ce313e4aa",
+        "sha256_in_prefix": "9d23904ed1a3a72299ba01f77069b15891b8ab40f3f5bf88e966901ce313e4aa",
+        "size_in_bytes": 159744
+      },
+      {
+        "_path": "Lib/site-packages/rapidfuzz/utils_py.py",
+        "path_type": "hardlink",
+        "sha256": "a0feb180eb28a644743613637f7bbac79e60c34dcb50c275ce1d85608b319e8e",
+        "sha256_in_prefix": "a0feb180eb28a644743613637f7bbac79e60c34dcb50c275ce1d85608b319e8e",
+        "size_in_bytes": 622
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "189ff87a94379d0611f03f160743406f0f499b66b38b8587309074bb8ca09d39",
+  "size": 1021576,
+  "subdir": "win-64",
+  "timestamp": 1757406026000,
+  "url": "https://conda.anaconda.org/conda-forge/win-64/rapidfuzz-3.14.1-py313hfe59770_0.conda",
+  "version": "3.14.1"
+}
