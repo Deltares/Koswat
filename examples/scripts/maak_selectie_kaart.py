@@ -6,7 +6,6 @@ import pandas as pd
 from shapely.geometry import shape
 
 
-# TODO: Maak multi selectie mogelijk
 def maak_interactieve_kaart(pad):
     """Creates an interactive map for selecting polygons from a shapefile."""
     
