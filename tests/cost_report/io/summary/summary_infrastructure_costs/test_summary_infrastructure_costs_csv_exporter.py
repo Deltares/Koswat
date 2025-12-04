@@ -33,11 +33,11 @@ class TestSummaryInfrastructureCostCsvExporter:
         # 3. Validate results
         assert _export_path.exists()
         _read_text = _export_path.read_text(encoding="utf-8")
-        _expected_text = ";;;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand;Kistdam;;;;;;;;Kwelscherm;;;;;;;;Grondmaatregel profiel;;;;;;;;Stabiliteitswand;;;;;;;\n\
-;;;*) Kosten incl. opslagfactoren;;;;TestInfra1;;;;TestInfra2;;;;TestInfra1;;;;TestInfra2;;;;TestInfra1;;;;TestInfra2;;;;TestInfra1;;;;TestInfra2;;;\n\
-Section;X coord;Y coord;Totale kosten* (Euro);Totale kosten* (Euro);Totale kosten* (Euro);Totale kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro)\n\
-A;0.24;0.42;0.0;0.0;0.0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0\n\
-A;2.4;0.42;19.8;19.8;19.8;19.8;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6\n\
-A;0.24;2.4;79.2;79.2;79.2;79.2;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4\n\
-A;2.4;2.4;178.2;178.2;178.2;178.2;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4"
+        _expected_text = ";;;;;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand;Kistdam;;;;;;;;Kwelscherm;;;;;;;;Grondmaatregel profiel;;;;;;;;Stabiliteitswand;;;;;;;\n\
+;;;;*) Kosten incl. opslagfactoren;;;;;TestInfra1;;;;TestInfra2;;;;TestInfra1;;;;TestInfra2;;;;TestInfra1;;;;TestInfra2;;;;TestInfra1;;;;TestInfra2;;;\n\
+Section;X coord;Y coord;Selectie;Kosten*;Totale kosten* (Euro);Totale kosten* (Euro);Totale kosten* (Euro);Totale kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro);Zone A Lengte (m);Zone A Kosten* (Euro);Zone B Lengte (m);Zone B Kosten* (Euro)\n\
+A;0.24;0.42;Kwelscherm;0.0;0.0;0.0;0.0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0;0;0.0\n\
+A;2.4;0.42;Grondmaatregel profiel;19.8;19.8;19.8;19.8;19.8;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6;1;3.3;2;6.6\n\
+A;0.24;2.4;Stabiliteitswand;79.2;79.2;79.2;79.2;79.2;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4;2;13.2;4;26.4\n\
+A;2.4;2.4;Stabiliteitswand;178.2;178.2;178.2;178.2;178.2;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4;3;29.7;6;59.4"
         assert _expected_text == _read_text

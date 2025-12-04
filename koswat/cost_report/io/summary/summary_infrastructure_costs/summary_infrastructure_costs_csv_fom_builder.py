@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from collections import defaultdict
@@ -75,17 +75,38 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         reinforcement_per_locations: list[StrategyLocationReinforcement],
         locations_profile_report_list: list[MultiLocationProfileCostReport],
     ) -> list[list[Any]]:
+        def _get_reinforcement_infra_costs(
+            location: PointSurroundings, profile_type: str
+        ) -> float:
+            return round(
+                sum(
+                    _ilc.total_cost_with_surtax
+                    for _ilc in _infra_cost_per_loc_dict[location][
+                        profile_type
+                    ].values()
+                ),
+                2,
+            )
+
+        def _get_selected(location: PointSurroundings) -> list[Any]:
+            _selected = next(
+                (
+                    _rpl
+                    for _rpl in reinforcement_per_locations
+                    if _rpl.location == location
+                ),
+                None,
+            )
+            return [
+                _selected.current_selected_measure.output_name,
+                _get_reinforcement_infra_costs(
+                    location, _selected.current_selected_measure.output_name
+                ),
+            ]
+
         def _get_totals(location: PointSurroundings) -> list[float]:
             return list(
-                round(
-                    sum(
-                        _ilc.total_cost_with_surtax
-                        for _ilc in _infra_cost_per_loc_dict[location][
-                            _profile_type
-                        ].values()
-                    ),
-                    2,
-                )
+                _get_reinforcement_infra_costs(location, _profile_type)
                 for _profile_type in self._ordered_profile_types
             )
 
@@ -104,7 +125,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             return _details
 
         def _location_as_row(
-            matrix_item: tuple[PointSurroundings, list[int]]
+            matrix_item: tuple[PointSurroundings, list[int]],
         ) -> list[Any]:
             _ps, _m_values = matrix_item
             _location_as_row = [_ps.section, _ps.location.x, _ps.location.y]
@@ -118,13 +139,14 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         # Initiate locations matrix
         _matrix = defaultdict(list)
 
-        # Totals and details per location for profile types
+        # Selected, totals and details per location for profile types
         for _rpl in reinforcement_per_locations:
+            _selected = _get_selected(_rpl.location)
             _totals = _get_totals(_rpl.location)
             _details = []
             for _profile_type in self._ordered_profile_types:
                 _details.extend(_get_details(_rpl.location, _profile_type))
-            _matrix[_rpl.location] = _totals + _details
+            _matrix[_rpl.location] = _selected + _totals + _details
 
         return list(
             map(
@@ -207,18 +229,18 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             _infra_type_keys.append(_infra_type)
             _infra_type_keys.extend([""] * (len(_zone_keys) - 1))
 
-        # Build headers (first 3 columns for the location)
+        # Build headers:
+        # - 3 columns for the location
+        # - 2 columns for chosen reforcement with costs
         _headers = [
-            ["", "", ""],
-            ["", "", ""],
-            ["Section", "X coord", "Y coord"],
+            5 * [""],
+            4 * [""] + [_surtax_note],
+            ["Section", "X coord", "Y coord", "Selectie", "Kosten*"],
         ]
 
         # Total cost headers per profile type
         _headers[0].extend(self._ordered_profile_types)
-        _headers[1].extend(
-            [_surtax_note] + [""] * (len(self._ordered_profile_types) - 1)
-        )
+        _headers[1].extend([""] * (len(self._ordered_profile_types)))
         _headers[2].extend([_total_cost_key] * len(self._ordered_profile_types))
 
         # Cost detail headers per profile type, infra type and zone

@@ -1,25 +1,26 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import math
+from collections import defaultdict
 from dataclasses import dataclass, field
 
 from koswat.cost_report.cost_report_protocol import CostReportProtocol
@@ -32,6 +33,11 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 @dataclass
 class MultiLocationProfileCostReport(CostReportProtocol):
+    """
+    Contains the cost report for a reinforcement profile type over multiple locations.
+    Each location can have multiple infrastructure costs for different road classes.
+    """
+
     report_locations: list[PointSurroundings] = field(default_factory=lambda: [])
     infra_multilocation_profile_cost_report: list[
         InfrastructureLocationProfileCostReport
@@ -43,17 +49,31 @@ class MultiLocationProfileCostReport(CostReportProtocol):
     ) -> dict[PointSurroundings, tuple[float, float]]:
         """
         Gets the total costs related to infrastructures at each of the points for
-        the profile type in `profile_cost_report`
+        the profile type in `profile_cost_report`.
+        Note a location can have multiple infrastructure costs for different road classes.
 
         Returns:
             dict[PointSurroundings, tuple[float, float]]: Total cost per location (without and with surtax).
         """
-        return {
-            _infra_costs_report.location: (
-                _infra_costs_report.total_cost,
-                _infra_costs_report.total_cost_with_surtax,
+        _infra_costs: dict[PointSurroundings, list[tuple[float, float]]] = defaultdict(
+            lambda: [(0.0, 0.0)]
+        )
+        for _infra_costs_report in self.infra_multilocation_profile_cost_report:
+            _infra_costs[_infra_costs_report.location].append(
+                (
+                    _infra_costs_report.total_cost,
+                    _infra_costs_report.total_cost_with_surtax,
+                )
             )
-            for _infra_costs_report in self.infra_multilocation_profile_cost_report
+
+        def to_location_cost(
+            location_cost: list[tuple[float, float]],
+        ) -> tuple[float, float]:
+            return tuple(sum(cost) for cost in zip(*location_cost))
+
+        return {
+            location: to_location_cost(costs)
+            for location, costs in _infra_costs.items()
         }
 
     @property
