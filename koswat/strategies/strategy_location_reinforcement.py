@@ -180,6 +180,4 @@ class StrategyLocationReinforcement:
             return self.strategy_location_input.get_infrastructure_costs(
                 reinforcement_type
             )
-        raise ValueError(
-            f"Reinforcement {reinforcement_type.output_name} not available, infrastructure costs cannot be computed.",
-        )
+        return (0.0, 0.0)
