@@ -180,10 +180,6 @@ def get_normalized_polygon_difference(
         # Try to filter out sliver polygons caused by precision issues.
         _result_geom = ops.unary_union([p for p in _result_geom.geoms if p.area > 0.1])
         if isinstance(_result_geom, geometry.MultiPolygon):
-            logging.warning(
-                "Resulting geometry is a MultiPolygon, which could result in unexpected results: %s",
-                str(_result_geom),
-            )
             return geometry.MultiPolygon(
                 map(_get_normalized_polygon, _result_geom.geoms)
             )
