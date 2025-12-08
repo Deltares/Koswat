@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
@@ -175,10 +175,15 @@ def get_normalized_polygon_difference(
     Returns:
         geometry.Polygon: Resulting normalized substraction polygon.
     """
-    _result_geom = order_geometry_points(left_geom.difference(right_geom))
+    _result_geom = left_geom.difference(right_geom)
     if isinstance(_result_geom, geometry.MultiPolygon):
-        return geometry.MultiPolygon(map(_get_normalized_polygon, _result_geom.geoms))
-    return _get_normalized_polygon(_result_geom)
+        # Try to filter out sliver polygons caused by precision issues.
+        _result_geom = ops.unary_union([p for p in _result_geom.geoms if p.area > 0.1])
+        if isinstance(_result_geom, geometry.MultiPolygon):
+            return geometry.MultiPolygon(
+                map(_get_normalized_polygon, _result_geom.geoms)
+            )
+    return _get_normalized_polygon(order_geometry_points(_result_geom))
 
 
 def _get_single_polygon_surface_points(
