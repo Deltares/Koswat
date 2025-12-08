@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass
@@ -35,6 +35,9 @@ from koswat.cost_report.profile.profile_cost_report_builder import (
     ProfileCostReportBuilder,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -60,10 +63,15 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
             surtax_cost_settings=self.koswat_costs_settings.surtax_costs,
         ).build()
 
+        # To enforce all locations get calculated for at least Cofferdam profile
+        _profile_width = self.reinforced_profile.profile_width
+        if type(self.reinforced_profile) == CofferdamReinforcementProfile:
+            _profile_width = 0.0
+
         # Multi-location profile cost report
         return MultiLocationProfileCostReport(
             report_locations=self.surroundings.get_locations_at_safe_distance(
-                self.reinforced_profile.profile_width
+                _profile_width
             ),
             profile_cost_report=_profile_cost_report_builder.build(),
             infra_multilocation_profile_cost_report=_infra_calculator.calculate(
