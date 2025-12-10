@@ -1,0 +1,99 @@
+{
+    "eenheidsprijzen": {
+        "prijspeil": 2023
+    },
+    "kostendijkprofiel": {
+        "aanleg_graslaag_m3": 16.12,
+        "aanleg_kleilaag_m3": 20.09,
+        "aanleg_kern_m3": 13.87,
+        "hergebruik_graslaag_m3": 7.28,
+        "hergebruik_kern_m3": 5.69,
+        "afvoeren_materiaal_m3": 9.02,
+        "profileren_graslaag_m2": 1.06,
+        "profileren_kleilaag_m2": 0.76,
+        "profileren_kern_m2": 0.7,
+        "bewerken_maaiveld_m2": 0.29
+    },
+    "kostenverticaalzanddichtgeotextiel": {
+        "c": 0,
+        "d": 0,
+        "z": 676.91,
+        "f": 0,
+        "g": 0
+    },
+    "kostencbwand": {
+        "c": 0,
+        "d": 174.68,
+        "z": -38.15,
+        "f": 0,
+        "g": 0
+    },
+    "kostendamwandonverankerd": {
+        "c": 10.19,
+        "d": 144.98,
+        "z": 113.61,
+        "f": 0,
+        "g": 0
+    },
+    "kostendamwandverankerd": {
+        "c": 10.19,
+        "d": 164.94,
+        "z": 1430.12,
+        "f": 0,
+        "g": 0
+    },
+    "kostendiepwand": {
+        "c": 0,
+        "d": 0,
+        "z": 0,
+        "f": 308.26,
+        "g": 1.205
+    },
+    "kostenkistdam": {
+        "c": 0,
+        "d": 746.37,
+        "z": -81.79,
+        "f": 0,
+        "g": 0
+    },
+    "kosteninfrastructuur": {
+        "wegen_klasse2_verwijderen": 10.34,
+        "wegen_klasse24_verwijderen": 14.31,
+        "wegen_klasse47_verwijderen": 26.63,
+        "wegen_klasse7_verwijderen": 42.88,
+        "wegen_onbekend_verwijderen": 14.31,
+        "wegen_klasse2_aanleg": 36.83,
+        "wegen_klasse24_aanleg": 52.26,
+        "wegen_klasse47_aanleg": 52.24,
+        "wegen_klasse7_aanleg": 60.61,
+        "wegen_onbekend_aanleg": 52.26
+    },
+    "kostenopslagfactoreninclbtw": {
+        "grond_makkelijk": 2.258,
+        "grond_normaal": 2.509,
+        "grond_moeilijk": 2.777,
+        "constructief_makkelijk": 2.561,
+        "constructief_normaal": 2.912,
+        "constructief_moeilijk": 3.295,
+        "wegen_makkelijk": 2.561,
+        "wegen_normaal": 2.912,
+        "wegen_moeilijk": 3.295,
+        "grondaankoop_makkelijk": 1.292,
+        "grondaankoop_normaal": 1.412,
+        "grondaankoop_moeilijk": 1.645
+    },
+    "kostenopslagfactorenexclbtw": {
+        "grond_makkelijk": 1.89,
+        "grond_normaal": 2.105,
+        "grond_moeilijk": 2.335,
+        "constructief_makkelijk": 2.143,
+        "constructief_normaal": 2.443,
+        "constructief_moeilijk": 2.77,
+        "wegen_makkelijk": 2.143,
+        "wegen_normaal": 2.443,
+        "wegen_moeilijk": 2.77,
+        "grondaankoop_makkelijk": 1.292,
+        "grondaankoop_normaal": 1.412,
+        "grondaankoop_moeilijk": 1.645
+    }
+}

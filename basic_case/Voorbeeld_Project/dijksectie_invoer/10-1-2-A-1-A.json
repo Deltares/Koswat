@@ -1,0 +1,20 @@
+{
+    "dijkprofiel": {
+        "buiten_maaiveld": 0.7,
+        "buiten_berm_lengte": 0.0,
+        "buiten_berm_hoogte": 0.7,
+        "buiten_talud": 3.17,
+        "kruin_breedte": 4.35,
+        "kruin_hoogte": 5.33,
+        "binnen_talud": 3.22,
+        "binnen_berm_lengte": 0.0,
+        "binnen_berm_hoogte": 0.5,
+        "binnen_maaiveld": 0.5,
+        "grondaankoop_bebouwd": 176.62,
+        "grondaankoop_onbebouwd": 9.22,
+        "factorzetting": 1.2,
+        "pleistoceen": -3.62,
+        "aquifer": -1.58,
+        "dikte_deklaag": 2.04
+    }
+}

@@ -19,37 +19,37 @@ def plot_profile(filename, pad):
         with open(jsonfile, "r") as file:
             data = json.load(file)
         
-        Dijkprofiel = data["Dijkprofiel"]
-        y0 = Dijkprofiel["Buiten_Maaiveld"]
-        y1 = Dijkprofiel["Buiten_Maaiveld"]
-        y2 = Dijkprofiel["Buiten_Berm_Hoogte"]
-        y3 = Dijkprofiel["Buiten_Berm_Hoogte"]
-        y4 = Dijkprofiel["Kruin_Hoogte"]
-        y5 = Dijkprofiel["Kruin_Hoogte"]
-        y6 = Dijkprofiel["Binnen_Berm_Hoogte"]
-        y7 = Dijkprofiel["Binnen_Berm_Hoogte"]
-        y8 = Dijkprofiel["Binnen_Maaiveld"]
-        y9 = Dijkprofiel["Binnen_Maaiveld"]
+        Dijkprofiel = data["dijkprofiel"]
+        y0 = Dijkprofiel["buiten_maaiveld"]
+        y1 = Dijkprofiel["buiten_maaiveld"]
+        y2 = Dijkprofiel["buiten_berm_hoogte"]
+        y3 = Dijkprofiel["buiten_berm_hoogte"]
+        y4 = Dijkprofiel["kruin_hoogte"]
+        y5 = Dijkprofiel["kruin_hoogte"]
+        y6 = Dijkprofiel["binnen_berm_hoogte"]
+        y7 = Dijkprofiel["binnen_berm_hoogte"]
+        y8 = Dijkprofiel["binnen_maaiveld"]
+        y9 = Dijkprofiel["binnen_maaiveld"]
         
         # Binnendijks
         x4 = 0
-        x5 = x4 + Dijkprofiel["Kruin_Breedte"]
-        x6 = x5 + (y5-y6)*Dijkprofiel["Binnen_Talud"]
-        x7 = x6 + Dijkprofiel["Binnen_Berm_Lengte"]
-        x8 = x7 + (y6-y8)*Dijkprofiel["Binnen_Talud"]
+        x5 = x4 + Dijkprofiel["kruin_breedte"]
+        x6 = x5 + (y5-y6)*Dijkprofiel["binnen_talud"]
+        x7 = x6 + Dijkprofiel["binnen_berm_lengte"]
+        x8 = x7 + (y6-y8)*Dijkprofiel["binnen_talud"]
         x9 = x8 + 5
         
         # Buitendijks
-        x3 = x4 - (y4-y3)*Dijkprofiel["Buiten_Talud"]
-        x2 = x3 - Dijkprofiel["Buiten_Berm_Lengte"]
-        x1 = x2 - (y2-y1)*Dijkprofiel["Buiten_Talud"]
+        x3 = x4 - (y4-y3)*Dijkprofiel["buiten_talud"]
+        x2 = x3 - Dijkprofiel["buiten_berm_lengte"]
+        x1 = x2 - (y2-y1)*Dijkprofiel["buiten_talud"]
         x0 = x1 - 5
         
         dike = np.array([[x0, y0], [x1, y1], [x2, y2], [x3, y3], [x4, y4], [x5, y5], [x6, y6], [x7, y7], [x8, y8], [x9, y9]])
         
         wx0 = x0
-        wy0 = max(Dijkprofiel["Kruin_Hoogte"] - 0.5, Dijkprofiel["Buiten_Maaiveld"] + 0.1)
-        wx1 = x4 - (y4-wy0)*Dijkprofiel["Buiten_Talud"]
+        wy0 = max(Dijkprofiel["kruin_hoogte"] - 0.5, Dijkprofiel["buiten_maaiveld"] + 0.1)
+        wx1 = x4 - (y4-wy0)*Dijkprofiel["buiten_talud"]
         wy1 = wy0
         
         water = np.array([[wx0, wy0], [wx1, wy1]])
@@ -122,7 +122,7 @@ def plot_profile(filename, pad):
         # Format the dictionary into a readable multi-line string
         with open(jsonfile, "r") as file:
             data = json.load(file)
-        Dijkprofiel = data["Dijkprofiel"]
+        Dijkprofiel = data["dijkprofiel"]
         text_str = "\n".join([f"{key}: {value:.2f}" for key, value in Dijkprofiel.items()])
 
         # Place text box on the right side

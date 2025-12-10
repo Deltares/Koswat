@@ -2,7 +2,7 @@
 
 [![Python 3.13](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/downloads/release/python-3135/)
 [![Binder branch](https://github.com/Deltares/koswat/actions/workflows/deploy_binder.yml/badge.svg)](https://github.com/Deltares/koswat/actions/workflows/deploy_binder.yml)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Deltares/koswat/jupyter-binder?urlpath=voila%2Frender%2FKOSWAT_Handleiding.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Deltares/koswat/Binder_notebook?urlpath=voila%2Frender%2FKOSWAT_Handleiding.ipynb)
 
 This directory contains all (current) available examples of koswat. An environment is ready to run them:
 ```
