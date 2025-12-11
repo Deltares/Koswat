@@ -148,9 +148,9 @@ def get_locations_reinforcements(
         _slr = StrategyLocationReinforcement(
             location=_location,
             available_measures=_a_measures,
-            filtered_measures=_a_measures
-            if any(_a_measures)
-            else [_available_reinforcements[-1]],
+            filtered_measures=(
+                _a_measures if any(_a_measures) else [_available_reinforcements[-1]]
+            ),
         )
         _matrix.append(_slr)
     return _matrix
@@ -227,6 +227,7 @@ def _get_cluster_shp_fom_factory() -> Iterable[
         class MockedBaseProfile(KoswatProfileProtocol):
             profile_width: float = 0.42
             points = [(0, 0), (0.42, 0)]
+            polderside_width: float = 0.21
 
         class MockedReinforcedProfile(ReinforcementProfileProtocol):
             input_data: ReinforcementInputProfileProtocol = SoilInputProfile(
@@ -235,6 +236,7 @@ def _get_cluster_shp_fom_factory() -> Iterable[
             output_name: str = _tr.output_name
             old_profile: KoswatProfileProtocol = MockedBaseProfile()
             profile_width: float = new_width
+            polderside_width: float = new_width / 2
 
         _reinforced_profile = MockedReinforcedProfile()
         return ClusterShpFom(
