@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Reinforcement profile - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Reinforcement profile";
+        var mkdocs_page_input_path = "reference/koswat_reinforced_profile.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Reinforcement profile</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#properties">Properties</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#possible-reinforcements">Possible reinforcements.</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Koswat docstrings</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Reinforcement profile</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_reinforced_profile.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="reinforcement-profile">Reinforcement profile<a class="headerlink" href="#reinforcement-profile" title="Permanent link">&para;</a></h1>
+<p>In koswat we consider a reinforcement profile the result of applying one of the multiple possible reinforcement calculations on an instance of a <code>KoswatProfileBase</code> (<a href="koswat_dike.html">Koswat dike</a>).</p>
+<p>This chapter covers the description of a reinforcement profile and its parts.</p>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
+<p>A reinforcement profile implements the <code>ReinforcementProfileProtocol</code>, which is a specialization of the <code>KoswatProfileProtocol</code> with some differences:</p>
+<ul>
+<li><code>input_data</code>: Similar to the base profile <code>input_data</code> but instead implements the <code>ReinforcementInputProfileProtocol</code>, a specialization of the (<code>KoswatInputProfileProtocol</code>) which depends on the type of <a href="#possible-reinforcements">reinforcement</a> being applied.</li>
+<li><code>old_profile</code>: New property which contains the <a href="koswat_dike.html#koswat-dike">koswat profile</a> from which the calculation was based on.</li>
+<li><code>polderside_width</code>: The distance between characteristic point 4 of the <strong>original</strong> profile (always 0 by definition) and characteristic point 8 of the reinforced profile.</li>
+</ul>
+<h2 id="possible-reinforcements">Possible reinforcements.<a class="headerlink" href="#possible-reinforcements" title="Permanent link">&para;</a></h2>
+<p>We have two main different sort of reinfocements which contain also subtypes for said reinforcements: </p>
+<ul>
+<li><strong>Outside slope reinforcement</strong>: Cofferdam (<em>kistdam</em>), based on the <code>OutsideSlopeReinforcementProfile</code>. With this reinforcement the outside slope (<em>buiten talud</em>) of the dike is impacted.</li>
+<li><strong>Standard reinforcement</strong>: Piping wall (<em>kwelscherm</em>), soil (<em>grondmaatregel profiel</em>), stability wall (<em>stabiliteitswand</em>), vertical piping solution (<em>verticale piping oplossing</em>). The previous being based on the <code>StandardReinforcementProfile</code>.</li>
+<li>A piping wall can be implemented by a cb wall (<em>cement-bentoniet wand</em>) and an unanchored sheet pile (<em>onverankerde damwand</em>).</li>
+<li>A stability wall can be implemented by a diaphragm wall (<em>diepwand</em>) and an anchored sheet pile (<em>verankerde damwand</em>).</li>
+</ul>
+<p>In addition, the above mentioned reinforcements can also implement their own <code>ReinforcementInputProfileProtocol</code>, which are after all extensions of the <code>KoswatInputProfileBase</code> with extra properties.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="koswat_main_workflow.html" class="btn btn-neutral float-left" title="Main workflow"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="koswat_strategies.html" class="btn btn-neutral float-right" title="Strategies">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="koswat_main_workflow.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="koswat_strategies.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
