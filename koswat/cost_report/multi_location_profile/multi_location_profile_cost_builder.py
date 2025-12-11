@@ -64,14 +64,14 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
         ).build()
 
         # To enforce all locations get calculated for at least Cofferdam profile
-        _profile_width = self.reinforced_profile.profile_width
+        _polderside_width = self.reinforced_profile.polderside_width
         if type(self.reinforced_profile) == CofferdamReinforcementProfile:
-            _profile_width = 0.0
+            _polderside_width = 0.0
 
         # Multi-location profile cost report
         return MultiLocationProfileCostReport(
             report_locations=self.surroundings.get_locations_at_safe_distance(
-                _profile_width
+                _polderside_width
             ),
             profile_cost_report=_profile_cost_report_builder.build(),
             infra_multilocation_profile_cost_report=_infra_calculator.calculate(
