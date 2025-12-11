@@ -80,8 +80,8 @@ class TestClusterCollectionShpFom:
                 "dijkvak",
                 "maatregel",
                 "lengte",
-                "dijkbasis_oud",
-                "dijkbasis_nw",
+                "bs_pld_oud",
+                "bs_pld_nw",
                 "geometry",
             ]
             assert len(gdf_result.values) == len(_clusters_reference_data)
@@ -94,8 +94,8 @@ class TestClusterCollectionShpFom:
                 )
                 assert _cluster_value[1] == _ref_data.reinforced_profile.output_name
                 assert _cluster_value[2] == len(_ref_data.locations)
-                assert _cluster_value[3] == _ref_data.old_profile_width
-                assert _cluster_value[4] == _ref_data.new_profile_width
+                assert _cluster_value[3] == _ref_data.old_polderside_width
+                assert _cluster_value[4] == _ref_data.new_polderside_width
                 assert _cluster_value[5] == geometry_lambda(_ref_data)
 
         check_gdf(
@@ -104,9 +104,9 @@ class TestClusterCollectionShpFom:
         )
         check_gdf(
             _gdf_collection.initial_state,
-            lambda c_fom: c_fom.get_buffered_geometry(c_fom.old_profile_width),
+            lambda c_fom: c_fom.get_buffered_geometry(c_fom.old_polderside_width),
         )
         check_gdf(
             _gdf_collection.new_state,
-            lambda c_fom: c_fom.get_buffered_geometry(c_fom.new_profile_width),
+            lambda c_fom: c_fom.get_buffered_geometry(c_fom.new_polderside_width),
         )

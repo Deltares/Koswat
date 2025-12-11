@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from __future__ import annotations
@@ -116,8 +116,8 @@ class ClusterCollectionShpFom:
                 "dijkvak": cluster_shp_fom.reinforced_profile.input_data.dike_section,
                 "maatregel": cluster_shp_fom.reinforced_profile.output_name,
                 "lengte": len(cluster_shp_fom.locations),
-                "dijkbasis_oud": cluster_shp_fom.old_profile_width,
-                "dijkbasis_nw": cluster_shp_fom.new_profile_width,
+                "bs_pld_oud": cluster_shp_fom.old_polderside_width,
+                "bs_pld_nw": cluster_shp_fom.new_polderside_width,
             }
 
             def buffered_entry(buffered_value: float) -> dict:
@@ -127,8 +127,8 @@ class ClusterCollectionShpFom:
 
             return (
                 _base_dict | dict(geometry=cluster_shp_fom.base_geometry),
-                buffered_entry(cluster_shp_fom.old_profile_width),
-                buffered_entry(cluster_shp_fom.new_profile_width),
+                buffered_entry(cluster_shp_fom.old_polderside_width),
+                buffered_entry(cluster_shp_fom.new_polderside_width),
             )
 
         def dict_list_to_gdf(dict_entries: list[dict]) -> GeoDataFrame:

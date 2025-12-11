@@ -56,14 +56,14 @@ class ClusterShpFom:
         return _points
 
     @property
-    def old_profile_width(self) -> float:
+    def old_polderside_width(self) -> float:
         """
         The original polderside width.
         """
         return self.reinforced_profile.old_profile.polderside_width
 
     @property
-    def new_profile_width(self) -> float:
+    def new_polderside_width(self) -> float:
         """
         The new polderside width.
         """
