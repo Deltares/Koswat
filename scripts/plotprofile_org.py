@@ -97,30 +97,29 @@ def plot_profile(filename, pad, scenarios):
         x_dp = [dike_x[8], (dike_x[8] + dp)]
         y_dp = [(dike_y[9] - 1.0), (dike_y[9] - 1.0)]
 
-        with plt.xkcd(randomness=randomness_level):
-
-            fig, ax = plt.subplots(figsize=(8, 5))
-                
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-                
-            # Jittered line
-            dike_line_x = jitter(dike_x)
-            dike_line_y = jitter(dike_y)
-            water_line_x = jitter(water_x)
-            water_line_y = jitter(water_y)
-            ref_line_x = jitter(ref_x)
-            ref_line_y = jitter(ref_y)
-                
-            ax.plot(water_line_x, water_line_y, color='#74B6D6', linewidth=3, label='Water')    
-            ax.fill_between(x, y_water, y_bottom, color='#74B6D6', alpha=0.3)
+        
+        fig, ax = plt.subplots(figsize=(8, 5))
             
-            ax.plot(dike_line_x, dike_line_y, color='#B7D167', linewidth=2, label='Dijkprofiel')
-            ax.plot(ref_line_x, ref_line_y, color='#CACCCA', linewidth=2, linestyle='--', label='Referentie')
-            ax.plot(dike_line_x, dike_line_y, color='#38312c', linewidth=2, label='Dijkprofiel')    
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
             
-            # ax.fill_between(dike_line_x, dike_line_y, y2=min(dike_line_y)-2, color='white')
-            ax.fill_between(dike_line_x, dike_line_y, y2=min(dike_line_y)-5, color='#B7D167', alpha=0.2, hatch='\\\\\\\\')
+        # Jittered line
+        dike_line_x = jitter(dike_x)
+        dike_line_y = jitter(dike_y)
+        water_line_x = jitter(water_x)
+        water_line_y = jitter(water_y)
+        ref_line_x = jitter(ref_x)
+        ref_line_y = jitter(ref_y)
+            
+        ax.plot(water_line_x, water_line_y, color='#74B6D6', linewidth=3, label='Water')    
+        ax.fill_between(x, y_water, y_bottom, color='#74B6D6', alpha=0.3)
+        
+        ax.plot(dike_line_x, dike_line_y, color='#B7D167', linewidth=2, label='Dijkprofiel')
+        ax.plot(ref_line_x, ref_line_y, color='#CACCCA', linewidth=2, linestyle='--', label='Referentie')
+        ax.plot(dike_line_x, dike_line_y, color='#38312c', linewidth=2, label='Dijkprofiel')    
+        
+        # ax.fill_between(dike_line_x, dike_line_y, y2=min(dike_line_y)-2, color='white')
+        ax.fill_between(dike_line_x, dike_line_y, y2=min(dike_line_y)-5, color='#B7D167', alpha=0.2, hatch='\\\\\\\\')
 
         # Second plot, without xkcd
         ax.set_title(f"KOSWAT - Dijksectie: {filename} ", loc='left', pad=20)
@@ -187,9 +186,9 @@ def plot_profile(filename, pad, scenarios):
     print("Adjust ΔH, ΔS, ΔP interactively:")
     interact(
         update_plot,
-        dh=FloatSlider(min=0, max=5, step=0.1, value=dh0, description="ΔH"),
-        ds=FloatSlider(min=0, max=20, step=0.1, value=ds0, description="ΔS"),
-        dp=FloatSlider(min=0, max=20, step=0.1, value=dp0, description="ΔP"),
+        dh=FloatSlider(min=(0.5 * dh0), max=(2 * dh0), step=0.1, value=dh0, description="ΔH"),
+        ds=FloatSlider(min=(0.5 * ds0), max=(2 * ds0), step=0.1, value=ds0, description="ΔS"),
+        dp=FloatSlider(min=(0.5 * dp0), max=(2 * ds0), step=0.1, value=dp0, description="ΔP"),
     )
 
 def kies_dijksectie(df, func, pad_profielen, pad_scenarios):
