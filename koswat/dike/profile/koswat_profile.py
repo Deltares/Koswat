@@ -61,7 +61,7 @@ class KoswatProfileBase(KoswatProfileProtocol):
         The profile extent from the lowest (left-most) x-coordinate to the largest (right-most) x-coordinate from a dike geometry polygon.
 
         Returns:
-            float: Total distance.
+            float: Total width.
         """
         if not self.points:
             return math.nan
@@ -74,10 +74,12 @@ class KoswatProfileBase(KoswatProfileProtocol):
     @property
     def polderside_width(self) -> float:
         """
-        The profile extent on the polderside from x-coordinate of point 4 of the (old) profile (assumed to be 0) to the largest (right-most) x-coordinate.
+        The profile extent on the polderside from
+        x-coordinate of point 4 of the (old) profile (assumed to be 0)
+        to the largest (right-most) x-coordinate of the (reinforced) profile.
 
         Returns:
-            float: Polderside distance.
+            float: Polderside width.
         """
         return self.points[-1].x
 
