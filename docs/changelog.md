@@ -33,6 +33,20 @@
 - docu corrections
 - docu corrections
 
+## v0.16.0 (2025-12-16)
+
+### Feat
+
+- add  --version command (#328)
+- koswat generaljson defined paths should be relative to its parent (#327)
+
+### Fix
+
+- #341 bug in dikewidth used for determining what measeres to fit in surroundings (#343)
+- #332 bug in calculation of soil profile (#337)
+- #333 bug in infrastructure costs (#336)
+- Corrected wrong dependencies and cleaned up variables
+
 ## v0.15.0 (2025-06-27)
 
 ### Feat
