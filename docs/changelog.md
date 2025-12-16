@@ -1,42 +1,16 @@
-## Release-2023 (2023-11-07)
+## v0.16.0 (2025-12-16)
 
 ### Feat
 
-- Added order_strategy submodule for determining reinforcement features across a dike traject based on default order
-- Added new class to better handle / generate the location-reinforcement matrix
-
-### Fix
-
-- improve rounding
-- improve rounding
-- improve rounding
-- show cost per km if no locations present
-- add @property to total_cost
-- add @property to total_cost
-- add @property to total_cost
-- test on presence of construction costs
-- correct return type
-- Added logic to plot new layer surfaces when they are either a `LineString` or a `MultiLineString`
-- corrected berm width calculations (#114)
-- corrected berm width calculations
-- merge leftovers
-- rename "raise" to "surtax" throughout KOSWAT
-- rename "raise" to "surtax" throughout KOSWAT
-- correct symbol name
-- correct symbol name
-- typo comment
-- typo comment
-- Added logic to avoid creating added / removed layers geometries when there were no modifications
-- Added default values as math.nan for koswatscenario
-- We now replace not-provided values from a KoswatScenario when calculating new reinforcements
-- docu corrections
-- docu corrections
-- docu corrections
-
-## v0.15.0 (2025-06-27)
-
-### Feat
-
+- add  --version command (#328)
+- koswat generaljson defined paths should be relative to its parent (#327)
+- new option to include types of surroundings (supporting custom types as well) (#287)
+- #276 stop processing if no dike sections selected (#290)
+- #280 change name of parameter grondprijs in ini and json (#289)
+- #258 exclude measures per section (#283)
+- #265 add overrides of general configs (#281)
+- Added importer for new `.csv` obstacles surroundings (#279)
+- Bumped python version to 3.13.5 (#252)
 - extend calculations for having berm as part of input profile (#218)
 - use costs_with_surtax in infra strategy (#229)
 - 213 extend summary report with reinforcement order (#215)
@@ -58,6 +32,13 @@
 
 ### Fix
 
+- #341 bug in dikewidth used for determining what measeres to fit in surroundings (#343)
+- #332 bug in calculation of soil profile (#337)
+- #333 bug in infrastructure costs (#336)
+- Corrected wrong dependencies and cleaned up variables
+- #306 shapefile not written with 1m subsection (#309)
+- #307 infra cost nan (#310)
+- Corrected wrong definition of enum values in `SurroundingsEnum`. (#284)
 - postcreatecommand
 - correct construction of StrategyReinforcementInput instances (#228)
 - 224 ordering strategy not as expected (#225)
@@ -95,15 +76,15 @@
 - rename "raise" to "surtax" throughout KOSWAT
 - rename "raise" to "surtax" throughout KOSWAT
 - correct symbol name
+- typo comment
 - correct symbol name
 - typo comment
-- typo comment
+- docu corrections
+- docu corrections
+- docu corrections
 - Added logic to avoid creating added / removed layers geometries when there were no modifications
 - Added default values as math.nan for koswatscenario
 - We now replace not-provided values from a KoswatScenario when calculating new reinforcements
-- docu corrections
-- docu corrections
-- docu corrections
 
 ## v0.13.0 (2023-01-31)
 
@@ -125,14 +106,11 @@
 
 ## v0.11.7 (2023-01-25)
 
-### Fix
-
-- **calc_library.py**: We now check whether the last point intersects with the line drawn between the first two points to avoid precission issues
-
 ## v0.11.6 (2023-01-25)
 
 ### Fix
 
+- **calc_library.py**: We now check whether the last point intersects with the line drawn between the first two points to avoid precission issues
 - **calc_library.py;koswat_coating_layer_builder.py**: We now round up the coordinates of the calculated layers to avoid precision issues
 - **calc_library.py**: Corrected collection of surface points, added extra plot for reinforced profiles
 
@@ -171,39 +149,25 @@
 
 ## v0.10.0 (2022-12-20)
 
-### Feat
-
-- **koswat/configuration/converters**: Created converters fom to dom
-- **koswat/configuration/io/converters/**: Added configuration converters for the analysis section. We can now generate input profiles from the ini files
-- **koswat/configuration/io/csv**: Added import of KoswatInputProfiles
-- **KoswatHandler;KoswatLogger**: Added handler and logger for koswat runs from CLI
-
 ### Fix
 
 - **koswat/geometries/calc_library.py**: We now order the points of the geometries so that calculations can be done correctly
 - **koswat/calculations**: Corrected profile calculation for all types and their tests. These changes come directly from Peter de Grave
 - **koswat/configuration/io/koswat_run_settings_importer.py**: corrected filtering of selected input profiles
 - **koswat_dike_locations_shp_reader.py**: Fixed enumerating a filtered list instead of filtering after enumerating
-- **KoswatSurroundingsConverter**: Fixed return as it was only giving the latest mapped FOM
-- **configuration/io/converters**: Fixed return of data and adapted tests
-- **koswat_analysis_converter.py**: Small fix to converter
-- **koswat_General_settings.py**: Fix validation for surroundings
-- **koswat/calculations**: Fixed calculations due to new profile input property
-- **KoswatMaterialType**: Minor fix regarding usage of new KoswatMaterialType
-- **KoswatMaterialType**: Adapted code to use the enum instead of strings
 
 ### Refactor
 
 - **koswat/configuration/io**: Moved converters into io
-- **koswat/dike/surroundings/io/shp**: Moved shp reader and fom to surroundings module
-- **koswat/configuration**: Integrating mapping of files to fom's during settings import
-- **koswat/dike/surroundings/io**: Moved previous CSV reader into a concrete module within dike/surroundings. Created protocols for csv reading so it can be repurposed
-- **KoswatMaterialType**: Made koswat material into an enum. Adapted code overall in the source
 
 ## v0.9.0 (2022-12-12)
 
 ### Feat
 
+- **koswat/configuration/converters**: Created converters fom to dom
+- **koswat/configuration/io/converters/**: Added configuration converters for the analysis section. We can now generate input profiles from the ini files
+- **koswat/configuration/io/csv**: Added import of KoswatInputProfiles
+- **KoswatHandler;KoswatLogger**: Added handler and logger for koswat runs from CLI
 - **KoswatGeneralSettings**: Created DOM for koswat general settings configuration
 - **KoswatConfigurationIniImporter**: We can now map all different ini fom classes to the config class
 - **koswat/configuration**: Created koswat configuration module and related class KoswatConfiguration to encapsulate all require information for a koswat analysis
@@ -211,24 +175,41 @@
 - **KoswatDikeSelectionIniFom**: It is now possible to read a Dike Selection INI file into its corresponding FOM
 - **KoswatCostsIniFom**: Added logic to fully implement reading of a KoswatCostsIniFom file
 - **KoswatCostsIniFom**: Added koswat costs ini file
-- **KoswatIniReader**: Created koswat ini reader and initial approach to reading the general Koswat INI file
 
 ### Fix
 
+- **KoswatSurroundingsConverter**: Fixed return as it was only giving the latest mapped FOM
+- **configuration/io/converters**: Fixed return of data and adapted tests
+- **koswat_analysis_converter.py**: Small fix to converter
+- **koswat_General_settings.py**: Fix validation for surroundings
+- **koswat/calculations**: Fixed calculations due to new profile input property
+- **KoswatMaterialType**: Minor fix regarding usage of new KoswatMaterialType
+- **KoswatMaterialType**: Adapted code to use the enum instead of strings
 - **KoswatCosts**: Added class conversion to dictionary
 
 ### Refactor
 
+- **koswat/dike/surroundings/io/shp**: Moved shp reader and fom to surroundings module
+- **koswat/configuration**: Integrating mapping of files to fom's during settings import
+- **koswat/dike/surroundings/io**: Moved previous CSV reader into a concrete module within dike/surroundings. Created protocols for csv reading so it can be repurposed
+- **KoswatMaterialType**: Made koswat material into an enum. Adapted code overall in the source
 - **koswat/configuration/models**: Moved configuration data object models into their own module. Fixed / grouped imports
 - **KoswatDikeSelection**: Koswat dike selection now implements a new type KoswatDikeSelectionTxtFom with related reader
 - **koswat_scenario**: Moved koswat scenario into koswat/configuration
-- **koswat/io**: Adapted export / import fom protocol
 
 ## v0.8.2 (2022-12-09)
+
+### Feat
+
+- **KoswatIniReader**: Created koswat ini reader and initial approach to reading the general Koswat INI file
 
 ### Fix
 
 - **KoswatLayerProtocol**: we now have two different geometries for a layer, so that the profile with the layer and the stand alone representation of it are better reached
+
+### Refactor
+
+- **koswat/io**: Adapted export / import fom protocol
 
 ## v0.8.1 (2022-11-21)
 
