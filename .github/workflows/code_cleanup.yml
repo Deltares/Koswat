@@ -1,11 +1,15 @@
-name: autoformat-and-bump
+name: ci-normalize-code
 on:
   push:
     branches: [ master ]
+
+env:
+  AUTOFORMAT_COMMIT_MESSAGE: 'chore: autoformat isort & black'
+
 jobs:
   code-autoformat:
-    if: "!startsWith(github.event.head_commit.message, 'bump:')"
-    name: Build (and deploy) documentation
+    if: "${{ (!startsWith(github.event.head_commit.message, 'chore: autoformat isort & black')) && (!startsWith(github.event.head_commit.message, 'bump:')) }}"
+    name: Normalize code with internal standards
     runs-on: ubuntu-latest
     defaults:
       run:

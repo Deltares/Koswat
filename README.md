@@ -14,7 +14,7 @@
 Quick documentation reference:
 - [Contributing wiki page](https://github.com/Deltares/Koswat/wiki/Contributing)
 - [Installation](https://deltares.github.io/Koswat/installation.html)
-- [User manual](https://deltares.github.io/Koswat/usage.html)
+- [User manual](https://deltares.github.io/Koswat/user_manual.html)
     - [Examples](https://deltares.github.io/Koswat/examples.html)
 - [Docker](https://deltares.github.io/Koswat/docker.html)
 
