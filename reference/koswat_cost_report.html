@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Cost report - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Cost report";
+        var mkdocs_page_input_path = "reference/koswat_cost_report.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Cost report</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#infrastructure-report">Infrastructure report</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#reinforcement-profile-zones">Reinforcement profile zones</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#infrastructures-distances">Infrastructure's distances</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cost-calculation">Cost calculation</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#example">Example</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generated-files">Generated files</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Koswat docstrings</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Cost report</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_cost_report.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="cost-report">Cost report<a class="headerlink" href="#cost-report" title="Permanent link">&para;</a></h1>
+<p>A Koswat report is divided in different parts:</p>
+<ul>
+<li><strong>Summary report</strong>: A summary containing all 'location reports'.</li>
+<li><strong>Location report</strong>: Which profile reinforcements can be applied to each location based on their surroundings and reinforcement properties (<code>MultiLocationProfileCostReport</code>). </li>
+<li><a href="#infrastructure-report"><strong>Infrastructure report</strong></a>: (<code>InfrastructureLocationProfileCostReport</code>) Costs related to applying all calculated reinforcement profiles at the locations where infrastructures are present.</li>
+<li><strong>Profile report</strong>: (<code>ProfileCostReport</code>), what are the (material) volume costs associated when applying a given <a href="koswat_reinforced_profile.html#possible-reinforcements">reinforced profile</a> .</li>
+<li><strong>Layer report</strong>: A sub report of the 'profile report' which breaks down the different costs of each one of the layers. This can be seen in <em>Image 1 Volume costs</em>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Base profile sand layer" src="imgs/reinforcement_calculations.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 1. Volume costs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="infrastructure-report">Infrastructure report<a class="headerlink" href="#infrastructure-report" title="Permanent link">&para;</a></h2>
+<p>When determining the costs of infrastructures we look mainly at:</p>
+<ul>
+<li>The reinforcement profile (<code>ReinforcementProfileProtocol</code>) zones A and B. </li>
+<li>The distance between a dike and an infrastructure (<code>SurroundingsInfrastructure.points</code>, <code>PointSurroundings.surroundings_matrix</code>).</li>
+</ul>
+<p>These characteristics are then used to estimate how much surface of the infrastructures will be affected by the reinforced profile and therefore their associated cost.</p>
+<h3 id="reinforcement-profile-zones">Reinforcement profile zones<a class="headerlink" href="#reinforcement-profile-zones" title="Permanent link">&para;</a></h3>
+<p>A reinforced profile can be different from its original state in many ways, however here we are only intestered in two things:</p>
+<ol>
+<li>The new profile's width from the original waterside crest point.</li>
+<li>Whether there is a crest's height increase (<code>dh0</code>),</li>
+</ol>
+<p>By using the old and the reinforced profile's geometries, we can determine what we call zone <code>A</code> and zone <code>B</code>, <code>A + B = {profile's width from waterside crest point}</code>. </p>
+<ul>
+<li>Zone <code>A</code> represents the width of the dike old profile's crest (highest surface).</li>
+<li>Zone <code>B</code> the distance between said crest and the end of the dike's reinforcement.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Dike profile with zone A and B" src="imgs/surroundings_zone_a_b.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 1. Reinforcement with <code>dh0 = 0</code></td>
+</tr>
+</tbody>
+</table>
+<p>However, when the crest's height of a <code>ReinforcementProfileProtocol</code> has increased in comparison to its original profile (<code>ReinforcementProfileProtocol.old_profile</code>, <code>KoswatProfileProtocol</code>) then we set zone <code>A = 0</code> and therefore <code>B = {profile's width from waterside crest point}</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Dike profile with zone B" src="imgs/surroundings_zone_b.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 2. Reinforcement with <code>dh0 = 1</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="infrastructures-distances">Infrastructure's distances<a class="headerlink" href="#infrastructures-distances" title="Permanent link">&para;</a></h3>
+<p>An infrastructure (<code>SurroundingsInfrastructure</code>) can be present at different locations (<code>SurroundingsInfrastructure.points</code>). Each of these locations (<code>PointSurroundings</code>) contains a dictionary (<code>surroundings_matrix: dict[float, float]</code>) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.</p>
+<p>For instance, we could have <code>surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}</code>, which means:
+- Between <code>0</code> and <code>5</code> meters from the location we will find <code>1.5</code> meters of the infrastructure,
+- Between <code>5</code> and <code>10</code> meters from the location we will find <code>0</code> meters of the infrastructure,
+- Between <code>10</code> and <code>15</code> meters from the location we will find <code>2.5</code> meters of the infrastructure.</p>
+<p>In addition, each infrastructure has a fixed width (<code>SurroundingsInfrastructure.infrastructure_width</code>), which can later be used to calculate the total surface of said infrastructure affected by the given profile. So: <code>affected_infra_zone_x = meters_of_infrastructure_in_zone_x * infrastructure_width</code>, where <code>meters_of_infrastructure_in_zone_x</code> are the values calculated from the <code>surroundings_matrix</code> and <code>infrastructure_width</code> is the infrastructure fixed width.</p>
+<h3 id="cost-calculation">Cost calculation<a class="headerlink" href="#cost-calculation" title="Permanent link">&para;</a></h3>
+<p>After defining the profile's zones <code>A</code> and <code>B</code> we can easily find how much of each infrastructures is affected by checking the <code>surroundings_matrix</code> indices and "rounding" up. It is agreed that at the overlapping points between <code>A</code> and <code>B</code>, the affected surface, and therefore costs, will only be computed for zone <code>A</code>; this is done regardless of the chosen infrastructure costs type (<code>InfraCostsEnum</code>).</p>
+<p>Once the total area is known, we only need to multiply them by their related costs for adding and/or removing infrastructure's material.</p>
+<h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
+<p>Using as example the previous <code>surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}</code> we can demostrate this when <code>A = 4</code> and <code>B = 10</code>.</p>
+<ol>
+<li>Estimate zone limits:<ul>
+<li><code>zone_a</code> goes from 0 to 4,</li>
+<li><code>zone_b</code> goes from 4 to 14.</li>
+</ul>
+</li>
+<li>Estimate affected points in the surroundings matrix:<ul>
+<li><code>zone_a</code> affects only up until key <code>5</code>, so 1.5 meters of infrastructure.</li>
+<li><code>zone_b</code> affects keys <code>10</code> and <code>15</code>, so 2.5 meters of infrastructure.<ul>
+<li>Note that we do not take <code>5</code> as has already been considered for <code>zone_a</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="generated-files">Generated files<a class="headerlink" href="#generated-files" title="Permanent link">&para;</a></h2>
+<p>After running a Koswat analysis, several files and directories will be generated. Usually the structure will be as follows:</p>
+<p><code>Dike profile section scenarios -&gt; Scenario -&gt; Generated files</code></p>
+<ul>
+<li>Dike profile - scenarios directory: Each dike can be run using different scenarios.</li>
+<li>Scenario: Scenario being applied to the selected dike profile.</li>
+<li>Dike section: The selected dike section being analyzed.</li>
+<li>Generated files: A combination of images and a 'csv' matrix result.<ul>
+<li>Images: Visual description of each of the possible reinforcements being applied.</li>
+<li><code>summary_costs.csv</code>: A csv file containing all the costs information of the summary.<ul>
+<li>Represents the Summary, Profile and Layer report.</li>
+</ul>
+</li>
+<li><code>summary_locations.csv</code>: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see <a href="koswat_strategies.html">strategies</a>).<ul>
+<li>Represents the Location report.</li>
+</ul>
+</li>
+<li><code>/summary_locations</code> directory: contains the following <code>.shp</code> files (and their related binaries):
+    -<code>summary_locations_measures</code>: The same data as present in <code>summary_locations.csv</code> is used to shape the geometry of a dike's traject. We keep as well the type of chosen reinforcement.<ul>
+<li><code>summary_locations_new</code>: an overlay of <code>summary_locations_measures</code> with the geometry buffered in relation to the new selected reinforcement.</li>
+<li><code>summary_locations_old</code>: an overlay of <code>summary_locations_measures</code> with the geometry buffered in relation to the original selected reinforcement.</li>
+<li><code>summary_locations_step</code>: an overlay of <code>summary_locations_measures</code> with the geometry buffered in relation to the <a href="koswat_strategies.html#order-based">Ordered Strategy</a> step.</li>
+</ul>
+</li>
+<li><code>summary_infrastructure_costs.csv</code>: A csv file contaning all the infrastructure costs at each location for each of the supported reinforcement profile types.<ul>
+<li>Represents the <a href="#infrastructure-report">Infrastructure Report</a>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Example using a summarized view of the output tree directory when running the acceptance test <code>test_main.test_given_valid_input_succeeds</code>: 
+<div class="highlight"><pre><span></span><code>acceptance
+|   koswat.log
+|
++-- results_output
+|   +-- dike_10-1-1-A-1-A
+|   |   +-- scenario_scenario1
+|   |   |   |   Grondmaatregel_profiel.png
+|   |   |   |   Kistdam.png
+|   |   |   |   Kwelscherm.png
+|   |   |   |   summary_costs.csv
+|   |   |   |   summary_locations.csv
+|   |   |   |   summary_infrastructure_costs.csv
+|   |   |   |   Stabiliteitswand.png
+|   |   |   |   Verticale_piping_oplossing.png
+|   |   |   |
+|   |   |   +-- summary_locations
+|   |   |       |   summary_locations_measures.cpg
+|   |   |       |   summary_locations_measures.dbf
+|   |   |       |   summary_locations_measures.prj
+|   |   |       |   summary_locations_measures.shp
+|   |   |       |   summary_locations_measures.shx
+|   |   |       |   summary_locations_new.cpg
+|   |   |       |   summary_locations_new.dbf
+|   |   |       |   summary_locations_new.prj
+|   |   |       |   summary_locations_new.shp
+|   |   |       |   summary_locations_new.shx
+|   |   |       |   summary_locations_old.cpg
+|   |   |       |   summary_locations_old.dbf
+|   |   |       |   summary_locations_old.prj
+|   |   |       |   summary_locations_old.shp
+|   |   |       |   summary_locations_step.shx
+|   |   |       |   summary_locations_step.cpg
+|   |   |       |   summary_locations_step.dbf
+|   |   |       |   summary_locations_step.prj
+|   |   |       |   summary_locations_step.shp
+|   |   |       |   summary_locations_step.shx
+|   |   |   +-- Grondmaatregel_profiel
+|   |   |       |   added_Grondmaatregel_profiel_CLAY.png
+|   |   |       |   added_Grondmaatregel_profiel_GRASS.png
+|   |   |       |   added_Grondmaatregel_profiel_SAND.png
+|   |   |       |   removed_Grondmaatregel_profiel_CLAY.png
+|   |   |       |   removed_Grondmaatregel_profiel_GRASS.png
+|   |   |   +-- Kistdam
+|   |   |       |   ...
+|   |   |
+|   |   |   +-- Kwelscherm
+|   |   |       |   ...
+|   |   |
+|   |   |   +-- Stabiliteitswand
+|   |   |       |   ...
+|   |   |
+|   |   |   +-- Verticale_piping_oplossing
+|   |   |       |   ...
+|   |   |
+|   |   +-- scenario_scenario2
+|   |       |   ...
+</code></pre></div></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="koswat_architecture.html" class="btn btn-neutral float-left" title="Koswat design"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="koswat_dike.html" class="btn btn-neutral float-right" title="Dike profile">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="koswat_architecture.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="koswat_dike.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

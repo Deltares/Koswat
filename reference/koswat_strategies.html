@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Strategies - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Strategies";
+        var mkdocs_page_input_path = "reference/koswat_strategies.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Strategies</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#available-strategies">Available strategies</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#order-based">Order based</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#reinforcement-order">Reinforcement order</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reinforcement-grouping">Reinforcement grouping</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reinforcement-buffering">Reinforcement buffering</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reinforcement-clustering">Reinforcement clustering</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#infrastructure-priority">Infrastructure priority</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#cluster-options">Cluster options</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#cluster-common-available-measures-cost">Cluster common available measures' cost</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#infrastructure-priority-old-approach-example">Infrastructure priority (old approach) example</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Koswat docstrings</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Strategies</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_strategies.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="strategies">Strategies<a class="headerlink" href="#strategies" title="Permanent link">&para;</a></h1>
+<p>Koswat can determine which is the "best" reinforcement type for a dike traject based on different selection criteria that we name "strategies" (<code>StrategyProtocol</code>).</p>
+<p>A strategy requires a strategy input (<code>StrategyInput</code>), this input contains information over which reinforcement types are available at each location as well as what's the <strong>minimal buffer</strong> (<code>reinforcement_min_buffer</code>) and <strong>minimal length</strong> (<code>reinforcement_min_length</code>)  for each reinforcement type.</p>
+<p>By default a strategy is applied as follows:</p>
+<ol>
+<li>For each point (meter) in the traject, determine which reinforcements can be applied to it.</li>
+<li>Choose one of the available reinforcements based on the chosen <a href="#order-based">strategy</a>. When no reinforcement is available the most restrictive will be chosen (<code>CofferDam</code>).</li>
+<li>Apply a buffer (<code>reinforcement_min_buffer</code>) for each one of the reinforcements.</li>
+<li>Check if the minimal distance between constructions is met (<code>reinforcement_min_length</code>), otherwise change it into one of the reinforcements next to it.</li>
+<li>Repeat 4 until all reinforcements have enough distance between themselves.</li>
+<li>Find based on the strategy for <a href="#infrastructure-priority">infrastructure derived costs</a>, mapped locations (<code>list[StrategyLocationReinforcement]</code>) whose reinforcement can be increased into a most restrictive one with total lower costs. </li>
+<li>Return list of mapped locations (<code>list[StrategyLocationReinforcement]</code>).</li>
+</ol>
+<h2 id="available-strategies">Available strategies<a class="headerlink" href="#available-strategies" title="Permanent link">&para;</a></h2>
+<p>Currently the following strategies are implemented:</p>
+<ul>
+<li><a href="#order-based">Order based</a></li>
+<li><a href="#infrastructure-priority">Infrastructure priority</a>, by default the strategy to run during a Koswat analysis.</li>
+</ul>
+<h3 id="order-based">Order based<a class="headerlink" href="#order-based" title="Permanent link">&para;</a></h3>
+<p>This strategy is the first and default of all defined strategies. Its criteria is based on a pre-defined <a href="#reinforcement-order">'order'</a> of each reinforcement. In steps, it can be seen as:</p>
+<ol>
+<li>Pre-selection of a location's available reinforcement based on said order, when a location does not have any "available" reinforcement, then the last reinforcement's order will be pre-selected.</li>
+<li><a href="#reinforcement-grouping">Grouping</a> of all locations by their pre-selected reinforcement.</li>
+<li><a href="#reinforcement-buffering">Buffering</a> to each of the groupings.</li>
+<li><a href="#reinforcement-clustering">Clustering</a> to the resulting groupings from the previous step.</li>
+</ol>
+<h4 id="reinforcement-order">Reinforcement order<a class="headerlink" href="#reinforcement-order" title="Permanent link">&para;</a></h4>
+<p>The reinforcements are ordered based on increasing cost (including surtax) and decreasing width.
+Reinforcements that are more expensive but are wider or have equal width are skipped (order <code>-1</code>).
+The <code>CofferDamReinforcementProfile</code> will never be skipped and is always the last reinforcement that is applied in case no other reinforcement fits the surroundings.</p>
+<table>
+<thead>
+<tr>
+<th>Reinforcement type</th>
+<th>Profile width</th>
+<th>Cost with surtax</th>
+<th>Index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SoilReinforcementProfile</code></td>
+<td>10</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>VPSReinforcementProfile</code></td>
+<td>20</td>
+<td>200</td>
+<td>-1</td>
+</tr>
+<tr>
+<td><code>PipingWallReinforcementProfile</code></td>
+<td>10</td>
+<td>300</td>
+<td>-1</td>
+</tr>
+<tr>
+<td><code>StabilityWallReinforcementProfile</code></td>
+<td>5</td>
+<td>400</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>CofferDamReinforcementProfile</code></td>
+<td>0</td>
+<td>500</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="reinforcement-grouping">Reinforcement grouping<a class="headerlink" href="#reinforcement-grouping" title="Permanent link">&para;</a></h4>
+<p>We create reinforcement-location "grouping" for the whole traject.</p>
+<p>A grouping represents a reinforcement type that is "selected" for a series of continuous locations. This means locations that are next to each other sharing the same measure type (<code>Type[ReinforcementProfileProtocol]</code>).</p>
+<h5 id="grouping-example">Grouping example<a class="headerlink" href="#grouping-example" title="Permanent link">&para;</a></h5>
+<p>Simplified representation for a traject with 10 locations. This example is also tested in the <code>tests.strategies.order_strategy.py</code> test file.
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;SoilReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Location_001&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;StabilityWallReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;SoilReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Location_006&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;CofferDamReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Location_009&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h4 id="reinforcement-buffering">Reinforcement buffering<a class="headerlink" href="#reinforcement-buffering" title="Permanent link">&para;</a></h4>
+<p>Given a <a href="#reinforcement-grouping">reinforcement grouping</a>, we will create a dictionary of masks of size <code>NM</code> where <code>N</code> (the keys) is the number of available reinforcement types (<code>Type[ReinforcementProfileProtocol]</code>) and <code>M</code> the number of available locations. </p>
+<p><strong>Note</strong>: Masks' values are the position of a reinforcement type in the <a href="#reinforcment-order">reinforcement's order list</a>. So a location with<code>CofferDamReinforcementProfile</code> will have a 4 at the mask's position, whilst a <code>SoilReinforcementProfile</code> will have a 0 instead (remember in Python indexing starts with 0).</p>
+<p><strong>Steps breakdown</strong>:</p>
+<ol>
+<li>
+<p>Initialize the dictionary masks with all values to -1.</p>
+</li>
+<li>
+<p>Iterate over the groupings list, and for each entry:</p>
+<ol>
+<li>
+<p>Select the mask to update using the grouping's reinforcement type (cluster's key).</p>
+</li>
+<li>
+<p>Update the indices representing the grouping's locations (grouping's values) with the matching value for this grouping's key (see previous <strong>note</strong>).</p>
+</li>
+<li>
+<p>Add a buffer (<code>StrategyInput.reinforcement_min_buffer</code>) by updating the adjacent's positions of this grouping with the same values as in step 1. </p>
+</li>
+</ol>
+</li>
+<li>
+<p>Merge all masks into a 1-dimensional array where the cell's value is the maximum between the available masks.</p>
+<ul>
+<li>This is done to prevent that a buffer of a "stronger" demanding reinforcement such as <code>CofferDamReinforcementProfile</code> is replaced by a "weaker" one.</li>
+</ul>
+</li>
+<li>
+<p>Update the locations with their new associated reinforcement. The resulting mask contains the index of the reinforcement to be applied in the <a href="#reinforcement-order">reinforcement's order</a>.</p>
+</li>
+</ol>
+<h5 id="buffering-example">Buffering example<a class="headerlink" href="#buffering-example" title="Permanent link">&para;</a></h5>
+<p>One simplified example, based on the <a href="#grouping-example">grouping example</a>, and using a buffer value of "1". This example is also tested in the <code>tests.strategies.order_strategy_buffering.py</code> test file.</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="err">I</span><span class="kc">n</span><span class="err">i</span><span class="kc">t</span><span class="err">ialize</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">masks</span><span class="w"> </span><span class="err">based</span><span class="w"> </span><span class="err">o</span><span class="kc">n</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">provided</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;SoilReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">,</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;VPSReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">,</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;PipingWallReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">,</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;StabilityWallReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">,</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;CofferDamReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">,</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="mf">2.</span><span class="w"> </span><span class="err">I</span><span class="kc">terate</span><span class="w"> </span><span class="err">over</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span><span class="w"> </span><span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">upda</span><span class="kc">te</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">masks&#39;</span><span class="w"> </span><span class="err">values</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;SoilReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;VPSReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;PipingWallReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;StabilityWallReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  </span><span class="mi">3</span><span class="p">,</span><span class="w">  </span><span class="mi">3</span><span class="p">,</span><span class="w">  </span><span class="mi">3</span><span class="p">,</span><span class="w">  </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;CofferDamReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">            </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">  </span><span class="mi">4</span><span class="p">,</span><span class="w">  </span><span class="mi">4</span><span class="p">,</span><span class="w">  </span><span class="mi">4</span><span class="p">],</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="mf">3.</span><span class="w"> </span><span class="err">Merge</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">masks</span><span class="w"> </span><span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">selec</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">heir</span><span class="w"> </span><span class="err">maximum</span><span class="w"> </span><span class="err">value</span><span class="p">:</span>
+<span class="w">    </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span>
+
+<span class="mf">4.</span><span class="w"> </span><span class="err">Upda</span><span class="kc">te</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;SoilReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_001&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;StabilityWallReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;SoilReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;Location_006&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;CofferDamReinforcementProfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_009&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<h4 id="reinforcement-clustering">Reinforcement clustering<a class="headerlink" href="#reinforcement-clustering" title="Permanent link">&para;</a></h4>
+<p>Given a <a href="#reinforcement-grouping">reinforcement grouping</a>, ideally done after applying <a href="#reinforcement-buffering">buffering</a>, we will now proceed to change the pre-selected reinforcement of all those groupings that contain less locations than required by the describing property. We do this by updating their type with the one of a "stronger" adjacent grouping, on this section called "clusters". These clusters are internally represented by the class <code>OrderCluster</code>.</p>
+<p>The strategy here is to detect <em>non-compliant</em> reinforcement-location clusters and replace their selected reinforcement type with the "least strong" of its adjacent clusters. We do this iteratively, so we first target the lowest type of reinforcements (<code>SoilReinforcementProfile</code>) and we move up until the first to the last (the last one cannot be further strengthened).</p>
+<p><strong>Conditions</strong>: </p>
+<ul>
+<li>We define a <em>non-compliant</em> cluster as a cluster that does not contain as many locations as defined by the minimal length requirement (<code>reinforcement_min_length</code>).</li>
+<li>We also define a <em>non-compliant exception</em> when a cluster does not meet said requirement but the adjacent clusters are of a lower reinforcement type. Therefore retaining their initial reinforcement type.</li>
+<li>The first and last clusters, are <strong>always considered compliant</strong>. Therefore they retain their initial reinforcement type.</li>
+<li>Clusters whose reinforcement type is placed the last in the strategy's <a href="#reinforcement-order">order</a>, are skipped and <strong>always considered compliant</strong>, as they cannot be further strengthened.</li>
+</ul>
+<p><strong>Steps breakdown</strong>:</p>
+<ol>
+<li>Generate a list of all available <em>unmerged</em> clusters.</li>
+<li>For each reinforcement type <em>target-reinforcement</em>, in the strategy order:<ol>
+<li>Get the current <em>non-compliant</em> clusters</li>
+<li>For each <em>non-compliant</em> <em>target-reinforcement</em> cluster :<ol>
+<li>Check if its indeed not compliant.<ul>
+<li>Otherwise move to the next cluster.</li>
+</ul>
+</li>
+<li>Get a stronger cluster among the neighbors. Selects the neighbor with the
+"weakest", yet greater than the actual, reinforcement type value.<ul>
+<li>If both neighbors are "weaker" than the current reinforcement type,
+then it is considered an "exception" as it cannot be further strengthened.
+We therefore move to the next <em>non-compliant</em> cluster.</li>
+</ul>
+</li>
+<li>Move the current cluster's locations to the stronger reinforcement cluster.</li>
+<li>Remove the cluster from the "available clusters" list as it is integrated in
+step 2.2.3.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h5 id="clustering-example">Clustering example<a class="headerlink" href="#clustering-example" title="Permanent link">&para;</a></h5>
+<p>One simplified example, based on the <a href="#buffering-example">buffering example</a>, and using a minimal distance of "5". This example is also tested in the <code>tests.strategies.order_strategy_clustering.py</code> test file.</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="err">Lis</span><span class="kc">t</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">u</span><span class="kc">n</span><span class="err">merged</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="mf">2.</span><span class="w"> </span><span class="err">I</span><span class="kc">terate</span><span class="w"> </span><span class="err">over</span><span class="w"> </span><span class="err">each</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="w"> </span><span class="kc">t</span><span class="err">ype</span><span class="p">:</span>
+
+<span class="mf">2.1.</span><span class="w"> </span><span class="err">Targe</span><span class="kc">t</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="s2">&quot;SoilReinforcementProfile&quot;</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">0</span><span class="err">)</span><span class="p">,</span><span class="w"> </span><span class="kc">n</span><span class="err">o</span><span class="kc">n</span><span class="mi">-</span><span class="err">complia</span><span class="kc">nt</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="mf">2.1.1.</span><span class="w"> </span><span class="err">Le</span><span class="kc">n</span><span class="err">g</span><span class="kc">t</span><span class="err">h</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">1.</span>
+
+<span class="mf">2.1.2.</span><span class="w"> </span><span class="err">Ge</span><span class="kc">t</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">s</span><span class="kc">tr</span><span class="err">o</span><span class="kc">n</span><span class="err">ger</span><span class="w"> </span><span class="kc">ne</span><span class="err">ighbor</span><span class="p">,</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Le</span><span class="kc">ft</span><span class="mi">-</span><span class="kc">ne</span><span class="err">ighbor</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="w"> </span><span class="kc">t</span><span class="err">ype</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Righ</span><span class="kc">t</span><span class="mi">-</span><span class="kc">ne</span><span class="err">ighbor</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="w"> </span><span class="kc">t</span><span class="err">ype</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Le</span><span class="kc">ft</span><span class="mi">-</span><span class="kc">ne</span><span class="err">ighbor</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">selec</span><span class="kc">te</span><span class="err">d.</span>
+
+<span class="mf">2.1.3.</span><span class="w"> </span><span class="err">Move</span><span class="w"> </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="err">s</span><span class="kc">tr</span><span class="err">o</span><span class="kc">n</span><span class="err">ger</span><span class="w"> </span><span class="kc">ne</span><span class="err">ighbor.</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">,</span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="mf">2.1.4.</span><span class="w"> </span><span class="err">Remove</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="w"> </span><span class="kc">fr</span><span class="err">om</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">lis</span><span class="kc">t</span><span class="err">.</span>
+
+<span class="mf">2.2.</span><span class="w"> </span><span class="err">Targe</span><span class="kc">t</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="s2">&quot;PipingWallReinforcementProfile&quot;</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">2</span><span class="err">)</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">complia</span><span class="kc">nt</span><span class="w"> </span><span class="err">a</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">poi</span><span class="kc">nt</span><span class="err">.</span>
+
+<span class="mf">2.3.</span><span class="w"> </span><span class="err">Targe</span><span class="kc">t</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="s2">&quot;StabilityWallReinforcementProfile&quot;</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">3</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">complia</span><span class="kc">nt</span><span class="w"> </span><span class="err">a</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">poi</span><span class="kc">nt</span><span class="err">.</span>
+
+<span class="mf">2.4.</span><span class="w"> </span><span class="s2">&quot;CofferDamReinforcementProfile&quot;</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">4</span><span class="err">)</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Las</span><span class="kc">t</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="w"> </span><span class="err">pro</span><span class="kc">f</span><span class="err">ile</span><span class="w"> </span><span class="kc">t</span><span class="err">ype</span><span class="p">,</span><span class="w"> </span><span class="kc">t</span><span class="err">here</span><span class="kc">f</span><span class="err">ore</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">s</span><span class="kc">tr</span><span class="err">o</span><span class="kc">n</span><span class="err">ges</span><span class="kc">t</span><span class="err">.</span>
+
+<span class="err">Resul</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<h3 id="infrastructure-priority">Infrastructure priority<a class="headerlink" href="#infrastructure-priority" title="Permanent link">&para;</a></h3>
+<p><strong>DEFAULT STRATEGY</strong>
+This strategy checks whether the clusters resulting from the <a href="#order-based">order based strategy</a> can change their selected reinforcement to one with cheaper costs. These costs are extracted from the <a href="koswat_cost_report.html#cost-report">cost report</a> and relate to the reinforcement profile costs (dike's materials for the required space) and the possible <a href="koswat_cost_report.html#infrastructure-report">infrastructure costs</a>. In steps, this strategy can be broke down as:</p>
+<p><strong>Steps breakdown</strong>:</p>
+<ol>
+<li>Assignment of <a href="#order-based">order based clusters</a>,</li>
+<li><a href="#cluster-options">Cluster options</a> evaluation,<ol>
+<li><a href="#cluster-common-available-measure-costs">Common available measures</a> cost calculation,</li>
+<li>Cheapest option selection,</li>
+</ol>
+</li>
+<li>Update reinforcement selection with selected option.</li>
+</ol>
+<h4 id="cluster-options">Cluster options<a class="headerlink" href="#cluster-options" title="Permanent link">&para;</a></h4>
+<p>For an optimal assignment of a new reinforcement profile, we make use of "subclusters". These subclusters are contiguous subsets from an order based cluster and have the minimal required length (<code>StrategyInput.reinforcement_min_cluster</code>). The logic for this section can be found in <code>InfraPriorityStrategy.generate_subcluster_options</code>.</p>
+<p>For each of original the clusters, multiple combinations of subclusters are possible. We refer to them as "<strong>cluster option</strong>" (<code>InfraClusterOption</code>) . We can already discard creating subclusters when the size of the original cluster is less than twice the required minimal length. So for a minimal length of 2 locations, you require a cluster of at least 4 locations to generate subclusters.</p>
+<p><strong>Conditions</strong>:</p>
+<ul>
+<li>We only create subclusters when the cluster's original size is, at least, twice the required minimal cluster's length.</li>
+<li>We estimate the cluster's minimal length to be at least twice the size of the buffer so: <code>min_cluster_length = (2 * reinforcement_min_buffer) + 1</code>.</li>
+<li>We create subclusters based on the immediate results of the <a href="#order-based">order based strategy</a>.  We do not try to combine or create new clusters based on a "greedier" strategy.</li>
+</ul>
+<h5 id="cluster-option-example">Cluster option example<a class="headerlink" href="#cluster-option-example" title="Permanent link">&para;</a></h5>
+<p>For example, given the results of the <a href="#clustering-example">clustering example</a> we can calculate the options for the clusters for a required minimal length of <code>2</code>:</p>
+<ol>
+<li>List of clusters:
+    <div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>
+<p>Options for cluster <code>{(0, ["Location_000","Location_001",])}</code>
+    <div class="highlight"><pre><span></span><code><span class="mi">-</span><span class="w"> </span><span class="err">Valid</span><span class="w"> </span><span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="p">:</span>
+<span class="w">    </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Options for cluster <code>{(3, ["Location_002","Location_003", "Location_004","Location_005", "Location_006",])}</code>
+    <div class="highlight"><pre><span></span><code><span class="mi">-</span><span class="w"> </span><span class="err">Valid</span><span class="p">:</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="p">{[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]},</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="p">{[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]}</span>
+<span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">n</span><span class="err">valid</span><span class="p">:</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="kc">f</span><span class="err">irs</span><span class="kc">t</span><span class="w"> </span><span class="err">subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">less</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p">{[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]}</span>
+
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">las</span><span class="kc">t</span><span class="w"> </span><span class="err">subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">less</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p">{[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_005&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_006&quot;</span><span class="p">]},</span><span class="w"> </span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">seco</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">less</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p">{[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_004&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]},</span><span class="w"> </span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">so</span><span class="w"> </span><span class="err">o</span><span class="kc">n</span><span class="err">...</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Options for cluster <code>{(4, ["Location_007","Location_008","Location_009",]),}</code>
+    <div class="highlight"><pre><span></span><code><span class="mi">-</span><span class="w"> </span><span class="err">Valid</span><span class="p">:</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="p">{[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]}</span>
+<span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">n</span><span class="err">valid</span><span class="p">:</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="kc">f</span><span class="err">irs</span><span class="kc">t</span><span class="w"> </span><span class="err">subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">less</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p">{[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_009&quot;</span><span class="p">]}</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">las</span><span class="kc">t</span><span class="w"> </span><span class="err">subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">less</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p">{[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_008&quot;</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_009&quot;</span><span class="p">]}</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">a</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">so</span><span class="w"> </span><span class="err">o</span><span class="kc">n</span><span class="err">...</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h4 id="cluster-common-available-measures-cost">Cluster common available measures' cost<a class="headerlink" href="#cluster-common-available-measures-cost" title="Permanent link">&para;</a></h4>
+<p>Once we have calculated a <a href="#cluster-options">cluster's option</a> we can determine whether this cluster should be consider as a valid one. This estimation is based on the <strong>cheapest reinforcement's cost</strong> (including surtax), and to get this value we first need to know which reinforcements are available at all the locations of this option. </p>
+<p>We will store this value in the <code>InfraClusterOption.cluster_costs</code>. In the current implementation, these costs are added to the <code>InfraClusterOption</code> together with the cluster's data (<code>list[InfraCluster]</code>).</p>
+<p><strong>Conditions</strong>:</p>
+<ul>
+<li>A "viable" cluster option must be cheaper than the order's cluster and has the cluster's minimal length.</li>
+<li>We consider "minimal costs" or "lower costs" as the lowest cost of applying a certain reinforcement type to a given subcluster.</li>
+</ul>
+<h5 id="common-available-measures-cost-example">Common available measures' cost example<a class="headerlink" href="#common-available-measures-cost-example" title="Permanent link">&para;</a></h5>
+<p>Following the <a href="#cluster-option-example">options example</a> we can estimate some fictional costs based on the following tables (if a type / location is not mentioned, then assume its cost is zero (<code>0</code>)):</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Reinforcement type</th>
+<th>base cost incl. surtax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Soil reinforcement</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Vertical Piping Solution</td>
+<td>420</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Piping Wall</td>
+<td>4.200</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Reinforcement indices</th>
+<th>Infrastructure cost incl. surtax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Location_000</td>
+<td>0, 1</td>
+<td>4.200.000</td>
+</tr>
+<tr>
+<td>Location_005</td>
+<td>0, 1, 2, 3</td>
+<td>4.200.000</td>
+</tr>
+</tbody>
+</table>
+<p>We already know that only the second cluster can generate subclusters, therefore different valid options, so we will use said subcluster's options for the example.</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="err">De</span><span class="kc">ter</span><span class="err">mi</span><span class="kc">ne</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">cos</span><span class="kc">t</span><span class="p">:</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]}</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">42.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">210.000</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">(</span><span class="mi">1</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">4.200.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">4.200.000</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">4.410.000</span>
+
+<span class="mf">2.</span><span class="w"> </span><span class="err">Calcula</span><span class="kc">te</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="kc">f</span><span class="err">irs</span><span class="kc">t</span><span class="w"> </span><span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">:</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="p">{</span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]</span><span class="err">)</span><span class="p">},</span>
+<span class="w">    </span><span class="mf">1.</span><span class="w"> </span><span class="err">Firs</span><span class="kc">t</span><span class="w"> </span><span class="err">subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">measures</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">S</span><span class="kc">ta</span><span class="err">bili</span><span class="kc">t</span><span class="err">y</span><span class="w"> </span><span class="err">Wall</span><span class="w"> </span><span class="err">(curre</span><span class="kc">nt</span><span class="err">)</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">42.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">84.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">42.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">420.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">840.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">840.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">oceme</span><span class="kc">nt</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">cheaper</span>
+<span class="w">    </span><span class="mf">2.</span><span class="w"> </span><span class="err">Seco</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">measures</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">S</span><span class="kc">ta</span><span class="err">bili</span><span class="kc">t</span><span class="err">y</span><span class="w"> </span><span class="err">Wall</span><span class="w"> </span><span class="err">(curre</span><span class="kc">nt</span><span class="err">)</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">42.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">126.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">(</span><span class="mi">1</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">4.200.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">4.200.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">4.326.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">420.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">1.260.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">1.260.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">cheaper.</span>
+<span class="w">    </span><span class="mf">3.</span><span class="w"> </span><span class="err">Subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">bes</span><span class="kc">t</span><span class="w"> </span><span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="p">{</span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]</span><span class="err">)</span><span class="p">}</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">t</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">42.000</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mf">1.260.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">1.302.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Selec</span><span class="kc">te</span><span class="err">d</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">.</span>
+
+<span class="mf">3.</span><span class="w"> </span><span class="err">Calcula</span><span class="kc">te</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="err">seco</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">:</span>
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="err">(</span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]</span><span class="err">)</span><span class="p">}</span>
+<span class="w">    </span><span class="mf">1.</span><span class="w"> </span><span class="err">Firs</span><span class="kc">t</span><span class="w"> </span><span class="err">sublus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">measures</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">S</span><span class="kc">ta</span><span class="err">bili</span><span class="kc">t</span><span class="err">y</span><span class="w"> </span><span class="err">Wall</span><span class="w"> </span><span class="err">(curre</span><span class="kc">nt</span><span class="err">)</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">42.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">126.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">126.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">420.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">1.260.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">1.260.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">oceme</span><span class="kc">nt</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">cheaper</span>
+<span class="w">    </span><span class="mf">2.</span><span class="w"> </span><span class="err">Seco</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">sublus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">measures</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">S</span><span class="kc">ta</span><span class="err">bili</span><span class="kc">t</span><span class="err">y</span><span class="w"> </span><span class="err">Wall</span><span class="w"> </span><span class="err">(curre</span><span class="kc">nt</span><span class="err">)</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">42.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">84.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">84.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="p">:</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mf">420.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">840.000</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">I</span><span class="kc">nfra</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">840.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">cheaper</span>
+<span class="w">    </span><span class="mf">3.</span><span class="w"> </span><span class="err">Subclus</span><span class="kc">ter</span><span class="err">&#39;s</span><span class="w"> </span><span class="err">bes</span><span class="kc">t</span><span class="w"> </span><span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">selec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="p">{</span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="p">]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_006&quot;</span><span class="p">]</span><span class="err">)</span><span class="p">}</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">t</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">126.000</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mf">840.000</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">966.000</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Selec</span><span class="kc">te</span><span class="err">d</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">.</span>
+
+<span class="mf">4.</span><span class="w"> </span><span class="err">Upda</span><span class="kc">te</span><span class="w"> </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="err">&#39;</span><span class="w"> </span><span class="err">selec</span><span class="kc">te</span><span class="err">d</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="p">:</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="err">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span><span class="s2">&quot;Location_006&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In this example we can therefore demonstrate the cost reduction. The last column represents the difference (positive means saved money):</p>
+<ul>
+<li>O.S. = Order strategy</li>
+<li>I.S. = Infrastructure priority strategy</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>(O.S.) reinforcement</th>
+<th>(O.S.) cost</th>
+<th>(I.S.) reinforcement</th>
+<th>(I.S.) cost</th>
+<th>Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total</td>
+<td>----</td>
+<td>6.090.084</td>
+<td>----</td>
+<td>2.226.840</td>
+<td><strong>+3.863.244</strong></td>
+</tr>
+<tr>
+<td>Location_000</td>
+<td>Soil reinforcement</td>
+<td>4.200.042</td>
+<td>Piping Wall</td>
+<td>420</td>
+<td>+4.199.622</td>
+</tr>
+<tr>
+<td>Location_001</td>
+<td>Soil reinforcement</td>
+<td>42</td>
+<td>Piping Wall</td>
+<td>420</td>
+<td>-378</td>
+</tr>
+<tr>
+<td>Location_002</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Location_003</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Location_004</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Location_005</td>
+<td>Stability Wall</td>
+<td>462.000</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>+42000</td>
+</tr>
+<tr>
+<td>Location_006</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>-378000</td>
+</tr>
+<tr>
+<td>Location_007</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Location_008</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Location_009</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h4 id="infrastructure-priority-old-approach-example">Infrastructure priority (old approach) example<a class="headerlink" href="#infrastructure-priority-old-approach-example" title="Permanent link">&para;</a></h4>
+<hr />
+<blockquote>
+<p><strong><em>Important!</em></strong> 
+This example is based on the first approach of this strategy and its steps might differ from the current solution. We left this example as it can help understanding the basic concepts of the strategy.</p>
+</blockquote>
+<hr />
+<p>We will start by defining some unrealistic costs per reinforcement type for all locations* such as. For a more realistic scenario check the <a href="#infrastructure-priority-subclustering-example">subclustering example</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Reinforcement type</th>
+<th>base cost</th>
+<th>infra cost</th>
+<th>total cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Soil reinforcement</td>
+<td>42</td>
+<td>420.000</td>
+<td>420.042</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Vertical Piping Solution</td>
+<td>420</td>
+<td>420.000</td>
+<td>420.420</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Piping Wall</td>
+<td>4200</td>
+<td>0</td>
+<td>4200</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Stability Wall</td>
+<td>42.000</td>
+<td>420.000</td>
+<td>462.000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cofferdam</td>
+<td>420.000</td>
+<td>0</td>
+<td>420.000</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong><em>Important!</em></strong> 
+For example purposes we are applying the same infrastructure costs to all the locations. |However, in a real case these costs would vary per location (and per reinforcement type). So we can determine the cluster's reinforcement costs as <code>(total cost) * N locations</code></p>
+</blockquote>
+<hr />
+<p>Based on this data <code>Piping Wall</code> will be chosen <strong>unless</strong> any of the points in the cluster cannot apply it due to obstacles or other constraints, in which case it would end up settling for a <code>Cofferdam</code> reinforcement.</p>
+<p>Let's see now the strategy steps using the results from the <a href="#clustering-example">clustering example</a>: </p>
+<div class="highlight"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="err">Lis</span><span class="kc">t</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="mf">2.</span><span class="w"> </span><span class="err">I</span><span class="kc">terate</span><span class="w"> </span><span class="err">over</span><span class="w"> </span><span class="err">each</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="p">:</span>
+
+<span class="mf">2.1.</span><span class="w"> </span><span class="err">Firs</span><span class="kc">t</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="w"> </span><span class="err">is</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="mf">2.1.1.</span><span class="w"> </span><span class="err">Ge</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">cos</span><span class="kc">t</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">usi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="err">N</span><span class="w"> </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mi">420042</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">840084</span><span class="err">`</span>
+
+<span class="w">    </span><span class="mf">2.1.2.</span><span class="w"> </span><span class="err">Ge</span><span class="kc">t</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">measures</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Soil</span><span class="w"> </span><span class="err">Rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">0</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Discard</span><span class="p">]</span><span class="w"> </span><span class="err">Curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">selec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Ver</span><span class="kc">t</span><span class="err">ical</span><span class="w"> </span><span class="err">Pipi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">Solu</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">1</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mf">420.420</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">840.840</span><span class="err">`</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Discard</span><span class="p">]</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">higher</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">i</span><span class="kc">n</span><span class="err">i</span><span class="kc">t</span><span class="err">ial</span><span class="w"> </span><span class="err">s</span><span class="kc">tate</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Pipi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">Wall</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">2</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mf">4.200</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mi">0</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">8.400</span><span class="err">`</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Keep</span><span class="p">]</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">i</span><span class="kc">n</span><span class="err">i</span><span class="kc">t</span><span class="err">ial</span><span class="w"> </span><span class="err">s</span><span class="kc">tate</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">S</span><span class="kc">ta</span><span class="err">bili</span><span class="kc">t</span><span class="err">y</span><span class="w"> </span><span class="err">Wall</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">3</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mf">462.000</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">924.000</span><span class="err">`</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Discard</span><span class="p">]</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">higher</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="err">i</span><span class="kc">n</span><span class="err">i</span><span class="kc">t</span><span class="err">ial</span><span class="w"> </span><span class="err">s</span><span class="kc">tate</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">3</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mf">420.000</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">840.000</span><span class="err">`</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Keep</span><span class="p">]</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">i</span><span class="kc">n</span><span class="err">i</span><span class="kc">t</span><span class="err">ial</span><span class="w"> </span><span class="err">s</span><span class="kc">tate</span><span class="p">,</span><span class="w"> </span><span class="err">keep.</span>
+
+<span class="w">    </span><span class="mf">2.1.3.</span><span class="w"> </span><span class="err">Se</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">cheapes</span><span class="kc">t</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">measure</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Pipi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">wall</span><span class="w"> </span><span class="err">&lt;</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="w"> </span><span class="err">&lt;</span><span class="w"> </span><span class="err">Soil</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="w"> </span><span class="err">(curre</span><span class="kc">nt</span><span class="err">)</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Pipi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">wall</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="kc">ne</span><span class="err">w</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="w"> </span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="err">.</span>
+
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Resul</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">}</span>
+
+<span class="mf">2.2.</span><span class="w"> </span><span class="err">Seco</span><span class="kc">n</span><span class="err">d</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="w"> </span><span class="err">is</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span><span class="err">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">}</span>
+
+<span class="w">    </span><span class="mf">2.3.1.</span><span class="w"> </span><span class="err">Ge</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">cos</span><span class="kc">t</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">usi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="err">N</span><span class="w"> </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mf">462.000</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">2.310.000</span><span class="err">`</span>
+
+<span class="w">    </span><span class="mf">2.3.2.</span><span class="w"> </span><span class="err">Ge</span><span class="kc">t</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">measures.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Soil</span><span class="w"> </span><span class="err">Rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">0</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Discard</span><span class="p">]</span><span class="w"> </span><span class="err">No</span><span class="kc">t</span><span class="w"> </span><span class="err">prese</span><span class="kc">nt</span><span class="w"> </span><span class="err">a</span><span class="kc">t</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Ver</span><span class="kc">t</span><span class="err">ical</span><span class="w"> </span><span class="err">Pipi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">Solu</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">1</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Discard</span><span class="p">]</span><span class="w"> </span><span class="err">No</span><span class="kc">t</span><span class="w"> </span><span class="err">prese</span><span class="kc">nt</span><span class="w"> </span><span class="err">a</span><span class="kc">t</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Pipi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">Wall</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">2</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Discard</span><span class="p">]</span><span class="w"> </span><span class="err">No</span><span class="kc">t</span><span class="w"> </span><span class="err">prese</span><span class="kc">nt</span><span class="w"> </span><span class="err">a</span><span class="kc">t</span><span class="w"> </span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Location_004&quot;</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">S</span><span class="kc">ta</span><span class="err">bili</span><span class="kc">t</span><span class="err">y</span><span class="w"> </span><span class="err">Wall</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">3</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Discard</span><span class="p">]</span><span class="w"> </span><span class="err">Curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">selec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">3</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mf">420.000</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">2.100.000</span><span class="err">`</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="p">[</span><span class="err">Keep</span><span class="p">]</span><span class="w"> </span><span class="err">Cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="kc">t</span><span class="err">ha</span><span class="kc">n</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">i</span><span class="kc">n</span><span class="err">i</span><span class="kc">t</span><span class="err">ial</span><span class="w"> </span><span class="err">s</span><span class="kc">tate</span><span class="err">.</span>
+
+<span class="w">    </span><span class="mf">2.3.3.</span><span class="w"> </span><span class="err">Se</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">cheapes</span><span class="kc">t</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">measure</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="w"> </span><span class="err">&lt;</span><span class="w"> </span><span class="err">S</span><span class="kc">ta</span><span class="err">bili</span><span class="kc">t</span><span class="err">y</span><span class="w"> </span><span class="err">wall</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="kc">ne</span><span class="err">w</span><span class="w"> </span><span class="err">rei</span><span class="kc">nf</span><span class="err">orceme</span><span class="kc">nt</span><span class="w"> </span><span class="kc">f</span><span class="err">or</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="err">.</span>
+
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Resul</span><span class="kc">t</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;Location_006&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">}</span>
+
+<span class="mf">2.3.</span><span class="w"> </span><span class="err">Third</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="w"> </span><span class="err">is</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">}}</span>
+
+<span class="w">    </span><span class="mf">2.3.1.</span><span class="w"> </span><span class="err">Ge</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">cos</span><span class="kc">t</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">usi</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="kc">t</span><span class="err">his</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="err">.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="err">cos</span><span class="kc">ts</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="err">N</span><span class="w"> </span><span class="err">loca</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">`(</span><span class="mf">420.000</span><span class="err">)</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">1.260.000</span><span class="err">`</span>
+
+<span class="w">    </span><span class="mf">2.3.2.</span><span class="w"> </span><span class="err">Ge</span><span class="kc">t</span><span class="w"> </span><span class="err">cheaper</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">measures.</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">Co</span><span class="kc">ffer</span><span class="err">dam</span><span class="p">,</span><span class="w"> </span><span class="err">(idx=</span><span class="mi">4</span><span class="err">)</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">Curre</span><span class="kc">nt</span><span class="w"> </span><span class="err">selec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">.</span>
+
+<span class="w">    </span><span class="mf">2.3.3.</span><span class="w"> </span><span class="err">Se</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">cheapes</span><span class="kc">t</span><span class="w"> </span><span class="err">commo</span><span class="kc">n</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">measure</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="p">:</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">O</span><span class="kc">nl</span><span class="err">y</span><span class="w"> </span><span class="err">co</span><span class="kc">ffer</span><span class="err">dam</span><span class="w"> </span><span class="err">available</span><span class="p">,</span>
+<span class="w">        </span><span class="mi">-</span><span class="w"> </span><span class="err">No</span><span class="w"> </span><span class="kc">furt</span><span class="err">her</span><span class="w"> </span><span class="err">ac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">.</span>
+
+<span class="w">    </span><span class="mi">-</span><span class="w"> </span><span class="err">Resul</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">}</span>
+
+<span class="mf">2.4.</span><span class="w"> </span><span class="err">Resul</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="err">clus</span><span class="kc">ters</span><span class="p">:</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_000&quot;</span><span class="p">,</span><span class="s2">&quot;Location_001&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">        </span><span class="err">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Location_002&quot;</span><span class="p">,</span><span class="s2">&quot;Location_003&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;Location_004&quot;</span><span class="p">,</span><span class="s2">&quot;Location_005&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;Location_006&quot;</span><span class="p">,</span><span class="s2">&quot;Location_007&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;Location_008&quot;</span><span class="p">,</span><span class="s2">&quot;Location_009&quot;</span><span class="p">,]</span><span class="err">)</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<p>With this, we went from:</p>
+<ul>
+<li>Initial costs: <code>(420.042) * 2 + (462.000) * 5 + (420.000) * 3 = 4.410.084</code>, to</li>
+<li>Final costs: <code>(4.200) * 2 + (420.000) * 8 = 3.368.400</code></li>
+</ul>
+<p>Which would amount to a total save of <strong>1.041.684€</strong></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="koswat_reinforced_profile.html" class="btn btn-neutral float-left" title="Reinforcement profile"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="koswat_surroundings.html" class="btn btn-neutral float-right" title="Surroundings">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="koswat_reinforced_profile.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="koswat_surroundings.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

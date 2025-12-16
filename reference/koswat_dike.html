@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Dike profile - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Dike profile";
+        var mkdocs_page_input_path = "reference/koswat_dike.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Dike profile</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#koswat-properties">Koswat properties</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dike-layers">Dike layers</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Koswat docstrings</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_docstrings/strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="koswat_docstrings/plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Dike profile</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_dike.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="dike-profile">Dike profile<a class="headerlink" href="#dike-profile" title="Permanent link">&para;</a></h1>
+<p>In this section we will describe how a Koswat dike is defined and what its parts are.</p>
+<h2 id="koswat-properties">Koswat properties<a class="headerlink" href="#koswat-properties" title="Permanent link">&para;</a></h2>
+<p>A koswat dike is represented by an instance of a <code>KoswatProfileProtocol</code>. And its properties represent different aspects of a 'real domain'. With <em>Image 1. Base profile properties</em> as reference, we can see the mapping between said 'real domain' and the koswat properties:</p>
+<ul>
+<li><code>input_data</code>: The parts of a dike (written on the image reference), which are directly mapped as an implementation of the <code>KoswatInputProfileProtocol</code>. </li>
+<li><code>characteristic_points</code>: 8 points given by the user describing the dike on (x,y) coordinates, the first four represent the waterside (<em>buitendijks</em>), the last four the polderside (<em>binnendijks</em>). Numbered in the reference picture from 1 to 8. Point 4 is considered to be the reference value (0) with respect to distances of e.g. surroundings and widths of certain parts of the dike.</li>
+<li><code>layers_wrapper</code>: The description on how the layers of the dike are built. Further described in <a href="#dike-layers">Dike layers</a>.</li>
+<li><code>location</code>: Geospatial coordinates (x, y) where the dike is situated.</li>
+<li><code>profile_width</code>: The difference between the lowest and the highest 'x' coordinates of the profile characteristic points. The distance between characteristic points 1 and 8. This can be broken down into:</li>
+<li><code>waterside_width</code>: The distance between characteristics points 1 and 4.</li>
+<li><code>polderside_width</code>: The distance between characteristics points 4 and 8.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Base profile properties" src="imgs/base_profile_properties.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 1. Base profile properties</td>
+</tr>
+</tbody>
+</table>
+<p>The geometry of a dike has certain additional characteristics:
+- <code>crest</code> (<em>kruin</em>): The flat part on top of the dike.
+- <code>berm</code> (<em>berm</em>): The flat part between either point 2 and 3 (waterside) or point 6 an 7 (polderside).
+- <code>slope</code> (<em>talud</em>): The (steepness of the) diagonal parts between points 1 and 4 (waterside) or points 5 and 8 (polderside).
+- <code>ground level</code> (<em>maaiveld</em>): The level of the area to the left of point 1 (waterside) or to the right of point 8 (polderside).</p>
+<h2 id="dike-layers">Dike layers<a class="headerlink" href="#dike-layers" title="Permanent link">&para;</a></h2>
+<p>A dike is composed by three layers:</p>
+<ul>
+<li>Sand, the core layer.</li>
+<li>Clay, a coating layer.</li>
+<li>Grass, a (top) coating layer.</li>
+</ul>
+<p>These layers are wrapped under a <code>KoswatLayersWrapperProtocol</code>  instance. At the same time, each layer is an instance of a <code>KoswatLayerProtocol</code> containing the following properties:</p>
+<ul>
+<li><code>material_type</code>: Either Sand, Clay or Grass.</li>
+<li><code>upper_points</code>: The surface points of the layer. This property can be used to calculate the <em>surface</em> (m<sup>2</sup>) of a material.</li>
+<li><code>outer_geometry</code>: A polygon representing the material layer and the 'wrapped' polygons. For instance, the Clay <code>outer_geometry</code> will also include the Sand <code>material_geometry</code>.</li>
+<li><code>material_geometry</code>: A closed polygon containing <strong>only</strong> the points representing the layer.</li>
+</ul>
+<p>Using <em>Image 3. Clay layer highlighted</em> as an example, we can map the previous properties:</p>
+<ul>
+<li><code>material_type</code>: Clay, the 'in-between' layer.</li>
+<li><code>upper_points</code>: Line with the 'orange' points, without 'closing' the polygon, something like: [(-18, 0), (0, 5.5), (8, 5.5), (21, 0)].</li>
+<li><code>outer_geometry</code>: Closed geometry using the <code>upper points</code> and the 'ground level' (<em>maaiveld</em>) points: [(-18, 0), (0, 5.5), (8, 5.5), (21, 0), <strong>(-18, 0)</strong>].</li>
+<li><code>material_geometry</code>: Closed geometry using the <code>upper_points</code> from Clay and the <code>upper_points</code> from the layer below (Sand, green points). Should be something like: [(-18, 0), (0, 5.5), (8, 5.5), (21, 0), <strong>(19, 0), (8, 4.75), (0, 4.75), (-14, 0), (-18, 0)</strong>]</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Base profile sand layer" src="imgs/base_profile/base_profile_sand.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 2. Sand layer highlighted</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Base profile clay layer" src="imgs/base_profile/base_profile_clay.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 3. Clay layer highlighted</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Base profile grass layer" src="imgs/base_profile/base_profile_grass.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Image 4. Grass layer highlighted</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="koswat_cost_report.html" class="btn btn-neutral float-left" title="Cost report"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="koswat_main_workflow.html" class="btn btn-neutral float-right" title="Main workflow">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="koswat_cost_report.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="koswat_main_workflow.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

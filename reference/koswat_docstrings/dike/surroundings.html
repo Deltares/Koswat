@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Koswat dike surroundings - Koswat</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Koswat dike surroundings";
+        var mkdocs_page_input_path = "reference/koswat_docstrings/dike/surroundings.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Koswat docstrings</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" >Dike</a>
+    <ul class="current">
+                <li class="toctree-l3"><a class="reference internal" href="layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3 current"><a class="reference internal current" href="#">Koswat dike surroundings</a>
+    <ul class="current">
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol">KoswatSurroundingsProtocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.dike.surroundings.surroundings_infrastructure.SurroundingsInfrastructure">SurroundingsInfrastructure</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.dike.surroundings.surroundings_obstacle.SurroundingsObstacle">SurroundingsObstacle</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#point">Point</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#wrapper">Wrapper</a>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+          <li class="breadcrumb-item">Koswat docstrings</li>
+          <li class="breadcrumb-item">Dike</li>
+      <li class="breadcrumb-item active">Koswat dike surroundings</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_docstrings/dike/surroundings.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="koswat-dike-surroundings">Koswat dike surroundings<a class="headerlink" href="#koswat-dike-surroundings" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol" class="doc doc-heading">
+            <code>KoswatSurroundingsProtocol</code>
+
+
+<a href="#koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+        <p>Empty interface to represent the Koswat surroundings and easily identify them throughout the solution.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.dike.surroundings.surroundings_infrastructure.SurroundingsInfrastructure" class="doc doc-heading">
+            <code>SurroundingsInfrastructure</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.surroundings_infrastructure.SurroundingsInfrastructure" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="KoswatSurroundingsProtocol (koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol)" href="#koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol">KoswatSurroundingsProtocol</a></code></p>
+
+
+
+        <p>Defines surroundings point collections that can be repaired or replaced.</p>
+<p>The <code>PointSurroundings</code> contain a matrix (dictionary) where the keys
+represent the distances to an obstacle, and the values a float representing
+how long that infrastructure is.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.dike.surroundings.surroundings_obstacle.SurroundingsObstacle" class="doc doc-heading">
+            <code>SurroundingsObstacle</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.surroundings_obstacle.SurroundingsObstacle" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="KoswatSurroundingsProtocol (koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol)" href="#koswat.dike.surroundings.koswat_surroundings_protocol.KoswatSurroundingsProtocol">KoswatSurroundingsProtocol</a></code></p>
+
+
+
+        <p>Defines surroundings point collections that cannot be repaired or replaced.
+The <code>PointObstacleSurroundings</code> contain the closest distance to an obstacle
+both inside and outside the polder.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="point">Point<a class="headerlink" href="#point" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings" class="doc doc-heading">
+            <code>PointSurroundings</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Object representing a <code>meter</code> with <code>x</code>, <code>y</code> coordinates in a polder (or else).</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="n">__value</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__eq__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Overriding of the "magic" equality operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__hash__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.__hash__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Overriding of the "magic" hash operator required
+so that <code>PointSurroundings</code> can be used as a key in a python dict.</p>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_total_infrastructure_per_zone</span><span class="p">(</span><span class="o">*</span><span class="n">zone_limit_collection</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.get_total_infrastructure_per_zone" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the total infrastructure width at each of the provided zones
+<code>zone_limit_collection</code> (<code>tuple[float, float]</code>).
+The zone limits are matched by rounding up their upper limit to the
+<code>surroundings_matrix</code> keys (distances to the <code>location</code> in the real world).
+When two zones have overlapping limits (as expected) the lower one will
+"claim" the corresponding surrounding distance.</p>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <ul>
+<li><code>zone_limit_collection</code> = (0, 4), (4, 11)</li>
+<li><code>surroundings_matrix</code> = {5: 1.5, 10: 3, 15: 6}</li>
+<li>"Taken" distances per zone:<ul>
+<li><code>(0, 4)</code> takes key <code>5</code>.</li>
+<li><code>(4, 11)</code> takes key(s) <code>10</code> and <code>15</code> because <code>5</code> was already taken.</li>
+</ul>
+</li>
+<li>Total infrastructure width at zones = <code>(1.5, 9)</code></li>
+</ul>
+</details>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<span title="float">float</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[float]: list with total width corresponding to each provided zone.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.dike.surroundings.point.point_surroundings.PointSurroundings.merge" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="p">:</span> <span class="n">PointSurroundings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings.merge" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Merges another <code>PointSurroundings</code> into this one by updating the
+<code>surroundings_matrix</code> with the values from the other one.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>other</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="PointSurroundings
+
+
+  
+      dataclass
+   (koswat.dike.surroundings.point.point_surroundings.PointSurroundings)" href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>The other <code>PointSurroundings</code> to merge.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.dike.surroundings.point.point_surroundings_list_polderside_builder.PointSurroundingsListBuilder" class="doc doc-heading">
+            <code>PointSurroundingsListBuilder</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.point.point_surroundings_list_polderside_builder.PointSurroundingsListBuilder" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="BuilderProtocol (koswat.core.protocols.BuilderProtocol)" href="../core/protocols.html#koswat.core.protocols.builder_protocol.BuilderProtocol">BuilderProtocol</a></code></p>
+
+
+
+        <p>Builds a collection of points (<code>list[PointSurroundings]</code>) given the dike locations
+(<code>KoswatDikeLocationsShpFom</code>) and the surroundings around it
+(<code>KoswatSurroundingsCsvFom</code>).</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="wrapper">Wrapper<a class="headerlink" href="#wrapper" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.dike.surroundings.wrapper.surroundings_wrapper.SurroundingsWrapper" class="doc doc-heading">
+            <code>SurroundingsWrapper</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.wrapper.surroundings_wrapper.SurroundingsWrapper" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.dike.surroundings.wrapper.surroundings_wrapper.SurroundingsWrapper.get_locations_at_safe_distance" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_locations_at_safe_distance</span><span class="p">(</span><span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.dike.surroundings.wrapper.surroundings_wrapper.SurroundingsWrapper.get_locations_at_safe_distance" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets all locations which are safe from obstacle surroundings in a radius of <code>distance</code>.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>distance</code></b>
+                  (<code><span title="float">float</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Radius from each point that should be free of surroundings.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="PointSurroundings
+
+
+  
+      dataclass
+   (koswat.dike.surroundings.point.point_surroundings.PointSurroundings)" href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+              –
+              <div class="doc-md-description">
+                <p>List[PointSurroundings]: List of safe locations (points with surroundings).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper.ObstacleSurroundingsWrapper" class="doc doc-heading">
+            <code>ObstacleSurroundingsWrapper</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper.ObstacleSurroundingsWrapper" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="koswat.dike.surroundings.wrapper.base_surroundings_wrapper.BaseSurroundingsWrapper">BaseSurroundingsWrapper</span></code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper.ObstacleSurroundingsWrapper.get_locations_at_safe_distance" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_locations_at_safe_distance</span><span class="p">(</span><span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointSurroundings</span><span class="p">]</span></code>
+
+<a href="#koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper.ObstacleSurroundingsWrapper.get_locations_at_safe_distance" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets all locations which are safe from obstacle surroundings in a radius of <code>distance</code>.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>distance</code></b>
+                  (<code><span title="float">float</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Radius from each point that should be free of surroundings.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="PointSurroundings
+
+
+  
+      dataclass
+   (koswat.dike.surroundings.point.point_surroundings.PointSurroundings)" href="#koswat.dike.surroundings.point.point_surroundings.PointSurroundings">PointSurroundings</a>]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[PointSurroundings]: List of safe locations (points with surroundings).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper.ObstacleSurroundingsWrapper.obstacle_locations" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">obstacle_locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">PointObstacleSurroundings</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper.ObstacleSurroundingsWrapper.obstacle_locations" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Overlay of locations of the different <code>ObstacleSurroundings</code> that are present.
+Buildings need to be present as input (leading for location coordinates).
+Each location represents 1 meter in a real scale map.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<span title="koswat.dike.surroundings.point.point_obstacle_surroundings.PointObstacleSurroundings">PointObstacleSurroundings</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[PointSurroundings]: List of locations with only the closest distance to obstacle(s).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="profile.html" class="btn btn-neutral float-left" title="Koswat dike profile module"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../dike_reinforcements/reinforcement_layers.html" class="btn btn-neutral float-right" title="Reinforcement Layers Wrapper">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="profile.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../dike_reinforcements/reinforcement_layers.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

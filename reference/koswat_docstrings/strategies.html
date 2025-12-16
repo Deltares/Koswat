@@ -1,0 +1,3401 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Strategies - Koswat</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Strategies";
+        var mkdocs_page_input_path = "reference/koswat_docstrings/strategies.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Koswat docstrings</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Strategies</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#koswat.strategies.strategy_input.StrategyInput">StrategyInput</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_input.StrategyInput.reinforcement_min_cluster">reinforcement_min_cluster</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#koswat.strategies.strategy_location_input.StrategyLocationInput">StrategyLocationInput</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_input.StrategyLocationInput.available_measures">available_measures</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_input.StrategyLocationInput.cheapest_reinforcement">cheapest_reinforcement</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_input.StrategyLocationInput.get_infrastructure_costs">get_infrastructure_costs</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_input.StrategyLocationInput.get_reinforcement_costs">get_reinforcement_costs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement">StrategyLocationReinforcement</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.current_cost">current_cost</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.current_selected_measure">current_selected_measure</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.get_infrastructure_costs">get_infrastructure_costs</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.get_selected_measure_steps">get_selected_measure_steps</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.set_selected_measure">set_selected_measure</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts">StrategyReinforcementTypeCosts</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts.total_costs_with_surtax">total_costs_with_surtax</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#koswat.strategies.strategy_protocol.StrategyProtocol">StrategyProtocol</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.strategy_protocol.StrategyProtocol.apply_strategy">apply_strategy</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#order-strategy">Order Strategy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.order_strategy.order_strategy.OrderStrategy">OrderStrategy</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.order_strategy.order_strategy_buffering.OrderStrategyBuffering">OrderStrategyBuffering</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.order_strategy.order_strategy_clustering.OrderStrategyClustering">OrderStrategyClustering</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.order_strategy.order_cluster.OrderCluster">OrderCluster</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#infra-priority-strategy">Infra Priority Strategy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.infra_priority_strategy.infra_priority_strategy.InfraPriorityStrategy">InfraPriorityStrategy</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster">InfraCluster</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption">InfraClusterOption</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#strategy-step">Strategy step</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+          <li class="breadcrumb-item">Koswat docstrings</li>
+      <li class="breadcrumb-item active">Strategies</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/koswat_docstrings/strategies.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="strategies">Strategies<a class="headerlink" href="#strategies" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.strategy_input.StrategyInput" class="doc doc-heading">
+            <code>StrategyInput</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_input.StrategyInput" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Represents the input data structure for a strategy.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.strategy_input.StrategyInput.reinforcement_min_cluster" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">reinforcement_min_cluster</span><span class="p">:</span> <span class="nb">int</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_input.StrategyInput.reinforcement_min_cluster" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns the minimum length of a reinforcement type
+along a traject, usually named as <code>cluster</code> throughout
+the code.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>int</code></b>(                  <code><span title="int">int</span></code>
+)              –
+              <div class="doc-md-description">
+                <p><code>Total length</code></p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.strategy_location_input.StrategyLocationInput" class="doc doc-heading">
+            <code>StrategyLocationInput</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_location_input.StrategyLocationInput" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.strategy_location_input.StrategyLocationInput.available_measures" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">available_measures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">]]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_location_input.StrategyLocationInput.available_measures" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets all the available reinforcement types in <code>strategy_location_reinforcements</code>.
+It is called <code>available_measures</code> to match the <code>StrategyLocationReinforcement</code>
+definition.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[Type[ReinforcementProfileProtocol]]: resulting list.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.strategy_location_input.StrategyLocationInput.cheapest_reinforcement" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">cheapest_reinforcement</span><span class="p">:</span> <span class="n">StrategyReinforcementTypeCosts</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_location_input.StrategyLocationInput.cheapest_reinforcement" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the <code>StrategyLocationReinforcementCosts</code> with the lowest <code>total_costs_with_surtax</code> value.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>StrategyLocationReinforcementCosts</code></b>(                  <code><a class="autorefs autorefs-internal" title="StrategyReinforcementTypeCosts
+
+
+  
+      dataclass
+   (koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts)" href="#koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts">StrategyReinforcementTypeCosts</a></code>
+)              –
+              <div class="doc-md-description">
+                <p>The cheapest reinforcement for this location.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.strategy_location_input.StrategyLocationInput.get_infrastructure_costs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_infrastructure_costs</span><span class="p">(</span><span class="n">reinforcement_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.strategies.strategy_location_input.StrategyLocationInput.get_infrastructure_costs" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get the infrastructure costs for the given reinforcement type.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>reinforcement_type</code></b>
+                  (<code><span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>The reinforcement type.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="ValueError">ValueError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>The reinforcement type is not available.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>tuple[float, float]: Tuple containing the infrastructure costs without and with surtax.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.strategy_location_input.StrategyLocationInput.get_reinforcement_costs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_reinforcement_costs</span><span class="p">(</span><span class="n">reinforcement_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span></code>
+
+<a href="#koswat.strategies.strategy_location_input.StrategyLocationInput.get_reinforcement_costs" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get the costs for the given reinforcement type.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>reinforcement_type</code></b>
+                  (<code><span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>The reinforcement type.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="ValueError">ValueError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>The reinforcement type is not available.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>float</code></b>(                  <code><span title="float">float</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>The reinforcement costs with surtax.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement" class="doc doc-heading">
+            <code>StrategyLocationReinforcement</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Represents a location and the different reinforcements that can be applied to it
+as well their costs.
+This class is used to show the final chosen state for a location.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.current_cost" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">current_cost</span><span class="p">:</span> <span class="nb">float</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.current_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Estimates the costs with surtax at this location for the given <code>current_selected_measure</code>.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.current_selected_measure" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">current_selected_measure</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.current_selected_measure" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Exposes the current selected measure for this object.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.get_infrastructure_costs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_infrastructure_costs</span><span class="p">(</span><span class="n">reinforcement_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span></code>
+
+<a href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.get_infrastructure_costs" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns the infrastructure costs for the given reinforcement type (without and with surtax).</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>reinforcement_type</code></b>
+                  (<code><span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Reinforcement type.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>tuple[float, float]: Tuple containing the infrastructure costs without and with surtax.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.get_selected_measure_steps" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_selected_measure_steps</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">],</span> <span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">],</span> <span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">]]</span></code>
+
+<a href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.get_selected_measure_steps" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Outputs the selected measure following the domain (expected) steps:
+    - Initial step,
+    - Order step,
+    - Infrastructure step</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="tuple">tuple</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>], <span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>], <span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]]</code>
+              –
+              <div class="doc-md-description">
+                <p>tuple[
+type[ReinforcementProfileProtocol],
+type[ReinforcementProfileProtocol],
+type[ReinforcementProfileProtocol]]: Resulting tuple.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.set_selected_measure" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_selected_measure</span><span class="p">(</span><span class="n">reinforcement_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">],</span> <span class="n">step</span><span class="p">:</span> <span class="n">StrategyStepEnum</span><span class="p">)</span></code>
+
+<a href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement.set_selected_measure" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Changes the value reprsented in <code>current_selected_measure</code> and updates the
+dictionary of selections (history).</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>reinforcement_type</code></b>
+                  (<code><span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Reinforcement type</p>
+              </div>
+            </li>
+            <li>
+              <b><code>step</code></b>
+                  (<code><span title="StrategyStepsEnum">StrategyStepsEnum</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Step whose</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts" class="doc doc-heading">
+            <code>StrategyReinforcementTypeCosts</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts.total_costs_with_surtax" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">total_costs_with_surtax</span><span class="p">:</span> <span class="nb">float</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.strategy_reinforcement_type_costs.StrategyReinforcementTypeCosts.total_costs_with_surtax" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>The simple addition of the base costs and the possible
+related infrastructure costs, both including surtax.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>float</code></b>(                  <code><span title="float">float</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>The total costs with surtax when applying this reinforcement.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.strategy_protocol.StrategyProtocol" class="doc doc-heading">
+            <code>StrategyProtocol</code>
+
+
+<a href="#koswat.strategies.strategy_protocol.StrategyProtocol" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.strategy_protocol.StrategyProtocol.apply_strategy" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">apply_strategy</span><span class="p">(</span><span class="n">strategy_input</span><span class="p">:</span> <span class="n">StrategyInput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StrategyOutput</span></code>
+
+<a href="#koswat.strategies.strategy_protocol.StrategyProtocol.apply_strategy" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Applies a specific strategy by matching each location (<code>PointSurroundings</code>)
+ to a valid reinforcement type (<code>ReinforcementProfileProtocol</code>).</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>strategy_input</code></b>
+                  (<code>`StrategyInput`</code>)
+              –
+              <div class="doc-md-description">
+                <p>Input data structure containing locations and available reinforcements for each of them.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>StrategyOutput</code></b>(                  <code><span title="koswat.strategies.strategy_output.StrategyOutput">StrategyOutput</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>Output data structure containing the selected reinforcements for each location.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="order-strategy">Order Strategy<a class="headerlink" href="#order-strategy" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.order_strategy.order_strategy.OrderStrategy" class="doc doc-heading">
+            <code>OrderStrategy</code>
+
+
+<a href="#koswat.strategies.order_strategy.order_strategy.OrderStrategy" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="StrategyProtocol (koswat.strategies.strategy_protocol.StrategyProtocol)" href="#koswat.strategies.strategy_protocol.StrategyProtocol">StrategyProtocol</a></code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.order_strategy.order_strategy.OrderStrategy.get_default_order_for_reinforcements" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_default_order_for_reinforcements</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">]]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#koswat.strategies.order_strategy.order_strategy.OrderStrategy.get_default_order_for_reinforcements" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Give the default order for reinforcements types,
+assuming they are sorted from cheapest to most expensive
+and least to most restrictive.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[type[ReinforcementProfileProtocol]]: list of reinforcement types</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.order_strategy.order_strategy.OrderStrategy.get_strategy_order_for_reinforcements" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_strategy_order_for_reinforcements</span><span class="p">(</span><span class="n">strategy_reinforcements</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">StrategyReinforcementInput</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">]]</span></code>
+
+<a href="#koswat.strategies.order_strategy.order_strategy.OrderStrategy.get_strategy_order_for_reinforcements" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
+possibly removing reinforcement types that are more expensive and more restrictive than others.
+Inactive reinforcements are ignored.
+Cofferdam should always be the last reinforcement type.</p>
+
+
+<details class="input" open>
+  <summary>Input</summary>
+  <p>strategy_reinforcements (list[StrategyReinforcementInput]): list of reinforcement types with costs and surface</p>
+</details>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[type[ReinforcementProfileProtocol]]: list of reinforcement types</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.order_strategy.order_strategy.OrderStrategy.get_strategy_reinforcements" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_strategy_reinforcements</span><span class="p">(</span><span class="n">strategy_locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">StrategyLocationInput</span><span class="p">],</span> <span class="n">selection_order</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">StrategyLocationReinforcement</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#koswat.strategies.order_strategy.order_strategy.OrderStrategy.get_strategy_reinforcements" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the strategy representation of the locations with their available measures
+ordered filtered and order by the provided <code>selection_order</code>. It also sets
+their initial state.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>strategy_locations</code></b>
+                  (<code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="StrategyLocationInput
+
+
+  
+      dataclass
+   (koswat.strategies.strategy_input.StrategyLocationInput)" href="#koswat.strategies.strategy_location_input.StrategyLocationInput">StrategyLocationInput</a>]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Locations to map into reinforcement locations.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>selection_order</code></b>
+                  (<code><span title="list">list</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Priority order to assign a reinforcement.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="StrategyLocationReinforcement
+
+
+  
+      dataclass
+   (koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement)" href="#koswat.strategies.strategy_location_reinforcement.StrategyLocationReinforcement">StrategyLocationReinforcement</a>]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[StrategyLocationReinforcement]: Mapped location reinforcements.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.order_strategy.order_strategy_buffering.OrderStrategyBuffering" class="doc doc-heading">
+            <code>OrderStrategyBuffering</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.order_strategy.order_strategy_buffering.OrderStrategyBuffering" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="koswat.strategies.order_strategy.order_strategy_base.OrderStrategyBase">OrderStrategyBase</span></code></p>
+
+
+
+        <p>Applies buffering, through masks, to each location's pre-assigned reinforcement.
+The result of the <code>apply</code> method will be the locations with the best
+reinforcement fit (lowest index from <code>reinforcement_order</code>) that fulfills the
+<code>reinforcement_min_buffer</code> requirement.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.order_strategy.order_strategy_clustering.OrderStrategyClustering" class="doc doc-heading">
+            <code>OrderStrategyClustering</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.order_strategy.order_strategy_clustering.OrderStrategyClustering" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="koswat.strategies.order_strategy.order_strategy_base.OrderStrategyBase">OrderStrategyBase</span></code></p>
+
+
+
+        <p>Applies clustering, to the whole collection of reinforcements
+(<code>location_reinforcements: list[StrategyLocationReinforcement]</code>).
+The result of the <code>apply</code> method will be the locations with the best
+reinforcement fit (lowest index from <code>reinforcement_order</code>) that fulfills the
+<code>reinforcement_min_length</code> requirement.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.order_strategy.order_cluster.OrderCluster" class="doc doc-heading">
+            <code>OrderCluster</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.order_strategy.order_cluster.OrderCluster" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.order_strategy.order_cluster.OrderCluster.extend_cluster" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">extend_cluster</span><span class="p">(</span><span class="n">other</span><span class="p">:</span> <span class="n">OrderCluster</span><span class="p">)</span></code>
+
+<a href="#koswat.strategies.order_strategy.order_cluster.OrderCluster.extend_cluster" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extends the current cluster with the reinforcements
+(<code>list[StrategyLocationReinforcement]</code>) from another cluster.
+Modifies the <code>current_selected_measure</code> property of those measures being merged but it
+does not remove them from their source cluster.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>other</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="OrderCluster
+
+
+  
+      dataclass
+   (koswat.strategies.order_strategy.order_cluster.OrderCluster)" href="#koswat.strategies.order_strategy.order_cluster.OrderCluster">OrderCluster</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>Cluster whose contents will be used to extend <code>self</code>.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Raises:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="ValueError">ValueError</span></code>
+              –
+              <div class="doc-md-description">
+                <p>When trying to extend from an unrelated cluster.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.order_strategy.order_cluster.OrderCluster.get_stronger_cluster" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_stronger_cluster</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">OrderCluster</span></code>
+
+<a href="#koswat.strategies.order_strategy.order_cluster.OrderCluster.get_stronger_cluster" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets the neighbor with the lowest reinforcement type value greater
+than the current cluster's value (<code>self.reinforcement_idx</code>).</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>OrderCluster</code></b>(                  <code><a class="autorefs autorefs-internal" title="OrderCluster
+
+
+  
+      dataclass
+   (koswat.strategies.order_strategy.order_cluster.OrderCluster)" href="#koswat.strategies.order_strategy.order_cluster.OrderCluster">OrderCluster</a></code>
+)              –
+              <div class="doc-md-description">
+                <p>Neighbor with a stronger <code>ReinforcementProfileProtocol</code>.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.order_strategy.order_cluster.OrderCluster.is_compliant" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">is_compliant</span><span class="p">(</span><span class="n">min_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">strongest_reinforcement</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.strategies.order_strategy.order_cluster.OrderCluster.is_compliant" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Checks whether this <code>OrderCluster</code> instance is compliant within a cluster group.
+This method does not check for exceptions, such as, the cluster's neighbors are
+of lower strength than the current.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>min_length</code></b>
+                  (<code><span title="float">float</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Minimal length a reinforcement measure is required
+for a cluster.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>strongest_reinforcement</code></b>
+                  (<code><span title="int">int</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>What is the reinforcement index which cannot
+be futher 'strengthen'.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>bool</code></b>(                  <code><span title="bool">bool</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>if the cluster is compliant within its neighbors context.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="infra-priority-strategy">Infra Priority Strategy<a class="headerlink" href="#infra-priority-strategy" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.infra_priority_strategy.infra_priority_strategy.InfraPriorityStrategy" class="doc doc-heading">
+            <code>InfraPriorityStrategy</code>
+
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_priority_strategy.InfraPriorityStrategy" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="StrategyProtocol (koswat.strategies.strategy_protocol.StrategyProtocol)" href="#koswat.strategies.strategy_protocol.StrategyProtocol">StrategyProtocol</a></code></p>
+
+
+
+        <p>This strategy works under the assumption that
+<code>StrategyLocationReinforcement.available_measures</code>
+ARE NOT ordered by "compatibility".
+Thus we need to check first which are the compatible reinforcements
+per cluster.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_priority_strategy.InfraPriorityStrategy.generate_subcluster_options" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">generate_subcluster_options</span><span class="p">(</span><span class="n">from_cluster</span><span class="p">:</span> <span class="n">InfraCluster</span><span class="p">,</span> <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">InfraCluster</span><span class="p">]]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_priority_strategy.InfraPriorityStrategy.generate_subcluster_options" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generates all possible combinations of (sub) clusters based on the locations
+of this cluster. These are also referred as "options".</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>min_length</code></b>
+                  (<code><span title="int">int</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Minimum length for a cluster to be valid.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="list">list</span>[<span title="list">list</span>[<a class="autorefs autorefs-internal" title="InfraCluster
+
+
+  
+      dataclass
+   (koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster)" href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster">InfraCluster</a>]]</code>
+              –
+              <div class="doc-md-description">
+                <p>list[list[InfraCluster]]: Collection of "options" with valid length.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_priority_strategy.InfraPriorityStrategy.get_common_available_measures_costs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_common_available_measures_costs</span><span class="p">(</span><span class="n">infra_cluster</span><span class="p">:</span> <span class="n">InfraCluster</span><span class="p">,</span> <span class="n">order_strategy_reinforcements</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_priority_strategy.InfraPriorityStrategy.get_common_available_measures_costs" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gets a dictionary with the reinforcements available at all
+locations of the cluster (<code>infra_cluster</code>) as well as their
+total cost if said reinforcement is applied at them.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>infra_cluster</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="InfraCluster
+
+
+  
+      dataclass
+   (koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster)" href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster">InfraCluster</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>Cluster being analyzed.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>order_strategy_reinforcements</code></b>
+                  (<code><span title="list">list</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Reinforcements ordered by base cost (ground surface).</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="dict">dict</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>], <span title="float">float</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>dict[type[ReinforcementProfileProtocol], float]:
+Resulting reinforcement type - costs dictionary.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster" class="doc doc-heading">
+            <code>InfraCluster</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>This dataclass represents the subset of locations sharing the same
+reinforcement type (<code>type[ReinforcementProfileProtocol]</code>).</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.current_cost" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">current_cost</span><span class="p">:</span> <span class="nb">float</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.current_cost" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculates the cost of applying the <code>reinforcement_type</code> to
+all locations present in the <code>cluster</code>.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>float</code></b>(                  <code><span title="float">float</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>The total (current) cost of this cluster.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.fits_subclusters" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">fits_subclusters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.fits_subclusters" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validates whether this cluster can be split into subclusters.
+For that it requires to have at least twice the required length.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>bool</code></b>(                  <code><span title="bool">bool</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>Whether subclusters can be generated from this one.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.is_valid" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">is_valid</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.is_valid" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validates the length of this cluster.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>bool</code></b>(                  <code><span title="bool">bool</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>The cluster has the minimal required length.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.set_cheapest_common_available_measure" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_cheapest_common_available_measure</span><span class="p">(</span><span class="n">measure_costs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">],</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster.set_cheapest_common_available_measure" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Updates all the location reinforcements with the cheapest reinforcement type
+from the <code>measure_costs</code>.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>measure_costs</code></b>
+                  (<code><span title="dict">dict</span>[<span title="type">type</span>[<a class="autorefs autorefs-internal" title="ReinforcementProfileProtocol (koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol)" href="dike_reinforcements/reinforcement_profile.html#koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol.ReinforcementProfileProtocol">ReinforcementProfileProtocol</a>]]</code>)
+              –
+              <div class="doc-md-description">
+                <p>dictionary with the total costs per reinforcement type.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption" class="doc doc-heading">
+            <code>InfraClusterOption</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Represents one set of subclusters the strategy could select
+for costs optimization.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.add_cluster" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">add_cluster</span><span class="p">(</span><span class="n">infra_cluster</span><span class="p">:</span> <span class="n">InfraCluster</span><span class="p">,</span> <span class="n">cluster_costs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span></code>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.add_cluster" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Adds the infra cluster into the collection as well as its reinforcement
+costs.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>infra_cluster</code></b>
+                  (<code><a class="autorefs autorefs-internal" title="InfraCluster
+
+
+  
+      dataclass
+   (koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster)" href="#koswat.strategies.infra_priority_strategy.infra_cluster.InfraCluster">InfraCluster</a></code>)
+              –
+              <div class="doc-md-description">
+                <p>Cluster to add to this collection option.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>cluster_costs</code></b>
+                  (<code><span title="dict">dict</span></code>)
+              –
+              <div class="doc-md-description">
+                <p>Reinforcement costs for the given cluster.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.cluster_collection" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">cluster_collection</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">InfraCluster</span><span class="p">]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.cluster_collection" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Read-only property to expose the stored subclusters.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.cluster_costs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">cluster_costs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="n">ReinforcementProfileProtocol</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.cluster_costs" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Read-only property to expose the stored costs.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.set_cheapest_option" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_cheapest_option</span><span class="p">()</span></code>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.set_cheapest_option" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Sets the subclusters defined in this option to their most optimal (cheapest)
+reinforcement possible.</p>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.valid_option" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">valid_option</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span></code>
+
+<a href="#koswat.strategies.infra_priority_strategy.infra_cluster_option.InfraClusterOption.valid_option" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Validates the collection of clusters based on the
+required minimun length.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>bool</code></b>(                  <code><span title="bool">bool</span></code>
+)              –
+              <div class="doc-md-description">
+                <p>Validation result.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="strategy-step">Strategy step<a class="headerlink" href="#strategy-step" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+
+    <div class="doc doc-contents first">
+
+        <div class="highlight"><pre><span></span><code>            GNU GENERAL PUBLIC LICENSE
+              Version 3, 29 June 2007
+</code></pre></div>
+<p>KOSWAT, from the dutch combination of words <code>Kosts-Wat</code> (what are the costs)
+Copyright (C) 2025 Stichting Deltares</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="koswat_main.html" class="btn btn-neutral float-left" title="Main"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="configuration/koswat_config_protocol.html" class="btn btn-neutral float-right" title="Koswat Config Protocol">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="koswat_main.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="configuration/koswat_config_protocol.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

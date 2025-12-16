@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Installation - Koswat</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Installation";
+        var mkdocs_page_input_path = "installation.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Installation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#pypi-installation">Pypi installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#preparation">Preparation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#installation_1">Installation</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#docker-installation">Docker installation</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Koswat docstrings</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/cost_report.html">Cost report module</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/koswat_handler.html">Koswat handler</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/koswat_main.html">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/koswat_docstrings/strategies.html">Strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Configuration</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/configuration/koswat_config_protocol.html">Koswat Config Protocol</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Core</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/geometries.html">Core geometries module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/io.html">Input Output core module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/koswat_logger.html">Koswat logger</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/core/protocols.html">Core protocols module</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike/layers.html">Dike layers module.</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike/profile.html">Koswat dike profile module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike/surroundings.html">Koswat dike surroundings</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Dike reinforcements</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike_reinforcements/reinforcement_layers.html">Reinforcement Layers Wrapper</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/dike_reinforcements/reinforcement_profile.html">Reinforcement profile</a>
+                </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" >Plots</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/plots/dike.html">Dike plotting module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/plots/geometries.html">Geometries plot module</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="reference/koswat_docstrings/plots/plots.html">Plots module</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/installation.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The following installation steps are written based on a Windows environment. When using other systems (which should be possible) it might be required to use different commands. However, the fundamental of the installation steps should remain the same. This meaning, no additional packages or libraries should be required. If problems would arose during your installation, please contact the maintainers of the tool.</p>
+</div>
+<h2 id="pypi-installation">Pypi installation<a class="headerlink" href="#pypi-installation" title="Permanent link">&para;</a></h2>
+<h3 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">&para;</a></h3>
+<p>Ensure you have a valid python environment with pip. If you are using conda you can do so with the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="go">conda create -n koswat_env python==3.13 pip</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the time of writing of this document koswat is supported for <code>python&gt;=3.11,&lt;3.14</code>.</p>
+</div>
+<h3 id="installation_1">Installation<a class="headerlink" href="#installation_1" title="Permanent link">&para;</a></h3>
+<p>Koswat is not published at a package repository such as <a href="https://pypi.org/">Pypi</a>, however you can install it directly from GitHub as follows:</p>
+<ol>
+<li>
+<p>Latest available (<code>master</code>):
+    <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Deltares/Koswat.git
+</code></pre></div></p>
+</li>
+<li>
+<p>Specific Koswat version, add <code>@version-tag</code> (<a href="https://github.com/Deltares/Koswat/tags">check released tags</a>) to the previous command, for instance install tag <code>v0.15.0</code>:
+    <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Deltares/Koswat.git@v0.15.0
+</code></pre></div></p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also do the above with a commit-hash for development branches (e.g.:<code>06e3f27</code>)</p>
+</div>
+<p>Either way, installation should start immediately:</p>
+<div class="highlight"><pre><span></span><code><span class="go">C:\your_checkout_dir&gt;pip install git+https://github.com/Deltares/Koswat.git</span>
+<span class="go">Collecting git+https://github.com/Deltares/Koswat.git</span>
+<span class="go">...</span>
+<span class="go">Successfully built koswat</span>
+<span class="go">Installing collected packages: pytz, tzdata, six, pyshp, pyparsing, pillow, packaging, numpy, more-itertools, kiwisolver, fonttools, cycler, colorama, certifi, shapely, python-dateutil, pyproj, pyogrio, contourpy, click, pandas, matplotlib, geopandas, koswat</span>
+<span class="go">Successfully installed certifi-2025.11.12 click-8.3.1 colorama-0.4.6 contourpy-1.3.3 cycler-0.12.1 fonttools-4.60.1 geopandas-1.1.1 kiwisolver-1.4.9 koswat-0.15.0 matplotlib-3.10.7 more-itertools-10.8.0 numpy-2.3.5 packaging-25.0 pandas-2.3.3 pillow-12.0.0 pyogrio-0.11.1 pyparsing-3.2.5 pyproj-3.7.2 pyshp-3.0.2.post1 python-dateutil-2.9.0.post0 pytz-2025.2 shapely-2.1.2 six-1.17.0 tzdata-2025.2</span>
+</code></pre></div>
+<p>Let's verify the installation with <code>pip show koswat</code>:</p>
+<div class="highlight"><pre><span></span><code>C:<span class="se">\y</span>our_checkout_dir&gt;pip<span class="w"> </span>show<span class="w"> </span>koswat
+Name:<span class="w"> </span>koswat
+Version:<span class="w"> </span><span class="m">0</span>.15.0
+Summary:<span class="w"> </span>Koswat,<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>dutch<span class="w"> </span>combination<span class="w"> </span>of<span class="w"> </span>words<span class="w"> </span><span class="sb">`</span>Kosts-Wat<span class="sb">`</span><span class="w"> </span><span class="o">(</span>what<span class="w"> </span>are<span class="w"> </span>the<span class="w"> </span>costs<span class="o">)</span>.<span class="w"> </span>Analyzes<span class="w"> </span>all<span class="w"> </span>the<span class="w"> </span>possible<span class="w"> </span>dikes<span class="w"> </span>reinforcements<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>a<span class="w"> </span>provided<span class="w"> </span>traject,<span class="w"> </span>with<span class="w"> </span>surrounding<span class="w"> </span>constructions,<span class="w"> </span>and<span class="w"> </span>what<span class="w"> </span>their<span class="w"> </span>related<span class="w"> </span>costs<span class="w"> </span>will<span class="w"> </span>be.
+...
+</code></pre></div>
+<h2 id="docker-installation">Docker installation<a class="headerlink" href="#docker-installation" title="Permanent link">&para;</a></h2>
+<p>For docker installation (and usage) check our <a href="docker.html">koswat docker reference</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="user_manual.html" class="btn btn-neutral float-right" title="User manual">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="examples.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="user_manual.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
