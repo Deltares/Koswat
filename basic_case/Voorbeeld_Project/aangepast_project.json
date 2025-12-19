@@ -1,0 +1,82 @@
+{
+  "analyse": {
+    "dijksectie_ligging": "dijksectie_ligging/WV21_dijkvakken_10_15_48.shp",
+    "dijksecties_selectie": "dijksecties_selectie.txt",
+    "dijksectie_invoer": "dijksectie_invoer",
+    "scenario_invoer": "scenarios",
+    "eenheidsprijzen": "eenheidsprijzen_2023.json",
+    "omgevingsdatabases": "omgeving",
+    "uitvoerfolder": "uitvoer",
+    "btw": true
+  },
+  "dijkprofiel": {
+    "dikte_graslaag": 0.3,
+    "dikte_kleilaag": 0.5,
+    "factor_zetting": 1.2,
+    "grondaankoop_bebouwd": 200,
+    "grondaankoop_onbebouwd": 10
+  },
+  "grondmaatregel": {
+    "actief": true,
+    "opslagfactor_grond": "normaal",
+    "opslagfactor_grondaankoop": "normaal",
+    "max_bermlengte": 50,
+    "min_bermhoogte": 0.5,
+    "max_bermhoogte_factor": 0.4,
+    "factor_toename_bermhoogte": 0.05
+  },
+  "verticalepipingoplossing": {
+    "actief": false,
+    "opslagfactor_grond": "normaal",
+    "opslagfactor_constructief": "normaal",
+    "opslagfactor_grondaankoop": "normaal",
+    "binnen_berm_breedte_vps": 10
+  },
+  "kwelscherm": {
+    "actief": true,
+    "opslagfactor_grond": "normaal",
+    "opslagfactor_constructief": "normaal",
+    "opslagfactor_grondaankoop": "normaal",
+    "min_lengte_kwelscherm": 4,
+    "overgang_cbwand_damwand": 99,
+    "max_lengte_kwelscherm": 25
+  },
+  "stabiliteitswand": {
+    "actief": false,
+    "opslagfactor_grond": "moeilijk",
+    "opslagfactor_constructief": "normaal",
+    "opslagfactor_grondaankoop": "moeilijk",
+    "versteiling_binnentalud": 2,
+    "min_lengte_stabiliteitswand": 5,
+    "overgang_damwand_diepwand": 20,
+    "max_lengte_stabiliteitswand": 25
+  },
+  "kistdam": {
+    "actief": true,
+    "opslagfactor_grond": "moeilijk",
+    "opslagfactor_constructief": "moeilijk",
+    "min_lengte_kistdam": 7,
+    "max_lengte_kistdam": 25
+  },
+  "omgeving": {
+    "omgevingtypes": [
+      "bebouwing",
+      "water",
+      "spoorwegen"
+    ],
+    "constructieafstand": 50.0,
+    "constructieovergang": 10.0,
+    "buitendijks": false
+  },
+  "infrastructuur": {
+    "actief": true,
+    "opslagfactor_wegen": "normaal",
+    "infrakosten_0dh": "vervang",
+    "buffer_buitendijks": 0,
+    "wegen_klasse2_breedte": 3.5,
+    "wegen_klasse24_breedte": 8,
+    "wegen_klasse47_breedte": 10,
+    "wegen_klasse7_breedte": 12,
+    "wegen_onbekend_breedte": 6
+  }
+}
