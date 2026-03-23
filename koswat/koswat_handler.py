@@ -31,6 +31,7 @@ from koswat.configuration.io.koswat_run_settings_importer import (
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
+from koswat.configuration.settings.koswat_run_settings import KoswatRunSettings
 from koswat.core.koswat_logger import KoswatLogger
 from koswat.cost_report.io.plots.multi_location_profile_comparison_plot_exporter import (
     MultiLocationProfileComparisonPlotExporter,
@@ -118,6 +119,13 @@ class KoswatHandler:
         )
         if not self._run_settings.run_scenarios:
             logging.error("No run scenarios found for %s", analysis_file)
+            return
+        self.run_analysis_settings(self._run_settings)
+
+    def run_analysis_settings(self, analysis_settings: "KoswatRunSettings") -> None:
+        self._run_settings = analysis_settings
+        if not self._run_settings.run_scenarios:
+            logging.error("No run scenarios found for the provided settings", analysis_settings)
             return
 
         # Run data
