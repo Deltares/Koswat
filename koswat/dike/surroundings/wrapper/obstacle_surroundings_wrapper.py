@@ -96,9 +96,9 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
             list[PointSurroundings]: List of safe locations (points with surroundings).
         """
 
-        def _is_at_safe_distance(point_surroundings: PointSurroundings) -> bool:
-            if math.isnan(point_surroundings.closest_obstacle):
+        def _is_at_safe_distance(point_surroundings: PointObstacleSurroundings) -> bool:
+            if math.isnan(point_surroundings.obstacle_free_room):
                 return True
-            return distance < point_surroundings.closest_obstacle
+            return distance < point_surroundings.obstacle_free_room
 
         return list(filter(_is_at_safe_distance, self.obstacle_locations))
