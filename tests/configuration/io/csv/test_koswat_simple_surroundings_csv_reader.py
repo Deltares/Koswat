@@ -40,6 +40,8 @@ class TestKoswatSimpleSurroundingsCsvReader:
         _location_x = 4.2
         _location_y = 2.4
         distance_weights = [500, 200, 0, 0]
+        _inside_distance = 500
+        _outside_distance = 200
 
         # 2. Run test.
         _point_surroundings = KoswatSimpleSurroundingsCsvReader()._build_point_surroundings(
@@ -60,8 +62,9 @@ class TestKoswatSimpleSurroundingsCsvReader:
         assert _point_surroundings.location.x == _location_x
         assert _point_surroundings.location.y == _location_y
         assert _point_surroundings.surroundings_matrix == []
-        assert _point_surroundings.inside_distance == 500
-        assert _point_surroundings.outside_distance == 200
+        assert _point_surroundings.inside_distance == _inside_distance
+        assert _point_surroundings.outside_distance == _outside_distance
         assert _point_surroundings.angle_inside == 0
         assert _point_surroundings.angle_outside == 0
-        assert _point_surroundings.closest_obstacle == _point_surroundings.inside_distance
+        assert _point_surroundings.closest_obstacle == _point_surroundings.outside_distance
+        assert _point_surroundings.obstacle_free_room == _point_surroundings.outside_distance + _point_surroundings.inside_distance
