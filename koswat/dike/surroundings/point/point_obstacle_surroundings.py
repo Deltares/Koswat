@@ -77,6 +77,7 @@ class PointObstacleSurroundings(PointSurroundings):
         Returns:
             float: Total distance between inside and outside of the dike.
         """
+        _fallback_distance = 500
         def _get_valid_distance(value: float) -> float:
-            return 0 if math.isnan(value) else value
+            return _fallback_distance if math.isnan(value) else value
         return _get_valid_distance(self.inside_distance) + _get_valid_distance(self.outside_distance)
