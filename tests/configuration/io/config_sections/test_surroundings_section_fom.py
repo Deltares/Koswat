@@ -43,10 +43,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is False
-        assert _surroundings_section_fom.buildings is False
-        assert _surroundings_section_fom.railways is False
-        assert _surroundings_section_fom.waters is False
-        assert _surroundings_section_fom.custom_obstacles == []
+        assert _surroundings_section_fom.obstacle_types == []
 
     def test_from_config_with_omgevingtypes(self):
         # 1. Define test data.
@@ -73,7 +70,10 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
-        assert _surroundings_section_fom.buildings is True
-        assert _surroundings_section_fom.railways is True
-        assert _surroundings_section_fom.waters is True
-        assert _surroundings_section_fom.custom_obstacles == ["camping", "wildlife"]
+        assert _surroundings_section_fom.obstacle_types == [
+            "bebouwing",
+            "spoorwegen",
+            "water",
+            "camping",
+            "wildlife",
+        ]

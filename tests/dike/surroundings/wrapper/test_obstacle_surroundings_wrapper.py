@@ -27,10 +27,7 @@ class TestObstacleSurroundingsWrapper:
         assert not _wrapper.obstacle_locations
 
         # Supported surroundings are initialized.
-        assert isinstance(_wrapper.buildings, SurroundingsObstacle)
-        assert isinstance(_wrapper.railways, SurroundingsObstacle)
-        assert isinstance(_wrapper.waters, SurroundingsObstacle)
-        assert isinstance(_wrapper.custom_obstacles, SurroundingsObstacle)
+        assert isinstance(_wrapper.obstacles, dict)
 
     @pytest.mark.parametrize(
         "obstacles_distance",
@@ -130,7 +127,7 @@ class TestObstacleSurroundingsWrapper:
                     )
                 ]
             ),
-            custom_obstacles=SurroundingsObstacle(
+            obstacles=SurroundingsObstacle(
                 points=[
                     PointObstacleSurroundings(
                         location=_location,

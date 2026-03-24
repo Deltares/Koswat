@@ -264,7 +264,7 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.obstacle_surroundings_wrapper, ObstacleSurroundingsWrapper
             )
             assert any(_sw.obstacle_surroundings_wrapper.obstacle_locations)
-            assert any(_sw.obstacle_surroundings_wrapper.custom_obstacles.points)
+            assert any(_sw.obstacle_surroundings_wrapper.obstacles)
 
             # Infrastructure Surroundings
             assert isinstance(
