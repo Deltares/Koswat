@@ -174,6 +174,8 @@ for _multi_report in _summary.locations_profile_report_list:
     _mlp_plot = MultiLocationProfileComparisonPlotExporter()
     _mlp_plot.cost_report = _multi_report
     _mlp_plot.export_dir = _output_dir
+    _mlp_plot.export_measures_png = True
+    _mlp_plot.export_layers_png = True
     _mlp_plot.export()
 
 ```
