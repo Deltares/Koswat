@@ -26,6 +26,7 @@ from shapely.geometry.point import Point
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.layers.layers_wrapper import KoswatLayersWrapper
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 
 
 @runtime_checkable

@@ -18,28 +18,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input_profile import (
-    VPSInputProfile,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
-)
 from koswat.dike_reinforcements.reinforcement_profile.polderside_only_room_calculator import PoldersideOnlyRoomCalculator
-from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
-    StandardReinforcementProfile,
-)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 
-
-class VPSReinforcementProfile(StandardReinforcementProfile):
-    output_name: str = "Verticale piping oplossing"
-    input_data: VPSInputProfile
-    layers_wrapper: ReinforcementLayersWrapper
-    old_profile: KoswatProfileProtocol
-    new_ground_level_surface: float
-
-    def get_reinforcement_room_calculator(self):
-        return PoldersideOnlyRoomCalculator(
-            required_width=self.polderside_width
-        )
+class PoldersideAndWatersideRoomCalculator(ReinforcementRoomCalculatorBase):
+    def reinforcement_has_room(self, inside: float, outside: float) -> bool:
+        return self.required_width_less_or_equal(inside) or self.required_width_less_or_equal(outside)

@@ -19,29 +19,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from typing import Protocol, runtime_checkable
-
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
-    ReinforcementInputProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 
-
-@runtime_checkable
-class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
-    """
-    Extension of the `KoswatProfileProtocol` to define the properties of a calculated reinforcement.
-    """
-
-    output_name: str
-    input_data: ReinforcementInputProfileProtocol
-    layers_wrapper: ReinforcementLayersWrapper
-    old_profile: KoswatProfileProtocol
-    new_ground_level_surface: float
-
-    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorBase:
-        pass
+class PoldersideOnlyRoomCalculator(ReinforcementRoomCalculatorBase):
+    def reinforcement_has_room(self, inside: float, outside: float) -> bool:
+        # Implement the logic to check for reinforcement room
+        return self.required_width_less_or_equal(inside)

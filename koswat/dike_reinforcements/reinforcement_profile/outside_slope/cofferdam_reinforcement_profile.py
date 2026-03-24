@@ -19,6 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import re
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,
@@ -29,6 +30,7 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 
 
 class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
@@ -37,3 +39,11 @@ class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
+
+    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorBase:
+        class CofferdamRoomCalculator(ReinforcementRoomCalculatorBase):
+            def reinforcement_has_room(self, inside: float, outside: float) -> bool:
+                return True
+        return CofferdamRoomCalculator(
+            required_width=self.polderside_width,
+        )
