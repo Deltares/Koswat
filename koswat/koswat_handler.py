@@ -76,15 +76,11 @@ class KoswatHandler:
             logging.error("No summary was genarted for %s", settings.name)
             return
         # Export analysis csv.
-        _exporter = KoswatSummaryExporter()
-        _exporter.koswat_summary = summary
-        _exporter.export_path = settings.output_dir
-        _exporter.export_shapefiles = settings.export_shapefiles
-        _exporter.export(
-            summary=summary,
-            output_dir=settings.output_dir,
+        KoswatSummaryExporter(
+            koswat_summary=summary,
+            export_path=settings.output_dir,
             export_shapefiles=settings.export_shapefiles,
-        )
+        ).export()
         logging.info("Exported summary results to: %s", settings.output_dir)
 
     def _generate_plots(

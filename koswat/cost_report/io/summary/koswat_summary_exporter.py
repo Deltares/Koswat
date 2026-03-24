@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
@@ -38,10 +39,11 @@ from koswat.cost_report.io.summary.summary_locations.summary_locations_shp_expor
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
 
 
+@dataclass(kw_only=True)
 class KoswatSummaryExporter(KoswatExporterProtocol):
-    koswat_summary: KoswatSummary
-    export_path: Path
-    export_shapefiles: bool
+    koswat_summary: KoswatSummary = field(default_factory=KoswatSummary)
+    export_path: Path = field(default_factory=Path)
+    export_shapefiles: bool = True
 
     def export(self) -> None:
         SummaryCostsCsvExporter().export(

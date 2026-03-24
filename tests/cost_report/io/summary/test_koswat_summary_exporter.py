@@ -28,7 +28,11 @@ class TestKoswatSummaryExporter:
         _expected_locations_summary = _test_dir.joinpath("summary_locations.csv")
 
         # 2. Run test
-        KoswatSummaryExporter().export(valid_clusters_mocked_summary, _test_dir)
+        KoswatSummaryExporter(
+            koswat_summary=valid_clusters_mocked_summary,
+            export_path=_test_dir,
+            export_shapefiles=False,
+        ).export()
 
         # 3. Validate results
         assert _expected_costs_summary.exists()

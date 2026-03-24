@@ -236,7 +236,9 @@ class TestAcceptance:
         # TODO: These checks take extremely long time  when infrastructures are present
         assert any(_summary.locations_profile_report_list)
 
-        KoswatSummaryExporter().export(_summary, _test_dir)
+        KoswatSummaryExporter(
+            koswat_summary=_summary, export_path=_test_dir, export_shapefiles=False
+        ).export()
         assert _test_dir.joinpath("summary_costs.csv").exists()
 
         # Validate obstacles.
@@ -374,7 +376,8 @@ class TestAcceptance:
         _summary = KoswatSummaryBuilder(run_scenario_settings=_run_settings).build()
         assert isinstance(_summary, KoswatSummary)
 
-        KoswatSummaryExporter().export(_summary, _test_dir)
+        KoswatSummaryExporter(koswat_summary=_summary, export_path=_test_dir, False).export()
+        
         assert _test_dir.joinpath("summary_costs.csv").exists()
         assert _test_dir.joinpath("summary_locations.csv").exists()
         assert _test_dir.joinpath("summary_infrastructure_costs.csv").exists()
@@ -577,7 +580,7 @@ class TestAcceptance:
         assert isinstance(_summary, KoswatSummary)
 
         # Export results
-        KoswatSummaryExporter().export(_summary, _export_path_dir)
+        KoswatSummaryExporter(koswat_summary=_summary, export_path=_export_path_dir, export_shapefiles=False).export()
         for _multi_report in _summary.locations_profile_report_list:
             _mlp_plot = MultiLocationProfileComparisonPlotExporter()
             _mlp_plot.cost_report = _multi_report
