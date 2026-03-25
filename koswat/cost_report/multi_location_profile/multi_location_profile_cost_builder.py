@@ -60,11 +60,6 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
             surtax_cost_settings=self.koswat_costs_settings.surtax_costs,
         ).build()
 
-        # To enforce all locations get calculated for at least Cofferdam profile
-        # _polderside_width = self.reinforced_profile.polderside_width
-        # if type(self.reinforced_profile) == CofferdamReinforcementProfile:
-        #     _polderside_width = 0.0
-
         # Multi-location profile cost report
         return MultiLocationProfileCostReport(
             report_locations=self.surroundings.get_locations_at_safe_distance(

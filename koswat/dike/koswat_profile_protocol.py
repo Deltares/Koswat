@@ -37,4 +37,5 @@ class KoswatProfileProtocol(Protocol):
     points: list[Point]
     profile_width: float
     polderside_width: float
+    waterside_width: float
     profile_height: float

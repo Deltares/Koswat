@@ -19,8 +19,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import math
-import re
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
     CofferDamInputProfile,

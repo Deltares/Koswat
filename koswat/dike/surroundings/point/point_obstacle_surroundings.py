@@ -23,7 +23,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-import deprecated
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
