@@ -158,9 +158,7 @@ class TestKoswatGeneralJsonFom:
         assert _config_fom.surroundings_section.construction_distance == 50
         assert _config_fom.surroundings_section.construction_buffer == 10
         assert _config_fom.surroundings_section.waterside is False
-        assert _config_fom.surroundings_section.buildings is True
-        assert _config_fom.surroundings_section.railways is False
-        assert _config_fom.surroundings_section.waters is False
+        assert _config_fom.surroundings_section.obstacle_types == ["bebouwing"]
 
         # Infrastructuur section
         assert isinstance(_config_fom.infrastructuur_section, InfrastructureSectionFom)

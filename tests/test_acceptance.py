@@ -240,7 +240,7 @@ class TestAcceptance:
         assert _test_dir.joinpath("summary_costs.csv").exists()
 
         # Validate obstacles.
-        if _surroundings_wrapper.obstacle_surroundings_wrapper.buildings.points:
+        if _surroundings_wrapper.obstacle_surroundings_wrapper.obstacles.points:
             assert _test_dir.joinpath("summary_locations.csv").exists()
 
         # Validate infrastructures.
