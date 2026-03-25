@@ -137,28 +137,33 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         """
         _imported_csv_foms: dict[SurroundingsEnum, KoswatSurroundingsCsvFom] = {}
         _traject_name = csv_dir.stem
+        _obs_type_names = []
         for _csv_file in csv_dir.glob("*.csv"):
             # Map CSV file name to surrounding type.
             _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
             _type_enum = SurroundingsEnum.translate(_type_name)
 
-            if (
-                _type_enum == SurroundingsEnum.OBSTACLE
-                and _type_name not in obstacle_types
-            ):
-                # In case of obstacles, only import those that are defined in the config file.
-                logging.info(
-                    f"Skipping obstacle surrounding type {_type_name} as it is not defined in the config file."
-                )
-                continue
+            if _type_enum == SurroundingsEnum.OBSTACLE:
+                if _type_name not in obstacle_types:
+                    # In case of obstacles, only import those that are defined in the config file.
+                    logging.info(
+                        f"Skipping obstacle surrounding type {_type_name} for traject {_traject_name} as it is not defined in the config file."
+                    )
+                    continue
+                _obs_type_names.append(_type_name)
 
+            # Get FOM from CSV file.
+            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum)
             if _type_enum in _imported_csv_foms.keys():
-                _imported_csv_foms[_type_enum].merge(
-                    self._csv_file_to_fom(_csv_file, _type_enum)
-                )
+                _imported_csv_foms[_type_enum].merge(_csv_fom)
             else:
-                _imported_csv_foms[_type_enum] = self._csv_file_to_fom(
-                    _csv_file, _type_enum
+                _imported_csv_foms[_type_enum] = _csv_fom
+
+        # Log missing obstacle files.
+        for _obs_type in obstacle_types:
+            if _obs_type not in _obs_type_names:
+                logging.warning(
+                    f"Obstacle surrounding type {_obs_type} defined in config file is missing for traject {_traject_name}."
                 )
 
         return _imported_csv_foms
