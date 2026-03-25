@@ -67,5 +67,11 @@ class PointObstacleSurroundings(PointSurroundings):
         Returns:
             float: Distance to the closest surrounding.
         """
+        if math.isnan(self.inside_distance):
+            if math.isnan(self.outside_distance):
+                return math.nan
+            return self.outside_distance
+        elif math.isnan(self.outside_distance):
+            return self.inside_distance
 
-        return self.inside_distance
+        return min(self.inside_distance, self.outside_distance)
