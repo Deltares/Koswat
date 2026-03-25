@@ -60,7 +60,6 @@ class PointObstacleSurroundings(PointSurroundings):
         self.angle_inside = _get_min_value(self.angle_inside, other.angle_inside)
         self.angle_outside = _get_min_value(self.angle_outside, other.angle_outside)
 
-    @deprecated("Use `inside_distance` or `outside_distance` instead.")
     @property
     def closest_obstacle(self) -> float:
         """
