@@ -13,24 +13,6 @@ class TestSurroundingsEnum:
         "input_str, expected_enum, expected_surrounding_type, expected_name",
         [
             pytest.param(
-                "bebouwing",
-                SurroundingsEnum.BUILDINGS,
-                SurroundingsObstacle,
-                "buildings",
-            ),
-            pytest.param(
-                "spoorwegen",
-                SurroundingsEnum.RAILWAYS,
-                SurroundingsObstacle,
-                "railways",
-            ),
-            pytest.param(
-                "water", SurroundingsEnum.WATERS, SurroundingsObstacle, "waters"
-            ),
-            pytest.param(
-                "custom", SurroundingsEnum.CUSTOM, SurroundingsObstacle, "custom"
-            ),
-            pytest.param(
                 "wegen_binnendijks_klasse2",
                 SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE,
                 SurroundingsInfrastructure,
@@ -110,9 +92,9 @@ class TestSurroundingsEnum:
         assert _result.dutch_text == input_str
         assert _result.name.lower() == expected_name
 
-    def test_translate_unknown_type_returns_custom(self):
+    def test_translate_unknown_type_returns_obstacle(self):
         # 1. Define test data.
-        _expected_enum = SurroundingsEnum.CUSTOM
+        _expected_enum = SurroundingsEnum.OBSTACLE
 
         # 2. Run test.
         _result = SurroundingsEnum.translate("unknown_type")

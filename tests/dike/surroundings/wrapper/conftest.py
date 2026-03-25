@@ -3,19 +3,21 @@ from typing import Callable, Iterable
 import pytest
 from shapely import Point
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
+from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+    PointObstacleSurroundings,
+)
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
     ObstacleSurroundingsWrapper,
 )
 
 
-@pytest.fixture(name="buildings_obstacle_surroundings_fixture")
-def _get_buildings_fixture() -> Iterable[
-    Callable[[list[tuple[Point, float]]], ObstacleSurroundingsWrapper]
-]:
+@pytest.fixture(name="obstacles_surroundings_fixture")
+def _get_obstacless_fixture() -> (
+    Iterable[Callable[[list[tuple[Point, float]]], ObstacleSurroundingsWrapper]]
+):
     def build_surroundings_wrapper(
-        point_distances: list[tuple[Point, float]]
+        point_distances: list[tuple[Point, float]],
     ) -> ObstacleSurroundingsWrapper:
         _points = [
             PointObstacleSurroundings(
@@ -26,7 +28,7 @@ def _get_buildings_fixture() -> Iterable[
         ]
         _obstacle = SurroundingsObstacle(points=_points)
         return ObstacleSurroundingsWrapper(
-            buildings=_obstacle,
+            obstacles=_obstacle,
         )
 
     yield build_surroundings_wrapper

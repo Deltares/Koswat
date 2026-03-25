@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
@@ -94,7 +94,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                 surroundings_section_fom=self.surroundings_section_fom,
                 infrastructure_section_fom=self.infrastructure_section_fom,
                 surroundings_csv_fom_collection=self._csv_dir_to_fom(
-                    _csv_dir, self.surroundings_section_fom.custom_obstacles
+                    _csv_dir, self.surroundings_section_fom.obstacle_types
                 ),
                 location_shp_fom=None,
             )
@@ -122,42 +122,48 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         return _reader().read(csv_file)
 
     def _csv_dir_to_fom(
-        self, csv_dir: Path, custom_obstacles: list[str]
-    ) -> dict[str, KoswatSurroundingsCsvFom]:
+        self, csv_dir: Path, obstacle_types: list[str]
+    ) -> dict[SurroundingsEnum, KoswatSurroundingsCsvFom]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
         `KoswatSurroundingsCsvFom` objects, grouped by their type name.
 
         Args:
             csv_dir (Path): The directory containing the CSV files.
-            custom_obstacles (list[str]): A list of custom obstacle names.
+            obstacle_types (list[str]): A list of custom obstacle names.
 
         Returns:
-            dict[str, KoswatSurroundingsCsvFom]: A dictionary of `KoswatSurroundingsCsvFom` objects, grouped by their type name.
+            dict[SurroundingsEnum, KoswatSurroundingsCsvFom]: A dictionary of `KoswatSurroundingsCsvFom` objects, grouped by their type name.
         """
-        _imported_csv_foms = {}
+        _imported_csv_foms: dict[SurroundingsEnum, KoswatSurroundingsCsvFom] = {}
         _traject_name = csv_dir.stem
+        _obs_type_names = []
         for _csv_file in csv_dir.glob("*.csv"):
             # Map CSV file name to surrounding type.
-            _surrounding_type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
-            _surrounding_type = SurroundingsEnum.translate(_surrounding_type_name)
-            if (
-                _surrounding_type == SurroundingsEnum.CUSTOM
-                and _surrounding_type_name not in custom_obstacles
-            ):
-                # In case of custom surrounding types, only import those that are defined in the config file.
-                logging.info(
-                    f"Skipping custom surrounding type {_surrounding_type_name} as it is not defined in the config file."
-                )
-                continue
+            _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
+            _type_enum = SurroundingsEnum.translate(_type_name)
+
+            if _type_enum == SurroundingsEnum.OBSTACLE:
+                if _type_name not in obstacle_types:
+                    # In case of obstacles, only import those that are defined in the config file.
+                    logging.info(
+                        f"Skipping obstacle surrounding type {_type_name} for traject {_traject_name} as it is not defined in the config file."
+                    )
+                    continue
+                _obs_type_names.append(_type_name)
 
             # Get FOM from CSV file.
-            _csv_fom = self._csv_file_to_fom(_csv_file, _surrounding_type)
-            if _surrounding_type.name in _imported_csv_foms:
-                # If already imported the same type, then merge with existing FOM.
-                # Specially designed to handle custom surrounding types split over multiple files.
-                _imported_csv_foms[_surrounding_type.name].merge(_csv_fom)
+            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum)
+            if _type_enum in _imported_csv_foms.keys():
+                _imported_csv_foms[_type_enum].merge(_csv_fom)
             else:
-                _imported_csv_foms[_surrounding_type.name] = _csv_fom
+                _imported_csv_foms[_type_enum] = _csv_fom
+
+        # Log missing obstacle files.
+        for _obs_type in obstacle_types:
+            if _obs_type not in _obs_type_names:
+                logging.warning(
+                    f"Obstacle surrounding type {_obs_type} defined in config file is missing for traject {_traject_name}."
+                )
 
         return _imported_csv_foms
