@@ -19,18 +19,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import copy
 import math
 from dataclasses import dataclass, field
-from itertools import chain, groupby
-
-from matplotlib.dates import SU
 
 from koswat.dike.surroundings.point.point_obstacle_surroundings import (
     PointObstacleSurroundings,
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
     BaseSurroundingsWrapper,
