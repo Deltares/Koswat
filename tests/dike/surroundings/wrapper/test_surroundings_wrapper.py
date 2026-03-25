@@ -63,9 +63,7 @@ class TestSurroundingsWrapper:
             construction_distance=float("nan"),
             construction_buffer=float("nan"),
             waterside=False,
-            buildings=True,
-            railways=False,
-            waters=False,
+            obstacle_types=["bebouwing"],
         )
 
         # Generate Infrastructures section file model
@@ -108,7 +106,7 @@ class TestSurroundingsWrapper:
         _obs = _wrapper.obstacle_surroundings_wrapper
         assert isinstance(_obs, ObstacleSurroundingsWrapper)
         assert any(_obs.surroundings_collection)
-        assert any(_obs.obstacle_locations)
+        assert any(_obs.obstacles.points)
 
         # Infra
         _infra = _wrapper.infrastructure_surroundings_wrapper

@@ -24,10 +24,10 @@ class TestObstacleSurroundingsWrapper:
         assert isinstance(_wrapper, ObstacleSurroundingsWrapper)
         assert isinstance(_wrapper, BaseSurroundingsWrapper)
 
-        assert not _wrapper.obstacle_locations
+        assert not any(_wrapper.obstacles.points)
 
         # Supported surroundings are initialized.
-        assert isinstance(_wrapper.obstacles, dict)
+        assert isinstance(_wrapper.obstacles, SurroundingsObstacle)
 
     @pytest.mark.parametrize(
         "obstacles_distance",
@@ -39,15 +39,13 @@ class TestObstacleSurroundingsWrapper:
     def test_when_get_locations_after_distance_given_safe_obstacles_returns_surrounding_point(
         self,
         obstacles_distance: float,
-        buildings_obstacle_surroundings_fixture: Callable[
+        obstacles_surroundings_fixture: Callable[
             [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
         ],
     ):
         # 1. Define test data.
         _location = Point(2.4, 2.4)
-        _wrapper = buildings_obstacle_surroundings_fixture(
-            [(_location, obstacles_distance)]
-        )
+        _wrapper = obstacles_surroundings_fixture([(_location, obstacles_distance)])
         _safe_distance = obstacles_distance - 1
 
         # 2. Run test.
@@ -62,7 +60,7 @@ class TestObstacleSurroundingsWrapper:
 
     def test_when_get_locations_after_distance_given_unsafe_obstacles_returns_nothing(
         self,
-        buildings_obstacle_surroundings_fixture: Callable[
+        obstacles_surroundings_fixture: Callable[
             [list[tuple[Point, float]]], ObstacleSurroundingsWrapper
         ],
     ):
@@ -70,9 +68,7 @@ class TestObstacleSurroundingsWrapper:
         _obstacles_distance = 24
         _location = Point(2.4, 2.4)
 
-        _wrapper = buildings_obstacle_surroundings_fixture(
-            [(_location, _obstacles_distance)]
-        )
+        _wrapper = obstacles_surroundings_fixture([(_location, _obstacles_distance)])
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(
@@ -83,65 +79,29 @@ class TestObstacleSurroundingsWrapper:
         assert isinstance(_classified_surroundings, list)
         assert not any(_classified_surroundings)
 
-    @pytest.mark.parametrize(
-        "buildings_distance, railwasys_distance, waters_distance, custom_obstacles_distance",
-        [
-            pytest.param(5, 15, 25, 35, id="Buildings closest"),
-            pytest.param(15, 5, 25, 35, id="Railways closest"),
-            pytest.param(25, 15, 5, 35, id="Waters closest"),
-            pytest.param(35, 15, 25, 5, id="Custom obstacles closest"),
-        ],
-    )
     def test_when_obstacle_surroundings_correct_distance_calculated(
         self,
-        buildings_distance: int,
-        railwasys_distance: int,
-        waters_distance: int,
-        custom_obstacles_distance: int,
     ):
         # 1. Define test data.
         _location = Point(1.0, 1.0)
+        _obstacles_distance = 5
 
         _wrapper = ObstacleSurroundingsWrapper(
-            buildings=SurroundingsObstacle(
-                points=[
-                    PointObstacleSurroundings(
-                        location=_location,
-                        inside_distance=float(buildings_distance),
-                    )
-                ]
-            ),
-            railways=SurroundingsObstacle(
-                points=[
-                    PointObstacleSurroundings(
-                        location=_location,
-                        inside_distance=float(railwasys_distance),
-                    )
-                ]
-            ),
-            waters=SurroundingsObstacle(
-                points=[
-                    PointObstacleSurroundings(
-                        location=_location,
-                        inside_distance=float(waters_distance),
-                    )
-                ]
-            ),
             obstacles=SurroundingsObstacle(
                 points=[
                     PointObstacleSurroundings(
                         location=_location,
-                        inside_distance=float(custom_obstacles_distance),
+                        inside_distance=float(_obstacles_distance),
                     )
                 ]
             ),
         )
 
         # 2. Run test.
-        _obstacle_locations = _wrapper.obstacle_locations
+        _obstacle_locations = _wrapper.obstacles.points
 
         # 3. Verify expectations.
         assert isinstance(_obstacle_locations, list)
         assert len(_obstacle_locations) == 1
         assert _obstacle_locations[0].location == _location
-        assert _obstacle_locations[0].closest_obstacle == 5
+        assert _obstacle_locations[0].closest_obstacle == _obstacles_distance
