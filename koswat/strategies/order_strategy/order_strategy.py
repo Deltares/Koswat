@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from __future__ import annotations
@@ -80,7 +80,8 @@ class OrderStrategy(StrategyProtocol):
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
         possibly removing reinforcement types that are more expensive and more restrictive than others.
         Inactive reinforcements are ignored.
-        Cofferdam should always be the last reinforcement type.
+        If active, SoilReinforcement should be the first reinforcement type.
+        Cofferdam should be the last reinforcement type.
 
         Input:
             strategy_reinforcements (list[StrategyReinforcementInput]): list of reinforcement types with costs and surface
@@ -91,27 +92,35 @@ class OrderStrategy(StrategyProtocol):
         if not strategy_reinforcements:
             return []
 
-        def split_reinforcements() -> (
-            tuple[list[StrategyReinforcementInput], list[StrategyReinforcementInput]]
-        ):
-            _last, _other = [], []
+        def split_reinforcements() -> tuple[
+            list[StrategyReinforcementInput],
+            list[StrategyReinforcementInput],
+            list[StrategyReinforcementInput],
+        ]:
+            _first, _other, _last = [], [], []
             for obj in strategy_reinforcements:
                 if not obj:
                     continue
                 if obj.reinforcement_type == CofferdamReinforcementProfile:
-                    _last.append(obj)
+                    _last = [obj]
                     continue
                 if not obj.active:
+                    continue
+                if obj.reinforcement_type == SoilReinforcementProfile:
+                    _first = [obj]
                     continue
                 else:
                     _other.append(obj)
 
-            return (_other, _last)
+            return (_first, _other, _last)
 
-        # Split in a list to be sorted (least to most restrictive) and a list to be put last (Cofferdam for now)
-        _unsorted, _last = split_reinforcements()
+        # Split in a list to be sorted (least to most restrictive)
+        # and a list to be put first (SoilReinforcement, if active) and last (Cofferdam for now)
+        _first, _unsorted, _last = split_reinforcements()
+
+        # Sort the reinforcements from least to most restrictive, and cheapest to most expensive
         _sorted = sorted(
-            _unsorted,
+            _first + _unsorted,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
             reverse=True,
         )
@@ -129,7 +138,11 @@ class OrderStrategy(StrategyProtocol):
             if remove_reinforcement(_pair) and _pair[0] in _sorted:
                 _sorted.remove(_pair[0])
 
-        return [x.reinforcement_type for x in _sorted + _last]
+        # Remove SoilReinforcement if active and not removed by the previous step
+        if _first and _first[0] in _sorted:
+            _sorted.remove(_first[0])
+
+        return [x.reinforcement_type for x in _first + _sorted + _last]
 
     @staticmethod
     def get_strategy_reinforcements(
