@@ -26,7 +26,7 @@ from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.polderside_only_room_calculator import PoldersideOnlyRoomCalculator
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import PoldersideOnlyRoomCalculator
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )

@@ -18,7 +18,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from koswat.dike_reinforcements.reinforcement_profile.polderside_only_room_calculator import PoldersideOnlyRoomCalculator
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 
 class PoldersideAndWatersideRoomCalculator(ReinforcementRoomCalculatorBase):

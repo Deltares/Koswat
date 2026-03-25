@@ -26,7 +26,7 @@ from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_inpu
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.polderside_and_waterside_room_calculator import PoldersideAndWatersideRoomCalculator
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import PoldersideAndWatersideRoomCalculator
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )

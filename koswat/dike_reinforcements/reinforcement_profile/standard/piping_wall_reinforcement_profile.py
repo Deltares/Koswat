@@ -29,7 +29,7 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.polderside_and_waterside_room_calculator import PoldersideAndWatersideRoomCalculator
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import PoldersideAndWatersideRoomCalculator
 
 class PipingWallReinforcementProfile(StandardReinforcementProfile):
     output_name: str = "Kwelscherm"

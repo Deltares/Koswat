@@ -35,9 +35,6 @@ from koswat.cost_report.profile.profile_cost_report_builder import (
     ProfileCostReportBuilder,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
-    CofferdamReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
