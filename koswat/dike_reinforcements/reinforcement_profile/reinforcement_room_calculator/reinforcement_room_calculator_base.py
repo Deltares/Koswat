@@ -21,16 +21,10 @@
 
 from abc import ABC, abstractmethod
 import math
-from dataclasses import dataclass
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
 
-@dataclass
 class ReinforcementRoomCalculatorBase(ABC, ReinforcementRoomCalculatorProtocol):
-    required_polderside_width: float = math.nan
-    required_waterside_width: float = math.nan
-
     def _required_width_less_or_equal(self, a: float) -> bool:
         return self._required_width < a or math.isclose(a, self._required_width, rel_tol=1e-9)
 
@@ -38,8 +32,3 @@ class ReinforcementRoomCalculatorBase(ABC, ReinforcementRoomCalculatorProtocol):
     @abstractmethod
     def _required_width(self) -> float:
         pass
-
-    @abstractmethod
-    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings) -> bool:
-        pass
-

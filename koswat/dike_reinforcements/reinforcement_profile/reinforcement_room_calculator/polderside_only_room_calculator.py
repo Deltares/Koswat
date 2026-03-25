@@ -19,13 +19,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from dataclasses import dataclass
 from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 
+@dataclass
 class PoldersideOnlyRoomCalculator(ReinforcementRoomCalculatorBase):
+    required_polderside_width: float
+
     @property
     def _required_width(self) -> float:
         return self.required_polderside_width
+
     def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings) -> bool:
         # Implement the logic to check for reinforcement room
         return self._required_width_less_or_equal(point_obstacle_surroundings.inside_distance)
