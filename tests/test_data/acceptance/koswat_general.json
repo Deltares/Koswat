@@ -6,8 +6,11 @@
         "Scenario_Invoer": "scenarios",
         "Eenheidsprijzen": "koswat_costs.json",
         "Omgevingsdatabases": "surroundings_analysis",
+        "BTW": true,
         "Uitvoerfolder": "../../test_results/acceptance/results_output",
-        "BTW": true
+        "Exporteer_Lagen_png": true,
+        "Exporteer_Maatregelen_png": true,
+        "Exporteer_Shapefiles": true
     },
     "Dijkprofiel": {
         "Dikte_Graslaag": 0.3,
