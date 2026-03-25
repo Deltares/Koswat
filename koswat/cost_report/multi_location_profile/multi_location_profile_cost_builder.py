@@ -68,7 +68,7 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
         # Multi-location profile cost report
         return MultiLocationProfileCostReport(
             report_locations=self.surroundings.get_locations_at_safe_distance(
-                self.reinforced_profile.reinforcement_room_calculator
+                self.reinforced_profile.get_reinforcement_room_calculator()
             ),
             profile_cost_report=_profile_cost_report_builder.build(),
             infra_multilocation_profile_cost_report=_infra_calculator.calculate(

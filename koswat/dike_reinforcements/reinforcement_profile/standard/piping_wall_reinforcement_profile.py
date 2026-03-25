@@ -40,5 +40,6 @@ class PipingWallReinforcementProfile(StandardReinforcementProfile):
 
     def get_reinforcement_room_calculator(self):
         return PoldersideAndWatersideRoomCalculator(
-            required_width=self.polderside_width
+            required_polderside_width=self.polderside_width,
+            required_waterside_width=self.waterside_width
         )

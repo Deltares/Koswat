@@ -100,6 +100,6 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         def _is_at_safe_distance(point_surroundings: PointObstacleSurroundings) -> bool:
             if math.isnan(point_surroundings.closest_obstacle):
                 return True
-            return room_calculator.reinforcement_has_room(point_surroundings.inside_distance, point_surroundings.outside_distance)
+            return room_calculator.reinforcement_has_room(point_surroundings)
 
         return list(filter(_is_at_safe_distance, self.obstacle_locations))

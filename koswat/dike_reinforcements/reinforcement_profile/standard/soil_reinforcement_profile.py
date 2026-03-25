@@ -41,5 +41,5 @@ class SoilReinforcementProfile(StandardReinforcementProfile):
 
     def get_reinforcement_room_calculator(self):
         return PoldersideOnlyRoomCalculator(
-            required_width=self.polderside_width
+            required_polderside_width=self.polderside_width
         )

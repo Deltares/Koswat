@@ -21,10 +21,13 @@
 
 from typing import Protocol
 
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
+
+
 class ReinforcementRoomCalculatorProtocol(Protocol):
-    def reinforcement_has_room(self, **kwargs) -> bool:
+    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings) -> bool:
         """
-        Checks if there is enough room for a given reinforcement.
+        Checks if there is enough room for a given reinforcement at a given point with obstacles.
 
         Returns:
             bool: True if there is enough room for reinforcement, False otherwise.

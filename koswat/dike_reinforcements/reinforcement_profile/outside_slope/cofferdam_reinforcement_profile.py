@@ -43,6 +43,6 @@ class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
 
     def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
         class CofferdamRoomCalculator(ReinforcementRoomCalculatorProtocol):
-            def reinforcement_has_room(self, **kwargs) -> bool:
+            def reinforcement_has_room(self, *args) -> bool:
                 return True
         return CofferdamRoomCalculator()

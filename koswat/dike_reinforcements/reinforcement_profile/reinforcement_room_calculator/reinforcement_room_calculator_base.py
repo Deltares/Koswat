@@ -23,32 +23,23 @@ from abc import ABC, abstractmethod
 import math
 from dataclasses import dataclass
 
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
 
 @dataclass
 class ReinforcementRoomCalculatorBase(ABC, ReinforcementRoomCalculatorProtocol):
-    required_polderside_width: float
-    required_waterside_width: float
+    required_polderside_width: float = math.nan
+    required_waterside_width: float = math.nan
 
     def _required_width_less_or_equal(self, a: float) -> bool:
-        return self.required_width < a or math.isclose(a, self.required_width, rel_tol=1e-9)
+        return self._required_width < a or math.isclose(a, self._required_width, rel_tol=1e-9)
 
     @property
     @abstractmethod
-    def required_width(self) -> float:
+    def _required_width(self) -> float:
         pass
 
     @abstractmethod
-    def reinforcement_has_room(self, inside: float, outside: float) -> bool:
-        """
-        Checks if there is enough room for reinforcement between the inside and outside dimensions.
-
-        Args:
-            inside (float): The inside dimension.
-            outside (float): The outside dimension.
-
-        Returns:
-            bool: True if there is enough room for reinforcement, False otherwise.
-        """
+    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings) -> bool:
         pass
 
