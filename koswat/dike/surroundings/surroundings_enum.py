@@ -79,3 +79,6 @@ class SurroundingsEnum(SurroundingsEnumType, Enum):
             f"Surrounding type: {surrounding_type_str} is mapped to {_translation.name.lower()}"
         )
         return _translation
+
+    def __hash__(self):
+        return hash(self.name)

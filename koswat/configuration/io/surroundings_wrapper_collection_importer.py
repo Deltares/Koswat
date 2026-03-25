@@ -122,42 +122,43 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         return _reader().read(csv_file)
 
     def _csv_dir_to_fom(
-        self, csv_dir: Path, custom_obstacles: list[str]
-    ) -> dict[str, KoswatSurroundingsCsvFom]:
+        self, csv_dir: Path, obstacle_types: list[str]
+    ) -> dict[SurroundingsEnum, KoswatSurroundingsCsvFom]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
         `KoswatSurroundingsCsvFom` objects, grouped by their type name.
 
         Args:
             csv_dir (Path): The directory containing the CSV files.
-            custom_obstacles (list[str]): A list of custom obstacle names.
+            obstacle_types (list[str]): A list of custom obstacle names.
 
         Returns:
-            dict[str, KoswatSurroundingsCsvFom]: A dictionary of `KoswatSurroundingsCsvFom` objects, grouped by their type name.
+            dict[SurroundingsEnum, KoswatSurroundingsCsvFom]: A dictionary of `KoswatSurroundingsCsvFom` objects, grouped by their type name.
         """
-        _imported_csv_foms = {}
+        _imported_csv_foms: dict[SurroundingsEnum, KoswatSurroundingsCsvFom] = {}
         _traject_name = csv_dir.stem
         for _csv_file in csv_dir.glob("*.csv"):
             # Map CSV file name to surrounding type.
-            _surrounding_type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
-            _surrounding_type = SurroundingsEnum.translate(_surrounding_type_name)
+            _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
+            _type_enum = SurroundingsEnum.translate(_type_name)
+
             if (
-                _surrounding_type == SurroundingsEnum.CUSTOM
-                and _surrounding_type_name not in custom_obstacles
+                _type_enum == SurroundingsEnum.OBSTACLE
+                and _type_name not in obstacle_types
             ):
-                # In case of custom surrounding types, only import those that are defined in the config file.
+                # In case of obstacles, only import those that are defined in the config file.
                 logging.info(
-                    f"Skipping custom surrounding type {_surrounding_type_name} as it is not defined in the config file."
+                    f"Skipping obstacle surrounding type {_type_name} as it is not defined in the config file."
                 )
                 continue
 
-            # Get FOM from CSV file.
-            _csv_fom = self._csv_file_to_fom(_csv_file, _surrounding_type)
-            if _surrounding_type.name in _imported_csv_foms:
-                # If already imported the same type, then merge with existing FOM.
-                # Specially designed to handle custom surrounding types split over multiple files.
-                _imported_csv_foms[_surrounding_type.name].merge(_csv_fom)
+            if _type_enum in _imported_csv_foms.keys():
+                _imported_csv_foms[_type_enum].merge(
+                    self._csv_file_to_fom(_csv_file, _type_enum)
+                )
             else:
-                _imported_csv_foms[_surrounding_type.name] = _csv_fom
+                _imported_csv_foms[_type_enum] = self._csv_file_to_fom(
+                    _csv_file, _type_enum
+                )
 
         return _imported_csv_foms

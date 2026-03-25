@@ -54,7 +54,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     surroundings_section_fom: SurroundingsSectionFom
     infrastructure_section_fom: InfrastructureSectionFom
     location_shp_fom: KoswatDikeLocationsShpFom
-    surroundings_csv_fom_collection: dict[str, KoswatSurroundingsCsvFom]
+    surroundings_csv_fom_collection: dict[SurroundingsEnum, KoswatSurroundingsCsvFom]
 
     def build(self) -> SurroundingsWrapper:
         return SurroundingsWrapper(
@@ -68,7 +68,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     def _get_surroundings_from_fom(
         self, csv_fom: SurroundingsEnum
     ) -> list[PointSurroundings]:
-        if csv_fom.name not in self.surroundings_csv_fom_collection:
+        if csv_fom not in self.surroundings_csv_fom_collection:
             return []
         return PointSurroundingsListBuilder(
             koswat_shp_fom=self.location_shp_fom,
@@ -89,9 +89,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
         for _type in self.surroundings_section_fom.obstacle_types:
             _type_enum = SurroundingsEnum.translate(_type)
-            _obs_wrapper.obstacles[_type_enum].points = self._get_surroundings_from_fom(
-                _type_enum
-            )
+            _obs_wrapper.obstacles.points = self._get_surroundings_from_fom(_type_enum)
 
         return _obs_wrapper
 

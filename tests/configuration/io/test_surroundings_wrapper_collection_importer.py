@@ -110,9 +110,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            buildings=True,
-            railways=True,
-            waters=True,
+            obstacle_types=["bebouwing", "spoor", "water"],
         )
 
     @pytest.fixture(name="infrastructure_section_fom_fixture")
@@ -171,7 +169,7 @@ class TestSurroundingsWrapperCollectionImporter:
             assert isinstance(
                 _sw.obstacle_surroundings_wrapper, ObstacleSurroundingsWrapper
             )
-            assert any(_sw.obstacle_surroundings_wrapper.obstacle_locations)
+            assert any(_sw.obstacle_surroundings_wrapper.obstacles.points)
 
             # Infrastructure Surroundings
             assert isinstance(
@@ -213,10 +211,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            buildings=True,
-            railways=True,
-            waters=True,
-            custom_obstacles=["campings", "wildlife"],
+            obstacle_types=["bebouwing", "spoor", "water", "campings", "wildlife"],
         )
 
     def test_given_valid_custom_surroundings_path_when_import_from_returns_surrounding_wrapper(
@@ -263,8 +258,7 @@ class TestSurroundingsWrapperCollectionImporter:
             assert isinstance(
                 _sw.obstacle_surroundings_wrapper, ObstacleSurroundingsWrapper
             )
-            assert any(_sw.obstacle_surroundings_wrapper.obstacle_locations)
-            assert any(_sw.obstacle_surroundings_wrapper.obstacles)
+            assert any(_sw.obstacle_surroundings_wrapper.obstacles.points)
 
             # Infrastructure Surroundings
             assert isinstance(

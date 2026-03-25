@@ -24,6 +24,8 @@ import math
 from dataclasses import dataclass, field
 from itertools import chain, groupby
 
+from matplotlib.dates import SU
+
 from koswat.dike.surroundings.point.point_obstacle_surroundings import (
     PointObstacleSurroundings,
 )
@@ -40,41 +42,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
 
-    obstacles: dict[SurroundingsEnum, SurroundingsObstacle] = field(
-        default_factory=dict
-    )
-
-    @property
-    def obstacle_locations(self) -> list[PointObstacleSurroundings]:
-        """
-        Overlay of locations of the different `ObstacleSurroundings` that are present.
-        Buildings need to be present as input (leading for location coordinates).
-        Each location represents 1 meter in a real scale map.
-
-        Returns:
-            list[PointSurroundings]: List of locations with only the closest distance to obstacle(s).
-        """
-
-        def ps_sorting_key(ps_to_sort: PointObstacleSurroundings) -> int:
-            return ps_to_sort.__hash__()
-
-        _ps_keyfunc = ps_sorting_key
-        _point_obstacle_surroundings = sorted(
-            chain(*list(map(lambda x: x.points, self.obstacles.values()))),
-            key=_ps_keyfunc,
-        )
-        _obstacle_locations = []
-        for _, _matches in groupby(_point_obstacle_surroundings, key=_ps_keyfunc):
-            _lmatches = list(_matches)
-            if not any(_lmatches):
-                continue
-            _ps_copy = copy.deepcopy(_lmatches[0])
-            for _matched_ps in _lmatches[1:]:
-                if math.isnan(_matched_ps.closest_obstacle):
-                    continue
-                _ps_copy.merge(_matched_ps)
-            _obstacle_locations.append(_ps_copy)
-        return _obstacle_locations
+    obstacles: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
 
     def get_locations_at_safe_distance(
         self, distance: float
@@ -94,4 +62,4 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
                 return True
             return distance < point_surroundings.closest_obstacle
 
-        return list(filter(_is_at_safe_distance, self.obstacle_locations))
+        return list(filter(_is_at_safe_distance, self.obstacles.points))

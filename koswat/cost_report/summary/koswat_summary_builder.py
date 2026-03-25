@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
@@ -150,7 +150,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
 
         _strategy_output = self._get_final_reinforcement_per_location(
             _summary.locations_profile_report_list,
-            self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.obstacle_locations,
+            self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.obstacles.points,
         )
         _summary.reinforcement_per_locations = _strategy_output.location_reinforcements
         _summary.reinforcement_order = _strategy_output.reinforcement_order
