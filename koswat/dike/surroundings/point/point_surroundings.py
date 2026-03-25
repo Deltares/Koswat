@@ -43,7 +43,7 @@ class PointSurroundings:
         Overriding of the "magic" hash operator required
         so that `PointSurroundings` can be used as a key in a python dict.
         """
-        return hash(self.traject_order)
+        return hash((self.section, self.traject_order, self.location))
 
     def __eq__(self, __value: object) -> bool:
         """

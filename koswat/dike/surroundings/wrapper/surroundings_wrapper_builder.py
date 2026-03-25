@@ -81,15 +81,15 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
         )
 
+        _obs_wrapper.obstacles.points = self._get_surroundings_from_fom(
+            SurroundingsEnum.OBSTACLE
+        )
+
         # At least 1 obstacle type should be present to determine the location coordinates.
-        if not self.surroundings_section_fom.obstacle_types:
+        if not any(_obs_wrapper.obstacles.points):
             raise ValueError(
                 "At least 1 obstacle type should be present to determine the location coordinates."
             )
-
-        for _type in self.surroundings_section_fom.obstacle_types:
-            _type_enum = SurroundingsEnum.translate(_type)
-            _obs_wrapper.obstacles.points = self._get_surroundings_from_fom(_type_enum)
 
         return _obs_wrapper
 

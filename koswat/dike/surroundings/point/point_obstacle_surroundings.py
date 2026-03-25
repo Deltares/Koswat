@@ -45,7 +45,7 @@ class PointObstacleSurroundings(PointSurroundings):
         so that `PointObstacleSurroundings` can be used as a key in a python dict.
         It cannot be inherited from the parent class as the child class adds new properties.
         """
-        return hash(self.traject_order)
+        return hash((self.section, self.traject_order, self.location))
 
     def merge(self, other: PointObstacleSurroundings) -> None:
         def _get_min_value(value_1: float, value_2: float) -> float:
