@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from __future__ import annotations
@@ -76,7 +76,11 @@ class KoswatHandler:
             logging.error("No summary was genarted for %s", settings.name)
             return
         # Export analysis csv.
-        KoswatSummaryExporter().export(summary, settings.output_dir)
+        KoswatSummaryExporter(
+            koswat_summary=summary,
+            export_path=settings.output_dir,
+            export_shapefiles=settings.export_shapefiles,
+        ).export()
         logging.info("Exported summary results to: %s", settings.output_dir)
 
     def _generate_plots(
@@ -88,6 +92,8 @@ class KoswatHandler:
                 _mlp_plot = MultiLocationProfileComparisonPlotExporter()
                 _mlp_plot.cost_report = _multi_report
                 _mlp_plot.export_dir = settings.output_dir
+                _mlp_plot.export_measures_png = settings.export_measures_png
+                _mlp_plot.export_layers_png = settings.export_layers_png
                 _mlp_plot.export()
                 logging.info("Exported comparison plots to: %s", settings.output_dir)
             except Exception as e_info:

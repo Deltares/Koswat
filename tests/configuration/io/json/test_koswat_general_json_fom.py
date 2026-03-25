@@ -58,10 +58,13 @@ class TestKoswatGeneralJsonFom:
         assert _config_fom.analysis_section.costs_json_file == Path(
             "c:\\fake_drive\\Invoer\\json files\\Eenheidsprijzen2017.json"
         )
+        assert _config_fom.analysis_section.include_taxes == True
         assert _config_fom.analysis_section.analysis_output_dir == Path(
             "c:\\fake_drive\\Uitvoer"
         )
-        assert _config_fom.analysis_section.include_taxes == True
+        assert _config_fom.analysis_section.export_measures_png == True
+        assert _config_fom.analysis_section.export_layers_png == True
+        assert _config_fom.analysis_section.export_shapefiles == True
 
         # Dijkprofiel section
         assert isinstance(_config_fom.dike_profile_section, DikeProfileSectionFom)
