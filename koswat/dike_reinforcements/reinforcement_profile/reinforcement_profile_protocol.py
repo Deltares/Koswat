@@ -28,7 +28,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorProtocol
 
 
 @runtime_checkable
@@ -43,5 +43,5 @@ class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorBase:
+    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
         pass

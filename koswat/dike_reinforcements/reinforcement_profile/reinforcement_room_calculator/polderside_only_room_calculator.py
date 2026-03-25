@@ -22,6 +22,9 @@
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 
 class PoldersideOnlyRoomCalculator(ReinforcementRoomCalculatorBase):
+    @property
+    def required_width(self) -> float:
+        return self.required_polderside_width
     def reinforcement_has_room(self, inside: float, outside: float) -> bool:
         # Implement the logic to check for reinforcement room
         return self.required_width_less_or_equal(inside)

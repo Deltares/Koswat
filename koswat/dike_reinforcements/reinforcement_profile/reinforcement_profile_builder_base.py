@@ -43,7 +43,6 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile impo
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_protocol import (
     ReinforcementProfileBuilderProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )

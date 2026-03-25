@@ -32,7 +32,7 @@ from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
     BaseSurroundingsWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorBase
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorProtocol
 
 
 @dataclass
@@ -85,7 +85,7 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         return _obstacle_locations
 
     def get_locations_at_safe_distance(
-        self, room_calculator: ReinforcementRoomCalculatorBase
+        self, room_calculator: ReinforcementRoomCalculatorProtocol
     ) -> list[PointSurroundings]:
         """
         Gets all locations which are safe from obstacle surroundings in a radius of `distance`.

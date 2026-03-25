@@ -23,12 +23,20 @@ from abc import ABC, abstractmethod
 import math
 from dataclasses import dataclass
 
-@dataclass
-class ReinforcementRoomCalculatorBase(ABC):
-    required_width: float
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
 
-    def required_width_less_or_equal(self, a: float) -> bool:
+@dataclass
+class ReinforcementRoomCalculatorBase(ABC, ReinforcementRoomCalculatorProtocol):
+    required_polderside_width: float
+    required_waterside_width: float
+
+    def _required_width_less_or_equal(self, a: float) -> bool:
         return self.required_width < a or math.isclose(a, self.required_width, rel_tol=1e-9)
+
+    @property
+    @abstractmethod
+    def required_width(self) -> float:
+        pass
 
     @abstractmethod
     def reinforcement_has_room(self, inside: float, outside: float) -> bool:
