@@ -38,7 +38,7 @@ class PipingWallReinforcementProfile(StandardReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self):
+    def get_reinforcement_room_calculator(self) -> PoldersideAndWatersideRoomCalculator:
         return PoldersideAndWatersideRoomCalculator(
             required_polderside_width=self.polderside_width,
             required_waterside_width=self.waterside_width
