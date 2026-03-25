@@ -110,7 +110,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            obstacle_types=["bebouwing", "spoor", "water"],
+            obstacle_types=["bebouwing", "spoorwegen", "water"],
         )
 
     @pytest.fixture(name="infrastructure_section_fom_fixture")
@@ -211,7 +211,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            obstacle_types=["bebouwing", "spoor", "water", "campings", "wildlife"],
+            obstacle_types=["bebouwing", "spoorwegen", "water", "campings", "wildlife"],
         )
 
     def test_given_valid_custom_surroundings_path_when_import_from_returns_surrounding_wrapper(
