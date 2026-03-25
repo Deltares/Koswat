@@ -6,8 +6,11 @@
         "Scenario_Invoer": "c:\\fake_drive\\Invoer\\Scenarios",
         "Omgevingsdatabases": "c:\\fake_drive\\Invoer\\Omgevingsanalyses",
         "Eenheidsprijzen": "c:\\fake_drive\\Invoer\\json files\\Eenheidsprijzen2017.json",
+        "BTW": true,
         "Uitvoerfolder": "c:\\fake_drive\\Uitvoer",
-        "BTW": true
+        "Exporteer_Maatregelen_png": true,
+        "Exporteer_Lagen_png": true,
+        "Exporteer_Shapefiles": true
     },
     "Dijkprofiel": {
         "Dikte_Graslaag": 0.3,

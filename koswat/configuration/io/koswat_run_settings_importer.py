@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
@@ -27,6 +27,9 @@ from koswat.configuration.io.config_sections import (
     DikeProfileSectionFom,
     InfrastructureSectionFom,
     SurroundingsSectionFom,
+)
+from koswat.configuration.io.config_sections.analysis_section_fom import (
+    AnalysisSectionFom,
 )
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
@@ -90,7 +93,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         # First get the FOM
         logging.info("Importing CSV configuration from %s", from_path)
         _general_settings = self._import_general_settings(from_path)
-        _output_dir = _general_settings.analysis_section.analysis_output_dir
+        _analysis_settings = _general_settings.analysis_section
 
         _dike_selected_sections = self._import_selected_dike_section_names(
             _general_settings.analysis_section.dike_selection_txt_file
@@ -131,7 +134,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _scenario_fom_list,
             _dike_costs,
             _surroundings_fom,
-            _output_dir,
+            _analysis_settings,
         )
         logging.info("Settings import completed.")
 
@@ -144,10 +147,10 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         fom_scenario_list: list[KoswatSectionScenariosJsonFom],
         costs_settings: KoswatCostsSettings,
         surroundings_fom: list[SurroundingsWrapper],
-        output_dir: Path,
+        analysis_settings: AnalysisSectionFom,
     ) -> KoswatRunSettings:
         _run_settings = KoswatRunSettings()
-        _run_settings.output_dir = output_dir
+        _run_settings.output_dir = analysis_settings.analysis_output_dir
         for _i, _ip in enumerate(input_profiles):
             _reinforcement_settings = reinforcement_settings_list[_i]
 
@@ -176,7 +179,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 ),
                 None,
             )
-            _dike_output_dir = output_dir / ("dike_" + _ip.input_data.dike_section)
+            _dike_output_dir = _run_settings.output_dir / (
+                "dike_" + _ip.input_data.dike_section
+            )
 
             # Create new run scenario setting
             logging.info(
@@ -192,6 +197,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 _run_scenario.output_dir = _dike_output_dir / (
                     "scenario_" + _sub_scenario.scenario_name.lower()
                 )
+                _run_scenario.export_measures_png = (
+                    analysis_settings.export_measures_png
+                )
+                _run_scenario.export_layers_png = analysis_settings.export_layers_png
+                _run_scenario.export_shapefiles = analysis_settings.export_shapefiles
                 logging.info("Created sub scenario %s.", _sub_scenario.scenario_name)
                 _run_settings.run_scenarios.append(_run_scenario)
 

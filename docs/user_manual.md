@@ -151,7 +151,11 @@ _multi_loc_multi_prof_cost_builder = KoswatSummaryBuilder()
 _multi_loc_multi_prof_cost_builder.run_scenario_settings = _run_settings
 _summary = _multi_loc_multi_prof_cost_builder.build()
 
-KoswatSummaryExporter().export(_summary, _output_dir)
+KoswatSummaryExporter(
+    koswat_summary=_summary,
+    export_path=_output_dir,
+    export_shapefiles=False
+).export()
 
 # 3. Generate plots
 assert isinstance(_summary, KoswatSummary)
@@ -170,6 +174,8 @@ for _multi_report in _summary.locations_profile_report_list:
     _mlp_plot = MultiLocationProfileComparisonPlotExporter()
     _mlp_plot.cost_report = _multi_report
     _mlp_plot.export_dir = _output_dir
+    _mlp_plot.export_measures_png = True
+    _mlp_plot.export_layers_png = True
     _mlp_plot.export()
 
 ```
