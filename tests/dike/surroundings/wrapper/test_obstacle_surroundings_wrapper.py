@@ -53,8 +53,9 @@ class TestObstacleSurroundingsWrapper:
     ):
         # 1. Define test data.
         _location = Point(2.4, 2.4)
-        # Distance needs to be any value float for the calculator to take action.
-        _wrapper = obstacles_surroundings_fixture([(_location, obstacles_distance)])
+        _wrapper = obstacles_surroundings_fixture(
+            [(_location, obstacles_distance)]
+        )
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(
