@@ -91,18 +91,14 @@ class OrderStrategy(StrategyProtocol):
         )
         # SoilReinforcement, if active
         _first = next(
-            (
-                x
-                for x in reinforcements
-                if x.reinforcement_type == SoilReinforcementProfile and x.active
-            ),
+            (x for x in _unsorted if x.reinforcement_type == SoilReinforcementProfile),
             None,
         )
         # Cofferdam
         _last = next(
             (
                 x
-                for x in reinforcements
+                for x in _unsorted
                 if x.reinforcement_type == CofferdamReinforcementProfile
             )
         )
