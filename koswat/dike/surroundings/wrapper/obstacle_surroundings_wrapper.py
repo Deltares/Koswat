@@ -36,6 +36,7 @@ from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
 class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
+    obstacle_buffer: float = math.nan
 
     obstacles: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
 
@@ -55,6 +56,6 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         def _is_at_safe_distance(point_surroundings: PointObstacleSurroundings) -> bool:
             if math.isnan(point_surroundings.closest_obstacle):
                 return True
-            return distance < point_surroundings.closest_obstacle
+            return distance < point_surroundings.closest_obstacle - self.obstacle_buffer
 
         return list(filter(_is_at_safe_distance, self.obstacles.points))
