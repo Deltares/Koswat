@@ -66,7 +66,7 @@ class TestMultiLocationProfileCostReportBuilder:
             layers_wrapper = _base_profile.layers_wrapper
             def get_reinforcement_room_calculator(self):
                 class DummyReinforcementRoomCalculator(ReinforcementRoomCalculatorProtocol):
-                    def reinforcement_has_room(self, point_obstacle_surroundings):
+                    def reinforcement_has_room(self, *args):
                         return True
                 return DummyReinforcementRoomCalculator()
             
