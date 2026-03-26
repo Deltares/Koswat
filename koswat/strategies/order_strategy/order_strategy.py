@@ -117,7 +117,7 @@ class OrderStrategy(StrategyProtocol):
     ) -> list[StrategyReinforcementInput]:
         # Remove first (if present) and last, to avoid duplicates.
         sorted.remove(first) if first in sorted else None
-        sorted.remove(last)
+        sorted.remove(last) if last in sorted else None
         return [first] + sorted + [last] if first else sorted + [last]
 
     def get_strategy_order_for_reinforcements(
