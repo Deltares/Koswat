@@ -63,13 +63,14 @@
     "Omgeving": {
         "ConstructieAfstand": 50,
         "ConstructieOvergang": 10,
-        "OmgevingTypes": ["Bebouwing", "Water"]
+        "OmgevingTypes": ["Bebouwing", "Water"],
+        "ObstakelBuffer": 5
     },
     "Infrastructuur": {
         "Actief": false,
         "Opslagfactor_Wegen": "Normaal",
         "Infrakosten_0dh": "Geen",
-        "Buffer_buitendijks": 0,
+        "Buffer_Buitendijks": 0,
         "Wegen_Klasse2_Breedte": 2,
         "Wegen_Klasse24_Breedte": 5,
         "Wegen_Klasse47_Breedte": 8,
