@@ -101,18 +101,18 @@ class OrderStrategy(StrategyProtocol):
 
             def find_and_pop(
                 reinforcement_type: ReinforcementProfileProtocol,
-                active: bool,
+                active_required: bool,
             ) -> StrategyReinforcementInput:
                 _found = next(
                     (
                         x
                         for x in _other
                         if x.reinforcement_type == reinforcement_type
-                        and x.active == active
+                        and (x.active == True or not active_required)
                     ),
                     None,
                 )
-                _other.pop(strategy_reinforcements.index(_found)) if _found else None
+                _other.remove(_found) if _found else None
 
                 return _found
 
@@ -128,8 +128,8 @@ class OrderStrategy(StrategyProtocol):
 
         # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
         # Include first reinforcement as that could exclude other reinforements.
-        # if _first:
-        #     _unsorted = [_first] + _unsorted
+        if _first:
+            _unsorted = [_first] + _unsorted
         _sorted = sorted(
             _unsorted,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
