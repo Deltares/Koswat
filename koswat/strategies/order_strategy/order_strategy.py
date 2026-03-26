@@ -81,13 +81,15 @@ class OrderStrategy(StrategyProtocol):
         Optional[StrategyReinforcementInput],
         StrategyReinforcementInput,
     ]:
+        # All active items including Cofferdam, even if not active
         _unsorted = list(
             filter(
                 lambda x: x.active
-                and x.reinforcement_type != CofferdamReinforcementProfile,
+                or x.reinforcement_type == CofferdamReinforcementProfile,
                 reinforcements,
             )
         )
+        # SoilReinforcement, if active
         _first = next(
             (
                 x
@@ -96,6 +98,7 @@ class OrderStrategy(StrategyProtocol):
             ),
             None,
         )
+        # Cofferdam
         _last = next(
             (
                 x
@@ -112,8 +115,9 @@ class OrderStrategy(StrategyProtocol):
         first: Optional[StrategyReinforcementInput],
         last: StrategyReinforcementInput,
     ) -> list[StrategyReinforcementInput]:
-        # Remove first from sorted if it is present, to avoid duplicates.
+        # Remove first (if present) and last, to avoid duplicates.
         sorted.remove(first) if first in sorted else None
+        sorted.remove(last)
         return [first] + sorted + [last] if first else sorted + [last]
 
     def get_strategy_order_for_reinforcements(
@@ -136,8 +140,8 @@ class OrderStrategy(StrategyProtocol):
         if not strategy_reinforcements:
             return []
 
-        # Split in a list to be sorted (least to most restrictive)
-        # and a list to be put first (SoilReinforcement, if active) and last (Cofferdam for now).
+        # Order in a list to be sorted (least to most restrictive)
+        # and find item to be put first and last.
         _unsorted, _first, _last = self._split_reinforcements(strategy_reinforcements)
 
         # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
@@ -156,7 +160,7 @@ class OrderStrategy(StrategyProtocol):
                 and pair[0].ground_level_surface >= pair[1].ground_level_surface
             )
 
-        for _pair in product(_sorted, _sorted + [_last]):
+        for _pair in product(_sorted[:-1], _sorted):
             if remove_reinforcement(_pair) and _pair[0] in _sorted:
                 _sorted.remove(_pair[0])
 
