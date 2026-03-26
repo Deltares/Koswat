@@ -63,7 +63,11 @@
     "Omgeving": {
         "ConstructieAfstand": 50,
         "ConstructieOvergang": 10,
-        "OmgevingTypes": ["Bebouwing", "Water"]
+        "Buitendijks": true,
+        "OmgevingTypes": [
+            {"Bebouwing": 5},
+            {"Water": 0}
+        ]
     },
     "Infrastructuur": {
         "Actief": false,
