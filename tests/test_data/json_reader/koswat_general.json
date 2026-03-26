@@ -57,7 +57,8 @@
         "ConstructieOvergang": 10,
         "OmgevingTypes": [
             "Bebouwing"
-        ]
+        ],
+        "ObstakelBuffer": 5
     },
     "Infrastructuur": {
         "Actief": false,

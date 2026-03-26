@@ -63,7 +63,8 @@
     "Omgeving": {
         "ConstructieAfstand": 50,
         "ConstructieOvergang": 10,
-        "OmgevingTypes": ["Bebouwing", "Water"]
+        "OmgevingTypes": ["Bebouwing", "Water"],
+        "ObstakelBuffer": 5
     },
     "Infrastructuur": {
         "Actief": false,
