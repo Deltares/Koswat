@@ -35,9 +35,6 @@ from koswat.cost_report.profile.profile_cost_report_builder import (
     ProfileCostReportBuilder,
 )
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
-    CofferdamReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -63,15 +60,10 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
             surtax_cost_settings=self.koswat_costs_settings.surtax_costs,
         ).build()
 
-        # To enforce all locations get calculated for at least Cofferdam profile
-        _polderside_width = self.reinforced_profile.polderside_width
-        if type(self.reinforced_profile) == CofferdamReinforcementProfile:
-            _polderside_width = 0.0
-
         # Multi-location profile cost report
         return MultiLocationProfileCostReport(
             report_locations=self.surroundings.get_locations_at_safe_distance(
-                _polderside_width
+                self.reinforced_profile.get_reinforcement_room_calculator()
             ),
             profile_cost_report=_profile_cost_report_builder.build(),
             infra_multilocation_profile_cost_report=_infra_calculator.calculate(

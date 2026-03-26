@@ -1,4 +1,6 @@
-from typing import Callable
+from dataclasses import dataclass
+import math
+from typing import Callable, Iterator, Type
 
 import pytest
 from shapely import Point
@@ -13,6 +15,7 @@ from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
     ObstacleSurroundingsWrapper,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
 
 
 class TestObstacleSurroundingsWrapper:
@@ -29,28 +32,34 @@ class TestObstacleSurroundingsWrapper:
         # Supported surroundings are initialized.
         assert isinstance(_wrapper.obstacles, SurroundingsObstacle)
 
-    @pytest.mark.parametrize(
-        "obstacles_distance",
-        [
-            pytest.param(24, id="Surroundings WITH obstacles at distance 24"),
-            pytest.param(0, id="Surroundings WITHOUT obstacles"),
-        ],
-    )
+    @pytest.fixture(name="mocked_room_calculator")
+    def get_mocked_room_calculator(self) -> Iterator[Type[ReinforcementRoomCalculatorProtocol]]:
+        @dataclass
+        class MockedRoomCalculator(ReinforcementRoomCalculatorProtocol):
+            return_value: bool
+            def reinforcement_has_room(self, *args) -> float:
+                return self.return_value
+
+        yield MockedRoomCalculator
+
+    @pytest.mark.parametrize("obstacles_distance", [24, math.nan])
     def test_when_get_locations_after_distance_given_safe_obstacles_returns_surrounding_point(
         self,
         obstacles_distance: float,
         obstacles_surroundings_fixture: Callable[
             [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
         ],
+        mocked_room_calculator: Type[ReinforcementRoomCalculatorProtocol],
     ):
         # 1. Define test data.
         _location = Point(2.4, 2.4)
-        _wrapper = obstacles_surroundings_fixture([(_location, obstacles_distance)])
-        _safe_distance = obstacles_distance - 1
+        _wrapper = obstacles_surroundings_fixture(
+            [(_location, obstacles_distance)]
+        )
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(
-            _safe_distance
+            mocked_room_calculator(True)
         )
 
         # 3. Verify expectations.
@@ -63,6 +72,7 @@ class TestObstacleSurroundingsWrapper:
         obstacles_surroundings_fixture: Callable[
             [list[tuple[Point, float]]], ObstacleSurroundingsWrapper
         ],
+        mocked_room_calculator: Type[ReinforcementRoomCalculatorProtocol],
     ):
         # 1. Define test data.
         _obstacles_distance = 24
@@ -72,7 +82,7 @@ class TestObstacleSurroundingsWrapper:
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(
-            _obstacles_distance + 1
+            mocked_room_calculator(False)
         )
 
         # 3. Verify expectations.
@@ -104,4 +114,3 @@ class TestObstacleSurroundingsWrapper:
         assert isinstance(_obstacle_locations, list)
         assert len(_obstacle_locations) == 1
         assert _obstacle_locations[0].location == _location
-        assert _obstacle_locations[0].closest_obstacle == _obstacles_distance

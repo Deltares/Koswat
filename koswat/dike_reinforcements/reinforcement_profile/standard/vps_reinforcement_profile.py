@@ -26,6 +26,7 @@ from koswat.dike_reinforcements.input_profile.vertical_piping_solution.vps_input
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import PoldersideOnlyRoomCalculator
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
@@ -37,3 +38,8 @@ class VPSReinforcementProfile(StandardReinforcementProfile):
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
+
+    def get_reinforcement_room_calculator(self) -> PoldersideOnlyRoomCalculator:
+        return PoldersideOnlyRoomCalculator(
+            required_polderside_width=self.polderside_width
+        )

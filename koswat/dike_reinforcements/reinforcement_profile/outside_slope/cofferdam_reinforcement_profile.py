@@ -29,6 +29,7 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.outside_slope_reinforcement_profile import (
     OutsideSlopeReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
 
 
 class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
@@ -37,3 +38,9 @@ class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
+
+    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
+        class CofferdamRoomCalculator(ReinforcementRoomCalculatorProtocol):
+            def reinforcement_has_room(self, *args) -> bool:
+                return True
+        return CofferdamRoomCalculator()

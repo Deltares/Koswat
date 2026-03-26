@@ -54,7 +54,7 @@ class TestKoswatSummaryBuilder:
         assert not _builder.run_scenario_settings
         assert _builder.strategy_type == InfraPriorityStrategy
 
-    def test_get_calculated_profile_list(self):
+    def test_when__get_calculated_profile_list_given_reinforcement_settings_then_returns_expected_profiles(self):
         # 1. Define test data.
         _expected_profile_types = [
             SoilReinforcementProfile,
@@ -114,7 +114,7 @@ class TestKoswatSummaryBuilder:
         )
         assert not _multi_location_profile_cost_builder.reinforced_profile
 
-    def test_build(self):
+    def test_when_build_given_valid_data_then_returns_expected_summary(self):
         # 1. Define test data.
         _builder = KoswatSummaryBuilder()
         _p_surrounding = PointObstacleSurroundings(
@@ -153,7 +153,6 @@ class TestKoswatSummaryBuilder:
             isinstance(lpr, MultiLocationProfileCostReport)
             for lpr in _summary.locations_profile_report_list
         )
-        assert (
-            _summary.locations_profile_report_list[0].report_locations[0].location
-            == _p_surrounding.location
+        assert any(
+            [report_location.location == _p_surrounding.location for lpr in _summary.locations_profile_report_list for report_location in lpr.report_locations]
         )

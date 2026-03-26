@@ -63,14 +63,3 @@ class PointObstacleSurroundings(PointSurroundings):
         )
         self.angle_inside = _get_min_value(self.angle_inside, other.angle_inside)
         self.angle_outside = _get_min_value(self.angle_outside, other.angle_outside)
-
-    @property
-    def closest_obstacle(self) -> float:
-        """
-        Distance to the closest (obstacle) surrounding. When no surroundings are given the value will be `NaN` (Not A Number), so that the value 0 is reserved for buildings at distance 0.
-
-        Returns:
-            float: Distance to the closest surrounding.
-        """
-
-        return self.inside_distance
