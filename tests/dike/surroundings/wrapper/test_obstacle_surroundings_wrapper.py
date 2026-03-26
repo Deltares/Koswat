@@ -51,8 +51,6 @@ class TestObstacleSurroundingsWrapper:
     def test_when_get_locations_after_distance_given_safe_obstacles_returns_surrounding_point(
         self,
         obstacles_distance: float,
-        obstacle_buffer: float,
-        is_location_safe: bool,
         obstacles_surroundings_fixture: Callable[
             [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
         ],
