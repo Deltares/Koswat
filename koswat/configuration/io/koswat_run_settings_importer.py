@@ -258,6 +258,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     ) -> KoswatReinforcementSettings:
         # Override base reinforcement settings with section-specific input where provided
         _new_settings = KoswatReinforcementSettings(
+            allow_waterside_reinforcement=section_input.allow_waterside_reinforcement,
             soil_settings=section_input.soil_measure.set_defaults(
                 base_settings.soil_settings
             ),

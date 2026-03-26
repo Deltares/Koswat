@@ -37,6 +37,7 @@ class ReinforcementProfile(ReinforcementProfileProtocol, KoswatProfileBase):
     input_data: ReinforcementInputProfileProtocol
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
+    allow_waterside_reinforcement: bool = True
 
     @property
     def new_ground_level_surface(self) -> float:

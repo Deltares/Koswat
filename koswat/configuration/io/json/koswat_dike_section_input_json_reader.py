@@ -69,6 +69,7 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             cofferdam=CofferdamReinforcementSectionFom.from_config(
                 _json_fom.content.get("kistdam", dict()), set_defaults=False
             ),
+            allow_waterside_reinforcement=_json_fom.content.get("toegestaan_buitenzijde_versterking", True)
         )
         _dike_section_input_fom.input_profile.dike_section = (
             _dike_section_input_fom.dike_section

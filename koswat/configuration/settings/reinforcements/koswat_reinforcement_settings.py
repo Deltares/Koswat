@@ -44,7 +44,7 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     """
     Wrapper of all settings per reinforcement.
     """
-
+    allow_waterside_reinforcement: bool = True
     soil_settings: KoswatSoilSettings = field(default_factory=KoswatSoilSettings)
     vps_settings: KoswatVPSSettings = field(default_factory=KoswatVPSSettings)
     piping_wall_settings: KoswatPipingWallSettings = field(

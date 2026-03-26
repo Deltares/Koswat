@@ -84,6 +84,7 @@ class ReinforcementProfileBuilderBase(ReinforcementProfileBuilderProtocol):
         _profile = self.reinforcement_profile_type()
         logging.info("Building reinforcement {}".format(type(_profile).__name__))
 
+        _profile.allow_waterside_reinforcement = self.reinforcement_settings.allow_waterside_reinforcement
         _profile.old_profile = self.base_profile
         _profile.input_data = self._get_reinforcement_profile_input()
         _profile.characteristic_points = self._get_characteristic_points(

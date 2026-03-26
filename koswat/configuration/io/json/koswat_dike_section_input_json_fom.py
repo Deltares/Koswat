@@ -49,6 +49,7 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     cofferdam: CofferdamReinforcementSectionFom = field(
         default_factory=CofferdamReinforcementSectionFom
     )
+    allow_waterside_reinforcement: bool = True
 
     def is_valid(self) -> bool:
         return self.dike_section != ""
