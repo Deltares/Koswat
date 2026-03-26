@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass
@@ -54,7 +54,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     surroundings_section_fom: SurroundingsSectionFom
     infrastructure_section_fom: InfrastructureSectionFom
     location_shp_fom: KoswatDikeLocationsShpFom
-    surroundings_csv_fom_collection: dict[str, KoswatSurroundingsCsvFom]
+    surroundings_csv_fom_collection: dict[SurroundingsEnum, KoswatSurroundingsCsvFom]
 
     def build(self) -> SurroundingsWrapper:
         return SurroundingsWrapper(
@@ -66,13 +66,13 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         )
 
     def _get_surroundings_from_fom(
-        self, csv_fom_name: SurroundingsEnum
+        self, csv_fom: SurroundingsEnum
     ) -> list[PointSurroundings]:
-        if csv_fom_name.name not in self.surroundings_csv_fom_collection:
+        if csv_fom not in self.surroundings_csv_fom_collection:
             return []
         return PointSurroundingsListBuilder(
             koswat_shp_fom=self.location_shp_fom,
-            koswat_csv_fom=self.surroundings_csv_fom_collection[csv_fom_name.name],
+            koswat_csv_fom=self.surroundings_csv_fom_collection[csv_fom],
         ).build()
 
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
@@ -80,22 +80,15 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             reinforcement_min_separation=self.surroundings_section_fom.construction_distance,
             reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
         )
-        # Buildings polderside should always be present to determine the location coordinates.
-        _obs_wrapper.buildings.points = self._get_surroundings_from_fom(
-            SurroundingsEnum.BUILDINGS
-        )
-        if self.surroundings_section_fom.railways:
-            _obs_wrapper.railways.points = self._get_surroundings_from_fom(
-                SurroundingsEnum.RAILWAYS
-            )
-        if self.surroundings_section_fom.waters:
-            _obs_wrapper.waters.points = self._get_surroundings_from_fom(
-                SurroundingsEnum.WATERS
-            )
 
-        if any(self.surroundings_section_fom.custom_obstacles):
-            _obs_wrapper.custom_obstacles.points = self._get_surroundings_from_fom(
-                SurroundingsEnum.CUSTOM
+        _obs_wrapper.obstacles.points = self._get_surroundings_from_fom(
+            SurroundingsEnum.OBSTACLE
+        )
+
+        # At least 1 obstacle type should be present to determine the location coordinates.
+        if not any(_obs_wrapper.obstacles.points):
+            raise ValueError(
+                "At least 1 obstacle type should be present to determine the location coordinates."
             )
 
         return _obs_wrapper
@@ -104,6 +97,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         self, surroundings_enum: SurroundingsEnum
     ) -> SurroundingsInfrastructure:
         # Map the enum name to the corresponding attribute name in InfrastructureSectionFom
+        # TODO: Remove the need for this mapping
         _mapped_name = (
             surroundings_enum.name.lower()
             .replace("_polderside", "_width")

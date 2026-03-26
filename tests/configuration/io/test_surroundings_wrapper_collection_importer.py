@@ -39,11 +39,6 @@ def get_surroundings_test_cases(surroundings_dir: Path) -> list[pytest.param]:
 _surroundings_test_cases = get_surroundings_test_cases(
     test_data.joinpath("acceptance", "surroundings_analysis")
 )
-# These test cases are basically the same as the normal ones, we just replaced `spoorwegen` and `waters` with `campings` and `wildlife`.
-# We expect therefore the same results as in the normal test cases.
-_custom_surroundings_test_cases = get_surroundings_test_cases(
-    test_data.joinpath("acceptance", "custom_surroundings_analysis")
-)
 
 
 class TestSurroundingsWrapperCollectionImporter:
@@ -110,9 +105,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            buildings=True,
-            railways=True,
-            waters=True,
+            obstacle_types=["bebouwing", "spoorwegen", "water"],
         )
 
     @pytest.fixture(name="infrastructure_section_fom_fixture")
@@ -129,7 +122,7 @@ class TestSurroundingsWrapperCollectionImporter:
             roads_unknown_width=0.67,
         )
 
-    def test_given_valid_surroundings_path_when_import_from_returns_surrounding_wrapper(
+    def test_given_valid_surroundings_path_when_build_returns_surrounding_wrapper(
         self,
         local_surroundings_dir_copy_fixture: Path,
         surroundings_section_fom_fixture: SurroundingsSectionFom,
@@ -171,7 +164,7 @@ class TestSurroundingsWrapperCollectionImporter:
             assert isinstance(
                 _sw.obstacle_surroundings_wrapper, ObstacleSurroundingsWrapper
             )
-            assert any(_sw.obstacle_surroundings_wrapper.obstacle_locations)
+            assert any(_sw.obstacle_surroundings_wrapper.obstacles.points)
 
             # Infrastructure Surroundings
             assert isinstance(
@@ -185,58 +178,25 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.infrastructure_surroundings_wrapper.roads_class_24_polderside.points
             )
 
-    @pytest.fixture(
-        name="local_custom_surroundings_dir_copy_fixture",
-        params=[_stc.values for _stc in _custom_surroundings_test_cases],
-        ids=[_stc.id for _stc in _custom_surroundings_test_cases],
-    )
-    def _get_local_custom_surroundings_dir_copy_fixture(
-        self, request: pytest.FixtureRequest
-    ) -> Iterator[Path]:
-        # Remember! The database dir is the parent as in theory more
-        # traject's surroundings are available in said dir.
-        _temp_dir = self._create_local_surroundings_dir_copy(request, request.param[0])
-
-        yield _temp_dir.parent
-
-        # Remove the temporary directory.
-        shutil.rmtree(_temp_dir)
-
-    @pytest.fixture(
-        name="custom_surroundings_section_fom_fixture",
-    )
-    def _get_custom_surroundings_section_fom_fixture(
+    def test_given_no_matching_obstacle_files_when_build_then_no_wrappers_returned(
         self,
-    ) -> Iterator[SurroundingsSectionFom]:
-        # Yield the surroundings section.
-        yield SurroundingsSectionFom(
+        local_surroundings_dir_copy_fixture: Path,
+    ):
+        # 1. Define test data.
+        _surroundings_section_fom = SurroundingsSectionFom(
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            buildings=True,
-            railways=True,
-            waters=True,
-            custom_obstacles=["campings", "wildlife"],
-        )
-
-    def test_given_valid_custom_surroundings_path_when_import_from_returns_surrounding_wrapper(
-        self,
-        local_custom_surroundings_dir_copy_fixture: Path,
-        custom_surroundings_section_fom_fixture: SurroundingsSectionFom,
-        infrastructure_section_fom_fixture: InfrastructureSectionFom,
-    ):
-        # 1. Define test data.
-        assert isinstance(
-            custom_surroundings_section_fom_fixture, SurroundingsSectionFom
+            obstacle_types=["non_existing_obstacle_type"],
         )
 
         _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
         assert _shp_file.is_file()
 
         _builder = SurroundingsWrapperCollectionImporter(
-            surroundings_database_dir=local_custom_surroundings_dir_copy_fixture,
-            surroundings_section_fom=custom_surroundings_section_fom_fixture,
-            infrastructure_section_fom=infrastructure_section_fom_fixture,
+            surroundings_database_dir=local_surroundings_dir_copy_fixture,
+            surroundings_section_fom=_surroundings_section_fom,
+            infrastructure_section_fom=None,
             traject_loc_shp_file=_shp_file,
             selected_locations=[
                 # For traject 10-1
@@ -254,26 +214,5 @@ class TestSurroundingsWrapperCollectionImporter:
         # 2. Run test.
         _surroundings_wrapper_list = _builder.build()
 
-        # 3. Verify expectations (specific for the case present in the test data).
-        assert len(_surroundings_wrapper_list) == 2
-        for _sw in _surroundings_wrapper_list:
-            assert isinstance(_sw, SurroundingsWrapper)
-
-            # Obstacle Surroundings
-            assert isinstance(
-                _sw.obstacle_surroundings_wrapper, ObstacleSurroundingsWrapper
-            )
-            assert any(_sw.obstacle_surroundings_wrapper.obstacle_locations)
-            assert any(_sw.obstacle_surroundings_wrapper.custom_obstacles.points)
-
-            # Infrastructure Surroundings
-            assert isinstance(
-                _sw.infrastructure_surroundings_wrapper,
-                InfrastructureSurroundingsWrapper,
-            )
-            assert any(
-                _sw.infrastructure_surroundings_wrapper.roads_class_2_polderside.points
-            )
-            assert any(
-                _sw.infrastructure_surroundings_wrapper.roads_class_24_polderside.points
-            )
+        # 3. Verify expectations
+        assert len(_surroundings_wrapper_list) == 0

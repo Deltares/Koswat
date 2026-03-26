@@ -242,7 +242,7 @@ class TestAcceptance:
         assert _test_dir.joinpath("summary_costs.csv").exists()
 
         # Validate obstacles.
-        if _surroundings_wrapper.obstacle_surroundings_wrapper.buildings.points:
+        if _surroundings_wrapper.obstacle_surroundings_wrapper.obstacles.points:
             assert _test_dir.joinpath("summary_locations.csv").exists()
 
         # Validate infrastructures.
@@ -304,9 +304,7 @@ class TestAcceptance:
             construction_distance=50,
             construction_buffer=10,
             waterside=False,
-            buildings=True,
-            railways=False,
-            waters=False,
+            obstacle_types=["bebouwing"],
         )
 
         _infrastructure_section = InfrastructureSectionFom(
