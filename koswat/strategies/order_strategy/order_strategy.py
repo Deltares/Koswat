@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 from itertools import product
+from typing import Optional
 
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
@@ -72,6 +73,49 @@ class OrderStrategy(StrategyProtocol):
             CofferdamReinforcementProfile,
         ]
 
+    def _split_reinforcements(
+        self,
+        reinforcements: list[StrategyReinforcementInput],
+    ) -> tuple[
+        list[StrategyReinforcementInput],
+        Optional[StrategyReinforcementInput],
+        StrategyReinforcementInput,
+    ]:
+        _unsorted = list(
+            filter(
+                lambda x: x.active
+                and x.reinforcement_type != CofferdamReinforcementProfile,
+                reinforcements,
+            )
+        )
+        _first = next(
+            (
+                x
+                for x in reinforcements
+                if x.reinforcement_type == SoilReinforcementProfile and x.active
+            ),
+            None,
+        )
+        _last = next(
+            (
+                x
+                for x in reinforcements
+                if x.reinforcement_type == CofferdamReinforcementProfile
+            )
+        )
+
+        return (_unsorted, _first, _last)
+
+    def _merge_reinforcements(
+        self,
+        sorted: list[StrategyReinforcementInput],
+        first: Optional[StrategyReinforcementInput],
+        last: StrategyReinforcementInput,
+    ) -> list[StrategyReinforcementInput]:
+        # Remove first from sorted if it is present, to avoid duplicates.
+        sorted.remove(first) if first in sorted else None
+        return [first] + sorted + [last] if first else sorted + [last]
+
     def get_strategy_order_for_reinforcements(
         self,
         strategy_reinforcements: list[StrategyReinforcementInput],
@@ -92,44 +136,11 @@ class OrderStrategy(StrategyProtocol):
         if not strategy_reinforcements:
             return []
 
-        def split_reinforcements() -> tuple[
-            StrategyReinforcementInput,
-            list[StrategyReinforcementInput],
-            StrategyReinforcementInput,
-        ]:
-            _other = strategy_reinforcements.copy()
-
-            def find_and_pop(
-                reinforcement_type: ReinforcementProfileProtocol,
-                active_required: bool,
-            ) -> StrategyReinforcementInput:
-                _found = next(
-                    (
-                        x
-                        for x in _other
-                        if x.reinforcement_type == reinforcement_type
-                        and (x.active == True or not active_required)
-                    ),
-                    None,
-                )
-                _other.remove(_found) if _found else None
-
-                return _found
-
-            _first = find_and_pop(SoilReinforcementProfile, True)
-            _last = find_and_pop(CofferdamReinforcementProfile, False)
-            _other = list(filter(lambda x: x.active, _other))
-
-            return (_first, _other, _last)
-
         # Split in a list to be sorted (least to most restrictive)
         # and a list to be put first (SoilReinforcement, if active) and last (Cofferdam for now).
-        _first, _unsorted, _last = split_reinforcements()
+        _unsorted, _first, _last = self._split_reinforcements(strategy_reinforcements)
 
         # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
-        # Include first reinforcement as that could exclude other reinforements.
-        if _first:
-            _unsorted = [_first] + _unsorted
         _sorted = sorted(
             _unsorted,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
@@ -149,11 +160,10 @@ class OrderStrategy(StrategyProtocol):
             if remove_reinforcement(_pair) and _pair[0] in _sorted:
                 _sorted.remove(_pair[0])
 
-        # Remove reinforcement that should come first, if active, and not removed by the previous step
-        if _first and _first in _sorted:
-            _sorted.remove(_first)
-
-        return [x.reinforcement_type for x in [_first] + _sorted + [_last] if x]
+        return [
+            x.reinforcement_type
+            for x in self._merge_reinforcements(_sorted, _first, _last)
+        ]
 
     @staticmethod
     def get_strategy_reinforcements(
