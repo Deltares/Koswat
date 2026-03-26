@@ -11,34 +11,53 @@ def get_reinforcement_and_obstacle_room_cases() -> list[pytest.param]:
                 required_polderside_width=_polderside_width,
                 required_waterside_width=_waterside_width
             )
+    
+    def get_point_obstacle_surroundings(inside_space: float, outside_space: float) -> PointObstacleSurroundings:
+        return PointObstacleSurroundings(
+            inside_distance=inside_space,
+            outside_distance=outside_space
+        )
+
     return [
         pytest.param(
             _base_calculator,
-            PointObstacleSurroundings(inside_distance=_polderside_width, outside_distance=_waterside_width),
+            get_point_obstacle_surroundings(_polderside_width, _waterside_width),
             True,
             id="exact_room_at_both_sides"
         ),
         pytest.param(
             _base_calculator,
-            PointObstacleSurroundings(inside_distance=_polderside_width + 1, outside_distance=_waterside_width + 1),
+            get_point_obstacle_surroundings(_polderside_width + 1, _waterside_width + 1),
             True,
             id="enough_room_at_both_sides"
         ),
         pytest.param(
             _base_calculator,
-            PointObstacleSurroundings(inside_distance=_polderside_width + _waterside_width, outside_distance=0),
+            get_point_obstacle_surroundings(_polderside_width + _waterside_width, 0),
             True,
             id="enough_room_only_at_polderside"
         ),
         pytest.param(
             _base_calculator,
-            PointObstacleSurroundings(outside_distance=_polderside_width + _waterside_width, inside_distance=0),
+            get_point_obstacle_surroundings(0, _polderside_width + _waterside_width),
             True,
             id="enough_room_only_at_waterside"
         ),
         pytest.param(
             _base_calculator,
-            PointObstacleSurroundings(inside_distance=_polderside_width - 1, outside_distance=_waterside_width - 1),
+            get_point_obstacle_surroundings(_polderside_width - 2, _waterside_width + 2),
+            True,
+            id="more_room_on_the_waterside"
+        ),
+        pytest.param(
+            _base_calculator,
+            get_point_obstacle_surroundings(_polderside_width + 1, _waterside_width - 1),
+            True,
+            id="more_room_on_the_polderside"
+        ),
+        pytest.param(
+            _base_calculator,
+            get_point_obstacle_surroundings(_polderside_width - 1, _waterside_width - 1),
             False,
             id="not_enough_room_at_either_side"
         )

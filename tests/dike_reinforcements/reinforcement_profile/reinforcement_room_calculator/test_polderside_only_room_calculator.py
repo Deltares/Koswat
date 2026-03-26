@@ -59,7 +59,7 @@ class TestPoldersideOnlyRoomCalculator:
         assert isinstance(_calculator, ReinforcementRoomCalculatorBase)
         assert isinstance(_calculator, ReinforcementRoomCalculatorProtocol)
 
-    def test_when__required_width_given_calculator_then_returns_summation_of_widths(self):
+    def test_when__required_width_given_calculator_then_returns_polderside_width(self):
         # 1. Given
         _polderside_width = 1.0
         _calculator = PoldersideOnlyRoomCalculator(
