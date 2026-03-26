@@ -13,7 +13,7 @@ from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
 
 
 @pytest.fixture(name="obstacles_surroundings_fixture")
-def _get_obstacless_fixture() -> (
+def _get_obstacles_fixture() -> (
     Iterable[Callable[[list[tuple[Point, float]]], ObstacleSurroundingsWrapper]]
 ):
     def build_surroundings_wrapper(
