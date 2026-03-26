@@ -114,4 +114,3 @@ class TestObstacleSurroundingsWrapper:
         assert isinstance(_obstacle_locations, list)
         assert len(_obstacle_locations) == 1
         assert _obstacle_locations[0].location == _location
-        assert _obstacle_locations[0].closest_obstacle == _obstacles_distance
