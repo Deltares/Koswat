@@ -97,20 +97,28 @@ class OrderStrategy(StrategyProtocol):
             list[StrategyReinforcementInput],
             StrategyReinforcementInput,
         ]:
-            _first, _other, _last = None, [], None
-            for obj in strategy_reinforcements:
-                if not obj:
-                    continue
-                if obj.reinforcement_type == CofferdamReinforcementProfile:
-                    _last = obj
-                    continue
-                if not obj.active:
-                    continue
-                if obj.reinforcement_type == SoilReinforcementProfile:
-                    _first = obj
-                    continue
-                else:
-                    _other.append(obj)
+            _other = strategy_reinforcements.copy()
+
+            def find_and_pop(
+                reinforcement_type: ReinforcementProfileProtocol,
+                active: bool,
+            ) -> StrategyReinforcementInput:
+                _found = next(
+                    (
+                        x
+                        for x in _other
+                        if x.reinforcement_type == reinforcement_type
+                        and x.active == active
+                    ),
+                    None,
+                )
+                _other.pop(strategy_reinforcements.index(_found)) if _found else None
+
+                return _found
+
+            _first = find_and_pop(SoilReinforcementProfile, True)
+            _last = find_and_pop(CofferdamReinforcementProfile, False)
+            _other = list(filter(lambda x: x.active, _other))
 
             return (_first, _other, _last)
 
@@ -119,9 +127,9 @@ class OrderStrategy(StrategyProtocol):
         _first, _unsorted, _last = split_reinforcements()
 
         # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
-        # Include first reinforcement as that could excluded other reinforements.
-        if _first:
-            _unsorted = [_first] + _unsorted
+        # Include first reinforcement as that could exclude other reinforements.
+        # if _first:
+        #     _unsorted = [_first] + _unsorted
         _sorted = sorted(
             _unsorted,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
