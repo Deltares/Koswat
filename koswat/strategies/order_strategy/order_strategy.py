@@ -93,21 +93,21 @@ class OrderStrategy(StrategyProtocol):
             return []
 
         def split_reinforcements() -> tuple[
+            StrategyReinforcementInput,
             list[StrategyReinforcementInput],
-            list[StrategyReinforcementInput],
-            list[StrategyReinforcementInput],
+            StrategyReinforcementInput,
         ]:
-            _first, _other, _last = [], [], []
+            _first, _other, _last = None, [], None
             for obj in strategy_reinforcements:
                 if not obj:
                     continue
                 if obj.reinforcement_type == CofferdamReinforcementProfile:
-                    _last = [obj]
+                    _last = obj
                     continue
                 if not obj.active:
                     continue
                 if obj.reinforcement_type == SoilReinforcementProfile:
-                    _first = [obj]
+                    _first = obj
                     continue
                 else:
                     _other.append(obj)
@@ -115,17 +115,20 @@ class OrderStrategy(StrategyProtocol):
             return (_first, _other, _last)
 
         # Split in a list to be sorted (least to most restrictive)
-        # and a list to be put first (SoilReinforcement, if active) and last (Cofferdam for now)
+        # and a list to be put first (SoilReinforcement, if active) and last (Cofferdam for now).
         _first, _unsorted, _last = split_reinforcements()
 
-        # Sort the reinforcements from least to most restrictive, and cheapest to most expensive
+        # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
+        # Include first reinforcement as that could excluded other reinforements.
+        if _first:
+            _unsorted = [_first] + _unsorted
         _sorted = sorted(
-            _first + _unsorted,
+            _unsorted,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
             reverse=True,
         )
 
-        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others
+        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others.
         def remove_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
         ) -> bool:
@@ -134,15 +137,15 @@ class OrderStrategy(StrategyProtocol):
                 and pair[0].ground_level_surface >= pair[1].ground_level_surface
             )
 
-        for _pair in product(_sorted, _sorted + _last):
+        for _pair in product(_sorted, _sorted + [_last]):
             if remove_reinforcement(_pair) and _pair[0] in _sorted:
                 _sorted.remove(_pair[0])
 
-        # Remove SoilReinforcement if active and not removed by the previous step
-        if _first and _first[0] in _sorted:
-            _sorted.remove(_first[0])
+        # Remove reinforcement that should come first, if active, and not removed by the previous step
+        if _first and _first in _sorted:
+            _sorted.remove(_first)
 
-        return [x.reinforcement_type for x in _first + _sorted + _last]
+        return [x.reinforcement_type for x in [_first] + _sorted + [_last] if x]
 
     @staticmethod
     def get_strategy_reinforcements(

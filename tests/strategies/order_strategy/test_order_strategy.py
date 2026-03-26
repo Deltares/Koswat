@@ -182,6 +182,25 @@ class TestOrderStrategy:
         assert _reinforcements[0] == SoilReinforcementProfile
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
+    def test_get_strategy_order_increased_soil_surface_keeps_reinforcement(
+        self, example_strategy_input: StrategyInput
+    ):
+        # 1. Define test data.
+        example_strategy_input.strategy_reinforcements[0].ground_level_surface += 15
+        _expected_result = self._default_reinforcements
+
+        _strategy = OrderStrategy()
+
+        # 2. Run test.
+        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
+            example_strategy_input.strategy_reinforcements
+        )
+
+        # 3. Verify expectations
+        assert _reinforcements == _expected_result
+        assert _reinforcements[0] == SoilReinforcementProfile
+        assert _reinforcements[-1] == CofferdamReinforcementProfile
+
     def test_get_strategy_order_filters_two_consecutive_reinforcements(
         self, example_strategy_input: StrategyInput
     ):
