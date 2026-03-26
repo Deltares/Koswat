@@ -21,27 +21,15 @@
 
 from typing import Protocol, runtime_checkable
 
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
-    ReinforcementInputProfileProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
-    ReinforcementLayersWrapper,
-)
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorProtocol
-
+from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
 
 @runtime_checkable
-class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
-    """
-    Extension of the `KoswatProfileProtocol` to define the properties of a calculated reinforcement.
-    """
+class ReinforcementRoomCalculatorProtocol(Protocol):
+    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings) -> bool:
+        """
+        Checks if there is enough room for a given reinforcement at a given point with obstacles.
 
-    output_name: str
-    input_data: ReinforcementInputProfileProtocol
-    layers_wrapper: ReinforcementLayersWrapper
-    old_profile: KoswatProfileProtocol
-    new_ground_level_surface: float
-
-    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
+        Returns:
+            bool: True if there is enough room for reinforcement, False otherwise.
+        """
         pass
