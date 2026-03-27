@@ -63,7 +63,7 @@ class TestSurroundingsWrapper:
             construction_distance=float("nan"),
             construction_buffer=float("nan"),
             waterside=False,
-            obstacle_types=["bebouwing"],
+            obstacle_types={"bebouwing": 5},
         )
 
         # Generate Infrastructures section file model
