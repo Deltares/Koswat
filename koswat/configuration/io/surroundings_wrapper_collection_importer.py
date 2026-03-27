@@ -112,17 +112,21 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         return _surroundings_wrappers
 
     def _csv_file_to_fom(
-        self, csv_file: Path, surrounding_type: SurroundingsEnum
+        self,
+        csv_file: Path,
+        surrounding_type: SurroundingsEnum,
+        surroundings_buffer: float,
     ) -> KoswatSurroundingsCsvFom:
-
-        _reader = KoswatSurroundingsCsvReader
         if surrounding_type.surrounding_type == SurroundingsObstacle:
-            _reader = KoswatSimpleSurroundingsCsvReader
+            _reader = KoswatSimpleSurroundingsCsvReader()
+            _reader.surroundings_buffer = surroundings_buffer
+        else:
+            _reader = KoswatSurroundingsCsvReader()
 
-        return _reader().read(csv_file)
+        return _reader.read(csv_file)
 
     def _csv_dir_to_fom(
-        self, csv_dir: Path, obstacle_types: list[tuple[str, float]]
+        self, csv_dir: Path, obstacle_types: dict[str, float]
     ) -> dict[SurroundingsEnum, KoswatSurroundingsCsvFom]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
@@ -143,17 +147,21 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
             _type_enum = SurroundingsEnum.translate(_type_name)
 
+            _surroundings_buffer = 0.0
             if _type_enum == SurroundingsEnum.OBSTACLE:
-                if _type_name not in obstacle_types:
+                if _type_name not in obstacle_types.keys():
                     # In case of obstacles, only import those that are defined in the config file.
                     logging.info(
                         f"Skipping obstacle surrounding type {_type_name} for traject {_traject_name} as it is not defined in the config file."
                     )
                     continue
                 _obs_type_names.append(_type_name)
+                _surroundings_buffer = obstacle_types[_type_name]
 
             # Get FOM from CSV file.
-            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum)
+            _csv_fom = self._csv_file_to_fom(
+                _csv_file, _type_enum, _surroundings_buffer
+            )
             if _type_enum in _imported_csv_foms.keys():
                 _imported_csv_foms[_type_enum].merge(_csv_fom)
             else:
