@@ -168,7 +168,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                 _imported_csv_foms[_type_enum] = _csv_fom
 
         # Log missing obstacle files.
-        for _obs_type in obstacle_types:
+        for _obs_type in obstacle_types.keys():
             if _obs_type not in _obs_type_names:
                 logging.warning(
                     f"Obstacle surrounding type {_obs_type} defined in config file is missing for traject {_traject_name}."
