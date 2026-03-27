@@ -18,19 +18,6 @@ class TestPointObstacleSurroundings:
         assert math.isnan(_pos.outside_distance)
         assert math.isnan(_pos.angle_inside)
         assert math.isnan(_pos.angle_outside)
-        assert math.isnan(_pos.closest_obstacle)
-
-    def test_closest_obstacle_returns_inside_distance(self):
-        # 1. Define test data.
-        _inside_distance = 246.01
-
-        # 2. Run test
-        _pos = PointObstacleSurroundings(
-            inside_distance=_inside_distance
-        )
-        
-        # 2. Verify expectations.
-        assert _pos.closest_obstacle == _inside_distance
 
 
     def test_merge_point_obstacle_surroundings(self):
