@@ -51,11 +51,7 @@ class TestSurroundingsSectionFom:
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
             "buitendijks": True,
-            "omgevingtypes": [
-                {"bebouwing": 5},
-                {"spoorwegen": 10},
-                {"water": 0},
-            ],
+            "omgevingtypes": {"bebouwing": 5, "spoorwegen": 10, "water": 0},
         }
 
         # 2. Run test.
