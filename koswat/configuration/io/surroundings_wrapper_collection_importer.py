@@ -141,7 +141,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         """
         _imported_csv_foms: dict[SurroundingsEnum, KoswatSurroundingsCsvFom] = {}
         _traject_name = csv_dir.stem
-        _obs_type_names = []
+        _read_obs_types = []
         for _csv_file in csv_dir.glob("*.csv"):
             # Map CSV file name to surrounding type.
             _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
@@ -155,7 +155,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                         f"Skipping obstacle surrounding type {_type_name} for traject {_traject_name} as it is not defined in the config file."
                     )
                     continue
-                _obs_type_names.append(_type_name)
+                _read_obs_types.append(_type_name)
                 _surroundings_buffer = obstacle_types[_type_name]
 
             # Get FOM from CSV file.
@@ -169,7 +169,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
 
         # Log missing obstacle files.
         for _obs_type in obstacle_types.keys():
-            if _obs_type not in _obs_type_names:
+            if _obs_type not in _read_obs_types:
                 logging.warning(
                     f"Obstacle surrounding type {_obs_type} defined in config file is missing for traject {_traject_name}."
                 )
