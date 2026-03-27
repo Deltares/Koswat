@@ -32,8 +32,11 @@ This strategy is the first and default of all defined strategies. Its criteria i
 
 #### Reinforcement order
 The reinforcements are ordered based on increasing cost (including surtax) and decreasing width.
+Only the active reinforcements are being taken into account.
 Reinforcements that are more expensive but are wider or have equal width are skipped (order `-1`).
-The `CofferDamReinforcementProfile` will never be skipped and is always the last reinforcement that is applied in case no other reinforcement fits the surroundings.
+Two exceptions apply:
+1. If `SoilReinforcementProfile` is active, it should be the first option, even if it is not the cheapest and the least restrictive reinforcement.
+2. The `CofferDamReinforcementProfile` will never be skipped and is always the last reinforcement that is applied in case no other reinforcement fits the surroundings, even if is not active.
 
 | Reinforcement type | Profile width | Cost with surtax | Index |
 | ---- | ---- | ---- | ---- |
