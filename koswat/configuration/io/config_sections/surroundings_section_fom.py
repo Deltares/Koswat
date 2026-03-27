@@ -33,7 +33,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
     construction_distance: float
     construction_buffer: float
     waterside: bool
-    obstacle_types: list[tuple[str, float]] = field(default_factory=list)
+    obstacle_types: dict[str, float] = field(default_factory=dict)
 
     @classmethod
     def from_config(cls, input_config: dict[str, Any]) -> "SurroundingsSectionFom":
@@ -45,10 +45,10 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
                 input_config["constructieovergang"]
             ),
             waterside=SectionConfigHelper.get_bool(input_config["buitendijks"]),
-            obstacle_types=[
-                (k.lower().strip(), v)
+            obstacle_types={
+                k.lower().strip(): v
                 for d in input_config.get("omgevingtypes", [])
                 for k, v in d.items()
-            ],
+            },
         )
         return _section

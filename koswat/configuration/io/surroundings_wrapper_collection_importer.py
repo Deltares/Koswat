@@ -122,7 +122,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         return _reader().read(csv_file)
 
     def _csv_dir_to_fom(
-        self, csv_dir: Path, obstacle_types: list[str]
+        self, csv_dir: Path, obstacle_types: list[tuple[str, float]]
     ) -> dict[SurroundingsEnum, KoswatSurroundingsCsvFom]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of

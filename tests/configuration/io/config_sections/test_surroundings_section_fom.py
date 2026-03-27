@@ -11,7 +11,7 @@ class TestSurroundingsSectionFom:
             construction_distance=100.0,
             construction_buffer=20.0,
             waterside=True,
-            obstacle_types=[("bebouwing", 5), ("spoorwegen", 10), ("water", 0)],
+            obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": 0},
         )
 
         # 2. Verify expectations.
@@ -19,11 +19,11 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
-        assert _surroundings_section_fom.obstacle_types == [
-            ("bebouwing", 5),
-            ("spoorwegen", 10),
-            ("water", 0),
-        ]
+        assert _surroundings_section_fom.obstacle_types == {
+            "bebouwing": 5,
+            "spoorwegen": 10,
+            "water": 0,
+        }
 
     def test_from_config_without_omgevingtypes(self):
         # 1. Define test data.
@@ -43,7 +43,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
-        assert _surroundings_section_fom.obstacle_types == []
+        assert _surroundings_section_fom.obstacle_types == {}
 
     def test_from_config_with_omgevingtypes(self):
         # 1. Define test data.
@@ -68,8 +68,8 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
-        assert _surroundings_section_fom.obstacle_types == [
-            ("bebouwing", 5),
-            ("spoorwegen", 10),
-            ("water", 0),
-        ]
+        assert _surroundings_section_fom.obstacle_types == {
+            "bebouwing": 5,
+            "spoorwegen": 10,
+            "water": 0,
+        }
