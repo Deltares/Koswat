@@ -156,9 +156,10 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                 _read_obs_types.append(_type_name)
                 _surroundings_buffer = obstacle_types[_type_name]
 
-            # Get FOM from CSV file.
+            # Get FOM from CSV file and apply buffer.
             _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum)
             _csv_fom.apply_buffer(_surroundings_buffer)
+
             if _type_enum in _imported_csv_foms.keys():
                 _imported_csv_foms[_type_enum].merge(_csv_fom)
             else:
