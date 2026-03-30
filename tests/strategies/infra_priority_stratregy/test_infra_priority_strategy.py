@@ -77,7 +77,7 @@ class TestInfraPriorityStrategy:
 
         _order = _strategy_output.reinforcement_order
         assert isinstance(_order, list)
-        assert len(_order) == 5
+        assert len(_order) == 6
         assert all(isinstance(_r, type) for _r in _order)
 
     def test_given_example_for_subclusters_when_apply_strategy_then_splits_them(
@@ -104,16 +104,16 @@ class TestInfraPriorityStrategy:
         )
         assert all(
             _sr.current_selected_measure == StabilityWallCrestReinforcementProfile
-            for _sr in _result[2:5]
+            for _sr in _result[2:7]
         )
         assert all(
             _sr.current_selected_measure == CofferdamReinforcementProfile
-            for _sr in _result[5:]
+            for _sr in _result[7:]
         )
 
         _order = _strategy_output.reinforcement_order
         assert isinstance(_order, list)
-        assert len(_order) == 5
+        assert len(_order) == 6
         assert all(isinstance(_r, type) for _r in _order)
 
     @pytest.fixture(name="small_infra_cluster")

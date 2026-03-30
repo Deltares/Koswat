@@ -29,12 +29,12 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         SoilReinforcementProfile,  # Expected idx 0 in default order!
         SoilReinforcementProfile,
         SoilReinforcementProfile,
-        StabilityWallCrestReinforcementProfile,  # Expected idx 3 in default order!
+        StabilityWallCrestReinforcementProfile,  # Expected idx 4 in default order!
         StabilityWallCrestReinforcementProfile,
         SoilReinforcementProfile,
         SoilReinforcementProfile,
         SoilReinforcementProfile,
-        CofferdamReinforcementProfile,  # Expected idx 4 in default order!
+        CofferdamReinforcementProfile,  # Expected idx 5 in default order!
         CofferdamReinforcementProfile,
     ]
 
@@ -49,7 +49,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
             * 42.0,
             infrastructure_costs_with_surtax=(
                 (10 ** (len(_reinforcement_type_default_order) - 1)) * 84.0
-                if _idx in [0, 1, 3]
+                if _idx in [0, 1, 3, 4]
                 else 0.0
             ),  # Dramatic infra costs so they move to where we want
         )
