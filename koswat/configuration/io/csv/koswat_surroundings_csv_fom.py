@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import math
 from dataclasses import dataclass, field
 
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
@@ -37,7 +36,7 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
         return any(self.points_surroundings_list)
 
     def apply_buffer(self, buffer: float) -> None:
-        if buffer == math.nan or buffer == 0:
+        if buffer is None or buffer == 0:
             return
         for point in self.points_surroundings_list:
             point.apply_buffer(buffer)

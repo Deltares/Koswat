@@ -13,7 +13,7 @@ class TestSurroundingsSectionFom:
             construction_distance=100.0,
             construction_buffer=20.0,
             waterside=True,
-            obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": 0},
+            obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": None},
         )
 
         # 2. Verify expectations.
@@ -24,7 +24,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.obstacle_types == {
             "bebouwing": 5,
             "spoorwegen": 10,
-            "water": 0,
+            "water": None,
         }
 
     def test_from_config_without_omgevingtypes(self):
@@ -53,7 +53,11 @@ class TestSurroundingsSectionFom:
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
             "buitendijks": True,
-            "omgevingtypes": {"bebouwing": 5, "spoorwegen": 10, "water": 0},
+            "omgevingtypes": [
+                {"type": "bebouwing", "buffer": 5},
+                {"type": "spoorwegen", "buffer": 10},
+                {"type": "water"},
+            ],
         }
 
         # 2. Run test.
@@ -69,7 +73,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.obstacle_types == {
             "bebouwing": 5,
             "spoorwegen": 10,
-            "water": 0,
+            "water": None,
         }
 
     def test_from_config_with_invalid_buffer(self):
@@ -78,7 +82,7 @@ class TestSurroundingsSectionFom:
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
             "buitendijks": True,
-            "omgevingtypes": {"bebouwing": "invalid_buffer"},
+            "omgevingtypes": [{"type": "bebouwing", "buffer": "invalid_buffer"}],
         }
 
         # 2. Run test

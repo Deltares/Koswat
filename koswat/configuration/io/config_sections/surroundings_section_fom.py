@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Optional
 
 from koswat.configuration.io.config_sections.config_section_helper import (
     SectionConfigHelper,
@@ -33,7 +33,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
     construction_distance: float
     construction_buffer: float
     waterside: bool
-    obstacle_types: dict[str, float] = field(default_factory=dict)
+    obstacle_types: dict[str, Optional[float]] = field(default_factory=dict)
 
     @classmethod
     def from_config(cls, input_config: dict[str, Any]) -> "SurroundingsSectionFom":
@@ -46,8 +46,12 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             ),
             waterside=SectionConfigHelper.get_bool(input_config["buitendijks"]),
             obstacle_types={
-                k.lower().strip(): SectionConfigHelper.get_float(v)
-                for k, v in input_config.get("omgevingtypes", {}).items()
+                _type.get("type")
+                .lower()
+                .strip(): SectionConfigHelper.get_float_without_default(
+                    _type.get("buffer", None)
+                )
+                for _type in input_config.get("omgevingtypes", [])
             },
         )
         return _section
