@@ -47,6 +47,10 @@ class PointObstacleSurroundings(PointSurroundings):
         """
         return hash(self.traject_order)
 
+    def apply_buffer(self, buffer: float) -> None:
+        self.inside_distance = self.inside_distance - buffer
+        self.outside_distance = self.outside_distance - buffer
+
     def merge(self, other: PointObstacleSurroundings) -> None:
         def _get_min_value(value_1: float, value_2: float) -> float:
             if math.isnan(value_1):

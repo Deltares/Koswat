@@ -43,8 +43,6 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
         A;199186.66;515698.01;500;500;-76.0;104.0
     """
 
-    surroundings_buffer: float = 0.0
-
     def read(self, file_path: Path) -> KoswatSurroundingsCsvFom:
         _csv_fom = KoswatCsvReader().read(file_path)
 
@@ -73,8 +71,8 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
             traject_order=entry[0],
             location=Point(float(entry[2]), float(entry[3])),
             surroundings_matrix=[],
-            inside_distance=float(entry[4]) - self.surroundings_buffer,
-            outside_distance=float(entry[5]) - self.surroundings_buffer,
+            inside_distance=float(entry[4]),
+            outside_distance=float(entry[5]),
             angle_inside=float(entry[6]),
             angle_outside=float(entry[7]),
         )

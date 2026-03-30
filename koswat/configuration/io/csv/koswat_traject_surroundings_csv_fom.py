@@ -33,6 +33,7 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
         default_factory=lambda: []
     )
     traject: str = ""
+    surroundings_buffer: float = 0.0
 
     def is_valid(self) -> bool:
         return any(self.points_surroundings_list)
@@ -53,6 +54,7 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
         # Note: Suboptimal, but sufficient for now.
         _as_dict = {point.location: point for point in self.points_surroundings_list}
         for point in other.points_surroundings_list:
+            point.apply_buffer(self.surroundings_buffer)
             if point.location not in _as_dict:
                 self.points_surroundings_list.append(point)
             else:

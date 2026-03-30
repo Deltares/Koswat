@@ -117,13 +117,13 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         surrounding_type: SurroundingsEnum,
         surroundings_buffer: float,
     ) -> KoswatSurroundingsCsvFom:
+        _reader = KoswatSurroundingsCsvReader
         if surrounding_type.surrounding_type == SurroundingsObstacle:
-            _reader = KoswatSimpleSurroundingsCsvReader()
-            _reader.surroundings_buffer = surroundings_buffer
-        else:
-            _reader = KoswatSurroundingsCsvReader()
+            _reader = KoswatSimpleSurroundingsCsvReader
 
-        return _reader.read(csv_file)
+        _csv_fom = _reader().read(csv_file)
+        _csv_fom.surroundings_buffer = surroundings_buffer
+        return _csv_fom
 
     def _csv_dir_to_fom(
         self, csv_dir: Path, obstacle_types: dict[str, float]
