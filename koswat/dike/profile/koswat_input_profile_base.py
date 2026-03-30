@@ -48,7 +48,7 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     thickness_grass_layer: float = math.nan
     thickness_clay_layer: float = math.nan
 
-    def set_defaults(self, other: KoswatInputProfileBase) -> KoswatInputProfileBase:
+    def set_defaults(self, other: "KoswatInputProfileBase") -> "KoswatInputProfileBase":
         """
         Add the defaults from another KoswatInputProfileBase instance to this instance, if not set.
 
