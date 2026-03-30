@@ -70,29 +70,24 @@ class StabilityWallToeInputProfileCalculation(
         stability_wall_settings: KoswatStabilityWallToeSettings,
         seepage_length: float,
         stab_wall: bool,
-        new_crest_height: float,
     ) -> float:
         if stab_wall:
-            _length_stability = (new_crest_height - 0.5) - (old_data.pleistocene - 1)
-            if seepage_length == 0:
-                # Length of wall is not determined by piping.
-                _length_piping = 0.0
-            else:
-                _length_piping = (
-                    (seepage_length / 6) + (new_crest_height - 0.5) - old_data.aquifer
-                )
+            _length_stability = (old_data.polderside_ground_level + 1) - (
+                old_data.pleistocene - 1
+            )
         else:
             _length_stability = 0
-            if seepage_length == 0:
-                # Length of wall is not determined by piping.
-                _length_piping = 0.0
-            else:
-                # Length of wall zoals bij kwelscherm
-                _length_piping = (
-                    (seepage_length / 6)
-                    + (old_data.polderside_ground_level - old_data.aquifer)
-                    + 1  # 1 m in bestaande dijklichaam
-                )
+
+        if seepage_length == 0:
+            # Length of wall is not determined by piping.
+            _length_piping = 0.0
+        else:
+            # Length of wall zoals bij kwelscherm
+            _length_piping = (
+                (seepage_length / 6)
+                + (old_data.polderside_ground_level - old_data.aquifer)
+                + 1  # 1 m in bestaande dijklichaam
+            )
 
         return round(
             min(
@@ -105,6 +100,14 @@ class StabilityWallToeInputProfileCalculation(
             ),
             1,
         )
+
+    @staticmethod
+    def _determine_construction_type(
+        construction_length: float,
+    ) -> ConstructionTypeEnum | None:
+        if construction_length == 0.0:
+            return None
+        return ConstructionTypeEnum.DAMWAND_ONVERANKERD
 
     def build(self) -> StabilityWallToeInputProfile:
         _reinforced_data = self._get_reinforcement_profile(
@@ -124,7 +127,7 @@ class StabilityWallToeInputProfileCalculation(
             self.scenario,
         )
         _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
-            InputProfileEnum.STABILITY_WALL_TOE, _calculated_factors
+            InputProfileEnum.STABILITY_WALL, _calculated_factors
         )
         (
             _reinforced_data.polderside_berm_width,
@@ -154,9 +157,10 @@ class StabilityWallToeInputProfileCalculation(
             self.reinforcement_settings.stability_wall_toe_settings,
             _seepage_length,
             _stab_wall,
-            _reinforced_data.crest_height,
         )
-        _reinforced_data.construction_type = ConstructionTypeEnum.DAMWAND_ONVERANKERD
+        _reinforced_data.construction_type = self._determine_construction_type(
+            _reinforced_data.construction_length,
+        )
 
         # Settings
         _reinforced_data.soil_surtax_factor = (
