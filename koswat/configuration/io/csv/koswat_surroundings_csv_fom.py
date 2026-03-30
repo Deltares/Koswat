@@ -38,7 +38,7 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
         return any(self.points_surroundings_list)
 
     def apply_buffer(self, buffer: float) -> None:
-        if buffer is None or buffer == 0:
+        if buffer is None or buffer <= 0:
             return
         for point in self.points_surroundings_list:
             point.apply_buffer(buffer)
