@@ -13,25 +13,25 @@ from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_se
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
-from koswat.dike_reinforcements.input_profile import StabilityWallInputProfile
+from koswat.dike_reinforcements.input_profile import StabilityWallCrestInputProfile
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
-from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile_calculation import (
-    StabilityWallInputProfileCalculation,
+from koswat.dike_reinforcements.input_profile.stability_wall_crest.stability_wall_crest_input_profile_calculation import (
+    StabilityWallCrestInputProfileCalculation,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
     ReinforcementProfile,
 )
 
 
-class TestStabilityWallInputProfileCalculation:
+class TestStabilityWallCrestInputProfileCalculation:
     def test_initialize(self):
-        _calculation = StabilityWallInputProfileCalculation()
+        _calculation = StabilityWallCrestInputProfileCalculation()
         assert _calculation
         assert not _calculation.base_profile
         assert not _calculation.scenario
-        assert isinstance(_calculation, StabilityWallInputProfileCalculation)
+        assert isinstance(_calculation, StabilityWallCrestInputProfileCalculation)
         assert isinstance(_calculation, ReinforcementInputProfileCalculationProtocol)
         assert isinstance(_calculation, BuilderProtocol)
 
@@ -92,12 +92,14 @@ class TestStabilityWallInputProfileCalculation:
         _new_crest_height = 8
 
         # 2. Run test.
-        _result = StabilityWallInputProfileCalculation._calculate_length_stability_wall(
-            _input_data,
-            _stability_wall_settings,
-            seepage_length,
-            stab_wall,
-            _new_crest_height,
+        _result = (
+            StabilityWallCrestInputProfileCalculation._calculate_length_stability_wall(
+                _input_data,
+                _stability_wall_settings,
+                seepage_length,
+                stab_wall,
+                _new_crest_height,
+            )
         )
 
         # 3. Verify expectations
@@ -122,8 +124,10 @@ class TestStabilityWallInputProfileCalculation:
         _transition = 15.0
 
         # 2. Run test
-        _result = StabilityWallInputProfileCalculation._determine_construction_type(
-            _transition, construction_length
+        _result = (
+            StabilityWallCrestInputProfileCalculation._determine_construction_type(
+                _transition, construction_length
+            )
         )
 
         # 3. Verify expectations
@@ -137,7 +141,7 @@ class TestStabilityWallInputProfileCalculation:
             transition_sheetpile_diaphragm_wall: float
 
         # 1. Define test data.
-        _calculator = StabilityWallInputProfileCalculation()
+        _calculator = StabilityWallCrestInputProfileCalculation()
         _calculator.base_profile = ReinforcementProfile(input_data=valid_input_data)
         _reinforcement_settings = KoswatReinforcementSettings(
             stability_wall_crest_settings=MockSettings(
@@ -155,7 +159,7 @@ class TestStabilityWallInputProfileCalculation:
         _result = _calculator.build()
 
         # 3. Verify expectations
-        assert isinstance(_result, StabilityWallInputProfile)
+        assert isinstance(_result, StabilityWallCrestInputProfile)
         assert isinstance(_result, KoswatInputProfileBase)
         assert isinstance(_result, KoswatInputProfileProtocol)
 

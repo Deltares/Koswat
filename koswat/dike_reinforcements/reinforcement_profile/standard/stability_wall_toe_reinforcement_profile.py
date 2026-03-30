@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile import (
-    StabilityWallInputProfile,
+from koswat.dike_reinforcements.input_profile.stability_wall_toe.stability_wall_toe_input_profile import (
+    StabilityWallToeInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
@@ -34,9 +34,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 )
 
 
-class StabilityWallReinforcementProfile(StandardReinforcementProfile):
-    output_name: str = "Stabiliteitswand kruin"
-    input_data: StabilityWallInputProfile
+class StabilityWallToeReinforcementProfile(StandardReinforcementProfile):
+    output_name: str = "Stabiliteitswand teen"
+    input_data: StabilityWallToeInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float

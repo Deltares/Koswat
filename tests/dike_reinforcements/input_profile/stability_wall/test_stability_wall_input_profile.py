@@ -3,15 +3,15 @@ from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
-from koswat.dike_reinforcements.input_profile.stability_wall.stability_wall_input_profile import (
-    StabilityWallInputProfile,
+from koswat.dike_reinforcements.input_profile.stability_wall_crest.stability_wall_crest_input_profile import (
+    StabilityWallCrestInputProfile,
 )
 
 
-class TestStabilityWallInputProfile:
+class TestStabilityWallCrestInputProfile:
     def test_initialize(self):
-        _input = StabilityWallInputProfile()
-        assert isinstance(_input, StabilityWallInputProfile)
+        _input = StabilityWallCrestInputProfile()
+        assert isinstance(_input, StabilityWallCrestInputProfile)
         assert isinstance(_input, KoswatInputProfileBase)
         assert isinstance(_input, KoswatInputProfileProtocol)
         assert isinstance(_input, ReinforcementInputProfileProtocol)
@@ -20,7 +20,7 @@ class TestStabilityWallInputProfile:
         # 1. Define test data
         _builtup = 100
         _unbuilt = 10
-        _profile = StabilityWallInputProfile()
+        _profile = StabilityWallCrestInputProfile()
         _profile.ground_price_builtup = _builtup
         _profile.ground_price_unbuilt = _unbuilt
 

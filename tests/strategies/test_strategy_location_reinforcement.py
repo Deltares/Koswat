@@ -5,9 +5,6 @@ import pytest
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
-    ReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -17,8 +14,8 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinf
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
-    StabilityWallReinforcementProfile,
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_crest_reinforcement_profile import (
+    StabilityWallCrestReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
     VPSReinforcementProfile,
@@ -105,7 +102,7 @@ class TestStrategyLocationReinforcement:
             StrategyStepEnum.ORDERED,
             [
                 PipingWallReinforcementProfile,
-                StabilityWallReinforcementProfile,
+                StabilityWallCrestReinforcementProfile,
                 _new_step_value,
             ],
         )
@@ -132,7 +129,7 @@ class TestStrategyLocationReinforcement:
         self._add_extra_steps(
             basic_valid_slr,
             StrategyStepEnum.INFRASTRUCTURE,
-            [StabilityWallReinforcementProfile, _new_step_value],
+            [StabilityWallCrestReinforcementProfile, _new_step_value],
         )
         _steps = basic_valid_slr.get_selected_measure_steps()
 
@@ -162,7 +159,7 @@ class TestStrategyLocationReinforcement:
         self._add_extra_steps(
             basic_valid_slr,
             StrategyStepEnum.INFRASTRUCTURE,
-            [StabilityWallReinforcementProfile, _new_step_value],
+            [StabilityWallCrestReinforcementProfile, _new_step_value],
         )
         _steps = basic_valid_slr.get_selected_measure_steps()
 

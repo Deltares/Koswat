@@ -14,8 +14,8 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.piping_wall_reinf
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
-    StabilityWallReinforcementProfile,
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_crest_reinforcement_profile import (
+    StabilityWallCrestReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
     VPSReinforcementProfile,
@@ -103,7 +103,7 @@ class TestInfraPriorityStrategy:
             for _sr in _result[0:2]
         )
         assert all(
-            _sr.current_selected_measure == StabilityWallReinforcementProfile
+            _sr.current_selected_measure == StabilityWallCrestReinforcementProfile
             for _sr in _result[2:5]
         )
         assert all(
@@ -164,7 +164,7 @@ class TestInfraPriorityStrategy:
             _common_reinforcements + [CofferdamReinforcementProfile],
             _common_reinforcements,
             _common_reinforcements,
-            _common_reinforcements + [StabilityWallReinforcementProfile],
+            _common_reinforcements + [StabilityWallCrestReinforcementProfile],
         ]
         _location_input = StrategyLocationInput(
             point_surrounding=None,
@@ -190,7 +190,7 @@ class TestInfraPriorityStrategy:
                 ),
                 # Not present at all locations.
                 StrategyReinforcementTypeCosts(
-                    StabilityWallReinforcementProfile,
+                    StabilityWallCrestReinforcementProfile,
                     base_costs_with_surtax=42,
                     infrastructure_costs=42,
                     infrastructure_costs_with_surtax=42,
@@ -210,9 +210,11 @@ class TestInfraPriorityStrategy:
             _slr = StrategyLocationReinforcement(
                 location=None,
                 available_measures=_available_measures,
-                filtered_measures=_available_measures
-                if any(_available_measures)
-                else [SoilReinforcementProfile],
+                filtered_measures=(
+                    _available_measures
+                    if any(_available_measures)
+                    else [SoilReinforcementProfile]
+                ),
                 strategy_location_input=_location_input,
             )
             _cluster_data.append(_slr)

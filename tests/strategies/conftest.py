@@ -7,7 +7,7 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
@@ -29,8 +29,8 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         SoilReinforcementProfile,  # Expected idx 0 in default order!
         SoilReinforcementProfile,
         SoilReinforcementProfile,
-        StabilityWallReinforcementProfile,  # Expected idx 3 in default order!
-        StabilityWallReinforcementProfile,
+        StabilityWallCrestReinforcementProfile,  # Expected idx 3 in default order!
+        StabilityWallCrestReinforcementProfile,
         SoilReinforcementProfile,
         SoilReinforcementProfile,
         SoilReinforcementProfile,
@@ -48,11 +48,10 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
             infrastructure_costs=(10 ** (len(_reinforcement_type_default_order) - 1))
             * 42.0,
             infrastructure_costs_with_surtax=(
-                10 ** (len(_reinforcement_type_default_order) - 1)
-            )
-            * 84.0
-            if _idx in [0, 1, 3]
-            else 0.0,  # Dramatic infra costs so they move to where we want
+                (10 ** (len(_reinforcement_type_default_order) - 1)) * 84.0
+                if _idx in [0, 1, 3]
+                else 0.0
+            ),  # Dramatic infra costs so they move to where we want
         )
         for _idx, _reinforcement in enumerate(_reinforcement_type_default_order)
     ]
