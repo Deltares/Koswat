@@ -127,7 +127,7 @@ class StabilityWallToeInputProfileCalculation(
             self.scenario,
         )
         _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
-            InputProfileEnum.STABILITY_WALL, _calculated_factors
+            InputProfileEnum.STABILITY_WALL_TOE, _calculated_factors
         )
         (
             _reinforced_data.polderside_berm_width,
