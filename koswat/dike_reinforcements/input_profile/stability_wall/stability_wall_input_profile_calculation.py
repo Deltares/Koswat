@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import asdict
@@ -26,8 +26,8 @@ from koswat.configuration.settings.koswat_general_settings import ConstructionTy
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
+    KoswatStabilityWallCrestSettings,
 )
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -67,7 +67,7 @@ class StabilityWallInputProfileCalculation(
     @staticmethod
     def _calculate_length_stability_wall(
         old_data: KoswatInputProfileProtocol,
-        stability_wall_settings: KoswatStabilityWallSettings,
+        stability_wall_settings: KoswatStabilityWallCrestSettings,
         seepage_length: float,
         stab_wall: bool,
         new_crest_height: float,
@@ -122,8 +122,10 @@ class StabilityWallInputProfileCalculation(
             StabilityWallInputProfile, self.base_profile.input_data, self.scenario
         )
         assert isinstance(_reinforced_data, StabilityWallInputProfile)
-        
-        _reinforced_data.active = self.reinforcement_settings.stability_wall_settings.active
+
+        _reinforced_data.active = (
+            self.reinforcement_settings.stability_wall_crest_settings.active
+        )
 
         # Berm calculation
         _calculated_factors = BermCalculatedFactors.from_calculation_input(
@@ -160,25 +162,25 @@ class StabilityWallInputProfileCalculation(
         _stab_wall = isinstance(_polderside_berm_calculator, NoBermCalculator)
         _reinforced_data.construction_length = self._calculate_length_stability_wall(
             self.base_profile.input_data,
-            self.reinforcement_settings.stability_wall_settings,
+            self.reinforcement_settings.stability_wall_crest_settings,
             _seepage_length,
             _stab_wall,
             _reinforced_data.crest_height,
         )
         _reinforced_data.construction_type = self._determine_construction_type(
-            self.reinforcement_settings.stability_wall_settings.transition_sheetpile_diaphragm_wall,
+            self.reinforcement_settings.stability_wall_crest_settings.transition_sheetpile_diaphragm_wall,
             _reinforced_data.construction_length,
         )
 
         # Settings
         _reinforced_data.soil_surtax_factor = (
-            self.reinforcement_settings.stability_wall_settings.soil_surtax_factor
+            self.reinforcement_settings.stability_wall_crest_settings.soil_surtax_factor
         )
         _reinforced_data.constructive_surtax_factor = (
-            self.reinforcement_settings.stability_wall_settings.constructive_surtax_factor
+            self.reinforcement_settings.stability_wall_crest_settings.constructive_surtax_factor
         )
         _reinforced_data.land_purchase_surtax_factor = (
-            self.reinforcement_settings.stability_wall_settings.land_purchase_surtax_factor
+            self.reinforcement_settings.stability_wall_crest_settings.land_purchase_surtax_factor
         )
 
         return _reinforced_data

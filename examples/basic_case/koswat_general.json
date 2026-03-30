@@ -48,6 +48,15 @@
         "Opslagfactor_Grond": "Moeilijk",
         "Opslagfactor_Constructief": "Normaal",
         "Opslagfactor_Grondaankoop": "Moeilijk",
+        "Versteiling_Binnentalud": 3,
+        "Min_Lengte_Stabiliteitswand": 5,
+        "Max_Lengte_Stabiliteitswand": 15
+    },
+    "StabiliteitswandKruin": {
+        "Actief": true,
+        "Opslagfactor_Grond": "Moeilijk",
+        "Opslagfactor_Constructief": "Normaal",
+        "Opslagfactor_Grondaankoop": "Moeilijk",
         "Versteiling_Binnentalud": 2,
         "Min_Lengte_Stabiliteitswand": 5,
         "Overgang_Damwand_Diepwand": 20,

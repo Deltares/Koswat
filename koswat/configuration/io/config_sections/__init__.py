@@ -19,6 +19,9 @@ from koswat.configuration.io.config_sections.soil_reinforcement_section_fom impo
 from koswat.configuration.io.config_sections.stability_wall_crest_reinforcement_section_fom import (
     StabilityWallCrestReinforcementSectionFom,
 )
+from koswat.configuration.io.config_sections.stability_wall_toe_reinforcement_section_fom import (
+    StabilityWallToeReinforcementSectionFom,
+)
 from koswat.configuration.io.config_sections.surroundings_section_fom import (
     SurroundingsSectionFom,
 )

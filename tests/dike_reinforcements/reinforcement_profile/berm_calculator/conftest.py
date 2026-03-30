@@ -15,8 +15,8 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
     KoswatSoilSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
+    KoswatStabilityWallCrestSettings,
 )
 from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
     KoswatVPSSettings,
@@ -41,16 +41,16 @@ def _get_valid_scenario_fixture() -> Iterator[KoswatScenario]:
 
 
 @pytest.fixture(name="valid_reinforcement_settings")
-def _get_valid_reinforcement_settings_fixture() -> Iterator[
-    KoswatReinforcementSettings
-]:
+def _get_valid_reinforcement_settings_fixture() -> (
+    Iterator[KoswatReinforcementSettings]
+):
     yield KoswatReinforcementSettings(
         soil_settings=KoswatSoilSettings(),
         vps_settings=KoswatVPSSettings(polderside_berm_width_vps=10),
         piping_wall_settings=KoswatPipingWallSettings(
             transition_cbwall_sheetpile=10.0,
         ),
-        stability_wall_settings=KoswatStabilityWallSettings(
+        stability_wall_settings=KoswatStabilityWallCrestSettings(
             transition_sheetpile_diaphragm_wall=15.0,
         ),
         cofferdam_settings=KoswatCofferdamSettings(),

@@ -7,8 +7,8 @@ from koswat.configuration.settings.koswat_general_settings import ConstructionTy
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
+    KoswatStabilityWallCrestSettings,
 )
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
@@ -77,7 +77,7 @@ class TestStabilityWallInputProfileCalculation:
             aquifer: float
 
         @dataclass
-        class MockSettings(KoswatStabilityWallSettings):
+        class MockSettings(KoswatStabilityWallCrestSettings):
             min_length_stability_wall: float
             max_length_stability_wall: float
 
@@ -131,7 +131,7 @@ class TestStabilityWallInputProfileCalculation:
 
     def test_build(self, valid_input_data: KoswatInputProfileProtocol):
         @dataclass
-        class MockSettings(KoswatStabilityWallSettings):
+        class MockSettings(KoswatStabilityWallCrestSettings):
             min_length_stability_wall: float
             max_length_stability_wall: float
             transition_sheetpile_diaphragm_wall: float

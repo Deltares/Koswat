@@ -27,6 +27,7 @@ from koswat.configuration.io.config_sections import (
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilityWallCrestReinforcementSectionFom,
+    StabilityWallToeReinforcementSectionFom,
     VPSReinforcementSectionFom,
 )
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
@@ -43,7 +44,10 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     piping_wall: PipingWallReinforcementSectionFom = field(
         default_factory=PipingWallReinforcementSectionFom
     )
-    stability_wall: StabilityWallCrestReinforcementSectionFom = field(
+    stability_wall_toe: StabilityWallToeReinforcementSectionFom = field(
+        default_factory=StabilityWallToeReinforcementSectionFom
+    )
+    stability_wall_crest: StabilityWallCrestReinforcementSectionFom = field(
         default_factory=StabilityWallCrestReinforcementSectionFom
     )
     cofferdam: CofferdamReinforcementSectionFom = field(

@@ -29,6 +29,7 @@ from koswat.configuration.io.config_sections import (
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilityWallCrestReinforcementSectionFom,
+    StabilityWallToeReinforcementSectionFom,
     SurroundingsSectionFom,
     VPSReinforcementSectionFom,
 )
@@ -43,7 +44,8 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
     soil_measure_section: SoilReinforcementSectionFom
     vps_section: VPSReinforcementSectionFom
     piping_wall_section: PipingWallReinforcementSectionFom
-    stability_wall_section: StabilityWallCrestReinforcementSectionFom
+    stability_wall_toe_section: StabilityWallToeReinforcementSectionFom
+    stability_wall_crest_section: StabilityWallCrestReinforcementSectionFom
     cofferdam_section: CofferdamReinforcementSectionFom
     surroundings_section: SurroundingsSectionFom
     infrastructuur_section: InfrastructureSectionFom
@@ -82,7 +84,12 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
                     json_config["kwelscherm"], set_defaults=True
                 )
             ),
-            stability_wall_section=(
+            stability_wall_toe_section=(
+                StabilityWallToeReinforcementSectionFom.from_config(
+                    json_config["stabiliteitswandteen"], set_defaults=True
+                )
+            ),
+            stability_wall_crest_section=(
                 StabilityWallCrestReinforcementSectionFom.from_config(
                     json_config["stabiliteitswandkruin"], set_defaults=True
                 )
