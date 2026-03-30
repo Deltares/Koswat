@@ -140,7 +140,7 @@ class TestStabilityWallInputProfileCalculation:
         _calculator = StabilityWallInputProfileCalculation()
         _calculator.base_profile = ReinforcementProfile(input_data=valid_input_data)
         _reinforcement_settings = KoswatReinforcementSettings(
-            stability_wall_settings=MockSettings(
+            stability_wall_crest_settings=MockSettings(
                 min_length_stability_wall=0,
                 max_length_stability_wall=99,
                 transition_sheetpile_diaphragm_wall=15,

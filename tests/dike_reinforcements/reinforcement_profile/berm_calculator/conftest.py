@@ -50,7 +50,7 @@ def _get_valid_reinforcement_settings_fixture() -> (
         piping_wall_settings=KoswatPipingWallSettings(
             transition_cbwall_sheetpile=10.0,
         ),
-        stability_wall_settings=KoswatStabilityWallCrestSettings(
+        stability_wall_crest_settings=KoswatStabilityWallCrestSettings(
             transition_sheetpile_diaphragm_wall=15.0,
         ),
         cofferdam_settings=KoswatCofferdamSettings(),
