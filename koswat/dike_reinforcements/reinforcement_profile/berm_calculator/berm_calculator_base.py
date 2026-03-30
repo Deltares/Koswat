@@ -58,7 +58,7 @@ class BermCalculatorBase(BermCalculatorProtocol, ABC):
             + self.scenario.d_h
         )
 
-        if reinforcement_type == InputProfileEnum.STABILITY_WALL:
+        if reinforcement_type == InputProfileEnum.STABILITY_WALL_CREST:
             _operand = (
                 self.dikebase_piping_old
                 - self.scenario.d_h * self.scenario.waterside_slope

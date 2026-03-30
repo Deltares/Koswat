@@ -106,17 +106,6 @@ class StabilityWallToeInputProfileCalculation(
             1,
         )
 
-    @staticmethod
-    def _determine_construction_type(
-        transition: float,
-        construction_length: float,
-    ) -> ConstructionTypeEnum | None:
-        if construction_length == 0.0:
-            return None
-        if construction_length <= transition:
-            return ConstructionTypeEnum.DAMWAND_VERANKERD
-        return ConstructionTypeEnum.DIEPWAND
-
     def build(self) -> StabilityWallToeInputProfile:
         _reinforced_data = self._get_reinforcement_profile(
             StabilityWallToeInputProfile, self.base_profile.input_data, self.scenario
@@ -135,7 +124,7 @@ class StabilityWallToeInputProfileCalculation(
             self.scenario,
         )
         _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
-            InputProfileEnum.STABILITY_WALL, _calculated_factors
+            InputProfileEnum.STABILITY_WALL_TOE, _calculated_factors
         )
         (
             _reinforced_data.polderside_berm_width,
@@ -167,10 +156,7 @@ class StabilityWallToeInputProfileCalculation(
             _stab_wall,
             _reinforced_data.crest_height,
         )
-        _reinforced_data.construction_type = self._determine_construction_type(
-            self.reinforcement_settings.stability_wall_toe_settings.transition_sheetpile_diaphragm_wall,
-            _reinforced_data.construction_length,
-        )
+        _reinforced_data.construction_type = ConstructionTypeEnum.DAMWAND_ONVERANKERD
 
         # Settings
         _reinforced_data.soil_surtax_factor = (
