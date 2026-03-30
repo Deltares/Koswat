@@ -27,6 +27,7 @@ from koswat.configuration.io.config_sections import (
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilityWallCrestReinforcementSectionFom,
+    StabilityWallToeReinforcementSectionFom,
     VPSReinforcementSectionFom,
 )
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
@@ -63,7 +64,11 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             piping_wall=PipingWallReinforcementSectionFom.from_config(
                 _json_fom.content.get("kwelscherm", dict()), set_defaults=False
             ),
-            stability_wall=StabilityWallCrestReinforcementSectionFom.from_config(
+            stability_wall_toe=StabilityWallToeReinforcementSectionFom.from_config(
+                _json_fom.content.get("stabiliteitswandteen", dict()),
+                set_defaults=False,
+            ),
+            stability_wall_crest=StabilityWallCrestReinforcementSectionFom.from_config(
                 _json_fom.content.get("stabiliteitswandkruin", dict()),
                 set_defaults=False,
             ),

@@ -9,6 +9,7 @@ from koswat.configuration.io.config_sections import (
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
     StabilityWallCrestReinforcementSectionFom,
+    StabilityWallToeReinforcementSectionFom,
     SurroundingsSectionFom,
     VPSReinforcementSectionFom,
 )
@@ -107,7 +108,7 @@ class TestKoswatGeneralJsonFom:
             == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _config_fom.stability_wall_section.constructive_surtax_factor
+            _config_fom.piping_wall_section.constructive_surtax_factor
             == SurtaxFactorEnum.NORMAAL
         )
         assert (
@@ -118,29 +119,51 @@ class TestKoswatGeneralJsonFom:
         assert _config_fom.piping_wall_section.transition_cbwall_sheetpile == 99
         assert _config_fom.piping_wall_section.max_length_piping_wall == 25
 
-        # Stabiliteitswand (kruin) section
+        # Stabiliteitswand (teen) section
         assert isinstance(
-            _config_fom.stability_wall_section,
-            StabilityWallCrestReinforcementSectionFom,
+            _config_fom.stability_wall_toe_section,
+            StabilityWallToeReinforcementSectionFom,
         )
         assert (
-            _config_fom.stability_wall_section.soil_surtax_factor
+            _config_fom.stability_wall_toe_section.soil_surtax_factor
             == SurtaxFactorEnum.MOEILIJK
         )
         assert (
-            _config_fom.stability_wall_section.constructive_surtax_factor
+            _config_fom.stability_wall_toe_section.constructive_surtax_factor
             == SurtaxFactorEnum.NORMAAL
         )
         assert (
-            _config_fom.stability_wall_section.land_purchase_surtax_factor
+            _config_fom.stability_wall_toe_section.land_purchase_surtax_factor
             == SurtaxFactorEnum.MOEILIJK
         )
-        assert _config_fom.stability_wall_section.steepening_polderside_slope == 2
-        assert _config_fom.stability_wall_section.min_length_stability_wall == 5
-        assert (
-            _config_fom.stability_wall_section.transition_sheetpile_diaphragm_wall == 20
+        assert _config_fom.stability_wall_toe_section.steepening_polderside_slope == 3
+        assert _config_fom.stability_wall_toe_section.min_length_stability_wall == 5
+        assert _config_fom.stability_wall_toe_section.max_length_stability_wall == 15
+
+        # Stabiliteitswand (kruin) section
+        assert isinstance(
+            _config_fom.stability_wall_crest_section,
+            StabilityWallCrestReinforcementSectionFom,
         )
-        assert _config_fom.stability_wall_section.max_length_stability_wall == 25
+        assert (
+            _config_fom.stability_wall_crest_section.soil_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
+        )
+        assert (
+            _config_fom.stability_wall_crest_section.constructive_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
+        )
+        assert (
+            _config_fom.stability_wall_crest_section.land_purchase_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
+        )
+        assert _config_fom.stability_wall_crest_section.steepening_polderside_slope == 2
+        assert _config_fom.stability_wall_crest_section.min_length_stability_wall == 5
+        assert (
+            _config_fom.stability_wall_crest_section.transition_sheetpile_diaphragm_wall
+            == 20
+        )
+        assert _config_fom.stability_wall_crest_section.max_length_stability_wall == 25
 
         # Kistdam section
         assert isinstance(
