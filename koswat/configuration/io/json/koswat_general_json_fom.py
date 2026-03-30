@@ -84,7 +84,7 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
             ),
             stability_wall_section=(
                 StabilityWallCrestReinforcementSectionFom.from_config(
-                    json_config["stabiliteitswand"], set_defaults=True
+                    json_config["stabiliteitswandkruin"], set_defaults=True
                 )
             ),
             cofferdam_section=CofferdamReinforcementSectionFom.from_config(

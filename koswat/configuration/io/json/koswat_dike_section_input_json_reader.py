@@ -64,7 +64,8 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
                 _json_fom.content.get("kwelscherm", dict()), set_defaults=False
             ),
             stability_wall=StabilityWallCrestReinforcementSectionFom.from_config(
-                _json_fom.content.get("stabiliteitswand", dict()), set_defaults=False
+                _json_fom.content.get("stabiliteitswandkruin", dict()),
+                set_defaults=False,
             ),
             cofferdam=CofferdamReinforcementSectionFom.from_config(
                 _json_fom.content.get("kistdam", dict()), set_defaults=False

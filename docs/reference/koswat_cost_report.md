@@ -110,7 +110,7 @@ acceptance
 |   |   |   |   summary_costs.csv
 |   |   |   |   summary_locations.csv
 |   |   |   |   summary_infrastructure_costs.csv
-|   |   |   |   Stabiliteitswand.png
+|   |   |   |   Stabiliteitswand_kruin.png
 |   |   |   |   Verticale_piping_oplossing.png
 |   |   |   |
 |   |   |   +-- summary_locations
@@ -146,7 +146,7 @@ acceptance
 |   |   |   +-- Kwelscherm
 |   |   |       |   ...
 |   |   |
-|   |   |   +-- Stabiliteitswand
+|   |   |   +-- Stabiliteitswand_kruin
 |   |   |       |   ...
 |   |   |
 |   |   |   +-- Verticale_piping_oplossing

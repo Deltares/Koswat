@@ -118,7 +118,7 @@ class TestKoswatGeneralJsonFom:
         assert _config_fom.piping_wall_section.transition_cbwall_sheetpile == 99
         assert _config_fom.piping_wall_section.max_length_piping_wall == 25
 
-        # Stabiliteitswand section
+        # Stabiliteitswand (kruin) section
         assert isinstance(
             _config_fom.stability_wall_section,
             StabilityWallCrestReinforcementSectionFom,

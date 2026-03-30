@@ -339,7 +339,9 @@ class TestReinforcementProfileBuilderFactory:
             pytest.param(SoilReinforcementProfile, id="Groundmaatregel"),
             pytest.param(VPSReinforcementProfile, id="Verticale piping oplossing"),
             pytest.param(PipingWallReinforcementProfile, id="Pipingwand"),
-            pytest.param(StabilityWallReinforcementProfile, id="Stabiliteitswand"),
+            pytest.param(
+                StabilityWallReinforcementProfile, id="Stabiliteitswand kruin"
+            ),
             pytest.param(CofferdamReinforcementProfile, id="Kistdam"),
         ],
     )
