@@ -1,4 +1,5 @@
-from abc import ABC, abstractmethod
+from abc import ABC
+from dataclasses import dataclass
 
 from koswat.configuration.settings.koswat_general_settings import (
     ConstructionTypeEnum,
@@ -10,6 +11,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 )
 
 
+@dataclass
 class ReinforcementInputProfileBase(
     ABC, KoswatInputProfileBase, ReinforcementInputProfileProtocol
 ):
