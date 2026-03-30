@@ -8,7 +8,7 @@ from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
-    StabilitywallReinforcementSectionFom,
+    StabilityWallCrestReinforcementSectionFom,
     SurroundingsSectionFom,
     VPSReinforcementSectionFom,
 )
@@ -120,7 +120,8 @@ class TestKoswatGeneralJsonFom:
 
         # Stabiliteitswand section
         assert isinstance(
-            _config_fom.stability_wall_section, StabilitywallReinforcementSectionFom
+            _config_fom.stability_wall_section,
+            StabilityWallCrestReinforcementSectionFom,
         )
         assert (
             _config_fom.stability_wall_section.soil_surtax_factor
