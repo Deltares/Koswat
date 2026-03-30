@@ -41,6 +41,4 @@ class ReinforcementInputProfileProtocol(KoswatInputProfileProtocol, Protocol):
     constructive_surtax_factor: SurtaxFactorEnum | None
     land_purchase_surtax_factor: SurtaxFactorEnum | None
     reinforcement_domain_name: str
-
-    def ground_price(self) -> float:
-        pass
+    ground_price: float
