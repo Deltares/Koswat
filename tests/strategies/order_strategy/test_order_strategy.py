@@ -219,6 +219,7 @@ class TestOrderStrategy:
         _expected_result = deepcopy(self._default_reinforcements)
         _expected_result = [
             SoilReinforcementProfile,
+            StabilityWallToeReinforcementProfile,
             StabilityWallCrestReinforcementProfile,
             CofferdamReinforcementProfile,
         ]

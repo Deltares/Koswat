@@ -96,7 +96,7 @@ def _get_example_location_input(
                 0
             ].strategy_reinforcement_type_costs
         )
-        == 5
+        == 6
     )
     assert (
         len(
