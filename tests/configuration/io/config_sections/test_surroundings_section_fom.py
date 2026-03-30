@@ -1,3 +1,5 @@
+import pytest
+
 from koswat.configuration.io.config_sections.surroundings_section_fom import (
     SurroundingsSectionFom,
 )
@@ -69,3 +71,19 @@ class TestSurroundingsSectionFom:
             "spoorwegen": 10,
             "water": 0,
         }
+
+    def test_from_config_with_invalid_buffer(self):
+        # 1. Define test data.
+        _surroundings_config = {
+            "constructieafstand": 100.0,
+            "constructieovergang": 20.0,
+            "buitendijks": True,
+            "omgevingtypes": {"bebouwing": "invalid_buffer"},
+        }
+
+        # 2. Run test
+        with pytest.raises(ValueError) as exc_info:
+            SurroundingsSectionFom.from_config(_surroundings_config)
+
+        # 3. Verify expectations.
+        assert exc_info is not None

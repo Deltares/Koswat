@@ -46,7 +46,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             ),
             waterside=SectionConfigHelper.get_bool(input_config["buitendijks"]),
             obstacle_types={
-                k.lower().strip(): v
+                k.lower().strip(): SectionConfigHelper.get_float(v)
                 for k, v in input_config.get("omgevingtypes", {}).items()
             },
         )
