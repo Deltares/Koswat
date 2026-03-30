@@ -40,16 +40,18 @@ class KoswatJsonReader(KoswatReaderProtocol):
         with open(file_path, "r", encoding="utf-8") as _file:
             _json_content = json.load(_file)
 
-        def _normalize_keys(_json_content: dict) -> dict:
+        def _normalize_keys(
+            _json_content: dict[str, str | dict | list],
+        ) -> dict[str, str | dict | list]:
             # All keys to lowercase
-            return {
-                k.lower(): (
-                    _normalize_keys(v)
-                    if isinstance(v, dict)
-                    else ([_normalize_keys(i) for i in v] if isinstance(v, list) else v)
-                )
-                for k, v in _json_content.items()
-            }
+            def _normalize_value(value: str | dict | list) -> str | dict | list:
+                if isinstance(value, dict):
+                    return _normalize_keys(value)
+                if isinstance(value, list):
+                    return [_normalize_value(i) for i in value]
+                return value
+
+            return {k.lower(): _normalize_value(v) for k, v in _json_content.items()}
 
         return KoswatJsonFom(
             file_path=file_path, content=_normalize_keys(_json_content)
