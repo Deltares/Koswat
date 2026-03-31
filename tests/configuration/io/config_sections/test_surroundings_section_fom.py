@@ -19,6 +19,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
+        assert _surroundings_section_fom.allow_waterside_reinforcement is True
         assert _surroundings_section_fom.obstacle_types == [
             "bebouwing",
             "spoorwegen",
@@ -42,6 +43,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is False
+        assert _surroundings_section_fom.allow_waterside_reinforcement is True
         assert _surroundings_section_fom.obstacle_types == []
 
     def test_from_config_with_omgevingtypes(self):
@@ -57,6 +59,7 @@ class TestSurroundingsSectionFom:
                 "camping",
                 "wildlife",
             ],
+            "toegestaanbuitenzijdeversterking": False
         }
 
         # 2. Run test.
@@ -69,6 +72,7 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
+        assert _surroundings_section_fom.allow_waterside_reinforcement is False
         assert _surroundings_section_fom.obstacle_types == [
             "bebouwing",
             "spoorwegen",
