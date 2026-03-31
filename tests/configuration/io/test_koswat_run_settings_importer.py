@@ -19,12 +19,12 @@ from tests import test_data, test_results
 
 
 class TestKoswatRunSettingsImporter:
-    def test_initialize_importer(self):
+    def test_when_initialize_importer_then_expected_instance_returned(self):
         _importer = KoswatRunSettingsImporter()
         assert isinstance(_importer, KoswatRunSettingsImporter)
         assert isinstance(_importer, KoswatImporterProtocol)
 
-    def test__import_dike_section_input_list_without_json_files(self, empty_dir: Path):
+    def test_when__import_dike_section_input_list_given_no_json_files_then_empty_result_list(self, empty_dir: Path):
         # 1. Define test data.
         _json_folder = empty_dir
         _importer = KoswatRunSettingsImporter()
@@ -35,7 +35,7 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test__import_dike_section_input_list_missing_folder(self):
+    def test_when__import_dike_section_input_list_given_missing_folder_then_empty_result_list(self):
         # 1. Define test data.
         _json_folder = Path("non_existing_folder")
         _importer = KoswatRunSettingsImporter()
@@ -46,7 +46,7 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test__import_selected_dike_section_names_without_txt_file(
+    def test_when__import_selected_dike_section_names_given_no_txt_file_then_empty_result_list(
         self, empty_dir: Path
     ):
         # 1. Define test data.
@@ -59,7 +59,7 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == []
 
-    def test__import_selected_dike_section_names_with_emtpy_txt_file(
+    def test_when__import_selected_dike_section_names_given_empty_txt_file_then_empty_result_list(
         self, empty_file: Path
     ):
         # 1. Define test data.
@@ -73,7 +73,7 @@ class TestKoswatRunSettingsImporter:
         assert _result == []
 
     @pytest.mark.parametrize("include_taxes", [(True), (False)])
-    def test__import_dike_costs_without_json_file(
+    def test_when__import_dike_costs_given_no_json_file_then_returns_none(
         self, include_taxes: bool, empty_dir: Path
     ):
         # 1. Define test data.
@@ -86,7 +86,7 @@ class TestKoswatRunSettingsImporter:
         # 3. Verify final expectations.
         assert _result == None
 
-    def test_koswat_run_settings_importer_build_from_valid_json(self):
+    def test_when_import_from_given_valid_json_then_returns_expected_config_instance(self):
         # 1. Define test data.
         _config_file = test_data.joinpath("acceptance", "koswat_general.json")
         assert _config_file.is_file()
@@ -102,7 +102,7 @@ class TestKoswatRunSettingsImporter:
         )
         assert isinstance(_config.output_dir, Path)
 
-    def test_koswat_run_settings_importer_build_without_dike_sections(
+    def test_when_import_from_given_no_dike_sections_then_run_scenarios_is_empty(
         self, empty_file: Path
     ):
         # 1. Define test data
@@ -123,7 +123,7 @@ class TestKoswatRunSettingsImporter:
         assert isinstance(_config, KoswatRunSettings)
         assert _config.run_scenarios == []
 
-    def test__get_dike_section_input_overrides_defaults(self):
+    def test_when__get_dike_section_input_given_new_values_then_general_settings_are_overriden(self):
         # 1. Define test data
         _importer = KoswatRunSettingsImporter()
         _general_settings = _importer._import_general_settings(
