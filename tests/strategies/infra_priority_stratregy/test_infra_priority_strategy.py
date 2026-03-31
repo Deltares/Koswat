@@ -104,11 +104,11 @@ class TestInfraPriorityStrategy:
         )
         assert all(
             _sr.current_selected_measure == StabilityWallCrestReinforcementProfile
-            for _sr in _result[2:7]
+            for _sr in _result[2:5]
         )
         assert all(
             _sr.current_selected_measure == CofferdamReinforcementProfile
-            for _sr in _result[7:]
+            for _sr in _result[5:]
         )
 
         _order = _strategy_output.reinforcement_order

@@ -69,8 +69,8 @@ _reinforcements = {
     SoilReinforcementProfile: SoilInputProfile,
     VPSReinforcementProfile: VPSInputProfile,
     PipingWallReinforcementProfile: PipingWallInputProfile,
-    StabilityWallCrestReinforcementProfile: StabilityWallCrestInputProfile,
     StabilityWallToeReinforcementProfile: StabilityWallToeInputProfile,
+    StabilityWallCrestReinforcementProfile: StabilityWallCrestInputProfile,
     CofferdamReinforcementProfile: CofferDamInputProfile,
 }
 
