@@ -30,9 +30,9 @@ from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 @dataclass
 class SurroundingsSectionFom(KoswatJsonFomProtocol):
-    construction_distance: float
-    construction_buffer: float
-    waterside: bool
+    construction_distance: float = float("nan")
+    construction_buffer: float = float("nan")
+    waterside: bool = False
     allow_waterside_reinforcement: bool = True
     obstacle_types: list[str] = field(default_factory=list)
 
@@ -55,7 +55,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             construction_buffer=SectionConfigHelper.get_float(
                 input_config.get("constructieovergang", None)
             ),
-            waterside=pop_surrounding_type("buitenzijde"),
+            waterside=pop_surrounding_type("buitendijks"),
             allow_waterside_reinforcement=SectionConfigHelper.get_bool(
                 input_config.get("toegestaanbuitenzijdeversterking", True)
             ),
