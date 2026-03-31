@@ -37,7 +37,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calcula
 class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
-    use_waterside: bool = False
+    allow_waterside_reinforcement: bool = False
 
     obstacles: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
 
@@ -55,6 +55,6 @@ class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
         """
 
         def _is_at_safe_distance(point_surroundings: PointObstacleSurroundings) -> bool:
-            return room_calculator.reinforcement_has_room(point_surroundings, self.use_waterside)
+            return room_calculator.reinforcement_has_room(point_surroundings, self.allow_waterside_reinforcement)
 
         return list(filter(_is_at_safe_distance, self.obstacles.points))
