@@ -1,7 +1,14 @@
+from typing import Optional
+
+import pytest
+
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
+from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+    PointObstacleSurroundings,
+)
 
 
 class TestKoswatSurroundingsCsvFom:
@@ -12,3 +19,58 @@ class TestKoswatSurroundingsCsvFom:
         assert not _csv_fom.points_surroundings_list
         assert _csv_fom.traject == ""
         assert not _csv_fom.is_valid()
+
+    def test_when_merge_given_different_traject_then_raise_exception(self):
+        # 1. Define test data
+        _csv_fom_1 = KoswatSurroundingsCsvFom(traject="traject_1")
+        _csv_fom_2 = KoswatSurroundingsCsvFom(traject="traject_2")
+
+        # 2. Execute test and verify expectations
+        with pytest.raises(ValueError):
+            _csv_fom_1.merge(_csv_fom_2)
+
+    def test_when_merge_given_same_traject_then_points_merged(
+        self,
+    ):
+        # 1. Define test data
+        _csv_fom_1 = KoswatSurroundingsCsvFom(
+            points_surroundings_list=[
+                PointObstacleSurroundings(
+                    location=(0, 0),
+                    inside_distance=10.0,
+                    outside_distance=15.0,
+                )
+            ],
+            traject="traject_1",
+        )
+        _csv_fom_2 = KoswatSurroundingsCsvFom(
+            points_surroundings_list=[
+                PointObstacleSurroundings(
+                    location=(0, 0),
+                    inside_distance=5.0,
+                    outside_distance=10.0,
+                ),
+                PointObstacleSurroundings(
+                    location=(1, 1),
+                    inside_distance=8.0,
+                    outside_distance=12.0,
+                ),
+            ],
+            traject="traject_1",
+        )
+
+        # 2. Execute test
+        _csv_fom_1.merge(_csv_fom_2)
+
+        # 3. Verify expectations
+        assert len(_csv_fom_1.points_surroundings_list) == 2
+        assert all(
+            isinstance(_point, PointObstacleSurroundings)
+            for _point in _csv_fom_1.points_surroundings_list
+        )
+        assert _csv_fom_1.points_surroundings_list[0].location == (0, 0)
+        assert _csv_fom_1.points_surroundings_list[0].inside_distance == 5.0
+        assert _csv_fom_1.points_surroundings_list[0].outside_distance == 10.0
+        assert _csv_fom_1.points_surroundings_list[1].location == (1, 1)
+        assert _csv_fom_1.points_surroundings_list[1].inside_distance == 8.0
+        assert _csv_fom_1.points_surroundings_list[1].outside_distance == 12.0
