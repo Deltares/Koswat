@@ -78,7 +78,8 @@
         "ConstructieOvergang": 10,
         "OmgevingTypes": [
             "Bebouwing"
-        ]
+        ],
+        "ToegestaanBuitenzijdeVersterking": true
     },
     "Infrastructuur": {
         "Actief": false,

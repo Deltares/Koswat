@@ -29,6 +29,7 @@ from koswat.configuration.io.config_sections import (
     StabilitywallReinforcementSectionFom,
     VPSReinforcementSectionFom,
 )
+from koswat.configuration.io.config_sections.surroundings_section_fom import SurroundingsSectionFom
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
 )
@@ -69,7 +70,9 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             cofferdam=CofferdamReinforcementSectionFom.from_config(
                 _json_fom.content.get("kistdam", dict()), set_defaults=False
             ),
-            allow_waterside_reinforcement=_json_fom.content.get("toegestaan_buitenzijde_versterking", True)
+            surroundings=SurroundingsSectionFom.from_config(
+                _json_fom.content.get("omgeving", dict())
+            )
         )
         _dike_section_input_fom.input_profile.dike_section = (
             _dike_section_input_fom.dike_section

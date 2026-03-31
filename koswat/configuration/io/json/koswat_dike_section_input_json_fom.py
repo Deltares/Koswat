@@ -29,6 +29,7 @@ from koswat.configuration.io.config_sections import (
     StabilitywallReinforcementSectionFom,
     VPSReinforcementSectionFom,
 )
+from koswat.configuration.io.config_sections.surroundings_section_fom import SurroundingsSectionFom
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
@@ -49,7 +50,7 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     cofferdam: CofferdamReinforcementSectionFom = field(
         default_factory=CofferdamReinforcementSectionFom
     )
-    allow_waterside_reinforcement: bool = True
+    surroundings: SurroundingsSectionFom = field(default_factory=SurroundingsSectionFom)
 
     def is_valid(self) -> bool:
         return self.dike_section != ""
