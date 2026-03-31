@@ -33,7 +33,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
     construction_distance: float
     construction_buffer: float
     waterside: bool
-    allow_waterside_reinforcement: bool
+    allow_waterside_reinforcement: bool = True
     obstacle_types: list[str] = field(default_factory=list)
 
     @classmethod
