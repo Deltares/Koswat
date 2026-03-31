@@ -45,7 +45,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             construction_buffer=SectionConfigHelper.get_float(
                 input_config.get("constructieovergang", None)
             ),
-            waterside=SectionConfigHelper.get_bool(input_config["buitendijks"]),
+            waterside=SectionConfigHelper.get_bool(input_config.get("buitendijks", None)),
             allow_waterside_reinforcement=SectionConfigHelper.get_bool(
                 input_config.get("toegestaanbuitenzijdeversterking", True)
             ),
