@@ -1,27 +1,28 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from __future__ import annotations
 
 from itertools import product
+from typing import Optional
 
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
@@ -72,6 +73,49 @@ class OrderStrategy(StrategyProtocol):
             CofferdamReinforcementProfile,
         ]
 
+    def _split_reinforcements(
+        self,
+        reinforcements: list[StrategyReinforcementInput],
+    ) -> tuple[
+        list[StrategyReinforcementInput],
+        Optional[StrategyReinforcementInput],
+        StrategyReinforcementInput,
+    ]:
+        # All active items including Cofferdam, even if not active
+        _unsorted = list(
+            filter(
+                lambda x: x.active
+                or x.reinforcement_type == CofferdamReinforcementProfile,
+                reinforcements,
+            )
+        )
+        # SoilReinforcement, if active
+        _first = next(
+            (x for x in _unsorted if x.reinforcement_type == SoilReinforcementProfile),
+            None,
+        )
+        # Cofferdam
+        _last = next(
+            (
+                x
+                for x in _unsorted
+                if x.reinforcement_type == CofferdamReinforcementProfile
+            )
+        )
+
+        return (_unsorted, _first, _last)
+
+    def _merge_reinforcements(
+        self,
+        sorted: list[StrategyReinforcementInput],
+        first: Optional[StrategyReinforcementInput],
+        last: StrategyReinforcementInput,
+    ) -> list[StrategyReinforcementInput]:
+        # Remove first (if present) and last, to avoid duplicates.
+        sorted.remove(first) if first in sorted else None
+        sorted.remove(last) if last in sorted else None
+        return [first] + sorted + [last] if first else sorted + [last]
+
     def get_strategy_order_for_reinforcements(
         self,
         strategy_reinforcements: list[StrategyReinforcementInput],
@@ -80,7 +124,8 @@ class OrderStrategy(StrategyProtocol):
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
         possibly removing reinforcement types that are more expensive and more restrictive than others.
         Inactive reinforcements are ignored.
-        Cofferdam should always be the last reinforcement type.
+        If active, SoilReinforcement should be the first reinforcement type.
+        Cofferdam should be the last reinforcement type.
 
         Input:
             strategy_reinforcements (list[StrategyReinforcementInput]): list of reinforcement types with costs and surface
@@ -91,32 +136,18 @@ class OrderStrategy(StrategyProtocol):
         if not strategy_reinforcements:
             return []
 
-        def split_reinforcements() -> (
-            tuple[list[StrategyReinforcementInput], list[StrategyReinforcementInput]]
-        ):
-            _last, _other = [], []
-            for obj in strategy_reinforcements:
-                if not obj:
-                    continue
-                if obj.reinforcement_type == CofferdamReinforcementProfile:
-                    _last.append(obj)
-                    continue
-                if not obj.active:
-                    continue
-                else:
-                    _other.append(obj)
+        # Order in a list to be sorted (least to most restrictive)
+        # and find item to be put first and last.
+        _unsorted, _first, _last = self._split_reinforcements(strategy_reinforcements)
 
-            return (_other, _last)
-
-        # Split in a list to be sorted (least to most restrictive) and a list to be put last (Cofferdam for now)
-        _unsorted, _last = split_reinforcements()
+        # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
         _sorted = sorted(
             _unsorted,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
             reverse=True,
         )
 
-        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others
+        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others.
         def remove_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
         ) -> bool:
@@ -125,11 +156,14 @@ class OrderStrategy(StrategyProtocol):
                 and pair[0].ground_level_surface >= pair[1].ground_level_surface
             )
 
-        for _pair in product(_sorted, _sorted + _last):
+        for _pair in product(_sorted[:-1], _sorted):
             if remove_reinforcement(_pair) and _pair[0] in _sorted:
                 _sorted.remove(_pair[0])
 
-        return [x.reinforcement_type for x in _sorted + _last]
+        return [
+            x.reinforcement_type
+            for x in self._merge_reinforcements(_sorted, _first, _last)
+        ]
 
     @staticmethod
     def get_strategy_reinforcements(

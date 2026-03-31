@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Optional
 
 from koswat.configuration.io.config_sections.config_section_helper import (
     SectionConfigHelper,
@@ -34,20 +34,10 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
     construction_buffer: float = float("nan")
     waterside: bool = False
     allow_waterside_reinforcement: bool = True
-    obstacle_types: list[str] = field(default_factory=list)
+    obstacle_types: dict[str, Optional[float]] = field(default_factory=dict)
 
     @classmethod
     def from_config(cls, input_config: dict[str, Any]) -> "SurroundingsSectionFom":
-        _types = [
-            _type.lower().strip() for _type in input_config.get("omgevingtypes", [])
-        ]
-
-        def pop_surrounding_type(type_name: str) -> bool:
-            if type_name in _types:
-                _types.remove(type_name)
-                return True
-            return False
-
         _section = cls(
             construction_distance=SectionConfigHelper.get_float(
                 input_config.get("constructieafstand", None)
@@ -55,10 +45,17 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             construction_buffer=SectionConfigHelper.get_float(
                 input_config.get("constructieovergang", None)
             ),
-            waterside=pop_surrounding_type("buitendijks"),
+            waterside=SectionConfigHelper.get_bool(input_config["buitendijks"]),
             allow_waterside_reinforcement=SectionConfigHelper.get_bool(
                 input_config.get("toegestaanbuitenzijdeversterking", True)
             ),
-            obstacle_types=[_type for _type in _types],
+            obstacle_types={
+                _type.get("type")
+                .lower()
+                .strip(): SectionConfigHelper.get_float_without_default(
+                    _type.get("buffer", None)
+                )
+                for _type in input_config.get("omgevingtypes", [])
+            },
         )
         return _section

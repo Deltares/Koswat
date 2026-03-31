@@ -23,6 +23,7 @@ import logging
 from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
+from typing import Optional
 
 from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
@@ -112,17 +113,23 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         return _surroundings_wrappers
 
     def _csv_file_to_fom(
-        self, csv_file: Path, surrounding_type: SurroundingsEnum
+        self,
+        csv_file: Path,
+        surrounding_type: SurroundingsEnum,
+        surrounding_buffer: Optional[float],
     ) -> KoswatSurroundingsCsvFom:
-
-        _reader = KoswatSurroundingsCsvReader
         if surrounding_type.surrounding_type == SurroundingsObstacle:
-            _reader = KoswatSimpleSurroundingsCsvReader
+            _reader = KoswatSimpleSurroundingsCsvReader()
+            if surrounding_buffer and surrounding_buffer > 0.0:
+                _reader.surroundings_buffer = surrounding_buffer
+        else:
+            _reader = KoswatSurroundingsCsvReader()
 
-        return _reader().read(csv_file)
+        _csv_fom = _reader.read(csv_file)
+        return _csv_fom
 
     def _csv_dir_to_fom(
-        self, csv_dir: Path, obstacle_types: list[str]
+        self, csv_dir: Path, obstacle_types: dict[str, float]
     ) -> dict[SurroundingsEnum, KoswatSurroundingsCsvFom]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
@@ -137,31 +144,33 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         """
         _imported_csv_foms: dict[SurroundingsEnum, KoswatSurroundingsCsvFom] = {}
         _traject_name = csv_dir.stem
-        _obs_type_names = []
+        _read_obs_types = []
         for _csv_file in csv_dir.glob("*.csv"):
             # Map CSV file name to surrounding type.
             _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
             _type_enum = SurroundingsEnum.translate(_type_name)
 
             if _type_enum == SurroundingsEnum.OBSTACLE:
-                if _type_name not in obstacle_types:
+                if _type_name not in obstacle_types.keys():
                     # In case of obstacles, only import those that are defined in the config file.
                     logging.info(
                         f"Skipping obstacle surrounding type {_type_name} for traject {_traject_name} as it is not defined in the config file."
                     )
                     continue
-                _obs_type_names.append(_type_name)
+                _read_obs_types.append(_type_name)
 
             # Get FOM from CSV file.
-            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum)
+            _buffer = obstacle_types.get(_type_name, None)
+            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum, _buffer)
+
             if _type_enum in _imported_csv_foms.keys():
                 _imported_csv_foms[_type_enum].merge(_csv_fom)
             else:
                 _imported_csv_foms[_type_enum] = _csv_fom
 
         # Log missing obstacle files.
-        for _obs_type in obstacle_types:
-            if _obs_type not in _obs_type_names:
+        for _obs_type in obstacle_types.keys():
+            if _obs_type not in _read_obs_types:
                 logging.warning(
                     f"Obstacle surrounding type {_obs_type} defined in config file is missing for traject {_traject_name}."
                 )
