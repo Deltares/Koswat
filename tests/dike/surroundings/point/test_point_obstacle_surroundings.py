@@ -1,5 +1,8 @@
 import math
-from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObstacleSurroundings
+
+from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+    PointObstacleSurroundings,
+)
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
@@ -7,7 +10,7 @@ class TestPointObstacleSurroundings:
     def test_initialize_point_obstacle_surroundings(self):
         # 1. Define test data.
         _pos = PointObstacleSurroundings()
-        
+
         # 2. Verify expectations.
         assert isinstance(_pos, PointObstacleSurroundings)
         assert isinstance(_pos, PointSurroundings)
@@ -18,7 +21,6 @@ class TestPointObstacleSurroundings:
         assert math.isnan(_pos.outside_distance)
         assert math.isnan(_pos.angle_inside)
         assert math.isnan(_pos.angle_outside)
-
 
     def test_merge_point_obstacle_surroundings(self):
         # 1. Define test data.
@@ -44,7 +46,7 @@ class TestPointObstacleSurroundings:
         assert _pos_1.outside_distance == 20.0
         assert _pos_1.angle_inside == 15.0
         assert _pos_1.angle_outside == 35.0
-    
+
     def test_merge_point_obstacle_surroundings_with_nan(self):
         # 1. Define test data.
         _pos_1 = PointObstacleSurroundings(

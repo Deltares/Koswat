@@ -1,3 +1,5 @@
+import pytest
+
 from koswat.configuration.io.config_sections.surroundings_section_fom import (
     SurroundingsSectionFom,
 )
@@ -11,7 +13,7 @@ class TestSurroundingsSectionFom:
             construction_distance=100.0,
             construction_buffer=20.0,
             waterside=True,
-            obstacle_types=["bebouwing", "spoorwegen", "water"],
+            obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": None},
         )
 
         # 2. Verify expectations.
@@ -19,17 +21,18 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
-        assert _surroundings_section_fom.obstacle_types == [
-            "bebouwing",
-            "spoorwegen",
-            "water",
-        ]
+        assert _surroundings_section_fom.obstacle_types == {
+            "bebouwing": 5,
+            "spoorwegen": 10,
+            "water": None,
+        }
 
     def test_from_config_without_omgevingtypes(self):
         # 1. Define test data.
         _surroundings_config = {
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
+            "buitendijks": True,
         }
 
         # 2. Run test.
@@ -41,21 +44,19 @@ class TestSurroundingsSectionFom:
         assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
-        assert _surroundings_section_fom.waterside is False
-        assert _surroundings_section_fom.obstacle_types == []
+        assert _surroundings_section_fom.waterside is True
+        assert _surroundings_section_fom.obstacle_types == {}
 
     def test_from_config_with_omgevingtypes(self):
         # 1. Define test data.
         _surroundings_config = {
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
+            "buitendijks": True,
             "omgevingtypes": [
-                "buitendijks",
-                "bebouwing",
-                "spoorwegen",
-                "water",
-                "camping",
-                "wildlife",
+                {"type": "bebouwing", "buffer": 5},
+                {"type": "spoorwegen", "buffer": 10},
+                {"type": "water"},
             ],
         }
 
@@ -69,10 +70,24 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.waterside is True
-        assert _surroundings_section_fom.obstacle_types == [
-            "bebouwing",
-            "spoorwegen",
-            "water",
-            "camping",
-            "wildlife",
-        ]
+        assert _surroundings_section_fom.obstacle_types == {
+            "bebouwing": 5,
+            "spoorwegen": 10,
+            "water": None,
+        }
+
+    def test_from_config_with_invalid_buffer(self):
+        # 1. Define test data.
+        _surroundings_config = {
+            "constructieafstand": 100.0,
+            "constructieovergang": 20.0,
+            "buitendijks": True,
+            "omgevingtypes": [{"type": "bebouwing", "buffer": "invalid_buffer"}],
+        }
+
+        # 2. Run test
+        with pytest.raises(ValueError) as exc_info:
+            SurroundingsSectionFom.from_config(_surroundings_config)
+
+        # 3. Verify expectations.
+        assert exc_info is not None

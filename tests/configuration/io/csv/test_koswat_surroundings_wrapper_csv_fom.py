@@ -1,4 +1,4 @@
-from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
+from koswat.configuration.io.csv.koswat_surroundings_wrapper_csv_fom import (
     KoswatSurroundingsWrapperCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
