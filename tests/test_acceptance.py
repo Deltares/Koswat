@@ -304,7 +304,7 @@ class TestAcceptance:
             construction_distance=50,
             construction_buffer=10,
             waterside=False,
-            obstacle_types=["bebouwing"],
+            obstacle_types={"bebouwing": 5},
         )
 
         _infrastructure_section = InfrastructureSectionFom(

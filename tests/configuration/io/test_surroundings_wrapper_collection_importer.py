@@ -105,7 +105,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            obstacle_types=["bebouwing", "spoorwegen", "water"],
+            obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": 0},
         )
 
     @pytest.fixture(name="infrastructure_section_fom_fixture")
@@ -187,7 +187,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
-            obstacle_types=["non_existing_obstacle_type"],
+            obstacle_types={"non_existing_obstacle_type": 0},
         )
 
         _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
