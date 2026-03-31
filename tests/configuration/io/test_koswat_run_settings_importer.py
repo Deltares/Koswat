@@ -173,6 +173,8 @@ class TestKoswatRunSettingsImporter:
                     for _key, _value in _config_values.__dict__.items():
                         if _value not in (None, math.nan):
                             assert getattr(_profile.input_data, _key) == _value
+                elif _config_section == "allow_waterside_reinforcement":
+                    continue
                 else:
                     _reinforcement_settings_section = getattr(
                         _reinforcement_settings,

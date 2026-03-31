@@ -303,7 +303,7 @@ class TestAcceptance:
         _surroundings_section = SurroundingsSectionFom(
             construction_distance=50,
             construction_buffer=10,
-            waterside=False,
+            waterside=True,
             obstacle_types=["bebouwing"],
         )
 
