@@ -1,19 +1,25 @@
 import json
 import math
+from operator import ge
 from pathlib import Path
+from typing import Callable, Iterable, Iterator, Tuple
 
 import pytest
 
+from koswat.configuration.io.config_sections.dike_profile_section_fom import DikeProfileSectionFom
 from koswat.configuration.io.json.koswat_dike_section_input_json_reader import (
     KoswatDikeSectionInputJsonReader,
 )
+from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
+from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 from koswat.configuration.settings.koswat_run_scenario_settings import (
     KoswatRunScenarioSettings,
 )
 from koswat.configuration.settings.koswat_run_settings import KoswatRunSettings
+from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import KoswatReinforcementSettings
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from tests import test_data, test_results
 
@@ -123,69 +129,187 @@ class TestKoswatRunSettingsImporter:
         assert isinstance(_config, KoswatRunSettings)
         assert _config.run_scenarios == []
 
-    def test_when__get_dike_section_input_given_new_values_then_general_settings_are_overriden(self):
-        # 1. Define test data
+    @pytest.fixture(name="general_settings")
+    def _get_valid_general_settings(self) -> KoswatGeneralJsonFom:
         _importer = KoswatRunSettingsImporter()
-        _general_settings = _importer._import_general_settings(
+        return _importer._import_general_settings(
             test_data.joinpath("section_input", "koswat_general.json")
         )
+
+    def _compare_settings_as_dict(self, settings_a: dict[str, float], settings_b: dict[str, float], except_keys: list[str]) -> None:
+        # assert sorted(settings_a.keys()) == sorted(settings_b.keys())
+        _excluded_keys = except_keys + ["allow_waterside_reinforcement"]
+        for _key in filter(lambda k: k not in _excluded_keys, settings_a.keys()):
+            assert settings_a[_key] == settings_b[_key]
+
+
+    @pytest.fixture(name="general_settings_dike_profile")
+    def _get_valid_general_settings_dike_profile(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+        assert general_settings.dike_profile_section.waterside_slope == 3.52
+        assert general_settings.dike_profile_section.waterside_berm_height == 0.6
+        assert general_settings.dike_profile_section.waterside_ground_level == 0.6
+        assert general_settings.dike_profile_section.waterside_berm_width == 0.0
+        assert general_settings.dike_profile_section.crest_height == 4.21
+        assert general_settings.dike_profile_section.crest_width == 3.97
+        assert general_settings.dike_profile_section.polderside_ground_level == 2.82
+        assert general_settings.dike_profile_section.polderside_slope == 2.4
+        assert general_settings.dike_profile_section.polderside_berm_height == 2.82
+        assert general_settings.dike_profile_section.polderside_berm_width == 0.0
+        assert general_settings.dike_profile_section.ground_price_builtup == 176.62
+        assert general_settings.dike_profile_section.ground_price_unbuilt == 9.22
+        assert general_settings.dike_profile_section.factor_settlement == 1.2
+        assert general_settings.dike_profile_section.pleistocene == -5.06
+        assert general_settings.dike_profile_section.aquifer == -2.06
+        assert general_settings.dike_profile_section.thickness_cover_layer == 3.0
+        assert general_settings.dike_profile_section.thickness_grass_layer == 0.3
+        assert general_settings.dike_profile_section.thickness_clay_layer == 0.5
+
+        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
+            _generated_profile = profile.input_data
+            self._compare_settings_as_dict(
+                general_settings.dike_profile_section.__dict__,
+                _generated_profile.__dict__, 
+                except_keys=["dike_section", "polderside_ground_level", "thickness_grass_layer"])
+            assert _generated_profile.polderside_ground_level == 2.81
+            assert _generated_profile.thickness_grass_layer == 0.31
+        
+        return general_settings, settings_comparison
+        
+    @pytest.fixture(name="general_settings_soil_measurement")
+    def _get_valid_general_settings_soil_measurement(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+        _soil_settings = general_settings.soil_measure_section
+        assert _soil_settings.active == True
+        assert _soil_settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _soil_settings.land_purchase_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _soil_settings.min_berm_height == 0.5
+        assert _soil_settings.max_berm_height_factor == 0.4
+        assert _soil_settings.factor_increase_berm_height == 0.05
+        
+        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
+            self._compare_settings_as_dict(
+                _soil_settings.__dict__,
+                reinforcement_settings.soil_settings.__dict__,
+                except_keys=["soil_surtax_factor"])
+            assert reinforcement_settings.soil_settings.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
+        
+        return general_settings, settings_comparison
+
+    @pytest.fixture(name="general_settings_vps_measurement")
+    def _get_valid_general_settings_vps_measurement(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+        _vps_settings = general_settings.vps_section
+        assert _vps_settings.active == True
+        assert _vps_settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _vps_settings.land_purchase_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _vps_settings.constructive_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _vps_settings.polderside_berm_width_vps == 10
+        
+        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
+            self._compare_settings_as_dict(
+                _vps_settings.__dict__,
+                reinforcement_settings.vps_settings.__dict__,
+                except_keys=["active", "polderside_berm_width_vps"])
+            assert reinforcement_settings.vps_settings.active == False
+            assert reinforcement_settings.vps_settings.polderside_berm_width_vps == 11
+
+        return general_settings, settings_comparison
+
+    @pytest.fixture(name="general_settings_piping_wall_measurement")
+    def _get_valid_general_settings_piping_wall_measurement(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+        _settings = general_settings.piping_wall_section
+        assert _settings.active == True
+        assert _settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _settings.land_purchase_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _settings.constructive_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _settings.min_length_piping_wall == 4
+        assert _settings.max_length_piping_wall == 25
+        assert _settings.transition_cbwall_sheetpile == 99
+        
+        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
+            self._compare_settings_as_dict(
+                _settings.__dict__,
+                reinforcement_settings.piping_wall_settings.__dict__,
+                except_keys=["min_length_piping_wall", "max_length_piping_wall", "transition_cbwall_sheetpile"])
+            assert reinforcement_settings.piping_wall_settings.min_length_piping_wall == 5
+            assert reinforcement_settings.piping_wall_settings.max_length_piping_wall == 30
+            assert reinforcement_settings.piping_wall_settings.transition_cbwall_sheetpile == 95
+        return general_settings, settings_comparison
+
+    @pytest.fixture(name="general_settings_stability_wall_measurement")
+    def _get_valid_general_settings_stability_wall_measurement(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+        _settings = general_settings.stability_wall_section
+        assert _settings.active == True
+        assert _settings.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
+        assert _settings.land_purchase_surtax_factor == SurtaxFactorEnum.MOEILIJK
+        assert _settings.constructive_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _settings.min_length_stability_wall == 5
+        assert _settings.max_length_stability_wall == 25
+        assert _settings.transition_sheetpile_diaphragm_wall == 20
+        assert _settings.steepening_polderside_slope == 2
+        
+        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
+            self._compare_settings_as_dict(
+                _settings.__dict__,
+                reinforcement_settings.stability_wall_settings.__dict__,
+                except_keys=[])
+
+        return general_settings, settings_comparison
+
+    @pytest.fixture(name="general_settings_cofferdam_measurement")
+    def _get_valid_general_settings_cofferdam_measurement(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+        _settings = general_settings.cofferdam_section
+        assert _settings.active == True
+        assert _settings.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
+        assert _settings.constructive_surtax_factor == SurtaxFactorEnum.MOEILIJK
+        assert _settings.min_length_cofferdam == 5
+        assert _settings.max_length_cofferdam == 25
+        
+        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
+            self._compare_settings_as_dict(
+                _settings.__dict__,
+                reinforcement_settings.cofferdam_settings.__dict__,
+                except_keys=["soil_surtax_factor", "max_length_cofferdam"])
+            assert reinforcement_settings.cofferdam_settings.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
+            assert reinforcement_settings.cofferdam_settings.max_length_cofferdam == 26
+        return general_settings, settings_comparison
+    
+    @pytest.fixture(name="general_settings_surroundings")
+    def _get_valid_general_settings_surroundigns(self, general_settings: KoswatGeneralJsonFom)-> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+        _settings = general_settings.cofferdam_section
+        assert _settings.active == True
+        assert _settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _settings.constructive_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert _settings.min_length_cofferdam == 5
+        assert _settings.max_length_cofferdam == 25
+        
+        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
+            self._compare_settings_as_dict(
+                profile.__dict__,
+                reinforcement_settings.__dict__,
+                except_keys=[])
+        return general_settings, settings_comparison
+
+    @pytest.mark.parametrize("fixture_name", [
+        pytest.param("general_settings_dike_profile", id="dike_profile"),
+        pytest.param("general_settings_soil_measurement", id="soil_measurement"),
+        pytest.param("general_settings_vps_measurement", id="vps_measurement"),
+        pytest.param("general_settings_piping_wall_measurement", id="piping_wall_measurement"),
+        pytest.param("general_settings_stability_wall_measurement", id="stability_wall_measurement"),
+        pytest.param("general_settings_cofferdam_measurement", id="cofferdam_measurement")
+    ])
+    def test_when__get_dike_section_input_given_custom_section_settings_then_general_settings_are_overriden(self, fixture_name: str, request: pytest.FixtureRequest) -> None:
+        # 1. Define test data.
         _dike_selection = [
-            "all_section_settings",
-            "no_section_settings",
             "some_section_settings",
-        ]
-
+        ]        
+        _settings, _settings_comparison = request.getfixturevalue(fixture_name)
+        
         # 2. Run test.
-        _profiles, _reinforcement_settings_list = _importer._get_dike_section_input(
-            _general_settings, _dike_selection
+        _profiles, _reinforcement_settings_list = KoswatRunSettingsImporter()._get_dike_section_input(
+            _settings, _dike_selection
         )
 
-        # 3. Verify final expectations.
-        assert len(_profiles) == 3
-        assert len(_reinforcement_settings_list) == 3
+        # 3. Verify expectations
+        assert len(_profiles) == 1
+        assert len(_reinforcement_settings_list) == 1
+        _settings_comparison(_profiles[0], _reinforcement_settings_list[0])
 
-        # Check that the settings have been overridden correctly
-
-        _reinforcement_settings_keys = dict(
-            soil_measure="soil_settings",
-            vps="vps_settings",
-            piping_wall="piping_wall_settings",
-            stability_wall="stability_wall_settings",
-            cofferdam="cofferdam_settings",
-        )
-        for _profile, _reinforcement_settings in zip(
-            _profiles, _reinforcement_settings_list
-        ):
-            assert _profile.input_data.dike_section in _dike_selection
-
-            _section_input_file = (
-                _general_settings.analysis_section.input_profiles_json_dir.joinpath(
-                    f"{_profile.input_data.dike_section}.json",
-                )
-            )
-            _section_settings = KoswatDikeSectionInputJsonReader().read(
-                _section_input_file
-            )
-            for _config_section, _config_values in _section_settings.__dict__.items():
-                if _config_section == "dike_section":
-                    assert _profile.input_data.dike_section == _config_values
-                elif _config_section == "input_profile":
-                    for _key, _value in _config_values.__dict__.items():
-                        if _value not in (None, math.nan):
-                            assert getattr(_profile.input_data, _key) == _value
-                elif _config_section == "allow_waterside_reinforcement":
-                    continue
-                else:
-                    _reinforcement_settings_section = getattr(
-                        _reinforcement_settings,
-                        _reinforcement_settings_keys[_config_section],
-                    )
-                    for _key, _value in _config_values.__dict__.items():
-                        if _value not in (None, math.nan):
-                            assert (
-                                getattr(
-                                    _reinforcement_settings_section,
-                                    _key,
-                                )
-                                == _value
-                            )
