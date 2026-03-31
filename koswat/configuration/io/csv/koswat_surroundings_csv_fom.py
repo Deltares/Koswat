@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Optional
 
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -36,12 +37,6 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
 
     def is_valid(self) -> bool:
         return any(self.points_surroundings_list)
-
-    def apply_buffer(self, buffer: float) -> None:
-        if buffer is None or buffer <= 0.0:
-            return
-        for point in self.points_surroundings_list:
-            point.apply_buffer(buffer)
 
     def merge(self, other: KoswatSurroundingsCsvFom) -> None:
         """

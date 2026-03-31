@@ -22,25 +22,6 @@ class TestPointObstacleSurroundings:
         assert math.isnan(_pos.angle_inside)
         assert math.isnan(_pos.angle_outside)
 
-    def test_apply_buffer(self):
-        # 1. Define test data.
-        _pos = PointObstacleSurroundings(
-            inside_distance=10.0,
-            outside_distance=20.0,
-            angle_inside=30.0,
-            angle_outside=40.0,
-        )
-        _buffer = 5.0
-
-        # 2. Run test
-        _pos.apply_buffer(_buffer)
-
-        # 3. Verify expectations.
-        assert _pos.inside_distance == 5.0
-        assert _pos.outside_distance == 15.0
-        assert _pos.angle_inside == 30.0
-        assert _pos.angle_outside == 40.0
-
     def test_merge_point_obstacle_surroundings(self):
         # 1. Define test data.
         _pos_1 = PointObstacleSurroundings(

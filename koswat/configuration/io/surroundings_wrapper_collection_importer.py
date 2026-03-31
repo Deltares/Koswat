@@ -23,6 +23,7 @@ import logging
 from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
+from typing import Optional
 
 from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
@@ -115,12 +116,16 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         self,
         csv_file: Path,
         surrounding_type: SurroundingsEnum,
+        surrounding_buffer: Optional[float],
     ) -> KoswatSurroundingsCsvFom:
-        _reader = KoswatSurroundingsCsvReader
         if surrounding_type.surrounding_type == SurroundingsObstacle:
-            _reader = KoswatSimpleSurroundingsCsvReader
+            _reader = KoswatSimpleSurroundingsCsvReader()
+            if surrounding_buffer and surrounding_buffer > 0.0:
+                _reader.surroundings_buffer = surrounding_buffer
+        else:
+            _reader = KoswatSurroundingsCsvReader()
 
-        _csv_fom = _reader().read(csv_file)
+        _csv_fom = _reader.read(csv_file)
         return _csv_fom
 
     def _csv_dir_to_fom(
@@ -154,9 +159,9 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                     continue
                 _read_obs_types.append(_type_name)
 
-            # Get FOM from CSV file and apply buffer.
-            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum)
-            _csv_fom.apply_buffer(obstacle_types.get(_type_name, 0.0))
+            # Get FOM from CSV file.
+            _buffer = obstacle_types.get(_type_name, None)
+            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum, _buffer)
 
             if _type_enum in _imported_csv_foms.keys():
                 _imported_csv_foms[_type_enum].merge(_csv_fom)

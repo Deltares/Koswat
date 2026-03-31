@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from pathlib import Path
+from typing import Optional
 
 from shapely import Point
 
@@ -42,6 +43,14 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
         Sectie;Xcoord;Ycoord;dist_binnen;dist_buiten;angle_binnen;angle_buiten
         A;199186.66;515698.01;500;500;-76.0;104.0
     """
+
+    surroundings_buffer: Optional[float] = None
+
+    @property
+    def applied_surroundings_buffer(self) -> float:
+        if self.surroundings_buffer is None or self.surroundings_buffer <= 0.0:
+            return 0.0
+        return self.surroundings_buffer
 
     def read(self, file_path: Path) -> KoswatSurroundingsCsvFom:
         _csv_fom = KoswatCsvReader().read(file_path)
@@ -71,8 +80,8 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
             traject_order=entry[0],
             location=Point(float(entry[2]), float(entry[3])),
             surroundings_matrix=[],
-            inside_distance=float(entry[4]),
-            outside_distance=float(entry[5]),
+            inside_distance=float(entry[4]) - self.applied_surroundings_buffer,
+            outside_distance=float(entry[5]) - self.applied_surroundings_buffer,
             angle_inside=float(entry[6]),
             angle_outside=float(entry[7]),
         )

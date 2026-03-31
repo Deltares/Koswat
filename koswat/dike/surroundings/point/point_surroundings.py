@@ -54,16 +54,6 @@ class PointSurroundings:
             return False
         return self.traject_order == __value.traject_order
 
-    def apply_buffer(self, buffer: float) -> None:
-        """
-        Subtract the gibven buffer from the insie and outside distance to the obstacle.
-        This is not applicable to infrastructure surroundings.
-
-        Args:
-            buffer (float): Extent of the buffer to be applied.
-        """
-        pass
-
     def merge(self, other: PointSurroundings) -> None:
         """
         Merges another `PointSurroundings` into this one by updating the

@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pytest
 
 from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import (
@@ -35,16 +37,32 @@ class TestKoswatSimpleSurroundingsCsvReader:
         assert isinstance(_csv_fom, KoswatSurroundingsCsvFom)
         assert _csv_fom.is_valid()
 
-    def test_when_build_point_surroundings_then_reduced_surroundings_matrix(self):
+    @pytest.mark.parametrize(
+        "given_surroundings_buffer, expected_applied_surroundings_buffer",
+        [
+            pytest.param(0.0, 0.0, id="Zero buffer"),
+            pytest.param(10.0, 10.0, id="Non-zero buffer"),
+            pytest.param(-5.0, 0.0, id="Negative buffer"),
+            pytest.param(None, 0.0, id="None buffer"),
+        ],
+    )
+    def test_when_build_point_surroundings_then_reduced_surroundings_matrix(
+        self,
+        given_surroundings_buffer: Optional[float],
+        expected_applied_surroundings_buffer: float,
+    ):
         # 1. Define test data.
         _section = "Dummy"
         _traject_order = -1
         _location_x = 4.2
         _location_y = 2.4
+        _expected_inside_distance = 500 - expected_applied_surroundings_buffer
+        _expected_outside_distance = 200 - expected_applied_surroundings_buffer
         _distance_weights = [500, 200, 0, 0]
 
         # 2. Run test.
         _reader = KoswatSimpleSurroundingsCsvReader()
+        _reader.surroundings_buffer = given_surroundings_buffer
         _point_surroundings = _reader._build_point_surroundings(
             entry=[
                 _traject_order,
@@ -63,7 +81,7 @@ class TestKoswatSimpleSurroundingsCsvReader:
         assert _point_surroundings.location.x == _location_x
         assert _point_surroundings.location.y == _location_y
         assert _point_surroundings.surroundings_matrix == []
-        assert _point_surroundings.inside_distance == 500
-        assert _point_surroundings.outside_distance == 200
+        assert _point_surroundings.inside_distance == _expected_inside_distance
+        assert _point_surroundings.outside_distance == _expected_outside_distance
         assert _point_surroundings.angle_inside == 0
         assert _point_surroundings.angle_outside == 0
