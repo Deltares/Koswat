@@ -13,7 +13,6 @@ class TestSurroundingsSectionFom:
         _surroundings_section_fom = SurroundingsSectionFom(
             construction_distance=100.0,
             construction_buffer=20.0,
-            waterside=True,
             allow_waterside_reinforcement=True,
             obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": None},
         )
@@ -22,7 +21,6 @@ class TestSurroundingsSectionFom:
         assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
-        assert _surroundings_section_fom.waterside is True
         assert _surroundings_section_fom.allow_waterside_reinforcement is True
         assert _surroundings_section_fom.obstacle_types == {
             "bebouwing": 5,
@@ -44,7 +42,6 @@ class TestSurroundingsSectionFom:
         assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert _surroundings_section_fom.construction_distance == None
         assert _surroundings_section_fom.construction_buffer == None
-        assert _surroundings_section_fom.waterside == None
         assert _surroundings_section_fom.allow_waterside_reinforcement == None
         assert _surroundings_section_fom.obstacle_types == {}
 
@@ -62,7 +59,6 @@ class TestSurroundingsSectionFom:
         assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert math.isnan(_surroundings_section_fom.construction_distance)
         assert math.isnan(_surroundings_section_fom.construction_buffer)
-        assert _surroundings_section_fom.waterside is False
         assert _surroundings_section_fom.allow_waterside_reinforcement is True
         assert _surroundings_section_fom.obstacle_types == {}
 
@@ -89,7 +85,6 @@ class TestSurroundingsSectionFom:
         assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
-        assert _surroundings_section_fom.waterside is True
         assert _surroundings_section_fom.allow_waterside_reinforcement is False
         assert _surroundings_section_fom.obstacle_types == {
             "bebouwing": 5,
