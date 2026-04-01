@@ -29,6 +29,7 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     PoldersideAndWatersideRoomCalculator,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_only_room_calculator import PoldersideOnlyRoomCalculator
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
@@ -42,6 +43,8 @@ class StabilityWallToeReinforcementProfile(StandardReinforcementProfile):
     new_ground_level_surface: float
 
     def get_reinforcement_room_calculator(self) -> PoldersideAndWatersideRoomCalculator:
+        if not self.allow_waterside_reinforcement:
+            return PoldersideOnlyRoomCalculator(required_polderside_width=self.polderside_width)
         return PoldersideAndWatersideRoomCalculator(
             required_polderside_width=self.polderside_width,
             required_waterside_width=self.waterside_width,

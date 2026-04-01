@@ -18,7 +18,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 )
 
 
-class TestStabilityToeReinforcementProfile:
+class TestStabilityWallToeReinforcementProfile:
     def test_initialize(self):
         _profile = StabilityWallToeReinforcementProfile()
         assert isinstance(_profile, StabilityWallToeReinforcementProfile)
