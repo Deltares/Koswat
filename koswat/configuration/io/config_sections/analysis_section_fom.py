@@ -73,7 +73,7 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
                 input_config.get("exporteer_maatregelen_png", None), True
             ),
             export_layers_png=SectionConfigHelper.get_bool(
-                input_config.get("exporteer_lagen_png", None), True
+                input_config.get("exporteer_lagen_png", None), False
             ),
             export_shapefiles=SectionConfigHelper.get_bool(
                 input_config.get("exporteer_shapefiles", None), True
