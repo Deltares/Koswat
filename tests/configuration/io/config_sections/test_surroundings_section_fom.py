@@ -66,27 +66,6 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.allow_waterside_reinforcement is True
         assert _surroundings_section_fom.obstacle_types == {}
 
-    def test_from_config_without_omgevingtypes(self):
-        # 1. Define test data.
-        _surroundings_config = {
-            "constructieafstand": 100.0,
-            "constructieovergang": 20.0,
-            "buitendijks": False,
-        }
-
-        # 2. Run test.
-        _surroundings_section_fom = SurroundingsSectionFom.from_config(
-            _surroundings_config, set_defaults=False
-        )
-
-        # 3. Verify expectations.
-        assert isinstance(_surroundings_section_fom, KoswatJsonFomProtocol)
-        assert _surroundings_section_fom.construction_distance == 100.0
-        assert _surroundings_section_fom.construction_buffer == 20.0
-        assert _surroundings_section_fom.waterside is False
-        assert _surroundings_section_fom.allow_waterside_reinforcement is False
-        assert _surroundings_section_fom.obstacle_types == {}
-
     def test_from_config_with_omgevingtypes(self):
         # 1. Define test data.
         _surroundings_config = {

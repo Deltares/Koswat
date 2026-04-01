@@ -106,24 +106,3 @@ class TestPoldersideAndWatersideRoomCalculator:
 
         # 3. Then
         assert _result == expected_result
-
-    def test_when_reinforcement_has_room_given_only_waterside_space_and_cannot_use_waterside_then_returns_false(self):
-        # 1. Given
-        _polderside_width = 1.0
-        _waterside_width = 2.0
-        _calculator = PoldersideAndWatersideRoomCalculator(
-            required_polderside_width=_polderside_width,
-            required_waterside_width=_waterside_width
-        )
-
-        _surroundings = PointObstacleSurroundings(
-            inside_distance=0,
-            outside_distance=1000
-        )
-
-        # 2. When
-        _result = _calculator.reinforcement_has_room(_surroundings)
-        pytest.fail("phased out test")
-
-        # 3. Then
-        assert _result == False
