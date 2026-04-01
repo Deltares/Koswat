@@ -70,12 +70,12 @@ class AnalysisSectionFom(KoswatJsonFomProtocol):
             include_taxes=SectionConfigHelper.get_bool(input_config["btw"]),
             analysis_output_dir=resolve_path(input_config["uitvoerfolder"]),
             export_measures_png=SectionConfigHelper.get_bool(
-                input_config["exporteer_maatregelen_png"], True
+                input_config.get("exporteer_maatregelen_png", None), True
             ),
             export_layers_png=SectionConfigHelper.get_bool(
-                input_config["exporteer_lagen_png"], True
+                input_config.get("exporteer_lagen_png", None), False
             ),
             export_shapefiles=SectionConfigHelper.get_bool(
-                input_config["exporteer_shapefiles"], True
+                input_config.get("exporteer_shapefiles", None), True
             ),
         )
