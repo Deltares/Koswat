@@ -55,7 +55,6 @@
     "Omgeving": {
         "ConstructieAfstand": 50,
         "ConstructieOvergang": 10,
-        "Buitendijks": true,
         "OmgevingTypes": [
             {"Type": "Bebouwing", "Buffer": 5}
         ]

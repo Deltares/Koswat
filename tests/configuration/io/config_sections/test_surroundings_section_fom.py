@@ -67,7 +67,6 @@ class TestSurroundingsSectionFom:
         _surroundings_config = {
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
-            "buitendijks": True,
             "omgevingtypes": [
                 {"type": "bebouwing", "buffer": 5},
                 {"type": "spoorwegen", "buffer": 10},
@@ -97,7 +96,6 @@ class TestSurroundingsSectionFom:
         _surroundings_config = {
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
-            "buitendijks": True,
             "omgevingtypes": [{"type": "bebouwing", "buffer": "invalid_buffer"}],
         }
 
