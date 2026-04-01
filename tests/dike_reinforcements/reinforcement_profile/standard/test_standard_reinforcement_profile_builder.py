@@ -3,7 +3,8 @@ import pytest
 from koswat.dike_reinforcements.input_profile import (
     PipingWallInputProfileCalculation,
     SoilInputProfileCalculation,
-    StabilityWallInputProfileCalculation,
+    StabilityWallCrestInputProfileCalculation,
+    StabilityWallToeInputProfileCalculation,
     VPSInputProfileCalculation,
 )
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
@@ -12,7 +13,8 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 from koswat.dike_reinforcements.reinforcement_profile import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
+    StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_builder_protocol import (
@@ -59,9 +61,14 @@ class TestStandardReinforcementProfileBuilder:
                 id="[Standard] Piping wall reinforcement",
             ),
             pytest.param(
-                StabilityWallReinforcementProfile,
-                StabilityWallInputProfileCalculation,
-                id="[Standard] Stability wall reinforcement",
+                StabilityWallToeReinforcementProfile,
+                StabilityWallToeInputProfileCalculation,
+                id="[Standard] Stability wall (toe) reinforcement",
+            ),
+            pytest.param(
+                StabilityWallCrestReinforcementProfile,
+                StabilityWallCrestInputProfileCalculation,
+                id="[Standard] Stability wall (crest) reinforcement",
             ),
         ],
     )

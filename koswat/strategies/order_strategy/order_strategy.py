@@ -28,7 +28,8 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
+    StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -69,7 +70,8 @@ class OrderStrategy(StrategyProtocol):
             SoilReinforcementProfile,
             VPSReinforcementProfile,
             PipingWallReinforcementProfile,
-            StabilityWallReinforcementProfile,
+            StabilityWallToeReinforcementProfile,
+            StabilityWallCrestReinforcementProfile,
             CofferdamReinforcementProfile,
         ]
 

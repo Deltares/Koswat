@@ -2,7 +2,7 @@
 
 In general, the architecture of this package is based on the following principles:
 
-- Single responsibility principle, [component hierarchy](#component-hierarchy).
+- Single responsibility principle, [component hierarchy](#component-module-hierarchy).
 - Open-closed principle, [inheritance](#inheritance).
 - Interface segregation principle, [protocols](#protocols).
 

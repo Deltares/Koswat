@@ -187,6 +187,7 @@ class TestQuantityCostParametersBuilder:
             soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.NORMAAL
             constructive_surtax_factor: SurtaxFactorEnum | None = None
             land_purchase_surtax_factor: SurtaxFactorEnum | None = None
+            ground_price: float = 0.0
 
         class MockedReinforcement(StandardReinforcementProfile):
             output_name: str = "Mocked reinforcement"
