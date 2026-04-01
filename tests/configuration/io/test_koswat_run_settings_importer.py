@@ -236,27 +236,26 @@ class TestKoswatRunSettingsImporter:
 
     @pytest.fixture(name="general_settings_stability_wall_toe_measurement")
     def _get_valid_general_settings_stability_wall_toe_measurement(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
-        _settings = general_settings.stability_wall_section
+        _settings = general_settings.stability_wall_toe_section
         assert _settings.active == True
         assert _settings.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
         assert _settings.land_purchase_surtax_factor == SurtaxFactorEnum.MOEILIJK
         assert _settings.constructive_surtax_factor == SurtaxFactorEnum.NORMAAL
         assert _settings.min_length_stability_wall == 5
-        assert _settings.max_length_stability_wall == 25
-        assert _settings.transition_sheetpile_diaphragm_wall == 20
-        assert _settings.steepening_polderside_slope == 2
+        assert _settings.max_length_stability_wall == 15
+        assert _settings.steepening_polderside_slope == 3
         
         def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
             self._compare_settings_as_dict(
                 _settings.__dict__,
-                reinforcement_settings.stability_wall_settings.__dict__,
+                reinforcement_settings.stability_wall_toe_settings.__dict__,
                 except_keys=[])
 
         return general_settings, settings_comparison
 
     @pytest.fixture(name="general_settings_stability_wall_crest_measurement")
     def _get_valid_general_settings_stability_wall_crest_measurement(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
-        _settings = general_settings.stability_wall_section
+        _settings = general_settings.stability_wall_crest_section
         assert _settings.active == True
         assert _settings.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
         assert _settings.land_purchase_surtax_factor == SurtaxFactorEnum.MOEILIJK
@@ -269,7 +268,7 @@ class TestKoswatRunSettingsImporter:
         def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
             self._compare_settings_as_dict(
                 _settings.__dict__,
-                reinforcement_settings.stability_wall_settings.__dict__,
+                reinforcement_settings.stability_wall_crest_settings.__dict__,
                 except_keys=[])
 
         return general_settings, settings_comparison
