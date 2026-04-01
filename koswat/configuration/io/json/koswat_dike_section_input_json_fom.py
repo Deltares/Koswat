@@ -50,7 +50,7 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     cofferdam: CofferdamReinforcementSectionFom = field(
         default_factory=CofferdamReinforcementSectionFom
     )
-    surroundings: SurroundingsSectionFom = field(default_factory=SurroundingsSectionFom)
+    surroundings: SurroundingsSectionFom = field(default_factory=lambda: SurroundingsSectionFom.from_config({}, False))
 
     def is_valid(self) -> bool:
         return self.dike_section != ""

@@ -102,14 +102,13 @@ class TestPoldersideAndWatersideRoomCalculator:
         assert isinstance(surroundings, PointObstacleSurroundings)
 
         # 2. When
-        _result = calculator.reinforcement_has_room(surroundings, True)
+        _result = calculator.reinforcement_has_room(surroundings)
 
         # 3. Then
         assert _result == expected_result
 
     def test_when_reinforcement_has_room_given_only_waterside_space_and_cannot_use_waterside_then_returns_false(self):
         # 1. Given
-        _can_use_waterside = False
         _polderside_width = 1.0
         _waterside_width = 2.0
         _calculator = PoldersideAndWatersideRoomCalculator(
@@ -123,7 +122,8 @@ class TestPoldersideAndWatersideRoomCalculator:
         )
 
         # 2. When
-        _result = _calculator.reinforcement_has_room(_surroundings, _can_use_waterside)
+        _result = _calculator.reinforcement_has_room(_surroundings)
+        pytest.fail("phased out test")
 
         # 3. Then
         assert _result == False

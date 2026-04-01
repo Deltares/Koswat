@@ -79,7 +79,6 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         _obs_wrapper = ObstacleSurroundingsWrapper(
             reinforcement_min_separation=self.surroundings_section_fom.construction_distance,
             reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
-            allow_waterside_reinforcement=self.surroundings_section_fom.allow_waterside_reinforcement,
         )
 
         _obs_wrapper.obstacles.points = self._get_surroundings_from_fom(

@@ -25,13 +25,12 @@ from koswat.dike.surroundings.point.point_obstacle_surroundings import PointObst
 
 @runtime_checkable
 class ReinforcementRoomCalculatorProtocol(Protocol):
-    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings, can_use_waterside: bool) -> bool:
+    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings) -> bool:
         """
         Checks if there is enough room for a given reinforcement at a given point with obstacles.
 
         Args:
             point_obstacle_surroundings (PointObstacleSurroundings): The point surroundings to check.
-            can_use_waterside (bool): Whether the waterside can be used for reinforcement.
 
         Returns:
             bool: True if there is enough room for reinforcement, False otherwise.

@@ -31,5 +31,5 @@ class PoldersideOnlyRoomCalculator(ReinforcementRoomCalculatorBase):
     def _required_width(self) -> float:
         return self.required_polderside_width
 
-    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings, *args) -> bool:
+    def reinforcement_has_room(self, point_obstacle_surroundings: PointObstacleSurroundings) -> bool:
         return self._required_width_less_or_equal(point_obstacle_surroundings.inside_distance)

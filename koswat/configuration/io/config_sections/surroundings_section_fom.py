@@ -42,9 +42,9 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             if set_defaults:
                 return SectionConfigHelper.get_float(input_val)
             return SectionConfigHelper.get_float_without_default(input_val)
-        def _get_bool(input_val: Optional[str]) -> bool:
+        def _get_bool(input_val: Optional[str], default_value: bool) -> bool:
             if set_defaults:
-                return SectionConfigHelper.get_bool(input_val)
+                return SectionConfigHelper.get_bool(input_val, default_value)
             return SectionConfigHelper.get_bool_without_default(input_val)
 
         _section = cls(
@@ -54,9 +54,9 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
             construction_buffer=_get_float(
                 input_config.get("constructieovergang", None)
             ),
-            waterside=_get_bool(input_config.get("buitendijks", None)),
-            allow_waterside_reinforcement=SectionConfigHelper.get_bool(
-                input_config.get("toegestaanbuitenzijdeversterking"),
+            waterside=_get_bool(input_config.get("buitendijks", None), False),
+            allow_waterside_reinforcement=_get_bool(
+                input_config.get("toegestaanbuitenzijdeversterking", None),
                 True
             ),
             obstacle_types={
