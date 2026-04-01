@@ -6,7 +6,8 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
+    StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -26,7 +27,8 @@ class TestOrderStrategy:
         SoilReinforcementProfile,
         VPSReinforcementProfile,
         PipingWallReinforcementProfile,
-        StabilityWallReinforcementProfile,
+        StabilityWallToeReinforcementProfile,
+        StabilityWallCrestReinforcementProfile,
         CofferdamReinforcementProfile,
     ]
 
@@ -217,7 +219,8 @@ class TestOrderStrategy:
         _expected_result = deepcopy(self._default_reinforcements)
         _expected_result = [
             SoilReinforcementProfile,
-            StabilityWallReinforcementProfile,
+            StabilityWallToeReinforcementProfile,
+            StabilityWallCrestReinforcementProfile,
             CofferdamReinforcementProfile,
         ]
 
@@ -263,7 +266,7 @@ class TestOrderStrategy:
             SoilReinforcementProfile, _location_reinforcements[:3]
         )
         assert_subset_selected_measure(
-            StabilityWallReinforcementProfile, _location_reinforcements[3:5]
+            StabilityWallCrestReinforcementProfile, _location_reinforcements[3:5]
         )
         assert_subset_selected_measure(
             SoilReinforcementProfile, _location_reinforcements[5:8]
@@ -326,7 +329,7 @@ class TestOrderStrategy:
             for _sr in _result[0:2]
         )
         assert all(
-            _sr.current_selected_measure == StabilityWallReinforcementProfile
+            _sr.current_selected_measure == StabilityWallCrestReinforcementProfile
             for _sr in _result[2:7]
         )
         assert all(

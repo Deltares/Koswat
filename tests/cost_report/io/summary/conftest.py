@@ -32,7 +32,8 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
+    StabilityWallToeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -162,7 +163,8 @@ def _get_valid_mocked_summary_fixture() -> KoswatSummary:
         CofferdamReinforcementProfile,
         PipingWallReinforcementProfile,
         SoilReinforcementProfile,
-        StabilityWallReinforcementProfile,
+        StabilityWallCrestReinforcementProfile,
+        StabilityWallToeReinforcementProfile,
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()
@@ -184,7 +186,8 @@ def _get_valid_clusters_mocked_summary_fixture() -> KoswatSummary:
         CofferdamReinforcementProfile,
         PipingWallReinforcementProfile,
         SoilReinforcementProfile,
-        StabilityWallReinforcementProfile,
+        StabilityWallCrestReinforcementProfile,
+        StabilityWallToeReinforcementProfile,
     ]
     _available_points = _create_locations()
     _summary = KoswatSummary()

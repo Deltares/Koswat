@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass, field
@@ -32,8 +32,11 @@ from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings im
 from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
     KoswatSoilSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
+    KoswatStabilityWallCrestSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_toe_settings import (
+    KoswatStabilityWallToeSettings,
 )
 from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
     KoswatVPSSettings,
@@ -50,8 +53,11 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     piping_wall_settings: KoswatPipingWallSettings = field(
         default_factory=KoswatPipingWallSettings
     )
-    stability_wall_settings: KoswatStabilityWallSettings = field(
-        default_factory=KoswatStabilityWallSettings
+    stability_wall_toe_settings: KoswatStabilityWallToeSettings = field(
+        default_factory=KoswatStabilityWallToeSettings
+    )
+    stability_wall_crest_settings: KoswatStabilityWallCrestSettings = field(
+        default_factory=KoswatStabilityWallCrestSettings
     )
     cofferdam_settings: KoswatCofferdamSettings = field(
         default_factory=KoswatCofferdamSettings

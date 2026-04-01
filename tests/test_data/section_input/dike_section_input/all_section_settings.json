@@ -43,7 +43,7 @@
         "Overgang_CBwand_Damwand": 95,
         "Max_Lengte_Kwelscherm": 30
     },
-    "Stabiliteitswand": {
+    "StabiliteitswandKruin": {
         "Actief": true,
         "Opslagfactor_Grond": "Moeilijk",
         "Opslagfactor_Constructief": "Makkelijk",

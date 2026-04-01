@@ -72,8 +72,11 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
     KoswatSoilSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_settings import (
-    KoswatStabilityWallSettings,
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
+    KoswatStabilityWallCrestSettings,
+)
+from koswat.configuration.settings.reinforcements.koswat_stability_wall_toe_settings import (
+    KoswatStabilityWallToeSettings,
 )
 from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
     KoswatVPSSettings,
@@ -227,8 +230,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             piping_wall_settings=KoswatPipingWallSettings(
                 **(general_settings.piping_wall_section.__dict__)
             ),
-            stability_wall_settings=KoswatStabilityWallSettings(
-                **(general_settings.stability_wall_section.__dict__)
+            stability_wall_toe_settings=KoswatStabilityWallToeSettings(
+                **(general_settings.stability_wall_toe_section.__dict__)
+            ),
+            stability_wall_crest_settings=KoswatStabilityWallCrestSettings(
+                **(general_settings.stability_wall_crest_section.__dict__)
             ),
             cofferdam_settings=KoswatCofferdamSettings(
                 **(general_settings.cofferdam_section.__dict__)
@@ -270,8 +276,11 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             piping_wall_settings=section_input.piping_wall.set_defaults(
                 base_settings.piping_wall_settings
             ),
-            stability_wall_settings=section_input.stability_wall.set_defaults(
-                base_settings.stability_wall_settings
+            stability_wall_toe_settings=section_input.stability_wall_toe.set_defaults(
+                base_settings.stability_wall_toe_settings
+            ),
+            stability_wall_crest_settings=section_input.stability_wall_crest.set_defaults(
+                base_settings.stability_wall_crest_settings
             ),
             cofferdam_settings=section_input.cofferdam.set_defaults(
                 base_settings.cofferdam_settings

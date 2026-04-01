@@ -467,13 +467,22 @@ class TestAcceptance:
         _run_settings.reinforcement_settings.piping_wall_settings.land_purchase_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
-        _run_settings.reinforcement_settings.stability_wall_settings.soil_surtax_factor = (
+        _run_settings.reinforcement_settings.stability_wall_toe_settings.soil_surtax_factor = (
             SurtaxFactorEnum.MOEILIJK
         )
-        _run_settings.reinforcement_settings.stability_wall_settings.constructive_surtax_factor = (
+        _run_settings.reinforcement_settings.stability_wall_toe_settings.constructive_surtax_factor = (
             SurtaxFactorEnum.NORMAAL
         )
-        _run_settings.reinforcement_settings.stability_wall_settings.land_purchase_surtax_factor = (
+        _run_settings.reinforcement_settings.stability_wall_toe_settings.land_purchase_surtax_factor = (
+            SurtaxFactorEnum.MOEILIJK
+        )
+        _run_settings.reinforcement_settings.stability_wall_crest_settings.soil_surtax_factor = (
+            SurtaxFactorEnum.MOEILIJK
+        )
+        _run_settings.reinforcement_settings.stability_wall_crest_settings.constructive_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+        _run_settings.reinforcement_settings.stability_wall_crest_settings.land_purchase_surtax_factor = (
             SurtaxFactorEnum.MOEILIJK
         )
         _run_settings.reinforcement_settings.cofferdam_settings.soil_surtax_factor = (

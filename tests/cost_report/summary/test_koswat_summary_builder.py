@@ -34,7 +34,8 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
+    StabilityWallToeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -54,12 +55,15 @@ class TestKoswatSummaryBuilder:
         assert not _builder.run_scenario_settings
         assert _builder.strategy_type == InfraPriorityStrategy
 
-    def test_when__get_calculated_profile_list_given_reinforcement_settings_then_returns_expected_profiles(self):
+    def test_when__get_calculated_profile_list_given_reinforcement_settings_then_returns_expected_profiles(
+        self,
+    ):
         # 1. Define test data.
         _expected_profile_types = [
             SoilReinforcementProfile,
             PipingWallReinforcementProfile,
-            StabilityWallReinforcementProfile,
+            StabilityWallToeReinforcementProfile,
+            StabilityWallCrestReinforcementProfile,
             CofferdamReinforcementProfile,
         ]
         _builder = KoswatSummaryBuilder()
@@ -154,5 +158,9 @@ class TestKoswatSummaryBuilder:
             for lpr in _summary.locations_profile_report_list
         )
         assert any(
-            [report_location.location == _p_surrounding.location for lpr in _summary.locations_profile_report_list for report_location in lpr.report_locations]
+            [
+                report_location.location == _p_surrounding.location
+                for lpr in _summary.locations_profile_report_list
+                for report_location in lpr.report_locations
+            ]
         )
