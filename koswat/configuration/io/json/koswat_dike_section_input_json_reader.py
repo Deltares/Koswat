@@ -71,7 +71,7 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
                 _json_fom.content.get("kistdam", dict()), set_defaults=False
             ),
             surroundings=SurroundingsSectionFom.from_config(
-                _json_fom.content.get("omgeving", dict())
+                _json_fom.content.get("omgeving", dict()), set_defaults=False
             )
         )
         _dike_section_input_fom.input_profile.dike_section = (

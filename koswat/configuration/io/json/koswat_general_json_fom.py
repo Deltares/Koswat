@@ -91,7 +91,7 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
                 dict(json_config["kistdam"]), set_defaults=True
             ),
             surroundings_section=SurroundingsSectionFom.from_config(
-                json_config["omgeving"]
+                json_config["omgeving"], set_defaults=True
             ),
             infrastructuur_section=InfrastructureSectionFom.from_config(
                 json_config["infrastructuur"]

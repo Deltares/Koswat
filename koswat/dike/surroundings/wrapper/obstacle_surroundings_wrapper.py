@@ -37,7 +37,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calcula
 class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
-    allow_waterside_reinforcement: bool = False
+    allow_waterside_reinforcement: bool = True
 
     obstacles: SurroundingsObstacle = field(default_factory=SurroundingsObstacle)
 

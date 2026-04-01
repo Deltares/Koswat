@@ -304,6 +304,7 @@ class TestAcceptance:
             construction_distance=50,
             construction_buffer=10,
             waterside=False,
+            allow_waterside_reinforcement=True,
             obstacle_types={"bebouwing": 5},
         )
 

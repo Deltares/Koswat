@@ -30,31 +30,37 @@ from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 
 @dataclass
 class SurroundingsSectionFom(KoswatJsonFomProtocol):
-    construction_distance: float = float("nan")
-    construction_buffer: float = float("nan")
-    waterside: bool = False
-    allow_waterside_reinforcement: bool = True
+    construction_distance: float
+    construction_buffer: float
+    waterside: bool
+    allow_waterside_reinforcement: bool
     obstacle_types: dict[str, Optional[float]] = field(default_factory=dict)
 
     @classmethod
-    def from_config(cls, input_config: dict[str, Any]) -> "SurroundingsSectionFom":
+    def from_config(cls, input_config: dict[str, Any], set_defaults: bool = True) -> "SurroundingsSectionFom":
+        def _get_float(input_val: Optional[str]) -> float:
+            if set_defaults:
+                return SectionConfigHelper.get_float(input_val)
+            return SectionConfigHelper.get_float_without_default(input_val)
+        def _get_bool(input_val: Optional[str]) -> bool:
+            if set_defaults:
+                return SectionConfigHelper.get_bool(input_val)
+            return SectionConfigHelper.get_bool_without_default(input_val)
+
         _section = cls(
-            construction_distance=SectionConfigHelper.get_float(
+            construction_distance=_get_float(
                 input_config.get("constructieafstand", None)
             ),
-            construction_buffer=SectionConfigHelper.get_float(
+            construction_buffer=_get_float(
                 input_config.get("constructieovergang", None)
             ),
-            waterside=SectionConfigHelper.get_bool(input_config.get("buitendijks", None)),
+            waterside=_get_bool(input_config.get("buitendijks", None)),
             allow_waterside_reinforcement=SectionConfigHelper.get_bool(
-                input_config.get("toegestaanbuitenzijdeversterking", True)
+                input_config.get("toegestaanbuitenzijdeversterking"),
+                True
             ),
             obstacle_types={
-                _type.get("type")
-                .lower()
-                .strip(): SectionConfigHelper.get_float_without_default(
-                    _type.get("buffer", None)
-                )
+                _type.get("type").lower().strip(): _get_float(_type.get("buffer", None))
                 for _type in input_config.get("omgevingtypes", [])
             },
         )

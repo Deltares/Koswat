@@ -105,6 +105,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
+            allow_waterside_reinforcement=True,
             obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": 0},
         )
 
@@ -187,6 +188,7 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             waterside=True,
+            allow_waterside_reinforcement=True,            
             obstacle_types={"non_existing_obstacle_type": 0},
         )
 

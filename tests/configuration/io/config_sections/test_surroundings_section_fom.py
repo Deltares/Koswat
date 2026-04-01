@@ -13,6 +13,7 @@ class TestSurroundingsSectionFom:
             construction_distance=100.0,
             construction_buffer=20.0,
             waterside=True,
+            allow_waterside_reinforcement=True,
             obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": None},
         )
 
@@ -38,7 +39,7 @@ class TestSurroundingsSectionFom:
 
         # 2. Run test.
         _surroundings_section_fom = SurroundingsSectionFom.from_config(
-            _surroundings_config
+            _surroundings_config, set_defaults=False
         )
 
         # 3. Verify expectations.
@@ -65,7 +66,7 @@ class TestSurroundingsSectionFom:
 
         # 2. Run test.
         _surroundings_section_fom = SurroundingsSectionFom.from_config(
-            _surroundings_config
+            _surroundings_config, set_defaults=False
         )
 
         # 3. Verify expectations.
@@ -91,7 +92,7 @@ class TestSurroundingsSectionFom:
 
         # 2. Run test
         with pytest.raises(ValueError) as exc_info:
-            SurroundingsSectionFom.from_config(_surroundings_config)
+            SurroundingsSectionFom.from_config(_surroundings_config, set_defaults=True)
 
         # 3. Verify expectations.
         assert exc_info is not None
