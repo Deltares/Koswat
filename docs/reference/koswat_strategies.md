@@ -82,7 +82,7 @@ Simplified representation for a traject with 10 locations. This example is also 
 
 Given a [reinforcement grouping](#reinforcement-grouping), we will create a dictionary of masks of size `NM` where `N` (the keys) is the number of available reinforcement types (`Type[ReinforcementProfileProtocol]`) and `M` the number of available locations. 
 
-__Note__: Masks' values are the position of a reinforcement type in the [reinforcement's order list](#reinforcment-order). So a location with`CofferDamReinforcementProfile` will have a 4 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
+__Note__: Masks' values are the position of a reinforcement type in the [reinforcement's order list](#reinforcement-order). So a location with`CofferDamReinforcementProfile` will have a 4 at the mask's position, whilst a `SoilReinforcementProfile` will have a 0 instead (remember in Python indexing starts with 0).
 
 __Steps breakdown__:
 
@@ -257,7 +257,7 @@ __Steps breakdown__:
 
 1. Assignment of [order based clusters](#order-based),
 2. [Cluster options](#cluster-options) evaluation,
-    1. [Common available measures](#cluster-common-available-measure-costs) cost calculation,
+    1. [Common available measures](#cluster-common-available-measures-cost) cost calculation,
     2. Cheapest option selection,
 3. Update reinforcement selection with selected option.
 
