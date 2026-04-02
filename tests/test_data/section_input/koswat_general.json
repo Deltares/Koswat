@@ -88,7 +88,7 @@
         "OmgevingTypes": [
             {"Type": "Bebouwing", "Buffer": 5}
         ],
-        "ToegestaanBuitenzijdeVersterking": true
+        "ToegestaanBuitendijkseVersterking": true
     },
     "Infrastructuur": {
         "Actief": false,

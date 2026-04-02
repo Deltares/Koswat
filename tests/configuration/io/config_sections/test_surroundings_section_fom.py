@@ -72,7 +72,7 @@ class TestSurroundingsSectionFom:
                 {"type": "spoorwegen", "buffer": 10},
                 {"type": "water"},
             ],
-            "toegestaanbuitenzijdeversterking": False
+            "toegestaanbuitendijkseversterking": False
         }
 
         # 2. Run test.

@@ -76,7 +76,7 @@
             {"Type": "Bebouwing", "Buffer": 5},
             {"Type": "Water"}
         ],
-        "ToegestaanBuitenzijdeVersterking": true
+        "ToegestaanBuitendijkseVersterking": true
     },
     "Infrastructuur": {
         "Actief": false,

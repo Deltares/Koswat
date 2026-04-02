@@ -54,7 +54,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
                 input_config.get("constructieovergang", None)
             ),
             allow_waterside_reinforcement=_get_bool(
-                input_config.get("toegestaanbuitenzijdeversterking", None),
+                input_config.get("toegestaanbuitendijkseversterking", None),
                 True
             ),
             obstacle_types={
