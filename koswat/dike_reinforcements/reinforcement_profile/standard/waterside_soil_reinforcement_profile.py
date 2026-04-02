@@ -26,7 +26,7 @@ from koswat.dike_reinforcements.input_profile.waterside_soil.waterside_soil_inpu
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.waterside_only_room_calculator import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     WatersideOnlyRoomCalculator,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (

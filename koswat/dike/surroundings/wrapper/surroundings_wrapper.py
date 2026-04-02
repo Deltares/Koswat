@@ -28,7 +28,7 @@ from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
     ObstacleSurroundingsWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     ReinforcementRoomCalculatorProtocol,
 )
 

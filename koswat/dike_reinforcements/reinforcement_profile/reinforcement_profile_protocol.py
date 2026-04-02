@@ -28,7 +28,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     ReinforcementRoomCalculatorProtocol,
 )
 

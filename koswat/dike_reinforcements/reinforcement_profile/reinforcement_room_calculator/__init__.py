@@ -4,9 +4,6 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calcula
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_only_room_calculator import (
     PoldersideOnlyRoomCalculator,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_base import (
-    ReinforcementRoomCalculatorBase,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
     ReinforcementRoomCalculatorProtocol,
 )
