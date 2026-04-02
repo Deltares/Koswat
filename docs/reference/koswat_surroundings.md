@@ -14,7 +14,32 @@ We categorize these structures in the following two types:
 
 To define said surroundings we make use of `.csv` files, each file for a specific type of surrounding that needs to be "enabled" in the `koswat_general.json` settings file.
 
-In addition, surroundings can be defined for the inside or the outside of a dike. At the current `Koswat` version (unreleased `v0.15.0`) we __only support__ surroundings in the inside of a dike ( `binnendijks`).
+Surroundings can be defined for the inside or the outside of a dike. Moreover, we can also prevent reinforcements to be done at the waterside of the dike with the property `ToegestaanBuitendijkseVersterking` generally in the `koswat_general.json` or for specific sections at their respective `*.json` files. Example given:
+`koswat_general.json`
+```json
+{
+    "Omgeving": {
+        "ConstructieAfstand": 50,
+        "ConstructieOvergang": 10,
+        "OmgevingTypes": [
+            {"Type": "Bebouwing", "Buffer": 5},
+            {"Type": "Water"}
+        ],
+        "ToegestaanBuitendijkseVersterking": false
+    }
+}
+```
+All reinforcements will be calculated without using the waterside of the dike. However you can override this property at the section level e.g.: `10-1-1-A-1-A.json`
+
+```json
+{
+    "Omgeving": {
+        "ToegestaanBuitendijkseVersterking": true
+    }
+}
+```
+
+This can also be done the other way around (allow always to use the waterside except for specific sections).
 
 ## Surroundings `.csv` files
 

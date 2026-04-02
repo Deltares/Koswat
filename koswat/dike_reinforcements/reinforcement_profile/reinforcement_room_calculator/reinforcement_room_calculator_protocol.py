@@ -29,6 +29,9 @@ class ReinforcementRoomCalculatorProtocol(Protocol):
         """
         Checks if there is enough room for a given reinforcement at a given point with obstacles.
 
+        Args:
+            point_obstacle_surroundings (PointObstacleSurroundings): The point surroundings to check.
+
         Returns:
             bool: True if there is enough room for reinforcement, False otherwise.
         """

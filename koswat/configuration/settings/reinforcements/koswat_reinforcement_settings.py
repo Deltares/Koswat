@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass, field
 
+from koswat.configuration.io.config_sections.surroundings_section_fom import SurroundingsSectionFom
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
     KoswatCofferdamSettings,
@@ -47,7 +48,6 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     """
     Wrapper of all settings per reinforcement.
     """
-
     soil_settings: KoswatSoilSettings = field(default_factory=KoswatSoilSettings)
     vps_settings: KoswatVPSSettings = field(default_factory=KoswatVPSSettings)
     piping_wall_settings: KoswatPipingWallSettings = field(
@@ -62,6 +62,9 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     cofferdam_settings: KoswatCofferdamSettings = field(
         default_factory=KoswatCofferdamSettings
     )
+
+    # By definition set to None to force its explicit definition.
+    allow_waterside_reinforcement: bool = None
 
     def is_valid(self) -> bool:
         return True
