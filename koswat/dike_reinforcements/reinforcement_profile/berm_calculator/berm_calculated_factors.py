@@ -122,7 +122,10 @@ class BermCalculatedFactors:
             _dikebase_height_new,
             _dikebase_stability_new,
         )
-        _dikebase_piping_new_dict[InputProfileEnum.STABILITY_WALL] = (
+        _dikebase_piping_new_dict[InputProfileEnum.STABILITY_WALL_TOE] = (
+            _dikebase_piping_old
+        )
+        _dikebase_piping_new_dict[InputProfileEnum.STABILITY_WALL_CREST] = (
             _dikebase_piping_old
         )
         _dikebase_piping_new_dict[InputProfileEnum.VPS] = max(
