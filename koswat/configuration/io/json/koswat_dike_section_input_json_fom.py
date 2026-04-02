@@ -43,7 +43,7 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     soil_measure: SoilReinforcementSectionFom = field(
         default_factory=SoilReinforcementSectionFom
     )
-    # Use soil settings for now
+    # Use soil settings for now #370
     waterside_soil_measure: SoilReinforcementSectionFom = field(
         default_factory=SoilReinforcementSectionFom
     )

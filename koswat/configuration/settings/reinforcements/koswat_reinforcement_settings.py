@@ -49,7 +49,7 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     """
 
     soil_settings: KoswatSoilSettings = field(default_factory=KoswatSoilSettings)
-    # Use soil settings for now
+    # Use soil settings for now #370
     waterside_soil_settings: KoswatSoilSettings = field(
         default_factory=KoswatSoilSettings
     )

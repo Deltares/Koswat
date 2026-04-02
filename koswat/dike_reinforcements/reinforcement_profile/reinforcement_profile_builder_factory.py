@@ -65,7 +65,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 
 _reinforcements = {
     SoilReinforcementProfile: SoilInputProfile,
-    # Not active yet
+    # Not active yet #370
     # WatersideSoilReinforcementProfile: WatersideSoilInputProfile,
     VPSReinforcementProfile: VPSInputProfile,
     PipingWallReinforcementProfile: PipingWallInputProfile,
