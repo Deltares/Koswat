@@ -2,7 +2,7 @@ name: ci-version-bumper
 
 on:
   push:
-    branches: [ "master" ]
+    tags: [ "v*" ]
 
 env:
   GH_TOKEN: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
@@ -10,7 +10,6 @@ env:
 jobs:
   generate-release:
     name: "Generate release from bump release tag"
-    if: "${{ (startsWith(github.event.head_commit.message, 'bump:')) }}"
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,30 +20,33 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
+
       - name: Set release variables
         run: |
-          echo "RELEASE_TAG=$(git tag --sort=committerdate | grep -o 'v.*' | tail -1)" >> "$GITHUB_ENV"
+          echo "RELEASE_TAG=${{ github.ref_name }}" >> "$GITHUB_ENV"
           echo "OLD_RELEASE_TAG=$(git tag --sort=committerdate | grep -o 'v.*' | tail -2 | head -1)" >> "$GITHUB_ENV"
-          echo "RELEASE_TITLE=$(git log -1 --pretty=format:%s | cut -d ':' -f 2 | awk '{$1=$1;print}')" >> "$GITHUB_ENV"
+
       - name: Check if pre-release
         run: |
-          if echo "${{ env.RELEASE_TAG }}" | grep -qE '^v[0-9]+\.[0-9]+\.[0-9]+rc'; then
+          if echo "${{ github.ref_name }}" | grep -qE '^v[0-9]+\.[0-9]+\.[0-9]+rc'; then
             echo "IS_PRERELEASE=true" >> "$GITHUB_ENV"
           else
             echo "IS_PRERELEASE=false" >> "$GITHUB_ENV"
           fi
+
       - name: Set release title
         run: |
           YEAR=$(date +'%Y')
           MONTH=$(date +'%-m')
           QUARTER=$(( (MONTH - 1) / 3 + 1 ))
-          CLEAN_VERSION=$(echo "${{ env.RELEASE_TAG }}" | sed 's/rc[0-9]*//')
+          CLEAN_VERSION=$(echo "${{ github.ref_name }}" | sed 's/rc[0-9]*//')
 
           if [ "${{ env.IS_PRERELEASE }}" == "true" ]; then
-            echo "RELEASE_TITLE=${YEAR}.Q${QUARTER} Pre-release ${CLEAN_VERSION}" >> "$GITHUB_ENV"
+            echo "RELEASE_TITLE=${YEAR}.Q${QUARTER} ${CLEAN_VERSION} prerelease" >> "$GITHUB_ENV"
           else
-            echo "RELEASE_TITLE=${YEAR}.Q${QUARTER} Release ${{ env.RELEASE_TAG }} " >> "$GITHUB_ENV"
+            echo "RELEASE_TITLE=${YEAR}.Q${QUARTER} ${{ github.ref_name }} release" >> "$GITHUB_ENV"
           fi
+
       - name: Generate release (pre-release)
         if: env.IS_PRERELEASE == 'true'
         run: |
