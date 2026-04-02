@@ -6,8 +6,7 @@
 [![Python 3.14](https://img.shields.io/badge/Python-3.14-blue.svg)](https://www.python.org/downloads/release/python-3143/)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![ci-install-package](https://github.com/Deltares/Koswat/actions/workflows/ci_installation.yml/badge.svg)](https://github.com/Deltares/Koswat/actions/workflows/ci_installation.yml)
-![TeamCity build status](https://dpcbuild.deltares.nl/app/rest/builds/buildType:id:Koswat_ContinuousIntegrationBuild_RunFastTests/statusIcon.svg)
+![TeamCity build status](https://dpcbuild.deltares.nl/app/rest/builds/buildType:id:Koswat_ContinuousDeliveryBuild_RunAllTests/statusIcon.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_Koswat&metric=alert_status&token=87fdd0648c19800b4b5fc11334461a7fb602bf20)](https://sonarcloud.io/summary/new_code?id=Deltares_Koswat)
 [![GitHub Pages documentation](https://github.com/Deltares/koswat/actions/workflows/deploy_docs.yml/badge.svg)](https://github.com/Deltares/koswat/actions/workflows/deploy_docs.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Deltares/koswat/jupyter-binder)
