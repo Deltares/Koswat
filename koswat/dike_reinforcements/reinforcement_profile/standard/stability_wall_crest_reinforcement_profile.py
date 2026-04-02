@@ -30,6 +30,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calcula
     PoldersideAndWatersideRoomCalculator,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_only_room_calculator import PoldersideOnlyRoomCalculator
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
@@ -42,7 +43,7 @@ class StabilityWallCrestReinforcementProfile(StandardReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> PoldersideAndWatersideRoomCalculator:
+    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
         if not self.allow_waterside_reinforcement:
             return PoldersideOnlyRoomCalculator(required_polderside_width=self.polderside_width)
         return PoldersideAndWatersideRoomCalculator(

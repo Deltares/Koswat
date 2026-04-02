@@ -97,7 +97,6 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
             cofferdam_section=CofferdamReinforcementSectionFom.from_config(
                 dict(json_config["kistdam"]), set_defaults=True
             ),
-            # This is the GENERAL definition.
             surroundings_section=SurroundingsSectionFom.from_config(
                 json_config["omgeving"], set_defaults=True
             ),

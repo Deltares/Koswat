@@ -137,9 +137,7 @@ class TestKoswatRunSettingsImporter:
         )
 
     def _compare_settings_as_dict(self, settings_a: dict[str, float], settings_b: dict[str, float], except_keys: list[str]) -> None:
-        # assert sorted(settings_a.keys()) == sorted(settings_b.keys())
-        _excluded_keys = except_keys + ["allow_waterside_reinforcement"]
-        for _key in filter(lambda k: k not in _excluded_keys, settings_a.keys()):
+        for _key in filter(lambda k: k not in except_keys, settings_a.keys()):
             assert settings_a[_key] == settings_b[_key]
 
 
@@ -292,7 +290,7 @@ class TestKoswatRunSettingsImporter:
         return general_settings, settings_comparison
     
     @pytest.fixture(name="general_settings_surroundings")
-    def _get_valid_general_settings_surroundigns(self, general_settings: KoswatGeneralJsonFom)-> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
+    def _get_valid_general_settings_surroundings(self, general_settings: KoswatGeneralJsonFom)-> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
         _settings = general_settings.cofferdam_section
         assert _settings.active == True
         assert _settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
@@ -321,7 +319,6 @@ class TestKoswatRunSettingsImporter:
         pytest.param("general_settings_piping_wall_measurement", id="piping_wall_measurement"),
         pytest.param("general_settings_stability_wall_toe_measurement", id="stability_wall_toe_measurement"),
         pytest.param("general_settings_stability_wall_crest_measurement", id="stability_wall_crest_measurement"),
-        # pytest.param("general_settings_stability_wall_measurement", id="stability_wall_measurement"),
         pytest.param("general_settings_cofferdam_measurement", id="cofferdam_measurement"),
         pytest.param("general_settings_surroundings", id="surroundings")
     ])

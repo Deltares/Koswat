@@ -36,7 +36,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
     obstacle_types: dict[str, Optional[float]] = field(default_factory=dict)
 
     @classmethod
-    def from_config(cls, input_config: dict[str, Any], set_defaults: bool = True) -> "SurroundingsSectionFom":
+    def from_config(cls, input_config: dict[str, Any], set_defaults: bool) -> "SurroundingsSectionFom":
         def _get_float(input_val: Optional[str]) -> float:
             if set_defaults:
                 return SectionConfigHelper.get_float(input_val)
