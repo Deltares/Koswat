@@ -8,13 +8,13 @@ from koswat.dike_reinforcements.input_profile import (
     CofferDamInputProfile,
     PipingWallInputProfile,
     SoilInputProfile,
-    StabilityWallInputProfile,
+    StabilityWallCrestInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -91,9 +91,9 @@ reinforcement_profile_cases = [
     ReinforcementProfileCaseCombination(
         case_name="Stability Wall, Default input profile, Scenario 3",
         koswat_scenario_case=ScenarioCases.scenario_3,
-        reinforcement_profile_type=StabilityWallReinforcementProfile,
+        reinforcement_profile_type=StabilityWallCrestReinforcementProfile,
         expectation=ReinforcementProfileCaseExpectation(
-            input_profile_base=StabilityWallInputProfile(
+            input_profile_base=StabilityWallCrestInputProfile(
                 dike_section="test_data",
                 waterside_ground_level=0.0,
                 waterside_slope=3.0,

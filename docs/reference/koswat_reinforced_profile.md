@@ -9,7 +9,7 @@ This chapter covers the description of a reinforcement profile and its parts.
 A reinforcement profile implements the `ReinforcementProfileProtocol`, which is a specialization of the `KoswatProfileProtocol` with some differences:
 
 - `input_data`: Similar to the base profile `input_data` but instead implements the `ReinforcementInputProfileProtocol`, a specialization of the (`KoswatInputProfileProtocol`) which depends on the type of [reinforcement](#possible-reinforcements) being applied.
-- `old_profile`: New property which contains the [koswat profile](koswat_dike.md#koswat-dike) from which the calculation was based on.
+- `old_profile`: New property which contains the [koswat profile](koswat_dike.md#koswat-properties) from which the calculation was based on.
 - `polderside_width`: The distance between characteristic point 4 of the **original** profile (always 0 by definition) and characteristic point 8 of the reinforced profile.
 
 

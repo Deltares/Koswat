@@ -32,7 +32,7 @@ class TestBermCalculatedFactors:
     @pytest.mark.parametrize(
         "profile_type, expected",
         [
-            (InputProfileEnum.STABILITY_WALL, 10.0),
+            (InputProfileEnum.STABILITY_WALL_CREST, 10.0),
             (InputProfileEnum.VPS, 0.0),
             (InputProfileEnum.NONE, 0.0),
             (None, 0.0),
@@ -47,7 +47,7 @@ class TestBermCalculatedFactors:
             scenario=None,
             dikebase_piping_old=None,
             dikebase_piping_new_dict={
-                InputProfileEnum.STABILITY_WALL: 10.0,
+                InputProfileEnum.STABILITY_WALL_CREST: 10.0,
                 InputProfileEnum.SOIL: 5.0,
                 InputProfileEnum.NONE: 0.0,
             },

@@ -20,7 +20,7 @@ class TestNoBermCalculator:
         [
             pytest.param(InputProfileEnum.NONE, 0.609091, id="Default"),
             pytest.param(
-                InputProfileEnum.STABILITY_WALL, 0.00909091, id="Stability wall"
+                InputProfileEnum.STABILITY_WALL_CREST, 0.00909091, id="Stability wall"
             ),
         ],
     )

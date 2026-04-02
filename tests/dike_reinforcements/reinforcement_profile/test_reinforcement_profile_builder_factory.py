@@ -51,7 +51,8 @@ from koswat.dike_reinforcements.reinforcement_layers.standard_reinforcement_laye
 from koswat.dike_reinforcements.reinforcement_profile import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
-    StabilityWallReinforcementProfile,
+    StabilityWallCrestReinforcementProfile,
+    StabilityWallToeReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
@@ -156,13 +157,14 @@ class TestReinforcementProfileBuilderFactory:
             SoilReinforcementProfile,
             VPSReinforcementProfile,
             PipingWallReinforcementProfile,
-            StabilityWallReinforcementProfile,
+            StabilityWallToeReinforcementProfile,
+            StabilityWallCrestReinforcementProfile,
             CofferdamReinforcementProfile,
         ]
         _available_reinforcements = (
             ReinforcementProfileBuilderFactory.get_available_reinforcements()
         )
-        assert len(_available_reinforcements) == 5
+        assert len(_available_reinforcements) == 6
         assert all(
             _reinforcement in _available_reinforcements
             for _reinforcement in _expected_reinforcements
@@ -187,9 +189,14 @@ class TestReinforcementProfileBuilderFactory:
                 id="[Standard] Piping wall reinforcement",
             ),
             pytest.param(
-                StabilityWallReinforcementProfile,
+                StabilityWallToeReinforcementProfile,
                 StandardReinforcementProfileBuilder,
-                id="[Standard] Stability wall reinforcement",
+                id="[Standard] Stability wall (toe) reinforcement",
+            ),
+            pytest.param(
+                StabilityWallCrestReinforcementProfile,
+                StandardReinforcementProfileBuilder,
+                id="[Standard] Stability wall (crest) reinforcement",
             ),
             pytest.param(
                 CofferdamReinforcementProfile,
@@ -339,7 +346,12 @@ class TestReinforcementProfileBuilderFactory:
             pytest.param(SoilReinforcementProfile, id="Groundmaatregel"),
             pytest.param(VPSReinforcementProfile, id="Verticale piping oplossing"),
             pytest.param(PipingWallReinforcementProfile, id="Pipingwand"),
-            pytest.param(StabilityWallReinforcementProfile, id="Stabiliteitswand"),
+            pytest.param(
+                StabilityWallToeReinforcementProfile, id="Stabiliteitswand (teen)"
+            ),
+            pytest.param(
+                StabilityWallCrestReinforcementProfile, id="Stabiliteitswand (kruin)"
+            ),
             pytest.param(CofferdamReinforcementProfile, id="Kistdam"),
         ],
     )

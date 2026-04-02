@@ -22,7 +22,7 @@ The surroundings files follow all the same format both in naming and content.
 
 Their file name has the form of `T{dike_traject}_{type_of_surrounding}.csv`:
 - The `{dike_traject}` is the dike's traject code name, usually something like `10_1`,
-- the `{type_of_surrounding}` is the name of surrounding that will be imported (check further in the corresponding subsections of [obstacles](#obstacle-types) and [infrastructure](#infrastructure-types)).
+- the `{type_of_surrounding}` is the name of surrounding that will be imported (check further in the corresponding subsections of [obstacles](#obstacle-types) and [infrastructure](#infrastructures-types)).
 
 Their headers are divided in the following columns:
 
@@ -76,7 +76,7 @@ As reminder, at the moment we only support 'inside the dike's' surroundings.
 
 ## Surroundings in the code
 
-But, how are these surroundings represented in the code? As earlier described, we distinguish surroundings by either [obstacles](#obstacles) or [infrastructures](#infrastructures). This is also reflected in the code where we create a general [SurroundingsWrapper](./koswat_docstrings/dike/surroundings.md), which as the name states, wraps the obstacle and infrastructure surroundings in separate properties, each implementing an specialitzation of the `BaseSurroundingsWrapper` so that: 
+But, how are these surroundings represented in the code? As earlier described, we distinguish surroundings by either [obstacles](#obstacles) or [infrastructures](#infrastructures). This is also reflected in the code where we create a general `SurroundingsWrapper`, which as the name states, wraps the obstacle and infrastructure surroundings in separate properties, each implementing an specialitzation of the `BaseSurroundingsWrapper` so that: 
 
 - `ObstacleSurroundingsWrapper` will wrap all the supported [obstacle types](#obstacle-types), in separate properties of type `SurroundingsObstacle`.
 - `InfrastructureSurroundingsWrapper` will wrap all the supported [infrastructure types](#infrastructures-types), in separate properties of type `SurroundingsInfrastructure`.

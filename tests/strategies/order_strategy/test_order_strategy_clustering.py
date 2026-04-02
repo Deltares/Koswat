@@ -4,8 +4,11 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_re
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_reinforcement_profile import (
-    StabilityWallReinforcementProfile,
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_crest_reinforcement_profile import (
+    StabilityWallCrestReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_toe_reinforcement_profile import (
+    StabilityWallToeReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_cluster import OrderCluster
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
@@ -49,11 +52,11 @@ class TestOrderStrategyClustering:
             for _sr in example_location_reinforcements_with_buffering[0:2]
         )
         assert all(
-            _sr.current_selected_measure == StabilityWallReinforcementProfile
+            _sr.current_selected_measure == StabilityWallToeReinforcementProfile
             for _sr in example_location_reinforcements_with_buffering[2:7]
         )
         assert all(
-            _sr.current_selected_measure == CofferdamReinforcementProfile
+            _sr.current_selected_measure == StabilityWallCrestReinforcementProfile
             for _sr in example_location_reinforcements_with_buffering[7:]
         )
 

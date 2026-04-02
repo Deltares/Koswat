@@ -150,7 +150,8 @@ class TestKoswatRunSettingsImporter:
             soil_measure="soil_settings",
             vps="vps_settings",
             piping_wall="piping_wall_settings",
-            stability_wall="stability_wall_settings",
+            stability_wall_toe="stability_wall_toe_settings",
+            stability_wall_crest="stability_wall_crest_settings",
             cofferdam="cofferdam_settings",
         )
         for _profile, _reinforcement_settings in zip(
