@@ -58,7 +58,9 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
                 True
             ),
             obstacle_types={
-                _type.get("type").lower().strip(): _get_float(_type.get("buffer", None))
+                _type.get("type").lower().strip(): SectionConfigHelper.get_float_without_default(
+                    _type.get("buffer", None)
+                )
                 for _type in input_config.get("omgevingtypes", [])
             },
         )

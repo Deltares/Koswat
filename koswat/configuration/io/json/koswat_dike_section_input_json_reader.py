@@ -76,7 +76,6 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             cofferdam=CofferdamReinforcementSectionFom.from_config(
                 _json_fom.content.get("kistdam", dict()), set_defaults=False
             ),
-            # These are the settings overriding the general ones.
             surroundings=SurroundingsSectionFom.from_config(
                 _json_fom.content.get("omgeving", dict()), set_defaults=False
             )

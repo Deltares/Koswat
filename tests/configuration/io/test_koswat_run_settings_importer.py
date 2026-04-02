@@ -290,22 +290,6 @@ class TestKoswatRunSettingsImporter:
         return general_settings, settings_comparison
     
     @pytest.fixture(name="general_settings_surroundings")
-    def _get_valid_general_settings_surroundings(self, general_settings: KoswatGeneralJsonFom)-> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
-        _settings = general_settings.cofferdam_section
-        assert _settings.active == True
-        assert _settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
-        assert _settings.constructive_surtax_factor == SurtaxFactorEnum.NORMAAL
-        assert _settings.min_length_cofferdam == 5
-        assert _settings.max_length_cofferdam == 25
-        
-        def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
-            self._compare_settings_as_dict(
-                profile.__dict__,
-                reinforcement_settings.__dict__,
-                except_keys=[])
-        return general_settings, settings_comparison
-
-    @pytest.fixture(name="general_settings_surroundings")
     def _get_valid_general_settings_surroundings(self, general_settings: KoswatGeneralJsonFom) -> Tuple[KoswatGeneralJsonFom, Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None]]:
         assert general_settings.surroundings_section.allow_waterside_reinforcement == True
         def settings_comparison(profile: DikeProfileSectionFom, reinforcement_settings: KoswatReinforcementSettings) -> None:
