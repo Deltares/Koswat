@@ -28,6 +28,3 @@ from koswat.configuration.io.config_sections.surroundings_section_fom import (
 from koswat.configuration.io.config_sections.vps_reinforcement_section_fom import (
     VPSReinforcementSectionFom,
 )
-from koswat.configuration.io.config_sections.waterside_soil_reinforcement_section_fom import (
-    WatersideSoilReinforcementSectionFom,
-)

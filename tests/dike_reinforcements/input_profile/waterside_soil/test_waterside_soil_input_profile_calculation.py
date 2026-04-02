@@ -4,8 +4,8 @@ from koswat.configuration.settings import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.configuration.settings.reinforcements.koswat_waterside_soil_settings import (
-    KoswatWatersideSoilSettings,
+from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
+    KoswatSoilSettings,
 )
 from koswat.core.protocols import BuilderProtocol
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
@@ -36,7 +36,7 @@ class TestWatersideSoilInputProfileCalculation:
 
     def test_build(self, valid_input_data: KoswatInputProfileProtocol):
         @dataclass
-        class MockSettings(KoswatWatersideSoilSettings):
+        class MockSettings(KoswatSoilSettings):
             min_berm_height: float
             max_berm_height_factor: float
             factor_increase_berm_height: float

@@ -11,7 +11,6 @@ from koswat.configuration.io.config_sections import (
     StabilityWallToeReinforcementSectionFom,
     SurroundingsSectionFom,
     VPSReinforcementSectionFom,
-    WatersideSoilReinforcementSectionFom,
 )
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.settings.koswat_general_settings import (
@@ -90,7 +89,7 @@ class TestKoswatGeneralJsonFom:
         # Buitendijkse grondmaatregel section
         assert isinstance(
             _config_fom.waterside_soil_measure_section,
-            WatersideSoilReinforcementSectionFom,
+            SoilReinforcementSectionFom,
         )
         assert _config_fom.waterside_soil_measure_section.active == True
         assert (

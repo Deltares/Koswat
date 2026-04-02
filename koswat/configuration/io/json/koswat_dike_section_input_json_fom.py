@@ -29,7 +29,6 @@ from koswat.configuration.io.config_sections import (
     StabilityWallCrestReinforcementSectionFom,
     StabilityWallToeReinforcementSectionFom,
     VPSReinforcementSectionFom,
-    WatersideSoilReinforcementSectionFom,
 )
 from koswat.configuration.io.config_sections.surroundings_section_fom import (
     SurroundingsSectionFom,
@@ -44,8 +43,9 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     soil_measure: SoilReinforcementSectionFom = field(
         default_factory=SoilReinforcementSectionFom
     )
-    waterside_soil_measure: WatersideSoilReinforcementSectionFom = field(
-        default_factory=WatersideSoilReinforcementSectionFom
+    # Use soil settings for now
+    waterside_soil_measure: SoilReinforcementSectionFom = field(
+        default_factory=SoilReinforcementSectionFom
     )
     vps: VPSReinforcementSectionFom = field(default_factory=VPSReinforcementSectionFom)
     piping_wall: PipingWallReinforcementSectionFom = field(
