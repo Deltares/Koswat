@@ -89,7 +89,7 @@ reinforcement_profile_cases = [
         ),
     ),
     ReinforcementProfileCaseCombination(
-        case_name="Stability Wall, Default input profile, Scenario 3",
+        case_name="Stability Wall Crest, Default input profile, Scenario 3",
         koswat_scenario_case=ScenarioCases.scenario_3,
         reinforcement_profile_type=StabilityWallCrestReinforcementProfile,
         expectation=ReinforcementProfileCaseExpectation(
