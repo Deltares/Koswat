@@ -239,6 +239,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             cofferdam_settings=KoswatCofferdamSettings(
                 **(general_settings.cofferdam_section.__dict__)
             ),
+            # By default initialized to True
+            allow_waterside_reinforcement=general_settings.surroundings_section.allow_waterside_reinforcement
         )
         return _reinforcement_settings
 
@@ -263,6 +265,9 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         section_input: KoswatDikeSectionInputJsonFom,
     ) -> KoswatReinforcementSettings:
         # Override base reinforcement settings with section-specific input where provided
+        _allow_waterside_section = section_input.surroundings.allow_waterside_reinforcement 
+        _allow_waterside_general = base_settings.allow_waterside_reinforcement
+        _allow_waterside_reinforcement = _allow_waterside_section if _allow_waterside_section != None else _allow_waterside_general
         _new_settings = KoswatReinforcementSettings(
             soil_settings=section_input.soil_measure.set_defaults(
                 base_settings.soil_settings
@@ -280,6 +285,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             cofferdam_settings=section_input.cofferdam.set_defaults(
                 base_settings.cofferdam_settings
             ),
+            allow_waterside_reinforcement=_allow_waterside_reinforcement
+
         )
         return _new_settings
 

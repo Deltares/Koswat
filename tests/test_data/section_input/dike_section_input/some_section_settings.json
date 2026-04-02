@@ -18,5 +18,8 @@
     "Kistdam": {
         "Opslagfactor_Grond": "Moeilijk",
         "Max_Lengte_Kistdam": 26
+    },
+    "Omgeving":{
+        "ToegestaanBuitendijkseVersterking": false
     }
 }

@@ -1,5 +1,4 @@
 import shutil
-from pathlib import Path
 from typing import Iterator
 
 import pytest
@@ -62,7 +61,7 @@ class TestSurroundingsWrapper:
         _surroundings_settings = SurroundingsSectionFom(
             construction_distance=float("nan"),
             construction_buffer=float("nan"),
-            waterside=False,
+            allow_waterside_reinforcement=True,
             obstacle_types={"bebouwing": 5},
         )
 
