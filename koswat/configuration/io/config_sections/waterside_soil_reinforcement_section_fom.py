@@ -19,19 +19,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from enum import Enum
+from typing import Any
+
+from koswat.configuration.io.config_sections.soil_reinforcement_section_fom import (
+    SoilReinforcementSectionFom,
+)
 
 
-class InputProfileEnum(Enum):
-    """
-    Enum class for input profiles.
-    """
-
-    NONE = 0
-    SOIL = 1
-    VPS = 2
-    PIPING_WALL = 3
-    STABILITY_WALL_TOE = 4
-    STABILITY_WALL_CREST = 5
-    COFFERDAM = 6
-    WATERSIDE_SOIL = 7
+class WatersideSoilReinforcementSectionFom(SoilReinforcementSectionFom):
+    @classmethod
+    def from_config(
+        cls, input_dict: dict[str, Any], set_defaults: bool
+    ) -> "WatersideSoilReinforcementSectionFom":
+        _section = super().from_config(input_dict, set_defaults)
+        return _section

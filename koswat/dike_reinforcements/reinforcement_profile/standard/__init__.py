@@ -13,3 +13,6 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_to
 from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
     VPSReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.waterside_soil_reinforcement_profile import (
+    WatersideSoilReinforcementProfile,
+)

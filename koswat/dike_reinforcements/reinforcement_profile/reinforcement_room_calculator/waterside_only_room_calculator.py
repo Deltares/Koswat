@@ -19,19 +19,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from enum import Enum
+from dataclasses import dataclass
+
+from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+    PointObstacleSurroundings,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_base import (
+    ReinforcementRoomCalculatorBase,
+)
 
 
-class InputProfileEnum(Enum):
-    """
-    Enum class for input profiles.
-    """
+@dataclass
+class WatersideOnlyRoomCalculator(ReinforcementRoomCalculatorBase):
+    required_waterside_width: float
 
-    NONE = 0
-    SOIL = 1
-    VPS = 2
-    PIPING_WALL = 3
-    STABILITY_WALL_TOE = 4
-    STABILITY_WALL_CREST = 5
-    COFFERDAM = 6
-    WATERSIDE_SOIL = 7
+    @property
+    def _required_width(self) -> float:
+        return self.required_waterside_width
+
+    def reinforcement_has_room(
+        self, point_obstacle_surroundings: PointObstacleSurroundings
+    ) -> bool:
+        return self._required_width_less_or_equal(
+            point_obstacle_surroundings.outside_distance
+        )

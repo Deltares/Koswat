@@ -30,7 +30,9 @@ from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
     BaseSurroundingsWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import ReinforcementRoomCalculatorProtocol
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+    ReinforcementRoomCalculatorProtocol,
+)
 
 
 @dataclass

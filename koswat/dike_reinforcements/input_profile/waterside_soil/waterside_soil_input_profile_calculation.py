@@ -19,19 +19,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from enum import Enum
+from koswat.dike_reinforcements.input_profile.soil.soil_input_profile_calculation import (
+    SoilInputProfileCalculation,
+)
+from koswat.dike_reinforcements.input_profile.waterside_soil.waterside_soil_input_profile import (
+    WatersideSoilInputProfile,
+)
 
 
-class InputProfileEnum(Enum):
-    """
-    Enum class for input profiles.
-    """
-
-    NONE = 0
-    SOIL = 1
-    VPS = 2
-    PIPING_WALL = 3
-    STABILITY_WALL_TOE = 4
-    STABILITY_WALL_CREST = 5
-    COFFERDAM = 6
-    WATERSIDE_SOIL = 7
+class WatersideSoilInputProfileCalculation(SoilInputProfileCalculation):
+    def build(self) -> WatersideSoilInputProfile:
+        return super().build()

@@ -32,6 +32,7 @@ from koswat.configuration.io.config_sections import (
     StabilityWallToeReinforcementSectionFom,
     SurroundingsSectionFom,
     VPSReinforcementSectionFom,
+    WatersideSoilReinforcementSectionFom,
 )
 from koswat.core.io.json.koswat_json_fom import KoswatJsonFom
 from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
@@ -42,6 +43,7 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
     analysis_section: AnalysisSectionFom
     dike_profile_section: DikeProfileSectionFom
     soil_measure_section: SoilReinforcementSectionFom
+    waterside_soil_measure_section: WatersideSoilReinforcementSectionFom
     vps_section: VPSReinforcementSectionFom
     piping_wall_section: PipingWallReinforcementSectionFom
     stability_wall_toe_section: StabilityWallToeReinforcementSectionFom
@@ -75,6 +77,9 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
             ),
             soil_measure_section=SoilReinforcementSectionFom.from_config(
                 json_config["grondmaatregel"], set_defaults=True
+            ),
+            waterside_soil_measure_section=WatersideSoilReinforcementSectionFom.from_config(
+                json_config["buitendijksegrondmaatregel"], set_defaults=True
             ),
             vps_section=VPSReinforcementSectionFom.from_config(
                 json_config["verticalepipingoplossing"], set_defaults=True

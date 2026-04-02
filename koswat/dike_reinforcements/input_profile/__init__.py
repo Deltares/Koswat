@@ -22,3 +22,7 @@ from koswat.dike_reinforcements.input_profile.vertical_piping_solution import (
     VPSInputProfile,
     VPSInputProfileCalculation,
 )
+from koswat.dike_reinforcements.input_profile.waterside_soil import (
+    WatersideSoilInputProfile,
+    WatersideSoilInputProfileCalculation,
+)

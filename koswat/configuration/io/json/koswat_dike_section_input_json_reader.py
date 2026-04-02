@@ -29,8 +29,11 @@ from koswat.configuration.io.config_sections import (
     StabilityWallCrestReinforcementSectionFom,
     StabilityWallToeReinforcementSectionFom,
     VPSReinforcementSectionFom,
+    WatersideSoilReinforcementSectionFom,
 )
-from koswat.configuration.io.config_sections.surroundings_section_fom import SurroundingsSectionFom
+from koswat.configuration.io.config_sections.surroundings_section_fom import (
+    SurroundingsSectionFom,
+)
 from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
 )
@@ -58,6 +61,10 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             soil_measure=SoilReinforcementSectionFom.from_config(
                 _json_fom.content.get("grondmaatregel", dict()), set_defaults=False
             ),
+            waterside_soil_measure=WatersideSoilReinforcementSectionFom.from_config(
+                _json_fom.content.get("grondmaatregel_waterzijde", dict()),
+                set_defaults=False,
+            ),
             vps=VPSReinforcementSectionFom.from_config(
                 _json_fom.content.get("verticalepipingoplossing", dict()),
                 set_defaults=False,
@@ -78,7 +85,7 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             ),
             surroundings=SurroundingsSectionFom.from_config(
                 _json_fom.content.get("omgeving", dict()), set_defaults=False
-            )
+            ),
         )
         _dike_section_input_fom.input_profile.dike_section = (
             _dike_section_input_fom.dike_section

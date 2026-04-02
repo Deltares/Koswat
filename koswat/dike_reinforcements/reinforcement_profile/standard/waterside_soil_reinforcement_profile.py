@@ -20,35 +20,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike_reinforcements.input_profile.stability_wall_toe.stability_wall_toe_input_profile import (
-    StabilityWallToeInputProfile,
+from koswat.dike_reinforcements.input_profile.waterside_soil.waterside_soil_input_profile import (
+    WatersideSoilInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
-    PoldersideAndWatersideRoomCalculator,
-    PoldersideOnlyRoomCalculator,
-    ReinforcementRoomCalculatorProtocol,
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.waterside_only_room_calculator import (
+    WatersideOnlyRoomCalculator,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
 
 
-class StabilityWallToeReinforcementProfile(StandardReinforcementProfile):
-    output_name: str = "Stabiliteitswand teen"
-    input_data: StabilityWallToeInputProfile
+class WatersideSoilReinforcementProfile(StandardReinforcementProfile):
+    output_name: str = "Buitendijkse grondmaatregel profiel"
+    input_data: WatersideSoilInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
-        if not self.allow_waterside_reinforcement:
-            return PoldersideOnlyRoomCalculator(
-                required_polderside_width=self.polderside_width
-            )
-        return PoldersideAndWatersideRoomCalculator(
-            required_polderside_width=self.polderside_width,
-            required_waterside_width=self.waterside_width,
+    def get_reinforcement_room_calculator(self) -> WatersideOnlyRoomCalculator:
+        return WatersideOnlyRoomCalculator(
+            required_waterside_width=self.waterside_width
         )
