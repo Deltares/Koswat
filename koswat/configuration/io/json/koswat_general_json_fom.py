@@ -42,7 +42,7 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
     analysis_section: AnalysisSectionFom
     dike_profile_section: DikeProfileSectionFom
     soil_measure_section: SoilReinforcementSectionFom
-    # Use soil measure section for now #370
+    # TODO: Use soil measure section for now #370
     waterside_soil_measure_section: SoilReinforcementSectionFom
     vps_section: VPSReinforcementSectionFom
     piping_wall_section: PipingWallReinforcementSectionFom
