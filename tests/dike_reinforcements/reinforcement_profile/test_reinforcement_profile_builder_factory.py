@@ -76,6 +76,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
     VPSReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.waterside_soil_reinforcement_profile import (
+    WatersideSoilReinforcementProfile,
+)
 from koswat.plots.dike.list_koswat_profile_plot import ListKoswatProfilePlot
 from koswat.plots.koswat_figure_context_handler import KoswatFigureContextHandler
 from tests import (
@@ -155,6 +158,7 @@ class TestReinforcementProfileBuilderFactory:
     def test_get_available_reinforcements(self):
         _expected_reinforcements = [
             SoilReinforcementProfile,
+            # WatersideSoilReinforcementProfile,
             VPSReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallToeReinforcementProfile,
@@ -177,6 +181,11 @@ class TestReinforcementProfileBuilderFactory:
                 SoilReinforcementProfile,
                 StandardReinforcementProfileBuilder,
                 id="[Standard] Soil reinforcement",
+            ),
+            pytest.param(
+                WatersideSoilReinforcementProfile,
+                StandardReinforcementProfileBuilder,
+                id="[Standard] Waterside soil reinforcement",
             ),
             pytest.param(
                 VPSReinforcementProfile,

@@ -73,6 +73,7 @@ class TestKoswatGeneralJsonFom:
 
         # Grondmaatregel section
         assert isinstance(_config_fom.soil_measure_section, SoilReinforcementSectionFom)
+        assert _config_fom.soil_measure_section.active == True
         assert (
             _config_fom.soil_measure_section.soil_surtax_factor
             == SurtaxFactorEnum.NORMAAL
@@ -85,8 +86,30 @@ class TestKoswatGeneralJsonFom:
         assert _config_fom.soil_measure_section.max_berm_height_factor == 0.4
         assert _config_fom.soil_measure_section.factor_increase_berm_height == 0.05
 
+        # Buitendijkse grondmaatregel section
+        assert isinstance(
+            _config_fom.waterside_soil_measure_section,
+            SoilReinforcementSectionFom,
+        )
+        assert _config_fom.waterside_soil_measure_section.active == True
+        assert (
+            _config_fom.waterside_soil_measure_section.soil_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
+        )
+        assert (
+            _config_fom.waterside_soil_measure_section.land_purchase_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
+        )
+        assert _config_fom.waterside_soil_measure_section.min_berm_height == 0.5
+        assert _config_fom.waterside_soil_measure_section.max_berm_height_factor == 0.4
+        assert (
+            _config_fom.waterside_soil_measure_section.factor_increase_berm_height
+            == 0.05
+        )
+
         # Verticale piping oplossing section
         assert isinstance(_config_fom.vps_section, VPSReinforcementSectionFom)
+        assert _config_fom.vps_section.active == True
         assert _config_fom.vps_section.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
         assert (
             _config_fom.vps_section.constructive_surtax_factor
@@ -102,6 +125,7 @@ class TestKoswatGeneralJsonFom:
         assert isinstance(
             _config_fom.piping_wall_section, PipingWallReinforcementSectionFom
         )
+        assert _config_fom.piping_wall_section.active == True
         assert (
             _config_fom.piping_wall_section.soil_surtax_factor
             == SurtaxFactorEnum.NORMAAL
@@ -123,6 +147,7 @@ class TestKoswatGeneralJsonFom:
             _config_fom.stability_wall_toe_section,
             StabilityWallToeReinforcementSectionFom,
         )
+        assert _config_fom.stability_wall_toe_section.active == True
         assert (
             _config_fom.stability_wall_toe_section.soil_surtax_factor
             == SurtaxFactorEnum.MOEILIJK
@@ -144,6 +169,7 @@ class TestKoswatGeneralJsonFom:
             _config_fom.stability_wall_crest_section,
             StabilityWallCrestReinforcementSectionFom,
         )
+        assert _config_fom.stability_wall_crest_section.active == True
         assert (
             _config_fom.stability_wall_crest_section.soil_surtax_factor
             == SurtaxFactorEnum.MOEILIJK
@@ -168,6 +194,7 @@ class TestKoswatGeneralJsonFom:
         assert isinstance(
             _config_fom.cofferdam_section, CofferdamReinforcementSectionFom
         )
+        assert _config_fom.cofferdam_section.active == True
         assert (
             _config_fom.cofferdam_section.soil_surtax_factor
             == SurtaxFactorEnum.MOEILIJK

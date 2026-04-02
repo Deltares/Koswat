@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass, field
 
-from koswat.configuration.io.config_sections.surroundings_section_fom import SurroundingsSectionFom
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.reinforcements.koswat_cofferdam_settings import (
     KoswatCofferdamSettings,
@@ -48,7 +47,12 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     """
     Wrapper of all settings per reinforcement.
     """
+
     soil_settings: KoswatSoilSettings = field(default_factory=KoswatSoilSettings)
+    # TODO: Use soil settings for now #370
+    waterside_soil_settings: KoswatSoilSettings = field(
+        default_factory=KoswatSoilSettings
+    )
     vps_settings: KoswatVPSSettings = field(default_factory=KoswatVPSSettings)
     piping_wall_settings: KoswatPipingWallSettings = field(
         default_factory=KoswatPipingWallSettings

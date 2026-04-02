@@ -7,4 +7,5 @@ from koswat.dike_reinforcements.reinforcement_profile.standard import (
     StabilityWallCrestReinforcementProfile,
     StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
+    WatersideSoilReinforcementProfile,
 )
