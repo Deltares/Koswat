@@ -27,6 +27,14 @@
         "Max_Bermhoogte_Factor": 0.4,
         "Factor_Toename_Bermhoogte": 0.05
     },
+    "BuitendijkseGrondmaatregel": {
+        "Actief": false,
+        "Opslagfactor_Grond": "Normaal",
+        "Opslagfactor_Grondaankoop": "Normaal",
+        "Min_Bermhoogte": 0.5,
+        "Max_Bermhoogte_Factor": 0.4,
+        "Factor_Toename_Bermhoogte": 0.05
+    },
     "VerticalePipingOplossing": {
         "Actief": true,
         "Opslagfactor_Grond": "Normaal",

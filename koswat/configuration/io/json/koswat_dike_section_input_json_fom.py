@@ -30,7 +30,9 @@ from koswat.configuration.io.config_sections import (
     StabilityWallToeReinforcementSectionFom,
     VPSReinforcementSectionFom,
 )
-from koswat.configuration.io.config_sections.surroundings_section_fom import SurroundingsSectionFom
+from koswat.configuration.io.config_sections.surroundings_section_fom import (
+    SurroundingsSectionFom,
+)
 from koswat.core.io.file_object_model_protocol import FileObjectModelProtocol
 
 
@@ -39,6 +41,10 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     dike_section: str = ""
     input_profile: DikeProfileSectionFom = field(default_factory=DikeProfileSectionFom)
     soil_measure: SoilReinforcementSectionFom = field(
+        default_factory=SoilReinforcementSectionFom
+    )
+    # TODO: Use soil settings for now #370
+    waterside_soil_measure: SoilReinforcementSectionFom = field(
         default_factory=SoilReinforcementSectionFom
     )
     vps: VPSReinforcementSectionFom = field(default_factory=VPSReinforcementSectionFom)
@@ -54,7 +60,9 @@ class KoswatDikeSectionInputJsonFom(FileObjectModelProtocol):
     cofferdam: CofferdamReinforcementSectionFom = field(
         default_factory=CofferdamReinforcementSectionFom
     )
-    surroundings: SurroundingsSectionFom = field(default_factory=lambda: SurroundingsSectionFom.from_config({}, False))
+    surroundings: SurroundingsSectionFom = field(
+        default_factory=lambda: SurroundingsSectionFom.from_config({}, False)
+    )
 
     def is_valid(self) -> bool:
         return self.dike_section != ""

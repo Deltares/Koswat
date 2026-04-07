@@ -1,4 +1,12 @@
-from .reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
-from .reinforcement_room_calculator_base import ReinforcementRoomCalculatorBase
-from .polderside_only_room_calculator import PoldersideOnlyRoomCalculator
-from .polderside_and_waterside_room_calculator import PoldersideAndWatersideRoomCalculator
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_and_waterside_room_calculator import (
+    PoldersideAndWatersideRoomCalculator,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_only_room_calculator import (
+    PoldersideOnlyRoomCalculator,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+    ReinforcementRoomCalculatorProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.waterside_only_room_calculator import (
+    WatersideOnlyRoomCalculator,
+)
