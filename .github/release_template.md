@@ -13,6 +13,8 @@
    - Update your `release/title-for-your-release` branch with `master`.
 - Once validation is correct you may proceed to publish the release or release candidate:
     - __Release candidates:__ should be done with a simple "Commit Merge".
-    - __Releases:__ should be done with a __Squash and merge__ commit.
-        - They should follow the format: `{release_type}: {release title}`. 
+        - Make sure that the commit message does not start with `release:`.
+        - You can copy & paste the latest commit e.g.: `bump: version 0.17.0rc0 → 0.17.0rc1`.
+    - __Releases:__ must be done with a __Squash and merge__ commit.
+        - They __must__ follow the format: `{release_type}: {release title}`. 
         - A new tag and release will be made based on the merge commit.
