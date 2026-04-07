@@ -1,3 +1,20 @@
+## v0.17.0rc0 (2026-04-07)
+
+### Feat
+
+- #365 add waterside soil reinforcement (#369)
+- Allow user to limit use of waterside surroundings. (#362)
+- #364 add light stability wall (#367)
+- #347 add distance to keep clear from bebouwing or all obstacles (#363)
+- #357 always have soil reinforcement as first option (#360)
+- each reinforcement defines if it can be applied to polder and / or waterside (#359)
+- #318 full flexibility in obstacle layers (#358)
+- #334 add settings for export of pngs and shapefiles (#354)
+
+### Fix
+
+- #348 adjust piping berm calculation for stability (#368)
+
 ## v0.16.2 (2026-03-17)
 
 ## v0.16.1 (2026-03-17)
