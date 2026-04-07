@@ -1,6 +1,6 @@
 [project]
 name = "koswat"
-version = "0.17.0rc2"
+version = "0.17.0rc3"
 description = "Koswat, from the dutch combination of words `Kosts-Wat` (what are the costs). Analyzes all the possible dikes reinforcements based on a provided traject, with surrounding constructions, and what their related costs will be."
 authors = [{name = "Peter de Grave", email = "peter.degrave@deltares.nl"}]
 maintainers = [{name = "Carles S. Soriano Pérez", email = "carles.sorianoperez@deltares.nl"}, {name = "Ardt Klapwijk", email = "ardt.klapwijk@deltares.nl"}]
@@ -142,7 +142,7 @@ skip = [".git", ".github", ".pixi", ".env", ".venv", ".devcontainer", ".pytest_c
 name = "cz_conventional_commits"
 changelog_file = "docs/changelog.md"
 update_changelog_on_bump = true
-version = "0.17.0rc2"
+version = "0.17.0rc3"
 tag_format = "v$major.$minor.$patch$prerelease"
 pre_bump_hooks = ["pixi lock"]
 version_files= [
