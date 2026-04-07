@@ -13878,8 +13878,8 @@ packages:
   timestamp: 1773067062280
 - pypi: ./
   name: koswat
-  version: 0.17.0rc3
-  sha256: a7110ae35bb23c2d65451f114e9430dd1f9f8b846685672acbdd780600ff2fae
+  version: 0.17.0rc1
+  sha256: fbc2e06a55a25c9b47af4c7d8264d64a9dd7e0de715b28b944df5fa01de2e845
   requires_dist:
   - click
   - matplotlib
