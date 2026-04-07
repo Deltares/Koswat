@@ -89,7 +89,7 @@ reinforcement_profile_cases = [
         ),
     ),
     ReinforcementProfileCaseCombination(
-        case_name="Stability Wall, Default input profile, Scenario 3",
+        case_name="Stability Wall Crest, Default input profile, Scenario 3",
         koswat_scenario_case=ScenarioCases.scenario_3,
         reinforcement_profile_type=StabilityWallCrestReinforcementProfile,
         expectation=ReinforcementProfileCaseExpectation(
@@ -110,7 +110,7 @@ reinforcement_profile_cases = [
                 factor_settlement=1.2,
                 pleistocene=-5.0,
                 aquifer=-2.0,
-                construction_length=14.5,
+                construction_length=13.5,
                 construction_type=ConstructionTypeEnum.DAMWAND_VERANKERD,
             ),
             koswat_layers_case=LayersCases.without_layers,
@@ -147,7 +147,7 @@ reinforcement_profile_cases = [
         ),
     ),
     ReinforcementProfileCaseCombination(
-        case_name="Cofferdam, default input scenario",
+        case_name="Cofferdam, Default input profile, Scenario 3",
         koswat_scenario_case=ScenarioCases.scenario_3,
         reinforcement_profile_type=CofferdamReinforcementProfile,
         expectation=ReinforcementProfileCaseExpectation(
