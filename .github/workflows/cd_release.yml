@@ -1,4 +1,4 @@
-name: ci-version-bumper
+name: cd-version-bumper
 
 on:
   push:
