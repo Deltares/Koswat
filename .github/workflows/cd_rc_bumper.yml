@@ -46,7 +46,7 @@ jobs:
 
       - name: Push changes
         run: |
-          git push --force
+          git push --force && git push --tags --force
   
   creates-pr:
     name: "Create new pull-request"

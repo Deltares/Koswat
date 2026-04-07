@@ -44,4 +44,4 @@ jobs:
 
       - name: Push changes
         run: |
-          git push --force
+          git push --force && git push --tags --force
