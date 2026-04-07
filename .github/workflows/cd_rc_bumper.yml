@@ -1,4 +1,4 @@
-name: ci-rc-bumper
+name: cd-rc-bumper
 
 on:
   push:
@@ -8,7 +8,7 @@ env:
   GH_TOKEN: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
 
 jobs:
-  bump-versions:
+  bump-rc-version:
     name: "Automatic release candidate bumping"
     if: ${{ contains(github.ref, 'refs/heads/release/') && (!startsWith(github.event.head_commit.message, 'bump'))}}
     runs-on: ubuntu-latest

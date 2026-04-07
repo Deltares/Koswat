@@ -1,4 +1,4 @@
-name: cd-version-bumper
+name: cd-gh-release
 
 on:
   push:
@@ -8,8 +8,8 @@ env:
   GH_TOKEN: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
 
 jobs:
-  generate-release:
-    name: "Generate release from bump release tag"
+  generate-gh-release:
+    name: "Generate GH release from bump release tag"
     runs-on: ubuntu-latest
     permissions:
       contents: write
