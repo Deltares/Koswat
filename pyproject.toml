@@ -143,6 +143,7 @@ changelog_file = "docs/changelog.md"
 update_changelog_on_bump = true
 version = "0.16.2"
 tag_format = "v$major.$minor.$patch$prerelease"
+pre_bump_hooks = [".cz-hooks/update_pixi_lock.sh"]
 version_files= [
     "koswat/__init__.py",
     "pyproject.toml:version",]
