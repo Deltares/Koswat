@@ -13879,20 +13879,7 @@ packages:
 - pypi: ./
   name: koswat
   version: 0.17.0rc1
-  sha256: 5036dcb0c7a65f086ee09d3b7449b8fc4bfbf624b776fdeba6007d1180f02865
-  requires_dist:
-  - click
-  - matplotlib
-  - pyshp
-  - shapely
-  - geopandas
-  - more-itertools
-  requires_python: '>=3.11,<3.15'
-  editable: true
-- pypi: ./
-  name: koswat
-  version: 0.17.0rc1
-  sha256: 89c41d9f8ed2440ddc0dfc5c7a5747917118f2ef1308556a915ee46c51ae49fe
+  sha256: 235efb4e53e8e7d60589d8e2ba119de8627f06a5d2d87a7bcedd181ecef61d7b
   requires_dist:
   - click
   - matplotlib
