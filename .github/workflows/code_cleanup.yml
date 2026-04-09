@@ -1,14 +1,21 @@
 name: "Code Cleanup"
+
 on:
   push:
     branches: [ master ]
 
 env:
-  AUTOFORMAT_COMMIT_MESSAGE: 'chore: autoformat isort & black'
+  AUTOFORMAT_COMMIT_MSG: "chore: autoformat with isort & black"
+  BOT_USER_NAME: "github-actions[bot]"
+  BOT_USER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+  PIXI_VERSION: "v0.62.2"
 
 jobs:
   code-autoformat:
-    if: "${{ (!startsWith(github.event.head_commit.message, 'chore: autoformat isort & black')) && (!startsWith(github.event.head_commit.message, 'bump:'))}}"
+    # Skip if this push was itself triggered by the autoformat bot or a version bump
+    if: |
+      !startsWith(github.event.head_commit.message, 'chore: autoformat') &&
+      !startsWith(github.event.head_commit.message, 'bump:')
     name: Normalize code with internal standards
     runs-on: ubuntu-latest
     permissions:
@@ -16,6 +23,7 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -23,17 +31,27 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
 
-      - uses: prefix-dev/setup-pixi@v0.9.4
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@v0.9.4
         with:
-          pixi-version: v0.62.2
+          pixi-version: ${{ env.PIXI_VERSION }}
           cache: true
           cache-write: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
 
-      - name: Autoformat code
+      - name: Run isort & black
+        run: pixi run -e dev code-cleanup
+
+      - name: Set GIT identity
         run: |
-            pixi run -e dev code-cleanup
-            git config --global user.name 'github-actions[bot]'
-            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git remote set-url origin https://x-access-token:${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}@github.com/$GITHUB_REPOSITORY
-            git checkout $GITHUB_HEAD_REF
-            git commit -am "chore: autoformat with isort & black" && git push || true
+          git config --global user.name "${{ env.BOT_USER_NAME }}"
+          git config --global user.email "${{ env.BOT_USER_EMAIL }}"
+          git remote set-url origin https://x-access-token:${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}@github.com/$GITHUB_REPOSITORY
+
+      - name: Commit and push formatting changes
+        run: |
+          if git diff --quiet; then
+            echo "No formatting changes detected, skipping commit."
+            exit 0
+          fi
+          git commit -am "${{ env.AUTOFORMAT_COMMIT_MSG }}"
+          git push || { echo "ERROR: Failed to push formatting changes."; exit 1; }
