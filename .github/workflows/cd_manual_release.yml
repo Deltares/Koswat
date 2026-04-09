@@ -1,4 +1,4 @@
-name: cd-manual-release
+name: "Generate release"
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ on:
         type: boolean
         default: false
       release_title:
-        description: "Release title suffix (e.g. 'Spring cleanup'). Leave empty to auto-generate."
+        description: "Release title suffix (e.g. '2026.Q4 Sprint'). Leave empty to auto-generate."
         required: false
         type: string
 
@@ -59,7 +59,7 @@ jobs:
           RELEASE_TYPE=$([[ "${{ inputs.is_prerelease }}" == "true" ]] && echo "prerelease" || echo "release")
 
           if [ -n "${INPUT_TITLE}" ]; then
-            echo "RELEASE_TITLE=${YEAR}.Q${QUARTER} ${INPUT_TITLE} ${RELEASE_TYPE}" >> "$GITHUB_ENV"
+            echo "RELEASE_TITLE=${INPUT_TITLE} - ${RELEASE_TYPE}" >> "$GITHUB_ENV"
           else
             echo "RELEASE_TITLE=${YEAR}.Q${QUARTER} ${{ inputs.bump_type }} ${RELEASE_TYPE}" >> "$GITHUB_ENV"
           fi
