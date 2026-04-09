@@ -1,4 +1,4 @@
-name: ci-normalize-code
+name: "Code Cleanup"
 on:
   push:
     branches: [ master ]
@@ -11,27 +11,29 @@ jobs:
     if: "${{ (!startsWith(github.event.head_commit.message, 'chore: autoformat isort & black')) && (!startsWith(github.event.head_commit.message, 'bump:'))}}"
     name: Normalize code with internal standards
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     defaults:
       run:
         shell: bash -l {0}
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
-
-      - uses: prefix-dev/setup-pixi@v0.9.0
         with:
-          pixi-version: v0.49.0
+          fetch-depth: 0
+          token: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
+
+      - uses: prefix-dev/setup-pixi@v0.9.4
+        with:
+          pixi-version: v0.62.2
           cache: true
           cache-write: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
 
       - name: Autoformat code
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         run: |
-          pixi run -e dev isort .
-          pixi run -e dev black .
-          git config --global user.name '${{ github.actor }}'
-          git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git checkout $GITHUB_HEAD_REF
-          git commit -am "chore: autoformat with isort & black" && git push || true
+            pixi run -e dev code-cleanup
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git remote set-url origin https://x-access-token:${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}@github.com/$GITHUB_REPOSITORY
+            git checkout $GITHUB_HEAD_REF
+            git commit -am "chore: autoformat with isort & black" && git push || true
