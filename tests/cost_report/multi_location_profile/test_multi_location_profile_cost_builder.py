@@ -3,7 +3,9 @@ import math
 from shapely.geometry import Point
 from sklearn import base
 
-from koswat.configuration.settings.costs.dike_profile_costs_settings import DikeProfileCostsSettings
+from koswat.configuration.settings.costs.dike_profile_costs_settings import (
+    DikeProfileCostsSettings,
+)
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
@@ -21,10 +23,18 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import ReinforcementProfileProtocol
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_base import ReinforcementRoomCalculatorBase
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
-from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile_builder import StandardReinforcementProfileBuilder
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_base import (
+    ReinforcementRoomCalculatorBase,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+    ReinforcementRoomCalculatorProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile_builder import (
+    StandardReinforcementProfileBuilder,
+)
 from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
 from tests.acceptance_scenarios.layers_cases import LayersCases
 
@@ -36,7 +46,9 @@ class TestMultiLocationProfileCostReportBuilder:
         assert not _builder.surroundings
         assert not _builder.reinforced_profile
 
-    def test_when_build_given_mocked_reinforced_profile_then_returns_expected_locations(self):
+    def test_when_build_given_mocked_reinforced_profile_then_returns_expected_locations(
+        self,
+    ):
         # 1. Define test data.
         _builder = MultiLocationProfileCostReportBuilder()
 
@@ -60,22 +72,25 @@ class TestMultiLocationProfileCostReportBuilder:
                 reinforcement_type=CofferdamReinforcementProfile,
             )
         ).build()
-       
+
         class DummyReinforcedProfile(ReinforcementProfileProtocol):
             old_profile = None
             layers_wrapper = _base_profile.layers_wrapper
+
             def get_reinforcement_room_calculator(self):
-                class DummyReinforcementRoomCalculator(ReinforcementRoomCalculatorProtocol):
+                class DummyReinforcementRoomCalculator(
+                    ReinforcementRoomCalculatorProtocol
+                ):
                     def reinforcement_has_room(self, *args):
                         return True
+
                 return DummyReinforcementRoomCalculator()
-            
+
         _builder.reinforced_profile = DummyReinforcedProfile()
 
         # Define costs
         _builder.koswat_costs_settings = KoswatCostsSettings()
         _builder.koswat_costs_settings.dike_profile_costs = DikeProfileCostsSettings()
-
 
         # 2. Run test.
         _profile_cost_report = _builder.build()

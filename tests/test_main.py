@@ -93,7 +93,7 @@ class TestMain:
         _cli_arg = "--version"
         _expected_output = f"version {__main__.__version__}"
 
-        # 2. Run test.        
+        # 2. Run test.
         _run_result = CliRunner().invoke(
             __main__.run_analysis,
             _cli_arg,

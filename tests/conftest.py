@@ -44,9 +44,9 @@ class PointSurroundingsTestCase:
 
 
 @pytest.fixture(name="basic_point_surroundings_builder")
-def _get_basic_point_surroundings_builder_fixture() -> Iterable[
-    Callable[[], PointSurroundings]
-]:
+def _get_basic_point_surroundings_builder_fixture() -> (
+    Iterable[Callable[[], PointSurroundings]]
+):
     def build() -> PointSurroundings:
         return PointSurroundings(
             location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}

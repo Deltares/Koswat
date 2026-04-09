@@ -7,9 +7,9 @@ from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 @pytest.fixture(name="distances_to_surrounding_point_builder")
-def get_distances_as_surrounding_point_builder() -> Iterator[
-    Callable[[Point, list[float]], PointSurroundings]
-]:
+def get_distances_as_surrounding_point_builder() -> (
+    Iterator[Callable[[Point, list[float]], PointSurroundings]]
+):
     """
     Gets a builder to generate `PointSurroundings` with a location and a valid
     `surroundings_matrix` which could relate to an `ObstacleSurrounding`.

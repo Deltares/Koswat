@@ -36,11 +36,14 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
     obstacle_types: dict[str, Optional[float]] = field(default_factory=dict)
 
     @classmethod
-    def from_config(cls, input_config: dict[str, Any], set_defaults: bool) -> "SurroundingsSectionFom":
+    def from_config(
+        cls, input_config: dict[str, Any], set_defaults: bool
+    ) -> "SurroundingsSectionFom":
         def _get_float(input_val: Optional[str]) -> float:
             if set_defaults:
                 return SectionConfigHelper.get_float(input_val)
             return SectionConfigHelper.get_float_without_default(input_val)
+
         def _get_bool(input_val: Optional[str], default_value: bool) -> bool:
             if set_defaults:
                 return SectionConfigHelper.get_bool(input_val, default_value)
@@ -54,11 +57,12 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
                 input_config.get("constructieovergang", None)
             ),
             allow_waterside_reinforcement=_get_bool(
-                input_config.get("toegestaanbuitendijkseversterking", None),
-                True
+                input_config.get("toegestaanbuitendijkseversterking", None), True
             ),
             obstacle_types={
-                _type.get("type").lower().strip(): SectionConfigHelper.get_float_without_default(
+                _type.get("type")
+                .lower()
+                .strip(): SectionConfigHelper.get_float_without_default(
                     _type.get("buffer", None)
                 )
                 for _type in input_config.get("omgevingtypes", [])

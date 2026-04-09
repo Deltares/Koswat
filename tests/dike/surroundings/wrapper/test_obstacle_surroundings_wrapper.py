@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 from typing import Callable, Iterator, Type
 
 import pytest
@@ -15,7 +15,9 @@ from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
     ObstacleSurroundingsWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import ReinforcementRoomCalculatorProtocol
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+    ReinforcementRoomCalculatorProtocol,
+)
 
 
 class TestObstacleSurroundingsWrapper:
@@ -33,10 +35,13 @@ class TestObstacleSurroundingsWrapper:
         assert isinstance(_wrapper.obstacles, SurroundingsObstacle)
 
     @pytest.fixture(name="mocked_room_calculator")
-    def get_mocked_room_calculator(self) -> Iterator[Type[ReinforcementRoomCalculatorProtocol]]:
+    def get_mocked_room_calculator(
+        self,
+    ) -> Iterator[Type[ReinforcementRoomCalculatorProtocol]]:
         @dataclass
         class MockedRoomCalculator(ReinforcementRoomCalculatorProtocol):
             return_value: bool
+
             def reinforcement_has_room(self, *args) -> float:
                 return self.return_value
 
@@ -53,9 +58,7 @@ class TestObstacleSurroundingsWrapper:
     ):
         # 1. Define test data.
         _location = Point(2.4, 2.4)
-        _wrapper = obstacles_surroundings_fixture(
-            [(_location, obstacles_distance)]
-        )
+        _wrapper = obstacles_surroundings_fixture([(_location, obstacles_distance)])
 
         # 2. Run test.
         _classified_surroundings = _wrapper.get_locations_at_safe_distance(

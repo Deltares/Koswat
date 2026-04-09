@@ -1,22 +1,22 @@
 """
-                    GNU GENERAL PUBLIC LICENSE
-                      Version 3, 29 June 2007
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
 
-    KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
-    Copyright (C) 2025 Stichting Deltares
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
@@ -26,8 +26,8 @@ import click
 from koswat import __version__
 from koswat.koswat_handler import KoswatHandler
 
-
 ### Below is the documentation for the commandline interface, see the CLICK-package.
+
 
 @click.command()
 @click.option("--input_file", default=None, help="Full path to the config input file.")
@@ -47,6 +47,7 @@ def run_analysis(input_file: str, log_output: str):
     """
     with KoswatHandler(log_output) as _handler:
         _handler.run_analysis(input_file)
+
 
 if __name__ == "__main__":
     try:

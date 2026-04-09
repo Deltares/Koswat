@@ -82,7 +82,7 @@ class KoswatProfileBase(KoswatProfileProtocol):
             float: Polderside width.
         """
         return self.points[-1].x
-    
+
     @property
     def waterside_width(self) -> float:
         """

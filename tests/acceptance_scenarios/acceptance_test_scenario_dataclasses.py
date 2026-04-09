@@ -47,7 +47,9 @@ class AcceptanceTestScenarioCombinations:
 
     def get_test_cases(self) -> list[pytest.param]:
         def to_pytest_case(
-            test_scenario: tuple[KoswatInputProfileBase, LayersTestCase, KoswatScenario]
+            test_scenario: tuple[
+                KoswatInputProfileBase, LayersTestCase, KoswatScenario
+            ],
         ) -> pytest.param:
             _profile_case, _layer_case, _scenario_case = test_scenario
             _input_profile_case = KoswatProfileBuilder.with_data(

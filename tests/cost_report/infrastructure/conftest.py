@@ -25,9 +25,11 @@ from tests.conftest import PointSurroundingsTestCase
 
 
 @pytest.fixture(name="reinforcement_profile_builder")
-def _get_dummy_reinforcment_profile_builder() -> Iterable[
-    Callable[[list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol]
-]:
+def _get_dummy_reinforcment_profile_builder() -> (
+    Iterable[
+        Callable[[list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol]
+    ]
+):
     @dataclass
     class DummyReinforcementProfile(KoswatProfileBase, ReinforcementProfileProtocol):
         output_name: str = "Dummy reinforcement"

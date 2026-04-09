@@ -3,7 +3,9 @@ from typing import Callable, Iterator
 import pytest
 from shapely.geometry import Point
 
-from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import KoswatSimpleSurroundingsCsvReader
+from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import (
+    KoswatSimpleSurroundingsCsvReader,
+)
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )

@@ -1,4 +1,5 @@
 import math
+
 import pytest
 
 from koswat.configuration.io.config_sections.surroundings_section_fom import (
@@ -30,8 +31,7 @@ class TestSurroundingsSectionFom:
 
     def test_when_from_config_given_set_defaults_false_then_expected_values_set(self):
         # 1. Define test data.
-        _surroundings_config = {
-        }
+        _surroundings_config = {}
 
         # 2. Run test.
         _surroundings_section_fom = SurroundingsSectionFom.from_config(
@@ -47,8 +47,7 @@ class TestSurroundingsSectionFom:
 
     def test_when_from_config_given_set_defaults_true_then_expected_values_set(self):
         # 1. Define test data.
-        _surroundings_config = {
-        }
+        _surroundings_config = {}
 
         # 2. Run test.
         _surroundings_section_fom = SurroundingsSectionFom.from_config(
@@ -72,7 +71,7 @@ class TestSurroundingsSectionFom:
                 {"type": "spoorwegen", "buffer": 10},
                 {"type": "water"},
             ],
-            "toegestaanbuitendijkseversterking": False
+            "toegestaanbuitendijkseversterking": False,
         }
 
         # 2. Run test.
