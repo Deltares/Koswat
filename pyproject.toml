@@ -1,6 +1,6 @@
 [project]
 name = "koswat"
-version = "0.17.0-rc3"
+version = "0.17.0-rc4"
 description = "Koswat, from the dutch combination of words `Kosts-Wat` (what are the costs). Analyzes all the possible dikes reinforcements based on a provided traject, with surrounding constructions, and what their related costs will be."
 authors = [{name = "Peter de Grave", email = "peter.degrave@deltares.nl"}]
 maintainers = [{name = "Carles S. Soriano Pérez", email = "carles.sorianoperez@deltares.nl"}, {name = "Ardt Klapwijk", email = "ardt.klapwijk@deltares.nl"}]
@@ -141,7 +141,7 @@ line_length = 88
 skip = [".git", ".github", ".pixi", ".env", ".venv", ".devcontainer", ".pytest_cache", ".scannerwork", ".vscode", "site"]
 
 [tool.commitizen]
-version = "0.17.0-rc3"
+version = "0.17.0-rc4"
 name = "cz_conventional_commits"
 changelog_file = "docs/changelog.md"
 update_changelog_on_bump = true
