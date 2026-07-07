@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK) - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)";
+        var mkdocs_page_input_path = "gebruikershandleiding/h10_sskmethodiek.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Gebruikershandleiding</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="h01_intro.html">Introductie</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h02_methode.html">De KOSWAT-methode</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h03_installatie.html">Software, installatie en gebruik</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h04_projectdefinitie.html">Definitie van een KOSWAT project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h05_dijksectie-invoer.html">Dijksectie invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h06_scenario-invoer.html">Scenario invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h07_eenheidsprijzen.html">Eenheidsprijzen</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h08_omgevingsdatabases.html">Omgevingsdatabases</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h09_uitvoer.html">KOSWAT uitvoer</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#ssk-systematiek">SSK-systematiek</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grondwerk">Grondwerk</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#constructieve-oplossingen">Constructieve oplossingen</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Gebruikershandleiding</li>
+      <li class="breadcrumb-item active">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/gebruikershandleiding/h10_sskmethodiek.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="kostenberekening-volgens-de-standaardsystematiek-kostenramingen-in-de-gww-sector-ssk">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)<a class="headerlink" href="#kostenberekening-volgens-de-standaardsystematiek-kostenramingen-in-de-gww-sector-ssk" title="Permanent link">&para;</a></h1>
+<h2 id="ssk-systematiek">SSK-systematiek<a class="headerlink" href="#ssk-systematiek" title="Permanent link">&para;</a></h2>
+<p><a id="ssk"></a>
+KOSWAT maakt voor z’n kostenramingen gebruik van de Standaard Systematiek voor Kostenramingen in de Grond-, Weg-, en Waterbouw (SSK-systematiek). Investeringskosten worden in deze systematiek berekend door de kostencategorieën Bouwkosten, Vastgoedkosten, Engineeringskosten (samen de Basisraming genoemd) en Overige Bijkomende Kosten bij elkaar op te tellen, en daarop een toeslag te zetten voor de Objectoverstijgende risico’s en eventueel BTW. De verschillende kostencategorieën bestaan ieder uit de Benoemde Directe Kosten, Nader Te Detailleren Directe Kosten en Indirecte Kosten.</p>
+<p>Binnen KOSWAT worden voor de kostencategorieën Bouwkosten en Vastgoedkosten volledig bottom-up de Benoemde Directe Kosten bepaald door berekende hoeveelheden uit het ontwerp te vermenigvuldigen met eenheidsprijzen (of kostenkengetallen). We maken hierbij onderscheid naar Benoemde Directe Bouwkosten (BDBK) van de maatregelen en Benoemde Directe Vastgoedkosten (BDVK) voor de aankoop van grond.</p>
+<p>Alle overige kostenposten worden bepaald door het toepassen van opslagfactoren, waarbij de diverse posten als percentage van de Benoemde Directe Kosten worden gespecificeerd. De in KOSWAT gehanteerde eenheidsprijzen en opslagfactoren worden ontleend aan het KOSWAT Eenheidsprijzenbestand dat wordt onderhouden door RWS GPO. Een gebruiker kan kiezen om hiervan af te wijken.</p>
+<p>Om tot een raming van de Investeringskosten te komen dienen deze Benoemde Directe Kosten vermenigvuldigd te worden met opslagfactoren. Binnen KOSWAT wordt een aantal verschillende opslagfactoren gebruikt, afhankelijk van het type maatregel, in grond of constructief. Daarnaast wordt in de opslagfactoren nog onderscheid gemaakt naar de moeilijkheidsgraad van het werk.</p>
+<p>Zo kan bij het grondwerk bij een maatregel in grond met een lagere opslagfactor gewerkt worden dan bij het grondwerk van bijvoorbeeld een kistdam. In de opslagfactoren zit ook een percentage voor BTW versleuteld. In de rekeninstellingen kan een gebruiker aangeven of in- of exclusief BTW gerekend moet worden. Daarbij worden dus andere opslagfactoren gehanteerd.</p>
+<p>Hieronder volgt een lijst met de verschillende componenten waaruit de totale investeringskosten in KOSWAT bestaan. Tussen haakjes is de moeilijkheidsklasse van de opslagfactor gegeven die in KOSWAT per default wordt gebruikt. Dit is aan te passen door de gebruiker in de rekeninstellingen.</p>
+<p><strong>Maatregel in grond:</strong><br>
+Grondwerk: BDBK x Opslag Grondwerk (Normaal)<br>
+Grondaankoop: BDVK x Opslag Grondaankoop (Normaal)</p>
+<p><strong>Kwelscherm en VZG:</strong><br>
+Grondwerk: BDBK x Opslag Grondwerk (Normaal)<br>
+Constructieve elementen: BDBK x Opslag Constructie (Normaal)<br>
+Grondaankoop: BDVK x Opslag Grondaankoop (Normaal)</p>
+<p><strong>Stabiliteitswand:</strong><br>
+Grondwerk: BDBK x Opslag Grondwerk (Moeilijk)<br>
+Constructieve elementen: BDBK x Opslag Constructie (Normaal)<br>
+Grondaankoop: BDVK x Opslag Grondaankoop (Moeilijk)</p>
+<p><strong>Kistdam:</strong><br>
+Grondwerk: BDBK x Opslag Grondwerk (Moeilijk)<br>
+Constructieve elementen: BDBK x Opslag Constructie (Moeilijk)</p>
+<p><strong>Weginfrastructuur:</strong><br>
+BDBK Infrastructuur x Opslag Infrastructuur (Normaal)</p>
+<p>De opslagfactoren (inclusief en exclusief btw) worden gespecificeerd in het eenheidsprijzenbestand zoals beschreven in <a href="h04_projectdefinitie.html#eenheidsprijzen">Eenheidsprijzen</a>. Dit zijn defaultwaarden zoals aangeleverd door RWS-GPO. In een toekomstige versie worden de opslagfactoren nader uitgesplitst in hun componenten (bijvoorbeeld engineering, winst&amp;risico), zodat ramingen transparanter worden.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;kostenopslagfactoreninclbtw&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;grond_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.258</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grond_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.509</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grond_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.777</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;constructief_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.561</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;constructief_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.912</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;constructief_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.295</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.561</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.912</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.295</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.292</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.412</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.645</span>
+<span class="p">},</span>
+<span class="nt">&quot;kostenopslagfactorenexclbtw&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;grond_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.89</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grond_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.105</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grond_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.335</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;constructief_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.143</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;constructief_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.443</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;constructief_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.77</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.143</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.443</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.77</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_makkelijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.292</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_normaal&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.412</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_moeilijk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.645</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>KOSWAT berekent enkel investeringskosten. Het bepalen van bijvoorbeeld investeringsstrategieën, Life Cycle Costing (LCC) en kosten voor beheer en onderhoud maken geen onderdeel uit van KOSWAT.</p>
+<h2 id="grondwerk">Grondwerk<a class="headerlink" href="#grondwerk" title="Permanent link">&para;</a></h2>
+<p><a id="grondwerk"></a>
+Om in KOSWAT een berekening van de Benoemde Directe Bouwkosten (BDBK) van het grondwerk te kunnen maken orden hoeveelheden vermenigvuldigd met eenheidsprijzen. Deze paragraaf beschrijft welke hoeveelheden er aan de orde zijn in het geval van een versterking in grond. Het gaat hier om eenheidskosten per strekkende meter dijkversterking.</p>
+<p>In KOSWAT wordt ervan uit gegaan dat een dijk uit drie afzonderlijke lagen bestaat. Het profiel is afgewerkt met een bekledingslaag van gras met daaronder een waterdichte kleilaag. De resterende kern van de dijk is opgebouwd uit een zandlichaam. In principe worden de hoeveelheden gevonden door het huidige aanwezige profiel af te trekken van het nieuw ontworpen profiel. Echter, in de versterking wordt verschillend met de diverse lagen omgegaan.</p>
+<p>De volgende stappen worden gevolgd, zie de nummering in <a href="#figuur-6">Figuur 6</a>:</p>
+<ul>
+<li>De grasbekleding van het huidig profiel wordt gedeeltelijk verwijderd (deel 1b), en opzij gelegd om opnieuw te kunnen gebruiken als bekledingslaag in het nieuwe profiel (3)</li>
+<li>De kleilaag van het huidig profiel wordt gedeeltelijk verwijderd (2b), en gebruikt als kernmateriaal in het nieuwe profiel (5)</li>
+<li>Kernmateriaal van de nieuwe dijk wordt aangevuld en geprofileerd (5)</li>
+<li>Kleilaag wordt aangebracht op de nieuwe kern (4)</li>
+<li>De grasbekleding wordt aangebracht op de nieuwe afdeklaag</li>
+</ul>
+<p><a id="figuur-6"></a></p>
+<p><img alt="Figuur 6" src="images/figuur6.png" /></p>
+<p><em>Figuur 6 Volumeberekeningen van grondwerk</em></p>
+<p>De volgende hoeveelheden worden in de berekening bepaald. Deze dienen als input voor de kostenberekening van het grondwerk.</p>
+<ul>
+<li>Hoeveelheid aanvoeren en verwerken teelaarde (toplaag)</li>
+<li>Hoeveelheid aanvoeren en verwerken klei (afdeklaag)</li>
+<li>Hoeveelheid aanvoeren en verwerken kernmateriaal (zand)</li>
+<li>Hoeveelheid als toplaag in profiel te verwerken</li>
+<li>Hoeveelheid als kernmateriaal in profiel te verwerken</li>
+<li>Hoeveelheid af te voeren overtollig materiaal</li>
+<li>Oppervlakte profiel voor profilering + inzaaien</li>
+<li>Oppervlakte afdeklaag voor profilering</li>
+<li>Oppervlakte kernlaag (zandlichaam) voor profilering</li>
+<li>Oppervlakte grondgebruik nieuw profiel voor bewerking maaiveld</li>
+</ul>
+<p>De hoeveelheden die zijn bepaald worden volgens de SSK-systematiek vermenigvuldigd met eenheidsprijzen om tot Benoemde Directe Bouwkosten (BDBK) per strekkende meter dijksectie te komen. De eenheidsprijzen worden gedefinieerd in het betreffende invoerbestand (*.json), zie onderstaand. De BDBK worden uiteindelijk vermenigvuldigd met een opslagfactor om tot totale investeringskosten te komen zoals beschreven in <a href="#ssk">Kostenberekening volgens SSK</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;kostendijkprofiel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;aanleg_graslaag_m3&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">16.12</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;aanleg_kleilaag_m3&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">20.09</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;aanleg_kern_m3&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">13.87</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hergebruik_graslaag_m3&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">7.28</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hergebruik_kern_m3&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.69</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;afvoeren_materiaal_m3&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">9.02</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;profileren_graslaag_m2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.06</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;profileren_kleilaag_m2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.76</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;profileren_kern_m2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;bewerken_maaiveld_m2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.29</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="constructieve-oplossingen">Constructieve oplossingen<a class="headerlink" href="#constructieve-oplossingen" title="Permanent link">&para;</a></h2>
+<p><a id="constructief"></a>
+Op plaatsen waar geen ruimte is voor een dijkversterkingsmaatregel in grond, kiest KOSWAT voor de goedkoopste constructieve oplossing die wel in de beschikbare ruimte past. Op plekken waar bebouwing in het bestaande dijklichaam zit, kiest KOSWAT vooralsnog voor een kistdam. Deze afwegingssystematiek wordt in 2026 aangepast, alsmede de berekende dimensies van damwanden e.d.</p>
+<p>KOSWAT heeft de beschikking over verschillende constructieve maatregelen die altijd een combinatie zijn van de aanpassing van het dijkprofiel in grond, met daarbij de toevoeging van een constructief element. Voor bepalen van de BDBK van het grondwerk wordt dezelfde systematiek toegepast als voor een versterking in grond, zie <a href="#grondwerk">Grondwerk</a>. Wel worden hierbij andere opslagfactoren gehanteerd, samenhangend met de moeilijkheidsgraad van het werk (constructieve oplossingen vinden per definitie plaats in gebieden met minder ruimte, dus zijn lastiger uit te voeren).</p>
+<p>Voor de BDBK van het constructieve deel (de wand zelf) worden (samengestelde) eenheidskostencurves gebruikt. Achter elke constructieve maatregel zit een gefitte kostencurve die afhankelijk is van de wandlengte van de constructie. Ze zijn bepaald door bij een aantal discrete wandlengtes de kosten te bepalen, en hierdoor vervolgens de curves te fitten. Zo is er een curve voor een cement-bentonietwand, een damwand, een diepwand, etc. Deze curves zijn onderbouwd door RWS-GPO, en bevatten naast de materiaalkosten ook de kosten van uitvoering. De wiskundige beschrijving van de samengestelde eenheidskostenfunctie is als volgt:</p>
+<div class="highlight"><pre><span></span><code>f(x) = cx² + dx + z + fxᵍ
+</code></pre></div>
+<p>waarbij x de wandlengte is, en c, d, f, g en z een serie constanten. Voor verschillende constructies (kistdam, damwand) spelen verschillende factoren een rol, waardoor sommige van de factoren op nul staan. De factoren van de constructieve elementen worden gedefinieerd in het betreffende invoerbestand (*.json), zie onderstaand.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;kostenverticaalzanddichtgeotextiel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;d&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">676.91</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;f&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;g&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="nt">&quot;kostencbwand&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;d&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">174.68</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-38.15</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;f&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;g&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="nt">&quot;kostendamwandonverankerd&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.19</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;d&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">144.98</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">113.61</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;f&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;g&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="nt">&quot;kostendamwandverankerd&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.19</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;d&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">164.94</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1430.12</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;f&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;g&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="nt">&quot;kostendiepwand&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;d&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;f&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">308.26</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;g&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.205</span><span class="w"> </span><span class="p">},</span>
+<span class="nt">&quot;kostenkistdam&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;d&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">746.37</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-81.79</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;f&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;g&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+</code></pre></div>
+<h1 id="infrastructuur">Infrastructuur<a class="headerlink" href="#infrastructuur" title="Permanent link">&para;</a></h1>
+<p><a id="infrastructuur"></a>
+Infrastructuur in de versterkingszone stelt in principe geen grens aan de beschikbare ruimte, maar wordt vervangen (verwijderd en opnieuw aangebracht) of hersteld (enkel kosten van opnieuw aanleggen worden gerekend). De gehanteerde eenheidsprijzen zijn als volgt:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;kosteninfrastructuur&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse2_verwijderen&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.34</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse24_verwijderen&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">14.31</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse47_verwijderen&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">26.63</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse7_verwijderen&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">42.88</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_onbekend_verwijderen&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">14.31</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse2_aanleg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">36.83</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse24_aanleg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">52.26</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse47_aanleg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">52.24</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse7_aanleg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">60.61</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_onbekend_aanleg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">52.26</span>
+<span class="p">}</span>
+</code></pre></div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="h09_uitvoer.html" class="btn btn-neutral float-left" title="KOSWAT uitvoer"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../reference/koswat_architecture.html" class="btn btn-neutral float-right" title="Koswat design">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="h09_uitvoer.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../reference/koswat_architecture.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

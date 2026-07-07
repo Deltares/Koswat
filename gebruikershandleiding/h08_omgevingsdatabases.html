@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Omgevingsdatabases - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Omgevingsdatabases";
+        var mkdocs_page_input_path = "gebruikershandleiding/h08_omgevingsdatabases.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Gebruikershandleiding</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="h01_intro.html">Introductie</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h02_methode.html">De KOSWAT-methode</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h03_installatie.html">Software, installatie en gebruik</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h04_projectdefinitie.html">Definitie van een KOSWAT project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h05_dijksectie-invoer.html">Dijksectie invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h06_scenario-invoer.html">Scenario invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h07_eenheidsprijzen.html">Eenheidsprijzen</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Omgevingsdatabases</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h09_uitvoer.html">KOSWAT uitvoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h10_sskmethodiek.html">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Gebruikershandleiding</li>
+      <li class="breadcrumb-item active">Omgevingsdatabases</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/gebruikershandleiding/h08_omgevingsdatabases.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="omgevingsdatabases">Omgevingsdatabases<a class="headerlink" href="#omgevingsdatabases" title="Permanent link">&para;</a></h1>
+<p>KOSWAT gebruikt in z’n analyses een aantal omgevingsdatabases om de ligging van obstructies en infrastructuur in de invloedzone van de versterking te beschrijven, om aan de hand daarvan keuzes voor de versterkingsmaatregelen te kunnen maken in de beschikbare ruimte. Het maken van deze omgevingsanalyses is bewerkelijk, en zou in iedere KOSWAT berekening veel rekentijd vragen om dat on-the-fly te doen, vandaar dat ervoor is gekozen om deze databases voor bebouwing, spoorwegen en waterpartijen op voorhand op te stellen voor alle normtrajecten in Nederland.</p>
+<p>Bij het opstellen van databases is uitgegaan van de ligging van de dijktrajecten volgens het Nationaal Basisbestand Primaire Waterkeringen NBPW[^11]. Om de databases op te kunnen stellen zijn hierop een aantal bewerkingen uitgevoerd. Zo moeten trajecten bestaan uit zgn. single-line strings (ofwel ononderbroken lijnstukken), trajecten die uit meerdere afzonderlijke delen bestaan worden opgesplitst en krijgen een subtrajectcode eindigend op -A, -B, -C etc. Voor KOSWAT zijn enkel categorie A keringen van belang (dijkringen, geen verbindende keringen). Belangrijkste is dat ieder lijnsegment de juiste <u>richting</u> moet hebben, namelijk ten opzichte van het beschermde gebied met de klok mee. Op deze manier is rechts van de lijn altijd de binnendijkse kant, links is altijd buitendijks.</p>
+<p><a id="figuur-7"></a></p>
+<p><img alt="Figuur 7" src="images/figuur7.png" /></p>
+<p><em>Richting van lijnelementen in NBPW</em></p>
+<p>Vooralsnog zijn voor ieder dijktraject omgevingsdatabases met obstructies opgesteld voor bebouwing, spoorwegen en water in de versterkingszone. In de project-json wordt verwezen naar de locatie van de databases op de schijf. Binnen deze map zijn submappen voor ieder dijktraject te vinden, bestanden aldaar moeten voldoen aan de naamgeving zoals weergegeven in <a href="#figuur-4">Figuur 4</a>. Wanneer bijvoorbeeld een extra omgevingstype <em>“natura2000”</em> wordt toegevoegd in de analyses (zie de <a href="h04_projectdefinitie.html">rekeninstelling mbt de omgeving</a>) dient in deze map een bestand geplaatst te worden met de naam <em>“T_10_1_natura2000.csv”</em>.</p>
+<p><a id="figuur-4"></a></p>
+<p><img alt="Figuur 4" src="images/figuur4.png" /></p>
+<p><em>Figuur 4 Folderstructuur omgevingsdatabases</em></p>
+<p>Voor het produceren van omgevingsdatabases zijn scripts in Python beschikbaar, waarmee databases gemaakt kunnen worden op basis van de ligging van de keringen in het (bewerkte) NBPW en polygonen met obstructies in de versterkingszone. In het script worden allereerst op iedere meter punten gezet op de dijklijn, vervolgens wordt aan binnen- en buitendijkse zijde loodrecht op de dijklijn gekeken (in een zone van 500 meter) óf en zo ja, op welke afstand hier een obstructie wordt gevonden, zoals weergeven in <a href="#figuur-5">Figuur 5</a>.</p>
+<p><a id="figuur-5"></a></p>
+<p><img alt="Figuur 5" src="images/figuur5.png" /></p>
+<p><em>Visualisatie omgevingsdatabases bebouwing</em></p>
+<p>Omgevingsdatabases krijgen het volgende format, met per punt het x-y coördinaat, de afstand tot een object aan binnen- en buitendijkse zijde, en de zoekrichting aan binnen- en buitendijkse zijde in graden (positieve x-as = 0 graden, tegen de klok in). De A in de eerste kolom staat voor het subtraject, bij een overgang van subtraject A naar B zit een ‘gat’ in het normtraject.</p>
+<div class="highlight"><pre><span></span><code>Sectie;Xcoord;Ycoord;dist_binnen;dist_buiten;angle_binnen;angle_buiten
+A;199186.66;515698.01;340;500;-76.0;104.0
+A;199187.63;515698.25;340;500;-76.0;104.0
+A;199188.6;515698.49;340;500;-76.0;104.0
+A;199189.57;515698.74;340;500;-76.0;104.0
+A;199190.54;515698.98;339;500;-76.0;104.0
+A;199191.51;515699.22;339;500;-76.0;104.0
+A;199192.48;515699.46;339;500;-76.0;104.0
+A;199193.45;515699.7;339;500;-76.0;104.0
+A;199194.42;515699.95;339;500;-76.0;104.0
+A;199195.39;515700.19;339;500;-76.0;104.0
+A;199196.36;515700.43;339;500;-76.0;104.0
+etc
+</code></pre></div>
+<p>Voor weginfrastructuur zijn eveneens databases beschikbaar, waarvoor eveneens een Python script is ontwikkeld om de databases op te stellen. De databases zijn ingedeeld naar wegklasse (&lt;2m, 2-4m, 4-7m, &gt;7m en onbekend)[^12]. Hierbij is echter niet enkel de minimale afstand tot een weg relevant, maar willen we voor iedere zone naast de dijk weten hoeveel er van die weg ligt. Databases krijgen hiermee een iets afwijkend format, met in de kolommen in iedere zone het aantal strekkende meters van de betreffende weg. Ieder wegsegment wordt hierbij slechts eenmaal (aan het dichtstbijzijnde) meter-punt toebedeeld, dit is relevant wanneer er bijvoorbeeld bochten in het dijktraject zitten. De breedte van de zones is vastgelegd middels de header van het bestand, in dit geval is gewerkt in stappen van 5 meter, dit had echter ook 1 meter kunnen zijn (levert grotere bestanden). De inventarisatie loopt veelal tot 200 meter binnen- en buitendijks.</p>
+<div class="highlight"><pre><span></span><code>Sectie;Xcoord;Ycoord;afst_5m;afst_10m;afst_15m;afst_20m;afst_25m;etc
+A;199202.19;515701.88;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199203.16;515702.12;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199204.13;515702.37;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199205.10;515702.61;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199206.07;515702.85;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199207.04;515703.09;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199208.01;515703.33;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199208.98;515703.57;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199209.95;515703.82;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;4;5;etc
+A;199210.92;515704.06;2;5;5;5;5;5;5;5;5;5;5;5;5;5;5;5;5;5;5;3;0;etc
+A;199211.63;515704.45;4;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199211.36;515705.41;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199211.09;515706.38;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199210.82;515707.34;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+A;199210.56;515708.30;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;etc
+etc
+</code></pre></div>
+<p>[^11]: Bij de eerste oplevering van KOSWAT is uitgegaan van de shapefile NBPW gedownload via Waterveiligheidsportaal / Nationaal Georegister dd. 3 maart 2025.
+[^12]: Deze klasseindeling sluit niet meer aan op het Nationaal Wegen Bestand en wordt in 2026 heroverwogen.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="h07_eenheidsprijzen.html" class="btn btn-neutral float-left" title="Eenheidsprijzen"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="h09_uitvoer.html" class="btn btn-neutral float-right" title="KOSWAT uitvoer">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="h07_eenheidsprijzen.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="h09_uitvoer.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

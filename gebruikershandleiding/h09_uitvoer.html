@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>KOSWAT uitvoer - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "KOSWAT uitvoer";
+        var mkdocs_page_input_path = "gebruikershandleiding/h09_uitvoer.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Gebruikershandleiding</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="h01_intro.html">Introductie</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h02_methode.html">De KOSWAT-methode</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h03_installatie.html">Software, installatie en gebruik</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h04_projectdefinitie.html">Definitie van een KOSWAT project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h05_dijksectie-invoer.html">Dijksectie invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h06_scenario-invoer.html">Scenario invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h07_eenheidsprijzen.html">Eenheidsprijzen</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h08_omgevingsdatabases.html">Omgevingsdatabases</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">KOSWAT uitvoer</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#totaaloverzicht">Totaaloverzicht</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ruimtelijk-beeld">Ruimtelijk beeld</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#infrastructuur-kosten">Infrastructuur kosten</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#afbeeldingen-en-mappen-per-versterkingsmaatregel">Afbeeldingen en mappen per versterkingsmaatregel</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h10_sskmethodiek.html">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Gebruikershandleiding</li>
+      <li class="breadcrumb-item active">KOSWAT uitvoer</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/gebruikershandleiding/h09_uitvoer.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="koswat-uitvoer">KOSWAT uitvoer<a class="headerlink" href="#koswat-uitvoer" title="Permanent link">&para;</a></h1>
+<p>Wanneer een KOSWAT project wordt doorgerekend, worden de uitvoerfiles weggeschreven in de map die opgegeven is door de gebruiker in de project-json in de instelling <a href="h04_projectdefinitie.html#analyse">Uitvoerfolder</a>. Iedere combinatie van dijksectie en versterkingsscenario wordt hierbij apart doorgerekend en weggeschreven in de subfolder "<em>dike_{dijksectie_naam}\scenario_{scenario_naam}</em>".</p>
+<p>In deze mappen zitten de volgende bestanden:</p>
+<p><img alt="Overzicht uitvoerbestanden" src="images/figuur-uitvoerbestanden.png" /></p>
+<h2 id="totaaloverzicht">Totaaloverzicht<a class="headerlink" href="#totaaloverzicht" title="Permanent link">&para;</a></h2>
+<p><a id="totaaloverzicht"></a>
+In de tabel <em>“summary_costs.csv”</em> wordt de totale gemaakte kostenraming gerapporteerd. In de kolommen zijn daarbij de gegevens voor de verschillende versterkingsmaatregelen te zien.</p>
+<p>Bovenin het bestand wordt gestart met de <em>“Strategy reinforcement order”</em>, de volgorde waarin de maatregelen gekozen zullen worden voor zover de ruimte rond de dijk beschikbaar is, oplopend vanaf 0 (dus 0,1,2, etc). Deze volgorde wordt bepaald op basis van de kosten per km van het beschouwde maatregeltype (goedkoper heeft de voorkeur) in combinatie met het ruimtebeslag van de maatregel. Wanneer een versterkingsmaatregel duurder is én meer (of evenveel) ruimte kost dan een andere mogelijke maatregel op die plek, dan zal deze in principe nooit gekozen worden. In de <em>“Strategy reinforcement order”</em> komt dan -1 te staan.</p>
+<p>Vervolgens volgen een flink aantal rijen met berekende hoeveelheden (<em>“quantity”</em>), directe bouwkosten (“<em>cost</em>”) en kosten inclusief opslagfactoren (“<em>cost incl surtax</em>”). Bovenin wordt allereerst de eenheidsprijs (€/km) voor de verschillende maatregeltypen gerapporteerd, de directe bouwkosten en de kosten inclusief opslagfactoren. Deze worden in de rijen daaronder uitgesplitst in verschillende kostencomponenten, met de hoeveelheden daarbij, aansluitend bij de versterkingssystematiek die is geschetst in <a href="h10_sskmethodiek.html#grondwerk">Grondwerk</a>.</p>
+<p>Onderin het bestand wordt uiteindelijk gerapporteerd over welke lengte van de dijksectie (<em>“Total measure meters”</em>) iedere maatregel gekozen wordt, zie hiervoor ook <a href="#ruimtelijkbeeld">Ruimtelijk beeld</a>. Daarbij staan ook de totale versterkingskosten die hiermee voor ieder maatregeltype gevonden worden (de eenheidskosten €/m vermenigvuldigd met de lengte m waarover de maatregel wordt toegepast) in de “<em>Total measure cost</em>”. Vervolgens worden hierbij de kosten die samenhangen met het vervangen van infrastructuur gevoegd (<em>“Infrastructure cost”, zie <a href="#infrastructuurkosten">Infrastructuur kosten</a>), en worden de totale resulterende kosten (</em>“Total cost”_) per maatregeltype berekend.</p>
+<p>In de laatste kolom worden de totaalkosten voor de afzonderlijke maatregeltypen nog bij elkaar opgeteld tot de totaalkosten voor de dijksectie.</p>
+<h2 id="ruimtelijk-beeld">Ruimtelijk beeld<a class="headerlink" href="#ruimtelijk-beeld" title="Permanent link">&para;</a></h2>
+<p><a id="ruimtelijkbeeld"></a>
+In de tabel <em>“summary_locations.csv”</em> wordt de ruimtelijke analyse die is gemaakt samengevat per strekkende meter dijk. Op basis van de meterpunten die ontleend zijn aan de omgevingsdatabases (zie <a href="h08_omgevingsdatabases.html">Omgevingsdatabases</a>), wordt per maatregeltype (kolommen) weergegeven of deze maatregel ingepast zou kunnen worden (1) of niet (0).</p>
+<p>Op basis van deze analyse in combinatie met de <em>“Strategy reinforcement order”</em> (zie <a href="#totaaloverzicht">Totaaloverzicht</a>) wordt een eerste selectie (kolom <em>“Initial selection”</em>) van toe te passen maatregelen gemaakt. Vervolgens wordt aan de hand van de rekeninstellingen met betrekking tot overgangsconstructies en de minimale ruimte tussen constructieve strekkingen (zie <a href="h04_projectdefinitie.html#omgeving">Omgeving</a>) een eerste basis neergezet voor de kostenraming (kolom <em>“Ordered selection”</em>). Tenslotte wordt nog geoptimaliseerd op basis van aanwezige infrastructuur in de versterkingszone. Hierbij kan het voorkomen dat op een duurder maatregeltype wordt overgestapt die minder ruimte kost omdat kosten van infrastructuur achter de kering dan lager uitvallen (kolom <em>“Optimized selection”</em>).</p>
+<p>Het ruimtelijk beeld wordt ook weggeschreven als shapefiles in de map <em>“summary_locations”</em>. In deze map zijn shapefiles te vinden met:</p>
+<ul>
+<li>de ligging van de binnendijkteen van het oude profiel (<em>“summary_locations_old.shp”</em>)</li>
+<li>de binnendijkteen van de versterkte dijk (<em>“summary_locations_new.shp”</em>)</li>
+<li>de uiteindelijk gekozen maatregeltypen uit de optimized selection (<em>“summary_locations_measures.shp”</em>)</li>
+<li>de maatregeltypen uit de tussenstap “Ordered selection” (<em>“summary_locations_step.shp”</em>)</li>
+</ul>
+<h2 id="infrastructuur-kosten">Infrastructuur kosten<a class="headerlink" href="#infrastructuur-kosten" title="Permanent link">&para;</a></h2>
+<p><a id="infrastructuurkosten"></a>
+De tabel <em>“summary_infrastructure_costs.csv”</em> is erg uitgebreid en geeft inzicht in de opbouw van de berekende infrastructuurkosten.</p>
+<p>In de basis wordt (vanaf kolom K) per strekkende meter dijksectie voor ieder maatregeltype (grondmaatregel, kwelscherm, stabiliteitswand, etc) en voor iedere klasse weginfrastructuur (&lt;2m, 2-4m, 4-7m, &gt;7m en klasse onbekend) het aantal vierkante meters wegdek in de versterkingszone gerapporteerd met de bijbehorende (directe) kosten. Daarbij wordt nog onderscheid gemaakt in infrastructuur op de kruin van de dijk (zone A) en infrastructuur daarbuiten (zone B). Dit omdat met deze verschillende zones in de kostenberekening anders omgegaan wordt, zie <a href="h04_projectdefinitie.html#infrastructuur">Infrastructuur</a>.</p>
+<p>In kolommen F t/m J worden per maatregeltype de kosten over de verschillende infrastructuurklasse bij elkaar opgeteld. In Kolom D wordt de uiteindelijk gekozen maatregel weergegeven (zie <a href="#ruimtelijkbeeld">Ruimtelijk beeld</a>) met in kolom E de bijbehorende uiteindelijke infrastructuurkosten. Deze komt overeen met de totale infrastructuurkosten in de tabel <em>“summary_costs.csv”</em>.</p>
+<h2 id="afbeeldingen-en-mappen-per-versterkingsmaatregel">Afbeeldingen en mappen per versterkingsmaatregel<a class="headerlink" href="#afbeeldingen-en-mappen-per-versterkingsmaatregel" title="Permanent link">&para;</a></h2>
+<p>De afbeeldingen (*.png) in deze map laten de geschematiseerde dwarsdoorsnede van alle verschillende versterkingsmaatregelen zien, met de verschillende lagen waaruit de dijk is opgebouwd. In de bijbehorende mappen zitten daarnaast meer afbeeldingen met daarin de verschillende lagen gearceerd op basis waarvan de volumeberekeningen zijn uitgevoerd. Dit sluit aan bij de versterkingssystematiek die is geschetst in <a href="h10_sskmethodiek.html#grondwerk">Grondwerk</a>. De uitgevoerde afbeeldingen dienen allemaal ter visuele controle van de doorgerekende maatregelen.</p>
+<table>
+<thead>
+<tr>
+<th><em>Stap 1. Verwijderen oude grasbekleding</em></th>
+<th><em>Stap 2. Verwijderen oude kleilaag</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="Stap 1" src="images/stap-1-verwijderen-oude-grasbekleding.png" /></td>
+<td><img alt="Stap 2" src="images/stap-2-verwijderen-oude-kleilaag.png" /></td>
+</tr>
+<tr>
+<td><strong><em>Stap 3. Aanvullen kernmateriaal</em></strong></td>
+<td><strong><em>Stap 4. Aanleg nieuwe kleilaag</em></strong></td>
+</tr>
+<tr>
+<td><img alt="Stap 3" src="images/stap-3-aanvullen-kernmateriaal.png" /></td>
+<td><img alt="Stap 4" src="images/stap-4-aanleg-nieuwe-kleilaag.png" /></td>
+</tr>
+<tr>
+<td><strong><em>Stap 5. Aanleg nieuwe grasbekleding</em></strong></td>
+<td><strong><em>Versterkingsmaatregel overzicht</em></strong></td>
+</tr>
+<tr>
+<td><img alt="Stap 5" src="images/stap-5-aanleg-nieuwe-grasbekleding.png" /></td>
+<td><img alt="Versterkingsmaatregel overzicht" src="images/versterkingsmaatregel-overzicht.png" /></td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="h08_omgevingsdatabases.html" class="btn btn-neutral float-left" title="Omgevingsdatabases"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="h10_sskmethodiek.html" class="btn btn-neutral float-right" title="Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="h08_omgevingsdatabases.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="h10_sskmethodiek.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
