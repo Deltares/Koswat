@@ -2,13 +2,33 @@ name: "GitHub Pages documentation"
 on:
   push:
     branches: [ master ]
+    tags: [ 'v*.*.*' ]
 
 permissions:
     contents: write
 
 jobs:
   docs:
-    if: "!startsWith(github.event.head_commit.message, 'bump:')"
+    # if: "!startsWith(github.event.head_commit.message, 'bump:')"
+    # name: Build (and deploy) documentation
+    # runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     shell: bash -l {0}
+    # steps:
+    #   - name: Checkout source
+    #     uses: actions/checkout@v4
+
+    #   - uses: prefix-dev/setup-pixi@v0.9.0
+    #     with:
+    #       pixi-version: v0.49.0
+    #       cache: true
+    #       cache-write: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
+      
+    #   - run: pixi run -e docs mkdocs gh-deploy --force
+    concurrency:
+      group: deploy-docs
+      cancel-in-progress: false
     name: Build (and deploy) documentation
     runs-on: ubuntu-latest
     defaults:
@@ -17,11 +37,30 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
-
-      - uses: prefix-dev/setup-pixi@v0.9.0
         with:
-          pixi-version: v0.49.0
+          fetch-depth: 0
+          token: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
+
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@v0.9.5
+        with:
+          pixi-version: v0.68.1
           cache: true
           cache-write: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
-      
-      - run: pixi run -e docs mkdocs gh-deploy --force
+    
+      - name: Set GIT identity
+        run: |
+          PAT_USER=$(gh api user | jq -r '.login')
+          git config --global user.name "${PAT_USER}"
+          git config --global user.email "${PAT_USER}@users.noreply.github.com"
+
+
+      - name: Deploy docs for release tag
+        if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-rc')
+        run: |
+          pixi run -e docs mike deploy ${{ github.ref_name }} --update-aliases latest --push
+          pixi run -e docs mike set-default --push latest
+
+      - name: Deploy docs for main branch (dev)
+        if: github.ref == 'refs/heads/main'
+        run: pixi run -e docs release-dev
