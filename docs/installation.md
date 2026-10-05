@@ -17,7 +17,19 @@ conda create -n koswat_env python==3.13 pip
 
 ### Installation
 
-Koswat is not published at a package repository such as [Pypi](https://pypi.org/), however you can install it directly from GitHub as follows:
+Koswat is published at [Pypi](https://pypi.org/), you can decide to install a concrete version or the latest available from [Pypi](https://pypi.org/project/koswat/#history):
+
+1. Latest available:
+    ```bash
+    pip install koswat
+    ```
+
+2. Concrete version:
+    ```bash
+    pip install koswat=={version_number}
+    ```
+
+An alternative to installing from pypi is to do so via our [Koswat repository](https://github.com/Deltares/Koswat):
 
 1. Latest available (`master`):
     ```bash
