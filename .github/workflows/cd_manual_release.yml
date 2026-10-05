@@ -8,6 +8,7 @@ on:
         required: true
         type: choice
         options:
+          - auto
           - patch
           - minor
           - major
@@ -38,9 +39,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.BYPASS_PROTECTED_BRANCHES_PAT }}
 
-      - uses: prefix-dev/setup-pixi@v0.9.0
+      - uses: prefix-dev/setup-pixi@v0.9.5
         with:
-          pixi-version: v0.49.0
+          pixi-version: v0.68.1
           cache: true
           cache-write: false
 
@@ -67,16 +68,29 @@ jobs:
       - name: Bump project version
         run: |
           if [ "${{ inputs.is_prerelease }}" == "true" ]; then
-            pixi run -e dev cz bump \
-              --increment ${{ inputs.bump_type }} \
-              --prerelease rc \
-              --allow-no-commit \
-              --bump-message "release: ${{ env.RELEASE_TITLE }}"
+            if [ "${{ inputs.bump_type }}" == "auto" ]; then
+              pixi run bump-rc \
+                --prerelease rc \
+                --allow-no-commit \
+                --bump-message "release: ${{ env.RELEASE_TITLE }}"
+            else
+              pixi run bump-rc \
+                --increment ${{ inputs.bump_type }} \
+                --prerelease rc \
+                --allow-no-commit \
+                --bump-message "release: ${{ env.RELEASE_TITLE }}"
+            fi
           else
-            pixi run -e dev cz bump \
-              --increment ${{ inputs.bump_type }} \
-              --allow-no-commit \
-              --bump-message "release: ${{ env.RELEASE_TITLE }}"
+            if [ "${{ inputs.bump_type }}" == "auto" ]; then
+              pixi run bump \
+                --allow-no-commit \
+                --bump-message "release: ${{ env.RELEASE_TITLE }}"
+            else
+              pixi run bump \
+                --increment ${{ inputs.bump_type }} \
+                --allow-no-commit \
+                --bump-message "release: ${{ env.RELEASE_TITLE }}"
+            fi
           fi
 
       - name: Push bumped version and tag
