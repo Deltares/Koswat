@@ -23,7 +23,7 @@ Currently the following strategies are implemented:
 
 ### Order based
 
-This strategy is the first and default of all defined strategies. Its criteria is based on a pre-defined ['order'](#reinforcement-order) of each reinforcement. In steps, it can be seen as:
+This strategy is the first of all defined strategies. Its criteria is based on a pre-defined ['order'](#reinforcement-order) of each reinforcement. In steps, it can be seen as:
 
 1. Pre-selection of a location's available reinforcement based on said order, when a location does not have any "available" reinforcement, then the last reinforcement's order will be pre-selected.
 2. [Grouping](#reinforcement-grouping) of all locations by their pre-selected reinforcement.
@@ -35,6 +35,7 @@ The reinforcements are ordered based on increasing cost (including surtax) and d
 Only the active reinforcements are being taken into account.
 Reinforcements that are more expensive but are wider or have equal width are skipped (order `-1`).
 Two exceptions apply:
+
 1. If `SoilReinforcementProfile` is active, it should be the first option, even if it is not the cheapest and the least restrictive reinforcement.
 2. The `CofferDamReinforcementProfile` will never be skipped and is always the last reinforcement that is applied in case no other reinforcement fits the surroundings, even if is not active.
 
