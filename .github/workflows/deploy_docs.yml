@@ -44,6 +44,6 @@ jobs:
           pixi run -e docs mike deploy ${{ github.ref_name }} --update-aliases latest --push
           pixi run -e docs mike set-default --push latest
 
-      - name: Deploy docs for main branch (dev)
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy docs for master branch (dev)
+        if: github.ref == 'refs/heads/master'
         run: pixi run -e docs release-dev
