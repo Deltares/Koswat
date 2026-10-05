@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Definitie van een KOSWAT project - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Definitie van een KOSWAT project";
+        var mkdocs_page_input_path = "gebruikershandleiding/h04_projectdefinitie.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Gebruikershandleiding</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="h01_intro.html">Introductie</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h02_methode.html">De KOSWAT-methode</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h03_installatie.html">Software, installatie en gebruik</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Definitie van een KOSWAT project</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#analyse">Analyse</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dijksectie-ligging-en-selectie">Dijksectie ligging en selectie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dijksectie-invoer">Dijksectie invoer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#scenario-invoer">Scenario invoer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#eenheidsprijzen">Eenheidsprijzen</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#omgevingsdatabases">Omgevingsdatabases</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#uitvoerfolder">Uitvoerfolder</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dijkprofiel">Dijkprofiel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grondmaatregel">Grondmaatregel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#constructieve-maatregelen">Constructieve maatregelen</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#verticale-piping-oplossing">Verticale Piping Oplossing</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#kwelscherm">Kwelscherm</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stabiliteitswand">Stabiliteitswand</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#kistdam">Kistdam</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#omgeving">Omgeving</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#infrastructuur">Infrastructuur</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h05_dijksectie-invoer.html">Dijksectie invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h06_scenario-invoer.html">Scenario invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h07_eenheidsprijzen.html">Eenheidsprijzen</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h08_omgevingsdatabases.html">Omgevingsdatabases</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h09_uitvoer.html">KOSWAT uitvoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h10_sskmethodiek.html">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Gebruikershandleiding</li>
+      <li class="breadcrumb-item active">Definitie van een KOSWAT project</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/gebruikershandleiding/h04_projectdefinitie.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="definitie-van-een-koswat-project">Definitie van een KOSWAT project<a class="headerlink" href="#definitie-van-een-koswat-project" title="Permanent link">&para;</a></h1>
+<p>Een KOSWAT-project wordt gedefinieerd in verschillende *.json bestanden. Overkoepelend wordt een project-json opgesteld die wordt gebruikt in het <a href="h03_installatie.html#berekening">aanroepen van de berekening</a>. Deze project-json is verdeeld in een aantal blokken met invoer die in de volgende paragrafen beschreven worden. Als basis kunnen de invoerbestanden gebruikt worden in het voorbeeldproject dat beschikbaar is gesteld met KOSWAT. Paden naar bestanden en folders kunnen door de gebruiker worden aangepast en kunnen zowel absoluut als relatief ten opzichte van de project-json opgegeven worden.</p>
+<p>In het bestand worden de globale rekeninstellingen gedefinieerd die in principe voor het gehele project geldig zijn. Voor een aantal instellingen is het mogelijk om hier per dijksectie van af te wijken, zie daarvoor de beschrijving van de <a href="h05_dijksectie-invoer.html">dijksectie invoer</a>.</p>
+<p>Onderstaand is de structuur van de project-json weergegeven. De verschillende blokken worden in het vervolg van deze pagina uitgewerkt.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;analyse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;dijkprofiel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;grondmaatregel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;verticalepipingoplossing&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;kwelscherm&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;stabiliteitswand&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;kistdam&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;omgeving&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;infrastructuur&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="analyse">Analyse<a class="headerlink" href="#analyse" title="Permanent link">&para;</a></h2>
+<p><a id="analyse"></a>
+In het blok <em>analyse</em> worden allereerst de algemene instellingen gegeven voor het KOSWAT project, als volgt:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;analyse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;dijksectie_ligging&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dijksectie_ligging/dijksecties.shp&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dijksecties_selectie&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dijksecties_selectie.txt&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dijksectie_invoer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dijksectie_invoer&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;scenario_invoer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;scenarios&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;eenheidsprijzen&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eenheidsprijzen_2022.json&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;omgevingsdatabases&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;omgeving&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;uitvoerfolder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;KOSWAT_WV21_DR10_15_48_uitvoer&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;btw&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">},</span>
+</code></pre></div>
+<h4 id="dijksectie-ligging-en-selectie">Dijksectie ligging en selectie<a class="headerlink" href="#dijksectie-ligging-en-selectie" title="Permanent link">&para;</a></h4>
+<p><a id="dijksectie-ligging"></a>
+Met de instelling <em>[dijksectie_ligging]</em> wordt verwezen naar de shapefile waarin de ligging van de dijksecties gedefinieerd is die in het KOSWAT-project beschouwd kunnen worden. Bij het opstellen van de shapefile met dijksecties wordt uitgegaan van een template van de ligging van normtrajecten. Deze template wordt met KOSWAT meegeleverd. De <a href="h08_omgevingsdatabases.html">omgevingsdatabases</a> die in KOSWAT gebruikt worden zijn eveneens exact op deze ligging gebaseerd. Het is in de analyses noodzakelijk dat de dijksecties en omgevingsdatabases met elkaar overeen komen qua ligging.</p>
+<p>De dijksectie-indeling wordt gemaakt door de meegeleverde template verder op te knippen in een GIS pakket (ArcGIS, QGIS, oid), en de dijksecties daarbij een unieke naam[^6] te geven in het veld “Dijksectie”. De attribute table bij de shapefile bevat naast het veld “Dijksectie” ook de velden “Traject”, “Subtraject” en “Lengte”. De lengte (in meter) dient na het opknippen opnieuw berekend te worden. De velden Traject en Subtraject verwijzen naar de betreffende delen van de omgevingsdatabases en mogen <u>niet</u> gewijzigd worden.</p>
+<p>Het bijbehorende invoerbestand <em>[dijksecties_selectie]</em> verwijst naar een eenvoudig tekstbestandje (*.txt) waarin de dijksecties gedefinieerd zijn waarmee we in het project gaan rekenen volgens onderstaande structuur. Dit hoeven niet alle dijksecties te zijn die in de shapefile gedefinieerd zijn, we kunnen hiermee een specifieke selectie maken.</p>
+<div class="highlight"><pre><span></span><code>dijksectie_1
+dijksectie_2
+etc.
+</code></pre></div>
+<h4 id="dijksectie-invoer">Dijksectie invoer<a class="headerlink" href="#dijksectie-invoer" title="Permanent link">&para;</a></h4>
+<p><a id="dijksectie-invoer"></a>
+De instelling <em>[dijksectie_invoer]</em> verwijst naar een map waarin de invoerbestanden met rekeninstellingen per dijksectie zijn opgeslagen in afzonderlijke json-files. De json-files in deze map hebben een naam die exact overeenkomt met de unieke dijksectienaam die is vastgelegd in de shapefile. De inhoud van de invoerbestanden wordt beschreven in <a href="h05_dijksectie-invoer.html">Dijksectie invoer</a>.</p>
+<h4 id="scenario-invoer">Scenario invoer<a class="headerlink" href="#scenario-invoer" title="Permanent link">&para;</a></h4>
+<p><a id="scenario-invoer"></a>
+Om de versterkingen van de dijksecties te definiëren wordt gewerkt met scenario’s. De versterkingsopgave wordt niet door KOSWAT zelf bepaald, maar dient te worden opgegeven door de gebruiker of deze volgt uit andere tools (bijvoorbeeld OKADER). De instelling <em>[scenario_invoer]</em> verwijst naar een map waarin de scenariobestanden per dijksectie zijn opgeslagen in afzonderlijke json-files, wederom met een naam die exact overeenkomt met de unieke dijksectienaam. In een bestand kunnen per dijksectie één of meerdere scenario’s worden gedefinieerd. De inhoud van de scenario-files wordt beschreven in <a href="h06_scenario-invoer.html">Scenario invoer</a>.</p>
+<h4 id="eenheidsprijzen">Eenheidsprijzen<a class="headerlink" href="#eenheidsprijzen" title="Permanent link">&para;</a></h4>
+<p><a id="eenheidsprijzen"></a>
+De rekeninstelling <em>[eenheidsprijzen]</em> geeft een verwijzing naar het bestand met de eenheidsprijzen die in KOSWAT gehanteerd worden. Dit bestand wordt standaard meegeleverd met KOSWAT. Zie <a href="h07_eenheidsprijzen.html">Eenheidsprijzen</a> voor het gehanteerde format.</p>
+<p>Met de rekeninstelling <em>[btw]</em> wordt aangegeven of inclusief (waarde <em>true</em>) of exclusief btw (waarde <em>false</em>) wordt gerekend.</p>
+<h4 id="omgevingsdatabases">Omgevingsdatabases<a class="headerlink" href="#omgevingsdatabases" title="Permanent link">&para;</a></h4>
+<p><a id="omgevingsdatabases"></a>
+KOSWAT werkt met omgevingsdatabases. Met deze rekeninstelling wordt aangegeven waar deze databases opgeslagen zijn. Meer configuratie wordt gedefinieerd in het blok <a href="#omgeving">Omgeving</a> in de project-json, meer informatie over de omgevingsanalyses in het algemeen is te vinden in <a href="h08_omgevingsdatabases.html">Omgevingsdatabases</a>.</p>
+<h4 id="uitvoerfolder">Uitvoerfolder<a class="headerlink" href="#uitvoerfolder" title="Permanent link">&para;</a></h4>
+<p><a id="uitvoerfolder"></a>
+Deze rekeninstelling spreekt voor zich, in deze folder wordt de uitvoer van de KOSWAT analyses opgeslagen per dijksectie en per doorgerekend scenario. Zie <a href="h09_uitvoer.html">KOSWAT uitvoer</a> voor een nadere beschrijving van de uitvoerfiles die worden weggeschreven.</p>
+<h2 id="dijkprofiel">Dijkprofiel<a class="headerlink" href="#dijkprofiel" title="Permanent link">&para;</a></h2>
+<p><a id="dijkprofiel"></a>
+In de project-json worden in het blok <em>dijkprofiel</em> de globale instellingen rondom het dijkprofiel gedefinieerd, die in principe gelden voor het hele project. Van deze globale instellingen kan per dijksectie worden afgeweken, zie hiervoor de invoerbestanden per sectie in <a href="h05_dijksectie-invoer.html">Dijksectie invoer</a>. In deze sectie-specifieke bestanden dient sowieso het dijkprofiel in de uitgangssituatie te worden gedefinieerd, al kunnen we er ook voor kiezen om een default profiel te specificeren voor alle dijksecties in onderstaand blok.</p>
+<p>Algemene instellingen die in dit blok opgenomen kunnen worden:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;dijkprofiel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;dikte_graslaag&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dikte_kleilaag&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;factorzetting&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_bebouwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;grondaankoop_onbebouwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>De factoren <em>[dikte_graslaag]</em> en <em>[dikte_kleilaag]</em> beschrijven de opbouw van het dijklichaam in verschillende lagen. Zie <a href="h10_sskmethodiek.html#grondwerk">Grondwerk</a> voor een beschrijving hoe deze lagen worden behandeld in de berekening van volumes en kosten.</p>
+<p>De instelling <em>[factorzetting]</em> geeft aan hoeveel extra hoogte aangebracht dient te worden om zetting van de ondergrond ten gevolge van het gewicht van het extra aangebrachte grondlichaam te compenseren, een factor van 1,2 betekent hier 20% extra kruinverhoging. Let op: deze factor dient nog volledig doorgevoerd te worden in de berekening (2026).</p>
+<p>Met de factoren <em>[grondaankoop_bebouwd]</em> en <em>[grondaankoop_onbebouwd]</em> worden de vierkantemeter-prijzen (in €/m2 excl. opslagen en btw) gegeven van de aankoop van grond in bebouwd en onbebouwd (agrarisch) gebied. In geval van een grondmaatregel wordt ervan uit gegaan dat dit veelal in onbebouwd gebied is. Voor de zwaardere constructieve maatregelen (stabiliteitswand, kistdam) wordt uitgegaan van bebouwd gebied (immers, je treft deze maatregelen niet voor niets). Bij een kwelscherm (lichtste constructieve maatregel) wordt met een gemiddelde gerekend.</p>
+<h2 id="grondmaatregel">Grondmaatregel<a class="headerlink" href="#grondmaatregel" title="Permanent link">&para;</a></h2>
+<p><a id="grondmaatregel"></a>
+In het blok grondmaatregel worden de instellingen gegeven die gelden specifiek voor de versterkingsmaatregel in grond.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;grondmaatregel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;actief&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grond&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grondaankoop&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_bermlengte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min_bermhoogte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_bermhoogte_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;factor_toename_bermhoogte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Met de instelling <em>[actief]</em> wordt aangegeven of de grondmaatregel überhaupt wordt meegenomen in de berekening, <em>true</em> of <em>false</em>. Op deze manier kan een gebruiker de keuze van een bepaalde maatregel op een dijksectie sturen. De instellingen op deze plek zijn globaal voor alle doorgerekende dijksecties, over het algemeen zal deze instelling daarom op true staan. Maar nogmaals, hier kan per dijksectie via de <a href="h05_dijksectie-invoer.html">dijksectie-specifieke invoerbestanden</a> vanaf geweken worden.</p>
+<p>Met de instellingen <em>[opslagfactor_grond]</em> en <em>[opslagfactor_grondaankoop]</em> wordt de moeilijkheidsfactor aangegeven op basis waarvan de opslagfactoren worden gekozen voor het grondwerk en de aankoop van grond (vastgoedkosten). Zie voor meer informatie de <a href="h10_sskmethodiek.html">kostenberekening volgens SSK</a>.</p>
+<p>Met de laatste 3 instellingen wordt de hoogte van de pipingberm gestuurd. <em>[min_bermhoogte]</em> is de minimale pipingbermhoogte in meter, de <em>[factor_toename_bermhoogte]</em> beschrijft hoeveel de pipingbermhoogte toeneemt met iedere meter berm. De <em>[max_bermhoogte_factor]</em> tenslotte is de maximale hoogte van de pipingberm relatief aan de totale dijkhoogte.</p>
+<h2 id="constructieve-maatregelen">Constructieve maatregelen<a class="headerlink" href="#constructieve-maatregelen" title="Permanent link">&para;</a></h2>
+<p>In verschillende opeenvolgende blokken worden de specifieke rekeninstellingen opgegeven voor de verschillende constructieve maatregelen. Net als bij de grondmaatregel wordt bij iedere constructieve maatregel aangegeven of deze <em>[actief]</em> (<em>true</em> of <em>false</em>) is in de berekening en welke opslagfactoren er moeten worden toegepast op het grondwerk <em>[opslagfactor_grond]</em>, op het constructieve element <em>[opslagfactor_constructief]</em> en (indien relevant) de aankoop van grond <em>[opslagfactor_grondaankoop]</em>. Daarnaast zijn er instellingen die specifiek voor iedere maatregel. Deze worden in de volgende subparagrafen beschreven.</p>
+<h4 id="verticale-piping-oplossing">Verticale Piping Oplossing<a class="headerlink" href="#verticale-piping-oplossing" title="Permanent link">&para;</a></h4>
+<p><a id="verticalepipingoplossing"></a>
+Let op: naamgeving van deze constructieve maatregel wordt gewijzigd in 2026.</p>
+<p>De verticale piping oplossing is de aanduiding van een (innovatieve) gronddichte maar waterdoorlatende filterconstructie zoals een Verticaal Zanddicht Geotextiel (VZG) of een Grof Zand Barrière (GZB). Deze wordt als volgt geconfigureerd:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;verticalepipingoplossing&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;actief&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grond&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_constructief&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grondaankoop&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;binnen_berm_breedte_vps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In KOSWAT wordt deze oplossing altijd geraamd in combinatie met een korte berm aan de binnendijkse zijde. De lengte van deze berm wordt opgegeven met de instelling <em>[binnen_berm_breedte_vps]</em>.</p>
+<h4 id="kwelscherm">Kwelscherm<a class="headerlink" href="#kwelscherm" title="Permanent link">&para;</a></h4>
+<p><a id="kwelscherm"></a>
+De vervolgens lichtste constructieve maatregel is een kwelscherm in de teen van de dijk. Hiermee kan in het ontwerp voorkomen worden dat een (lange) pipingberm aangelegd dient te worden. Het kwelscherm heeft in KOSWAT geen constructieve sterkte, en draagt daarmee niet bij aan de maatregelen ten aanzien van macrostabiliteit. Voor macrostabiliteit (opgave ds) dient als voorheen bij de grondmaatregel een taludverflauwing binnendijks plaats te vinden, zie <a href="h02_methode.html#figuur-1">Figuur 1</a>.</p>
+<p>De lengte van het kwelscherm wordt bepaald door de benodigde extra dijkbasis ten aanzien van piping, waarbij rekening gehouden wordt met het feit dat verticale kwelweglengte effectiever is tegen piping dan horizontale kwelweglengte[^7]. De instellingen in de json zijn als volgt:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;kwelscherm&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;actief&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grond&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_constructief&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grondaankoop&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min_lengte_kwelscherm&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;overgang_cbwand_damwand&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_lengte_kwelscherm&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>De minimale en maximale lengte van de toe te passen wand worden gegeven met <em>[min_lengte_kwelscherm]</em> en <em>[max_lengte_kwelscherm]</em>.</p>
+<p>Kosten voor een kwelscherm kunnen in KOSWAT berekend worden aan de hand van een cement-bentonietscherm voor de kortere schermen of een stalen damwand voor de grotere lengtes. De lengte waarop overgegaan wordt van de een op de andere maatregel in de berekening wordt aangegeven met de instelling <em>[overgang_cbwand_damwand]</em>. Voorheen stond deze instelling op 99 m, ofwel er werd altijd gekozen voor een cb-wand, de validatie van KOSWAT aan de hand van HWBP-projecten leert echter dat deze cb-wand in praktijk niet of nauwelijks toegepast wordt, maar dat meestal traditioneel gekozen wordt voor een stalen damwand (heavescherm). De instelling kan daarmee beter per default op 0 gezet worden, zodat de cb-wand hier niet meer gekozen wordt.</p>
+<p>Tegenwoordig wordt ook meer en meer geëxperimenteerd met kunststof kwelschermen, deze zijn in KOSWAT nog niet als standaard maatregel opgenomen.</p>
+<h4 id="stabiliteitswand">Stabiliteitswand<a class="headerlink" href="#stabiliteitswand" title="Permanent link">&para;</a></h4>
+<p><a id="stabiliteitswand"></a>
+Een stabiliteitswand in KOSWAT bestaat uit een enkelvoudige wand tot bovenin in het dijklichaam[^8]. De stabiliteitswand wordt ingebracht tot een meter in de draagkrachtige zandlaag. Instellingen voor deze maatregel zijn als volgt:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;stabiliteitswand&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;actief&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grond&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;moeilijk&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_constructief&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grondaankoop&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;moeilijk&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;versteiling_binnentalud&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min_lengte_stabiliteitswand&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;overgang_damwand_diepwand&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_lengte_stabiliteitswand&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>De minimale en maximale lengte van de toe te passen wand worden gegeven met <em>[min_lengte_stabiliteitswand]</em> en <em>[max_lengte_stabiliteitswand]</em>. De constructie kan uitgevoerd worden als een (verankerde) damwand of een diepwand, afhankelijk van de vereiste lengte. De overgang tussen de twee wordt ingesteld door de gebruiker met de rekeninstelling <em>[overgang_damwand_diepwand]</em>.</p>
+<p>De noodzaak tot een taludverflauwing vervalt met deze oplossing. Het binnentalud mag zelfs versteild worden, waardoor meer ruimte bespaard wordt. Versteiling kan plaatsvinden tot een bepaald maximum (cotan) aangegeven met de instelling <em>[versteiling_binnentalud]</em>. Een steiler binnentalud dan 1:2 kan leiden tot extra uitdagingen in het beheer van de dijk (omkiepende grasmaaiers e.d.).</p>
+<h4 id="kistdam">Kistdam<a class="headerlink" href="#kistdam" title="Permanent link">&para;</a></h4>
+<p><a id="kistdam"></a>
+Op plaatsen met bebouwing direct naast of in het bestaande dijklichaam kan een tweezijdige damwand in het dijklichaam worden gekozen, ofwel een kistdam. Hierbij wordt ervan uitgegaan dat de versterking volledig plaats vindt binnen het bestaande ruimtebeslag van de huidige dijk. Dit wordt bereikt door het versteilen van zowel de binnen- als de buitentaludhelling. Aan deze versteiling worden in de berekening geen grenzen gesteld. De inheidiepte van de kistdam is gelijk aan die van de stabiliteitswand.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;kistdam&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;actief&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_grond&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;moeilijk&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_constructief&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;moeilijk&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min_lengte_kistdam&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_lengte_kistdam&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>De minimale en maximale lengte van de toe te passen wand worden gegeven met <em>[min_lengte_kistdam]</em> en <em>[max_lengte_kistdam]</em>.</p>
+<h2 id="omgeving">Omgeving<a class="headerlink" href="#omgeving" title="Permanent link">&para;</a></h2>
+<p><a id="omgeving"></a>
+Met de rekeninstelling <em>[omgevingstypes]</em> wordt opgegeven welke lagen een harde grens stellen aan de beschikbare ruimte voor een versterking. Ofwel, als in de versterkingszone dergelijke obstructies geconstateerd worden, zal KOSWAT kiezen voor een alternatieve (constructieve) oplossing op die plek.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;omgeving&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;omgevingtypes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;bebouwing&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;water&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;spoorwegen&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;constructieafstand&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;constructieovergang&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Zie <a href="h08_omgevingsdatabases.html">Omgevingsdatabases</a> voor meer informatie over de bestanden en de exacte folderstructuur waarin de bestanden moeten staan.</p>
+<p>Met de rekeninstelling <em>[constructieovergang]</em> wordt aangegeven over welke lengte aan weerszijden van een constructieve oplossing een overgangsconstructie moeten worden toegepast. Wanneer wordt gekozen voor een stabiliteitswand ter plaatse van een woning o.i.d., zal deze in praktijk aan weerszijden immers een stukje doorlopen, voordat er weer volledig in grond versterkt wordt. Een andere instelling is de minimale ruimte tussen constructies die wordt vereist, aangegeven met <em>[constructieafstand]</em>. In de analyse zullen twee constructieve strekkingen samengevoegd worden tot één doorlopende constructie, wanneer de ruimte tussen de constructies kleiner wordt dan deze opgegeven afstand.</p>
+<h2 id="infrastructuur">Infrastructuur<a class="headerlink" href="#infrastructuur" title="Permanent link">&para;</a></h2>
+<p><a id="infrastructuur"></a>
+Weginfrastructuur in de versterkingszone stelt geen grens aan de beschikbare ruimte zoals de obstructies beschreven in de vorige paragraaf, maar het leidt wel tot extra kosten om wegen tijdelijk te verwijderen en nadien opnieuw aan te leggen. De aanwezigheid van wegen is vastgelegd in de omgevingsdatabases beschreven in <a href="h08_omgevingsdatabases.html">Omgevingsdatabases</a>. Hierbij worden verschillende breedteklasses gehanteerd die aansluiten bij het Nationaal Wegen Bestand (NWB). De volgende instellingen zijn van kracht:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;infrastructuur&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;actief&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;opslagfactor_wegen&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normaal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;infrakosten_0dh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vervang&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse2_breedte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse24_breedte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse47_breedte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_klasse7_breedte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wegen_onbekend_breedte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In de verschillende wegendatabases[^9] zijn as-lengtes van de verschillende wegtypes vastgelegd. Met de instellingen <em>[wegen_klasse2_breedte]</em>, <em>[wegen_klasse24_breedte]</em>, <em>[wegen_klasse47_breedte]</em>, <em>[wegen_klasse7_breedte]</em> en <em>[wegen_onbekend_breedte]</em> wordt aangegeven welke wegbreedte hierbij hoort om daarmee het aantal vierkante meters te bepalen ten behoeve van de kostenraming.</p>
+<p>De rekeninstelling <em>[infrakosten_0dh]</em> geeft aan op welke manier kosten worden geraamd voor infrastructuur die <u>op</u> de dijkkruin ligt op secties waar de dijk <u>niet</u> wordt opgehoogd (maar de dijk wel versterkt wordt ten aanzien van macrostabiliteit en/of piping). Mogelijke opties zijn hier “vervang” wanneer infrastructuur compleet vervangen wordt, “herstel” wanneer enkel kosten voor herstel van de bestaande infrastructuur wordt gerekend (bijvoorbeeld omdat het tijdens de versterking kapot wordt gereden door zwaar materieel) of “geen” wanneer hiervoor helemaal geen kosten gerekend hoeven te worden.</p>
+<p>[^6]: Gebruik hierbij enkel letters <em>[a tot z]</em>, cijfers <em>[0 tot 9]</em>, koppeltekens <em>[- of </em>]_ en voor de zekerheid geen spaties of andere vreemde tekens.
+[^7]: Rekenregels voor het bepalen van de wandlengte worden in 2026 bijgesteld.
+[^8]: In 2026 wordt ook een damwand in de binnenteen aan het assortiment van KOSWAT toegevoegd. Rekenregels om de wandlengtes te bepalen worden dan ook tegen het licht gehouden.
+[^9]: Klasse-indeling in de wegendatabases is gewijzigd, naamgeving van bestanden en rekeninstellingen dient hierop aangepast te worden in 2026.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="h03_installatie.html" class="btn btn-neutral float-left" title="Software, installatie en gebruik"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="h05_dijksectie-invoer.html" class="btn btn-neutral float-right" title="Dijksectie invoer">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="h03_installatie.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="h05_dijksectie-invoer.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
