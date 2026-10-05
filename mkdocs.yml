@@ -1,10 +1,15 @@
 site_name: Koswat
+site_url: https://deltares.github.io/Koswat/
+repo_url: https://github.com/Deltares/koswat
+repo_name: Deltares/koswat
+
 theme:
   name: readthedocs
   highlightjs: true
 plugins:
   - search
   - autorefs
+  - mike
   - mkdocstrings:
       default_handler: python
       handlers:
@@ -29,8 +34,6 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
-repo_url: https://github.com/Deltares/koswat
-repo_name: Deltares/koswat
 extra:
   authoremail: carles.sorianoperez@deltares.nl
   social:
