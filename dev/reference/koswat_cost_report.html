@@ -42,7 +42,7 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a>
                 </li>
               </ul>
               <ul>
@@ -50,19 +50,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a>
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Gebruikershandleiding</span></p>
@@ -118,9 +106,17 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="koswat_reinforced_profile.html">Reinforcement profile</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="koswat_strategies.html">Strategies</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Strategies</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="strategies/index.html">About strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="strategies/infrastructure_priority.html">Infrastructure priority</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="strategies/order_based.html">Order based</a>
+                </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -252,7 +248,7 @@
 <li>Represents the Summary, Profile and Layer report.</li>
 </ul>
 </li>
-<li><code>summary_locations.csv</code>: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see <a href="koswat_strategies.html">strategies</a>).<ul>
+<li><code>summary_locations.csv</code>: A csv file containing per-location a breakdown of available reinforcements and selected reinforcement ( see <a href="strategies/index.html">strategies</a>).<ul>
 <li>Represents the Location report.</li>
 </ul>
 </li>
@@ -260,7 +256,7 @@
     -<code>summary_locations_measures</code>: The same data as present in <code>summary_locations.csv</code> is used to shape the geometry of a dike's traject. We keep as well the type of chosen reinforcement.<ul>
 <li><code>summary_locations_new</code>: an overlay of <code>summary_locations_measures</code> with the geometry buffered in relation to the new selected reinforcement.</li>
 <li><code>summary_locations_old</code>: an overlay of <code>summary_locations_measures</code> with the geometry buffered in relation to the original selected reinforcement.</li>
-<li><code>summary_locations_step</code>: an overlay of <code>summary_locations_measures</code> with the geometry buffered in relation to the <a href="koswat_strategies.html#order-based">Ordered Strategy</a> step.</li>
+<li><code>summary_locations_step</code>: an overlay of <code>summary_locations_measures</code> with the geometry buffered in relation to the <a href="strategies/order_based.html">Ordered Strategy</a> step.</li>
 </ul>
 </li>
 <li><code>summary_infrastructure_costs.csv</code>: A csv file contaning all the infrastructure costs at each location for each of the supported reinforcement profile types.<ul>
@@ -344,7 +340,7 @@
 
   <div role="contentinfo">
     <!-- Copyright etc -->
-      <p>Copyright &copy; 2022 Carsopre</p>
+      <p>Copyright &copy; 2026 Deltares</p>
   </div>
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.

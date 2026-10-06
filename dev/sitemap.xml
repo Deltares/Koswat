@@ -9,19 +9,7 @@
          <lastmod>2026-10-06</lastmod>
     </url>
     <url>
-         <loc>https://deltares.github.io/Koswat/dev/docker.html</loc>
-         <lastmod>2026-10-06</lastmod>
-    </url>
-    <url>
-         <loc>https://deltares.github.io/Koswat/dev/examples.html</loc>
-         <lastmod>2026-10-06</lastmod>
-    </url>
-    <url>
-         <loc>https://deltares.github.io/Koswat/dev/installation.html</loc>
-         <lastmod>2026-10-06</lastmod>
-    </url>
-    <url>
-         <loc>https://deltares.github.io/Koswat/dev/user_manual.html</loc>
+         <loc>https://deltares.github.io/Koswat/dev/getting_started.html</loc>
          <lastmod>2026-10-06</lastmod>
     </url>
     <url>
@@ -85,11 +73,19 @@
          <lastmod>2026-10-06</lastmod>
     </url>
     <url>
-         <loc>https://deltares.github.io/Koswat/dev/reference/koswat_strategies.html</loc>
+         <loc>https://deltares.github.io/Koswat/dev/reference/koswat_surroundings.html</loc>
          <lastmod>2026-10-06</lastmod>
     </url>
     <url>
-         <loc>https://deltares.github.io/Koswat/dev/reference/koswat_surroundings.html</loc>
+         <loc>https://deltares.github.io/Koswat/dev/reference/strategies/index.html</loc>
+         <lastmod>2026-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://deltares.github.io/Koswat/dev/reference/strategies/infrastructure_priority.html</loc>
+         <lastmod>2026-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://deltares.github.io/Koswat/dev/reference/strategies/order_based.html</loc>
          <lastmod>2026-10-06</lastmod>
     </url>
 </urlset>

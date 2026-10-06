@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://deltares.github.io/Koswat/dev/reference/strategies/index.html" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>About strategies - Koswat</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+        <link href="../../css/version-select.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "About strategies";
+        var mkdocs_page_input_path = "reference/strategies/index.md";
+        var mkdocs_page_url = "/Koswat/dev/reference/strategies/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Gebruikershandleiding</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h01_intro.html">Introductie</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h02_methode.html">De KOSWAT-methode</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h03_installatie.html">Software, installatie en gebruik</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h04_projectdefinitie.html">Definitie van een KOSWAT project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h05_dijksectie-invoer.html">Dijksectie invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h06_scenario-invoer.html">Scenario invoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h07_eenheidsprijzen.html">Eenheidsprijzen</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h08_omgevingsdatabases.html">Omgevingsdatabases</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h09_uitvoer.html">KOSWAT uitvoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../gebruikershandleiding/h10_sskmethodiek.html">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Strategies</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">About strategies</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#available-strategies">Available strategies</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#design-decisions">Design decisions</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#fixed-and-flexible-reinforcements">'Fixed' and 'flexible' reinforcements</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="infrastructure_priority.html">Infrastructure priority</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="order_based.html">Order based</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+          <li class="breadcrumb-item">Strategies</li>
+      <li class="breadcrumb-item active">About strategies</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/reference/strategies/index.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="about-strategies">About strategies<a class="headerlink" href="#about-strategies" title="Permanent link">&para;</a></h1>
+<p>Koswat can determine which is the "best" reinforcement type for a dike traject based on different selection criteria that we name "strategies" (<code>StrategyProtocol</code>).</p>
+<p>A strategy requires a strategy input (<code>StrategyInput</code>), this input contains information over which reinforcement types are available at each location as well as what's the <strong>minimal buffer</strong> (<code>reinforcement_min_buffer</code>) and <strong>minimal length</strong> (<code>reinforcement_min_length</code>)  for each reinforcement type.</p>
+<p>By default a strategy is applied as follows:</p>
+<ol>
+<li>For each point (meter) in the traject, determine which reinforcements can be applied to it.</li>
+<li>Choose one of the available reinforcements based on the chosen <a href="order_based.html">strategy</a>. When no reinforcement is available the most restrictive will be chosen (<code>CofferDam</code>).</li>
+<li>Apply a buffer (<code>reinforcement_min_buffer</code>) for each one of the reinforcements.</li>
+<li>Check if the minimal distance between constructions is met (<code>reinforcement_min_length</code>), otherwise change it into one of the reinforcements next to it.</li>
+<li>Repeat 4 until all reinforcements have enough distance between themselves.</li>
+<li>Find based on the strategy for <a href="infrastructure_priority.html">infrastructure derived costs</a>, mapped locations (<code>list[StrategyLocationReinforcement]</code>) whose reinforcement can be increased into a most restrictive one with total lower costs. </li>
+<li>Return list of mapped locations (<code>list[StrategyLocationReinforcement]</code>).</li>
+</ol>
+<h2 id="available-strategies">Available strategies<a class="headerlink" href="#available-strategies" title="Permanent link">&para;</a></h2>
+<p>Currently the following strategies are implemented:</p>
+<ul>
+<li><a href="order_based.html">Order based</a></li>
+<li><a href="infrastructure_priority.html">Infrastructure priority</a>, by default the strategy to run during a Koswat analysis.</li>
+</ul>
+<h2 id="design-decisions">Design decisions<a class="headerlink" href="#design-decisions" title="Permanent link">&para;</a></h2>
+<h3 id="fixed-and-flexible-reinforcements">'Fixed' and 'flexible' reinforcements<a class="headerlink" href="#fixed-and-flexible-reinforcements" title="Permanent link">&para;</a></h3>
+<p>Originally, all reinforcement profiles were defined on the polder side, meaning that their geometries extend along the polder rather than the waterside. For waterside analyses, the same calculated reinforcement profiles are reused (with the exception of <code>SoilReinforcementProfile</code>). Although their geometry is defined on the polder side, these profiles are commonly referred to as “flexible” or “non-fixed,” because they may also be applied on the waterside.</p>
+<p>Accordingly, a reinforcement is considered suitable at a given trajectory point only when sufficient space is available between the waterside and dikeside constraints, based solely on the total profile width (i.e., the x-axis extent of the reinforcement geometry). This criterion applies to all reinforcement types except soil reinforcement.</p>
+<p>In practical terms, this means that a given reinforcement may need to be shifted closer to the water or to the dike toe. This displacement is neither displayed nor stored explicitly, since the objective of KOSWAT is to assign the most cost-effective and appropriate dike reinforcement for an entire trajectory.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../koswat_surroundings.html" class="btn btn-neutral float-left" title="Surroundings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="infrastructure_priority.html" class="btn btn-neutral float-right" title="Infrastructure priority">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2026 Deltares</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="../koswat_surroundings.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="infrastructure_priority.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+      <script src="../../js/version-select.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

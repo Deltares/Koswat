@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://deltares.github.io/Koswat/dev/user_manual.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://deltares.github.io/Koswat/dev/getting_started.html" />
       <link rel="shortcut icon" href="img/favicon.ico" />
-    <title>User manual - Koswat</title>
+    <title>Getting Started - Koswat</title>
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -14,9 +14,9 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "User manual";
-        var mkdocs_page_input_path = "user_manual.md";
-        var mkdocs_page_url = "/Koswat/dev/user_manual.html";
+        var mkdocs_page_name = "Getting Started";
+        var mkdocs_page_input_path = "getting_started.md";
+        var mkdocs_page_url = "/Koswat/dev/getting_started.html";
       </script>
     
     <!--[if lt IE 9]>
@@ -42,41 +42,55 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="index.html">Koswat</a>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
                 </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="docker.html">Docker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a>
-                </li>
-              </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">User manual</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Getting Started</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#command-line-tool">Command line tool</a>
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#run">Run</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-version">--version</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-help">--help</a>
+    <li class="toctree-l3"><a class="reference internal" href="#python-installation">Python installation</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#as-a-sandbox">As a sandbox</a>
+    <li class="toctree-l3"><a class="reference internal" href="#pypi-installation">Pypi Installation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#docker-installation">Docker installation</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#build-koswat-docker-image">Build koswat docker image</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-koswat">Using Koswat</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#requirements_1">Requirements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#command-line-tool">Command line tool</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#run">Run</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#-version">--version</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#-help">--help</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#as-a-sandbox">As a sandbox</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-docker">With Docker</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
     </li>
     </ul>
                 </li>
@@ -116,9 +130,17 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="reference/koswat_reinforced_profile.html">Reinforcement profile</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="reference/koswat_strategies.html">Strategies</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Strategies</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="reference/strategies/index.html">About strategies</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/strategies/infrastructure_priority.html">Infrastructure priority</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="reference/strategies/order_based.html">Order based</a>
+                </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -135,9 +157,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html" class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">User manual</li>
+      <li class="breadcrumb-item active">Getting Started</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/Deltares/koswat/edit/master/docs/user_manual.md">Edit on Deltares/koswat</a>
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/getting_started.md">Edit on Deltares/koswat</a>
     </li>
   </ul>
   <hr/>
@@ -145,19 +167,107 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="user-manual">User manual<a class="headerlink" href="#user-manual" title="Permanent link">&para;</a></h1>
-<p>Quickreference:</p>
+                <h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
 <ul>
-<li><a href="installation.html">Installation</a></li>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#python-installation">Python installation</a></li>
+<li><a href="#docker-installation">Docker installation</a></li>
+</ul>
+</li>
+<li><a href="#using-koswat">Using Koswat</a><ul>
 <li><a href="#command-line-tool">Command line tool</a></li>
 <li><a href="#as-a-sandbox">Sandbox</a></li>
-<li><a href="examples.html">Examples (external)</a></li>
-<li><a href="docker.html">Docker</a></li>
+<li><a href="#with-docker">Docker</a></li>
 </ul>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
-<p>This guideline assumes you have installed koswat, otherwise please check our <a href="installation.html">installation page</a></p>
-<h2 id="command-line-tool">Command line tool<a class="headerlink" href="#command-line-tool" title="Permanent link">&para;</a></h2>
-<h3 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h3>
+</li>
+<li><a href="#examples">Examples (external)</a></li>
+</ul>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<h3 id="python-installation">Python installation<a class="headerlink" href="#python-installation" title="Permanent link">&para;</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The following installation steps are written based on a Windows environment. When using other systems (which should be possible) it might be required to use different commands. However, the fundamental of the installation steps should remain the same. This meaning, no additional packages or libraries should be required. If problems would arose during your installation, please contact the maintainers of the tool.</p>
+</div>
+<h4 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h4>
+<p>Ensure you have a valid python environment with pip. If you are using conda you can do so with the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="go">conda create -n koswat_env python==3.13 pip</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the time of writing of this document koswat is supported for <code>python&gt;=3.11,&lt;3.14</code>.</p>
+</div>
+<h3 id="pypi-installation">Pypi Installation<a class="headerlink" href="#pypi-installation" title="Permanent link">&para;</a></h3>
+<p>Koswat is published at <a href="https://pypi.org/">Pypi</a>, you can decide to install a concrete version or the latest available from <a href="https://pypi.org/project/koswat/#history">Pypi</a>:</p>
+<ol>
+<li>
+<p>Latest available:
+    <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>koswat
+</code></pre></div></p>
+</li>
+<li>
+<p>Concrete version:
+    <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">koswat</span><span class="o">=={</span>version_number<span class="o">}</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p>An alternative to installing from pypi is to do so via our <a href="https://github.com/Deltares/Koswat">Koswat repository</a>:</p>
+<ol>
+<li>
+<p>Latest available (<code>master</code>):
+    <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Deltares/Koswat.git
+</code></pre></div></p>
+</li>
+<li>
+<p>Specific Koswat version, add <code>@version-tag</code> (<a href="https://github.com/Deltares/Koswat/tags">check released tags</a>) to the previous command, for instance install tag <code>v0.15.0</code>:
+    <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Deltares/Koswat.git@v0.15.0
+</code></pre></div></p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also do the above with a commit-hash for development branches (e.g.:<code>06e3f27</code>)</p>
+</div>
+<p>Either way, installation should start immediately:</p>
+<div class="highlight"><pre><span></span><code><span class="go">C:\your_checkout_dir&gt;pip install git+https://github.com/Deltares/Koswat.git</span>
+<span class="go">Collecting git+https://github.com/Deltares/Koswat.git</span>
+<span class="go">...</span>
+<span class="go">Successfully built koswat</span>
+<span class="go">Installing collected packages: pytz, tzdata, six, pyshp, pyparsing, pillow, packaging, numpy, more-itertools, kiwisolver, fonttools, cycler, colorama, certifi, shapely, python-dateutil, pyproj, pyogrio, contourpy, click, pandas, matplotlib, geopandas, koswat</span>
+<span class="go">Successfully installed certifi-2025.11.12 click-8.3.1 colorama-0.4.6 contourpy-1.3.3 cycler-0.12.1 fonttools-4.60.1 geopandas-1.1.1 kiwisolver-1.4.9 koswat-0.15.0 matplotlib-3.10.7 more-itertools-10.8.0 numpy-2.3.5 packaging-25.0 pandas-2.3.3 pillow-12.0.0 pyogrio-0.11.1 pyparsing-3.2.5 pyproj-3.7.2 pyshp-3.0.2.post1 python-dateutil-2.9.0.post0 pytz-2025.2 shapely-2.1.2 six-1.17.0 tzdata-2025.2</span>
+</code></pre></div>
+<p>Let's verify the installation with <code>pip show koswat</code>:</p>
+<div class="highlight"><pre><span></span><code>C:<span class="se">\y</span>our_checkout_dir&gt;pip<span class="w"> </span>show<span class="w"> </span>koswat
+Name:<span class="w"> </span>koswat
+Version:<span class="w"> </span><span class="m">0</span>.15.0
+Summary:<span class="w"> </span>Koswat,<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>dutch<span class="w"> </span>combination<span class="w"> </span>of<span class="w"> </span>words<span class="w"> </span><span class="sb">`</span>Kosts-Wat<span class="sb">`</span><span class="w"> </span><span class="o">(</span>what<span class="w"> </span>are<span class="w"> </span>the<span class="w"> </span>costs<span class="o">)</span>.<span class="w"> </span>Analyzes<span class="w"> </span>all<span class="w"> </span>the<span class="w"> </span>possible<span class="w"> </span>dikes<span class="w"> </span>reinforcements<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>a<span class="w"> </span>provided<span class="w"> </span>traject,<span class="w"> </span>with<span class="w"> </span>surrounding<span class="w"> </span>constructions,<span class="w"> </span>and<span class="w"> </span>what<span class="w"> </span>their<span class="w"> </span>related<span class="w"> </span>costs<span class="w"> </span>will<span class="w"> </span>be.
+...
+</code></pre></div>
+<h3 id="docker-installation">Docker installation<a class="headerlink" href="#docker-installation" title="Permanent link">&para;</a></h3>
+<p>Koswat can also be used via command line tool with <a href="https://www.docker.com/">docker</a> or <a href="https://podman.io/">podman</a>. To do so you will have first to <a href="#build-koswat-docker-image">build the image</a> and then <a href="#with-docker">run the built container</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This guideline assumes you have a podman installation, when using docker you only need to replace our <code>podman</code> command with <code>docker</code>.</p>
+</div>
+<h4 id="build-koswat-docker-image">Build koswat docker image<a class="headerlink" href="#build-koswat-docker-image" title="Permanent link">&para;</a></h4>
+<p>The koswat container needs to be built before we can run it, this is not strictly necessary when running a remote image (check <a href="#with-docker">the following step</a>), but we will check either way how to build either a local or a remote image.</p>
+<ul>
+<li>
+<p>From a local koswat checkout:
+    <div class="highlight"><pre><span></span><code><span class="go">cd {your_local_koswat_checkout}</span>
+<span class="go">podman build -t koswat .</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>From our Deltares registry (as mentioned this step is not really needed):
+<div class="highlight"><pre><span></span><code><span class="go">podman pull containers.deltares.nl/gfs/koswat:latest</span>
+</code></pre></div></p>
+</li>
+</ul>
+<h2 id="using-koswat">Using Koswat<a class="headerlink" href="#using-koswat" title="Permanent link">&para;</a></h2>
+<h3 id="requirements_1">Requirements<a class="headerlink" href="#requirements_1" title="Permanent link">&para;</a></h3>
+<p>This guideline assumes you have installed koswat, otherwise please check our <a href="#installation">installation section</a></p>
+<h3 id="command-line-tool">Command line tool<a class="headerlink" href="#command-line-tool" title="Permanent link">&para;</a></h3>
+<h4 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h4>
 <p>When using <code>Koswat</code> as a package you can run it directly from the command line as follows:</p>
 <p><div class="highlight"><pre><span></span><code><span class="go">python -m koswat --input_file path\\to\\your\\koswat.json --log_output path\\to\\your\\output\\dir</span>
 </code></pre></div>
@@ -166,13 +276,13 @@ The arguments are:</p>
 <li><code>--input_file</code> (required): Absolute path to the location of your general <code>koswat.json</code> file.</li>
 <li><code>--log_output</code> (optional): Absolute path to the location of where the <code>koswat.log</code> will be written. If not specified it will be written at the root of the execution directory.</li>
 </ul>
-<p>Check our <a href="examples.html">examples page</a> for more details.</p>
-<h3 id="-version">--version<a class="headerlink" href="#-version" title="Permanent link">&para;</a></h3>
+<p>Check our <a href="#examples">examples section</a> for more details.</p>
+<h4 id="-version">--version<a class="headerlink" href="#-version" title="Permanent link">&para;</a></h4>
 <p>You can verify the installed koswat version as:</p>
 <div class="highlight"><pre><span></span><code><span class="go">C:\&gt; python -m koswat --version</span>
 <span class="go">python -m koswat, version 0.15.0   </span>
 </code></pre></div>
-<h3 id="-help">--help<a class="headerlink" href="#-help" title="Permanent link">&para;</a></h3>
+<h4 id="-help">--help<a class="headerlink" href="#-help" title="Permanent link">&para;</a></h4>
 <p>It is also possible to check all the above possibilities via the <code>--help</code> argument in the command line:</p>
 <div class="highlight"><pre><span></span><code><span class="go">C:\&gt; python -m koswat --help</span>
 <span class="go">Usage: python -m koswat [OPTIONS] COMMAND [ARGS]...</span>
@@ -191,7 +301,7 @@ The arguments are:</p>
 <span class="go">  --version          Show the version and exit.</span>
 <span class="go">  --help             Show this message and exit.</span>
 </code></pre></div>
-<h2 id="as-a-sandbox">As a sandbox<a class="headerlink" href="#as-a-sandbox" title="Permanent link">&para;</a></h2>
+<h3 id="as-a-sandbox">As a sandbox<a class="headerlink" href="#as-a-sandbox" title="Permanent link">&para;</a></h3>
 <p>It is entirely possible to make a custom Koswat analysis using the tool as a sandbox. This means, through a script calling the different classes to generate an analysis.</p>
 <p>As a simple example, we can rewrite the acceptance test <code>test_given_surrounding_files_run_calculations_for_all_included_profiles</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">koswat.dike.profile.koswat_input_profile_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">KoswatInputProfileBase</span>
@@ -305,11 +415,62 @@ The arguments are:</p>
     <span class="n">_mlp_plot</span><span class="o">.</span><span class="n">export_layers_png</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">_mlp_plot</span><span class="o">.</span><span class="n">export</span><span class="p">()</span>
 </code></pre></div>
+<h3 id="with-docker">With Docker<a class="headerlink" href="#with-docker" title="Permanent link">&para;</a></h3>
+<p>Assuming you correctly <a href="#docker-installation">installed koswat docker container</a>, you can now proceed to run the tool, we will make use of our example data ( <code>examples/basic_case</code> ), so you can copy it to a local test directory (<code>{your_data_to_run_directory}</code>).</p>
+<p>Running through docker requires that we <strong>mount</strong> the model data that we will use, this is done with the flag <code>-v {your_data_location}:/{mounted_data_location}</code>. </p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Make sure all the paths defined in the <code>koswat_general.json</code> are relative to it. Otherwise <strong>it will not work</strong>.</p>
+</div>
+<ul>
+<li>With your local image:
+    <div class="highlight"><pre><span></span><code><span class="go">podman run -it -v {your_data_to_run_directory}:/run_data koswat --input_file /run_data/koswat_general.json</span>
+</code></pre></div></li>
+<li>Or using the remote image instead:
+    <div class="highlight"><pre><span></span><code><span class="go">podman run -it -v {your_data_to_run_directory}:/run_data containers.deltares.nl/gfs/koswat:latest --input_file /run_data/koswat_general.json</span>
+</code></pre></div></li>
+</ul>
+<p>Which will result in something like this:
+<div class="highlight"><pre><span></span><code><span class="go">{date and time} - [koswat_handler.py:119] - root - INFO - Initialized Koswat.                                                                                             </span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:70] - root - INFO - Importing CSV configuration from /test_data/koswat_general.json                                     </span>
+<span class="go">{date and time} - [koswat_costs_importer.py:41] - root - INFO - Importing costs settings from /test_data/koswat_costs.json.                                                </span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:100] - root - INFO - Importing JSON configuration completed.                                                            </span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:103] - root - INFO - Mapping data to Koswat Settings</span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:158] - root - INFO - Creating scenarios for profile 10-1-1-A-1-A.</span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:171] - root - INFO - Created sub scenario Scenario1.</span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:171] - root - INFO - Created sub scenario Scenario2.</span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:140] - root - WARNING - No scenario found for selected section 10-1-2-A-1-A.</span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:140] - root - WARNING - No scenario found for selected section 10-1-3-A-1-B-1.</span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:174] - root - INFO - Finished generating koswat scenarios. A total of 2 scenarios were created.</span>
+<span class="go">{date and time} - [koswat_run_settings_importer.py:112] - root - INFO - Settings import completed.</span>
+<span class="go">...</span>
+<span class="go">{date and time} - [koswat_handler.py:59] - root - INFO - Exported summary results to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2</span>
+<span class="go">{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2</span>
+<span class="go">{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2</span>
+<span class="go">{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2</span>
+<span class="go">{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2</span>
+<span class="go">{date and time} - [koswat_handler.py:71] - root - INFO - Exported comparison plots to: /test_data/results_output/dike_10-1-1-A-1-A/scenario_scenario2</span>
+<span class="go">{date and time} - [koswat_handler.py:123] - root - INFO - Finalized Koswat.</span>
+</code></pre></div></p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>You can run all our examples in a <a href="https://mybinder.org/v2/gh/Deltares/koswat/jupyter-binder">koswat binder environment</a>, based on the <a href="https://github.com/Deltares/Koswat/tree/jupyter-binder?tab=readme-ov-file">jupyter-binder</a> long-living branch.</p>
+<ul>
+<li>
+<p>Simple runs:</p>
+<ul>
+<li><a href="https://github.com/Deltares/Koswat/blob/jupyter-binder/koswat_run_as_command_line.md">Koswat from command line</a></li>
+<li><a href="https://github.com/Deltares/Koswat/blob/jupyter-binder/koswat_run_as_python_package.ipynb">Koswat as python package</a></li>
+</ul>
+</li>
+<li>
+<p><a href="https://github.com/Deltares/Koswat/blob/jupyter-binder/KOSWAT_Handleiding.ipynb">Advanced manual</a></p>
+</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="installation.html" class="btn btn-neutral float-left" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Changelog"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="gebruikershandleiding/h01_intro.html" class="btn btn-neutral float-right" title="Introductie">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -317,7 +478,7 @@ The arguments are:</p>
 
   <div role="contentinfo">
     <!-- Copyright etc -->
-      <p>Copyright &copy; 2022 Carsopre</p>
+      <p>Copyright &copy; 2026 Deltares</p>
   </div>
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
@@ -338,7 +499,7 @@ The arguments are:</p>
         </span>
     
     
-      <span><a href="installation.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="changelog.html" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="gebruikershandleiding/h01_intro.html" style="color: #fcfcfc">Next &raquo;</a></span>
