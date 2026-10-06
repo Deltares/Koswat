@@ -27,6 +27,39 @@ class TestKoswatSurroundingsCsvFom:
         with pytest.raises(ValueError):
             _csv_fom_1.merge(_csv_fom_2)
 
+    def test_when_merge_given_duplicate_locations_in_current_list_then_raise_exception(
+        self,
+    ):
+        # 1. Define test data
+        _csv_fom_1 = KoswatSurroundingsCsvFom(
+            points_surroundings_list=[
+                PointObstacleSurroundings(
+                    location=(0, 0),
+                    traject_order=1,
+                    inside_distance=10.0,
+                    outside_distance=15.0,
+                ),
+                PointObstacleSurroundings(
+                    location=(0, 0),
+                    traject_order=2,
+                    inside_distance=5.0,
+                    outside_distance=10.0,
+                ),
+            ],
+            traject="traject_1",
+        )
+        _csv_fom_2 = KoswatSurroundingsCsvFom(
+            points_surroundings_list=[],
+            traject="traject_1",
+        )
+
+        # 2. Execute test and verify expectations
+        with pytest.raises(
+            ValueError,
+            match="Duplicate locations found in the current surroundings list.",
+        ):
+            _csv_fom_1.merge(_csv_fom_2)
+
     def test_when_merge_given_same_traject_then_points_merged(
         self,
     ):
@@ -35,6 +68,7 @@ class TestKoswatSurroundingsCsvFom:
             points_surroundings_list=[
                 PointObstacleSurroundings(
                     location=(0, 0),
+                    traject_order=1,
                     inside_distance=10.0,
                     outside_distance=15.0,
                 )
@@ -45,11 +79,13 @@ class TestKoswatSurroundingsCsvFom:
             points_surroundings_list=[
                 PointObstacleSurroundings(
                     location=(0, 0),
+                    traject_order=11,
                     inside_distance=5.0,
                     outside_distance=10.0,
                 ),
                 PointObstacleSurroundings(
                     location=(1, 1),
+                    traject_order=12,
                     inside_distance=8.0,
                     outside_distance=12.0,
                 ),

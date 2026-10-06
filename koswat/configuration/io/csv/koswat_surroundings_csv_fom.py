@@ -52,9 +52,13 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
 
         # Note: Suboptimal, but sufficient for now.
         _as_dict = {point.location: point for point in self.points_surroundings_list}
+        if len(_as_dict) != len(self.points_surroundings_list):
+            raise ValueError(
+                "Duplicate locations found in the current surroundings list."
+            )
+
         for point in other.points_surroundings_list:
             if point.location not in _as_dict:
                 self.points_surroundings_list.append(point)
             else:
-                # point.merge(_as_dict[point.location])
                 _as_dict[point.location].merge(point)
