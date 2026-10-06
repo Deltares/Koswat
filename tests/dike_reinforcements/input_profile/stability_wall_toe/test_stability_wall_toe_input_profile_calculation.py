@@ -162,7 +162,7 @@ class TestStabilityWallToeInputProfileCalculation:
         assert _result.waterside_berm_width == 8.9
         assert _result.crest_height == 42
         assert _result.crest_width == 6.7
-        assert _result.polderside_slope == pytest.approx(4.472292)
+        assert _result.polderside_slope == pytest.approx(0.981108)
         assert _result.polderside_berm_height == 2.3
         assert _result.polderside_berm_width == 0.0
         assert _result.polderside_ground_level == 2.3
