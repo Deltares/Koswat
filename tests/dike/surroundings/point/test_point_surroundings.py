@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 import pytest
 from shapely import Point
@@ -50,6 +50,27 @@ class TestPointSurroundings:
 
         # 2. Run test.
         assert _this != _other
+
+    def test_when_eq_given_no_location_then_raises_value_error(self):
+        # 1. Define test data
+        _this = PointSurroundings(
+            section="A",
+            traject_order=1,
+            location=None,
+            surroundings_matrix={},
+        )
+        _other = PointSurroundings(
+            section="A",
+            traject_order=2,
+            location=None,
+            surroundings_matrix={},
+        )
+
+        # 2. Run test.
+        with pytest.raises(
+            ValueError, match="Location is not set for this PointSurroundings instance."
+        ):
+            _this == _other
 
     def test_merge_point_surroundings(self):
         # 1. Define test data.

@@ -44,8 +44,8 @@ class PointSurroundings:
         so that `PointSurroundings` can be used as a key in a python dict.
         """
         if self.location is None:
-            return 0
-        return hash(self.location)
+            raise ValueError("Location is not set for this PointSurroundings instance.")
+        return hash((self.location.x, self.location.y))
 
     def __eq__(self, other: object) -> bool:
         """
