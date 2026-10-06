@@ -25,9 +25,9 @@ Currently the following strategies are implemented:
 
 ### 'Fixed' and 'flexible' reinforcements
 
-- Originally all our reinforcements have been defined as 'polderside', meaning that its geometries would extend along the polder- rather than the waterside. For waterside calculations we use the same calculated reinforcement profiles (except for `SoilReinforcementProfile`). We commonly name them as 'flexible' (or non-fixed), despite having a 'polderside' gemoetry they can still be used as 'waterside' ones.
+Originally, all reinforcement profiles were defined on the polder side, meaning that their geometries extend along the polder rather than the waterside. For waterside analyses, the same calculated reinforcement profiles are reused (with the exception of `SoilReinforcementProfile`). Although their geometry is defined on the polder side, these profiles are commonly referred to as “flexible” or “non-fixed,” because they may also be applied on the waterside.
 
-- We therefore consider a reinforcement to be 'suitable' for a given traject point when there is enough space between the waterside and dikeside obstacles, thus only looking at the total 'width' of the profile (`x` axis value of the reinforcement's geometry). This applies to all reinforcement types except for soil reinforcement.
-    - In 'the real world', it will imply that a given reinforcement might have to be moved closer to the water or dikeside.
-    - The required displacement is not displayed nor saved anywhere as koswat focuses on assigning the cheapest / most suitable dike reinforcement for a whole traject.
+Accordingly, a reinforcement is considered suitable at a given trajectory point only when sufficient space is available between the waterside and dikeside constraints, based solely on the total profile width (i.e., the x-axis extent of the reinforcement geometry). This criterion applies to all reinforcement types except soil reinforcement.
+
+In practical terms, this means that a given reinforcement may need to be shifted closer to the water or to the dike toe. This displacement is neither displayed nor stored explicitly, since the objective of KOSWAT is to assign the most cost-effective and appropriate dike reinforcement for an entire trajectory.
 
