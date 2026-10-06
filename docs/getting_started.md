@@ -118,7 +118,7 @@ The arguments are:
 - `--input_file` (required): Absolute path to the location of your general `koswat.json` file.
 - `--log_output` (optional): Absolute path to the location of where the `koswat.log` will be written. If not specified it will be written at the root of the execution directory.
 
-Check our [examples page](examples.md) for more details.
+Check our [examples section](#examples) for more details.
 
 #### --version
 
