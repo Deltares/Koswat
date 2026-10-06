@@ -1,6 +1,7 @@
 from typing import Callable
 
 import pytest
+from shapely import Point
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from tests.conftest import PointSurroundingsTestCase
@@ -13,6 +14,55 @@ class TestPointSurroundings:
         assert not _p_s.section
         assert not _p_s.location
         assert not _p_s.surroundings_matrix
+
+    def test_when_eq_given_same_location_then_returns_true(self):
+        # 1. Define test data
+        _this = PointSurroundings(
+            section="A",
+            traject_order=1,
+            location=Point(2, 3),
+            surroundings_matrix={},
+        )
+        _other = PointSurroundings(
+            section="A",
+            traject_order=2,
+            location=Point(2, 3),
+            surroundings_matrix={},
+        )
+
+        # 2. Run test.
+        assert _this == _other
+
+    def test_when_eq_given_same_traject_order_then_returns_false(self):
+        # 1. Define test data
+        _this = PointSurroundings(
+            section="A",
+            traject_order=1,
+            location=Point(2, 3),
+            surroundings_matrix={},
+        )
+        _other = PointSurroundings(
+            section="A",
+            traject_order=1,
+            location=Point(3, 4),
+            surroundings_matrix={},
+        )
+
+        # 2. Run test.
+        assert _this != _other
+
+    def test_merge_point_surroundings(self):
+        # 1. Define test data.
+        _this = PointSurroundings(traject_order=1, surroundings_matrix={1.0: 2.0})
+        _other = PointSurroundings(
+            traject_order=1, surroundings_matrix={1.0: 3.0, 2.0: 4.0}
+        )
+
+        # 2. Run test.
+        _this.merge(_other)
+
+        # 3. Verify expectations.
+        assert _this.surroundings_matrix == {1.0: 5.0, 2.0: 4.0}
 
     def test_get_total_infrastructure_per_zone_with_costs_calculator_case(
         self,
