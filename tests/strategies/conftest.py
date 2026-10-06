@@ -2,6 +2,7 @@ import copy
 from typing import Iterator
 
 import pytest
+from shapely import Point
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile import (
@@ -63,7 +64,9 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
 
     _strategy_locations = [
         StrategyLocationInput(
-            point_surrounding=PointSurroundings(traject_order=_idx),
+            point_surrounding=PointSurroundings(
+                traject_order=_idx, location=Point(_idx, _idx)
+            ),
             strategy_reinforcement_type_costs=copy.deepcopy(_initial_states[_rt]),
         )
         for _idx, _rt in enumerate(_initial_state_per_location)

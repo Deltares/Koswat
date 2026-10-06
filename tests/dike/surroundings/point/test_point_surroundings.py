@@ -74,9 +74,13 @@ class TestPointSurroundings:
 
     def test_merge_point_surroundings(self):
         # 1. Define test data.
-        _this = PointSurroundings(traject_order=1, surroundings_matrix={1.0: 2.0})
+        _this = PointSurroundings(
+            traject_order=1, location=Point(1, 1), surroundings_matrix={1.0: 2.0}
+        )
         _other = PointSurroundings(
-            traject_order=1, surroundings_matrix={1.0: 3.0, 2.0: 4.0}
+            traject_order=1,
+            location=Point(1, 1),
+            surroundings_matrix={1.0: 3.0, 2.0: 4.0},
         )
 
         # 2. Run test.

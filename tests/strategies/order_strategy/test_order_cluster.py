@@ -1,6 +1,7 @@
 from typing import Iterator
 
 import pytest
+from shapely import Point
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.strategies.order_strategy.order_cluster import OrderCluster
@@ -51,7 +52,9 @@ class TestOrderCluster:
         # Set locations.
         for _idx in range(0, 4):
             _dummy_location = StrategyLocationReinforcement(
-                location=PointSurroundings(section="test", traject_order=_idx),
+                location=PointSurroundings(
+                    section="test", traject_order=_idx, location=Point(_idx, _idx)
+                ),
                 available_measures=[],
                 filtered_measures=[],
             )
@@ -195,7 +198,7 @@ class TestOrderCluster:
         _selected_measure_value = "NotAMeasureDoesNotMatter"
         _merging_to = order_cluster_with_neighbors.right_neighbor
         _single_location = StrategyLocationReinforcement(
-            location=PointSurroundings(),
+            location=PointSurroundings(location=Point(-1, -1)),
             available_measures=[_selected_measure_value],
             filtered_measures=[_selected_measure_value],
         )

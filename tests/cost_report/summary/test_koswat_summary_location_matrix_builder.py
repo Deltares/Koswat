@@ -1,3 +1,5 @@
+from shapely import Point
+
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
@@ -26,8 +28,8 @@ class TestKoswatSummaryLocationMatrixBuilder:
         _section = "A"
 
         _builder.available_locations = [
-            PointSurroundings(section=_section, traject_order=1),
-            PointSurroundings(section=_section, traject_order=2),
+            PointSurroundings(section=_section, traject_order=1, location=Point(1, 1)),
+            PointSurroundings(section=_section, traject_order=2, location=Point(2, 2)),
         ]
         _builder.locations_profile_report_list = []
 
@@ -56,8 +58,8 @@ class TestKoswatSummaryLocationMatrixBuilder:
         # 1. Define test data.
         _section = "A"
         _locations = [
-            PointSurroundings(section=_section, traject_order=1),
-            PointSurroundings(section=_section, traject_order=2),
+            PointSurroundings(section=_section, traject_order=1, location=Point(1, 1)),
+            PointSurroundings(section=_section, traject_order=2, location=Point(2, 2)),
         ]
 
         _profile_report = MultiLocationProfileCostReport()
