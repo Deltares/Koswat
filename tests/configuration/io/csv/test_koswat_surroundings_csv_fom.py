@@ -29,6 +29,41 @@ class TestKoswatSurroundingsCsvFom:
         with pytest.raises(ValueError):
             _csv_fom_1.merge(_csv_fom_2)
 
+    def test_when_merge_given_duplicate_locations_then_exception_raised(self):
+        # 1. Define test data
+        _csv_fom_1 = KoswatSurroundingsCsvFom(
+            points_surroundings_list=[
+                PointObstacleSurroundings(
+                    location=(0, 0),
+                    inside_distance=10.0,
+                    outside_distance=15.0,
+                ),
+                PointObstacleSurroundings(
+                    location=(0, 0),
+                    inside_distance=5.0,
+                    outside_distance=10.0,
+                ),
+            ],
+            traject="traject_1",
+        )
+        _csv_fom_2 = KoswatSurroundingsCsvFom(
+            points_surroundings_list=[
+                PointObstacleSurroundings(
+                    location=(1, 1),
+                    inside_distance=8.0,
+                    outside_distance=12.0,
+                )
+            ],
+            traject="traject_1",
+        )
+
+        # 2. Execute test and verify expectations
+        with pytest.raises(
+            ValueError,
+            match="Duplicate locations detected in the current surroundings file.",
+        ):
+            _csv_fom_1.merge(_csv_fom_2)
+
     def test_when_merge_given_same_traject_then_points_merged(
         self,
     ):
