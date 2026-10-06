@@ -151,7 +151,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             _type_enum = SurroundingsEnum.translate(_type_name)
 
             if _type_enum == SurroundingsEnum.OBSTACLE:
-                if _type_name not in obstacle_types.keys():
+                if _type_name not in obstacle_types:
                     # In case of obstacles, only import those that are defined in the config file.
                     logging.info(
                         f"Skipping obstacle surrounding type {_type_name} for traject {_traject_name} as it is not defined in the config file."
@@ -163,13 +163,13 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             _buffer = obstacle_types.get(_type_name, None)
             _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum, _buffer)
 
-            if _type_enum in _imported_csv_foms.keys():
+            if _type_enum in _imported_csv_foms:
                 _imported_csv_foms[_type_enum].merge(_csv_fom)
             else:
                 _imported_csv_foms[_type_enum] = _csv_fom
 
         # Log missing obstacle files.
-        for _obs_type in obstacle_types.keys():
+        for _obs_type in obstacle_types:
             if _obs_type not in _read_obs_types:
                 logging.warning(
                     f"Obstacle surrounding type {_obs_type} defined in config file is missing for traject {_traject_name}."

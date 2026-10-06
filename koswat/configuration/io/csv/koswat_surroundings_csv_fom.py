@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -57,4 +56,5 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
             if point.location not in _as_dict:
                 self.points_surroundings_list.append(point)
             else:
+                # point.merge(_as_dict[point.location])
                 _as_dict[point.location].merge(point)

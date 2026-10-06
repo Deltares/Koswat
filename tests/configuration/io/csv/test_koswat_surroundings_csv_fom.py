@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pytest
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
