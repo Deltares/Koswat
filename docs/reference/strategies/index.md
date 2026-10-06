@@ -7,25 +7,27 @@ A strategy requires a strategy input (`StrategyInput`), this input contains info
 By default a strategy is applied as follows:
 
 1. For each point (meter) in the traject, determine which reinforcements can be applied to it.
-2. Choose one of the available reinforcements based on the chosen [strategy](#order-based). When no reinforcement is available the most restrictive will be chosen (`CofferDam`).
+2. Choose one of the available reinforcements based on the chosen [strategy](./order_based.md). When no reinforcement is available the most restrictive will be chosen (`CofferDam`).
 3. Apply a buffer (`reinforcement_min_buffer`) for each one of the reinforcements.
 4. Check if the minimal distance between constructions is met (`reinforcement_min_length`), otherwise change it into one of the reinforcements next to it.
 5. Repeat 4 until all reinforcements have enough distance between themselves.
-6. Find based on the strategy for [infrastructure derived costs](#infrastructure-priority), mapped locations (`list[StrategyLocationReinforcement]`) whose reinforcement can be increased into a most restrictive one with total lower costs. 
+6. Find based on the strategy for [infrastructure derived costs](./infrastructure_priority.md), mapped locations (`list[StrategyLocationReinforcement]`) whose reinforcement can be increased into a most restrictive one with total lower costs. 
 7. Return list of mapped locations (`list[StrategyLocationReinforcement]`).
 
 ## Available strategies
 
 Currently the following strategies are implemented:
 
-- [Order based](#order-based)
-- [Infrastructure priority](#infrastructure-priority), by default the strategy to run during a Koswat analysis.
+- [Order based](./order_based.md)
+- [Infrastructure priority](./infrastructure_priority.md), by default the strategy to run during a Koswat analysis.
 
 ## Design decisions
 
 ### 'Fix' and 'flexible' reinforcements
 
-- We consider a reinforcement to be 'suitable' for a given traject point when there is enough room between waterside and dikeside obstacles. This applies to all reinforcement types except for soil reinforcement.
+- Originally all our reinforcements have been defined based on a 'dikeside' perspective. For waterside calculations we use the same calculated reinforcement profiles (except for `SoilReinforcementProfile`) we commonly name them as 'flexible' (or non-fixed).
+
+- We therefore consider a reinforcement to be 'suitable' for a given traject point when there is enough room between the waterside and dikeside obstacles, therefore only looking at the total 'length' of the profile (`x` axis value of the reinforcement's geometry). This applies to all reinforcement types except for soil reinforcement.
     - In 'the real world', it will imply that a given reinforcement might have to be moved closer to the water or dikeside.
     - The required displacement is not displayed nor saved anywhere as koswat focuses on assigning the cheapest / most suitable dike reinforcement for a whole traject.
 

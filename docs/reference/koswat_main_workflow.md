@@ -44,7 +44,7 @@ For this step, we will be creating a [cost report](koswat_cost_report.md)
 For each of the reinforcement profiles we will calculate their associated costs if they were to be applied at all the available traject points where the surroundings allow it.
 
 ## Apply measure selection strategy
-Based on the available locations and the reinforcements that can be applied to it, a [selection strategy](koswat_strategies.md) finds which construction should be done at each location based on the strategy's criteria.
+Based on the available locations and the reinforcements that can be applied to it, a [selection strategy](./strategies/index.md) finds which construction should be done at each location based on the strategy's criteria.
 
 ## Calculate total costs
 Once `Koswat` knows which measure will be applied to each location, and with the previously calculated [reinforcement costs](#calculate-reinforcement-costs), it will estimate the total meters required of each reinforcement and their total cost in euros (€).

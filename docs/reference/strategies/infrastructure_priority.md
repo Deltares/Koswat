@@ -1,11 +1,11 @@
 # Infrastructure priority
 
 **DEFAULT STRATEGY**
-This strategy checks whether the clusters resulting from the [order based strategy](#order-based) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](koswat_cost_report.md#infrastructure-report). In steps, this strategy can be broke down as:
+This strategy checks whether the clusters resulting from the [order based strategy](order_based.md) can change their selected reinforcement to one with cheaper costs. These costs are extracted from the [cost report](../koswat_cost_report.md#cost-report) and relate to the reinforcement profile costs (dike's materials for the required space) and the possible [infrastructure costs](../koswat_cost_report.md#infrastructure-report). In steps, this strategy can be broke down as:
 
 __Steps breakdown__:
 
-1. Assignment of [order based clusters](#order-based),
+1. Assignment of [order based clusters](order_based.md),
 2. [Cluster options](#cluster-options) evaluation,
     1. [Common available measures](#cluster-common-available-measures-cost) cost calculation,
     2. Cheapest option selection,
@@ -21,12 +21,12 @@ __Conditions__:
 
 - We only create subclusters when the cluster's original size is, at least, twice the required minimal cluster's length.
 - We estimate the cluster's minimal length to be at least twice the size of the buffer so: `min_cluster_length = (2 * reinforcement_min_buffer) + 1`.
-- We create subclusters based on the immediate results of the [order based strategy](#order-based).  We do not try to combine or create new clusters based on a "greedier" strategy.
+- We create subclusters based on the immediate results of the [order based strategy](order_based.md).  We do not try to combine or create new clusters based on a "greedier" strategy.
 
 
 ### Cluster option example
 
-For example, given the results of the [clustering example](#clustering-example) we can calculate the options for the clusters for a required minimal length of `2`:
+For example, given the results of the [clustering example](order_based.md#clustering-example) we can calculate the options for the clusters for a required minimal length of `2`:
 
 1. List of clusters:
     ```json
