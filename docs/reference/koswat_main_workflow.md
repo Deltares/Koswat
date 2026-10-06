@@ -1,6 +1,6 @@
 # Main workflow
 
-As described in the [user manual](../user_manual.md), the tool can be used either as a sandbox, where the user has responsibility on how to put together an analysis, or as a command line tool. 
+As described in the [user manual](../getting_started.md#using-koswat), the tool can be used either as a sandbox, where the user has responsibility on how to put together an analysis, or as a command line tool (we will skip how to use it via docker as it ressembles the command line tool behavior). 
 
 When using the latter unfortunately we will only have one available call, in this chapter we will breakdown this main workflow so that we can better understand the structure of the rest of the package.
 
