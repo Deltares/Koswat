@@ -19,26 +19,56 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from typing import Any
+
+from koswat.configuration.io.config_sections.config_section_fom_protocol import (
+    ConfigSectionFomProtocol,
+)
 from koswat.configuration.io.config_sections.config_section_helper import (
     SectionConfigHelper,
 )
-from koswat.configuration.io.config_sections.soil_waterside_reinforcement_section_fom import (
-    SoilWatersideReinforcementSectionFom,
+from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
+    KoswatSoilSettings,
 )
 
 
-class SoilReinforcementSectionFom(SoilWatersideReinforcementSectionFom):
+class SoilReinforcementSectionFom(ConfigSectionFomProtocol, KoswatSoilSettings):
+
+    max_berm_height_factor: float = 0.05
+
     @classmethod
     def from_config(
         cls, input_dict: dict[str, Any], set_defaults: bool
     ) -> "SoilReinforcementSectionFom":
-        _section = super().from_config(input_dict, set_defaults)
+        _section = cls()
+
+        _active = input_dict.get("actief", None)
+        if set_defaults:
+            _section.active = SectionConfigHelper.get_bool(_active)
+        else:
+            _section.active = SectionConfigHelper.get_bool_without_default(_active)
+
+        def _get_enum(input_val: str | None) -> SurtaxFactorEnum:
+            if set_defaults:
+                return SectionConfigHelper.get_enum(input_val)
+            return SectionConfigHelper.get_enum_without_default(input_val)
+
+        _section.soil_surtax_factor = _get_enum(
+            input_dict.get("opslagfactor_grond", None)
+        )
+        _section.land_purchase_surtax_factor = _get_enum(
+            input_dict.get("opslagfactor_grondaankoop", None)
+        )
 
         def _get_float(input_val: str | None) -> float:
             if set_defaults:
                 return SectionConfigHelper.get_float(input_val)
             return SectionConfigHelper.get_float_without_default(input_val)
 
+        _section.min_berm_height = _get_float(input_dict.get("min_bermhoogte", None))
+        _section.factor_increase_berm_height = _get_float(
+            input_dict.get("factor_toename_bermhoogte", None)
+        )
         _section.max_berm_height_factor = _get_float(
             input_dict.get("max_bermhoogte_factor", None)
         )
