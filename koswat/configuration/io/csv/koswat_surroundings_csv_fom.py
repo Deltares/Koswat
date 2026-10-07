@@ -37,6 +37,24 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
     def is_valid(self) -> bool:
         return any(self.points_surroundings_list)
 
+    def locations_identical(self, other: KoswatSurroundingsCsvFom) -> bool:
+        """
+        Check if the locations are identical.
+
+        Args:
+            other (KoswatSurroundingsCsvFom): The other KoswatSurroundingsCsvFom to compare.
+
+        Returns:
+            bool: True if the locations are identical, False otherwise.
+        """
+        if len(self.points_surroundings_list) != len(other.points_surroundings_list):
+            return False
+
+        current_locations = {point.location for point in self.points_surroundings_list}
+        other_locations = {point.location for point in other.points_surroundings_list}
+
+        return current_locations == other_locations
+
     def merge(self, other: KoswatSurroundingsCsvFom) -> None:
         """
         Merge another KoswatSurroundingsCsvFom into this one.

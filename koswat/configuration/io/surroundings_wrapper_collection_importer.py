@@ -144,20 +144,9 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         """
         _imported_csv_foms: dict[SurroundingsEnum, KoswatSurroundingsCsvFom] = {}
 
-        def check_locations(surroundings: KoswatSurroundingsCsvFom) -> None:
-            if not _imported_csv_foms:
-                return
-            _first_key = next(iter(_imported_csv_foms))
-            _first_fom = _imported_csv_foms[_first_key]
-            if [x.location for x in _first_fom.points_surroundings_list] != [
-                x.location for x in surroundings.points_surroundings_list
-            ]:
-                raise ValueError(
-                    "Location mismatch detected between the first imported surroundings and the current."
-                )
-
         _traject_name = csv_dir.stem
         _read_obs_types = []
+        _first_fom: KoswatSurroundingsCsvFom | None = None
         for _csv_file in csv_dir.glob("*.csv"):
             # Map CSV file name to surrounding type.
             _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
@@ -175,7 +164,14 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             # Get FOM from CSV file.
             _buffer = obstacle_types.get(_type_name, None)
             _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum, _buffer)
-            check_locations(_csv_fom)
+
+            if _first_fom is None:
+                _first_fom = _csv_fom
+            else:
+                if not _first_fom.locations_identical(_csv_fom):
+                    raise ValueError(
+                        "Location mismatch detected between the first imported surroundings and the current."
+                    )
 
             if _type_enum in _imported_csv_foms.keys():
                 _imported_csv_foms[_type_enum].merge(_csv_fom)
