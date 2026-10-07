@@ -168,7 +168,7 @@ class TestReinforcementProfileBuilderFactory:
         _available_reinforcements = (
             ReinforcementProfileBuilderFactory.get_available_reinforcements()
         )
-        assert len(_available_reinforcements) == 6
+        assert len(_available_reinforcements) == 7
         assert all(
             _reinforcement in _available_reinforcements
             for _reinforcement in _expected_reinforcements
