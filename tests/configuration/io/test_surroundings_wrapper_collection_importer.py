@@ -178,6 +178,33 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.infrastructure_surroundings_wrapper.roads_class_24_polderside.points
             )
 
+    def test_when_build_given_location_mismatch_then_exception_raised(self):
+        # 1. Define test data.
+        _csv_dir = Path.joinpath(test_data, "acceptance", "surroundings_analysis")
+        _surroundings_section_fom = SurroundingsSectionFom(
+            construction_distance=None,
+            construction_buffer=None,
+            allow_waterside_reinforcement=None,
+            obstacle_types={"bebouwing_mismatch": 5, "spoorwegen": 10, "water": 0},
+        )
+        _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
+
+        _builder = SurroundingsWrapperCollectionImporter(
+            surroundings_database_dir=_csv_dir,
+            surroundings_section_fom=_surroundings_section_fom,
+            infrastructure_section_fom=None,
+            traject_loc_shp_file=_shp_file,
+            selected_locations=[
+                # For traject 10-3
+                "10-1-2-A-1-A",
+                "10-1-1-A-1-A",
+            ],
+        )
+
+        # 2. Execute test and verify exception.
+        with pytest.raises(ValueError, match="Location mismatch"):
+            _builder.build()
+
     def test_given_no_matching_obstacle_files_when_build_then_no_wrappers_returned(
         self,
         local_surroundings_dir_copy_fixture: Path,
