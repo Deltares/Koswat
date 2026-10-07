@@ -28,18 +28,18 @@ from koswat.configuration.io.config_sections.config_section_helper import (
     SectionConfigHelper,
 )
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
-from koswat.configuration.settings.reinforcements.koswat_stability_wall_toe_settings import (
-    KoswatStabilityWallToeSettings,
+from koswat.configuration.settings.reinforcements.koswat_soil_waterside_settings import (
+    KoswatSoilWatersideSettings,
 )
 
 
-class StabilityWallToeReinforcementSectionFom(
-    ConfigSectionFomProtocol, KoswatStabilityWallToeSettings
+class SoilWatersideReinforcementSectionFom(
+    ConfigSectionFomProtocol, KoswatSoilWatersideSettings
 ):
     @classmethod
     def from_config(
         cls, input_dict: dict[str, Any], set_defaults: bool
-    ) -> "StabilityWallToeReinforcementSectionFom":
+    ) -> "SoilWatersideReinforcementSectionFom":
         _section = cls()
 
         _active = input_dict.get("actief", None)
@@ -56,9 +56,6 @@ class StabilityWallToeReinforcementSectionFom(
         _section.soil_surtax_factor = _get_enum(
             input_dict.get("opslagfactor_grond", None)
         )
-        _section.constructive_surtax_factor = _get_enum(
-            input_dict.get("opslagfactor_constructief", None)
-        )
         _section.land_purchase_surtax_factor = _get_enum(
             input_dict.get("opslagfactor_grondaankoop", None)
         )
@@ -68,14 +65,9 @@ class StabilityWallToeReinforcementSectionFom(
                 return SectionConfigHelper.get_float(input_val)
             return SectionConfigHelper.get_float_without_default(input_val)
 
-        _section.steepening_polderside_slope = _get_float(
-            input_dict.get("versteiling_binnentalud", None)
-        )
-        _section.min_length_stability_wall = _get_float(
-            input_dict.get("min_lengte_stabiliteitswand", None)
-        )
-        _section.max_length_stability_wall = _get_float(
-            input_dict.get("max_lengte_stabiliteitswand", None)
+        _section.min_berm_height = _get_float(input_dict.get("min_bermhoogte", None))
+        _section.factor_increase_berm_height = _get_float(
+            input_dict.get("factor_toename_bermhoogte", None)
         )
 
         return _section

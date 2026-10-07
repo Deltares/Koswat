@@ -60,7 +60,7 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
             soil_measure=SoilReinforcementSectionFom.from_config(
                 _json_fom.content.get("grondmaatregel", dict()), set_defaults=False
             ),
-            waterside_soil_measure=SoilReinforcementSectionFom.from_config(
+            soil_waterside_measure=SoilReinforcementSectionFom.from_config(
                 _json_fom.content.get("buitendijksegrondmaatregel", dict()),
                 set_defaults=False,
             ),

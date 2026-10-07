@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from koswat.configuration.io.config_sections.config_section_helper import (
     SectionConfigHelper,
@@ -38,7 +38,7 @@ class StabilityWallCrestReinforcementSectionFom(
     ) -> "StabilityWallCrestReinforcementSectionFom":
         _section = super().from_config(input_dict, set_defaults)
 
-        def _get_float(input_val: Optional[str]) -> float:
+        def _get_float(input_val: str | None) -> float:
             if set_defaults:
                 return SectionConfigHelper.get_float(input_val)
             return SectionConfigHelper.get_float_without_default(input_val)

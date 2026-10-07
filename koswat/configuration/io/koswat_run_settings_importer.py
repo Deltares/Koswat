@@ -72,6 +72,9 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
     KoswatSoilSettings,
 )
+from koswat.configuration.settings.reinforcements.koswat_soil_waterside_settings import (
+    KoswatSoilWatersideSettings,
+)
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
     KoswatStabilityWallCrestSettings,
 )
@@ -226,7 +229,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             soil_settings=KoswatSoilSettings(
                 **(general_settings.soil_measure_section.__dict__)
             ),
-            waterside_soil_settings=KoswatSoilSettings(
+            soil_waterside_settings=KoswatSoilWatersideSettings(
                 **(general_settings.waterside_soil_measure_section.__dict__)
             ),
             vps_settings=KoswatVPSSettings(**(general_settings.vps_section.__dict__)),
@@ -281,8 +284,8 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             soil_settings=section_input.soil_measure.set_defaults(
                 base_settings.soil_settings
             ),
-            waterside_soil_settings=section_input.waterside_soil_measure.set_defaults(
-                base_settings.waterside_soil_settings
+            soil_waterside_settings=section_input.soil_waterside_measure.set_defaults(
+                base_settings.soil_waterside_settings
             ),
             vps_settings=section_input.vps.set_defaults(base_settings.vps_settings),
             piping_wall_settings=section_input.piping_wall.set_defaults(
