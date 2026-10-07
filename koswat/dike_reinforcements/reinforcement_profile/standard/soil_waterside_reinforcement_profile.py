@@ -35,7 +35,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 
 
 class SoilWatersideReinforcementProfile(StandardReinforcementProfile):
-    output_name: str = "Buitendijkse grondmaatregel profiel"
+    output_name: str = "Buitendijkse grondmaatregel"
     input_data: SoilWatersideInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
