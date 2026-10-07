@@ -230,7 +230,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
                 **(general_settings.soil_measure_section.__dict__)
             ),
             soil_waterside_settings=KoswatSoilWatersideSettings(
-                **(general_settings.waterside_soil_measure_section.__dict__)
+                **(general_settings.soil_waterside_measure_section.__dict__)
             ),
             vps_settings=KoswatVPSSettings(**(general_settings.vps_section.__dict__)),
             piping_wall_settings=KoswatPipingWallSettings(
