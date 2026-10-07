@@ -28,19 +28,18 @@ from koswat.configuration.io.config_sections.config_section_helper import (
     SectionConfigHelper,
 )
 from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
-from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
-    KoswatSoilSettings,
+from koswat.configuration.settings.reinforcements.koswat_soil_waterside_settings import (
+    KoswatSoilWatersideSettings,
 )
 
 
-class SoilReinforcementSectionFom(ConfigSectionFomProtocol, KoswatSoilSettings):
-
-    max_berm_height_factor: float = 0.05
-
+class SoilWatersideReinforcementSectionFom(
+    ConfigSectionFomProtocol, KoswatSoilWatersideSettings
+):
     @classmethod
     def from_config(
         cls, input_dict: dict[str, Any], set_defaults: bool
-    ) -> "SoilReinforcementSectionFom":
+    ) -> "SoilWatersideReinforcementSectionFom":
         _section = cls()
 
         _active = input_dict.get("actief", None)
@@ -69,9 +68,6 @@ class SoilReinforcementSectionFom(ConfigSectionFomProtocol, KoswatSoilSettings):
         _section.min_berm_height = _get_float(input_dict.get("min_bermhoogte", None))
         _section.factor_increase_berm_height = _get_float(
             input_dict.get("factor_toename_bermhoogte", None)
-        )
-        _section.max_berm_height_factor = _get_float(
-            input_dict.get("max_bermhoogte_factor", None)
         )
 
         return _section

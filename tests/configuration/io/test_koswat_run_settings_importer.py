@@ -1,16 +1,11 @@
 import json
-import math
-from operator import ge
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, Iterable, Iterator, Tuple
 
 import pytest
 
 from koswat.configuration.io.config_sections.dike_profile_section_fom import (
     DikeProfileSectionFom,
-)
-from koswat.configuration.io.json.koswat_dike_section_input_json_reader import (
-    KoswatDikeSectionInputJsonReader,
 )
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.koswat_run_settings_importer import (
@@ -158,7 +153,7 @@ class TestKoswatRunSettingsImporter:
     @pytest.fixture(name="general_settings_dike_profile")
     def _get_valid_general_settings_dike_profile(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
@@ -200,27 +195,30 @@ class TestKoswatRunSettingsImporter:
 
         return general_settings, settings_comparison
 
-    @pytest.fixture(name="general_settings_soil_measurement")
-    def _get_valid_general_settings_soil_measurement(
+    @pytest.fixture(name="general_settings_soil_polderside_measurement")
+    def _get_valid_general_settings_soil_polderside_measurement(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
-        _soil_settings = general_settings.soil_measure_section
-        assert _soil_settings.active == True
-        assert _soil_settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
-        assert _soil_settings.land_purchase_surtax_factor == SurtaxFactorEnum.NORMAAL
-        assert _soil_settings.min_berm_height == 0.5
-        assert _soil_settings.max_berm_height_factor == 0.4
-        assert _soil_settings.factor_increase_berm_height == 0.05
+        _soil_polderside_settings = general_settings.soil_measure_section
+        assert _soil_polderside_settings.active is True
+        assert _soil_polderside_settings.soil_surtax_factor == SurtaxFactorEnum.NORMAAL
+        assert (
+            _soil_polderside_settings.land_purchase_surtax_factor
+            == SurtaxFactorEnum.NORMAAL
+        )
+        assert _soil_polderside_settings.min_berm_height == 0.5
+        assert _soil_polderside_settings.max_berm_height_factor == 0.4
+        assert _soil_polderside_settings.factor_increase_berm_height == 0.05
 
         def settings_comparison(
             profile: DikeProfileSectionFom,
             reinforcement_settings: KoswatReinforcementSettings,
         ) -> None:
             self._compare_settings_as_dict(
-                _soil_settings.__dict__,
+                _soil_polderside_settings.__dict__,
                 reinforcement_settings.soil_settings.__dict__,
                 except_keys=["soil_surtax_factor"],
             )
@@ -231,10 +229,40 @@ class TestKoswatRunSettingsImporter:
 
         return general_settings, settings_comparison
 
+    @pytest.fixture(name="general_settings_soil_waterside_measurement")
+    def _get_valid_general_settings_soil_waterside_measurement(
+        self, general_settings: KoswatGeneralJsonFom
+    ) -> tuple[
+        KoswatGeneralJsonFom,
+        Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
+    ]:
+        _soil_waterside_settings = general_settings.soil_waterside_measure_section
+        assert _soil_waterside_settings.active is True
+        assert _soil_waterside_settings.soil_surtax_factor == SurtaxFactorEnum.MOEILIJK
+        assert (
+            _soil_waterside_settings.land_purchase_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
+        )
+        assert _soil_waterside_settings.min_berm_height == 0.5
+        assert _soil_waterside_settings.factor_increase_berm_height == 0.05
+
+        def settings_comparison(
+            profile: DikeProfileSectionFom,
+            reinforcement_settings: KoswatReinforcementSettings,
+        ) -> None:
+            self._compare_settings_as_dict(
+                _soil_waterside_settings.__dict__,
+                reinforcement_settings.soil_waterside_settings.__dict__,
+                except_keys=["active"],
+            )
+            assert reinforcement_settings.soil_waterside_settings.active is False
+
+        return general_settings, settings_comparison
+
     @pytest.fixture(name="general_settings_vps_measurement")
     def _get_valid_general_settings_vps_measurement(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
@@ -262,7 +290,7 @@ class TestKoswatRunSettingsImporter:
     @pytest.fixture(name="general_settings_piping_wall_measurement")
     def _get_valid_general_settings_piping_wall_measurement(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
@@ -304,7 +332,7 @@ class TestKoswatRunSettingsImporter:
     @pytest.fixture(name="general_settings_stability_wall_toe_measurement")
     def _get_valid_general_settings_stability_wall_toe_measurement(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
@@ -332,7 +360,7 @@ class TestKoswatRunSettingsImporter:
     @pytest.fixture(name="general_settings_stability_wall_crest_measurement")
     def _get_valid_general_settings_stability_wall_crest_measurement(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
@@ -361,7 +389,7 @@ class TestKoswatRunSettingsImporter:
     @pytest.fixture(name="general_settings_cofferdam_measurement")
     def _get_valid_general_settings_cofferdam_measurement(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
@@ -392,7 +420,7 @@ class TestKoswatRunSettingsImporter:
     @pytest.fixture(name="general_settings_surroundings")
     def _get_valid_general_settings_surroundings(
         self, general_settings: KoswatGeneralJsonFom
-    ) -> Tuple[
+    ) -> tuple[
         KoswatGeneralJsonFom,
         Callable[[DikeProfileSectionFom, KoswatReinforcementSettings], None],
     ]:
@@ -412,7 +440,14 @@ class TestKoswatRunSettingsImporter:
         "fixture_name",
         [
             pytest.param("general_settings_dike_profile", id="dike_profile"),
-            pytest.param("general_settings_soil_measurement", id="soil_measurement"),
+            pytest.param(
+                "general_settings_soil_polderside_measurement",
+                id="soil_polderside_measurement",
+            ),
+            pytest.param(
+                "general_settings_soil_waterside_measurement",
+                id="soil_waterside_measurement",
+            ),
             pytest.param("general_settings_vps_measurement", id="vps_measurement"),
             pytest.param(
                 "general_settings_piping_wall_measurement", id="piping_wall_measurement"

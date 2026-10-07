@@ -31,6 +31,9 @@ from koswat.configuration.settings.reinforcements.koswat_piping_wall_settings im
 from koswat.configuration.settings.reinforcements.koswat_soil_settings import (
     KoswatSoilSettings,
 )
+from koswat.configuration.settings.reinforcements.koswat_soil_waterside_settings import (
+    KoswatSoilWatersideSettings,
+)
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
     KoswatStabilityWallCrestSettings,
 )
@@ -49,9 +52,8 @@ class KoswatReinforcementSettings(KoswatConfigProtocol):
     """
 
     soil_settings: KoswatSoilSettings = field(default_factory=KoswatSoilSettings)
-    # TODO: Use soil settings for now #370
-    waterside_soil_settings: KoswatSoilSettings = field(
-        default_factory=KoswatSoilSettings
+    soil_waterside_settings: KoswatSoilWatersideSettings = field(
+        default_factory=KoswatSoilWatersideSettings
     )
     vps_settings: KoswatVPSSettings = field(default_factory=KoswatVPSSettings)
     piping_wall_settings: KoswatPipingWallSettings = field(

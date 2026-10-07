@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from koswat.configuration.io.config_sections.config_section_fom_protocol import (
     ConfigSectionFomProtocol,
@@ -48,7 +48,7 @@ class StabilityWallToeReinforcementSectionFom(
         else:
             _section.active = SectionConfigHelper.get_bool_without_default(_active)
 
-        def _get_enum(input_val: Optional[str]) -> SurtaxFactorEnum:
+        def _get_enum(input_val: str | None) -> SurtaxFactorEnum:
             if set_defaults:
                 return SectionConfigHelper.get_enum(input_val)
             return SectionConfigHelper.get_enum_without_default(input_val)
@@ -63,7 +63,7 @@ class StabilityWallToeReinforcementSectionFom(
             input_dict.get("opslagfactor_grondaankoop", None)
         )
 
-        def _get_float(input_val: Optional[str]) -> float:
+        def _get_float(input_val: str | None) -> float:
             if set_defaults:
                 return SectionConfigHelper.get_float(input_val)
             return SectionConfigHelper.get_float_without_default(input_val)
