@@ -42,6 +42,9 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
 )
+from koswat.strategies.order_strategy.order_strategy_reinforcement_filter_criteria import (
+    OrderStrategyReinforcementFilterCriteria,
+)
 from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -160,8 +163,10 @@ class OrderStrategy(StrategyProtocol):
                 FlexibleStrategyReinforcementInput, FlexibleStrategyReinforcementInput
             ],
         ) -> bool:
-
-            return pair[0].is_filtered_out_by(pair[1]) and pair[0] in _sorted
+            _filter_criteria = OrderStrategyReinforcementFilterCriteria(
+                pair[0], pair[1]
+            )
+            return _filter_criteria.can_be_filtered_out() and pair[0] in _sorted
 
         for _pair in filter(filter_out_reinforcement, product(_sorted[:-1], _sorted)):
             _sorted.remove(_pair[0])

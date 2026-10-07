@@ -19,40 +19,15 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from abc import ABC
 from dataclasses import dataclass
-from typing import Protocol
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 
 
-class StrategyReinforcementInputProtocol(Protocol):
-    """
-    A strategy reinforcement input aimed for those reinforcements that can use both
-    polder- and waterside space.
-    """
-
-    reinforcement_type: type[ReinforcementProfileProtocol]
-    active: bool
-    base_costs_with_surtax: float
-    ground_level_surface: float
-
-    def is_filtered_out_by(self, other: StrategyReinforcementInputProtocol) -> bool:
-        """
-        Compares this reinforcement input to another one and determines whether `other`
-        has a better cost-space efficiency, allowing to exclude this strategy reinforcement
-        input from further calculations.
-
-        Args:
-            other (StrategyReinforcementInputProtocol): The other 'StrategyReinforcementInputProtocol' to compare.
-
-        Returns:
-            bool: True when this strategy can be excluded.
-        """
-
-
 @dataclass
-class FlexibleStrategyReinforcementInput(StrategyReinforcementInputProtocol):
+class StrategyReinforcementInputBase(ABC):
     """
     A strategy reinforcement input aimed for those reinforcements that can use both
     polder- and waterside space.
@@ -63,17 +38,15 @@ class FlexibleStrategyReinforcementInput(StrategyReinforcementInputProtocol):
     base_costs_with_surtax: float = 0.0
     ground_level_surface: float = 0.0
 
-    def _has_greater_costs_than(
-        self, other: StrategyReinforcementInputProtocol
-    ) -> bool:
+    def _has_greater_costs_than(self, other: StrategyReinforcementInputBase) -> bool:
         return self.base_costs_with_surtax > other.base_costs_with_surtax
 
     def _has_greater_or_equal_ground_level_surface_than(
-        self, other: StrategyReinforcementInputProtocol
+        self, other: StrategyReinforcementInputBase
     ) -> bool:
         return self.ground_level_surface >= other.ground_level_surface
 
-    def is_filtered_out_by(self, other: StrategyReinforcementInputProtocol) -> bool:
+    def is_filtered_out_by(self, other: StrategyReinforcementInputBase) -> bool:
         # For now we only apply this criteria for `OrderStrategy` filtering.
         # if we wish to do so in other strategies, we can add a `criteria` argument to this method.
         # criteria: Callable[['StrategyReinforcementInput', 'StrategyReinforcementInput'], bool]
@@ -83,7 +56,19 @@ class FlexibleStrategyReinforcementInput(StrategyReinforcementInputProtocol):
 
 
 @dataclass
-class FixedStrategyReinforcementInput(StrategyReinforcementInputProtocol):
+class FlexibleStrategyReinforcementInput(StrategyReinforcementInputBase):
+    """
+    A `FlexibleStrategyReinforcementInput` is a `StrategyReinforcementInput` that can be
+    filtered out by other reinforcements based on costs and ground level surface.
+    This is useful for cases where certain reinforcements are optional or have
+    specific constraints that allow them to be excluded.
+    """
+
+    pass
+
+
+@dataclass
+class FixedStrategyReinforcementInput(StrategyReinforcementInputBase):
     """
     A `FixedStrategyReinforcementInput` is a `StrategyReinforcementInput` that is
     considered "fixed" and should not be filtered out by other reinforcements.
@@ -91,19 +76,4 @@ class FixedStrategyReinforcementInput(StrategyReinforcementInputProtocol):
     specific constraints that prevent them from being excluded.
     """
 
-    reinforcement_type: type[ReinforcementProfileProtocol]
-    active: bool = True
-    base_costs_with_surtax: float = 0.0
-    ground_level_surface: float = 0.0
-
-    def is_filtered_out_by(self, other: StrategyReinforcementInputProtocol) -> bool:
-        """
-        Ensures that fixed reinforcements are never filtered out by other reinforcements.
-
-        Args:
-            other (StrategyReinforcementInputProtocol): The other 'StrategyReinforcementInput' to compare.
-
-        Returns:
-            bool: Always returns False, indicating that this reinforcement cannot be excluded.
-        """
-        return False
+    pass

@@ -26,7 +26,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.strategies.strategy_reinforcement_input import (
     FixedStrategyReinforcementInput,
     FlexibleStrategyReinforcementInput,
-    StrategyReinforcementInputProtocol,
+    StrategyReinforcementInputBase,
 )
 from koswat.strategies.strategy_reinforcement_type_costs import (
     ReinforcementProfileProtocol,
@@ -44,7 +44,7 @@ class StrategyReinforcementInputBuilder:
     base_costs_with_surtax: float
     ground_level_surface: float
 
-    def build(self) -> StrategyReinforcementInputProtocol:
+    def build(self) -> StrategyReinforcementInputBase:
         if self.reinforcement_type is None:
             raise ValueError("Reinforcement type must be set before building.")
 
