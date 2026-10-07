@@ -4,8 +4,8 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
 from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
+    SoilWatersideReinforcementProfile,
     StabilityWallCrestReinforcementProfile,
     StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
-    WatersideSoilReinforcementProfile,
 )

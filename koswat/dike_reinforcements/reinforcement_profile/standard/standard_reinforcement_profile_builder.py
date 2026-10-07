@@ -38,8 +38,8 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
-from koswat.dike_reinforcements.input_profile.waterside_soil.waterside_soil_input_profile_calculation import (
-    WatersideSoilInputProfileCalculation,
+from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_input_profile_calculation import (
+    SoilWatersideInputProfileCalculation,
 )
 from koswat.dike_reinforcements.reinforcement_layers.outside_slope_reinforcement_layers_wrapper_builder import (
     OutsideSlopeReinforcementLayersWrapperBuilder,
@@ -60,11 +60,11 @@ from koswat.dike_reinforcements.reinforcement_profile.standard import (
     StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_waterside_reinforcement_profile import (
+    SoilWatersideReinforcementProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.waterside_soil_reinforcement_profile import (
-    WatersideSoilReinforcementProfile,
 )
 
 
@@ -91,8 +91,8 @@ class StandardReinforcementProfileBuilder(ReinforcementProfileBuilderBase):
         """
         if issubclass(reinforcement_type, SoilReinforcementProfile):
             return SoilInputProfileCalculation()
-        if issubclass(reinforcement_type, WatersideSoilReinforcementProfile):
-            return WatersideSoilInputProfileCalculation()
+        if issubclass(reinforcement_type, SoilWatersideReinforcementProfile):
+            return SoilWatersideInputProfileCalculation()
         if issubclass(reinforcement_type, VPSReinforcementProfile):
             return VPSInputProfileCalculation()
         if issubclass(reinforcement_type, PipingWallReinforcementProfile):

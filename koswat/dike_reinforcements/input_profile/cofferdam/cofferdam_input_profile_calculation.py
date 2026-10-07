@@ -32,7 +32,7 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
-    CofferDamInputProfile,
+    CofferdamInputProfile,
 )
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
@@ -110,11 +110,11 @@ class CofferdamInputProfileCalculation(
         )
         return _operand / _dividend
 
-    def build(self) -> CofferDamInputProfile:
+    def build(self) -> CofferdamInputProfile:
         _reinforced_data = self._get_reinforcement_profile(
-            CofferDamInputProfile, self.base_profile.input_data, self.scenario
+            CofferdamInputProfile, self.base_profile.input_data, self.scenario
         )
-        assert isinstance(_reinforced_data, CofferDamInputProfile)
+        assert isinstance(_reinforced_data, CofferdamInputProfile)
 
         _reinforced_data.active = self.reinforcement_settings.cofferdam_settings.active
 
