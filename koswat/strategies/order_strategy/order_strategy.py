@@ -69,7 +69,7 @@ class OrderStrategy(StrategyProtocol):
         """
         return [
             SoilReinforcementProfile,
-            SoilWatersideReinforcementProfile,
+            # SoilWatersideReinforcementProfile,
             VPSReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallToeReinforcementProfile,
