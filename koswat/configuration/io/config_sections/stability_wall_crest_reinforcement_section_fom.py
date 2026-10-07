@@ -27,6 +27,7 @@ from koswat.configuration.io.config_sections.config_section_fom_protocol import 
 from koswat.configuration.io.config_sections.config_section_helper import (
     SectionConfigHelper,
 )
+from koswat.configuration.settings.koswat_general_settings import SurtaxFactorEnum
 from koswat.configuration.settings.reinforcements.koswat_stability_wall_crest_settings import (
     KoswatStabilityWallCrestSettings,
 )
