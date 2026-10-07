@@ -52,20 +52,34 @@ class BermCalculatorBase(BermCalculatorProtocol, ABC):
         base_data: KoswatInputProfileProtocol,
         reinforcement_type: InputProfileEnum,
     ) -> float:
+        def get_steepening_polderside_slope() -> float:
+            if reinforcement_type == InputProfileEnum.STABILITY_WALL_CREST:
+                return (
+                    self.reinforcement_settings.stability_wall_crest_settings.steepening_polderside_slope
+                )
+            if reinforcement_type == InputProfileEnum.STABILITY_WALL_TOE:
+                return (
+                    self.reinforcement_settings.stability_wall_toe_settings.steepening_polderside_slope
+                )
+            raise ValueError(f"Unsupported reinforcement type: {reinforcement_type}")
+
         _dividend = (
             base_data.crest_height
             - base_data.polderside_ground_level
             + self.scenario.d_h
         )
 
-        if reinforcement_type == InputProfileEnum.STABILITY_WALL_CREST:
+        if reinforcement_type in (
+            InputProfileEnum.STABILITY_WALL_CREST,
+            InputProfileEnum.STABILITY_WALL_TOE,
+        ):
             _operand = (
                 self.dikebase_piping_old
                 - self.scenario.d_h * self.scenario.waterside_slope
                 - self.scenario.crest_width
             )
             return max(
-                self.reinforcement_settings.stability_wall_crest_settings.steepening_polderside_slope,
+                get_steepening_polderside_slope(),
                 _operand / _dividend,
             )
 
