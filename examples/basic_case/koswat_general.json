@@ -32,7 +32,6 @@
         "Opslagfactor_Grond": "Moeilijk",
         "Opslagfactor_Grondaankoop": "Moeilijk",
         "Min_Bermhoogte": 0.5,
-        "Max_Bermhoogte_Factor": 0.4,
         "Factor_Toename_Bermhoogte": 0.05
     },
     "VerticalePipingOplossing": {
