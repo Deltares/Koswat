@@ -29,8 +29,8 @@
     },
     "GrondmaatregelBuitendijks": {
         "Actief": false,
-        "Opslagfactor_Grond": "Normaal",
-        "Opslagfactor_Grondaankoop": "Normaal",
+        "Opslagfactor_Grond": "Moeilijk",
+        "Opslagfactor_Grondaankoop": "Moeilijk",
         "Min_Bermhoogte": 0.5,
         "Factor_Toename_Bermhoogte": 0.05
     },

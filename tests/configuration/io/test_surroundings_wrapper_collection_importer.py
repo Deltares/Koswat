@@ -1,8 +1,8 @@
 import shutil
 import string
+from collections.abc import Iterator
 from pathlib import Path
 from random import choices
-from typing import Iterator
 
 import pytest
 
