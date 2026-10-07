@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
@@ -37,6 +36,24 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
 
     def is_valid(self) -> bool:
         return any(self.points_surroundings_list)
+
+    def locations_identical(self, other: KoswatSurroundingsCsvFom) -> bool:
+        """
+        Check if the locations are identical.
+
+        Args:
+            other (KoswatSurroundingsCsvFom): The other KoswatSurroundingsCsvFom to compare.
+
+        Returns:
+            bool: True if the locations are identical, False otherwise.
+        """
+        if len(self.points_surroundings_list) != len(other.points_surroundings_list):
+            return False
+
+        current_locations = {point.location for point in self.points_surroundings_list}
+        other_locations = {point.location for point in other.points_surroundings_list}
+
+        return current_locations == other_locations
 
     def merge(self, other: KoswatSurroundingsCsvFom) -> None:
         """
@@ -53,6 +70,11 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
 
         # Note: Suboptimal, but sufficient for now.
         _as_dict = {point.location: point for point in self.points_surroundings_list}
+        if len(_as_dict) != len(self.points_surroundings_list):
+            raise ValueError(
+                "Duplicate locations detected in the current surroundings file."
+            )
+
         for point in other.points_surroundings_list:
             if point.location not in _as_dict:
                 self.points_surroundings_list.append(point)
