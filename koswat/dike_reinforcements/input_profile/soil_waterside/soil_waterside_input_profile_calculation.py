@@ -64,15 +64,17 @@ class SoilWatersideInputProfileCalculation(
 
         _reinforced_data.active = self.reinforcement_settings.soil_settings.active
 
-        # Berm calculation
+        # Polderside berm calculation (identical to PipingWall)
         _calculated_factors = BermCalculatedFactors.from_calculation_input(
             self.base_profile.input_data,
             _reinforced_data,
             self.reinforcement_settings,
             self.scenario,
         )
-        _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
-            InputProfileEnum.SOIL_WATERSIDE, _calculated_factors
+        _polderside_berm_calculator = (
+            BermCalculatorFactory.get_polderside_berm_calculator(
+                InputProfileEnum.SOIL_WATERSIDE, _calculated_factors
+            )
         )
         (
             _reinforced_data.polderside_berm_width,
@@ -80,6 +82,22 @@ class SoilWatersideInputProfileCalculation(
             _reinforced_data.polderside_slope,
         ) = asdict(
             _polderside_berm_calculator.calculate(
+                self.base_profile.input_data, _reinforced_data
+            )
+        ).values()
+
+        # Waterside berm calculation
+        _waterside_berm_calculator = (
+            BermCalculatorFactory.get_waterside_berm_calculator(
+                InputProfileEnum.SOIL_WATERSIDE, _calculated_factors
+            )
+        )
+        (
+            _reinforced_data.waterside_berm_width,
+            _reinforced_data.waterside_berm_height,
+            _reinforced_data.waterside_slope,
+        ) = asdict(
+            _waterside_berm_calculator.calculate(
                 self.base_profile.input_data, _reinforced_data
             )
         ).values()

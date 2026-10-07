@@ -161,7 +161,7 @@ class TestBermCalculatorFactory:
         )
 
         # 2. Run test
-        _result = BermCalculatorFactory.get_berm_calculator(
+        _result = BermCalculatorFactory.get_polderside_berm_calculator(
             calculator_case.profile_type, _factors
         )
 

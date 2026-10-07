@@ -125,8 +125,10 @@ class CofferdamInputProfileCalculation(
             self.reinforcement_settings,
             self.scenario,
         )
-        _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
-            InputProfileEnum.COFFERDAM, _calculated_factors
+        _polderside_berm_calculator = (
+            BermCalculatorFactory.get_polderside_berm_calculator(
+                InputProfileEnum.COFFERDAM, _calculated_factors
+            )
         )
         (
             _reinforced_data.polderside_berm_width,
