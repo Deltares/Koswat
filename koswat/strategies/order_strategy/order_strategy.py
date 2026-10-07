@@ -48,7 +48,9 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
-from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
+from koswat.strategies.strategy_reinforcement_input import (
+    FlexibleStrategyReinforcementInput,
+)
 from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
@@ -80,11 +82,11 @@ class OrderStrategy(StrategyProtocol):
 
     def _split_reinforcements(
         self,
-        reinforcements: list[StrategyReinforcementInput],
+        reinforcements: list[FlexibleStrategyReinforcementInput],
     ) -> tuple[
-        list[StrategyReinforcementInput],
-        Optional[StrategyReinforcementInput],
-        StrategyReinforcementInput,
+        list[FlexibleStrategyReinforcementInput],
+        Optional[FlexibleStrategyReinforcementInput],
+        FlexibleStrategyReinforcementInput,
     ]:
         # All active items including Cofferdam, even if not active
         _unsorted = list(
@@ -112,10 +114,10 @@ class OrderStrategy(StrategyProtocol):
 
     def _merge_reinforcements(
         self,
-        sorted: list[StrategyReinforcementInput],
-        first: Optional[StrategyReinforcementInput],
-        last: StrategyReinforcementInput,
-    ) -> list[StrategyReinforcementInput]:
+        sorted: list[FlexibleStrategyReinforcementInput],
+        first: Optional[FlexibleStrategyReinforcementInput],
+        last: FlexibleStrategyReinforcementInput,
+    ) -> list[FlexibleStrategyReinforcementInput]:
         # Remove first (if present) and last, to avoid duplicates.
         sorted.remove(first) if first in sorted else None
         sorted.remove(last) if last in sorted else None
@@ -123,7 +125,7 @@ class OrderStrategy(StrategyProtocol):
 
     def get_strategy_order_for_reinforcements(
         self,
-        strategy_reinforcements: list[StrategyReinforcementInput],
+        strategy_reinforcements: list[FlexibleStrategyReinforcementInput],
     ) -> list[type[ReinforcementProfileProtocol]]:
         """
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
@@ -154,7 +156,9 @@ class OrderStrategy(StrategyProtocol):
 
         # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others.
         def filter_out_reinforcement(
-            pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
+            pair: tuple[
+                FlexibleStrategyReinforcementInput, FlexibleStrategyReinforcementInput
+            ],
         ) -> bool:
 
             return pair[0].is_filtered_out_by(pair[1]) and pair[0] in _sorted
