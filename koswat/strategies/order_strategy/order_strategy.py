@@ -153,13 +153,13 @@ class OrderStrategy(StrategyProtocol):
         )
 
         # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others.
-        def remove_reinforcement(
+        def filter_out_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
         ) -> bool:
 
-            return pair[0].is_filtered_out_by(pair[1]) and _pair[0] in _sorted
+            return pair[0].is_filtered_out_by(pair[1]) and pair[0] in _sorted
 
-        for _pair in filter(remove_reinforcement, product(_sorted[:-1], _sorted)):
+        for _pair in filter(filter_out_reinforcement, product(_sorted[:-1], _sorted)):
             _sorted.remove(_pair[0])
 
         return [
