@@ -2,10 +2,23 @@ site_name: Koswat
 site_url: https://deltares.github.io/Koswat/
 repo_url: https://github.com/Deltares/koswat
 repo_name: Deltares/koswat
+copyright: Copyright &copy; 2026 Deltares
 
 theme:
   name: readthedocs
   highlightjs: true
+  include_homepage_in_sidebar: true
+
+extra:
+  authoremail: carles.sorianoperez@deltares.nl
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Deltares/koswat
+      name: Source code
+
+watch:
+    - koswat/
+
 plugins:
   - search
   - autorefs
@@ -24,20 +37,11 @@ plugins:
             group_by_category: false
             inherited_members: false
 use_directory_urls: false
-watch:
-    - koswat/
+
 markdown_extensions:
-  # - markdown_include.include:
-  #     base_path: .
   - pymdownx.highlight
   - pymdownx.superfences
   - admonition
   - toc:
       permalink: true
-extra:
-  authoremail: carles.sorianoperez@deltares.nl
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/Deltares/koswat
-      name: Source code
-copyright: Copyright &copy; 2022 Carsopre
+
