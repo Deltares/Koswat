@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Scenario invoer - Koswat</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Scenario invoer";
+        var mkdocs_page_input_path = "gebruikershandleiding/h06_scenario-invoer.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../index.html" class="icon icon-home"> Koswat
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.html">Koswat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../docker.html">Docker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../user_manual.html">User manual</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Gebruikershandleiding</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="h01_intro.html">Introductie</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h02_methode.html">De KOSWAT-methode</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h03_installatie.html">Software, installatie en gebruik</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h04_projectdefinitie.html">Definitie van een KOSWAT project</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h05_dijksectie-invoer.html">Dijksectie invoer</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Scenario invoer</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h07_eenheidsprijzen.html">Eenheidsprijzen</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h08_omgevingsdatabases.html">Omgevingsdatabases</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h09_uitvoer.html">KOSWAT uitvoer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="h10_sskmethodiek.html">Kostenberekening volgens de Standaardsystematiek Kostenramingen in de GWW-sector (SSK)</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_architecture.html">Koswat design</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_cost_report.html">Cost report</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_dike.html">Dike profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_main_workflow.html">Main workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_reinforced_profile.html">Reinforcement profile</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_strategies.html">Strategies</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/koswat_surroundings.html">Surroundings</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Koswat</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html" class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Gebruikershandleiding</li>
+      <li class="breadcrumb-item active">Scenario invoer</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Deltares/koswat/edit/master/docs/gebruikershandleiding/h06_scenario-invoer.md">Edit on Deltares/koswat</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="scenario-invoer">Scenario invoer<a class="headerlink" href="#scenario-invoer" title="Permanent link">&para;</a></h1>
+<p>Om de versterkingen van de dijksecties te definiëren wordt gewerkt met scenario’s. De versterkingsopgave wordt niet door KOSWAT zelf bepaald, maar dient te worden opgegeven door de gebruiker of deze volgt uit andere tools (bijvoorbeeld OKADER). De instelling <a href="h04_projectdefinitie.html#analyse"><em>[scenario_invoer]</em></a> in de project-json verwijst naar een map waarin de scenariobestanden per dijksectie zijn opgeslagen in afzonderlijke json-files, wederom met een naam die overeenkomt met de unieke dijksectienaam, dus {dijksectie}.json. In een bestand kunnen per dijksectie één of meerdere scenario’s worden gedefinieerd als volgt:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;scenario_1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;dh&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;dp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;scenario_2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;dh&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;dp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Buitentalud&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Kruinbreedte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Per scenario geven we in ieder geval (verplicht) de opgave ten aanzien van hoogte <em>[dh]</em>, en de benodigde toename van de dijkbasis ten aanzien van macrostabiliteit <em>[ds]</em> en piping <em>[dp]</em> op, zie ook <a href="h02_methode.html#figuur-1">Figuur 1</a>. Optioneel kan hierbij ook een nieuwe helling van het buitentalud <em>[buitentalud]</em> (in cotangens, dus 1:x) worden opgegeven (in het geval van een buitentaludverflauwing) en een aanpassing van de breedte van de dijkkruin <em>[kruinbreedte]</em> (in m).</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="h05_dijksectie-invoer.html" class="btn btn-neutral float-left" title="Dijksectie invoer"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="h07_eenheidsprijzen.html" class="btn btn-neutral float-right" title="Eenheidsprijzen">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 Carsopre</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Deltares/koswat" class="fa fa-code-fork" style="color: #fcfcfc"> Deltares/koswat</a>
+        </span>
+    
+    
+      <span><a href="h05_dijksectie-invoer.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="h07_eenheidsprijzen.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
