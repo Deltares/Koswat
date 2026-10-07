@@ -57,7 +57,7 @@ class WatersideBermCalculator(BermCalculatorProtocol):
         return BermCalculatorResult(
             berm_width=_waterside_berm_width,
             berm_height=self._calculate_new_waterside_berm_height_piping(
-                reinforced_data
+                reinforced_data, _waterside_berm_width
             ),
             slope=reinforced_data.waterside_slope,
         )
@@ -65,12 +65,13 @@ class WatersideBermCalculator(BermCalculatorProtocol):
     def _calculate_new_waterside_berm_height_piping(
         self,
         reinforced_data: KoswatInputProfileProtocol,
+        waterside_berm_width: float,
     ) -> float:
         _old_berm_height = 0.0
         _max = max(
             self.reinforcement_settings.soil_settings.min_berm_height,
             _old_berm_height,
-            reinforced_data.waterside_berm_width
+            waterside_berm_width
             * self.reinforcement_settings.soil_waterside_settings.factor_increase_berm_height,
         )
         return (
