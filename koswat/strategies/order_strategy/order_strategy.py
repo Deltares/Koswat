@@ -156,14 +156,11 @@ class OrderStrategy(StrategyProtocol):
         def remove_reinforcement(
             pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
         ) -> bool:
-            return (
-                pair[0].base_costs_with_surtax > pair[1].base_costs_with_surtax
-                and pair[0].ground_level_surface >= pair[1].ground_level_surface
-            )
 
-        for _pair in product(_sorted[:-1], _sorted):
-            if remove_reinforcement(_pair) and _pair[0] in _sorted:
-                _sorted.remove(_pair[0])
+            return pair[0].is_filtered_out_by(pair[1]) and _pair[0] in _sorted
+
+        for _pair in filter(remove_reinforcement, product(_sorted[:-1], _sorted)):
+            _sorted.remove(_pair[0])
 
         return [
             x.reinforcement_type
