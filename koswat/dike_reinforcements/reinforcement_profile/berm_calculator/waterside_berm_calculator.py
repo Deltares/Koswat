@@ -67,6 +67,9 @@ class WatersideBermCalculator(BermCalculatorProtocol):
         reinforced_data: KoswatInputProfileProtocol,
         waterside_berm_width: float,
     ) -> float:
+        if waterside_berm_width == 0:
+            return reinforced_data.waterside_ground_level
+
         _old_berm_height = 0.0
         _max = max(
             self.reinforcement_settings.soil_settings.min_berm_height,
