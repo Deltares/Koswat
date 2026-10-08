@@ -51,8 +51,8 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
-from koswat.strategies.strategy_reinforcement_input import (
-    FlexibleStrategyReinforcementInput,
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
+    StrategyReinforcementInputProtocol,
 )
 from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
@@ -85,7 +85,7 @@ class OrderStrategy(StrategyProtocol):
 
     def get_strategy_order_for_reinforcements(
         self,
-        strategy_reinforcements: list[FlexibleStrategyReinforcementInput],
+        strategy_reinforcements: list[StrategyReinforcementInputProtocol],
     ) -> list[type[ReinforcementProfileProtocol]]:
         """
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
