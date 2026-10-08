@@ -27,9 +27,6 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_re
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
-from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
-    OrderStrategyReinforcementFilterCriteria,
-)
 from koswat.strategies.strategy_reinforcement_input import (
     StrategyReinforcementInputProtocol,
 )
@@ -47,21 +44,33 @@ class OrderStrategyReinforcementSortCriteria:
         self.strategy_reinforcements = strategy_reinforcements
 
     def sort(self) -> list[StrategyReinforcementInputProtocol]:
+        """
+        Sorts the strategy reinforcements input based on their descending ground level surface
+        and associated costs.
+        """
         # Get the eligible strategies based on the skip criteria
-        _unsorted = OrderStrategyReinforcementFilterCriteria(
-            self.strategy_reinforcements
-        ).filter()
-
-        if not _unsorted:
+        if not self.strategy_reinforcements:
             return []
 
         # SoilReinforcement, if active
         _reinforcement_as_head = (
-            _unsorted[0].reinforcement_type == SoilReinforcementProfile
+            self.strategy_reinforcements[0].reinforcement_type
+            == SoilReinforcementProfile
+        )
+
+        # Cofferdam, if present
+        _reinforcement_as_tail = (
+            self.strategy_reinforcements[-1].reinforcement_type
+            == CofferdamReinforcementProfile
         )
 
         # Always skip from sorting the last item (Cofferdam).
-        _list_to_sort = _unsorted[1:-1] if _reinforcement_as_head else _unsorted[:-1]
+        _list_to_sort = (
+            self.strategy_reinforcements[1:]
+            if _reinforcement_as_head
+            else self.strategy_reinforcements
+        )
+        _list_to_sort = _list_to_sort[:-1] if _reinforcement_as_tail else _list_to_sort
 
         _sorted_list = sorted(
             _list_to_sort,
@@ -71,7 +80,8 @@ class OrderStrategyReinforcementSortCriteria:
 
         # Reappend the first and last items to the sorted list, if applicable
         if _reinforcement_as_head:
-            _sorted_list.insert(0, _unsorted[0])
-        _sorted_list.append(_unsorted[-1])
+            _sorted_list.insert(0, self.strategy_reinforcements[0])
+        if _reinforcement_as_tail:
+            _sorted_list.append(self.strategy_reinforcements[-1])
 
         return _sorted_list
