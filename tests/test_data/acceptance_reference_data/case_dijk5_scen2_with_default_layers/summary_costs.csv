@@ -1,47 +1,47 @@
-Profile type;Grondmaatregel profiel;Verticale piping oplossing;Kwelscherm;Stabiliteitswand teen;Stabiliteitswand kruin;Kistdam
-Strategy reinforcement order;-1;-1;-1;-1;-1;-1
-Cost per km (Euro/km);2371887.15;1610467.19;6585518.21;1618746.98;3933017.14;9534919.73
-Cost per km incl surtax (Euro/km);5189741.51;3889524.21;12327147.23;4625832.65;11364987.35;31130007.76
-New grass volume (quantity):;14.8;6.75;3.95;0;0;0.03
-New grass volume (cost):;184.17;83.93;49.17;0.0;0.0;0.38
-New grass volume (cost incl surtax):;462.08;210.57;123.36;0.0;0.0;1.06
-New clay volume (quantity):;40.88;24.45;24.25;16.75;16.75;18.02
-New clay volume (cost):;737.89;441.29;437.77;302.33;302.33;325.33
-New clay volume (cost incl surtax):;1851.36;1107.21;1098.38;839.58;839.58;903.44
-New core volume (quantity):;38.68;0.23;39.65;0;0;0
-New core volume (cost):;424.66;2.55;435.34;0.0;0.0;0.0
-New core volume (cost incl surtax):;1065.47;6.4;1092.26;0.0;0.0;0.0
-Reused grass volume (quantity):;10.45;10.45;10.45;10.37;10.37;10.45
-Reused grass volume (cost):;63.12;63.12;63.12;62.64;62.64;63.12
-Reused grass volume (cost incl surtax):;158.37;158.37;158.37;173.96;173.96;175.29
-Reused core volume (quantity):;17.46;17.46;17.46;5.68;5.68;14.2
-Reused core volume (cost):;81.56;81.56;81.56;26.53;26.53;66.32
-Reused core volume (cost incl surtax):;204.63;204.63;204.63;73.66;73.66;184.17
-Removed material volume (quantity):;0;0;0;11.86;11.86;3.26
-Removed material volume (cost):;0.0;0.0;0.0;83.87;83.87;23.07
-Removed material volume (cost incl surtax):;0.0;0.0;0.0;232.92;232.92;64.06
-New grass layer surface (quantity):;86.7;59.84;50.64;36.94;36.94;37.72
-New grass layer surface (cost):;76.29;52.66;44.56;32.51;32.51;33.2
-New grass layer surface (cost incl surtax):;191.42;132.12;111.81;90.27;90.27;92.18
-New clay layer surface (quantity):;83.75;56.89;49.01;34.75;34.75;36.29
-New clay layer surface (cost):;54.43;36.98;31.86;22.58;22.58;23.59
-New clay layer surface (cost incl surtax):;136.58;92.77;79.93;62.72;62.72;65.5
-New core layer surface (quantity):;72.08;35.22;45.98;18.09;18.09;33.53
-New core layer surface (cost):;43.25;21.13;27.59;10.85;10.85;20.12
-New core layer surface (cost incl surtax):;108.51;53.02;69.22;30.14;30.14;55.87
-New ground level surface (quantity):;50.04;23.18;13.18;0.04;0.04;0.0
-New ground level surface (cost):;12.51;5.79;3.29;0.01;0.01;0.0
-New ground level surface (cost incl surtax):;31.39;14.54;8.26;0.03;0.03;0.0
-Land purchase surface (quantity):;50.04;23.18;13.18;0.04;0.04;0.0
-Land purchase surface (cost):;694.0;321.46;4251.1;11.74;11.74;0.0
-Land purchase surface (cost incl surtax):;979.93;453.9;6002.56;19.32;19.32;0.0
-Construction length (quantity):;0.0;0.0;7.5;5.3;8.9;13.3
-Construction length (cost):;0;500.0;1160.15;1065.68;3379.95;8979.8
-Construction length (cost incl surtax):;0;1456.0;3378.36;3103.25;9842.4;29588.44
-Total measure meters;0;0;0;0;0;0
-Total measure cost;0.0;0.0;0.0;0.0;0.0;0.0;0.0
-Total measure cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0;0.0
-Infrastructure cost;0.0;0.0;0.0;0.0;0.0;0.0;0.0
-Infrastructure cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0;0.0
-Total cost;0.0;0.0;0.0;0.0;0.0;0.0;0.0
-Total cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+Profile type;Grondmaatregel binnendijks;Grondmaatregel buitendijks;Verticale piping oplossing;Kwelscherm;Stabiliteitswand teen;Stabiliteitswand kruin;Kistdam
+Strategy reinforcement order;-1;-1;-1;-1;-1;-1;-1
+Cost per km (Euro/km);2371887.15;2792089.38;1610467.19;6585518.21;1618746.98;3933017.14;9534919.73
+Cost per km incl surtax (Euro/km);5189741.51;6244028.91;3889524.21;12327147.23;4625832.65;11364987.35;31130007.76
+New grass volume (quantity):;14.8;15.01;6.75;3.95;0;0;0.03
+New grass volume (cost):;184.17;186.73;83.93;49.17;0.0;0.0;0.38
+New grass volume (cost incl surtax):;462.08;468.51;210.57;123.36;0.0;0.0;1.06
+New clay volume (quantity):;40.88;42.68;24.45;24.25;16.75;16.75;18.02
+New clay volume (cost):;737.89;770.44;441.29;437.77;302.33;302.33;325.33
+New clay volume (cost incl surtax):;1851.36;1933.02;1107.21;1098.38;839.58;839.58;903.44
+New core volume (quantity):;38.68;72.97;0.23;39.65;0;0;0
+New core volume (cost):;424.66;801.21;2.55;435.34;0.0;0.0;0.0
+New core volume (cost incl surtax):;1065.47;2010.22;6.4;1092.26;0.0;0.0;0.0
+Reused grass volume (quantity):;10.45;10.45;10.45;10.45;10.37;10.37;10.45
+Reused grass volume (cost):;63.12;63.12;63.12;63.12;62.64;62.64;63.12
+Reused grass volume (cost incl surtax):;158.37;158.37;158.37;158.37;173.96;173.96;175.29
+Reused core volume (quantity):;17.46;17.46;17.46;17.46;5.68;5.68;14.2
+Reused core volume (cost):;81.56;81.56;81.56;81.56;26.53;26.53;66.32
+Reused core volume (cost incl surtax):;204.63;204.63;204.63;204.63;73.66;73.66;184.17
+Removed material volume (quantity):;0;0;0;0;11.86;11.86;3.26
+Removed material volume (cost):;0.0;0.0;0.0;0.0;83.87;83.87;23.07
+Removed material volume (cost incl surtax):;0.0;0.0;0.0;0.0;232.92;232.92;64.06
+New grass layer surface (quantity):;86.7;87.5;59.84;50.64;36.94;36.94;37.72
+New grass layer surface (cost):;76.29;77.0;52.66;44.56;32.51;32.51;33.2
+New grass layer surface (cost incl surtax):;191.42;193.2;132.12;111.81;90.27;90.27;92.18
+New clay layer surface (quantity):;83.75;85.87;56.89;49.01;34.75;34.75;36.29
+New clay layer surface (cost):;54.43;55.82;36.98;31.86;22.58;22.58;23.59
+New clay layer surface (cost incl surtax):;136.58;140.05;92.77;79.93;62.72;62.72;65.5
+New core layer surface (quantity):;72.08;82.84;35.22;45.98;18.09;18.09;33.53
+New core layer surface (cost):;43.25;49.71;21.13;27.59;10.85;10.85;20.12
+New core layer surface (cost incl surtax):;108.51;124.71;53.02;69.22;30.14;30.14;55.87
+New ground level surface (quantity):;50.04;50.04;23.18;13.18;0.04;0.04;0.0
+New ground level surface (cost):;12.51;12.51;5.79;3.29;0.01;0.01;0.0
+New ground level surface (cost incl surtax):;31.39;31.39;14.54;8.26;0.03;0.03;0.0
+Land purchase surface (quantity):;50.04;50.04;23.18;13.18;0.04;0.04;0.0
+Land purchase surface (cost):;694.0;694.0;321.46;4251.1;11.74;11.74;0.0
+Land purchase surface (cost incl surtax):;979.93;979.93;453.9;6002.56;19.32;19.32;0.0
+Construction length (quantity):;0.0;0.0;0.0;7.5;5.3;8.9;13.3
+Construction length (cost):;0;0;500.0;1160.15;1065.68;3379.95;8979.8
+Construction length (cost incl surtax):;0;0;1456.0;3378.36;3103.25;9842.4;29588.44
+Total measure meters;0;0;0;0;0;0;0
+Total measure cost;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+Total measure cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+Infrastructure cost;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+Infrastructure cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+Total cost;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+Total cost incl surtax;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
