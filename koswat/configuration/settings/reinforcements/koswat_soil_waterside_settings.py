@@ -36,6 +36,7 @@ class KoswatSoilWatersideSettings(KoswatConfigProtocol):
     soil_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.MOEILIJK
     land_purchase_surtax_factor: SurtaxFactorEnum = SurtaxFactorEnum.MOEILIJK
     min_berm_height: float = 0.5
+    max_berm_height_factor: float = 0.4
     factor_increase_berm_height: float = 0.05
 
     def is_valid(self) -> bool:
@@ -74,6 +75,9 @@ class KoswatSoilWatersideSettings(KoswatConfigProtocol):
             self.land_purchase_surtax_factor, other.land_purchase_surtax_factor
         )
         self.min_berm_height = _set_default(self.min_berm_height, other.min_berm_height)
+        self.max_berm_height_factor = _set_default(
+            self.max_berm_height_factor, other.max_berm_height_factor
+        )
         self.factor_increase_berm_height = _set_default(
             self.factor_increase_berm_height, other.factor_increase_berm_height
         )

@@ -6,31 +6,21 @@ from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
 )
-from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator import (
+    BermCalculatorProtocol,
+    DefaultBermCalculator,
+    KeepBermCalculator,
+    NoBermCalculator,
+    PipingBermCalculator,
+    StabilityBermCalculator,
+    WatersideBermCalculator,
+)
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculated_factors import (
     BermCalculatedFactors,
 )
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_factory import (
     BermCalculatorFactory,
-)
-from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculator_protocol import (
-    BermCalculatorProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.default_berm_calculator import (
-    DefaultBermCalculator,
-)
-from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.keep_berm_calculator import (
-    KeepBermCalculator,
-)
-from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.no_berm_calculator import (
-    NoBermCalculator,
-)
-from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.piping_berm_calculator import (
-    PipingBermCalculator,
-)
-from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.stability_berm_calculator import (
-    StabilityBermCalculator,
 )
 
 
@@ -139,7 +129,7 @@ class TestBermCalculatorFactory:
     ]
 
     @pytest.mark.parametrize("calculator_case", calculator_cases)
-    def test_get_berm_calculator_returns_calculator(
+    def test_get_polderside_berm_calculator_returns_calculator(
         self,
         valid_scenario: KoswatScenario,
         valid_reinforcement_settings: KoswatReinforcementSettings,
@@ -161,10 +151,40 @@ class TestBermCalculatorFactory:
         )
 
         # 2. Run test
-        _result = BermCalculatorFactory.get_berm_calculator(
+        _result = BermCalculatorFactory.get_polderside_berm_calculator(
             calculator_case.profile_type, _factors
         )
 
         # 3. Verify expectations
         assert isinstance(_result, BermCalculatorProtocol)
         assert isinstance(_result, calculator_case.expected_calculator)
+
+    def test_when_get_waterside_berm_calculator_then_waterside_berm_calculator_returned(
+        self,
+        valid_scenario: KoswatScenario,
+        valid_reinforcement_settings: KoswatReinforcementSettings,
+    ):
+        # 1. Define test data
+        _factors = BermCalculatedFactors(
+            reinforcement_settings=valid_reinforcement_settings,
+            scenario=valid_scenario,
+            dikebase_piping_old=0.0,
+            dikebase_piping_new_dict={
+                InputProfileEnum.SOIL_WATERSIDE: 0.0,
+            },
+            dikebase_height_new=0.0,
+            dikebase_stability_new=0.0,
+            berm_old_is_stability=False,
+            berm_factor_old=0.0,
+            dike_height_new=0.0,
+        )
+
+        # 2. Run test
+        _result = BermCalculatorFactory.get_waterside_berm_calculator(
+            InputProfileEnum.SOIL_WATERSIDE, _factors
+        )
+
+        # 3. Verify expectations
+        assert isinstance(_result, BermCalculatorProtocol)
+        assert isinstance(_result, WatersideBermCalculator)
+        assert _result.dikebase_piping_new == 0.0

@@ -31,7 +31,8 @@ class TestSummaryCostsCsvExporter:
         # 3. Validate results
         assert _export_path.exists()
         _read_text = _export_path.read_text(encoding="utf-8")
-        _expected_text = "Profile type;Kistdam;Kwelscherm;Grondmaatregel profiel;Stabiliteitswand kruin;Stabiliteitswand teen\n\
+        _expected_text = "\
+Profile type;Kistdam;Kwelscherm;Grondmaatregel binnendijks;Stabiliteitswand kruin;Stabiliteitswand teen\n\
 Strategy reinforcement order;-1;-1;-1;-1;-1\n\
 Cost per km (Euro/km);0.0;8144.4;16288.8;24433.2;32577.6\n\
 Cost per km incl surtax (Euro/km);0.0;12216.6;24433.2;36649.8;48866.4\n\

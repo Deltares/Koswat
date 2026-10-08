@@ -27,6 +27,7 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator import (
     NoBermCalculator,
     PipingBermCalculator,
     StabilityBermCalculator,
+    WatersideBermCalculator,
 )
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculated_factors import (
     BermCalculatedFactors,
@@ -35,18 +36,18 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 
 class BermCalculatorFactory:
     """
-    Factory to create the correct berm calculator based on the caluclated factors.
+    Factory to create the correct berm calculator based on the calculated factors and reinforcement type.
     """
 
     @staticmethod
-    def get_berm_calculator(
+    def get_polderside_berm_calculator(
         reinforcement_type: InputProfileEnum, calculated_factors: BermCalculatedFactors
     ) -> BermCalculatorProtocol:
         """
-        Get the correct berm calculator based on the profile type.
+        Get the correct polderside berm calculator based on the profile type.
 
         Args:
-            profile_type (InputProfileEnum): The type of profile.
+            reinforcement_type (InputProfileEnum): The type of profile.
             calculated_factors (BermCalculatedFactors): The calculated factors.
 
         Returns:
@@ -88,6 +89,30 @@ class BermCalculatorFactory:
 
         return BermCalculatorFactory._get_default_berm_calculator(
             calculated_factors, reinforcement_type
+        )
+
+    @staticmethod
+    def get_waterside_berm_calculator(
+        reinforcement_type: InputProfileEnum, calculated_factors: BermCalculatedFactors
+    ) -> BermCalculatorProtocol:
+        """
+        Get the correct waterside berm calculator based on the profile type.
+
+        Args:
+            reinforcement_type (InputProfileEnum): The type of profile.
+            calculated_factors (BermCalculatedFactors): The calculated factors.
+
+        Returns:
+            BermCalculatorProtocol: The correct berm calculator.
+        """
+        return WatersideBermCalculator(
+            reinforcement_settings=calculated_factors.reinforcement_settings,
+            dikebase_piping_old=calculated_factors.dikebase_piping_old,
+            dikebase_piping_new=calculated_factors.get_dikebase_piping_new(
+                reinforcement_type
+            ),
+            dike_height_new=calculated_factors.dike_height_new,
+            d_p=calculated_factors.scenario.d_p,
         )
 
     @staticmethod

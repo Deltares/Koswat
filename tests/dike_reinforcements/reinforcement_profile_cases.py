@@ -5,7 +5,7 @@ from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile import (
-    CofferDamInputProfile,
+    CofferdamInputProfile,
     PipingWallInputProfile,
     SoilInputProfile,
     StabilityWallCrestInputProfile,
@@ -151,7 +151,7 @@ reinforcement_profile_cases = [
         koswat_scenario_case=ScenarioCases.scenario_3,
         reinforcement_profile_type=CofferdamReinforcementProfile,
         expectation=ReinforcementProfileCaseExpectation(
-            input_profile_base=CofferDamInputProfile(
+            input_profile_base=CofferdamInputProfile(
                 dike_section="test_data",
                 waterside_ground_level=0.0,
                 waterside_slope=2.25,

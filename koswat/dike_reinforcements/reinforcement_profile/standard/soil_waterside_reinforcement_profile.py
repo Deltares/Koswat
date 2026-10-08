@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
-from koswat.dike_reinforcements.input_profile.waterside_soil.waterside_soil_input_profile import (
-    WatersideSoilInputProfile,
+from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_input_profile import (
+    SoilWatersideInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
@@ -34,9 +34,9 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 )
 
 
-class WatersideSoilReinforcementProfile(StandardReinforcementProfile):
-    output_name: str = "Buitendijkse grondmaatregel profiel"
-    input_data: WatersideSoilInputProfile
+class SoilWatersideReinforcementProfile(StandardReinforcementProfile):
+    output_name: str = "Grondmaatregel buitendijks"
+    input_data: SoilWatersideInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float

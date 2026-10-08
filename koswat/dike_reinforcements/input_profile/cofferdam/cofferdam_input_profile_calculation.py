@@ -32,7 +32,7 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
-    CofferDamInputProfile,
+    CofferdamInputProfile,
 )
 from koswat.dike_reinforcements.input_profile.input_profile_enum import InputProfileEnum
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_base import (
@@ -110,11 +110,11 @@ class CofferdamInputProfileCalculation(
         )
         return _operand / _dividend
 
-    def build(self) -> CofferDamInputProfile:
+    def build(self) -> CofferdamInputProfile:
         _reinforced_data = self._get_reinforcement_profile(
-            CofferDamInputProfile, self.base_profile.input_data, self.scenario
+            CofferdamInputProfile, self.base_profile.input_data, self.scenario
         )
-        assert isinstance(_reinforced_data, CofferDamInputProfile)
+        assert isinstance(_reinforced_data, CofferdamInputProfile)
 
         _reinforced_data.active = self.reinforcement_settings.cofferdam_settings.active
 
@@ -125,18 +125,17 @@ class CofferdamInputProfileCalculation(
             self.reinforcement_settings,
             self.scenario,
         )
-        _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
-            InputProfileEnum.COFFERDAM, _calculated_factors
-        )
-        (
-            _reinforced_data.polderside_berm_width,
-            _reinforced_data.polderside_berm_height,
-            _reinforced_data.polderside_slope,
-        ) = asdict(
-            _polderside_berm_calculator.calculate(
-                self.base_profile.input_data, _reinforced_data
+        _polderside_berm_calculator = (
+            BermCalculatorFactory.get_polderside_berm_calculator(
+                InputProfileEnum.COFFERDAM, _calculated_factors
             )
-        ).values()
+        )
+        _calculator_result = _polderside_berm_calculator.calculate(
+            self.base_profile.input_data, _reinforced_data
+        )
+        _reinforced_data.polderside_berm_width = _calculator_result.berm_width
+        _reinforced_data.polderside_berm_height = _calculator_result.berm_height
+        _reinforced_data.polderside_slope = _calculator_result.slope
 
         # Construction calculations
         _seepage_length = self.scenario.d_p

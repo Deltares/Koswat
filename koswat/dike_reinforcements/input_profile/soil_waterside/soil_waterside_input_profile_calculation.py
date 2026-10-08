@@ -33,8 +33,8 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calcul
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_calculation_protocol import (
     ReinforcementInputProfileCalculationProtocol,
 )
-from koswat.dike_reinforcements.input_profile.waterside_soil.waterside_soil_input_profile import (
-    WatersideSoilInputProfile,
+from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_input_profile import (
+    SoilWatersideInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calculated_factors import (
     BermCalculatedFactors,
@@ -44,7 +44,7 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.berm_calcu
 )
 
 
-class WatersideSoilInputProfileCalculation(
+class SoilWatersideInputProfileCalculation(
     ReinforcementInputProfileCalculationBase,
     ReinforcementInputProfileCalculationProtocol,
 ):
@@ -56,33 +56,45 @@ class WatersideSoilInputProfileCalculation(
         self.base_profile = None
         self.scenario = None
 
-    def build(self) -> WatersideSoilInputProfile:
+    def build(self) -> SoilWatersideInputProfile:
         _reinforced_data = self._get_reinforcement_profile(
-            WatersideSoilInputProfile, self.base_profile.input_data, self.scenario
+            SoilWatersideInputProfile, self.base_profile.input_data, self.scenario
         )
-        assert isinstance(_reinforced_data, WatersideSoilInputProfile)
+        assert isinstance(_reinforced_data, SoilWatersideInputProfile)
 
         _reinforced_data.active = self.reinforcement_settings.soil_settings.active
 
-        # Berm calculation
+        # Polderside berm calculation (identical to PipingWall)
         _calculated_factors = BermCalculatedFactors.from_calculation_input(
             self.base_profile.input_data,
             _reinforced_data,
             self.reinforcement_settings,
             self.scenario,
         )
-        _polderside_berm_calculator = BermCalculatorFactory.get_berm_calculator(
-            InputProfileEnum.WATERSIDE_SOIL, _calculated_factors
-        )
-        (
-            _reinforced_data.polderside_berm_width,
-            _reinforced_data.polderside_berm_height,
-            _reinforced_data.polderside_slope,
-        ) = asdict(
-            _polderside_berm_calculator.calculate(
-                self.base_profile.input_data, _reinforced_data
+        _polderside_berm_calculator = (
+            BermCalculatorFactory.get_polderside_berm_calculator(
+                InputProfileEnum.SOIL_WATERSIDE, _calculated_factors
             )
-        ).values()
+        )
+        _calculator_result = _polderside_berm_calculator.calculate(
+            self.base_profile.input_data, _reinforced_data
+        )
+        _reinforced_data.polderside_berm_width = _calculator_result.berm_width
+        _reinforced_data.polderside_berm_height = _calculator_result.berm_height
+        _reinforced_data.polderside_slope = _calculator_result.slope
+
+        # Waterside berm calculation
+        _waterside_berm_calculator = (
+            BermCalculatorFactory.get_waterside_berm_calculator(
+                InputProfileEnum.SOIL_WATERSIDE, _calculated_factors
+            )
+        )
+        _calculator_result = _waterside_berm_calculator.calculate(
+            self.base_profile.input_data, _reinforced_data
+        )
+        _reinforced_data.waterside_berm_width = _calculator_result.berm_width
+        _reinforced_data.waterside_berm_height = _calculator_result.berm_height
+        _reinforced_data.waterside_slope = _calculator_result.slope
 
         # Settings
         _reinforced_data.soil_surtax_factor = (
