@@ -16,6 +16,9 @@ from koswat.configuration.io.config_sections.piping_wall_reinforcement_section_f
 from koswat.configuration.io.config_sections.soil_reinforcement_section_fom import (
     SoilReinforcementSectionFom,
 )
+from koswat.configuration.io.config_sections.soil_waterside_reinforcement_section_fom import (
+    SoilWatersideReinforcementSectionFom,
+)
 from koswat.configuration.io.config_sections.stability_wall_crest_reinforcement_section_fom import (
     StabilityWallCrestReinforcementSectionFom,
 )

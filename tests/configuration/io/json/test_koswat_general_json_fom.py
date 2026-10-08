@@ -7,6 +7,7 @@ from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
+    SoilWatersideReinforcementSectionFom,
     StabilityWallCrestReinforcementSectionFom,
     StabilityWallToeReinforcementSectionFom,
     SurroundingsSectionFom,
@@ -88,22 +89,21 @@ class TestKoswatGeneralJsonFom:
 
         # Buitendijkse grondmaatregel section
         assert isinstance(
-            _config_fom.waterside_soil_measure_section,
-            SoilReinforcementSectionFom,
+            _config_fom.soil_waterside_measure_section,
+            SoilWatersideReinforcementSectionFom,
         )
-        assert _config_fom.waterside_soil_measure_section.active == True
+        assert _config_fom.soil_waterside_measure_section.active == True
         assert (
-            _config_fom.waterside_soil_measure_section.soil_surtax_factor
-            == SurtaxFactorEnum.NORMAAL
+            _config_fom.soil_waterside_measure_section.soil_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
         )
         assert (
-            _config_fom.waterside_soil_measure_section.land_purchase_surtax_factor
-            == SurtaxFactorEnum.NORMAAL
+            _config_fom.soil_waterside_measure_section.land_purchase_surtax_factor
+            == SurtaxFactorEnum.MOEILIJK
         )
-        assert _config_fom.waterside_soil_measure_section.min_berm_height == 0.5
-        assert _config_fom.waterside_soil_measure_section.max_berm_height_factor == 0.4
+        assert _config_fom.soil_waterside_measure_section.min_berm_height == 0.5
         assert (
-            _config_fom.waterside_soil_measure_section.factor_increase_berm_height
+            _config_fom.soil_waterside_measure_section.factor_increase_berm_height
             == 0.05
         )
 

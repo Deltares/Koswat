@@ -3,8 +3,11 @@
         "Binnen_Maaiveld": 2.81,
         "Dikte_Graslaag": 0.31
     },
-    "Grondmaatregel": {
+    "GrondmaatregelBinnendijks": {
         "Opslagfactor_Grond" : "Moeilijk"
+    },
+    "GrondmaatregelBuitendijks": {
+        "Actief" : false
     },
     "VerticalePipingOplossing": {
         "Actief": false,

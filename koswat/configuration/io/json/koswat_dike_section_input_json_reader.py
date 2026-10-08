@@ -26,6 +26,7 @@ from koswat.configuration.io.config_sections import (
     DikeProfileSectionFom,
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
+    SoilWatersideReinforcementSectionFom,
     StabilityWallCrestReinforcementSectionFom,
     StabilityWallToeReinforcementSectionFom,
     VPSReinforcementSectionFom,
@@ -58,10 +59,11 @@ class KoswatDikeSectionInputJsonReader(KoswatReaderProtocol):
                 _json_fom.content.get("dijkprofiel", dict()), set_defaults=False
             ),
             soil_measure=SoilReinforcementSectionFom.from_config(
-                _json_fom.content.get("grondmaatregel", dict()), set_defaults=False
+                _json_fom.content.get("grondmaatregelbinnendijks", dict()),
+                set_defaults=False,
             ),
-            waterside_soil_measure=SoilReinforcementSectionFom.from_config(
-                _json_fom.content.get("buitendijksegrondmaatregel", dict()),
+            soil_waterside_measure=SoilWatersideReinforcementSectionFom.from_config(
+                _json_fom.content.get("grondmaatregelbuitendijks", dict()),
                 set_defaults=False,
             ),
             vps=VPSReinforcementSectionFom.from_config(
