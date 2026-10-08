@@ -77,15 +77,12 @@ class VPSInputProfileCalculation(
                 InputProfileEnum.VPS, _calculated_factors
             )
         )
-        (
-            _reinforced_data.polderside_berm_width,
-            _reinforced_data.polderside_berm_height,
-            _reinforced_data.polderside_slope,
-        ) = asdict(
-            _polderside_berm_calculator.calculate(
-                self.base_profile.input_data, _reinforced_data
-            )
-        ).values()
+        _calculator_result = _polderside_berm_calculator.calculate(
+            self.base_profile.input_data, _reinforced_data
+        )
+        _reinforced_data.polderside_berm_width = _calculator_result.berm_width
+        _reinforced_data.polderside_berm_height = _calculator_result.berm_height
+        _reinforced_data.polderside_slope = _calculator_result.slope
 
         # Construction calculations
         _reinforced_data.construction_type = ConstructionTypeEnum.VZG
