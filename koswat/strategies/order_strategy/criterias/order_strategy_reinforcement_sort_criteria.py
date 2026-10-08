@@ -24,8 +24,8 @@ from typing import Iterator
 from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
     OrderStrategyReinforcementSkipCriteria,
 )
-from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input import (
-    StrategyReinforcementInputBase,
+from koswat.strategies.strategy_reinforcement_input import (
+    StrategyReinforcementInputProtocol,
 )
 
 
@@ -35,14 +35,16 @@ class OrderStrategyReinforcementSortCriteria:
     `OrderStrategyReinforcementSkipCriteria`
     """
 
-    def __init__(self, strategy_reinforcements: list[StrategyReinforcementInputBase]):
+    def __init__(
+        self, strategy_reinforcements: list[StrategyReinforcementInputProtocol]
+    ):
         self.strategy_reinforcements = strategy_reinforcements
 
-    def sort(self) -> list[StrategyReinforcementInputBase]:
+    def sort(self) -> list[StrategyReinforcementInputProtocol]:
         _initial_sorting = self._initial_sort()
         return list(self._get_most_flexible_reinforcements(_initial_sorting))
 
-    def _initial_sort(self) -> list[StrategyReinforcementInputBase]:
+    def _initial_sort(self) -> list[StrategyReinforcementInputProtocol]:
         return sorted(
             self.strategy_reinforcements,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
@@ -51,8 +53,8 @@ class OrderStrategyReinforcementSortCriteria:
 
     def _get_most_flexible_reinforcements(
         self,
-        reinforcements: list[StrategyReinforcementInputBase],
-    ) -> Iterator[StrategyReinforcementInputBase]:
+        reinforcements: list[StrategyReinforcementInputProtocol],
+    ) -> Iterator[StrategyReinforcementInputProtocol]:
         for _idx, _reinforcement in enumerate(reinforcements[:-1]):
             _skip_criteria = OrderStrategyReinforcementSkipCriteria(
                 _reinforcement, reinforcements[_idx + 1 :]

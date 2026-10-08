@@ -19,9 +19,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input import (
+from koswat.strategies.strategy_reinforcement_input import (
     FixedStrategyReinforcementInput,
-    StrategyReinforcementInputBase,
+    StrategyReinforcementInputProtocol,
 )
 
 
@@ -33,8 +33,8 @@ class OrderStrategyReinforcementSkipCriteria:
 
     def __init__(
         self,
-        strategy_input: StrategyReinforcementInputBase,
-        other_strategies: list[StrategyReinforcementInputBase],
+        strategy_input: StrategyReinforcementInputProtocol,
+        other_strategies: list[StrategyReinforcementInputProtocol],
     ):
         self.strategy_input = strategy_input
         self.other_strategies = other_strategies
@@ -54,7 +54,9 @@ class OrderStrategyReinforcementSkipCriteria:
             for _other_strategy in self.other_strategies
         )
 
-    def _is_comparable(self, strategy_input: StrategyReinforcementInputBase) -> bool:
+    def _is_comparable(
+        self, strategy_input: StrategyReinforcementInputProtocol
+    ) -> bool:
         """
         Determine if a strategy reinforcement can be used to determine whether it should be skipped,
         or other strategies should be skipped in favor of this one.
@@ -66,7 +68,7 @@ class OrderStrategyReinforcementSkipCriteria:
 
     def _can_be_filtered_out_by(
         self,
-        strategy_to_compare: StrategyReinforcementInputBase,
+        strategy_to_compare: StrategyReinforcementInputProtocol,
     ) -> bool:
         """
         Compare the two strategies based on their total costs.

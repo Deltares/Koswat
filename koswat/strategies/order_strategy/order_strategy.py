@@ -50,7 +50,7 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
-from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input import (
+from koswat.strategies.strategy_reinforcement_input import (
     FlexibleStrategyReinforcementInput,
 )
 from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
