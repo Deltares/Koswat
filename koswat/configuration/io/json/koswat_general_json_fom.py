@@ -28,6 +28,7 @@ from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     PipingWallReinforcementSectionFom,
     SoilReinforcementSectionFom,
+    SoilWatersideReinforcementSectionFom,
     StabilityWallCrestReinforcementSectionFom,
     StabilityWallToeReinforcementSectionFom,
     SurroundingsSectionFom,
@@ -42,8 +43,7 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
     analysis_section: AnalysisSectionFom
     dike_profile_section: DikeProfileSectionFom
     soil_measure_section: SoilReinforcementSectionFom
-    # TODO: Use soil measure section for now #370
-    waterside_soil_measure_section: SoilReinforcementSectionFom
+    soil_waterside_measure_section: SoilWatersideReinforcementSectionFom
     vps_section: VPSReinforcementSectionFom
     piping_wall_section: PipingWallReinforcementSectionFom
     stability_wall_toe_section: StabilityWallToeReinforcementSectionFom
@@ -76,10 +76,10 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
                 json_config["dijkprofiel"], set_defaults=True
             ),
             soil_measure_section=SoilReinforcementSectionFom.from_config(
-                json_config["grondmaatregel"], set_defaults=True
+                json_config["grondmaatregelbinnendijks"], set_defaults=True
             ),
-            waterside_soil_measure_section=SoilReinforcementSectionFom.from_config(
-                json_config["buitendijksegrondmaatregel"], set_defaults=True
+            soil_waterside_measure_section=SoilWatersideReinforcementSectionFom.from_config(
+                json_config["grondmaatregelbuitendijks"], set_defaults=True
             ),
             vps_section=VPSReinforcementSectionFom.from_config(
                 json_config["verticalepipingoplossing"], set_defaults=True
