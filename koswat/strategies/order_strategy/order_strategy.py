@@ -43,7 +43,10 @@ from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
 )
 from koswat.strategies.order_strategy.order_strategy_reinforcement_filter_criteria import (
-    OrderStrategyReinforcementFilterCriteria,
+    OrderStrategyReinforcementSkipCriteria,
+)
+from koswat.strategies.order_strategy.order_strategy_reinforcement_sort_criteria import (
+    OrderStrategyReinforcementSortCriteria,
 )
 from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -151,26 +154,7 @@ class OrderStrategy(StrategyProtocol):
         _unsorted, _first, _last = self._split_reinforcements(strategy_reinforcements)
 
         # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
-        _sorted = sorted(
-            _unsorted,
-            key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
-            reverse=True,
-        )
-
-        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others.
-        def filter_out_reinforcement(
-            pair: tuple[
-                FlexibleStrategyReinforcementInput, FlexibleStrategyReinforcementInput
-            ],
-        ) -> bool:
-            _filter_criteria = OrderStrategyReinforcementFilterCriteria(
-                pair[0], pair[1]
-            )
-            return _filter_criteria.can_be_filtered_out() and pair[0] in _sorted
-
-        _possible_combinations = list(product(_sorted[:-1], _sorted))
-        for _pair in filter(filter_out_reinforcement, _possible_combinations):
-            _sorted.remove(_pair[0])
+        _sorted = OrderStrategyReinforcementSortCriteria(_unsorted).sort()
 
         return [
             x.reinforcement_type

@@ -26,7 +26,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class StrategyReinforcementInputBase(ABC):
     """
     A strategy reinforcement input aimed for those reinforcements that can use both
@@ -46,7 +46,9 @@ class StrategyReinforcementInputBase(ABC):
     ) -> bool:
         return self.ground_level_surface >= other.ground_level_surface
 
-    def is_filtered_out_by(self, other: StrategyReinforcementInputBase) -> bool:
+    def is_more_cost_space_restrictive(
+        self, other: StrategyReinforcementInputBase
+    ) -> bool:
         # For now we only apply this criteria for `OrderStrategy` filtering.
         # if we wish to do so in other strategies, we can add a `criteria` argument to this method.
         # criteria: Callable[['StrategyReinforcementInput', 'StrategyReinforcementInput'], bool]
@@ -55,7 +57,7 @@ class StrategyReinforcementInputBase(ABC):
         ) and self._has_greater_or_equal_ground_level_surface_than(other)
 
 
-@dataclass
+@dataclass(kw_only=True)
 class FlexibleStrategyReinforcementInput(StrategyReinforcementInputBase):
     """
     A `FlexibleStrategyReinforcementInput` is a `StrategyReinforcementInput` that can be
@@ -67,7 +69,7 @@ class FlexibleStrategyReinforcementInput(StrategyReinforcementInputBase):
     pass
 
 
-@dataclass
+@dataclass(kw_only=True)
 class FixedStrategyReinforcementInput(StrategyReinforcementInputBase):
     """
     A `FixedStrategyReinforcementInput` is a `StrategyReinforcementInput` that is
