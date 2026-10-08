@@ -52,6 +52,9 @@ class OrderStrategyReinforcementSortCriteria:
             self.strategy_reinforcements
         ).filter()
 
+        if not _unsorted:
+            return []
+
         # SoilReinforcement, if active
         _reinforcement_as_head = (
             _unsorted[0].reinforcement_type == SoilReinforcementProfile

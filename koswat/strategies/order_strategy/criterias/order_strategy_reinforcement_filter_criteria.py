@@ -47,6 +47,8 @@ class OrderStrategyReinforcementFilterCriteria:
         Returns:
             list[StrategyReinforcementInputProtocol]: A list of strategies that are not skippable.
         """
+        if not self.strategies:
+            return []
         _filtered_strategies = []
         _elegible_strategies = list(
             filter(lambda x: self._is_elegible(x), self.strategies)
@@ -60,6 +62,9 @@ class OrderStrategyReinforcementFilterCriteria:
         return _filtered_strategies
 
     def _is_elegible(self, strategy_input: StrategyReinforcementInputProtocol) -> bool:
+        """
+        Determines if a strategy reinforcement is active or otherwise type of Cofferdam.
+        """
         # Cofferdam is always eligible, even if not active
         return (
             strategy_input.active
@@ -74,6 +79,8 @@ class OrderStrategyReinforcementFilterCriteria:
         """
         Determines if a strategy reinforcement meets the criteria to be considered for filtering.
         """
+        if strategy.reinforcement_type == CofferdamReinforcementProfile:
+            return True
         return not any(
             self._can_be_filtered_out_by(strategy, _other_strategy)
             for _other_strategy in elegible_strategies
@@ -97,6 +104,6 @@ class OrderStrategyReinforcementFilterCriteria:
         """
         Compare the two strategies based on their total costs.
         """
-        return self._is_comparable(
-            strategy_to_compare
-        ) and strategy_input.is_more_cost_space_restrictive(strategy_to_compare)
+        if not self._is_comparable(strategy_to_compare):
+            return False
+        return strategy_input.is_more_cost_space_restrictive(strategy_to_compare)
