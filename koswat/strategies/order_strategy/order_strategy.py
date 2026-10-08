@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-from itertools import product
 from typing import Optional
 
 from koswat.dike_reinforcements.reinforcement_profile import (
@@ -42,10 +41,7 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
 )
-from koswat.strategies.order_strategy.order_strategy_reinforcement_filter_criteria import (
-    OrderStrategyReinforcementSkipCriteria,
-)
-from koswat.strategies.order_strategy.order_strategy_reinforcement_sort_criteria import (
+from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_sort_criteria import (
     OrderStrategyReinforcementSortCriteria,
 )
 from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput
@@ -68,7 +64,7 @@ class OrderStrategy(StrategyProtocol):
         list[type[ReinforcementProfileProtocol]]
     ):
         """
-        Give the default order for reinforcements types,
+        Gets the default order for reinforcements types,
         assuming they are sorted from cheapest to most expensive
         and least to most restrictive.
 
