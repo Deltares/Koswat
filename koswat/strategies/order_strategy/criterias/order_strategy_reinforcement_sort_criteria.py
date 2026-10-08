@@ -24,7 +24,7 @@ from typing import Iterator
 from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
     OrderStrategyReinforcementSkipCriteria,
 )
-from koswat.strategies.strategy_reinforcement_input import (
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input import (
     StrategyReinforcementInputBase,
 )
 

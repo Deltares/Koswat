@@ -23,7 +23,7 @@ import math
 from dataclasses import dataclass, field
 
 from koswat.strategies.strategy_location_input import StrategyLocationInput
-from koswat.strategies.strategy_reinforcement_input import (
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input import (
     FlexibleStrategyReinforcementInput,
 )
 

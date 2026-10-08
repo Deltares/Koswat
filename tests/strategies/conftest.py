@@ -16,7 +16,7 @@ from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 
-from koswat.strategies.strategy_reinforcement_input_builder import (
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_builder import (
     StrategyReinforcementInputBuilder,
 )
 from koswat.strategies.strategy_reinforcement_type_costs import (

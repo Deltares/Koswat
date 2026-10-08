@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from koswat.strategies.strategy_reinforcement_input import (
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input import (
     FixedStrategyReinforcementInput,
     StrategyReinforcementInputBase,
 )
