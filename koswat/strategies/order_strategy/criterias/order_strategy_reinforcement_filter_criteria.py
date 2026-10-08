@@ -23,9 +23,12 @@ from koswat.strategies.strategy_reinforcement_input import (
     FixedStrategyReinforcementInput,
     StrategyReinforcementInputProtocol,
 )
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
 
 
-class OrderStrategyReinforcementSkipCriteria:
+class OrderStrategyReinforcementFilterCriteria:
     """
     Verifies if a given `strategy_input` should be skipped based on its type and costs,
     in comparison with a collection of other strategies (`other_strategies`)
@@ -33,25 +36,48 @@ class OrderStrategyReinforcementSkipCriteria:
 
     def __init__(
         self,
-        strategy_input: StrategyReinforcementInputProtocol,
-        other_strategies: list[StrategyReinforcementInputProtocol],
+        strategies: list[StrategyReinforcementInputProtocol],
     ):
-        self.strategy_input = strategy_input
-        self.other_strategies = other_strategies
+        self.strategies = strategies
 
-    def skip_reinforcement(self) -> bool:
+    def filter(self) -> list[StrategyReinforcementInputProtocol]:
         """
-        Determine if a strategy reinforcement can be skipped based on the other strategies.
+        Filters the strategies based on their costs and types.
 
         Returns:
-            bool: True if the strategy reinforcement can be skipped, False otherwise.
+            list[StrategyReinforcementInputProtocol]: A list of strategies that are not skippable.
         """
-        if not self._is_comparable(self.strategy_input):
-            return False
+        _filtered_strategies = []
+        _elegible_strategies = list(
+            filter(lambda x: self._is_elegible(x), self.strategies)
+        )
+        for _strategy in _elegible_strategies:
+            if not self._is_comparable(_strategy) or self._is_optimal(
+                _strategy, _elegible_strategies
+            ):
+                _filtered_strategies.append(_strategy)
 
-        return any(
-            self._can_be_filtered_out_by(_other_strategy)
-            for _other_strategy in self.other_strategies
+        return _filtered_strategies
+
+    def _is_elegible(self, strategy_input: StrategyReinforcementInputProtocol) -> bool:
+        # Cofferdam is always eligible, even if not active
+        return (
+            strategy_input.active
+            or strategy_input.reinforcement_type == CofferdamReinforcementProfile
+        )
+
+    def _is_optimal(
+        self,
+        strategy: StrategyReinforcementInputProtocol,
+        elegible_strategies: list[StrategyReinforcementInputProtocol],
+    ) -> bool:
+        """
+        Determines if a strategy reinforcement meets the criteria to be considered for filtering.
+        """
+        return not any(
+            self._can_be_filtered_out_by(strategy, _other_strategy)
+            for _other_strategy in elegible_strategies
+            if _other_strategy != strategy
         )
 
     def _is_comparable(
@@ -60,22 +86,17 @@ class OrderStrategyReinforcementSkipCriteria:
         """
         Determine if a strategy reinforcement can be used to determine whether it should be skipped,
         or other strategies should be skipped in favor of this one.
-
-        Returns:
-            bool: True if the strategy reinforcement is comparable, False otherwise.
         """
         return not isinstance(strategy_input, FixedStrategyReinforcementInput)
 
     def _can_be_filtered_out_by(
         self,
+        strategy_input: StrategyReinforcementInputProtocol,
         strategy_to_compare: StrategyReinforcementInputProtocol,
     ) -> bool:
         """
         Compare the two strategies based on their total costs.
-
-        Returns:
-            bool: True if `self.strategy_input` can be filtered out by `strategy_to_compare`, False otherwise.
         """
-        if not self._is_comparable(strategy_to_compare):
-            return False
-        return self.strategy_input.is_more_cost_space_restrictive(strategy_to_compare)
+        return self._is_comparable(
+            strategy_to_compare
+        ) and strategy_input.is_more_cost_space_restrictive(strategy_to_compare)

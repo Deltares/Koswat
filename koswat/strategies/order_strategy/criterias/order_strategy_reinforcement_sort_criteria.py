@@ -21,8 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from typing import Iterator
 
+from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
+    CofferdamReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
+    SoilReinforcementProfile,
+)
 from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
-    OrderStrategyReinforcementSkipCriteria,
+    OrderStrategyReinforcementFilterCriteria,
 )
 from koswat.strategies.strategy_reinforcement_input import (
     StrategyReinforcementInputProtocol,
@@ -32,7 +38,7 @@ from koswat.strategies.strategy_reinforcement_input import (
 class OrderStrategyReinforcementSortCriteria:
     """
     Orders a list of strategy reinforcements based on the criteria from
-    `OrderStrategyReinforcementSkipCriteria`
+    `OrderStrategyReinforcementFilterCriteria`
     """
 
     def __init__(
@@ -41,26 +47,28 @@ class OrderStrategyReinforcementSortCriteria:
         self.strategy_reinforcements = strategy_reinforcements
 
     def sort(self) -> list[StrategyReinforcementInputProtocol]:
-        _initial_sorting = self._initial_sort()
-        return list(self._get_most_flexible_reinforcements(_initial_sorting))
+        # Get the eligible strategies based on the skip criteria
+        _unsorted = OrderStrategyReinforcementFilterCriteria(
+            self.strategy_reinforcements
+        ).filter()
 
-    def _initial_sort(self) -> list[StrategyReinforcementInputProtocol]:
-        return sorted(
-            self.strategy_reinforcements,
+        # SoilReinforcement, if active
+        _reinforcement_as_head = (
+            _unsorted[0].reinforcement_type == SoilReinforcementProfile
+        )
+
+        # Always skip from sorting the last item (Cofferdam).
+        _list_to_sort = _unsorted[1:-1] if _reinforcement_as_head else _unsorted[:-1]
+
+        _sorted_list = sorted(
+            _list_to_sort,
             key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
             reverse=True,
         )
 
-    def _get_most_flexible_reinforcements(
-        self,
-        reinforcements: list[StrategyReinforcementInputProtocol],
-    ) -> Iterator[StrategyReinforcementInputProtocol]:
-        for _idx, _reinforcement in enumerate(reinforcements[:-1]):
-            _skip_criteria = OrderStrategyReinforcementSkipCriteria(
-                _reinforcement, reinforcements[_idx + 1 :]
-            )
-            if not _skip_criteria.skip_reinforcement():
-                yield _reinforcement
-        # Last reinforcement is always included,
-        # as it is the least restrictive but most expensive
-        yield reinforcements[-1]
+        # Reappend the first and last items to the sorted list, if applicable
+        if _reinforcement_as_head:
+            _sorted_list.insert(0, _unsorted[0])
+        _sorted_list.append(_unsorted[-1])
+
+        return _sorted_list

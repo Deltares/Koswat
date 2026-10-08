@@ -21,8 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-from typing import Optional
-
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -82,49 +80,6 @@ class OrderStrategy(StrategyProtocol):
             CofferdamReinforcementProfile,
         ]
 
-    def _split_reinforcements(
-        self,
-        reinforcements: list[FlexibleStrategyReinforcementInput],
-    ) -> tuple[
-        list[FlexibleStrategyReinforcementInput],
-        Optional[FlexibleStrategyReinforcementInput],
-        FlexibleStrategyReinforcementInput,
-    ]:
-        # All active items including Cofferdam, even if not active
-        _unsorted = list(
-            filter(
-                lambda x: x.active
-                or x.reinforcement_type == CofferdamReinforcementProfile,
-                reinforcements,
-            )
-        )
-        # SoilReinforcement, if active
-        _first = next(
-            (x for x in _unsorted if x.reinforcement_type == SoilReinforcementProfile),
-            None,
-        )
-        # Cofferdam
-        _last = next(
-            (
-                x
-                for x in _unsorted
-                if x.reinforcement_type == CofferdamReinforcementProfile
-            )
-        )
-
-        return (_unsorted, _first, _last)
-
-    def _merge_reinforcements(
-        self,
-        sorted: list[FlexibleStrategyReinforcementInput],
-        first: Optional[FlexibleStrategyReinforcementInput],
-        last: FlexibleStrategyReinforcementInput,
-    ) -> list[FlexibleStrategyReinforcementInput]:
-        # Remove first (if present) and last, to avoid duplicates.
-        sorted.remove(first) if first in sorted else None
-        sorted.remove(last) if last in sorted else None
-        return [first] + sorted + [last] if first else sorted + [last]
-
     def get_strategy_order_for_reinforcements(
         self,
         strategy_reinforcements: list[FlexibleStrategyReinforcementInput],
@@ -142,20 +97,10 @@ class OrderStrategy(StrategyProtocol):
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
-        if not strategy_reinforcements:
-            return []
-
-        # Order in a list to be sorted (least to most restrictive)
-        # and find item to be put first and last.
-        _unsorted, _first, _last = self._split_reinforcements(strategy_reinforcements)
-
-        # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
-        _sorted = OrderStrategyReinforcementSortCriteria(_unsorted).sort()
-
-        return [
-            x.reinforcement_type
-            for x in self._merge_reinforcements(_sorted, _first, _last)
-        ]
+        _sorted_and_filtered_reinforcements = OrderStrategyReinforcementSortCriteria(
+            strategy_reinforcements
+        ).sort()
+        return [x.reinforcement_type for x in _sorted_and_filtered_reinforcements]
 
     @staticmethod
     def get_strategy_reinforcements(
@@ -199,6 +144,7 @@ class OrderStrategy(StrategyProtocol):
         return _strategy_reinforcements
 
     def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
+
         self.reinforcement_order = self.get_strategy_order_for_reinforcements(
             strategy_input.strategy_reinforcements
         )
