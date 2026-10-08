@@ -79,8 +79,7 @@ isort = ">=5.10.1, <6"
 urllib3 = "1.26.*"
 commitizen = ">=4.8.4,<5"
 black = ">=25.1.0,<26"
-packaging = ">=25.0"
-twine = ">=7"
+twine = ">=7.0.0,<8"
 
 [tool.pixi.feature.dev.tasks]
 isort = "isort"
