@@ -100,13 +100,13 @@ class OrderStrategy(StrategyProtocol):
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
-        _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
+        _sorted_reinforcements = OrderStrategyReinforcementSortCriteria(
             strategy_reinforcements
-        ).filter()
-        _sorted_and_filtered_reinforcements = OrderStrategyReinforcementSortCriteria(
-            _filtered_reinforcements
         ).sort()
-        return [x.reinforcement_type for x in _sorted_and_filtered_reinforcements]
+        _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
+            _sorted_reinforcements
+        ).filter()
+        return [x.reinforcement_type for x in _filtered_reinforcements]
 
     @staticmethod
     def get_strategy_reinforcements(

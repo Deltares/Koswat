@@ -1,6 +1,5 @@
 import shutil
 from pathlib import Path
-from typing import Protocol, runtime_checkable
 
 import pytest
 from click.testing import CliRunner

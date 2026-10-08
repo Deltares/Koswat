@@ -32,8 +32,7 @@ from .strategy_reinforcement_input_protocol import (
 @dataclass(kw_only=True)
 class StrategyReinforcementInputBase(ABC, StrategyReinforcementInputProtocol):
     """
-    A strategy reinforcement input aimed for those reinforcements that can use both
-    polder- and waterside space.
+    A base class for strategy reinforcement input, providing common attributes and methods for derived classes.
     """
 
     reinforcement_type: type[ReinforcementProfileProtocol]

@@ -49,19 +49,19 @@ class OrderStrategyReinforcementFilterCriteria:
         """
         if not self.strategies:
             return []
-        _filtered_strategies = []
-        _elegible_strategies = list(
-            filter(lambda x: self._is_elegible(x), self.strategies)
+        _chosen_strategies = []
+        _eligible_strategies = list(
+            filter(lambda x: self._is_eligible(x), self.strategies)
         )
-        for _strategy in _elegible_strategies:
+        for _strategy in _eligible_strategies:
             if not self._is_comparable(_strategy) or self._is_optimal(
-                _strategy, _elegible_strategies
+                _strategy, _eligible_strategies
             ):
-                _filtered_strategies.append(_strategy)
+                _chosen_strategies.append(_strategy)
 
-        return _filtered_strategies
+        return _chosen_strategies
 
-    def _is_elegible(self, strategy_input: StrategyReinforcementInputProtocol) -> bool:
+    def _is_eligible(self, strategy_input: StrategyReinforcementInputProtocol) -> bool:
         """
         Determines if a strategy reinforcement is active or otherwise type of Cofferdam.
         """
@@ -74,7 +74,7 @@ class OrderStrategyReinforcementFilterCriteria:
     def _is_optimal(
         self,
         strategy: StrategyReinforcementInputProtocol,
-        elegible_strategies: list[StrategyReinforcementInputProtocol],
+        eligible_strategies: list[StrategyReinforcementInputProtocol],
     ) -> bool:
         """
         Determines if a strategy reinforcement meets the criteria to be considered for filtering.
@@ -83,7 +83,7 @@ class OrderStrategyReinforcementFilterCriteria:
             return True
         return not any(
             self._can_be_filtered_out_by(strategy, _other_strategy)
-            for _other_strategy in elegible_strategies
+            for _other_strategy in eligible_strategies
             if _other_strategy != strategy
         )
 
