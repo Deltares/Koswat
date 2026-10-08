@@ -29,7 +29,12 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
 )
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.strategies.strategy_input import StrategyLocationInput
-from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
+from koswat.strategies.strategy_reinforcement_input import (
+    StrategyReinforcementInputProtocol,
+)
+from koswat.strategies.strategy_reinforcement_input import (
+    StrategyReinforcementInputBuilder,
+)
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
@@ -87,10 +92,10 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         locations_per_reinforcement: list[
             dict[PointSurroundings, StrategyReinforcementTypeCosts]
         ],
-    ) -> list[StrategyReinforcementInput]:
+    ) -> list[StrategyReinforcementInputProtocol]:
         def get_reinforcement(
             reinforcement_cost: StrategyReinforcementTypeCosts,
-        ) -> StrategyReinforcementInput:
+        ) -> StrategyReinforcementInputProtocol:
             _reinforcement = next(
                 (
                     _pcr.profile_cost_report.reinforced_profile
@@ -104,12 +109,13 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 raise ValueError(
                     f"Reinforcement type {reinforcement_cost.reinforcement_type} not found in profile reports."
                 )
-            return StrategyReinforcementInput(
+
+            return StrategyReinforcementInputBuilder(
                 reinforcement_type=reinforcement_cost.reinforcement_type,
                 active=reinforcement_cost.active,
                 base_costs_with_surtax=reinforcement_cost.base_costs_with_surtax,
                 ground_level_surface=_reinforcement.new_ground_level_surface,
-            )
+            ).build()
 
         # Get the reinforcement cost of the first location for each reinforcement (if present).
         _reinforcement_costs = []
@@ -123,15 +129,15 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
     def build(
         self,
-    ) -> tuple[list[StrategyLocationInput], list[StrategyReinforcementInput]]:
+    ) -> tuple[list[StrategyLocationInput], list[StrategyReinforcementInputProtocol]]:
         """
         Build the locations-reinforcements matrix.
 
         Returns:
-            tuple[list[StrategyLocationInput], list[StrategyReinforcementInput]]:
+            tuple[list[StrategyLocationInput], list[StrategyReinforcementInputProtocol]]:
                 Tuple containing:
                 - list[StrategyLocationInput]: The locations-reinforcements matrix.
-                - list[StrategyReinforcementInput]: The list of applied reinforcements.
+                - list[StrategyReinforcementInputProtocol]: The list of applied reinforcements.
         """
         # 1. First we get all the possible reinforcements per point.
         logging.info("Initalizing locations-reinforcements matrix.")

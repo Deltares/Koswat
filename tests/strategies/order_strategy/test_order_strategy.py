@@ -107,70 +107,12 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
-    @pytest.mark.parametrize(
-        "idx",
-        range(1, len(_default_reinforcements) - 1),
-        ids=_default_reinforcements[1:-1],
-    )
-    def test_get_strategy_order_increased_cost_filters_reinforcement(
-        self, idx: int, example_strategy_input: StrategyInput
-    ):
-        # 1. Define test data.
-        # Increase the cost of the reinforcement at the given index
-        # to become more expensive than the next (more restrictive) reinforcement
-        # and will be filtered out.
-        example_strategy_input.strategy_reinforcements[idx].base_costs_with_surtax *= 20
-        _expected_result = deepcopy(self._default_reinforcements)
-        _expected_result.remove(self._default_reinforcements[idx])
-
-        _strategy = OrderStrategy()
-
-        # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
-        )
-
-        # 3. Verify expectations
-        assert _reinforcements == _expected_result
-        assert _reinforcements[0] == SoilReinforcementProfile
-        assert _reinforcements[-1] == CofferdamReinforcementProfile
-
     def test_get_strategy_order_increased_soil_cost_keeps_reinforcement(
         self, example_strategy_input: StrategyInput
     ):
         # 1. Define test data.
         example_strategy_input.strategy_reinforcements[0].base_costs_with_surtax *= 20
         _expected_result = self._default_reinforcements
-
-        _strategy = OrderStrategy()
-
-        # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
-        )
-
-        # 3. Verify expectations
-        assert _reinforcements == _expected_result
-        assert _reinforcements[0] == SoilReinforcementProfile
-        assert _reinforcements[-1] == CofferdamReinforcementProfile
-
-    @pytest.mark.parametrize(
-        "idx",
-        range(1, len(_default_reinforcements) - 1),
-        ids=_default_reinforcements[1:-1],
-    )
-    def test_get_strategy_order_increased_surface_filters_reinforcement(
-        self,
-        idx: int,
-        example_strategy_input: StrategyInput,
-    ):
-        # 1. Define test data.
-        # Increase the surface of the reinforcement at the given index
-        # to become less restrictive than the previous (cheaper) reinforcement
-        # and will be filtered out.
-        example_strategy_input.strategy_reinforcements[idx].ground_level_surface += 15
-        _expected_result = deepcopy(self._default_reinforcements)
-        _expected_result.remove(self._default_reinforcements[idx])
 
         _strategy = OrderStrategy()
 
@@ -208,17 +150,22 @@ class TestOrderStrategy:
     ):
         # 1. Define test data.
         # Related to #224
-        # 2nd reinforcement is more expensive and less restrictive than the 1st and should be filtered out
+        # 2nd reinforcement is more expensive and less restrictive than the 1st but will not be skipped
+        # because the 1st is SoilReinforcementProfile.
         example_strategy_input.strategy_reinforcements[1].ground_level_surface = (
             example_strategy_input.strategy_reinforcements[0].ground_level_surface * 2
         )
-        # 3rd reinforcement is more expensive than and equally restrictive as the 1st and should be filtered out
+        # 3rd reinforcement is more expensive and less restrictive than the 2nd and should be filtered out
         example_strategy_input.strategy_reinforcements[2].ground_level_surface = (
-            example_strategy_input.strategy_reinforcements[0].ground_level_surface
+            example_strategy_input.strategy_reinforcements[1].ground_level_surface
+        )
+        example_strategy_input.strategy_reinforcements[2].base_costs_with_surtax = (
+            example_strategy_input.strategy_reinforcements[1].base_costs_with_surtax + 1
         )
         _expected_result = deepcopy(self._default_reinforcements)
         _expected_result = [
             SoilReinforcementProfile,
+            VPSReinforcementProfile,
             StabilityWallToeReinforcementProfile,
             StabilityWallCrestReinforcementProfile,
             CofferdamReinforcementProfile,

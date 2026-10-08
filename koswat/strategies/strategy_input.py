@@ -23,7 +23,9 @@ import math
 from dataclasses import dataclass, field
 
 from koswat.strategies.strategy_location_input import StrategyLocationInput
-from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
+from koswat.strategies.strategy_reinforcement_input import (
+    StrategyReinforcementInputProtocol,
+)
 
 
 @dataclass
@@ -33,7 +35,7 @@ class StrategyInput:
     """
 
     strategy_locations: list[StrategyLocationInput] = field(default_factory=lambda: [])
-    strategy_reinforcements: list[StrategyReinforcementInput] = field(
+    strategy_reinforcements: list[StrategyReinforcementInputProtocol] = field(
         default_factory=lambda: []
     )
     reinforcement_min_buffer: float = 0.0
