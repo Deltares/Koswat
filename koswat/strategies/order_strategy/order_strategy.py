@@ -168,7 +168,8 @@ class OrderStrategy(StrategyProtocol):
             )
             return _filter_criteria.can_be_filtered_out() and pair[0] in _sorted
 
-        for _pair in filter(filter_out_reinforcement, product(_sorted[:-1], _sorted)):
+        _possible_combinations = list(product(_sorted[:-1], _sorted))
+        for _pair in filter(filter_out_reinforcement, _possible_combinations):
             _sorted.remove(_pair[0])
 
         return [

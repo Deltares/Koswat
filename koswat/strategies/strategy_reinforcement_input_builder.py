@@ -57,8 +57,8 @@ class StrategyReinforcementInputBuilder:
             )
 
         return FixedStrategyReinforcementInput(
-            reinforcement_type=self._reinforcement_type,
-            active=self._active,
-            base_costs_with_surtax=self._base_costs_with_surtax,
-            ground_level_surface=self._ground_level_surface,
+            reinforcement_type=self.reinforcement_type,
+            active=self.active,
+            base_costs_with_surtax=self.base_costs_with_surtax,
+            ground_level_surface=self.ground_level_surface,
         )
