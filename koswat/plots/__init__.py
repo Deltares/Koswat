@@ -1,1 +1,1 @@
-from koswat.plots.utils import *
+from koswat.plots.utils import get_cmap
