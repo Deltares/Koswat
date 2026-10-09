@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import math
-from typing import List
 
 from shapely import geometry
 
@@ -39,7 +38,7 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
         self.layer_data = None
         self.base_geometry = None
 
-    def _get_offset_coordinates(self, depth: float) -> List[geometry.Point]:
+    def _get_offset_coordinates(self, depth: float) -> list[geometry.Point]:
         # Get the offset linestring
         _offset_geom_linestring = self.upper_linestring.parallel_offset(
             -depth, side="left", join_style=2, mitre_limit=10
@@ -59,13 +58,13 @@ class KoswatCoatingLayerBuilder(KoswatLayerBuilderProtocol):
         return _offset_geom_coords
 
     def _get_offset_geometry(
-        self, offset_geom_coords: List[geometry.Point]
+        self, offset_geom_coords: list[geometry.Point]
     ) -> geometry.LineString:
         offset_geom_coords.reverse()
         return geometry.LineString(offset_geom_coords)
 
     def _get_layer_geometry(
-        self, offset_geom_coords: List[geometry.Point]
+        self, offset_geom_coords: list[geometry.Point]
     ) -> geometry.Polygon:
         # Avoid duplicates while preserving order
         _layer_geometry_points = list(dict.fromkeys(self.upper_linestring.coords))
