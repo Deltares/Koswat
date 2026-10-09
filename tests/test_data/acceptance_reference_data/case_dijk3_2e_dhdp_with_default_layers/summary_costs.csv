@@ -1,13 +1,13 @@
 Profile type;Grondmaatregel binnendijks;Grondmaatregel buitendijks;Verticale piping oplossing;Kwelscherm;Stabiliteitswand teen;Stabiliteitswand kruin;Kistdam
 Strategy reinforcement order;-1;-1;-1;-1;-1;-1;-1
-Cost per km (Euro/km);3180790.0;17359964.97;1681860.0;3277577.8;1592778.0;5233385.0;12795299.61
-Cost per km incl surtax (Euro/km);7366282.11;42941832.12;4245766.74;7819258.63;4557776.37;15159223.95;41770985.52
-New grass volume (quantity):;16.8;508.25;4.8;1.8;0.03;0.03;0.03
-New grass volume (cost):;208.99;6322.63;59.71;22.39;0.37;0.37;0.43
-New grass volume (cost incl surtax):;524.36;15863.48;149.82;56.18;1.04;1.04;1.18
-New clay volume (quantity):;42.05;487.37;19.05;17.05;14.23;14.23;24.18
-New clay volume (cost):;759.0;8797.03;343.85;307.75;256.91;256.91;436.39
-New clay volume (cost incl surtax):;1904.34;22071.74;862.73;772.15;713.44;713.44;1211.85
+Cost per km (Euro/km);3180790.0;3273666.86;1681860.0;3277577.8;1592778.0;5233385.0;12795299.61
+Cost per km incl surtax (Euro/km);7366282.11;7599310.16;4245766.74;7819258.63;4557776.37;15159223.95;41770985.52
+New grass volume (quantity):;16.8;18.78;4.8;1.8;0.03;0.03;0.03
+New grass volume (cost):;208.99;233.62;59.71;22.39;0.37;0.37;0.43
+New grass volume (cost incl surtax):;524.36;586.16;149.82;56.18;1.04;1.04;1.18
+New clay volume (quantity):;42.05;44.6;19.05;17.05;14.23;14.23;24.18
+New clay volume (cost):;759.0;805.03;343.85;307.75;256.91;256.91;436.39
+New clay volume (cost incl surtax):;1904.34;2019.82;862.73;772.15;713.44;713.44;1211.85
 New core volume (quantity):;120.95;120.95;35.95;35.95;13.26;13.26;1.79
 New core volume (cost):;1328.07;1328.07;394.77;394.77;145.56;145.56;19.64
 New core volume (cost incl surtax):;3332.14;3332.14;990.49;990.49;404.21;404.21;54.55
@@ -20,12 +20,12 @@ Reused core volume (cost incl surtax):;175.59;175.59;175.59;175.59;194.35;194.35
 Removed material volume (quantity):;0;0;0;0;0;0;0
 Removed material volume (cost):;0.0;0.0;0.0;0.0;0.0;0.0;0.0
 Removed material volume (cost incl surtax):;0.0;0.0;0.0;0.0;0.0;0.0;0.0
-New grass layer surface (quantity):;89.15;105.03;49.15;39.15;33.54;33.54;49.95
-New grass layer surface (cost):;78.45;92.42;43.25;34.45;29.51;29.51;43.95
-New grass layer surface (cost incl surtax):;196.84;231.89;108.53;86.45;81.96;81.96;122.05
-New clay layer surface (quantity):;87.26;103.13;47.26;37.26;31.83;31.83;48.26
-New clay layer surface (cost):;56.72;67.03;30.72;24.22;20.69;20.69;31.37
-New clay layer surface (cost incl surtax):;142.3;168.19;77.07;60.76;57.45;57.45;87.12
+New grass layer surface (quantity):;89.15;105.6;49.15;39.15;33.54;33.54;49.95
+New grass layer surface (cost):;78.45;92.92;43.25;34.45;29.51;29.51;43.95
+New grass layer surface (cost incl surtax):;196.84;233.15;108.53;86.45;81.96;81.96;122.05
+New clay layer surface (quantity):;87.26;94.21;47.26;37.26;31.83;31.83;48.26
+New clay layer surface (cost):;56.72;61.24;30.72;24.22;20.69;20.69;31.37
+New clay layer surface (cost incl surtax):;142.3;153.65;77.07;60.76;57.45;57.45;87.12
 New core layer surface (quantity):;83.83;89.21;33.83;33.83;28.68;28.68;45.17
 New core layer surface (cost):;50.3;53.53;20.3;20.3;17.21;17.21;27.1
 New core layer surface (cost incl surtax):;126.2;134.29;50.93;50.93;47.79;47.79;75.25
