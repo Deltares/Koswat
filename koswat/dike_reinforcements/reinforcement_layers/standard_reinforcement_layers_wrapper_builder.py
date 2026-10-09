@@ -86,7 +86,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         # Due to issue `KOSWAT-235` we found out that when a coating layer intersects its previous
         # geometry, the resulting added geometry will not be calculated correctly.
         _res = new_coating_layer.upper_points.intersection(relative_base_layer)
-        if not (isinstance(_res, Polygon) or isinstance(_res, MultiLineString)):
+        if not (isinstance(_res, (Polygon, MultiLineString))):
             return as_unified_geometry(
                 get_normalized_polygon_difference(
                     new_coating_layer.material_geometry, relative_base_layer

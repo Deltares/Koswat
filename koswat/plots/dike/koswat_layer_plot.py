@@ -58,7 +58,7 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         )
             ValueError: When the `KoswatLayerProtocol` material has not been registered.
         """
-        _x_coords, y_coords = self.koswat_object.outer_geometry.boundary.coords.xy
+        _x_coords, _y_coords = self.koswat_object.outer_geometry.boundary.coords.xy
         dict_values = dict(color=color, linewidth=2, zorder=1)
         if self.koswat_object.material_type == KoswatMaterialType.SAND:
             dict_values["linestyle"] = "dashdot"
@@ -70,7 +70,7 @@ class KoswatLayerPlot(KoswatPlotProtocol):
             raise ValueError(
                 f"Material {self.koswat_object.material_type.name} not supported for plotting."
             )
-        self.subplot.plot(_x_coords, y_coords, **dict_values)
+        self.subplot.plot(_x_coords, _y_coords, **dict_values)
         _x_points, _y_points = list(zip(*self.koswat_object.upper_points.coords))
         self.subplot.scatter(_x_points, _y_points)
 
