@@ -19,8 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import logging
-
 from shapely import affinity, geometry, ops
 
 
@@ -30,15 +28,16 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
     For this reason we need to ensure all geometries are 'normalized' based on this criteria.
 
     Args:
-        dike_polygon (geometry.Polygon): Polygon to normalized.
+        dike_polygon (geometry.Polygon | geometry.MultiPolygon): Polygon to normalized.
 
     Returns:
-        geometry.Polygon: Normalized polygon.
+        geometry.Polygon | geometry.MultiPolygon: Normalized polygon.
     """
-    if isinstance(dike_polygon.boundary, geometry.MultiLineString):
-        logging.warning(
-            "Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this."
-        )
+    if dike_polygon.is_empty:
+        return dike_polygon
+    if isinstance(dike_polygon, geometry.MultiPolygon):
+        for _geom in dike_polygon.geoms:
+            _geom = order_geometry_points(_geom)
         return dike_polygon
     _x, _y = tuple(map(list, dike_polygon.boundary.coords.xy))
     # remove last point as it's repeated.
@@ -57,7 +56,7 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
 
 def as_unified_geometry(
     source_geom: geometry.Polygon | geometry.MultiPolygon,
-) -> geometry.Polygon:
+) -> geometry.Polygon | geometry.MultiPolygon:
     """
     Ensures the calculated geometry is returned as a single polygon.
 
@@ -65,10 +64,8 @@ def as_unified_geometry(
         source_geom (geometry.Polygon | geometry.MultiPolygon): Calculated source geometry.
 
     Returns:
-        geometry.Polygon: Unified resulting geometry with its points ordered (first one is the most-left x coordinate).
+        geometry.Polygon | geometry.MultiPolygon: Unified resulting geometry with its points ordered (first one is the most-left x coordinate).
     """
-    if isinstance(source_geom, geometry.MultiPolygon):
-        return order_geometry_points(source_geom.union(source_geom.convex_hull))
     return order_geometry_points(source_geom)
 
 
