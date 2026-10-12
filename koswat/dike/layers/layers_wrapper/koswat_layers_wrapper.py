@@ -21,8 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-from typing import List
-
 from koswat.dike.layers.base_layer import KoswatBaseLayer
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
@@ -33,14 +31,14 @@ from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_protocol import (
 
 class KoswatLayersWrapper(KoswatLayersWrapperProtocol):
     base_layer: KoswatBaseLayer
-    coating_layers: List[KoswatCoatingLayer]
+    coating_layers: list[KoswatCoatingLayer]
 
     def __init__(self) -> None:
         self.base_layer = None
         self.coating_layers = []
 
     @property
-    def layers(self) -> List[KoswatLayerProtocol]:
+    def layers(self) -> list[KoswatLayerProtocol]:
         """
         All the stored layers being the `KoswatBaseLayer` the latest one in the collection.
 

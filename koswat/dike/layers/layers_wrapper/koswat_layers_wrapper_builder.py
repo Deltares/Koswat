@@ -21,8 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-from typing import List
-
 from shapely import geometry
 
 from koswat.core.geometries.calc_library import profile_points_to_polygon
@@ -39,7 +37,7 @@ from koswat.dike.layers.layers_wrapper.koswat_layers_wrapper_builder_protocol im
 
 class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
     layers_data: dict
-    profile_points: List[geometry.Point]
+    profile_points: list[geometry.Point]
     profile_geometry: geometry.Polygon
 
     def __init__(self) -> None:
@@ -47,7 +45,7 @@ class KoswatLayersWrapperBuilder(KoswatLayersWrapperBuilderProtocol):
         self.profile_points = []
         self.profile_geometry = None
 
-    def _get_coating_layers(self) -> List[KoswatCoatingLayer]:
+    def _get_coating_layers(self) -> list[KoswatCoatingLayer]:
         _c_layers_data = self.layers_data.get("coating_layers", [])
         if not _c_layers_data:
             return []
