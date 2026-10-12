@@ -54,21 +54,6 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
     return geometry.Polygon(_points)
 
 
-def as_unified_geometry(
-    source_geom: geometry.Polygon | geometry.MultiPolygon,
-) -> geometry.Polygon | geometry.MultiPolygon:
-    """
-    Ensures the calculated geometry is returned as a single polygon.
-
-    Args:
-        source_geom (geometry.Polygon | geometry.MultiPolygon): Calculated source geometry.
-
-    Returns:
-        geometry.Polygon | geometry.MultiPolygon: Unified resulting geometry with its points ordered (first one is the most-left x coordinate).
-    """
-    return order_geometry_points(source_geom)
-
-
 def get_relative_core_layer(
     core_geometry: geometry.Polygon, coating_geometry: geometry.Polygon
 ) -> geometry.Polygon:
@@ -97,7 +82,7 @@ def get_relative_core_layer(
     )
     _wrapper_polygon = geometry.Polygon(_wrapper_points)
     _fixed_layer_geom = _wrapper_polygon.intersection(coating_geometry)
-    return as_unified_geometry(_fixed_layer_geom.union(core_geometry))
+    return order_geometry_points(_fixed_layer_geom.union(core_geometry))
 
 
 def get_polygon_coordinates(

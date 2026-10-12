@@ -23,10 +23,10 @@ from shapely.geometry import LineString, MultiLineString, MultiPolygon, Point, P
 from shapely.ops import split
 
 from koswat.core.geometries.calc_library import (
-    as_unified_geometry,
     get_normalized_polygon_difference,
     get_polygon_surface_points,
     get_relative_core_layer,
+    order_geometry_points,
 )
 from koswat.dike.layers.base_layer.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
@@ -99,7 +99,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         # geometry, the resulting added geometry will not be calculated correctly.
         _res = new_coating_layer.upper_points.intersection(relative_base_layer)
         if not (isinstance(_res, (Polygon, MultiLineString))):
-            return as_unified_geometry(
+            return order_geometry_points(
                 get_normalized_polygon_difference(
                     new_coating_layer.material_geometry, relative_base_layer
                 )
@@ -162,7 +162,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             # Calculate the removed geometry.
             _removed_geom = _old_geom.difference(_relative_core_geom)
             if any(_rc_layer_list):
-                _removed_geom = as_unified_geometry(
+                _removed_geom = order_geometry_points(
                     _removed_geom.difference(_wrapped_calc_layer.old_layer_geometry)
                 )
 
