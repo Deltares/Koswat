@@ -22,7 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from shapely import affinity, geometry, ops
 
 
-def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
+def order_geometry_points(
+    dike_polygon: geometry.Polygon | geometry.MultiPolygon,
+) -> geometry.Polygon | geometry.MultiPolygon:
     """
     In koswat we handle polygon operations expecting the lowest 'x' coordinate to be the initial and last point of a geometry.
     For this reason we need to ensure all geometries are 'normalized' based on this criteria.
@@ -35,10 +37,12 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
     """
     if dike_polygon.is_empty:
         return dike_polygon
+
     if isinstance(dike_polygon, geometry.MultiPolygon):
         for _geom in dike_polygon.geoms:
             _geom = order_geometry_points(_geom)
         return dike_polygon
+
     _x, _y = tuple(map(list, dike_polygon.boundary.coords.xy))
     # remove last point as it's repeated.
     _x.pop(-1)
@@ -86,13 +90,13 @@ def get_relative_core_layer(
 
 
 def get_polygon_coordinates(
-    pol_geometry: geometry.Polygon | geometry.MultiPolygon,
+    pol_geometry: geometry.Polygon,
 ) -> geometry.LineString:
     """
     Given a single or multi geometry returns the coordinates composing its outer layout.
 
     Args:
-        pol_geometry (geometry.Polygon | geometry.MultiPolygon): Source geometry.
+        pol_geometry (geometry.Polygon): Source geometry.
 
     Raises:
         NotImplementedError: When the provided geometry is not yet supported.

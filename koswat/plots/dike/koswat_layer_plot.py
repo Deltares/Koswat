@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from matplotlib import pyplot
-from numpy import concatenate
 from shapely.geometry import LineString, MultiLineString
 
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
@@ -33,7 +32,7 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 class KoswatLayerPlot(KoswatPlotProtocol):
     koswat_object: KoswatLayerProtocol
-    subplot: pyplot.axes
+    subplot: pyplot.Axes
 
     @staticmethod
     def _get_xy_line_coords(
@@ -52,7 +51,7 @@ class KoswatLayerPlot(KoswatPlotProtocol):
             linestyle="solid",
         )
 
-    def plot(self, color: str) -> None:
+    def plot(self, color: str) -> pyplot.Axes:
         """
         Plots a `KoswatLayerProtocol` into the provided canvas `plot_axes` with the requested `color`.
 

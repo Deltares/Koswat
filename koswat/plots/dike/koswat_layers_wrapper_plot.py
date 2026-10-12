@@ -32,9 +32,9 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 class KoswatLayersWrapperPlot(KoswatPlotProtocol):
     koswat_object: KoswatLayersWrapperProtocol
-    subplot: pyplot.axes
+    subplot: pyplot.Axes
 
-    def plot(self, *args, **kwargs) -> pyplot.axes:
+    def plot(self, *args, **kwargs) -> pyplot.Axes:
         _n_layers = len(self.koswat_object.layers)
         _unique_color = kwargs.get("unique_color", None)
         _colors = get_cmap(n_colors=_n_layers)
@@ -43,6 +43,7 @@ class KoswatLayersWrapperPlot(KoswatPlotProtocol):
         for idx, _polygon in enumerate(self.koswat_object.layers):
             _layer_plot.koswat_object = _polygon
             _layer_plot.plot(color=_unique_color if _unique_color else _colors(idx))
+        return self.subplot
 
     @classmethod
     def with_layers_list(
