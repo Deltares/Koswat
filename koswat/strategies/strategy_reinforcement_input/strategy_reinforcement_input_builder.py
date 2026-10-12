@@ -28,11 +28,9 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
     ReinforcementProfileProtocol,
 )
 
-from . import (
-    FixedStrategyReinforcementInput,
-    FlexibleStrategyReinforcementInput,
-    StrategyReinforcementInputProtocol,
-)
+from .fixed_strategy_reinforcement_input import FixedStrategyReinforcementInput
+from .flexible_strategy_reinforcement_input import FlexibleStrategyReinforcementInput
+from .strategy_reinforcement_input_protocol import StrategyReinforcementInputProtocol
 
 
 @dataclass
