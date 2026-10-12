@@ -37,13 +37,19 @@ class KoswatLayerPlot(KoswatPlotProtocol):
 
     @staticmethod
     def _get_xy_line_coords(
-        koswat_geometry: LineString | MultiLineString,
+        koswat_geometry: LineString,
     ) -> tuple[list[float], list[float]]:
-        if isinstance(koswat_geometry, LineString):
-            return tuple(map(list, koswat_geometry.coords.xy))
+        return tuple(map(list, koswat_geometry.coords.xy))
 
-        return tuple(
-            map(concatenate, zip(*map(lambda x: x.coords.xy, koswat_geometry.geoms)))
+    def _plot_surface(self, surface_geometry: LineString) -> None:
+        _x, _y = self._get_xy_line_coords(surface_geometry)
+        self.subplot.plot(
+            _x,
+            _y,
+            color="#000",
+            linewidth=2,
+            zorder=1,
+            linestyle="solid",
         )
 
     def plot(self, color: str) -> None:
@@ -75,15 +81,9 @@ class KoswatLayerPlot(KoswatPlotProtocol):
         self.subplot.scatter(_x_points, _y_points)
 
         if isinstance(self.koswat_object, ReinforcementLayerProtocol):
-            _surface_x, _surface_y = self._get_xy_line_coords(
-                self.koswat_object.new_layer_surface
-            )
-            self.subplot.plot(
-                _surface_x,
-                _surface_y,
-                color="#000",
-                linewidth=2,
-                zorder=1,
-                linestyle="solid",
-            )
+            if isinstance(self.koswat_object.new_layer_surface, MultiLineString):
+                for geom in self.koswat_object.new_layer_surface.geoms:
+                    self._plot_surface(geom)
+            else:
+                self._plot_surface(self.koswat_object.new_layer_surface)
         return self.subplot
