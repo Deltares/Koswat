@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from shapely.geometry import LineString, MultiLineString, Point, Polygon
+from shapely.geometry import LineString, MultiLineString, MultiPolygon, Point, Polygon
 from shapely.ops import split
 
 from koswat.core.geometries.calc_library import (
@@ -60,6 +60,18 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
 
         return _reinforcement_layers_wrapper
 
+    def _get_base_surface_points(
+        self,
+        added_geom: Polygon | MultiPolygon,
+        new_layer_geom: Polygon,
+    ) -> LineString:
+        if isinstance(added_geom, MultiPolygon):
+            # In case the added geometry is a MultiPolygon,
+            # calculate the surface points based on the new layer geometry to avoid bypassing unaffected points.
+            # This happens in case of a waterside soil reinforcement.
+            return get_polygon_surface_points(new_layer_geom)
+        return get_polygon_surface_points(added_geom)
+
     def _get_base_layer(self, new_layer: KoswatLayerProtocol) -> ReinforcementBaseLayer:
         _reinforced_base_layer = ReinforcementBaseLayer.from_koswat_base_layer(
             new_layer
@@ -72,8 +84,9 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         )
         _reinforced_base_layer.old_layer_geometry = _old_geom
         _reinforced_base_layer.new_layer_geometry = _added_geometry
-        _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
-            _added_geometry
+
+        _reinforced_base_layer.new_layer_surface = self._get_base_surface_points(
+            _added_geometry, new_layer.outer_geometry
         )
         return _reinforced_base_layer
 
@@ -86,7 +99,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         # Due to issue `KOSWAT-235` we found out that when a coating layer intersects its previous
         # geometry, the resulting added geometry will not be calculated correctly.
         _res = new_coating_layer.upper_points.intersection(relative_base_layer)
-        if not (isinstance(_res, Polygon) or isinstance(_res, MultiLineString)):
+        if not (isinstance(_res, (Polygon, MultiLineString))):
             return as_unified_geometry(
                 get_normalized_polygon_difference(
                     new_coating_layer.material_geometry, relative_base_layer
