@@ -28,6 +28,9 @@ from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
     ObstacleSurroundingsWrapper,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     ReinforcementRoomCalculatorProtocol,
 )
@@ -38,6 +41,8 @@ class SurroundingsWrapper:
     dike_section: str = ""
     traject: str = ""
     subtraject: str = ""
+    max_polderside_width_extension: float = float("nan")
+    max_waterside_width_extension: float = float("nan")
 
     obstacle_surroundings_wrapper: ObstacleSurroundingsWrapper = field(
         default_factory=ObstacleSurroundingsWrapper
@@ -45,6 +50,30 @@ class SurroundingsWrapper:
     infrastructure_surroundings_wrapper: InfrastructureSurroundingsWrapper = field(
         default_factory=InfrastructureSurroundingsWrapper
     )
+
+    def supports_reinforcement_width(
+        self, reinforcement: ReinforcementProfileProtocol
+    ) -> bool:
+        """
+        Determines if a reinforcement would fit given these surroundings wrapper.
+
+        Args:
+            reinforcement (ReinforcementProfileProtocol): Reinforcement to analyze.
+
+        Returns:
+            bool: the criteria result
+        """
+
+        def _compare_widths(reinforcement_width: float, max_width: float) -> bool:
+            if float.isnan(max_width):
+                return True
+            return reinforcement_width <= max_width
+
+        return _compare_widths(
+            reinforcement.waterside_width, self.max_waterside_width_extension
+        ) and _compare_widths(
+            reinforcement.polderside_width, self.max_polderside_width_extension
+        )
 
     def get_locations_at_safe_distance(
         self, room_calculator: ReinforcementRoomCalculatorProtocol

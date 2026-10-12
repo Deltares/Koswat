@@ -52,8 +52,6 @@ class InfraPriorityStrategy(StrategyProtocol):
     per cluster.
     """
 
-    _order_strategy: OrderStrategy
-
     @staticmethod
     def get_common_available_measures_costs(
         infra_cluster: InfraCluster,
@@ -162,22 +160,24 @@ class InfraPriorityStrategy(StrategyProtocol):
     def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
         _clustered_locations = []
         # 1. Run `OrderStrategy` to generate an initial cluster formation.
-        self._order_strategy = OrderStrategy()
+        _order_strategy_output = OrderStrategy().apply_strategy(strategy_input)
         for _infra_cluster in self._get_initial_state(
-            self._order_strategy, strategy_input
+            _order_strategy_output.location_reinforcements, strategy_input
         ):
             self._set_cheapest_measure_per_cluster(_infra_cluster, strategy_input)
             _clustered_locations.extend(_infra_cluster.cluster)
         return StrategyOutput(
             location_reinforcements=_clustered_locations,
-            reinforcement_order=self._order_strategy.reinforcement_order,
+            reinforcement_order=_order_strategy_output.reinforcement_order,
         )
 
     def _get_initial_state(
-        self, order_strategy: OrderStrategy, strategy_input: StrategyInput
+        self,
+        location_reinforcements: list[StrategyLocationReinforcement],
+        strategy_input: StrategyInput,
     ) -> Iterator[InfraCluster]:
         for _grouped_by, _grouping in groupby(
-            order_strategy.apply_strategy(strategy_input).location_reinforcements,
+            location_reinforcements,
             key=lambda x: x.current_selected_measure,
         ):
             _grouping_data = list(_grouping)

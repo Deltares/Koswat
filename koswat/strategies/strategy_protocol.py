@@ -27,6 +27,11 @@ from koswat.strategies.strategy_output import StrategyOutput
 
 @runtime_checkable
 class StrategyProtocol(Protocol):
+    """
+    Represents a strategy, which is applied invoking the `apply_strategy` method.
+
+    """
+
     def apply_strategy(
         self,
         strategy_input: StrategyInput,

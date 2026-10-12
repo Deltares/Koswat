@@ -83,31 +83,6 @@ class OrderStrategy(StrategyProtocol):
             CofferdamReinforcementProfile,
         ]
 
-    def get_strategy_order_for_reinforcements(
-        self,
-        strategy_reinforcements: list[StrategyReinforcementInputProtocol],
-    ) -> list[type[ReinforcementProfileProtocol]]:
-        """
-        Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
-        possibly removing reinforcement types that are more expensive and more restrictive than others.
-        Inactive reinforcements are ignored.
-        If active, SoilReinforcement should be the first reinforcement type.
-        Cofferdam should be the last reinforcement type.
-
-        Input:
-            strategy_reinforcements (list[StrategyReinforcementInput]): list of reinforcement types with costs and surface
-
-        Returns:
-            list[type[ReinforcementProfileProtocol]]: list of reinforcement types
-        """
-        _sorted_reinforcements = OrderStrategyReinforcementSortCriteria(
-            strategy_reinforcements
-        ).sort()
-        _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
-            _sorted_reinforcements
-        ).filter()
-        return [x.reinforcement_type for x in _filtered_reinforcements]
-
     @staticmethod
     def get_strategy_reinforcements(
         strategy_locations: list[StrategyLocationInput],
@@ -151,7 +126,7 @@ class OrderStrategy(StrategyProtocol):
 
     def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
 
-        self.reinforcement_order = self.get_strategy_order_for_reinforcements(
+        self.reinforcement_order = self._get_strategy_order_for_reinforcements(
             strategy_input.strategy_reinforcements
         )
         _strategy_reinforcements = self.get_strategy_reinforcements(
@@ -169,3 +144,16 @@ class OrderStrategy(StrategyProtocol):
             location_reinforcements=_strategy_reinforcements,
             reinforcement_order=self.reinforcement_order,
         )
+
+    def _get_strategy_order_for_reinforcements(
+        self,
+        strategy_reinforcements: list[StrategyReinforcementInputProtocol],
+        strategy_input: StrategyInput,
+    ) -> list[type[ReinforcementProfileProtocol]]:
+        _sorted_reinforcements = OrderStrategyReinforcementSortCriteria(
+            strategy_reinforcements
+        ).sort()
+        _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
+            strategy_input=strategy_input
+        ).filter(_sorted_reinforcements)
+        return [x.reinforcement_type for x in _filtered_reinforcements]

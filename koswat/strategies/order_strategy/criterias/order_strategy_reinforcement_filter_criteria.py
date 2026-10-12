@@ -22,36 +22,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
+from koswat.strategies.criterias.strategy_reinforcement_width_boundaries_filter_criteria import (
+    StrategyReinforcementWidthBoundariesFilterCriteria,
+)
+from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
+    StrategyReinforcementFilterCriteriaProtocol,
+)
 from koswat.strategies.strategy_reinforcement_input import (
     FixedStrategyReinforcementInput,
     StrategyReinforcementInputProtocol,
 )
 
 
-class OrderStrategyReinforcementFilterCriteria:
+class OrderStrategyReinforcementFilterCriteria(
+    StrategyReinforcementFilterCriteriaProtocol
+):
     """
     Verifies if a given `strategy_input` should be skipped based on its type and costs,
     in comparison with a collection of other strategies (`other_strategies`)
     """
 
-    def __init__(
-        self,
-        strategies: list[StrategyReinforcementInputProtocol],
-    ):
-        self.strategies = strategies
+    def __init__(self, strategy_input: StrategyInput) -> None:
+        self.strategy_input = strategy_input
 
-    def filter(self) -> list[StrategyReinforcementInputProtocol]:
-        """
-        Filters the strategies based on their costs and types.
-
-        Returns:
-            list[StrategyReinforcementInputProtocol]: A list of strategies that are not skippable.
-        """
-        if not self.strategies:
+    def filter(
+        self, strategy_reinforcements: list[StrategyReinforcementInputProtocol]
+    ) -> list[StrategyReinforcementInputProtocol]:
+        if not strategy_reinforcements:
             return []
         _chosen_strategies = []
+
+        _prefiltered_strategies = StrategyReinforcementWidthBoundariesFilterCriteria(
+            self.strategy_input
+        ).filter(strategy_reinforcements)
+
         _eligible_strategies = list(
-            filter(lambda x: self._is_eligible(x), self.strategies)
+            filter(lambda x: self._is_eligible(x), _prefiltered_strategies)
         )
         for _strategy in _eligible_strategies:
             if not self._is_comparable(_strategy) or self._is_optimal(

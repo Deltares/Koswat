@@ -40,6 +40,8 @@ class StrategyInput:
     )
     reinforcement_min_buffer: float = 0.0
     reinforcement_min_length: float = 0.0
+    reinforcement_max_width_polderside: float = 0.0
+    reinforcement_max_width_waterside: float = 0.0
 
     @property
     def reinforcement_min_cluster(self) -> int:

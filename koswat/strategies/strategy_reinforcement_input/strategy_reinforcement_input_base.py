@@ -25,6 +25,8 @@ from dataclasses import dataclass
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_width_boundaries import StrategyWidthBoundaries
 
 from .strategy_reinforcement_input_protocol import StrategyReinforcementInputProtocol
 
@@ -39,6 +41,7 @@ class StrategyReinforcementInputBase(ABC, StrategyReinforcementInputProtocol):
     active: bool = True
     base_costs_with_surtax: float = 0.0
     ground_level_surface: float = 0.0
+    reinforcement_boundaries: StrategyWidthBoundaries
 
     def _has_greater_costs_than(
         self, other: StrategyReinforcementInputProtocol
@@ -59,3 +62,10 @@ class StrategyReinforcementInputBase(ABC, StrategyReinforcementInputProtocol):
         return self._has_greater_costs_than(
             other
         ) and self._has_greater_or_equal_ground_level_surface_than(other)
+
+    def is_within_boundaries(self, strategy_input: StrategyInput) -> bool:
+        _surrounding_boundaries = StrategyWidthBoundaries(
+            width_polderside=strategy_input.width_boundaries.width_polderside,
+            width_waterside=strategy_input.width_boundaries.width_waterside,
+        )
+        return self.reinforcement_boundaries.within(_surrounding_boundaries)
