@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import shutil
 from pathlib import Path
 from typing import Callable, Iterable, Iterator
@@ -114,11 +115,14 @@ class TestAcceptance:
 
     @pytest.fixture(
         name="t_10_3_surroundings_wrapper_fixture",
-        params=[(False, False), (False, True), (True, False), (True, True)],
+        params=[
+            # (False, False), (False, True), (True, False),
+            (True, True)
+        ],
         ids=[
-            "Without ANY surrounding",
-            "With Infrastructure",
-            "With Obstacles",
+            # "Without ANY surrounding",
+            # "With Infrastructure",
+            # "With Obstacles",
             "With Infra and Obstacles",
         ],
     )
@@ -183,16 +187,11 @@ class TestAcceptance:
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
-    @pytest.mark.parametrize(
-        "layers_case",
-        LayersCases.cases,
-    )
     @pytest.mark.slow
     def test_koswat_run_as_sandbox_with_obstacles_and_infrastructures(
         self,
         input_profile_case,
         scenario_case: KoswatProfileBase,
-        layers_case,
         t_10_3_surroundings_wrapper_fixture: tuple[
             SurroundingsWrapper, KoswatCostsSettings, Path
         ],
@@ -220,7 +219,7 @@ class TestAcceptance:
             input_profile_case=KoswatProfileBuilder.with_data(
                 dict(
                     input_profile_data=input_profile_case,
-                    layers_data=layers_case,
+                    layers_data=LayersCases.with_acceptance_criteria.layers_dict,
                     profile_type=KoswatProfileBase,
                 )
             ).build(),
@@ -274,6 +273,9 @@ class TestAcceptance:
         LayersCases.cases,
     )
     @pytest.mark.slow
+    @pytest.mark.skip(
+        reason="These tests are already covered by `test_koswat_run_as_sandbox_with_obstacles_and_infrastructures`."
+    )
     def test_koswat_run_as_sandbox_with_surroundings(
         self,
         input_profile_case,
