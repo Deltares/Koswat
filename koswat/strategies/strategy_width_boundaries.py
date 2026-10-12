@@ -46,8 +46,8 @@ class StrategyWidthBoundaries:
             StrategyWidthBoundaries: An instance with the extracted width boundaries.
         """
         return cls(
-            width_polderside=profile.width_polderside,
-            width_waterside=profile.width_waterside,
+            width_polderside=profile.polderside_width,
+            width_waterside=profile.waterside_width,
         )
 
     def within(self, other: "StrategyWidthBoundaries") -> bool:
