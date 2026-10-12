@@ -19,7 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from dataclasses import dataclass
+from math import isnan
+from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
+
+@dataclass(kw_only=True)
 class StrategyWidthBoundaries:
     """
     Represents the width boundaries for a reinforcement input.
@@ -27,6 +32,22 @@ class StrategyWidthBoundaries:
 
     width_polderside: float = float("nan")
     width_waterside: float = float("nan")
+
+    @classmethod
+    def from_profile(cls, profile: KoswatProfileProtocol) -> "StrategyWidthBoundaries":
+        """
+        Creates a `StrategyWidthBoundaries` instance from a profile.
+
+        Args:
+            profile: The profile to extract width boundaries from.
+
+        Returns:
+            StrategyWidthBoundaries: An instance with the extracted width boundaries.
+        """
+        return cls(
+            width_polderside=profile.width_polderside,
+            width_waterside=profile.width_waterside,
+        )
 
     def within(self, other: "StrategyWidthBoundaries") -> bool:
         """
@@ -38,12 +59,12 @@ class StrategyWidthBoundaries:
         Returns:
             bool: True if the current width boundaries are within the other boundaries, False otherwise.
         """
-        if float.isnan(self.width_polderside) or float.isnan(self.width_waterside):
+        if isnan(self.width_polderside) or isnan(self.width_waterside):
             return False
 
-        if float.isnan(other.width_polderside):
+        if isnan(other.width_polderside):
             return self.width_polderside <= other.width_polderside
-        if float.isnan(other.width_waterside):
+        if isnan(other.width_waterside):
             return self.width_waterside <= other.width_waterside
         return (
             self.width_polderside <= other.width_polderside

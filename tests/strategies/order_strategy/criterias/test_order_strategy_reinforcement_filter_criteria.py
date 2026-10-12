@@ -33,8 +33,8 @@ class TestOrderStrategyReinforcementFilterCriteria:
 
         # 2. Run test.
         _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
-            example_strategy_input.strategy_reinforcements
-        ).filter()
+            example_strategy_input
+        ).filter(example_strategy_input.strategy_reinforcements)
 
         # 3. Verify expectations
         assert _filtered_reinforcements == _expected_result
@@ -62,8 +62,8 @@ class TestOrderStrategyReinforcementFilterCriteria:
 
         # 2. Run test.
         _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
-            example_strategy_input.strategy_reinforcements
-        ).filter()
+            example_strategy_input
+        ).filter(example_strategy_input.strategy_reinforcements)
 
         # 3. Verify expectations
         assert _filtered_reinforcements == _expected_result

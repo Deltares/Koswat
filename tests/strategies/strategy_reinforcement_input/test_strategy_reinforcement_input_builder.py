@@ -18,6 +18,7 @@ class TestStrategyReinforcementInputBuilder:
             active=True,
             base_costs_with_surtax=100.0,
             ground_level_surface=5.0,
+            reinforcement_boundaries=None,
         )
 
         # 2. When
@@ -29,3 +30,4 @@ class TestStrategyReinforcementInputBuilder:
         assert result.active == builder.active
         assert result.base_costs_with_surtax == builder.base_costs_with_surtax
         assert result.ground_level_surface == builder.ground_level_surface
+        assert result.reinforcement_boundaries == builder.reinforcement_boundaries

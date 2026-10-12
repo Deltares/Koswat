@@ -43,16 +43,19 @@ class StrategyReinforcementWidthBoundariesFilterCriteria(
         self,
         strategy_input: StrategyInput,
     ):
-        self.strategy_input = strategy_input
+        self._width_boundaries = StrategyWidthBoundaries(
+            width_polderside=strategy_input.reinforcement_max_width_polderside,
+            width_waterside=strategy_input.reinforcement_max_width_waterside,
+        )
 
     def filter(
         self, strategy_reinforcements: list[StrategyReinforcementInputProtocol]
     ) -> list[StrategyReinforcementInputProtocol]:
         """
-        Filters the given reinforcement profiles based on the surroundings criteria.
+        Filters the given reinforcement profiles based on the width boundaries criteria.
 
         Returns:
-            list[StrategyReinforcementInputProtocol]: List of reinforcement profiles that meet the surroundings criteria.
+            list[StrategyReinforcementInputProtocol]: List of reinforcement profiles that meet the width boundaries criteria.
         """
         return [
             _profile
@@ -64,11 +67,8 @@ class StrategyReinforcementWidthBoundariesFilterCriteria(
     def _reinforcement_meets_criteria(
         self, reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
-        _width_boundaries = StrategyWidthBoundaries(
-            width_polderside=self.strategy_input.width_boundaries.width_polderside,
-            width_waterside=self.strategy_input.width_boundaries.width_waterside,
-        )
-        if reinforcement.is_within_boundaries(_width_boundaries):
+
+        if reinforcement.is_within_boundaries(self._width_boundaries):
             return True
         logging.warning(
             "Reinforcement %s exceeds the maximum allowed width extension. Skipping.",
