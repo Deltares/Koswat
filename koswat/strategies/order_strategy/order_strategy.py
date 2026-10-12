@@ -127,7 +127,7 @@ class OrderStrategy(StrategyProtocol):
     def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
 
         self.reinforcement_order = self._get_strategy_order_for_reinforcements(
-            strategy_input.strategy_reinforcements
+            strategy_input
         )
         _strategy_reinforcements = self.get_strategy_reinforcements(
             strategy_input.strategy_locations, self.reinforcement_order
@@ -147,11 +147,10 @@ class OrderStrategy(StrategyProtocol):
 
     def _get_strategy_order_for_reinforcements(
         self,
-        strategy_reinforcements: list[StrategyReinforcementInputProtocol],
         strategy_input: StrategyInput,
     ) -> list[type[ReinforcementProfileProtocol]]:
         _sorted_reinforcements = OrderStrategyReinforcementSortCriteria(
-            strategy_reinforcements
+            strategy_input.strategy_reinforcements
         ).sort()
         _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
             strategy_input=strategy_input

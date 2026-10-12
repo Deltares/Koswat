@@ -58,7 +58,7 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -83,7 +83,7 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -100,7 +100,7 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -118,7 +118,7 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -137,7 +137,7 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -175,7 +175,7 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+            example_strategy_input
         )
 
         # 3. Verify expectations
