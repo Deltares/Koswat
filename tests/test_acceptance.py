@@ -115,14 +115,8 @@ class TestAcceptance:
 
     @pytest.fixture(
         name="t_10_3_surroundings_wrapper_fixture",
-        params=[
-            # (False, False), (False, True), (True, False),
-            (True, True)
-        ],
+        params=[(True, True)],
         ids=[
-            # "Without ANY surrounding",
-            # "With Infrastructure",
-            # "With Obstacles",
             "With Infra and Obstacles",
         ],
     )
