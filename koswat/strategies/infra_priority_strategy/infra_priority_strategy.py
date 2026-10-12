@@ -164,7 +164,11 @@ class InfraPriorityStrategy(StrategyProtocol):
         for _infra_cluster in self._get_initial_state(
             _order_strategy_output.location_reinforcements, strategy_input
         ):
-            self._set_cheapest_measure_per_cluster(_infra_cluster, strategy_input)
+            self._set_cheapest_measure_per_cluster(
+                _infra_cluster,
+                strategy_input,
+                _order_strategy_output.reinforcement_order,
+            )
             _clustered_locations.extend(_infra_cluster.cluster)
         return StrategyOutput(
             location_reinforcements=_clustered_locations,
@@ -190,7 +194,10 @@ class InfraPriorityStrategy(StrategyProtocol):
             )
 
     def _set_cheapest_measure_per_cluster(
-        self, infra_cluster: InfraCluster, strategy_input: StrategyInput
+        self,
+        infra_cluster: InfraCluster,
+        strategy_input: StrategyInput,
+        reinforcement_order: list[type[ReinforcementProfileProtocol]],
     ):
         # 2. Get common available measures for each cluster
         _min_costs = infra_cluster.current_cost
@@ -204,7 +211,7 @@ class InfraPriorityStrategy(StrategyProtocol):
             _icc_costs = 0
             for _sub_cluster in _clustering_option:
                 _costs_dict = self.get_common_available_measures_costs(
-                    _sub_cluster, self._order_strategy.reinforcement_order
+                    _sub_cluster, reinforcement_order
                 )
                 _icc.add_cluster(_sub_cluster, _costs_dict)
                 _icc_costs += min(_icc.cluster_costs[-1].values())
