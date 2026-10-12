@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_width_boundaries import StrategyWidthBoundaries
 from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
     StrategyReinforcementFilterCriteriaProtocol,
 )
@@ -63,7 +64,11 @@ class StrategyReinforcementWidthBoundariesFilterCriteria(
     def _reinforcement_meets_criteria(
         self, reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
-        if reinforcement.is_within_boundaries(self.strategy_input):
+        _width_boundaries = StrategyWidthBoundaries(
+            width_polderside=self.strategy_input.width_boundaries.width_polderside,
+            width_waterside=self.strategy_input.width_boundaries.width_waterside,
+        )
+        if reinforcement.is_within_boundaries(_width_boundaries):
             return True
         logging.warning(
             "Reinforcement %s exceeds the maximum allowed width extension. Skipping.",

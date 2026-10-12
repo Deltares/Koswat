@@ -23,7 +23,6 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_width_boundaries import StrategyWidthBoundaries
 
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
@@ -60,12 +59,14 @@ class StrategyReinforcementInputProtocol(Protocol):
         """
         pass
 
-    def is_within_boundaries(self, strategy_input: StrategyInput) -> bool:
+    def is_within_boundaries(
+        self, surrounding_boundaries: StrategyWidthBoundaries
+    ) -> bool:
         """
         Determines if the reinforcement input is within the defined boundaries.
 
         Args:
-            strategy_input (StrategyInput): The strategy input to check against the boundaries.
+            surrounding_boundaries (StrategyWidthBoundaries): The surrounding boundaries to check against.
 
         Returns:
             bool: True if within boundaries, False otherwise.

@@ -51,30 +51,6 @@ class SurroundingsWrapper:
         default_factory=InfrastructureSurroundingsWrapper
     )
 
-    def supports_reinforcement_width(
-        self, reinforcement: ReinforcementProfileProtocol
-    ) -> bool:
-        """
-        Determines if a reinforcement would fit given these surroundings wrapper.
-
-        Args:
-            reinforcement (ReinforcementProfileProtocol): Reinforcement to analyze.
-
-        Returns:
-            bool: the criteria result
-        """
-
-        def _compare_widths(reinforcement_width: float, max_width: float) -> bool:
-            if float.isnan(max_width):
-                return True
-            return reinforcement_width <= max_width
-
-        return _compare_widths(
-            reinforcement.waterside_width, self.max_waterside_width_extension
-        ) and _compare_widths(
-            reinforcement.polderside_width, self.max_polderside_width_extension
-        )
-
     def get_locations_at_safe_distance(
         self, room_calculator: ReinforcementRoomCalculatorProtocol
     ) -> list[PointSurroundings]:
