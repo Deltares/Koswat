@@ -11,6 +11,7 @@ issues_tests = test_data.joinpath("issues")
 
 
 class TestMain:
+
     def test_given_invalid_path_raises_value_error(self):
         _invalid_path = "not\\a\\path"
         _cli_arg = f'--input_file "{_invalid_path}"'
