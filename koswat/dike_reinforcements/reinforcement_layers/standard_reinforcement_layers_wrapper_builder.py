@@ -65,12 +65,12 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         added_geom: Polygon | MultiPolygon,
         new_layer_geom: Polygon,
     ) -> LineString:
-        if isinstance(added_geom, Polygon):
-            return get_polygon_surface_points(added_geom)
-        # In case the added geometry is a MultiPolygon,
-        # calculate the surface points based on the new layer geometry to avoid bypassing unaffected points.
-        # This happens in case of a waterside soil reinforcement.
-        return get_polygon_surface_points(new_layer_geom)
+        if isinstance(added_geom, MultiPolygon):
+            # In case the added geometry is a MultiPolygon,
+            # calculate the surface points based on the new layer geometry to avoid bypassing unaffected points.
+            # This happens in case of a waterside soil reinforcement.
+            return get_polygon_surface_points(new_layer_geom)
+        return get_polygon_surface_points(added_geom)
 
     def _get_base_layer(self, new_layer: KoswatLayerProtocol) -> ReinforcementBaseLayer:
         _reinforced_base_layer = ReinforcementBaseLayer.from_koswat_base_layer(
