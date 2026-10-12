@@ -20,9 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass
-from .strategy_reinforcement_input_base import (
-    StrategyReinforcementInputBase,
-)
+
+from .strategy_reinforcement_input_base import StrategyReinforcementInputBase
 
 
 @dataclass(kw_only=True)

@@ -21,12 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import ABC
 from dataclasses import dataclass
+
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from .strategy_reinforcement_input_protocol import (
-    StrategyReinforcementInputProtocol,
-)
+
+from .strategy_reinforcement_input_protocol import StrategyReinforcementInputProtocol
 
 
 @dataclass(kw_only=True)

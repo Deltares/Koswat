@@ -1,10 +1,10 @@
+from koswat.dike_reinforcements.reinforcement_profile import SoilReinforcementProfile
 from koswat.strategies.strategy_reinforcement_input.fixed_strategy_reinforcement_input import (
     FixedStrategyReinforcementInput,
 )
 from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_builder import (
     StrategyReinforcementInputBuilder,
 )
-from koswat.dike_reinforcements.reinforcement_profile import SoilReinforcementProfile
 
 
 class TestStrategyReinforcementInputBuilder:
