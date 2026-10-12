@@ -21,9 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-from itertools import product
-from typing import Optional
-
 from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
@@ -36,11 +33,17 @@ from koswat.dike_reinforcements.reinforcement_profile import (
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
+    OrderStrategyReinforcementFilterCriteria,
+)
 from koswat.strategies.order_strategy.order_strategy_buffering import (
     OrderStrategyBuffering,
 )
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
+)
+from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_sort_criteria import (
+    OrderStrategyReinforcementSortCriteria,
 )
 from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -48,7 +51,9 @@ from koswat.strategies.strategy_location_reinforcement import (
 )
 from koswat.strategies.strategy_output import StrategyOutput
 from koswat.strategies.strategy_protocol import StrategyProtocol
-from koswat.strategies.strategy_reinforcement_input import StrategyReinforcementInput
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
+    StrategyReinforcementInputProtocol,
+)
 from koswat.strategies.strategy_step.strategy_step_enum import StrategyStepEnum
 
 
@@ -60,7 +65,7 @@ class OrderStrategy(StrategyProtocol):
         list[type[ReinforcementProfileProtocol]]
     ):
         """
-        Give the default order for reinforcements types,
+        Gets the default order for reinforcements types,
         assuming they are sorted from cheapest to most expensive
         and least to most restrictive.
 
@@ -78,52 +83,9 @@ class OrderStrategy(StrategyProtocol):
             CofferdamReinforcementProfile,
         ]
 
-    def _split_reinforcements(
-        self,
-        reinforcements: list[StrategyReinforcementInput],
-    ) -> tuple[
-        list[StrategyReinforcementInput],
-        Optional[StrategyReinforcementInput],
-        StrategyReinforcementInput,
-    ]:
-        # All active items including Cofferdam, even if not active
-        _unsorted = list(
-            filter(
-                lambda x: x.active
-                or x.reinforcement_type == CofferdamReinforcementProfile,
-                reinforcements,
-            )
-        )
-        # SoilReinforcement, if active
-        _first = next(
-            (x for x in _unsorted if x.reinforcement_type == SoilReinforcementProfile),
-            None,
-        )
-        # Cofferdam
-        _last = next(
-            (
-                x
-                for x in _unsorted
-                if x.reinforcement_type == CofferdamReinforcementProfile
-            )
-        )
-
-        return (_unsorted, _first, _last)
-
-    def _merge_reinforcements(
-        self,
-        sorted: list[StrategyReinforcementInput],
-        first: Optional[StrategyReinforcementInput],
-        last: StrategyReinforcementInput,
-    ) -> list[StrategyReinforcementInput]:
-        # Remove first (if present) and last, to avoid duplicates.
-        sorted.remove(first) if first in sorted else None
-        sorted.remove(last) if last in sorted else None
-        return [first] + sorted + [last] if first else sorted + [last]
-
     def get_strategy_order_for_reinforcements(
         self,
-        strategy_reinforcements: list[StrategyReinforcementInput],
+        strategy_reinforcements: list[StrategyReinforcementInputProtocol],
     ) -> list[type[ReinforcementProfileProtocol]]:
         """
         Give the ordered reinforcement types for this strategy, from cheapest to most expensive,
@@ -138,37 +100,13 @@ class OrderStrategy(StrategyProtocol):
         Returns:
             list[type[ReinforcementProfileProtocol]]: list of reinforcement types
         """
-        if not strategy_reinforcements:
-            return []
-
-        # Order in a list to be sorted (least to most restrictive)
-        # and find item to be put first and last.
-        _unsorted, _first, _last = self._split_reinforcements(strategy_reinforcements)
-
-        # Sort the reinforcements from least to most restrictive, and cheapest to most expensive.
-        _sorted = sorted(
-            _unsorted,
-            key=lambda x: (x.ground_level_surface, x.base_costs_with_surtax),
-            reverse=True,
-        )
-
-        # Remove the reinforcements that are more expensive and less or equally restrictive than 1 of the others.
-        def remove_reinforcement(
-            pair: tuple[StrategyReinforcementInput, StrategyReinforcementInput],
-        ) -> bool:
-            return (
-                pair[0].base_costs_with_surtax > pair[1].base_costs_with_surtax
-                and pair[0].ground_level_surface >= pair[1].ground_level_surface
-            )
-
-        for _pair in product(_sorted[:-1], _sorted):
-            if remove_reinforcement(_pair) and _pair[0] in _sorted:
-                _sorted.remove(_pair[0])
-
-        return [
-            x.reinforcement_type
-            for x in self._merge_reinforcements(_sorted, _first, _last)
-        ]
+        _sorted_reinforcements = OrderStrategyReinforcementSortCriteria(
+            strategy_reinforcements
+        ).sort()
+        _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
+            _sorted_reinforcements
+        ).filter()
+        return [x.reinforcement_type for x in _filtered_reinforcements]
 
     @staticmethod
     def get_strategy_reinforcements(
@@ -212,6 +150,7 @@ class OrderStrategy(StrategyProtocol):
         return _strategy_reinforcements
 
     def apply_strategy(self, strategy_input: StrategyInput) -> StrategyOutput:
+
         self.reinforcement_order = self.get_strategy_order_for_reinforcements(
             strategy_input.strategy_reinforcements
         )

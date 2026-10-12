@@ -20,15 +20,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass
-
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
-    ReinforcementProfileProtocol,
+from .strategy_reinforcement_input_base import (
+    StrategyReinforcementInputBase,
 )
 
 
-@dataclass
-class StrategyReinforcementInput:
-    reinforcement_type: type[ReinforcementProfileProtocol]
-    active: bool = True
-    base_costs_with_surtax: float = 0.0
-    ground_level_surface: float = 0.0
+@dataclass(kw_only=True)
+class FlexibleStrategyReinforcementInput(StrategyReinforcementInputBase):
+    """
+    A `FlexibleStrategyReinforcementInput` is a `StrategyReinforcementInput` that can be
+    filtered out by other reinforcements based on costs and ground level surface.
+    This is useful for cases where certain reinforcements are optional or have
+    specific constraints that allow them to be excluded.
+    """
+
+    pass
