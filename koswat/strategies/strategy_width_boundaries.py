@@ -62,10 +62,15 @@ class StrategyWidthBoundaries:
         if isnan(self.width_polderside) or isnan(self.width_waterside):
             return False
 
+        if isnan(other.width_polderside) and isnan(other.width_waterside):
+            return True
+
         if isnan(other.width_polderside):
             return self.width_polderside <= other.width_polderside
+
         if isnan(other.width_waterside):
             return self.width_waterside <= other.width_waterside
+
         return (
             self.width_polderside <= other.width_polderside
             and self.width_waterside <= other.width_waterside
