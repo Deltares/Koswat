@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass
 from math import isnan
+import re
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 
 
@@ -59,19 +60,14 @@ class StrategyWidthBoundaries:
         Returns:
             bool: True if the current width boundaries are within the other boundaries, False otherwise.
         """
-        if isnan(self.width_polderside) or isnan(self.width_waterside):
-            return False
 
-        if isnan(other.width_polderside) and isnan(other.width_waterside):
-            return True
+        def _compare_widths(this: float, other: float) -> bool:
+            if isnan(this):
+                return False
+            if isnan(other):
+                return True
+            return this <= other
 
-        if isnan(other.width_polderside):
-            return self.width_polderside <= other.width_polderside
-
-        if isnan(other.width_waterside):
-            return self.width_waterside <= other.width_waterside
-
-        return (
-            self.width_polderside <= other.width_polderside
-            and self.width_waterside <= other.width_waterside
-        )
+        return _compare_widths(
+            self.width_polderside, other.width_polderside
+        ) and _compare_widths(self.width_waterside, other.width_waterside)
