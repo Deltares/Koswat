@@ -27,14 +27,14 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 class HighlightGeometryPlot(KoswatPlotProtocol):
     koswat_object: Polygon
-    subplot: pyplot.axes
+    subplot: pyplot.Axes
 
-    def plot(self, *args, **kwargs) -> pyplot.axes:
+    def plot(self, *args, **kwargs) -> pyplot.Axes:
         """
         Plots a layer highlighting its content.
 
         Returns:
-            pyplot.axes: Polygon with its area painted.
+            pyplot.Axes: Polygon with its area painted.
         """
         _color = "#e377c2"
         if isinstance(self.koswat_object, Polygon):

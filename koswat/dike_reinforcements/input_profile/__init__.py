@@ -1,5 +1,5 @@
 from koswat.dike_reinforcements.input_profile.cofferdam import (
-    CofferDamInputProfile,
+    CofferdamInputProfile,
     CofferdamInputProfileCalculation,
 )
 from koswat.dike_reinforcements.input_profile.piping_wall import (
@@ -9,6 +9,10 @@ from koswat.dike_reinforcements.input_profile.piping_wall import (
 from koswat.dike_reinforcements.input_profile.soil import (
     SoilInputProfile,
     SoilInputProfileCalculation,
+)
+from koswat.dike_reinforcements.input_profile.soil_waterside import (
+    SoilWatersideInputProfile,
+    SoilWatersideInputProfileCalculation,
 )
 from koswat.dike_reinforcements.input_profile.stability_wall_crest import (
     StabilityWallCrestInputProfile,
@@ -21,8 +25,4 @@ from koswat.dike_reinforcements.input_profile.stability_wall_toe import (
 from koswat.dike_reinforcements.input_profile.vertical_piping_solution import (
     VPSInputProfile,
     VPSInputProfileCalculation,
-)
-from koswat.dike_reinforcements.input_profile.waterside_soil import (
-    WatersideSoilInputProfile,
-    WatersideSoilInputProfileCalculation,
 )

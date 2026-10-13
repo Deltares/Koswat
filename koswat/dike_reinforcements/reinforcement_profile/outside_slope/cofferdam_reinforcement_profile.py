@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
-    CofferDamInputProfile,
+    CofferdamInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
@@ -36,7 +36,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calcula
 
 class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
     output_name: str = "Kistdam"
-    input_data: CofferDamInputProfile
+    input_data: CofferdamInputProfile
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float

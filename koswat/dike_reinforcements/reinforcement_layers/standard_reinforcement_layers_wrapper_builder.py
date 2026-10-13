@@ -19,14 +19,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from shapely.geometry import LineString, MultiLineString, Point, Polygon
+from shapely.geometry import LineString, MultiLineString, MultiPolygon, Point, Polygon
 from shapely.ops import split
 
 from koswat.core.geometries.calc_library import (
-    as_unified_geometry,
     get_normalized_polygon_difference,
     get_polygon_surface_points,
     get_relative_core_layer,
+    order_geometry_points,
 )
 from koswat.dike.layers.base_layer.koswat_base_layer import KoswatBaseLayer
 from koswat.dike.layers.koswat_layer_protocol import KoswatLayerProtocol
@@ -60,6 +60,16 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
 
         return _reinforcement_layers_wrapper
 
+    def _get_base_surface_points(
+        self,
+        added_geom: Polygon | MultiPolygon,
+    ) -> LineString | MultiLineString:
+        if isinstance(added_geom, MultiPolygon):
+            return MultiLineString(
+                list(map(get_polygon_surface_points, added_geom.geoms))
+            )
+        return get_polygon_surface_points(added_geom)
+
     def _get_base_layer(self, new_layer: KoswatLayerProtocol) -> ReinforcementBaseLayer:
         _reinforced_base_layer = ReinforcementBaseLayer.from_koswat_base_layer(
             new_layer
@@ -72,7 +82,8 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         )
         _reinforced_base_layer.old_layer_geometry = _old_geom
         _reinforced_base_layer.new_layer_geometry = _added_geometry
-        _reinforced_base_layer.new_layer_surface = get_polygon_surface_points(
+
+        _reinforced_base_layer.new_layer_surface = self._get_base_surface_points(
             _added_geometry
         )
         return _reinforced_base_layer
@@ -86,8 +97,8 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         # Due to issue `KOSWAT-235` we found out that when a coating layer intersects its previous
         # geometry, the resulting added geometry will not be calculated correctly.
         _res = new_coating_layer.upper_points.intersection(relative_base_layer)
-        if not (isinstance(_res, Polygon) or isinstance(_res, MultiLineString)):
-            return as_unified_geometry(
+        if not (isinstance(_res, (Polygon, MultiLineString))):
+            return order_geometry_points(
                 get_normalized_polygon_difference(
                     new_coating_layer.material_geometry, relative_base_layer
                 )
@@ -150,7 +161,7 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
             # Calculate the removed geometry.
             _removed_geom = _old_geom.difference(_relative_core_geom)
             if any(_rc_layer_list):
-                _removed_geom = as_unified_geometry(
+                _removed_geom = order_geometry_points(
                     _removed_geom.difference(_wrapped_calc_layer.old_layer_geometry)
                 )
 

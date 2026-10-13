@@ -31,7 +31,7 @@ from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protoc
 
 
 @dataclass
-class CofferDamInputProfile(
+class CofferdamInputProfile(
     ReinforcementInputProfileBase, ReinforcementInputProfileProtocol
 ):
     construction_length: float = math.nan
