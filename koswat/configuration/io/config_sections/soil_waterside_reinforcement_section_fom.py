@@ -66,6 +66,9 @@ class SoilWatersideReinforcementSectionFom(
             return SectionConfigHelper.get_float_without_default(input_val)
 
         _section.min_berm_height = _get_float(input_dict.get("min_bermhoogte", None))
+        _section.max_berm_height_factor = _get_float(
+            input_dict.get("max_bermhoogte_factor", None)
+        )
         _section.factor_increase_berm_height = _get_float(
             input_dict.get("factor_toename_bermhoogte", None)
         )

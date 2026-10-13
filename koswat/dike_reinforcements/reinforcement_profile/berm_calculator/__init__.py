@@ -16,3 +16,6 @@ from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.piping_ber
 from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.stability_berm_calculator import (
     StabilityBermCalculator,
 )
+from koswat.dike_reinforcements.reinforcement_profile.berm_calculator.waterside_berm_calculator import (
+    WatersideBermCalculator,
+)

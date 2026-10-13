@@ -34,4 +34,4 @@ class InputProfileEnum(Enum):
     STABILITY_WALL_TOE = 4
     STABILITY_WALL_CREST = 5
     COFFERDAM = 6
-    WATERSIDE_SOIL = 7
+    SOIL_WATERSIDE = 7

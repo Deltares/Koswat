@@ -13,7 +13,7 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 from koswat.dike.koswat_input_profile_protocol import KoswatInputProfileProtocol
 from koswat.dike.profile.koswat_input_profile_base import KoswatInputProfileBase
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
-    CofferDamInputProfile,
+    CofferdamInputProfile,
 )
 from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile_calculation import (
     CofferdamInputProfileCalculation,
@@ -136,7 +136,7 @@ class TestCofferdamInputProfileCalculation:
         _result = _calculator.build()
 
         # 3. Verify expectations
-        assert isinstance(_result, CofferDamInputProfile)
+        assert isinstance(_result, CofferdamInputProfile)
         assert isinstance(_result, KoswatInputProfileBase)
         assert isinstance(_result, KoswatInputProfileProtocol)
 

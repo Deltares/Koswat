@@ -25,13 +25,13 @@ from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings 
 )
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.input_profile import (
-    CofferDamInputProfile,
+    CofferdamInputProfile,
     PipingWallInputProfile,
     SoilInputProfile,
+    SoilWatersideInputProfile,
     StabilityWallCrestInputProfile,
     StabilityWallToeInputProfile,
     VPSInputProfile,
-    WatersideSoilInputProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope import (
     CofferdamReinforcementProfile,
@@ -51,10 +51,10 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 from koswat.dike_reinforcements.reinforcement_profile.standard import (
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
+    SoilWatersideReinforcementProfile,
     StabilityWallCrestReinforcementProfile,
     StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
-    WatersideSoilReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
@@ -65,13 +65,12 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforc
 
 _reinforcements = {
     SoilReinforcementProfile: SoilInputProfile,
-    # TODO: Not active yet #370
-    # WatersideSoilReinforcementProfile: WatersideSoilInputProfile,
+    SoilWatersideReinforcementProfile: SoilWatersideInputProfile,
     VPSReinforcementProfile: VPSInputProfile,
     PipingWallReinforcementProfile: PipingWallInputProfile,
     StabilityWallToeReinforcementProfile: StabilityWallToeInputProfile,
     StabilityWallCrestReinforcementProfile: StabilityWallCrestInputProfile,
-    CofferdamReinforcementProfile: CofferDamInputProfile,
+    CofferdamReinforcementProfile: CofferdamInputProfile,
 }
 
 

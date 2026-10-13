@@ -122,6 +122,9 @@ class BermCalculatedFactors:
             _dikebase_height_new,
             _dikebase_stability_new,
         )
+        _dikebase_piping_new_dict[InputProfileEnum.SOIL_WATERSIDE] = (
+            _dikebase_piping_new_dict[InputProfileEnum.PIPING_WALL]
+        )
         _dikebase_piping_new_dict[InputProfileEnum.STABILITY_WALL_TOE] = (
             _dikebase_piping_old
         )

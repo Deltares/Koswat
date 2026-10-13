@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-from shapely.geometry import LineString, MultiPolygon, Polygon
+from shapely.geometry import LineString, MultiLineString, MultiPolygon, Polygon
 
 from koswat.core.geometries.calc_library import get_polygon_coordinates
 from koswat.dike.layers.coating_layer import KoswatCoatingLayer
@@ -38,7 +38,7 @@ class ReinforcementCoatingLayer(ReinforcementLayerProtocol):
     upper_points: LineString
     old_layer_geometry: Polygon
     new_layer_geometry: Polygon | MultiPolygon
-    new_layer_surface: LineString
+    new_layer_surface: LineString | MultiLineString
     removal_layer_geometry: Polygon
 
     def __init__(self) -> None:

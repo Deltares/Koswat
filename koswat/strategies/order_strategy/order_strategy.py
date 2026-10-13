@@ -25,10 +25,10 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
+    SoilWatersideReinforcementProfile,
     StabilityWallCrestReinforcementProfile,
     StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
-    WatersideSoilReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
@@ -71,8 +71,7 @@ class OrderStrategy(StrategyProtocol):
         """
         return [
             SoilReinforcementProfile,
-            # TODO: Not active yet #370
-            # WatersideSoilReinforcementProfile,
+            # SoilWatersideReinforcementProfile,
             VPSReinforcementProfile,
             PipingWallReinforcementProfile,
             StabilityWallToeReinforcementProfile,

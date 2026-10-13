@@ -19,8 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from typing import List, Tuple
-
 from matplotlib import pyplot
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -29,10 +27,10 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 
 class ListKoswatProfilePlot(KoswatPlotProtocol):
-    koswat_object: List[Tuple[KoswatProfileProtocol, str]]
-    subplot: pyplot.axes
+    koswat_object: list[tuple[KoswatProfileProtocol, str]]
+    subplot: pyplot.Axes
 
-    def plot(self, *args, **kwargs) -> pyplot.axes:
+    def plot(self, *args, **kwargs) -> pyplot.Axes:
         _profile_plot = KoswatProfilePlot()
         _profile_plot.subplot = self.subplot
         for _profile, _plot_color in self.koswat_object:

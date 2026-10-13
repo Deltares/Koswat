@@ -19,8 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from typing import Optional
-
 from matplotlib import pyplot
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -30,9 +28,9 @@ from koswat.plots.koswat_plot_protocol import KoswatPlotProtocol
 
 class KoswatProfilePlot(KoswatPlotProtocol):
     koswat_object: KoswatProfileProtocol
-    subplot: pyplot.axes
+    subplot: pyplot.Axes
 
-    def plot(self, unique_color: Optional[str], *args, **kwargs) -> pyplot.axes:
+    def plot(self, unique_color: str | None, *args, **kwargs) -> pyplot.Axes:
         _layer_plot = KoswatLayersWrapperPlot()
         _layer_plot.subplot = self.subplot
         _layer_plot.koswat_object = self.koswat_object.layers_wrapper
