@@ -114,7 +114,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 active=reinforcement_cost.active,
                 base_costs_with_surtax=reinforcement_cost.base_costs_with_surtax,
                 ground_level_surface=_reinforcement.new_ground_level_surface,
-                reinforcement_boundaries=StrategyReinforcementWidths.from_reinforcement_profile(
+                reinforcement_widths=StrategyReinforcementWidths.from_reinforcement_profile(
                     _reinforcement
                 ),
             ).build()
