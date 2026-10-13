@@ -65,10 +65,9 @@ class StandardReinforcementLayersWrapperBuilder(KoswatLayersWrapperBuilderProtoc
         added_geom: Polygon | MultiPolygon,
     ) -> LineString | MultiLineString:
         if isinstance(added_geom, MultiPolygon):
-            _result = []
-            for _geom in added_geom.geoms:
-                _result.append(get_polygon_surface_points(_geom))
-            return MultiLineString(_result)
+            return MultiLineString(
+                list(map(get_polygon_surface_points, added_geom.geoms))
+            )
         return get_polygon_surface_points(added_geom)
 
     def _get_base_layer(self, new_layer: KoswatLayerProtocol) -> ReinforcementBaseLayer:
