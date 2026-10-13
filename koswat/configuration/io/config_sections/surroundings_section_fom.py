@@ -62,10 +62,10 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
                 input_config.get("toegestaanbuitendijkseversterking", None), True
             ),
             max_polderside_width_extension=_get_float(
-                input_config.get("max_toename_binnendijks", None)
+                input_config.get("max_toename_binnendijks", float("nan"))
             ),
             max_waterside_width_extension=_get_float(
-                input_config.get("max_toename_buitendijks", None)
+                input_config.get("max_toename_buitendijks", float("nan"))
             ),
             obstacle_types={
                 _type.get("type")

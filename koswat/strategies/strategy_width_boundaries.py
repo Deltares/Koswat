@@ -50,6 +50,22 @@ class StrategyWidthBoundaries:
             width_waterside=profile.waterside_width,
         )
 
+    def _is_unbound_field(self, field_value: float) -> bool:
+        return field_value is None or isnan(field_value)
+
+    @property
+    def is_unbound(self) -> bool:
+        """
+        Checks if the width boundaries are unbound (i.e., both widths are NaN).
+
+        Returns:
+            bool: True if both widths are NaN, False otherwise.
+        """
+
+        return self._is_unbound_field(self.width_polderside) and self._is_unbound_field(
+            self.width_waterside
+        )
+
     def within(self, other: "StrategyWidthBoundaries") -> bool:
         """
         Checks if the current width boundaries are within the specified other boundaries.
@@ -61,10 +77,15 @@ class StrategyWidthBoundaries:
             bool: True if the current width boundaries are within the other boundaries, False otherwise.
         """
 
+        if other.is_unbound:
+            return True
+        if self.is_unbound:
+            return False
+
         def _compare_widths(this: float, other: float) -> bool:
-            if isnan(this):
+            if self._is_unbound_field(this):
                 return False
-            if isnan(other):
+            if self._is_unbound_field(other):
                 return True
             return this <= other
 

@@ -8,7 +8,6 @@ class TestStrategyWidthBoundaries:
     @pytest.mark.parametrize(
         "max_width_polderside, max_width_waterside, expected",
         [
-            pytest.param(float("nan"), float("nan"), True, id="boundaries_nan"),
             pytest.param(
                 float("nan"), 40, True, id="polderside_nan, waterside does not exceed"
             ),
@@ -72,3 +71,31 @@ class TestStrategyWidthBoundaries:
 
         # 3. Verify expectations
         assert result is False
+
+    def test_when_within_given_unbound_boundaries_then_returns_true(self):
+        # 1. Define test data
+        boundaries = StrategyWidthBoundaries(
+            width_polderside=15.0, width_waterside=25.0
+        )
+        other_boundaries = StrategyWidthBoundaries(
+            width_polderside=float("nan"), width_waterside=float("nan")
+        )
+
+        # 2. Run test
+        result = boundaries.within(other_boundaries)
+
+        # 3. Verify expectations
+        assert result is True
+
+    @pytest.mark.parametrize("values", [(float("nan")), (None)])
+    def test_when_is_unbound_given_nan_widths_then_returns_true(self, values):
+        # 1. Define test data
+        boundaries = StrategyWidthBoundaries(
+            width_polderside=values, width_waterside=values
+        )
+
+        # 2. Run test
+        result = boundaries.is_unbound
+
+        # 3. Verify expectations
+        assert result is True
