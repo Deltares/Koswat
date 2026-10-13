@@ -42,7 +42,6 @@ class StrategyReinforcementInputProtocol(Protocol):
     base_costs_with_surtax: float
     ground_level_surface: float
     reinforcement_boundaries: StrategyWidthBoundaries
-    surroundings_boundaries: StrategyWidthBoundaries
 
     def is_more_cost_space_restrictive(
         self, other: StrategyReinforcementInputProtocol

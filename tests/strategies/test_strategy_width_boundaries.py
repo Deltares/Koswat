@@ -1,0 +1,74 @@
+import pytest
+
+from koswat.strategies.strategy_width_boundaries import StrategyWidthBoundaries
+
+
+class TestStrategyWidthBoundaries:
+
+    @pytest.mark.parametrize(
+        "max_width_polderside, max_width_waterside, expected",
+        [
+            pytest.param(float("nan"), float("nan"), True, id="boundaries_nan"),
+            pytest.param(
+                float("nan"), 40, True, id="polderside_nan, waterside does not exceed"
+            ),
+            pytest.param(
+                float("nan"), 0, False, id="polderside_nan, waterside exceeds"
+            ),
+            pytest.param(
+                40, float("nan"), True, id="waterside_nan, polderside does not exceed"
+            ),
+            pytest.param(
+                0, float("nan"), False, id="waterside_nan, polderside exceeds"
+            ),
+            pytest.param(15.0, 25.0, True, id="both_within"),
+            pytest.param(0.0, 0.0, False, id="both_exceed"),
+            pytest.param(0.0, 3.0, False, id="polderside_exceeds"),
+            pytest.param(15.0, 0.0, False, id="waterside_exceeds"),
+        ],
+    )
+    def test_when_within_given_other_boundaries_then_returns_expectation(
+        self, max_width_polderside: float, max_width_waterside: float, expected: bool
+    ):
+        # 1. Define test data
+        boundaries = StrategyWidthBoundaries(
+            width_polderside=15.0, width_waterside=25.0
+        )
+        other_boundaries = StrategyWidthBoundaries(
+            width_polderside=max_width_polderside, width_waterside=max_width_waterside
+        )
+
+        # 2. Run test
+        result = boundaries.within(other_boundaries)
+
+        # 3. Verify expectations
+        assert result is expected
+
+    @pytest.mark.parametrize(
+        "width_polderside, width_waterside",
+        [
+            pytest.param(float("nan"), float("nan"), id="both nan"),
+            pytest.param(
+                float("nan"), 1.0, id="polderside_nan, waterside does not exceed"
+            ),
+            pytest.param(
+                1.0, float("nan"), id="waterside_nan, polderside does not exceed"
+            ),
+        ],
+    )
+    def test_when_within_given_nan_width_then_returns_false(
+        self, width_polderside: float, width_waterside: float
+    ):
+        # 1. Define test data
+        boundaries = StrategyWidthBoundaries(
+            width_polderside=width_polderside, width_waterside=width_waterside
+        )
+        other_boundaries = StrategyWidthBoundaries(
+            width_polderside=15.0, width_waterside=25.0
+        )
+
+        # 2. Run test
+        result = boundaries.within(other_boundaries)
+
+        # 3. Verify expectations
+        assert result is False
