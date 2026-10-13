@@ -42,9 +42,9 @@ class OrderStrategyReinforcementFilterCriteria(
 
     def __init__(
         self,
-        eligible_strategy_reinforcements: list[StrategyReinforcementInputProtocol],
+        strategy_reinforcements: list[StrategyReinforcementInputProtocol],
     ):
-        self._eligible_strategy_reinforcements = eligible_strategy_reinforcements
+        self._strategy_reinforcements = strategy_reinforcements
 
     def meets_criteria(
         self, strategy_reinforcement: StrategyReinforcementInputProtocol
@@ -58,7 +58,7 @@ class OrderStrategyReinforcementFilterCriteria(
 
         return not any(
             self._can_be_filtered_out_by(strategy_reinforcement, _other_strategy)
-            for _other_strategy in self._eligible_strategy_reinforcements
+            for _other_strategy in self._strategy_reinforcements
             if _other_strategy != strategy_reinforcement
         )
 
