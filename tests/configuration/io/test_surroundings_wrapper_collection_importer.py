@@ -114,7 +114,7 @@ class TestSurroundingsWrapperCollectionImporter:
             active=True,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
-            buffer_waterside=0.42,
+            buffer_crest_waterside=0.42,
             roads_class2_width=2.4,
             roads_class24_width=4.2,
             roads_class47_width=24,

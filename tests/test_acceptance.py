@@ -311,7 +311,7 @@ class TestAcceptance:
             active=False,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
-            buffer_waterside=0,
+            buffer_crest_waterside=0,
             roads_class2_width=2,
             roads_class24_width=5,
             roads_class47_width=8,

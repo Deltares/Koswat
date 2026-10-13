@@ -70,7 +70,7 @@ class TestSurroundingsWrapper:
             active=True,
             surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
             infrastructure_costs_0dh=InfraCostsEnum.GEEN,
-            buffer_waterside=0.24,
+            buffer_crest_waterside=0.24,
             roads_class2_width=1,
             roads_class7_width=2,
             roads_class24_width=3,

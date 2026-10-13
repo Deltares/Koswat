@@ -37,7 +37,7 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
     active: bool
     surtax_factor_roads: SurtaxFactorEnum
     infrastructure_costs_0dh: InfraCostsEnum
-    buffer_waterside: float
+    buffer_crest_waterside: float
     roads_class2_width: float
     roads_class24_width: float
     roads_class47_width: float
@@ -55,7 +55,7 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
                 input_config["infrakosten_0dh"].upper()
             ],
             buffer_waterside=SectionConfigHelper.get_float(
-                input_config["buffer_buitendijks"]
+                input_config["buffer_kruin_buitendijks"]
             ),
             roads_class2_width=SectionConfigHelper.get_float(
                 input_config["wegen_klasse2_breedte"]
