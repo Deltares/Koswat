@@ -52,7 +52,7 @@ Possible improvements:
 - Add a limited number of locations.
 
 ### Surroundings tests
-A limited number of cases is tested, using the default dike profile (`InputProfileCases`) with 2 layer cases (`LayersCases`) and 3 different scenarios (`ScenarioCases`).
+A limited number of cases is tested, using the default dike profile (`InputProfileCases`) with an acceptance criteria layer case (`LayersCases`) and 3 different scenarios (`ScenarioCases`).
 
 Goal: TODO
 
@@ -70,7 +70,7 @@ Possible improvements:
 - Remove as they are superseded by the [Obstance and infrastructure tests](#Obstance-and-infrastructure-tests)?
 
 ### Obstacle and infrastructure tests
-A limited number of cases is tested, using the default dike profile (`InputProfileCases`) with 2 layer cases (`LayersCases`) and 3 different scenarios (`ScenarioCases`). These are combined with 4 different surrounding scenarios with and without infrastructure and/or obstacles.
+A limited number of cases is tested, using the default dike profile (`InputProfileCases`) with an acceptance criteria layer case (`LayersCases`) and 3 different scenarios (`ScenarioCases`). These are combined with the `t_10_3_surroundings_wrapper_fixture` surrounding scenario with infrastructure and obstacles.
 
 Goal: Validate the calculations for locations with obstacles and infrastructures work correctly.
 
