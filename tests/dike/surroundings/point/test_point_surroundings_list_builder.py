@@ -47,7 +47,7 @@ class TestPointSurroundingsListBuilder:
         # 3. Verify expectations.
         assert (
             str(exc_err.value)
-            == "No point fromt the *.shp file matches the ones in the *.csv file."
+            == "No point from the *.shp file matches the ones in the *.csv file."
         )
 
     @pytest.fixture(name="valid_builder")
