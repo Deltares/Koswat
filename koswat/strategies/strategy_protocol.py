@@ -32,7 +32,7 @@ class StrategyProtocol(Protocol):
         strategy_input: StrategyInput,
     ) -> StrategyOutput:
         """
-        Applies a specific strategy by matching each location (`PointSurroundings`)
+        Applies a specific strategy by matching each location (`PointSurroundingsProtocol`)
          to a valid reinforcement type (`ReinforcementProfileProtocol`).
 
         Args:

@@ -30,13 +30,14 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.configuration.io.shp import KoswatDikeLocationsShpFom
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+
+from .point_surroundings_protocol import PointSurroundingsProtocol
 
 
 @dataclass
 class PointSurroundingsListBuilder(BuilderProtocol):
     """
-    Builds a collection of points (`list[PointSurroundings]`) given the dike locations
+    Builds a collection of points (`list[PointSurroundingsProtocol]`) given the dike locations
     (`KoswatDikeLocationsShpFom`) and the surroundings around it
     (`KoswatSurroundingsCsvFom`).
     """
@@ -54,14 +55,14 @@ class PointSurroundingsListBuilder(BuilderProtocol):
 
     def _get_traject_points(
         self, start_idx: int, end_idx: int
-    ) -> list[PointSurroundings]:
+    ) -> list[PointSurroundingsProtocol]:
         if start_idx > end_idx:
             return self.koswat_csv_fom.points_surroundings_list[
                 end_idx : (start_idx + 1)
             ]
         return self.koswat_csv_fom.points_surroundings_list[start_idx : (end_idx + 1)]
 
-    def build(self) -> list[PointSurroundings]:
+    def build(self) -> list[PointSurroundingsProtocol]:
         if not self.koswat_shp_fom or not self.koswat_csv_fom:
             raise ValueError("FileObjectModel for both CSV and SHP should be provided.")
 

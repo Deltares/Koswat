@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass, field
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointSurroundingsProtocol
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
 )
@@ -48,15 +48,15 @@ class SurroundingsWrapper:
 
     def get_locations_at_safe_distance(
         self, room_calculator: ReinforcementRoomCalculatorProtocol
-    ) -> list[PointSurroundings]:
+    ) -> list[PointSurroundingsProtocol]:
         """
         Gets all locations which are safe from obstacle surroundings in a radius of `distance`.
 
         Args:
-            distance (float): Radius from each point that should be free of surroundings.
+            room_calculator (ReinforcementRoomCalculatorProtocol): The room calculator to determine safe distances.
 
         Returns:
-            List[PointSurroundings]: List of safe locations (points with surroundings).
+            list[PointSurroundingsProtocol]: List of safe locations (points with surroundings).
         """
         return self.obstacle_surroundings_wrapper.get_locations_at_safe_distance(
             room_calculator

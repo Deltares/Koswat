@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from pathlib import Path
-from typing import Optional
 
 from shapely import Point
 
@@ -29,10 +28,10 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+from koswat.dike.surroundings.point import (
     PointObstacleSurroundings,
+    PointSurroundingsProtocol,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
@@ -44,7 +43,7 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
         A;199186.66;515698.01;500;500;-76.0;104.0
     """
 
-    surroundings_buffer: Optional[float] = None
+    surroundings_buffer: float | None = None
 
     @property
     def applied_surroundings_buffer(self) -> float:
@@ -64,7 +63,7 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
 
     def _build_points_surroundings_list(
         self, entries: list[list[str]]
-    ) -> list[PointSurroundings]:
+    ) -> list[PointSurroundingsProtocol]:
         _point_list = []
         for idx, _point_entry in enumerate(entries):
             _point_entry.insert(0, idx)
@@ -72,14 +71,13 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
             _point_list.append(_ps)
         return _point_list
 
-    def _build_point_surroundings(self, entry: list[str]) -> PointSurroundings:
+    def _build_point_surroundings(self, entry: list[str]) -> PointSurroundingsProtocol:
         # Subtract the buffer from the distances, so that the resulting surroundings are already "buffered"
         # and can be directly used for calculations.
         return PointObstacleSurroundings(
             section=entry[1],
             traject_order=entry[0],
             location=Point(float(entry[2]), float(entry[3])),
-            surroundings_matrix=[],
             inside_distance=float(entry[4]) - self.applied_surroundings_buffer,
             outside_distance=float(entry[5]) - self.applied_surroundings_buffer,
             angle_inside=float(entry[6]),

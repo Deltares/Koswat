@@ -32,8 +32,10 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder import (
+from koswat.dike.surroundings.point import (
+    PointInfrastructureSurroundings,
+)
+from koswat.dike.surroundings.point.point_surroundings_list_builder import (
     PointSurroundingsListBuilder,
 )
 from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
@@ -67,7 +69,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
     def _get_surroundings_from_fom(
         self, csv_fom: SurroundingsEnum
-    ) -> list[PointSurroundings]:
+    ) -> list[PointInfrastructureSurroundings]:
         if csv_fom not in self.surroundings_csv_fom_collection:
             return []
         return PointSurroundingsListBuilder(

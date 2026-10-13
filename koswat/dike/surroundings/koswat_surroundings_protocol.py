@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from typing import Protocol, runtime_checkable
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointSurroundingsProtocol
 
 
 @runtime_checkable
@@ -30,4 +30,4 @@ class KoswatSurroundingsProtocol(Protocol):
     Empty interface to represent the Koswat surroundings and easily identify them throughout the solution.
     """
 
-    points: list[PointSurroundings]
+    points: list[PointSurroundingsProtocol]

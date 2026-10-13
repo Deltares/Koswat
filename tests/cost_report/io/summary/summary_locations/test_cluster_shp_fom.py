@@ -1,19 +1,15 @@
-from typing import Callable, Type
+from collections.abc import Callable
 
 from shapely import Point
 
 from koswat.cost_report.io.summary.summary_locations.cluster_shp_fom import (
     ClusterShpFom,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
-)
-from koswat.strategies.strategy_location_reinforcement import (
-    StrategyLocationReinforcement,
 )
 
 
@@ -21,7 +17,7 @@ class TestClusterShapeFom:
     def test_points_with_neighbour_extent_without_neighbours(
         self,
         cluster_shp_fom_factory: Callable[
-            [list[tuple[float, float]], Type[ReinforcementProfileProtocol], float],
+            [list[tuple[float, float]], type[ReinforcementProfileProtocol], float],
             ClusterShpFom,
         ],
     ):
@@ -44,7 +40,7 @@ class TestClusterShapeFom:
     def test_points_with_neighbour_extent_with_neighbours(
         self,
         cluster_shp_fom_factory: Callable[
-            [list[tuple[float, float]], Type[ReinforcementProfileProtocol], float],
+            [list[tuple[float, float]], type[ReinforcementProfileProtocol], float],
             ClusterShpFom,
         ],
     ):
@@ -74,7 +70,7 @@ class TestClusterShapeFom:
     def test_add_neighbour_extent(
         self,
         cluster_shp_fom_factory: Callable[
-            [list[tuple[float, float]], Type[ReinforcementProfileProtocol], float],
+            [list[tuple[float, float]], type[ReinforcementProfileProtocol], float],
             ClusterShpFom,
         ],
     ):

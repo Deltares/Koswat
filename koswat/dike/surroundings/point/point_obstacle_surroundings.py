@@ -24,15 +24,21 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from shapely import Point
+
+from .point_surroundings_protocol import PointSurroundingsProtocol
 
 
 @dataclass
-class PointObstacleSurroundings(PointSurroundings):
+class PointObstacleSurroundings(PointSurroundingsProtocol):
     """
     Object representing a `meter` with `x`, `y` coordinates in a polder (or else),
     extended with obstacle specific properties.
     """
+
+    section: str = ""
+    traject_order: int = -1
+    location: Point | None = None
 
     inside_distance: float = math.nan
     outside_distance: float = math.nan
