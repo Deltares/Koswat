@@ -37,7 +37,8 @@ class OrderStrategyReinforcementFilterCriteria(
     StrategyReinforcementFilterCriteriaProtocol
 ):
     """
-    This class is used to filter reinforcement profiles based on the order strategy criteria.
+    This class is used to filter reinforcement profiles based on the order criteria.
+    This takes into account the total cost-space of the reinforcement profiles and filters out the more expensive ones.
     """
 
     def __init__(

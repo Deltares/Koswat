@@ -34,7 +34,8 @@ class StrategyReinforcementActiveFilterCriteria(
     StrategyReinforcementFilterCriteriaProtocol
 ):
     """
-    This class is used to filter reinforcement profiles based on the active criteria.
+    This class is used to filter reinforcement profiles based on their active criteria.
+    It allows only active reinforcements or those of type `CofferdamReinforcementProfile` to pass the filter.
     """
 
     def criteria_met_by(

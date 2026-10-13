@@ -35,6 +35,10 @@ from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
 class StrategyReinforcementWidthBoundariesFilterCriteria(
     StrategyReinforcementFilterCriteriaProtocol
 ):
+    """
+    This class is used to filter reinforcement profiles based on the width boundaries criteria.
+    It checks if the reinforcement profiles polderside or waterside widths exceed the maximum allowed boundaries.
+    """
 
     def __init__(
         self,
