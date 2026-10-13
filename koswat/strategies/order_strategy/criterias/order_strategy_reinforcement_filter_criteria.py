@@ -22,16 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.strategies.criterias.strategy_reinforcement_active_filter_criteria import (
-    StrategyReinforcementActiveFilterCriteria,
+from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
+    StrategyReinforcementFilterCriteriaProtocol,
 )
-from koswat.strategies.criterias.strategy_reinforcement_comparable_filter_criteria import (
-    StrategyReinforcementComparableFilterCriteria,
-)
-from koswat.strategies.criterias.strategy_reinforcement_width_boundaries_filter_criteria import (
-    StrategyReinforcementWidthBoundariesFilterCriteria,
-)
-from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_reinforcement_input import (
     StrategyReinforcementInputProtocol,
 )
@@ -40,58 +33,22 @@ from koswat.strategies.strategy_reinforcement_input.fixed_strategy_reinforcement
 )
 
 
-class OrderStrategyReinforcementFilterCriteria:
+class OrderStrategyReinforcementFilterCriteria(
+    StrategyReinforcementFilterCriteriaProtocol
+):
     """
-    Verifies if a given `strategy_input` should be skipped based on its type and costs,
-    in comparison with a collection of other strategies (`other_strategies`)
+    This class is used to filter reinforcement profiles based on the order strategy criteria.
     """
 
-    def __init__(self, strategy_input: StrategyInput) -> None:
-        self.strategy_input = strategy_input
-        self.prefilters = [
-            StrategyReinforcementActiveFilterCriteria(),
-            StrategyReinforcementWidthBoundariesFilterCriteria(self.strategy_input),
-        ]
+    def __init__(
+        self,
+        eligible_strategy_reinforcements: list[StrategyReinforcementInputProtocol],
+    ):
+        self._eligible_strategy_reinforcements = eligible_strategy_reinforcements
 
-    def filter(
-        self, strategy_reinforcements: list[StrategyReinforcementInputProtocol]
-    ) -> list[StrategyReinforcementInputProtocol]:
-        """
-        Filters the given reinforcement profiles based on the collection criteria.
-
-        Returns:
-            list[StrategyReinforcementInputProtocol]: List of reinforcement profiles that meet the collection criteria.
-        """
-        if not strategy_reinforcements:
-            return []
-        _eligible_strategies = [
-            _reinforcement
-            for _reinforcement in filter(
-                self._strategy_reinforcement_meets_criteria, strategy_reinforcements
-            )
-        ]
-        return [
-            _strategy_reinforcement
-            for _strategy_reinforcement in _eligible_strategies
-            if self._is_optimal(_strategy_reinforcement, _eligible_strategies)
-        ]
-
-    def _strategy_reinforcement_meets_criteria(
+    def meets_criteria(
         self, strategy_reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
-        return all(
-            _criteria.meets_criteria(strategy_reinforcement)
-            for _criteria in self.prefilters
-        )
-
-    def _is_optimal(
-        self,
-        strategy_reinforcement: StrategyReinforcementInputProtocol,
-        eligible_strategy_reinforcements: list[StrategyReinforcementInputProtocol],
-    ) -> bool:
-        """
-        Determines if a strategy reinforcement meets the criteria to be considered for filtering.
-        """
         if (
             not self._is_comparable(strategy_reinforcement)
             or strategy_reinforcement.reinforcement_type
@@ -101,7 +58,7 @@ class OrderStrategyReinforcementFilterCriteria:
 
         return not any(
             self._can_be_filtered_out_by(strategy_reinforcement, _other_strategy)
-            for _other_strategy in eligible_strategy_reinforcements
+            for _other_strategy in self._eligible_strategy_reinforcements
             if _other_strategy != strategy_reinforcement
         )
 

@@ -5,7 +5,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
     SoilReinforcementProfile,
 )
 from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
-    OrderStrategyReinforcementFilterCriteria,
+    OrderStrategyReinforcementCollectionFilterCriteria,
 )
 from koswat.strategies.strategy_input import StrategyInput
 
@@ -32,7 +32,7 @@ class TestOrderStrategyReinforcementFilterCriteria:
         )
 
         # 2. Run test.
-        _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
+        _filtered_reinforcements = OrderStrategyReinforcementCollectionFilterCriteria(
             example_strategy_input
         ).filter(example_strategy_input.strategy_reinforcements)
 
@@ -61,7 +61,7 @@ class TestOrderStrategyReinforcementFilterCriteria:
         )
 
         # 2. Run test.
-        _filtered_reinforcements = OrderStrategyReinforcementFilterCriteria(
+        _filtered_reinforcements = OrderStrategyReinforcementCollectionFilterCriteria(
             example_strategy_input
         ).filter(example_strategy_input.strategy_reinforcements)
 
