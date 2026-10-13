@@ -86,7 +86,7 @@ class KoswatProfileBase(KoswatProfileProtocol):
     @property
     def waterside_width(self) -> float:
         """
-        The profile extend on the waterside from
+        The profile extent on the waterside from
         x-coordinate of point 4 of the (old) profile (assumed to be 0)
         to the smallest (left-most) x-coordinate of the (reinforced) profile.
 

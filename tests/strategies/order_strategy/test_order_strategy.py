@@ -57,8 +57,8 @@ class TestOrderStrategy:
         _strategy = OrderStrategy()
 
         # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+        _reinforcements = _strategy._get_strategy_order_for_reinforcements(
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -82,8 +82,8 @@ class TestOrderStrategy:
         _strategy = OrderStrategy()
 
         # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+        _reinforcements = _strategy._get_strategy_order_for_reinforcements(
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -99,8 +99,8 @@ class TestOrderStrategy:
         _strategy = OrderStrategy()
 
         # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+        _reinforcements = _strategy._get_strategy_order_for_reinforcements(
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -117,8 +117,8 @@ class TestOrderStrategy:
         _strategy = OrderStrategy()
 
         # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+        _reinforcements = _strategy._get_strategy_order_for_reinforcements(
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -136,8 +136,8 @@ class TestOrderStrategy:
         _strategy = OrderStrategy()
 
         # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+        _reinforcements = _strategy._get_strategy_order_for_reinforcements(
+            example_strategy_input
         )
 
         # 3. Verify expectations
@@ -174,8 +174,8 @@ class TestOrderStrategy:
         _strategy = OrderStrategy()
 
         # 2. Run test.
-        _reinforcements = _strategy.get_strategy_order_for_reinforcements(
-            example_strategy_input.strategy_reinforcements
+        _reinforcements = _strategy._get_strategy_order_for_reinforcements(
+            example_strategy_input
         )
 
         # 3. Verify expectations

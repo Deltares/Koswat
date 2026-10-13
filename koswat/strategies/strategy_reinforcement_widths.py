@@ -1,0 +1,98 @@
+"""
+                GNU GENERAL PUBLIC LICENSE
+                  Version 3, 29 June 2007
+
+KOSWAT, from the dutch combination of words `Kosts-Wat` (what are the costs)
+Copyright (C) 2025 Stichting Deltares
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+from dataclasses import dataclass
+from math import isnan
+
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+
+
+@dataclass(kw_only=True)
+class StrategyReinforcementWidths:
+    """
+    Represents the width boundaries for a reinforcement input.
+    """
+
+    width_polderside: float = float("nan")
+    width_waterside: float = float("nan")
+
+    @classmethod
+    def from_reinforcement_profile(
+        cls, reinforcement_profile: ReinforcementProfileProtocol
+    ) -> "StrategyReinforcementWidths":
+        """
+        Creates a `StrategyReinforcementWidths` instance from a profile.
+
+        Args:
+            reinforcement_profile: The profile to extract width boundaries from.
+
+        Returns:
+            StrategyReinforcementWidths: An instance with the extracted width boundaries.
+        """
+        return cls(
+            width_polderside=reinforcement_profile.new_ground_polderside,
+            width_waterside=reinforcement_profile.new_ground_waterside,
+        )
+
+    def _is_unbound_field(self, field_value: float) -> bool:
+        return field_value is None or isnan(field_value)
+
+    @property
+    def is_unbound(self) -> bool:
+        """
+        Checks if the width boundaries are unbound (i.e., both widths are NaN).
+
+        Returns:
+            bool: True if both widths are NaN, False otherwise.
+        """
+
+        return self._is_unbound_field(self.width_polderside) and self._is_unbound_field(
+            self.width_waterside
+        )
+
+    def within(self, other: "StrategyReinforcementWidths") -> bool:
+        """
+        Checks if the current width boundaries are within the specified other boundaries.
+
+        Args:
+            other (StrategyReinforcementWidths): The other width boundaries to compare against.
+
+        Returns:
+            bool: True if the current width boundaries are within the other boundaries, False otherwise.
+        """
+
+        if other.is_unbound:
+            return True
+        if self.is_unbound:
+            return False
+
+        def _compare_widths(this: float, other: float) -> bool:
+            if self._is_unbound_field(this):
+                return False
+            if self._is_unbound_field(other):
+                return True
+            return this <= other
+
+        return _compare_widths(
+            self.width_polderside, other.width_polderside
+        ) and _compare_widths(self.width_waterside, other.width_waterside)

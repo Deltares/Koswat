@@ -129,6 +129,8 @@ class KoswatSummaryBuilder(BuilderProtocol):
             strategy_reinforcements=_reinforcements,
             reinforcement_min_buffer=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer,
             reinforcement_min_length=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation,
+            reinforcement_max_width_polderside=self.run_scenario_settings.surroundings.max_polderside_extension,
+            reinforcement_max_width_waterside=self.run_scenario_settings.surroundings.max_waterside_extension,
         )
 
         # In theory this will become a factory (somewhere) where

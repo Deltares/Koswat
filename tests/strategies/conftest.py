@@ -21,6 +21,7 @@ from koswat.strategies.strategy_reinforcement_input import (
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
+from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 
 @pytest.fixture(name="example_strategy_input")
@@ -76,6 +77,9 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
             active=True,
             base_costs_with_surtax=_rtc.base_costs_with_surtax,
             ground_level_surface=10.0 * (len(_reinforcement_type_default_order) - _idx),
+            reinforcement_widths=StrategyReinforcementWidths(
+                width_polderside=50, width_waterside=25
+            ),
         ).build()
         for _idx, _rtc in enumerate(_levels_data)
     ]

@@ -44,6 +44,8 @@ class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
+    new_ground_waterside: float
+    new_ground_polderside: float
     allow_waterside_reinforcement: bool
 
     def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:

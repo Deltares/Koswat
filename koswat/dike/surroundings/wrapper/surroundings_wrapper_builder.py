@@ -65,6 +65,8 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             subtraject=self.location_shp_fom.dike_subtraject,
             obstacle_surroundings_wrapper=self._get_obstacle_surroundings_wrapper(),
             infrastructure_surroundings_wrapper=self._get_infrastructure_surroundings_wrapper(),
+            max_polderside_extension=self.surroundings_section_fom.max_polderside_extension,
+            max_waterside_extension=self.surroundings_section_fom.max_waterside_extension,
         )
 
     def _get_surroundings_from_fom(

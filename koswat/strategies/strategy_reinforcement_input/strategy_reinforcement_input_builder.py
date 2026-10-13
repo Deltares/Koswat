@@ -27,6 +27,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcemen
 from koswat.strategies.strategy_reinforcement_type_costs import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 from .fixed_strategy_reinforcement_input import FixedStrategyReinforcementInput
 from .flexible_strategy_reinforcement_input import FlexibleStrategyReinforcementInput
@@ -43,6 +44,7 @@ class StrategyReinforcementInputBuilder:
     active: bool
     base_costs_with_surtax: float
     ground_level_surface: float
+    reinforcement_widths: StrategyReinforcementWidths
 
     def build(self) -> StrategyReinforcementInputProtocol:
         if self.reinforcement_type is None:
@@ -54,6 +56,7 @@ class StrategyReinforcementInputBuilder:
                 active=self.active,
                 base_costs_with_surtax=self.base_costs_with_surtax,
                 ground_level_surface=self.ground_level_surface,
+                reinforcement_widths=self.reinforcement_widths,
             )
 
         return FixedStrategyReinforcementInput(
@@ -61,4 +64,5 @@ class StrategyReinforcementInputBuilder:
             active=self.active,
             base_costs_with_surtax=self.base_costs_with_surtax,
             ground_level_surface=self.ground_level_surface,
+            reinforcement_widths=self.reinforcement_widths,
         )
