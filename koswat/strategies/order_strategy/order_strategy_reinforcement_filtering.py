@@ -34,7 +34,7 @@ from koswat.strategies.strategy_reinforcement_input import (
 )
 
 
-class OrderStrategyReinforcementCollectionFilterCriteria:
+class OrderStrategyReinforcementFiltering:
     """
     Verifies if a given `strategy_input` should be skipped based on its type and costs,
     in comparison with a collection of other strategies (`other_strategies`)

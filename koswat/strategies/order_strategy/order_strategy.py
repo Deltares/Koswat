@@ -34,7 +34,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
     ReinforcementProfileProtocol,
 )
 from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_collection_filter_criteria import (
-    OrderStrategyReinforcementCollectionFilterCriteria,
+    OrderStrategyReinforcementFiltering,
 )
 from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_sort_criteria import (
     OrderStrategyReinforcementSortCriteria,
@@ -149,7 +149,7 @@ class OrderStrategy(StrategyProtocol):
         _sorted_reinforcements = OrderStrategyReinforcementSortCriteria(
             strategy_input.strategy_reinforcements
         ).sort()
-        _filtered_reinforcements = OrderStrategyReinforcementCollectionFilterCriteria(
+        _filtered_reinforcements = OrderStrategyReinforcementFiltering(
             strategy_input=strategy_input
         ).filter(_sorted_reinforcements)
         return [x.reinforcement_type for x in _filtered_reinforcements]

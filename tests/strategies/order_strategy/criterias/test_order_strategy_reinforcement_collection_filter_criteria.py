@@ -4,13 +4,13 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_re
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
-from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
-    OrderStrategyReinforcementCollectionFilterCriteria,
+from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_collection_filter_criteria import (
+    OrderStrategyReinforcementFiltering,
 )
 from koswat.strategies.strategy_input import StrategyInput
 
 
-class TestOrderStrategyReinforcementFilterCriteria:
+class TestOrderStrategyReinforcementCollectionFilterCriteria:
 
     def test_when_filter_given_less_cost_space_efficient_then_filters_out(
         self, example_strategy_input: list[StrategyInput]
@@ -32,7 +32,7 @@ class TestOrderStrategyReinforcementFilterCriteria:
         )
 
         # 2. Run test.
-        _filtered_reinforcements = OrderStrategyReinforcementCollectionFilterCriteria(
+        _filtered_reinforcements = OrderStrategyReinforcementFiltering(
             example_strategy_input
         ).filter(example_strategy_input.strategy_reinforcements)
 
@@ -61,7 +61,7 @@ class TestOrderStrategyReinforcementFilterCriteria:
         )
 
         # 2. Run test.
-        _filtered_reinforcements = OrderStrategyReinforcementCollectionFilterCriteria(
+        _filtered_reinforcements = OrderStrategyReinforcementFiltering(
             example_strategy_input
         ).filter(example_strategy_input.strategy_reinforcements)
 
