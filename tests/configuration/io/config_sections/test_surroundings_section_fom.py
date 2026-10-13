@@ -15,6 +15,8 @@ class TestSurroundingsSectionFom:
             construction_distance=100.0,
             construction_buffer=20.0,
             allow_waterside_reinforcement=True,
+            max_polderside_extension=15.0,
+            max_waterside_extension=25.0,
             obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": None},
         )
 
@@ -23,6 +25,8 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.allow_waterside_reinforcement is True
+        assert _surroundings_section_fom.max_polderside_extension == 15.0
+        assert _surroundings_section_fom.max_waterside_extension == 25.0
         assert _surroundings_section_fom.obstacle_types == {
             "bebouwing": 5,
             "spoorwegen": 10,
@@ -43,6 +47,8 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == None
         assert _surroundings_section_fom.construction_buffer == None
         assert _surroundings_section_fom.allow_waterside_reinforcement == None
+        assert math.isnan(_surroundings_section_fom.max_polderside_extension)
+        assert math.isnan(_surroundings_section_fom.max_waterside_extension)
         assert _surroundings_section_fom.obstacle_types == {}
 
     def test_when_from_config_given_set_defaults_true_then_expected_values_set(self):
@@ -59,6 +65,8 @@ class TestSurroundingsSectionFom:
         assert math.isnan(_surroundings_section_fom.construction_distance)
         assert math.isnan(_surroundings_section_fom.construction_buffer)
         assert _surroundings_section_fom.allow_waterside_reinforcement is True
+        assert math.isnan(_surroundings_section_fom.max_polderside_extension)
+        assert math.isnan(_surroundings_section_fom.max_waterside_extension)
         assert _surroundings_section_fom.obstacle_types == {}
 
     def test_from_config_with_omgevingtypes(self):
@@ -72,6 +80,8 @@ class TestSurroundingsSectionFom:
                 {"type": "water"},
             ],
             "toegestaanbuitendijkseversterking": False,
+            "max_toename_binnendijks": 15.0,
+            "max_toename_buitendijks": 25.0,
         }
 
         # 2. Run test.
@@ -84,6 +94,8 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == 100.0
         assert _surroundings_section_fom.construction_buffer == 20.0
         assert _surroundings_section_fom.allow_waterside_reinforcement is False
+        assert _surroundings_section_fom.max_polderside_extension == 15.0
+        assert _surroundings_section_fom.max_waterside_extension == 25.0
         assert _surroundings_section_fom.obstacle_types == {
             "bebouwing": 5,
             "spoorwegen": 10,

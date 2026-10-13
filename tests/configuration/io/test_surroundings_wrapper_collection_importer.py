@@ -105,6 +105,8 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             allow_waterside_reinforcement=True,
+            max_polderside_extension=None,
+            max_waterside_extension=None,
             obstacle_types={"bebouwing": 5, "spoorwegen": 10, "water": 0},
         )
 
@@ -185,6 +187,8 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=None,
             construction_buffer=None,
             allow_waterside_reinforcement=None,
+            max_polderside_extension=None,
+            max_waterside_extension=None,
             obstacle_types={"bebouwing_mismatch": 5, "spoorwegen": 10, "water": 0},
         )
         _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
@@ -214,6 +218,8 @@ class TestSurroundingsWrapperCollectionImporter:
             construction_distance=50,
             construction_buffer=10,
             allow_waterside_reinforcement=True,
+            max_polderside_extension=None,
+            max_waterside_extension=None,
             obstacle_types={"non_existing_obstacle_type": 0},
         )
 

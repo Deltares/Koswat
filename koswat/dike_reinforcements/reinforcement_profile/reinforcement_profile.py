@@ -42,5 +42,13 @@ class ReinforcementProfile(ReinforcementProfileProtocol, KoswatProfileBase):
     def new_ground_level_surface(self) -> float:
         return self.profile_width - self.old_profile.profile_width
 
+    @property
+    def new_ground_polderside(self) -> float:
+        return self.polderside_width - self.old_profile.polderside_width
+
+    @property
+    def new_ground_waterside(self) -> float:
+        return self.waterside_width - self.old_profile.waterside_width
+
     def __str__(self) -> str:
         return self.output_name.replace(" ", "_")

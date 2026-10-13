@@ -7,7 +7,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_to
 from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
     VPSReinforcementProfile,
 )
-from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_sort_criteria import (
+from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_sort_criteria import (
     OrderStrategyReinforcementSortCriteria,
 )
 from koswat.strategies.strategy_reinforcement_input.flexible_strategy_reinforcement_input import (
@@ -15,7 +15,7 @@ from koswat.strategies.strategy_reinforcement_input.flexible_strategy_reinforcem
 )
 
 
-class TestOrderStrategyReinforcementSortCriteria:
+class TestOrderStrategyReinforcementSorting:
     """
     Test suite for the OrderStrategyReinforcementSortCriteria class.
     """
@@ -27,23 +27,26 @@ class TestOrderStrategyReinforcementSortCriteria:
                 reinforcement_type=VPSReinforcementProfile,
                 ground_level_surface=10,
                 base_costs_with_surtax=1100,
+                reinforcement_widths=None,
             ),
             FlexibleStrategyReinforcementInput(
                 reinforcement_type=StabilityWallCrestReinforcementProfile,
                 ground_level_surface=15,
                 base_costs_with_surtax=1000,
+                reinforcement_widths=None,
             ),
             FlexibleStrategyReinforcementInput(
                 reinforcement_type=StabilityWallToeReinforcementProfile,
                 ground_level_surface=10,
                 base_costs_with_surtax=1000,
+                reinforcement_widths=None,
             ),
         ]
 
         # 2. When
-        _sorted_strategies = OrderStrategyReinforcementSortCriteria(
+        _sorted_strategies = OrderStrategyReinforcementSortCriteria().sort(
             _strategy_inputs
-        ).sort()
+        )
 
         # 3. Then
         assert (

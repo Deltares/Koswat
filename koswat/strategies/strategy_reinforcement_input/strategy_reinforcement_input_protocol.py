@@ -23,6 +23,8 @@ from __future__ import annotations
 
 from typing import Protocol
 
+from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
+
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -39,6 +41,7 @@ class StrategyReinforcementInputProtocol(Protocol):
     active: bool
     base_costs_with_surtax: float
     ground_level_surface: float
+    reinforcement_widths: StrategyReinforcementWidths
 
     def is_more_cost_space_restrictive(
         self, other: StrategyReinforcementInputProtocol
@@ -52,5 +55,19 @@ class StrategyReinforcementInputProtocol(Protocol):
 
         Returns:
             bool: True if this reinforcement input is more restrictive, False otherwise.
+        """
+        pass
+
+    def is_within_boundaries(
+        self, surrounding_widths: StrategyReinforcementWidths
+    ) -> bool:
+        """
+        Determines if the reinforcement input is within the defined boundaries.
+
+        Args:
+            surrounding_widths (StrategyReinforcementWidths): The surrounding widths to check against.
+
+        Returns:
+            bool: True if within boundaries, False otherwise.
         """
         pass

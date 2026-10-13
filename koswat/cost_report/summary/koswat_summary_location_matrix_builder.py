@@ -36,6 +36,7 @@ from koswat.strategies.strategy_reinforcement_input import (
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
+from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 
 @dataclass
@@ -113,6 +114,9 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
                 active=reinforcement_cost.active,
                 base_costs_with_surtax=reinforcement_cost.base_costs_with_surtax,
                 ground_level_surface=_reinforcement.new_ground_level_surface,
+                reinforcement_widths=StrategyReinforcementWidths.from_reinforcement_profile(
+                    _reinforcement
+                ),
             ).build()
 
         # Get the reinforcement cost of the first location for each reinforcement (if present).

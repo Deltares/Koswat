@@ -38,6 +38,8 @@ class SurroundingsWrapper:
     dike_section: str = ""
     traject: str = ""
     subtraject: str = ""
+    max_polderside_extension: float = float("nan")
+    max_waterside_extension: float = float("nan")
 
     obstacle_surroundings_wrapper: ObstacleSurroundingsWrapper = field(
         default_factory=ObstacleSurroundingsWrapper
@@ -53,7 +55,7 @@ class SurroundingsWrapper:
         Gets all locations which are safe from obstacle surroundings in a radius of `distance`.
 
         Args:
-            distance (float): Radius from each point that should be free of surroundings.
+            room_calculator (ReinforcementRoomCalculatorProtocol): Room calculator to determine safe distances.
 
         Returns:
             List[PointSurroundings]: List of safe locations (points with surroundings).

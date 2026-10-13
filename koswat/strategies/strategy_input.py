@@ -40,6 +40,10 @@ class StrategyInput:
     )
     reinforcement_min_buffer: float = 0.0
     reinforcement_min_length: float = 0.0
+    # By default there are no maximum width boundaries,
+    # so we set them to NaN to indicate that they are not defined.
+    reinforcement_max_width_polderside: float = float("nan")
+    reinforcement_max_width_waterside: float = float("nan")
 
     @property
     def reinforcement_min_cluster(self) -> int:

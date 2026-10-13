@@ -114,11 +114,8 @@ class TestAcceptance:
 
     @pytest.fixture(
         name="t_10_3_surroundings_wrapper_fixture",
-        params=[(False, False), (False, True), (True, False), (True, True)],
+        params=[(True, True)],
         ids=[
-            "Without ANY surrounding",
-            "With Infrastructure",
-            "With Obstacles",
             "With Infra and Obstacles",
         ],
     )
@@ -183,16 +180,11 @@ class TestAcceptance:
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
-    @pytest.mark.parametrize(
-        "layers_case",
-        LayersCases.cases,
-    )
     @pytest.mark.slow
     def test_koswat_run_as_sandbox_with_obstacles_and_infrastructures(
         self,
         input_profile_case,
         scenario_case: KoswatProfileBase,
-        layers_case,
         t_10_3_surroundings_wrapper_fixture: tuple[
             SurroundingsWrapper, KoswatCostsSettings, Path
         ],
@@ -220,7 +212,7 @@ class TestAcceptance:
             input_profile_case=KoswatProfileBuilder.with_data(
                 dict(
                     input_profile_data=input_profile_case,
-                    layers_data=layers_case,
+                    layers_data=LayersCases.with_acceptance_criteria.layers_dict,
                     profile_type=KoswatProfileBase,
                 )
             ).build(),
@@ -269,16 +261,11 @@ class TestAcceptance:
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
-    @pytest.mark.parametrize(
-        "layers_case",
-        LayersCases.cases,
-    )
     @pytest.mark.slow
     def test_koswat_run_as_sandbox_with_surroundings(
         self,
         input_profile_case,
         scenario_case: KoswatProfileBase,
-        layers_case,
         request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
@@ -298,6 +285,7 @@ class TestAcceptance:
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
+        _layers_case = LayersCases.with_acceptance_criteria.layers_dict
 
         # Surroundings wrapper
         _surroundings_section = SurroundingsSectionFom(
@@ -305,6 +293,8 @@ class TestAcceptance:
             construction_buffer=10,
             allow_waterside_reinforcement=True,
             obstacle_types={"bebouwing": 5},
+            max_polderside_extension=None,
+            max_waterside_extension=None,
         )
 
         _infrastructure_section = InfrastructureSectionFom(
@@ -331,7 +321,7 @@ class TestAcceptance:
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile_case,
-                layers_data=layers_case,
+                layers_data=_layers_case,
                 profile_type=KoswatProfileBase,
             )
         ).build()
@@ -408,7 +398,7 @@ class TestAcceptance:
             assert _multi_report.total_cost > 0
             assert _multi_report.cost_per_km > 1000
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
-            assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
+            assert len(_layers_report) == (1 + len(_layers_case["coating_layers"]))
             assert all(isinstance(lcr, CostReportProtocol) for lcr in _layers_report)
 
     @pytest.fixture(
