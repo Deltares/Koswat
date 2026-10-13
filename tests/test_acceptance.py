@@ -262,19 +262,11 @@ class TestAcceptance:
 
     @pytest.mark.parametrize("input_profile_case", InputProfileCases.cases)
     @pytest.mark.parametrize("scenario_case", ScenarioCases.cases)
-    @pytest.mark.parametrize(
-        "layers_case",
-        LayersCases.cases,
-    )
     @pytest.mark.slow
-    @pytest.mark.skip(
-        reason="These tests are already covered by `test_koswat_run_as_sandbox_with_obstacles_and_infrastructures`."
-    )
     def test_koswat_run_as_sandbox_with_surroundings(
         self,
         input_profile_case,
         scenario_case: KoswatProfileBase,
-        layers_case,
         request: pytest.FixtureRequest,
     ):
         # 1. Define test data.
@@ -329,7 +321,7 @@ class TestAcceptance:
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile_case,
-                layers_data=layers_case,
+                layers_data=LayersCases.with_acceptance_criteria.layers_dict,
                 profile_type=KoswatProfileBase,
             )
         ).build()
