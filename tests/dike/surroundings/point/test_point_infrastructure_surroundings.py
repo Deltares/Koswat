@@ -9,10 +9,11 @@ from koswat.dike.surroundings.point import (
 from tests.conftest import PointSurroundingsTestCase
 
 
-class TestPointSurroundings:
+class TestPointInfrastructureSurroundings:
     def test_initialize_point_surroundings(self):
         _p_s = PointInfrastructureSurroundings()
         assert isinstance(_p_s, PointInfrastructureSurroundings)
+        assert isinstance(_p_s, PointSurroundingsProtocol)
         assert not _p_s.section
         assert not _p_s.location
         assert not _p_s.surroundings_matrix
