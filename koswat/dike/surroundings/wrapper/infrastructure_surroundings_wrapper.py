@@ -72,9 +72,29 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
         )
     )
 
-    # Waterside infrastructures (not supported yet)
-    roads_class_2_waterside: SurroundingsInfrastructure = None
-    roads_class_7_waterside: SurroundingsInfrastructure = None
-    roads_class_24_waterside: SurroundingsInfrastructure = None
-    roads_class_47_waterside: SurroundingsInfrastructure = None
-    roads_class_unknown_waterside: SurroundingsInfrastructure = None
+    # Waterside infrastructures
+    roads_class_2_waterside: SurroundingsInfrastructure = field(
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_2_WATERSIDE.name
+        )
+    )
+    roads_class_7_waterside: SurroundingsInfrastructure = field(
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_7_WATERSIDE.name
+        )
+    )
+    roads_class_24_waterside: SurroundingsInfrastructure = field(
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_24_WATERSIDE.name
+        )
+    )
+    roads_class_47_waterside: SurroundingsInfrastructure = field(
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_47_WATERSIDE.name
+        )
+    )
+    roads_class_unknown_waterside: SurroundingsInfrastructure = field(
+        default_factory=lambda: SurroundingsInfrastructure(
+            infrastructure_name=SurroundingsEnum.ROADS_CLASS_UNKNOWN_WATERSIDE.name
+        )
+    )

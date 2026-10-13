@@ -54,7 +54,7 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
             infrastructure_costs_0dh=InfraCostsEnum[
                 input_config["infrakosten_0dh"].upper()
             ],
-            buffer_waterside=SectionConfigHelper.get_float(
+            buffer_crest_waterside=SectionConfigHelper.get_float(
                 input_config["buffer_kruin_buitendijks"]
             ),
             roads_class2_width=SectionConfigHelper.get_float(

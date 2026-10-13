@@ -119,6 +119,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrastructure_costs_0dh,
         )
         if self.infrastructure_section_fom.active:
+            # Polderside infra
             _infra_wrapper.roads_class_2_polderside = (
                 self._get_surroundings_infrastructure(
                     SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE
@@ -142,6 +143,32 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             _infra_wrapper.roads_class_unknown_polderside = (
                 self._get_surroundings_infrastructure(
                     SurroundingsEnum.ROADS_CLASS_UNKNOWN_POLDERSIDE
+                )
+            )
+            # Waterside infra
+            _infra_wrapper.roads_class_2_waterside = (
+                self._get_surroundings_infrastructure(
+                    SurroundingsEnum.ROADS_CLASS_2_WATERSIDE
+                )
+            )
+            _infra_wrapper.roads_class_7_waterside = (
+                self._get_surroundings_infrastructure(
+                    SurroundingsEnum.ROADS_CLASS_7_WATERSIDE
+                )
+            )
+            _infra_wrapper.roads_class_24_waterside = (
+                self._get_surroundings_infrastructure(
+                    SurroundingsEnum.ROADS_CLASS_24_WATERSIDE
+                )
+            )
+            _infra_wrapper.roads_class_47_waterside = (
+                self._get_surroundings_infrastructure(
+                    SurroundingsEnum.ROADS_CLASS_47_WATERSIDE
+                )
+            )
+            _infra_wrapper.roads_class_unknown_waterside = (
+                self._get_surroundings_infrastructure(
+                    SurroundingsEnum.ROADS_CLASS_UNKNOWN_WATERSIDE
                 )
             )
         return _infra_wrapper
