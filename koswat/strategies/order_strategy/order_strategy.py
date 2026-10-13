@@ -33,11 +33,8 @@ from koswat.dike_reinforcements.reinforcement_profile import (
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.strategies.order_strategy.order_strategy_reinforcement_filtering import (
+from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_filtering import (
     OrderStrategyReinforcementFiltering,
-)
-from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_sort_criteria import (
-    OrderStrategyReinforcementSortCriteria,
 )
 from koswat.strategies.order_strategy.order_strategy_buffering import (
     OrderStrategyBuffering,
@@ -45,7 +42,7 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
 )
-from koswat.strategies.order_strategy.order_strategy_reinforcement_sorting import (
+from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_sorting import (
     OrderStrategyReinforcementSorting,
 )
 from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput

@@ -8,6 +8,9 @@ from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_filt
     OrderStrategyReinforcementFiltering,
 )
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
+    StrategyReinforcementInputProtocol,
+)
 
 
 class TestOrderStrategyReinforcementFiltering:
@@ -58,6 +61,39 @@ class TestOrderStrategyReinforcementFiltering:
         _subset[2].ground_level_surface += 15
         _expected_result = (
             example_strategy_input.strategy_reinforcements[:2] + _subset[3:]
+        )
+
+        # 2. Run test.
+        _filtered_reinforcements = OrderStrategyReinforcementFiltering(
+            example_strategy_input
+        ).filter(example_strategy_input.strategy_reinforcements)
+
+        # 3. Verify expectations
+        assert _filtered_reinforcements == _expected_result
+        assert (
+            _filtered_reinforcements[0].reinforcement_type == SoilReinforcementProfile
+        )
+        assert (
+            _filtered_reinforcements[-1].reinforcement_type
+            == CofferdamReinforcementProfile
+        )
+
+    def test_when_filter_given_reinforcement_out_of_bounds_then_filters_out(
+        self,
+        example_strategy_input: StrategyInput,
+    ):
+        # 1. Define test data.
+        _max_polder_width = 100
+        _max_water_width = 100
+        example_strategy_input.reinforcement_max_width_polderside = _max_polder_width
+        example_strategy_input.reinforcement_max_width_waterside = _max_water_width
+        _subset: list[StrategyReinforcementInputProtocol] = (
+            example_strategy_input.strategy_reinforcements
+        )
+        _subset[1].reinforcement_boundaries.width_polderside = _max_polder_width + 1
+        _subset[2].reinforcement_boundaries.width_waterside = _max_water_width + 1
+        _expected_result = (
+            example_strategy_input.strategy_reinforcements[:1] + _subset[3:]
         )
 
         # 2. Run test.
