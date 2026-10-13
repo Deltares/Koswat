@@ -19,27 +19,30 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import logging
-
 from shapely import affinity, geometry, ops
 
 
-def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
+def order_geometry_points(
+    dike_polygon: geometry.Polygon | geometry.MultiPolygon,
+) -> geometry.Polygon | geometry.MultiPolygon:
     """
     In koswat we handle polygon operations expecting the lowest 'x' coordinate to be the initial and last point of a geometry.
     For this reason we need to ensure all geometries are 'normalized' based on this criteria.
 
     Args:
-        dike_polygon (geometry.Polygon): Polygon to normalized.
+        dike_polygon (geometry.Polygon | geometry.MultiPolygon): Polygon to normalized.
 
     Returns:
-        geometry.Polygon: Normalized polygon.
+        geometry.Polygon | geometry.MultiPolygon: Normalized polygon.
     """
-    if isinstance(dike_polygon.boundary, geometry.MultiLineString):
-        logging.warning(
-            "Polygon with 'multi line', most likely due to a geometry split in two parts. Ordering of points is not supported, some calculation errors might occur as a consequence of this."
-        )
+    if dike_polygon.is_empty:
         return dike_polygon
+
+    if isinstance(dike_polygon, geometry.MultiPolygon):
+        for _geom in dike_polygon.geoms:
+            _geom = order_geometry_points(_geom)
+        return dike_polygon
+
     _x, _y = tuple(map(list, dike_polygon.boundary.coords.xy))
     # remove last point as it's repeated.
     _x.pop(-1)
@@ -53,23 +56,6 @@ def order_geometry_points(dike_polygon: geometry.Polygon) -> geometry.Polygon:
     new_y = _y[_lowest_x:] + _y[0:_lowest_x] + [_y[_lowest_x]]
     _points = [(new_x[idx], new_y[idx]) for idx in range(0, len(new_x))]
     return geometry.Polygon(_points)
-
-
-def as_unified_geometry(
-    source_geom: geometry.Polygon | geometry.MultiPolygon,
-) -> geometry.Polygon:
-    """
-    Ensures the calculated geometry is returned as a single polygon.
-
-    Args:
-        source_geom (geometry.Polygon | geometry.MultiPolygon): Calculated source geometry.
-
-    Returns:
-        geometry.Polygon: Unified resulting geometry with its points ordered (first one is the most-left x coordinate).
-    """
-    if isinstance(source_geom, geometry.MultiPolygon):
-        return order_geometry_points(source_geom.union(source_geom.convex_hull))
-    return order_geometry_points(source_geom)
 
 
 def get_relative_core_layer(
@@ -100,17 +86,17 @@ def get_relative_core_layer(
     )
     _wrapper_polygon = geometry.Polygon(_wrapper_points)
     _fixed_layer_geom = _wrapper_polygon.intersection(coating_geometry)
-    return as_unified_geometry(_fixed_layer_geom.union(core_geometry))
+    return order_geometry_points(_fixed_layer_geom.union(core_geometry))
 
 
 def get_polygon_coordinates(
-    pol_geometry: geometry.Polygon | geometry.MultiPolygon,
+    pol_geometry: geometry.Polygon,
 ) -> geometry.LineString:
     """
     Given a single or multi geometry returns the coordinates composing its outer layout.
 
     Args:
-        pol_geometry (geometry.Polygon | geometry.MultiPolygon): Source geometry.
+        pol_geometry (geometry.Polygon): Source geometry.
 
     Raises:
         NotImplementedError: When the provided geometry is not yet supported.
@@ -163,7 +149,7 @@ def _get_normalized_polygon(base_polygon: geometry.Polygon) -> geometry.Polygon:
 
 
 def get_normalized_polygon_difference(
-    left_geom: geometry.Polygon, right_geom: geometry.Polygon
+    left_geom: geometry.Polygon | geometry.MultiPolygon, right_geom: geometry.Polygon
 ) -> geometry.Polygon | geometry.MultiPolygon:
     """
     Given two polygons calculates the difference between them and removes any residual polygon due to minor precision errors.
