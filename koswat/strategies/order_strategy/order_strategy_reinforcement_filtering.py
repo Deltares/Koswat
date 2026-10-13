@@ -29,6 +29,9 @@ from koswat.strategies.criterias.strategy_reinforcement_width_boundaries_filter_
     StrategyReinforcementWidthBoundariesFilterCriteria,
 )
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
+    StrategyReinforcementFilterCriteriaProtocol,
+)
 from koswat.strategies.strategy_reinforcement_input import (
     StrategyReinforcementInputProtocol,
 )
@@ -42,7 +45,7 @@ class OrderStrategyReinforcementFiltering:
 
     def __init__(self, strategy_input: StrategyInput) -> None:
         self.strategy_input = strategy_input
-        self.prefilters = [
+        self.prefilters: list[StrategyReinforcementFilterCriteriaProtocol] = [
             StrategyReinforcementActiveFilterCriteria(),
             StrategyReinforcementWidthBoundariesFilterCriteria(self.strategy_input),
         ]
@@ -59,27 +62,23 @@ class OrderStrategyReinforcementFiltering:
         """
         if not strategy_reinforcements:
             return []
-        _eligible_strategies = [
-            _reinforcement
-            for _reinforcement in filter(
-                self._strategy_reinforcement_meets_criteria, strategy_reinforcements
-            )
-        ]
-
-        _order_strategy_filter_criteria = OrderStrategyReinforcementFilterCriteria(
-            _eligible_strategies
+        _eligible_strategies = list(
+            filter(self._strategy_reinforcement_meets_criteria, strategy_reinforcements)
         )
 
-        return [
-            _strategy_reinforcement
-            for _strategy_reinforcement in _eligible_strategies
-            if _order_strategy_filter_criteria.meets_criteria(_strategy_reinforcement)
-        ]
+        return list(
+            filter(
+                OrderStrategyReinforcementFilterCriteria(
+                    _eligible_strategies
+                ).criteria_met_by,
+                _eligible_strategies,
+            )
+        )
 
     def _strategy_reinforcement_meets_criteria(
         self, strategy_reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
         return all(
-            _criteria.meets_criteria(strategy_reinforcement)
+            _criteria.criteria_met_by(strategy_reinforcement)
             for _criteria in self.prefilters
         )

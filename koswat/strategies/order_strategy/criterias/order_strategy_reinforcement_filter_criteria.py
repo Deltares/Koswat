@@ -46,7 +46,7 @@ class OrderStrategyReinforcementFilterCriteria(
     ):
         self._strategy_reinforcements = strategy_reinforcements
 
-    def meets_criteria(
+    def criteria_met_by(
         self, strategy_reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
         if (

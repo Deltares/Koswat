@@ -4,7 +4,7 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_re
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
-from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_collection_filter_criteria import (
+from koswat.strategies.order_strategy.order_strategy_reinforcement_filtering import (
     OrderStrategyReinforcementFiltering,
 )
 from koswat.strategies.strategy_input import StrategyInput

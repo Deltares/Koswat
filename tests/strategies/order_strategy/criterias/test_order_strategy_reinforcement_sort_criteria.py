@@ -44,9 +44,9 @@ class TestOrderStrategyReinforcementSortCriteria:
         ]
 
         # 2. When
-        _sorted_strategies = OrderStrategyReinforcementSortCriteria(
+        _sorted_strategies = OrderStrategyReinforcementSortCriteria().sort(
             _strategy_inputs
-        ).sort()
+        )
 
         # 3. Then
         assert (

@@ -33,7 +33,7 @@ from koswat.dike_reinforcements.reinforcement_profile import (
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_collection_filter_criteria import (
+from koswat.strategies.order_strategy.order_strategy_reinforcement_filtering import (
     OrderStrategyReinforcementFiltering,
 )
 from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_sort_criteria import (
@@ -44,6 +44,9 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
 )
 from koswat.strategies.order_strategy.order_strategy_clustering import (
     OrderStrategyClustering,
+)
+from koswat.strategies.order_strategy.order_strategy_reinforcement_sorting import (
+    OrderStrategyReinforcementSorting,
 )
 from koswat.strategies.strategy_input import StrategyInput, StrategyLocationInput
 from koswat.strategies.strategy_location_reinforcement import (
@@ -146,9 +149,9 @@ class OrderStrategy(StrategyProtocol):
         self,
         strategy_input: StrategyInput,
     ) -> list[type[ReinforcementProfileProtocol]]:
-        _sorted_reinforcements = OrderStrategyReinforcementSortCriteria(
+        _sorted_reinforcements = OrderStrategyReinforcementSorting().sort(
             strategy_input.strategy_reinforcements
-        ).sort()
+        )
         _filtered_reinforcements = OrderStrategyReinforcementFiltering(
             strategy_input=strategy_input
         ).filter(_sorted_reinforcements)
