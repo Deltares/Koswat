@@ -52,6 +52,8 @@ class TestKoswatSummaryLocationMatrixBuilder:
             output_name: str = "MockedReinforcementProfile"
             input_data: MockedInputData = MockedInputData()
             new_ground_level_surface: float = 42.0
+            waterside_width: float = float("nan")
+            polderside_width: float = float("nan")
 
         # 1. Define test data.
         _section = "A"
