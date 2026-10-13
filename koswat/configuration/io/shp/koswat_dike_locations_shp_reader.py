@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
 from pathlib import Path
-from typing import List, Tuple
 
 import shapefile
 from shapely.geometry import Point
@@ -33,7 +32,7 @@ from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 
 
 class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
-    selected_locations: List[str]
+    selected_locations: list[str]
 
     def __init__(self) -> None:
         self.selected_locations = []
@@ -41,7 +40,7 @@ class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix.lower() == ".shp"
 
-    def read(self, file_path: Path) -> List[KoswatDikeLocationsShpFom]:
+    def read(self, file_path: Path) -> list[KoswatDikeLocationsShpFom]:
         if not self.supports_file(file_path):
             raise ValueError("Shp file should be provided")
         if not file_path.is_file():
@@ -50,7 +49,7 @@ class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
             logging.warning("No selected locations.")
 
         def record_to_shp_fom(
-            idx_record: Tuple[int, shapefile._Record],
+            idx_record: tuple[int, shapefile._Record],
         ) -> KoswatDikeLocationsShpFom:
             _idx, _record = idx_record
             _shp_fom = KoswatDikeLocationsShpFom()
@@ -60,7 +59,7 @@ class KoswatDikeLocationsListShpReader(KoswatReaderProtocol):
             _shp_fom.record = _record
             return _shp_fom
 
-        def is_selected(idx_record: Tuple[int, shapefile._Record]) -> bool:
+        def is_selected(idx_record: tuple[int, shapefile._Record]) -> bool:
             _, _record = idx_record
             try:
                 # TODO: Normalize expected input file to avoid this here and in `KoswatDikeLocationsShpFom`

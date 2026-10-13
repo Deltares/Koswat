@@ -101,6 +101,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         _mapped_name = (
             surroundings_enum.name.lower()
             .replace("_polderside", "_width")
+            .replace("_waterside", "_width")
             .replace("class_unknown", "unknown")
             .replace("class_", "class")
         )
