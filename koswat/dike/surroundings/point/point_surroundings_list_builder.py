@@ -50,7 +50,7 @@ class PointSurroundingsListBuilder(BuilderProtocol):
             if limit_point.equals_exact(ps.location, 0.5):
                 return _ps_idx
         raise ValueError(
-            "No point fromt the *.shp file matches the ones in the *.csv file."
+            "No point from the *.shp file matches the ones in the *.csv file."
         )
 
     def _get_traject_points(
