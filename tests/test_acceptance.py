@@ -286,6 +286,7 @@ class TestAcceptance:
         _new_csv_path = _test_dir.joinpath("10_3", _csv_surroundings_file.name)
         _new_csv_path.parent.mkdir(parents=True)
         _csv_surroundings_file = shutil.copy(_csv_surroundings_file, _new_csv_path)
+        _layers_case = LayersCases.with_acceptance_criteria.layers_dict
 
         # Surroundings wrapper
         _surroundings_section = SurroundingsSectionFom(
@@ -321,7 +322,7 @@ class TestAcceptance:
         _base_koswat_profile = KoswatProfileBuilder.with_data(
             dict(
                 input_profile_data=input_profile_case,
-                layers_data=LayersCases.with_acceptance_criteria.layers_dict,
+                layers_data=_layers_case,
                 profile_type=KoswatProfileBase,
             )
         ).build()
@@ -398,7 +399,7 @@ class TestAcceptance:
             assert _multi_report.total_cost > 0
             assert _multi_report.cost_per_km > 1000
             _layers_report = _multi_report.profile_cost_report.layer_cost_reports
-            assert len(_layers_report) == (1 + len(layers_case["coating_layers"]))
+            assert len(_layers_report) == (1 + len(_layers_case["coating_layers"]))
             assert all(isinstance(lcr, CostReportProtocol) for lcr in _layers_report)
 
     @pytest.fixture(
