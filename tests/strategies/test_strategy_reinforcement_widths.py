@@ -1,5 +1,11 @@
 import pytest
 
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
+    ReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 
@@ -99,3 +105,21 @@ class TestStrategyReinforcementWidths:
 
         # 3. Verify expectations
         assert result is True
+
+    def test_when_from_reinforcement_profile_given_reinforcement_profile_then_returns_widths(
+        self,
+    ):
+        # 1. Define test data
+        class MockedReinforcementProfile(ReinforcementProfileProtocol):
+            def __init__(self):
+                self.new_ground_polderside = 30.0
+                self.new_ground_waterside = 50.0
+
+        # 2. Run test
+        result = StrategyReinforcementWidths.from_reinforcement_profile(
+            MockedReinforcementProfile()
+        )
+
+        # 3. Verify expectations
+        assert result.width_polderside == 30.0
+        assert result.width_waterside == 50.0

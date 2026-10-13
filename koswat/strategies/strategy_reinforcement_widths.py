@@ -49,19 +49,9 @@ class StrategyReinforcementWidths:
         Returns:
             StrategyReinforcementWidths: An instance with the extracted width boundaries.
         """
-
-        _increased_polderside_width = (
-            reinforcement_profile.polderside_width
-            - reinforcement_profile.old_profile.polderside_width
-        )
-        _increased_waterside_width = (
-            reinforcement_profile.waterside_width
-            - reinforcement_profile.old_profile.waterside_width
-        )
-
         return cls(
-            width_polderside=_increased_polderside_width,
-            width_waterside=_increased_waterside_width,
+            width_polderside=reinforcement_profile.new_ground_polderside,
+            width_waterside=reinforcement_profile.new_ground_waterside,
         )
 
     def _is_unbound_field(self, field_value: float) -> bool:
