@@ -47,8 +47,8 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.construction_distance == None
         assert _surroundings_section_fom.construction_buffer == None
         assert _surroundings_section_fom.allow_waterside_reinforcement == None
-        assert _surroundings_section_fom.max_polderside_width_extension == None
-        assert _surroundings_section_fom.max_waterside_width_extension == None
+        assert math.isnan(_surroundings_section_fom.max_polderside_width_extension)
+        assert math.isnan(_surroundings_section_fom.max_waterside_width_extension)
         assert _surroundings_section_fom.obstacle_types == {}
 
     def test_when_from_config_given_set_defaults_true_then_expected_values_set(self):
