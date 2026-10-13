@@ -26,12 +26,12 @@ from typing import Protocol
 
 
 class StrategyReinforcementFilterCriteriaProtocol(Protocol):
-    def filter(
+    def criteria_met_by(
         self, strategy_reinforcements: list[StrategyReinforcementInputProtocol]
     ) -> list[StrategyReinforcementInputProtocol]:
         """
-        Filters the given reinforcement profiles based on the surroundings criteria.
+        Determines which reinforcement profiles meet the collection criteria.
 
         Returns:
-            list[StrategyReinforcementInputProtocol]: List of reinforcement profiles that meet the surroundings criteria.
+            list[StrategyReinforcementInputProtocol]: List of reinforcement profiles that meet the collection criteria.
         """

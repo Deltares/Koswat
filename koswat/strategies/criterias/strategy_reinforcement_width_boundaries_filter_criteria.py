@@ -23,21 +23,18 @@ import logging
 
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_width_boundaries import StrategyWidthBoundaries
-from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
-    StrategyReinforcementFilterCriteriaProtocol,
-)
 
 from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
     StrategyReinforcementInputProtocol,
+)
+from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
+    StrategyReinforcementFilterCriteriaProtocol,
 )
 
 
 class StrategyReinforcementWidthBoundariesFilterCriteria(
     StrategyReinforcementFilterCriteriaProtocol
 ):
-    """
-    This class is used to filter reinforcement profiles based on the width boundaries criteria.
-    """
 
     def __init__(
         self,
@@ -48,30 +45,13 @@ class StrategyReinforcementWidthBoundariesFilterCriteria(
             width_waterside=strategy_input.reinforcement_max_width_waterside,
         )
 
-    def filter(
-        self, strategy_reinforcements: list[StrategyReinforcementInputProtocol]
-    ) -> list[StrategyReinforcementInputProtocol]:
-        """
-        Filters the given reinforcement profiles based on the width boundaries criteria.
-
-        Returns:
-            list[StrategyReinforcementInputProtocol]: List of reinforcement profiles that meet the width boundaries criteria.
-        """
-        return [
-            _profile
-            for _profile in filter(
-                self._reinforcement_meets_criteria, strategy_reinforcements
-            )
-        ]
-
-    def _reinforcement_meets_criteria(
-        self, reinforcement: StrategyReinforcementInputProtocol
+    def criteria_met_by(
+        self, strategy_reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
-
-        if reinforcement.is_within_boundaries(self._width_boundaries):
+        if strategy_reinforcement.is_within_boundaries(self._width_boundaries):
             return True
         logging.warning(
             "Reinforcement %s exceeds the maximum allowed width extension. Skipping.",
-            reinforcement.reinforcement_type.output_name,
+            strategy_reinforcement.reinforcement_type.output_name,
         )
         return False
