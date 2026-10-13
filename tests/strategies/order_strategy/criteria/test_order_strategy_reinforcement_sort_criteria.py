@@ -15,7 +15,7 @@ from koswat.strategies.strategy_reinforcement_input.flexible_strategy_reinforcem
 )
 
 
-class TestOrderStrategyReinforcementSortCriteria:
+class TestOrderStrategyReinforcementSorting:
     """
     Test suite for the OrderStrategyReinforcementSortCriteria class.
     """
