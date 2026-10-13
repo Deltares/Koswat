@@ -21,12 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass
 from math import isnan
-import re
-from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
+
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 
 
 @dataclass(kw_only=True)
-class StrategyWidthBoundaries:
+class StrategyReinforcementWidths:
     """
     Represents the width boundaries for a reinforcement input.
     """
@@ -35,19 +37,31 @@ class StrategyWidthBoundaries:
     width_waterside: float = float("nan")
 
     @classmethod
-    def from_profile(cls, profile: KoswatProfileProtocol) -> "StrategyWidthBoundaries":
+    def from_reinforcement_profile(
+        cls, reinforcement_profile: ReinforcementProfileProtocol
+    ) -> "StrategyReinforcementWidths":
         """
-        Creates a `StrategyWidthBoundaries` instance from a profile.
+        Creates a `StrategyReinforcementWidths` instance from a profile.
 
         Args:
-            profile: The profile to extract width boundaries from.
+            reinforcement_profile: The profile to extract width boundaries from.
 
         Returns:
-            StrategyWidthBoundaries: An instance with the extracted width boundaries.
+            StrategyReinforcementWidths: An instance with the extracted width boundaries.
         """
+
+        _increased_polderside_width = (
+            reinforcement_profile.polderside_width
+            - reinforcement_profile.old_profile.polderside_width
+        )
+        _increased_waterside_width = (
+            reinforcement_profile.waterside_width
+            - reinforcement_profile.old_profile.waterside_width
+        )
+
         return cls(
-            width_polderside=profile.polderside_width,
-            width_waterside=profile.waterside_width,
+            width_polderside=_increased_polderside_width,
+            width_waterside=_increased_waterside_width,
         )
 
     def _is_unbound_field(self, field_value: float) -> bool:
@@ -66,12 +80,12 @@ class StrategyWidthBoundaries:
             self.width_waterside
         )
 
-    def within(self, other: "StrategyWidthBoundaries") -> bool:
+    def within(self, other: "StrategyReinforcementWidths") -> bool:
         """
         Checks if the current width boundaries are within the specified other boundaries.
 
         Args:
-            other (StrategyWidthBoundaries): The other width boundaries to compare against.
+            other (StrategyReinforcementWidths): The other width boundaries to compare against.
 
         Returns:
             bool: True if the current width boundaries are within the other boundaries, False otherwise.
