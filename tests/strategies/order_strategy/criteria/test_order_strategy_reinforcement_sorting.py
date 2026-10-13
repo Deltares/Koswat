@@ -27,19 +27,19 @@ class TestOrderStrategyReinforcementSorting:
                 reinforcement_type=VPSReinforcementProfile,
                 ground_level_surface=10,
                 base_costs_with_surtax=1100,
-                reinforcement_boundaries=None,
+                reinforcement_widths=None,
             ),
             FlexibleStrategyReinforcementInput(
                 reinforcement_type=StabilityWallCrestReinforcementProfile,
                 ground_level_surface=15,
                 base_costs_with_surtax=1000,
-                reinforcement_boundaries=None,
+                reinforcement_widths=None,
             ),
             FlexibleStrategyReinforcementInput(
                 reinforcement_type=StabilityWallToeReinforcementProfile,
                 ground_level_surface=10,
                 base_costs_with_surtax=1000,
-                reinforcement_boundaries=None,
+                reinforcement_widths=None,
             ),
         ]
 

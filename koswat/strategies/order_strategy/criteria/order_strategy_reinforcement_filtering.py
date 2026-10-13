@@ -23,7 +23,7 @@ from koswat.strategies.criteria.strategy_reinforcement_active_filter_criteria im
     StrategyReinforcementActiveFilterCriteria,
 )
 from koswat.strategies.criteria.strategy_reinforcement_width_boundaries_filter_criteria import (
-    StrategyReinforcementWidthBoundariesFilterCriteria,
+    StrategyReinforcementWidthsFilterCriteria,
 )
 from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_filter_criteria import (
     OrderStrategyReinforcementFilterCriteria,
@@ -48,7 +48,7 @@ class OrderStrategyReinforcementFiltering:
         self.strategy_input = strategy_input
         self.prefilters: list[StrategyReinforcementFilterCriteriaProtocol] = [
             StrategyReinforcementActiveFilterCriteria(),
-            StrategyReinforcementWidthBoundariesFilterCriteria(self.strategy_input),
+            StrategyReinforcementWidthsFilterCriteria(self.strategy_input),
         ]
 
     def filter(

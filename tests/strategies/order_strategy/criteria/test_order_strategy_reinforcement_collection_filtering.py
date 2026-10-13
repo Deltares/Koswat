@@ -90,8 +90,8 @@ class TestOrderStrategyReinforcementFiltering:
         _subset: list[StrategyReinforcementInputProtocol] = (
             example_strategy_input.strategy_reinforcements
         )
-        _subset[1].reinforcement_boundaries.width_polderside = _max_polder_width + 1
-        _subset[2].reinforcement_boundaries.width_waterside = _max_water_width + 1
+        _subset[1].reinforcement_widths.width_polderside = _max_polder_width + 1
+        _subset[2].reinforcement_widths.width_waterside = _max_water_width + 1
         _expected_result = (
             example_strategy_input.strategy_reinforcements[:1] + _subset[3:]
         )

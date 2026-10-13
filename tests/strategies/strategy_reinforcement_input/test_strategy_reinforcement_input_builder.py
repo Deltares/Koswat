@@ -30,4 +30,4 @@ class TestStrategyReinforcementInputBuilder:
         assert result.active == builder.active
         assert result.base_costs_with_surtax == builder.base_costs_with_surtax
         assert result.ground_level_surface == builder.ground_level_surface
-        assert result.reinforcement_boundaries == builder.reinforcement_boundaries
+        assert result.reinforcement_widths == builder.reinforcement_boundaries
