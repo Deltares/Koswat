@@ -20,13 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass
-from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
+
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
 from koswat.strategies.strategy_reinforcement_type_costs import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 from .fixed_strategy_reinforcement_input import FixedStrategyReinforcementInput
 from .flexible_strategy_reinforcement_input import FlexibleStrategyReinforcementInput

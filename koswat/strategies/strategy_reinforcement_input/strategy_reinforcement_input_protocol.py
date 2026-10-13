@@ -23,11 +23,10 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
-
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
+from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 
 class StrategyReinforcementInputProtocol(Protocol):

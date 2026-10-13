@@ -22,11 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 
 from koswat.strategies.strategy_input import StrategyInput
-from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
-    StrategyReinforcementInputProtocol,
-)
 from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
     StrategyReinforcementFilterCriteriaProtocol,
+)
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
+    StrategyReinforcementInputProtocol,
 )
 from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 

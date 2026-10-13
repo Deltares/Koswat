@@ -19,10 +19,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from typing import Protocol
+
 from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
     StrategyReinforcementInputProtocol,
 )
-from typing import Protocol
 
 
 class StrategyReinforcementFilterCriteriaProtocol(Protocol):

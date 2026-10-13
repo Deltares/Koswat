@@ -19,15 +19,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_sort_criteria import (
-    OrderStrategyReinforcementSortCriteria,
-)
-
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
+)
+from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_sort_criteria import (
+    OrderStrategyReinforcementSortCriteria,
 )
 from koswat.strategies.strategy_reinforcement_input import (
     StrategyReinforcementInputProtocol,

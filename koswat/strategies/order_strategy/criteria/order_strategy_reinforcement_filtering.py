@@ -28,7 +28,6 @@ from koswat.strategies.criteria.strategy_reinforcement_widths_filter_criteria im
 from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_filter_criteria import (
     OrderStrategyReinforcementFilterCriteria,
 )
-
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
     StrategyReinforcementFilterCriteriaProtocol,

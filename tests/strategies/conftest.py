@@ -1,5 +1,6 @@
 import copy
 from typing import Iterator
+
 import pytest
 
 from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
