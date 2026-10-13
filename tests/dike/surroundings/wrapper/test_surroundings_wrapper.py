@@ -62,8 +62,8 @@ class TestSurroundingsWrapper:
             construction_distance=float("nan"),
             construction_buffer=float("nan"),
             allow_waterside_reinforcement=True,
-            max_polderside_width_extension=float("nan"),
-            max_waterside_width_extension=float("nan"),
+            max_polderside_extension=float("nan"),
+            max_waterside_extension=float("nan"),
             obstacle_types={"bebouwing": 5},
         )
 

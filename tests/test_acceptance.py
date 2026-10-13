@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import re
 import shutil
 from pathlib import Path
 from typing import Callable, Iterable, Iterator
@@ -294,8 +293,8 @@ class TestAcceptance:
             construction_buffer=10,
             allow_waterside_reinforcement=True,
             obstacle_types={"bebouwing": 5},
-            max_polderside_width_extension=None,
-            max_waterside_width_extension=None,
+            max_polderside_extension=None,
+            max_waterside_extension=None,
         )
 
         _infrastructure_section = InfrastructureSectionFom(
