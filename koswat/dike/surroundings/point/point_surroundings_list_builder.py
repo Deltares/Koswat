@@ -52,7 +52,7 @@ class PointSurroundingsListBuilder(BuilderProtocol):
             "No point fromt the *.shp file matches the ones in the *.csv file."
         )
 
-    def _get_polderside_points(
+    def _get_traject_points(
         self, start_idx: int, end_idx: int
     ) -> list[PointSurroundings]:
         if start_idx > end_idx:
@@ -68,4 +68,4 @@ class PointSurroundingsListBuilder(BuilderProtocol):
         start_idx = self._find_point_idx(self.koswat_shp_fom.initial_point)
         end_idx = self._find_point_idx(self.koswat_shp_fom.end_point)
 
-        return self._get_polderside_points(start_idx, end_idx)
+        return self._get_traject_points(start_idx, end_idx)

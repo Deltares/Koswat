@@ -1,4 +1,4 @@
-from typing import Callable, Iterator
+from collections.abc import Callable, Iterator
 
 import pytest
 from shapely.geometry import Point
@@ -8,9 +8,6 @@ from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import (
 )
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
-)
-from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
-    KoswatSurroundingsCsvReader,
 )
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
@@ -26,7 +23,7 @@ from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder i
 from tests import test_data
 
 
-class TestPointSurroundingsListPoldersideBuilder:
+class TestPointSurroundingsListBuilder:
     def test_initialize_builder(self):
         _builder = PointSurroundingsListBuilder(None, None)
         assert isinstance(_builder, PointSurroundingsListBuilder)
