@@ -19,15 +19,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_filter_criteria import (
-    OrderStrategyReinforcementFilterCriteria,
-)
-from koswat.strategies.criterias.strategy_reinforcement_active_filter_criteria import (
+from koswat.strategies.criteria.strategy_reinforcement_active_filter_criteria import (
     StrategyReinforcementActiveFilterCriteria,
 )
-from koswat.strategies.criterias.strategy_reinforcement_width_boundaries_filter_criteria import (
+from koswat.strategies.criteria.strategy_reinforcement_width_boundaries_filter_criteria import (
     StrategyReinforcementWidthBoundariesFilterCriteria,
 )
+from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_filter_criteria import (
+    OrderStrategyReinforcementFilterCriteria,
+)
+
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
     StrategyReinforcementFilterCriteriaProtocol,

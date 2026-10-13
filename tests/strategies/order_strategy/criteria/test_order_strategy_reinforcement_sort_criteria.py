@@ -7,7 +7,7 @@ from koswat.dike_reinforcements.reinforcement_profile.standard.stability_wall_to
 from koswat.dike_reinforcements.reinforcement_profile.standard.vps_reinforcement_profile import (
     VPSReinforcementProfile,
 )
-from koswat.strategies.order_strategy.criterias.order_strategy_reinforcement_sort_criteria import (
+from koswat.strategies.order_strategy.criteria.order_strategy_reinforcement_sort_criteria import (
     OrderStrategyReinforcementSortCriteria,
 )
 from koswat.strategies.strategy_reinforcement_input.flexible_strategy_reinforcement_input import (
