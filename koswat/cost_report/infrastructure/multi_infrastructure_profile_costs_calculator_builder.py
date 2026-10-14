@@ -40,6 +40,7 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
+from koswat.dike.surroundings.road_class import RoadClass
 from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -76,31 +77,31 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         return self.surtax_cost_settings.roads_easy
 
     def _get_infrastructure_costs(
-        self, infrastructure_name: str
+        self, infrastructure_type: RoadClass
     ) -> tuple[float, float]:
         if not self.cost_settings:
             return (math.nan, math.nan)
-        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE.name:
+        if infrastructure_type == RoadClass.CLASS_2:
             return (
                 self.cost_settings.adding_roads_klasse2,
                 self.cost_settings.removing_roads_klasse2,
             )
-        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_7_POLDERSIDE.name:
+        if infrastructure_type == RoadClass.CLASS_7:
             return (
                 self.cost_settings.adding_roads_klasse7,
                 self.cost_settings.removing_roads_klasse7,
             )
-        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_24_POLDERSIDE.name:
+        if infrastructure_type == RoadClass.CLASS_24:
             return (
                 self.cost_settings.adding_roads_klasse24,
                 self.cost_settings.removing_roads_klasse24,
             )
-        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_47_POLDERSIDE.name:
+        if infrastructure_type == RoadClass.CLASS_47:
             return (
                 self.cost_settings.adding_roads_klasse47,
                 self.cost_settings.removing_roads_klasse47,
             )
-        if infrastructure_name == SurroundingsEnum.ROADS_CLASS_UNKNOWN_POLDERSIDE.name:
+        if infrastructure_type == RoadClass.CLASS_UNKNOWN:
             return (
                 self.cost_settings.adding_roads_unknown,
                 self.cost_settings.removing_roads_unknown,
@@ -122,9 +123,11 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     def _get_zone_b_costs(self, adding_costs: float, removing_costs: float) -> float:
         return adding_costs + removing_costs
 
-    def _get_zone_a_b_costs(self, infrastructure_name: str) -> tuple[float, float]:
+    def _get_zone_a_b_costs(
+        self, infrastructure_type: RoadClass
+    ) -> tuple[float, float]:
         _adding_costs, _removing_costs = self._get_infrastructure_costs(
-            infrastructure_name
+            infrastructure_type
         )
         return (
             self._get_zone_a_costs(_adding_costs, _removing_costs),

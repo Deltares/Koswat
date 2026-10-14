@@ -75,8 +75,8 @@ class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
                 "Duplicate locations detected in the current surroundings file."
             )
 
-        for point in other.points_surroundings_list:
-            if point.location not in _as_dict:
-                self.points_surroundings_list.append(point)
+        for _point in other.points_surroundings_list:
+            if _point.location not in _as_dict:
+                self.points_surroundings_list.append(_point)
             else:
-                _as_dict[point.location].merge(point)
+                _as_dict[_point.location].merge(_point)
