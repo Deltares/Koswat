@@ -169,7 +169,7 @@
 <p>When determining the costs of infrastructures we look mainly at:</p>
 <ul>
 <li>The reinforcement profile (<code>ReinforcementProfileProtocol</code>) zones A and B. </li>
-<li>The distance between a dike and an infrastructure (<code>SurroundingsInfrastructure.points</code>, <code>PointSurroundings.surroundings_matrix</code>).</li>
+<li>The distance between a dike and an infrastructure (<code>SurroundingsInfrastructure.points</code>, <code>PointInfrastructureSurroundings.surroundings_matrix</code>).</li>
 </ul>
 <p>These characteristics are then used to estimate how much surface of the infrastructures will be affected by the reinforced profile and therefore their associated cost.</p>
 <h3 id="reinforcement-profile-zones">Reinforcement profile zones<a class="headerlink" href="#reinforcement-profile-zones" title="Permanent link">&para;</a></h3>
@@ -209,7 +209,7 @@
 </tbody>
 </table>
 <h3 id="infrastructures-distances">Infrastructure's distances<a class="headerlink" href="#infrastructures-distances" title="Permanent link">&para;</a></h3>
-<p>An infrastructure (<code>SurroundingsInfrastructure</code>) can be present at different locations (<code>SurroundingsInfrastructure.points</code>). Each of these locations (<code>PointSurroundings</code>) contains a dictionary (<code>surroundings_matrix: dict[float, float]</code>) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.</p>
+<p>An infrastructure (<code>SurroundingsInfrastructure</code>) can be present at different locations (<code>SurroundingsInfrastructure.points</code>). Each of these locations (<code>PointInfrastructureSurroundings</code>) contains a dictionary (<code>surroundings_matrix: dict[float, float]</code>) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.</p>
 <p>For instance, we could have <code>surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}</code>, which means:
 - Between <code>0</code> and <code>5</code> meters from the location we will find <code>1.5</code> meters of the infrastructure,
 - Between <code>5</code> and <code>10</code> meters from the location we will find <code>0</code> meters of the infrastructure,
