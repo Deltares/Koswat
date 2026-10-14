@@ -118,7 +118,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
 
         return _scp
 
-    def _get_land_purchase_cost_parameter(
+    def _get_land_purchase_polderside_cost_parameter(
         self, quantity: float, input_data: ReinforcementInputProfileProtocol
     ) -> SoilCostParameter:
         _lpcp = SoilCostParameter()
@@ -202,7 +202,7 @@ class QuantityCostParametersBuilder(BuilderProtocol):
             dike_profile_costs.processing_ground_level_surface_m2,
         )
         qc_parameters.land_purchase_surface_polderside = (
-            self._get_land_purchase_cost_parameter(
+            self._get_land_purchase_polderside_cost_parameter(
                 _qcp.new_ground_level_surface, self.reinforced_profile.input_data
             )
         )

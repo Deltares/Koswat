@@ -101,7 +101,7 @@ class TestQuantityCostParametersBuilder:
         assert _vc_parameter.total_cost == 10.08
         assert _vc_parameter.total_cost_with_surtax == 20.16
 
-    def test__get_land_purchase_cost_parameter(self):
+    def test__get_land_purchase_polderside_cost_parameter(self):
         # 1. Define test data
         _builder = QuantityCostParametersBuilder()
         _builder.koswat_costs_settings = KoswatCostsSettings()
@@ -115,7 +115,7 @@ class TestQuantityCostParametersBuilder:
         )
 
         # 2. Run test
-        _vc_parameter = _builder._get_land_purchase_cost_parameter(
+        _vc_parameter = _builder._get_land_purchase_polderside_cost_parameter(
             4.2, _builder.reinforced_profile.input_data
         )
 
@@ -125,6 +125,31 @@ class TestQuantityCostParametersBuilder:
         assert _vc_parameter.cost == 10
         assert _vc_parameter.total_cost == 42
         assert _vc_parameter.total_cost_with_surtax == 84
+
+    def test__get_land_purchase_waterside_cost_parameter(self):
+        # 1. Define test data
+        _builder = QuantityCostParametersBuilder()
+        _builder.koswat_costs_settings = KoswatCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs = SurtaxCostsSettings()
+        _builder.koswat_costs_settings.surtax_costs.land_purchase_normal = 2.0
+        _builder.reinforced_profile = SoilReinforcementProfile()
+        _builder.reinforced_profile.input_data = SoilInputProfile()
+        _builder.reinforced_profile.input_data.ground_price_waterside = 100
+        _builder.reinforced_profile.input_data.land_purchase_surtax_factor = (
+            SurtaxFactorEnum.NORMAAL
+        )
+
+        # 2. Run test
+        _vc_parameter = _builder._get_land_purchase_waterside_cost_parameter(
+            4.2, _builder.reinforced_profile.input_data
+        )
+
+        # 3. Validate results
+        assert isinstance(_vc_parameter, SoilCostParameter)
+        assert _vc_parameter.quantity == 4.2
+        assert _vc_parameter.cost == 100
+        assert _vc_parameter.total_cost == 420
+        assert _vc_parameter.total_cost_with_surtax == 840
 
     def test__get_construction_cost_parameter(self):
         # 1. Define test data
