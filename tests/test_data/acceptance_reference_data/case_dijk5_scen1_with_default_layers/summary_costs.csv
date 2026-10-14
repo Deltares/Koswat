@@ -1,7 +1,7 @@
 Profile type;Grondmaatregel binnendijks;Grondmaatregel buitendijks;Verticale piping oplossing;Kwelscherm;Stabiliteitswand teen;Stabiliteitswand kruin;Kistdam
 Strategy reinforcement order;-1;-1;-1;-1;-1;-1;-1
-Cost per km (Euro/km);2273825.33;4580502.63;1512415.26;6468204.26;1447345.5;3761615.66;9534919.73
-Cost per km incl surtax (Euro/km);4944258.25;8709940.61;3644065.76;12045689.4;4163144.64;10902299.34;31130007.76
+Cost per km (Euro/km);2273825.33;2737502.63;1512415.26;6468204.26;1447345.5;3761615.66;9534919.73
+Cost per km incl surtax (Euro/km);4944258.25;6107624.61;3644065.76;12045689.4;4163144.64;10902299.34;31130007.76
 New grass volume (quantity):;14.65;16.26;6.6;3.94;0;0;0.03
 New grass volume (cost):;182.3;202.27;82.06;49.04;0.0;0.0;0.38
 New grass volume (cost incl surtax):;457.4;507.49;205.89;123.04;0.0;0.0;1.06
@@ -36,8 +36,8 @@ Land purchase surface (quantity):;50.0;50.0;23.14;13.14;-0.0;-0.0;0.0
 Land purchase surface (cost):;693.5;693.5;320.95;4239.36;-0.0;-0.0;0.0
 Land purchase surface (cost incl surtax):;979.22;979.22;453.18;5985.97;-0.0;-0.0;0.0
 Land purchase surface waterside (quantity):;-0.0;36.86;-0.0;-0.0;-0.0;-0.0;-0.0
-Land purchase surface waterside (cost):;-0.0;1843.0;-0.0;-0.0;-0.0;-0.0;-0.0
-Land purchase surface waterside (cost incl surtax):;-0.0;2602.32;-0.0;-0.0;-0.0;-0.0;-0.0
+Land purchase surface waterside (cost):;nan;nan;nan;nan;nan;nan;nan
+Land purchase surface waterside (cost incl surtax):;nan;nan;nan;nan;nan;nan;nan
 Construction length (quantity):;0.0;0.0;0.0;7.5;5.3;8.9;13.3
 Construction length (cost):;0;0;500.0;1160.15;1065.68;3379.95;8979.8
 Construction length (cost incl surtax):;0;0;1456.0;3378.36;3103.25;9842.4;29588.44
