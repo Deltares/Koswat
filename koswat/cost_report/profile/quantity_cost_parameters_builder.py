@@ -201,8 +201,10 @@ class QuantityCostParametersBuilder(BuilderProtocol):
             _qcp.new_ground_level_surface,
             dike_profile_costs.processing_ground_level_surface_m2,
         )
-        qc_parameters.land_purchase_surface = self._get_land_purchase_cost_parameter(
-            _qcp.new_ground_level_surface, self.reinforced_profile.input_data
+        qc_parameters.land_purchase_surface_polderside = (
+            self._get_land_purchase_cost_parameter(
+                _qcp.new_ground_level_surface, self.reinforced_profile.input_data
+            )
         )
         qc_parameters.land_purchase_surface_waterside = (
             self._get_land_purchase_waterside_cost_parameter(

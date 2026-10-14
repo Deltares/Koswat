@@ -97,7 +97,7 @@ class QuantityCostParameters:
     new_clay_layer_surface: CostParameterProtocol
     new_core_layer_surface: CostParameterProtocol
     new_ground_level_surface: CostParameterProtocol
-    land_purchase_surface: CostParameterProtocol
+    land_purchase_surface_polderside: CostParameterProtocol
     land_purchase_surface_waterside: CostParameterProtocol
     construction_length: CostParameterProtocol
 
@@ -112,7 +112,7 @@ class QuantityCostParameters:
         self.new_clay_layer_surface = None
         self.new_core_layer_surface = None
         self.new_ground_level_surface = None
-        self.land_purchase_surface = None
+        self.land_purchase_surface_polderside = None
         self.land_purchase_surface_waterside = None
         self.construction_length = None
 

@@ -37,7 +37,7 @@ class TestKoswatGeneralJsonReader:
     ):
         class MockedSurroundingsSectionFom(SurroundingsSectionFom):
             def __init__(self):
-                self.allow_waterside_reinforcement = True
+                self.allow_waterside_reinforcement = False
 
         class MockedDikeProfileSectionFom(DikeProfileSectionFom):
             def __init__(self):
