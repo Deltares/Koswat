@@ -73,6 +73,7 @@ class ReinforcementInputProfileCalculationBase(ABC):
 
         _reinforced_profile.ground_price_builtup = base_data.ground_price_builtup
         _reinforced_profile.ground_price_unbuilt = base_data.ground_price_unbuilt
+        _reinforced_profile.ground_price_waterside = base_data.ground_price_waterside
         _reinforced_profile.factor_settlement = base_data.factor_settlement
         _reinforced_profile.pleistocene = base_data.pleistocene
         _reinforced_profile.aquifer = base_data.aquifer

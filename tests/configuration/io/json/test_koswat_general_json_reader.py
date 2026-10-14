@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from koswat.configuration.io.config_sections import (
     AnalysisSectionFom,
     CofferdamReinforcementSectionFom,
@@ -14,25 +16,55 @@ from koswat.configuration.io.config_sections import (
     VPSReinforcementSectionFom,
 )
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
+from koswat.configuration.io.json.koswat_general_json_reader import (
+    KoswatGeneralJsonReader,
+)
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
 )
-from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from tests import test_data
 
 test_json_reader_data = test_data.joinpath("json_reader")
 
 
-class TestKoswatGeneralJsonFom:
-    def test_from_config(self):
+class TestKoswatGeneralJsonReader:
+
+    @pytest.mark.parametrize("ground_price_waterside", [None, float("nan")])
+    def test_when__normalize_imported_json_given_allow_waterside_reinforcement_and_no_ground_price_then_sets_ground_price_to_zero(
+        self,
+        ground_price_waterside,
+    ):
+        class MockedSurroundingsSectionFom(SurroundingsSectionFom):
+            def __init__(self):
+                self.allow_waterside_reinforcement = False
+
+        class MockedDikeProfileSectionFom(DikeProfileSectionFom):
+            def __init__(self):
+                self.ground_price_waterside = ground_price_waterside
+
+        class MockedKoswatGeneralJsonFom(KoswatGeneralJsonFom):
+            def __init__(self):
+                self.surroundings_section = MockedSurroundingsSectionFom()
+                self.dike_profile_section = MockedDikeProfileSectionFom()
+
         # 1. Define test data.
-        _test_file_path = test_json_reader_data.joinpath("koswat_general.json")
-        _json_reader = KoswatJsonReader()
+        _json_reader = KoswatGeneralJsonReader()
+        _generated_object = MockedKoswatGeneralJsonFom()
 
         # 2. Run test
-        _json = _json_reader.read(_test_file_path)
-        _config_fom = KoswatGeneralJsonFom.from_json(_json)
+        _config_fom = _json_reader._normalize_imported_json(_generated_object)
+
+        # 3. Validate expectations.
+        assert _config_fom.dike_profile_section.ground_price_waterside == 0
+
+    def test_when_read_given_valid_json_then_returns_config_fom(self):
+        # 1. Define test data.
+        _test_file_path = test_json_reader_data.joinpath("koswat_general.json")
+        _json_reader = KoswatGeneralJsonReader()
+
+        # 2. Run test
+        _config_fom = _json_reader.read(_test_file_path)
 
         # 3. Validate expectations.
         assert isinstance(_config_fom, KoswatGeneralJsonFom)

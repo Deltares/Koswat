@@ -32,9 +32,12 @@ New core layer surface (cost incl surtax):;108.51;124.71;53.02;69.22;30.14;30.14
 New ground level surface (quantity):;50.04;50.04;23.18;13.18;0.04;0.04;0.0
 New ground level surface (cost):;12.51;12.51;5.79;3.29;0.01;0.01;0.0
 New ground level surface (cost incl surtax):;31.39;31.39;14.54;8.26;0.03;0.03;0.0
-Land purchase surface (quantity):;50.04;50.04;23.18;13.18;0.04;0.04;0.0
-Land purchase surface (cost):;694.0;694.0;321.46;4251.1;11.74;11.74;0.0
-Land purchase surface (cost incl surtax):;979.93;979.93;453.9;6002.56;19.32;19.32;0.0
+Land purchase surface polderside (quantity):;50.04;50.04;23.18;13.18;0.04;0.04;0.0
+Land purchase surface polderside (cost):;694.0;694.0;321.46;4251.1;11.74;11.74;0.0
+Land purchase surface polderside (cost incl surtax):;979.93;979.93;453.9;6002.56;19.32;19.32;0.0
+Land purchase surface waterside (quantity):;0.04;36.9;0.04;0.04;0.04;0.04;-0.0
+Land purchase surface waterside (cost):;nan;nan;nan;nan;nan;nan;nan
+Land purchase surface waterside (cost incl surtax):;nan;nan;nan;nan;nan;nan;nan
 Construction length (quantity):;0.0;0.0;0.0;7.5;5.3;8.9;13.3
 Construction length (cost):;0;0;500.0;1160.15;1065.68;3379.95;8979.8
 Construction length (cost incl surtax):;0;0;1456.0;3378.36;3103.25;9842.4;29588.44

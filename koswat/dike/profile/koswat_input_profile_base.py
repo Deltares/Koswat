@@ -41,6 +41,7 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     polderside_berm_width: float = math.nan
     ground_price_builtup: float = math.nan
     ground_price_unbuilt: float = math.nan
+    ground_price_waterside: float = math.nan
     factor_settlement: float = math.nan
     pleistocene: float = math.nan
     aquifer: float = math.nan
@@ -101,6 +102,9 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
         )
         self.ground_price_unbuilt = _set_default(
             self.ground_price_unbuilt, other.ground_price_unbuilt
+        )
+        self.ground_price_waterside = _set_default(
+            self.ground_price_waterside, other.ground_price_waterside
         )
         self.factor_settlement = _set_default(
             self.factor_settlement, other.factor_settlement

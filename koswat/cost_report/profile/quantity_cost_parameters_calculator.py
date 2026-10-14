@@ -32,6 +32,7 @@ class QuantityCostParametersCalculator:
     new_grass_layer_volume: float
     new_grass_layer_surface: float
     new_ground_level_surface: float
+    new_ground_level_surface_waterside: float
     construction_length: float
     construction_type: ConstructionTypeEnum | None
 
