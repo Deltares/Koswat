@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import dataclass
+import math
 
 from koswat.configuration.io.config_sections import (
     AnalysisSectionFom,
@@ -68,7 +69,7 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
             KoswatGeneralJsonFom: Created object with parsed config settings.
         """
         json_config = koswat_config_fom.content
-        return cls(
+        _generated_object = cls(
             analysis_section=AnalysisSectionFom.from_config(
                 json_config["analyse"], koswat_config_fom.file_path.parent
             ),
@@ -109,3 +110,9 @@ class KoswatGeneralJsonFom(KoswatJsonFomProtocol):
                 json_config["infrastructuur"]
             ),
         )
+        if _generated_object.surroundings_section.allow_waterside_reinforcement and (
+            _generated_object.dike_profile_section.ground_price_waterside is None
+            or math.isnan(_generated_object.dike_profile_section.ground_price_waterside)
+        ):
+            _generated_object.dike_profile_section.ground_price_waterside = 0.0
+        return _generated_object
