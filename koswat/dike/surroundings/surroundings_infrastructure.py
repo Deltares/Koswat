@@ -25,9 +25,7 @@ from dataclasses import dataclass, field
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
-from koswat.dike.surroundings.point import (
-    PointInfrastructureSurroundings,
-)
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 
 
 @dataclass

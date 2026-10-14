@@ -32,9 +32,7 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.point import (
-    PointInfrastructureSurroundings,
-)
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike.surroundings.point.point_surroundings_list_builder import (
     PointSurroundingsListBuilder,
 )
