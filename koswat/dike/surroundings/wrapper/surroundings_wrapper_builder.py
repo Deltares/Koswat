@@ -32,7 +32,10 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.point import PointSurroundingsProtocol
+from koswat.dike.surroundings.point import (
+    PointInfrastructureSurroundings,
+    PointObstacleSurroundings,
+)
 from koswat.dike.surroundings.point.point_surroundings_list_builder import (
     PointSurroundingsListBuilder,
 )
@@ -68,15 +71,33 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             max_waterside_extension=self.surroundings_section_fom.max_waterside_extension,
         )
 
-    def _get_surroundings_from_fom_collection(
-        self, csv_fom: list[SurroundingsEnum]
-    ) -> list[PointSurroundingsProtocol]:
-        for _type in csv_fom:
-            if _type not in self.surroundings_csv_fom_collection:
-                return []
+    def _get_obstacle_surroundings_from_fom_collection(
+        self, surrounding_type: SurroundingsEnum
+    ) -> list[PointObstacleSurroundings]:
+        if surrounding_type not in self.surroundings_csv_fom_collection:
+            return []
         return PointSurroundingsListBuilder(
             koswat_shp_fom=self.location_shp_fom,
-            koswat_csv_fom=self.surroundings_csv_fom_collection[csv_fom],
+            koswat_csv_fom=self.surroundings_csv_fom_collection[surrounding_type],
+        ).build()
+
+    def _get_infrastructure_surroundings_from_fom_collection(
+        self,
+        polderside_type: SurroundingsEnum,
+        waterside_type: SurroundingsEnum,
+    ) -> list[PointInfrastructureSurroundings]:
+        if (
+            polderside_type not in self.surroundings_csv_fom_collection
+            or waterside_type not in self.surroundings_csv_fom_collection
+        ):
+            return []
+
+        self.surroundings_csv_fom_collection[polderside_type].merge(
+            self.surroundings_csv_fom_collection[waterside_type]
+        )
+        return PointSurroundingsListBuilder(
+            koswat_shp_fom=self.location_shp_fom,
+            koswat_csv_fom=self.surroundings_csv_fom_collection[polderside_type],
         ).build()
 
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
@@ -85,8 +106,10 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
         )
 
-        _obs_wrapper.obstacles.points = self._get_surroundings_from_fom_collection(
-            [SurroundingsEnum.OBSTACLE]
+        _obs_wrapper.obstacles.points = (
+            self._get_obstacle_surroundings_from_fom_collection(
+                SurroundingsEnum.OBSTACLE
+            )
         )
 
         # At least 1 obstacle type should be present to determine the location coordinates.
@@ -102,8 +125,8 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     ) -> SurroundingsInfrastructure:
         return SurroundingsInfrastructure(
             infrastructure_type=road_class,
-            points=self._get_surroundings_from_fom_collection(
-                SurroundingsEnum.get_infra_types(road_class)
+            points=self._get_infrastructure_surroundings_from_fom_collection(
+                *SurroundingsEnum.get_infra_types(road_class)
             ),
             infrastructure_width=self.infrastructure_section_fom.get_roads_class_width(
                 road_class

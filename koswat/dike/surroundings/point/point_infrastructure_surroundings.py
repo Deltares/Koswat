@@ -32,12 +32,15 @@ from .point_surroundings_protocol import PointSurroundingsProtocol
 @dataclass(kw_only=True)
 class PointInfrastructureSurroundings(PointSurroundingsProtocol):
     """
-    Object representing a `meter` with `x`, `y` coordinates in a polder (or else).
+    Object representing a `meter` with `x`, `y` coordinates in a polder (or else),
+    extended with infrastructure specific properties.
     """
 
     section: str = ""
     traject_order: int = -1
     location: Point | None = None
+
+    imported_surroundings: dict[float, float] = field(default_factory=dict)
     polderside_surroundings: dict[float, float] = field(default_factory=dict)
     waterside_surroundings: dict[float, float] = field(default_factory=dict)
 
@@ -56,6 +59,15 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
         if not isinstance(value, type(self)):
             return False
         return self.traject_order == value.traject_order
+
+    def merge(self, other: PointSurroundingsProtocol) -> None:
+        if not isinstance(other, PointSurroundingsProtocol):
+            raise TypeError(
+                f"Expected an instance of PointSurroundingsProtocol, got {type(other)}"
+            )
+
+        self.polderside_surroundings = self.imported_surroundings
+        self.waterside_surroundings = other.imported_surroundings
 
     def get_total_infrastructure_per_zone(
         self, *zone_limit_collection: tuple[float, float]
