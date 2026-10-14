@@ -95,6 +95,9 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         _calculator.new_ground_level_surface = (
             self.reinforced_profile.new_ground_level_surface
         )
+        _calculator.new_ground_level_surface_waterside = (
+            self.reinforced_profile.new_ground_waterside
+        )
         _calculator.construction_length = (
             self.reinforced_profile.input_data.construction_length
         )
