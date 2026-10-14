@@ -23,6 +23,7 @@ import math
 from pathlib import Path
 
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
+from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
 from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
 
@@ -36,15 +37,15 @@ class KoswatGeneralJsonReader(KoswatReaderProtocol):
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix == ".json"
 
-    def read(self, from_path: Path) -> KoswatGeneralJsonFom:
+    def read(self, from_path: Path) -> KoswatJsonFomProtocol:
         reader = KoswatJsonReader()
         _json_fom = reader.read(from_path)
         _imported_json = KoswatGeneralJsonFom.from_json(_json_fom)
         return _imported_json
 
     def _normalize_imported_json(
-        self, _generated_object: KoswatGeneralJsonFom
-    ) -> KoswatGeneralJsonFom:
+        self, _generated_object: KoswatJsonFomProtocol
+    ) -> KoswatJsonFomProtocol:
         if _generated_object.surroundings_section.allow_waterside_reinforcement and (
             _generated_object.dike_profile_section.ground_price_waterside is None
             or math.isnan(_generated_object.dike_profile_section.ground_price_waterside)
