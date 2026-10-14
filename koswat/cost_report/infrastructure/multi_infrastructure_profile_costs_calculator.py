@@ -75,7 +75,7 @@ class MultiInfrastructureProfileCostsCalculator:
                 [
                     InfrastructureLocationProfileCostReport(
                         reinforced_profile=reinforced_profile,
-                        infrastructure_name=_calculator.infrastructure.infrastructure_name,
+                        infrastructure_name=_calculator.infrastructure.infrastructure_type,
                         infrastructure_location_costs=_subreport,
                     )
                     for _subreport in _subreports

@@ -25,6 +25,7 @@ import logging
 from dataclasses import dataclass
 from enum import Enum
 
+from koswat.dike.surroundings.road_class import RoadClass
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -82,3 +83,29 @@ class SurroundingsEnum(SurroundingsEnumType, Enum):
 
     def __hash__(self):
         return hash(self.name)
+
+    @classmethod
+    def get_infra_types(cls, road_class: RoadClass) -> list[SurroundingsEnum]:
+        mapping = {
+            RoadClass.CLASS_2: [
+                cls.ROADS_CLASS_2_POLDERSIDE,
+                cls.ROADS_CLASS_2_WATERSIDE,
+            ],
+            RoadClass.CLASS_7: [
+                cls.ROADS_CLASS_7_POLDERSIDE,
+                cls.ROADS_CLASS_7_WATERSIDE,
+            ],
+            RoadClass.CLASS_24: [
+                cls.ROADS_CLASS_24_POLDERSIDE,
+                cls.ROADS_CLASS_24_WATERSIDE,
+            ],
+            RoadClass.CLASS_47: [
+                cls.ROADS_CLASS_47_POLDERSIDE,
+                cls.ROADS_CLASS_47_WATERSIDE,
+            ],
+            RoadClass.CLASS_UNKNOWN: [
+                cls.ROADS_CLASS_UNKNOWN_POLDERSIDE,
+                cls.ROADS_CLASS_UNKNOWN_WATERSIDE,
+            ],
+        }
+        return mapping.get(road_class, [])

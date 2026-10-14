@@ -25,9 +25,8 @@ from dataclasses import dataclass, field
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
-from koswat.dike.surroundings.point import (
-    PointInfrastructureSurroundings,
-)
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
+from koswat.dike.surroundings.road_class import RoadClass
 
 
 @dataclass
@@ -40,6 +39,6 @@ class SurroundingsInfrastructure(KoswatSurroundingsProtocol):
     how long that infrastructure is.
     """
 
-    infrastructure_name: str = ""
+    infrastructure_type: RoadClass
     infrastructure_width: float = math.nan
     points: list[PointInfrastructureSurroundings] = field(default_factory=lambda: [])

@@ -139,7 +139,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             infrastructure: SurroundingsInfrastructure,
         ) -> MultiInfrastructureProfileCostsCalculator:
             _costs_a, _costs_b = self._get_zone_a_b_costs(
-                infrastructure.infrastructure_name
+                infrastructure.infrastructure_type
             )
             return InfrastructureProfileCostsCalculator(
                 infrastructure=infrastructure,

@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 from enum import Enum
 
 
-class RoadClasses(Enum):
+class RoadClass(Enum):
     CLASS_2 = "ROADS_CLASS_2"
     CLASS_7 = "ROADS_CLASS_7"
     CLASS_24 = "ROADS_CLASS_24"
