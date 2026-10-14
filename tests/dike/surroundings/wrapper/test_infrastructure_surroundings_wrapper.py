@@ -21,21 +21,8 @@ class TestInfrastructureSurroundingsWrapper:
         assert _wrapper.infrastructures_considered
 
         # Verify infras are initialized.
-        assert isinstance(_wrapper.roads_class_2_polderside, SurroundingsInfrastructure)
-        assert isinstance(_wrapper.roads_class_7_polderside, SurroundingsInfrastructure)
-        assert isinstance(
-            _wrapper.roads_class_24_polderside, SurroundingsInfrastructure
-        )
-        assert isinstance(
-            _wrapper.roads_class_47_polderside, SurroundingsInfrastructure
-        )
-        assert isinstance(
-            _wrapper.roads_class_unknown_polderside, SurroundingsInfrastructure
-        )
-        assert isinstance(_wrapper.roads_class_2_waterside, SurroundingsInfrastructure)
-        assert isinstance(_wrapper.roads_class_7_waterside, SurroundingsInfrastructure)
-        assert isinstance(_wrapper.roads_class_24_waterside, SurroundingsInfrastructure)
-        assert isinstance(_wrapper.roads_class_47_waterside, SurroundingsInfrastructure)
-        assert isinstance(
-            _wrapper.roads_class_unknown_waterside, SurroundingsInfrastructure
-        )
+        assert isinstance(_wrapper.roads_class_2, SurroundingsInfrastructure)
+        assert isinstance(_wrapper.roads_class_7, SurroundingsInfrastructure)
+        assert isinstance(_wrapper.roads_class_24, SurroundingsInfrastructure)
+        assert isinstance(_wrapper.roads_class_47, SurroundingsInfrastructure)
+        assert isinstance(_wrapper.roads_class_unknown, SurroundingsInfrastructure)

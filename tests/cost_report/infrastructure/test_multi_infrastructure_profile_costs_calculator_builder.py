@@ -22,6 +22,7 @@ from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calcul
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder import (
     MultiInfrastructureProfileCostsCalculatorBuilder,
 )
+from koswat.dike.surroundings.road_class import RoadClass
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -73,9 +74,9 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             infrastructures_considered=True,
             surtax_cost_factor=surtax_cost_factor,
             non_rising_dike_costs_factor=dh0_factor,
-            roads_class_unknown_polderside=_infrastructure,
+            roads_class_unknown=_infrastructure,
         )
-        _infrastructure.infrastructure_name = "ROADS_CLASS_UNKNOWN_POLDERSIDE"
+        _infrastructure.infrastructure_type = RoadClass.CLASS_2
 
         _adding_roads = 24.0
         _removing_roads = 12.0
@@ -120,8 +121,8 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             assert isinstance(infra_calculator, InfrastructureProfileCostsCalculator)
             assert infra_calculator.surtax == _expected_surtax_cost
             if (
-                infra_calculator.infrastructure.infrastructure_name
-                != _infrastructure.infrastructure_name
+                infra_calculator.infrastructure.infrastructure_type
+                != _infrastructure.infrastructure_type
             ):
                 if dh0_factor == InfraCostsEnum.GEEN:
                     assert infra_calculator.zone_a_costs == 0

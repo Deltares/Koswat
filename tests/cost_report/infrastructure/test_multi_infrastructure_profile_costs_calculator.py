@@ -12,6 +12,7 @@ from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calcul
     MultiInfrastructureProfileCostsCalculator,
 )
 from koswat.dike.surroundings.point import PointInfrastructureSurroundings
+from koswat.dike.surroundings.road_class import RoadClass
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -36,7 +37,7 @@ class TestMultiInfrastructureProfileCostsCalculator:
     ) -> Iterable[Callable[[int], InfrastructureProfileCostsCalculator]]:
         def build_calculator(n_points: int) -> InfrastructureProfileCostsCalculator:
             _infra = SurroundingsInfrastructure(
-                infrastructure_name="dummy infrastructure",
+                infrastructure_type=RoadClass.CLASS_2,
                 # To simplify A / B total areas, we just set it to `1`.
                 infrastructure_width=1,
                 points=[basic_point_surroundings_builder()] * n_points,

@@ -173,12 +173,8 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.infrastructure_surroundings_wrapper,
                 InfrastructureSurroundingsWrapper,
             )
-            assert any(
-                _sw.infrastructure_surroundings_wrapper.roads_class_2_polderside.points
-            )
-            assert any(
-                _sw.infrastructure_surroundings_wrapper.roads_class_24_polderside.points
-            )
+            assert any(_sw.infrastructure_surroundings_wrapper.roads_class_2.points)
+            assert any(_sw.infrastructure_surroundings_wrapper.roads_class_24.points)
 
     def test_when_build_given_location_mismatch_then_exception_raised(self):
         # 1. Define test data.
