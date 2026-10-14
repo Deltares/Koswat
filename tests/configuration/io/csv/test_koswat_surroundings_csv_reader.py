@@ -79,4 +79,4 @@ class TestKoswatSurroundingsCsvReader:
         assert _point_surroundings.traject_order == _traject_order
         assert _point_surroundings.location.x == _location_x
         assert _point_surroundings.location.y == _location_y
-        assert _point_surroundings.surroundings_matrix == expected_matrix
+        assert _point_surroundings.polderside_surroundings == expected_matrix

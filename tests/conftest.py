@@ -52,7 +52,7 @@ def _get_basic_point_surroundings_builder_fixture() -> (
 ):
     def build() -> PointSurroundingsProtocol:
         return PointInfrastructureSurroundings(
-            location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
+            location=Point(2.4, 4.2), polderside_surroundings={5: 1.5, 10: 3, 15: 6}
         )
 
     yield build

@@ -16,7 +16,7 @@ class TestPointInfrastructureSurroundings:
         assert isinstance(_p_s, PointSurroundingsProtocol)
         assert not _p_s.section
         assert not _p_s.location
-        assert not _p_s.surroundings_matrix
+        assert not _p_s.polderside_surroundings
 
     def test_get_total_infrastructure_per_zone_with_costs_calculator_case(
         self,
@@ -63,7 +63,9 @@ class TestPointInfrastructureSurroundings:
         expected_values: list[int],
     ):
         # 1. Define test data.
-        _ps = PointInfrastructureSurroundings(surroundings_matrix=surroundings_matrix)
+        _ps = PointInfrastructureSurroundings(
+            polderside_surroundings=surroundings_matrix
+        )
 
         # 2. Run test.
         _total_infra = _ps.get_total_infrastructure_per_zone(*zones)

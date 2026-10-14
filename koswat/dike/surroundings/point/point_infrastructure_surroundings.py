@@ -38,7 +38,8 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
     section: str = ""
     traject_order: int = -1
     location: Point | None = None
-    surroundings_matrix: dict[float, float] = field(default_factory=dict)
+    polderside_surroundings: dict[float, float] = field(default_factory=dict)
+    waterside_surroundings: dict[float, float] = field(default_factory=dict)
 
     def __hash__(self) -> int:
         """
@@ -56,21 +57,6 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
             return False
         return self.traject_order == value.traject_order
 
-    def merge(self, other: PointInfrastructureSurroundings) -> None:
-        """
-        Merges another `PointInfrastructureSurroundings` into this one by updating the
-        `surroundings_matrix` with the values from the other one.
-
-        Args:
-            other (PointInfrastructureSurroundings): The other `PointInfrastructureSurroundings` to merge.
-        """
-
-        for _s_key, _s_value in other.surroundings_matrix.items():
-            if _s_key in self.surroundings_matrix:
-                self.surroundings_matrix[_s_key] += _s_value
-            else:
-                self.surroundings_matrix[_s_key] = _s_value
-
     def get_total_infrastructure_per_zone(
         self, *zone_limit_collection: tuple[float, float]
     ) -> list[float]:
@@ -78,13 +64,14 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
         Gets the total infrastructure width at each of the provided zones
         `zone_limit_collection` (`tuple[float, float]`).
         The zone limits are matched by rounding up their upper limit to the
-        `surroundings_matrix` keys (distances to the `location` in the real world).
+        `polderside_surroundings` and `waterside_surroundings` keys
+        (distances to the `location` in the real world).
         When two zones have overlapping limits (as expected) the lower one will
         "claim" the corresponding surrounding distance.
 
         Example:
             - `zone_limit_collection` = (0, 4), (4, 11)
-            - `surroundings_matrix` = {5: 1.5, 10: 3, 15: 6}
+            - `polderside_surroundings` = {5: 1.5, 10: 3, 15: 6}
             - "Taken" distances per zone:
                 - `(0, 4)` takes key `5`.
                 - `(4, 11)` takes key(s) `10` and `15` because `5` was already taken.
@@ -96,7 +83,7 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
 
         # Prepare data.
         _sorted_matrix_array = sorted(
-            self.surroundings_matrix.items(), key=lambda item: item[0]
+            self.polderside_surroundings.items(), key=lambda item: item[0]
         )
 
         _taken_keys = []

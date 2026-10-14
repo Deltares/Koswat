@@ -67,7 +67,7 @@ class InfrastructureProfileCostsCalculator:
                 location=_location,
             )
             for _location in self.infrastructure.points
-            if any(_location.surroundings_matrix.items())
+            if any(_location.polderside_surroundings.items())
         ]
 
     def _calculate_at_location(

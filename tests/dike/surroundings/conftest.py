@@ -22,7 +22,7 @@ def get_distances_as_surrounding_point_builder() -> (
         location: Point, distances_list: list[float]
     ) -> PointInfrastructureSurroundings:
         return PointInfrastructureSurroundings(
-            location=location, surroundings_matrix={_d: 1 for _d in distances_list}
+            location=location, polderside_surroundings={_d: 1 for _d in distances_list}
         )
 
     yield build_point_surroundings
