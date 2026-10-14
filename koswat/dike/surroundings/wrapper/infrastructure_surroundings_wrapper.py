@@ -45,6 +45,8 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     # infrakosten_0dh
     non_rising_dike_costs_factor: InfraCostsEnum = InfraCostsEnum.GEEN
 
+    buffer_crest_waterside: float = 0.0
+
     # infrastructures
     roads_class_2: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(

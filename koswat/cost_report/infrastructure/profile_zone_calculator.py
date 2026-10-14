@@ -31,7 +31,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 @dataclass
 class ProfileZoneCalculator:
     """
-    Calculator to determine the width of zones `A` and `B` of a reinforced
+    Calculator to determine the width of zones `A`, `B`, and `C` of a reinforced
     profile (`ReinforcementProfileProtocol`). It requires its original base
     profile to be in its definition.
     """
@@ -46,37 +46,40 @@ class ProfileZoneCalculator:
         ]
         return min(_upper_x_coords), max(_upper_x_coords)
 
-    def _calculate_zone_a_and_b(self) -> tuple[float, float]:
+    def _calculate_all_zones(self) -> tuple[float, float, float]:
         _left_limit, _right_limit = self._get_profile_upper_x_coords(
             self.reinforced_profile.old_profile
         )
-        _zone_a = _right_limit - _left_limit
-        _zone_b = self.reinforced_profile.points[-1].x - _right_limit
-        return (_zone_a, _zone_b)
+        _zone_a = 0.0  # TODO
+        _zone_b = _right_limit - _left_limit
+        _zone_c = self.reinforced_profile.points[-1].x - _right_limit
+        return (_zone_a, _zone_b, _zone_c)
 
-    def _calculate_zone_b(self) -> tuple[float, float]:
+    def _calculate_a_c_zones(self) -> tuple[float, float, float]:
         _left_limit, _ = self._get_profile_upper_x_coords(
             self.reinforced_profile.old_profile
         )
-        _zone_b = self.reinforced_profile.points[-1].x - _left_limit
-        return (0, _zone_b)
+        _zone_a = 0.0  # TODO
+        _zone_b = 0.0
+        _zone_c = self.reinforced_profile.points[-1].x - _left_limit
+        return (_zone_a, _zone_b, _zone_c)
 
-    def calculate(self) -> tuple[float, float]:
+    def calculate(self) -> tuple[float, float, float]:
         """
-        Calculates the width of zones `A` and `B` for the defined instance of
+        Calculates the width of zones `A`, `B`, and `C` for the defined instance of
         `ReinforcementProfileProtocol`. The calculation is as follows:
-        - When `dh0` has not varied with respect to the base profile, then zones
-        `A` and `B` are calculated.
-        - When `dh0` has increased then only zone `B` is calculated.
+        - When `0dh` has not varied with respect to the base profile, then zones
+        `A`, `B`, and `C` are calculated.
+        - When `0dh` has increased then only zone `A` and `C` are calculated.
 
         Returns:
-            tuple[float, float]: Calculated zone `A` and `B` respectively.
+            tuple[float, float, float]: Calculated zone `A`, `B`, and `C` respectively.
         """
         if not self.reinforced_profile or not self.reinforced_profile.old_profile:
-            return (math.nan, math.nan)
+            return (math.nan, math.nan, math.nan)
 
         _new_height = self.reinforced_profile.profile_height
         _old_height = self.reinforced_profile.old_profile.profile_height
         if _new_height > _old_height and not math.isclose(_new_height, _old_height):
-            return self._calculate_zone_b()
-        return self._calculate_zone_a_and_b()
+            return self._calculate_a_c_zones()
+        return self._calculate_all_zones()

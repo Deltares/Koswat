@@ -36,17 +36,18 @@ class InfrastructureProfileCostsCalculator:
     """
     Calculator to generate all `InfrastructureLocationCosts` instances
     based on the locations of the contained infrastructure
-    (`SurroundingsInfrastructure.points`) and the width of `zone_a` and
-    `zone_b`.
+    (`SurroundingsInfrastructure.points`) and the width of `zone_a`,
+    `zone_b` and `zone_c`.
     """
 
     infrastructure: SurroundingsInfrastructure = None
     surtax: float = math.nan
     zone_a_costs: float = 0.0
     zone_b_costs: float = 0.0
+    zone_c_costs: float = 0.0
 
     def calculate(
-        self, zone_a_width: float, zone_b_width: float
+        self, zone_a_width: float, zone_b_width: float, zone_c_width: float
     ) -> list[InfrastructureLocationCosts]:
         """
         Calculates the costs affecting this instance's infrastructure
@@ -54,7 +55,8 @@ class InfrastructureProfileCostsCalculator:
 
         Args:
             zone_a_width (float): Width of zone type `A`.
-            zone_b_width (float): Width of zone type `B .
+            zone_b_width (float): Width of zone type `B`.
+            zone_c_width (float): Width of zone type `C`.
 
         Returns:
             list[InfrastructureLocationCosts]: Resulting cost summaries.
@@ -64,6 +66,7 @@ class InfrastructureProfileCostsCalculator:
             self._calculate_at_location(
                 zone_a_width=zone_a_width,
                 zone_b_width=zone_b_width,
+                zone_c_width=zone_c_width,
                 location=_location,
             )
             for _location in self.infrastructure.points
@@ -74,22 +77,32 @@ class InfrastructureProfileCostsCalculator:
         self,
         zone_a_width: float,
         zone_b_width: float,
+        zone_c_width: float,
         location: PointInfrastructureSurroundings,
     ) -> InfrastructureLocationCosts:
-        _zone_a_limits = (0, zone_a_width)
-        _zone_b_limits = (zone_a_width, zone_a_width + zone_b_width)
-        _total_zone_a, _total_zone_b = location.get_total_infrastructure_per_zone(
-            _zone_a_limits, _zone_b_limits
+        _zone_a_limits = (-zone_a_width, 0)
+        _zone_b_limits = (0, zone_b_width)
+        _zone_c_limits = (
+            zone_b_width,
+            zone_b_width + zone_c_width
+        )
+        _total_zone_a, _total_zone_b, _total_zone_c = (
+            location.get_total_infrastructure_per_zone(
+                _zone_a_limits, _zone_b_limits, _zone_c_limits
+            )
         )
 
         _surface_zone_a = _total_zone_a * self.infrastructure.infrastructure_width
         _surface_zone_b = _total_zone_b * self.infrastructure.infrastructure_width
+        _surface_zone_c = _total_zone_c * self.infrastructure.infrastructure_width
 
         return InfrastructureLocationCosts(
             location=location,
             surtax=self.surtax,
             zone_a=_surface_zone_a,
             zone_b=_surface_zone_b,
+            zone_c=_surface_zone_c,
             zone_a_costs=_surface_zone_a * self.zone_a_costs,
             zone_b_costs=_surface_zone_b * self.zone_b_costs,
+            zone_c_costs=_surface_zone_c * self.zone_c_costs,
         )

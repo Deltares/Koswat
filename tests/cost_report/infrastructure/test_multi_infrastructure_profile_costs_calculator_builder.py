@@ -54,7 +54,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
         ],
     )
     @pytest.mark.parametrize(
-        "dh0_factor",
+        "non_rising_dike_costs_factor",
         [
             pytest.param(_ice, id=f"Infra costs: {_ice.name.lower()}")
             for _ice in InfraCostsEnum
@@ -63,20 +63,20 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
     def test_build_given_different_settings(
         self,
         surtax_cost_factor: SurtaxFactorEnum,
-        dh0_factor: InfraCostsEnum,
+        non_rising_dike_costs_factor: InfraCostsEnum,
         surroundings_infrastructure_fixture: tuple[
             SurroundingsInfrastructure, PointSurroundingsTestCase
         ],
     ):
         # 1. Define test data.
         _infrastructure, _ = surroundings_infrastructure_fixture
+        _infrastructure.infrastructure_type = RoadClass.CLASS_UNKNOWN
         _infra_wrapper = InfrastructureSurroundingsWrapper(
             infrastructures_considered=True,
             surtax_cost_factor=surtax_cost_factor,
-            non_rising_dike_costs_factor=dh0_factor,
+            non_rising_dike_costs_factor=non_rising_dike_costs_factor,
             roads_class_unknown=_infrastructure,
         )
-        _infrastructure.infrastructure_type = RoadClass.CLASS_2
 
         _adding_roads = 24.0
         _removing_roads = 12.0
@@ -96,14 +96,17 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
         if surtax_cost_factor == SurtaxFactorEnum.MAKKELIJK:
             _expected_surtax_cost = 0.5
         if surtax_cost_factor == SurtaxFactorEnum.MOEILIJK:
-            _expected_surtax_cost = 2
+            _expected_surtax_cost = 2.0
 
-        _expected_zone_a_costs = 0
-        _expected_zone_b_costs = _adding_roads + _removing_roads
-        if dh0_factor == InfraCostsEnum.HERSTEL:
+        _expected_zone_a_costs = 0.0
+        _expected_zone_b_costs = 0.0
+        _expected_zone_c_costs = _adding_roads + _removing_roads
+        if non_rising_dike_costs_factor == InfraCostsEnum.HERSTEL:
             _expected_zone_a_costs = _adding_roads
-        if dh0_factor == InfraCostsEnum.VERVANG:
+            _expected_zone_b_costs = _adding_roads
+        if non_rising_dike_costs_factor == InfraCostsEnum.VERVANG:
             _expected_zone_a_costs = _adding_roads + _removing_roads
+            _expected_zone_b_costs = _adding_roads + _removing_roads
 
         # 2. Run test.
         _calculator = _builder.build()
@@ -124,14 +127,17 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
                 infra_calculator.infrastructure.infrastructure_type
                 != _infrastructure.infrastructure_type
             ):
-                if dh0_factor == InfraCostsEnum.GEEN:
-                    assert infra_calculator.zone_a_costs == 0
+                if non_rising_dike_costs_factor == InfraCostsEnum.GEEN:
+                    assert infra_calculator.zone_a_costs == 0.0
+                    assert infra_calculator.zone_b_costs == 0.0
                 else:
                     assert math.isnan(infra_calculator.zone_a_costs)
-                assert math.isnan(infra_calculator.zone_b_costs)
+                    assert math.isnan(infra_calculator.zone_b_costs)
+                assert math.isnan(infra_calculator.zone_c_costs)
             else:
                 assert infra_calculator.zone_a_costs == _expected_zone_a_costs
                 assert infra_calculator.zone_b_costs == _expected_zone_b_costs
+                assert infra_calculator.zone_c_costs == _expected_zone_c_costs
             return True
 
         assert all(

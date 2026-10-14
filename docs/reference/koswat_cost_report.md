@@ -27,7 +27,7 @@ These characteristics are then used to estimate how much surface of the infrastr
 A reinforced profile can be different from its original state in many ways, however here we are only intestered in two things:
 
 1. The new profile's width from the original waterside crest point.
-2. Whether there is a crest's height increase (`dh0`),
+2. Whether there is a crest's height increase (`0dh`),
 
 By using the old and the reinforced profile's geometries, we can determine what we call zone `A` and zone `B`, `A + B = {profile's width from waterside crest point}`. 
 
@@ -36,13 +36,13 @@ By using the old and the reinforced profile's geometries, we can determine what 
 
 |![Dike profile with zone A and B](./imgs/surroundings_zone_a_b.png)|
 |:--:|
-|Image 1. Reinforcement with `dh0 = 0`|
+|Image 1. Reinforcement with `0dh = 0`|
 
 However, when the crest's height of a `ReinforcementProfileProtocol` has increased in comparison to its original profile (`ReinforcementProfileProtocol.old_profile`, `KoswatProfileProtocol`) then we set zone `A = 0` and therefore `B = {profile's width from waterside crest point}`.
 
 |![Dike profile with zone B](./imgs/surroundings_zone_b.png)|
 |:--:|
-|Image 2. Reinforcement with `dh0 = 1`|
+|Image 2. Reinforcement with `0dh = 1`|
 
 ### Infrastructure's distances
 

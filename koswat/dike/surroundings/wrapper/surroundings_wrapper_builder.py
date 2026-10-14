@@ -140,6 +140,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             infrastructures_considered=self.infrastructure_section_fom.active,
             surtax_cost_factor=self.infrastructure_section_fom.surtax_factor_roads,
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrastructure_costs_0dh,
+            buffer_crest_waterside=self.infrastructure_section_fom.buffer_crest_waterside,
         )
         if self.infrastructure_section_fom.active:
             _infra_wrapper.roads_class_2 = self._get_surroundings_infrastructure(

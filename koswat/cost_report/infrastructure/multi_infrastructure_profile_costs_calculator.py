@@ -53,9 +53,9 @@ class MultiInfrastructureProfileCostsCalculator:
         self, reinforced_profile: ReinforcementProfileProtocol
     ) -> list[InfrastructureLocationProfileCostReport]:
         """
-        Calculates the costs related to appyling the provided `reinforcement_profile`
+        Calculates the costs related to applying the provided `reinforcement_profile`
         at all the locations where an infrastructure is present. It first determines
-        zone `A` and `B` and then provides their widths to the inner
+        zone `A`, `B` and `C` and then provides their widths to the inner
         infrastructure calculators (`InfrastructureProfileCostsCalculator`).
 
         Args:
@@ -64,13 +64,15 @@ class MultiInfrastructureProfileCostsCalculator:
         Returns:
             list[InfrastructureLocationProfileCostReport]: Collection of reports summarizing the cost-impact of a `reinforced_profile`.
         """
-        _width_zone_a, _width_zone_b = ProfileZoneCalculator(
+        _width_zone_a, _width_zone_b, _width_zone_c = ProfileZoneCalculator(
             reinforced_profile=reinforced_profile
         ).calculate()
 
         _reports = []
         for _calculator in self.infrastructure_calculators:
-            _subreports = _calculator.calculate(_width_zone_a, _width_zone_b)
+            _subreports = _calculator.calculate(
+                _width_zone_a, _width_zone_b, _width_zone_c
+            )
             _reports.extend(
                 [
                     InfrastructureLocationProfileCostReport(

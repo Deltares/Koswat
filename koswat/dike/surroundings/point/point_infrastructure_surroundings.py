@@ -74,7 +74,7 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
     ) -> list[float]:
         """
         Gets the total infrastructure width at each of the provided zones
-        `zone_limit_collection` (`tuple[float, float]`).
+        `zone_limit_collection` (`tuple[float, float, float]`).
         The zone limits are matched by rounding up their upper limit to the
         `polderside_surroundings` and `waterside_surroundings` keys
         (distances to the `location` in the real world).
@@ -82,12 +82,14 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
         "claim" the corresponding surrounding distance.
 
         Example:
-            - `zone_limit_collection` = (0, 4), (4, 11)
-            - `polderside_surroundings` = {5: 1.5, 10: 3, 15: 6}
+            - `zone_limit_collection` = (-6, 0), (0, 4), (4, 11)
+            - `polderside_surroundings` = {5: 1.5, 10: 3.0, 15: 6.0}
+            - `waterside_surroundings` = {5: 2.0, 10: 4.0, 15: 8.0}
             - "Taken" distances per zone:
-                - `(0, 4)` takes key `5`.
-                - `(4, 11)` takes key(s) `10` and `15` because `5` was already taken.
-            - Total infrastructure width at zones = `(1.5, 9)`
+                - `(-6, 0)` takes waterside key `5` and `10`.
+                - `(0, 4)` takes poldeside key `5`.
+                - `(4, 11)` takes polderside keys `10` and `15` because `5` was already taken.
+            - Total infrastructure width at zones = `(6.0, 1.5, 9.0)`
 
         Returns:
             list[float]: list with total width corresponding to each provided zone.

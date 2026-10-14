@@ -41,7 +41,6 @@ from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calcul
     MultiInfrastructureProfileCostsCalculator,
 )
 from koswat.dike.surroundings.road_class import RoadClass
-from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -108,30 +107,42 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             )
         return math.nan, math.nan
 
-    def _get_zone_a_costs(self, adding_costs: float, removing_costs: float) -> float:
-        _dh0_factor = self.infrastructure_wrapper.non_rising_dike_costs_factor
-        if _dh0_factor == InfraCostsEnum.GEEN:
+    def _get_zone_cost_for_non_rising_dike(
+        self, adding_costs: float, removing_costs: float
+    ) -> float:
+        _0dh_factor = self.infrastructure_wrapper.non_rising_dike_costs_factor
+        if _0dh_factor == InfraCostsEnum.GEEN:
             return 0
-        elif _dh0_factor == InfraCostsEnum.HERSTEL:
+        elif _0dh_factor == InfraCostsEnum.HERSTEL:
             return adding_costs
-        elif _dh0_factor == InfraCostsEnum.VERVANG:
+        elif _0dh_factor == InfraCostsEnum.VERVANG:
             return adding_costs + removing_costs
 
-        logging.error("`dh0` factor %s not supported.", _dh0_factor)
+        logging.error("`0dh` factor %s not supported.", _0dh_factor)
         return math.nan
 
+    def _get_zone_a_costs(self, adding_costs: float, removing_costs: float) -> float:
+        # Waterside zone costs
+        return self._get_zone_cost_for_non_rising_dike(adding_costs, removing_costs)
+
     def _get_zone_b_costs(self, adding_costs: float, removing_costs: float) -> float:
+        # Crest zone costs
+        return self._get_zone_cost_for_non_rising_dike(adding_costs, removing_costs)
+
+    def _get_zone_c_costs(self, adding_costs: float, removing_costs: float) -> float:
+        # Polderside zone costs
         return adding_costs + removing_costs
 
-    def _get_zone_a_b_costs(
+    def _get_zone_costs(
         self, infrastructure_type: RoadClass
-    ) -> tuple[float, float]:
+    ) -> tuple[float, float, float]:
         _adding_costs, _removing_costs = self._get_infrastructure_costs(
             infrastructure_type
         )
         return (
             self._get_zone_a_costs(_adding_costs, _removing_costs),
             self._get_zone_b_costs(_adding_costs, _removing_costs),
+            self._get_zone_c_costs(_adding_costs, _removing_costs),
         )
 
     def build(self) -> MultiInfrastructureProfileCostsCalculator:
@@ -140,8 +151,8 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
 
         def get_infra_calculator(
             infrastructure: SurroundingsInfrastructure,
-        ) -> MultiInfrastructureProfileCostsCalculator:
-            _costs_a, _costs_b = self._get_zone_a_b_costs(
+        ) -> InfrastructureProfileCostsCalculator:
+            _costs_a, _costs_b, _costs_c = self._get_zone_costs(
                 infrastructure.infrastructure_type
             )
             return InfrastructureProfileCostsCalculator(
@@ -149,6 +160,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
                 surtax=_surtax_costs,
                 zone_a_costs=_costs_a,
                 zone_b_costs=_costs_b,
+                zone_c_costs=_costs_c,
             )
 
         return MultiInfrastructureProfileCostsCalculator(

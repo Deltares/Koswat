@@ -1,5 +1,5 @@
 import math
-from typing import Callable
+from collections.abc import Callable
 
 import pytest
 
@@ -52,67 +52,67 @@ class TestProfileZoneCalculator:
     @pytest.mark.parametrize(
         "points_reinforcement, expected_zones",
         [
-            # Without dh0 increase, we expect zone a and zone b calculated.
+            # Without 0dh increase, we expect zone a and zone b calculated.
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (39.7, -0.6), (67.7, -0.6), (74, -2)],
                 (10, 64),
-                id="Without dh0 increase - Soil reinforcement",
+                id="Without 0dh increase - Soil reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (43.74, -1.5), (53.75, -1.5), (56, -2)],
                 (10, 46),
-                id="Without dh0 increase - Vertical Piping Solution",
+                id="Without 0dh increase - Vertical Piping Solution",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (46, -2), (46, -2), (46, -2)],
                 (10, 36),
-                id="Without dh0 increase - Piping Wall reinforcement",
+                id="Without 0dh increase - Piping Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (34, -2), (34, -2), (34, -2)],
                 (10, 24),
-                id="Without dh0 increase - Stability Wall reinforcement",
+                id="Without 0dh increase - Stability Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (34, -2), (34, -2), (34, -2)],
                 (10, 24),
-                id="Without dh0 increase - Cofferdam reinforcement",
+                id="Without 0dh increase - Cofferdam reinforcement",
             ),
-            # With dh0 increase (of 1), we expect only zone b calculated.
+            # With 0dh increase (of 1), we expect only zone b calculated.
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (40.87, -0.6), (68.87, -0.6), (74, -2)],
                 (0, 74),
-                id="With dh0 increase to 1 - Soil reinforcement",
+                id="With 0dh increase to 1 - Soil reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (44.17, -1.5), (54.17, -1.5), (56, -2)],
                 (0, 56),
-                id="With dh0 increase to 1 - Vertical Piping Solution",
+                id="With 0dh increase to 1 - Vertical Piping Solution",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (46, -2), (46, -2), (46, -2)],
                 (0, 46),
-                id="With dh0 increase to 1 - Piping Wall reinforcement",
+                id="With 0dh increase to 1 - Piping Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (34, -2), (34, -2), (34, -2)],
                 (0, 34),
-                id="With dh0 increase to 1 - Stability Wall reinforcement",
+                id="With 0dh increase to 1 - Stability Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 7), (10, 7), (34, -2), (34, -2), (34, -2)],
                 (0, 34),
-                id="With dh0 increase to 1- Cofferdam reinforcement",
+                id="With 0dh increase to 1- Cofferdam reinforcement",
             ),
         ],
     )
