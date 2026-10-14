@@ -98,6 +98,7 @@ class QuantityCostParameters:
     new_core_layer_surface: CostParameterProtocol
     new_ground_level_surface: CostParameterProtocol
     land_purchase_surface: CostParameterProtocol
+    land_purchase_surface_waterside: CostParameterProtocol
     construction_length: CostParameterProtocol
 
     def __init__(self) -> None:
@@ -112,6 +113,7 @@ class QuantityCostParameters:
         self.new_core_layer_surface = None
         self.new_ground_level_surface = None
         self.land_purchase_surface = None
+        self.land_purchase_surface_waterside = None
         self.construction_length = None
 
     def get_parameters(self) -> list[CostParameterProtocol]:

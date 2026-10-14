@@ -127,6 +127,18 @@ class QuantityCostParametersBuilder(BuilderProtocol):
 
         return _lpcp
 
+    def _get_land_purchase_waterside_cost_parameter(
+        self, quantity: float, input_data: ReinforcementInputProfileProtocol
+    ) -> SoilCostParameter:
+        _lpcp = SoilCostParameter()
+        _lpcp.quantity = quantity
+        _lpcp.cost = input_data.ground_price_waterside
+        _lpcp.surtax = self.koswat_costs_settings.surtax_costs.get_land_purchase_surtax(
+            self.reinforced_profile.input_data.land_purchase_surtax_factor
+        )
+
+        return _lpcp
+
     def _get_construction_cost_parameter(
         self, length: float, construction_type: ConstructionTypeEnum | None
     ) -> ConstructionCostParameter:
@@ -188,6 +200,12 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         )
         qc_parameters.land_purchase_surface = self._get_land_purchase_cost_parameter(
             _qcp.new_ground_level_surface, self.reinforced_profile.input_data
+        )
+        qc_parameters.land_purchase_surface_waterside = (
+            self._get_land_purchase_waterside_cost_parameter(
+                _qcp.new_ground_level_surface_waterside,
+                self.reinforced_profile.input_data,
+            )
         )
         qc_parameters.construction_length = self._get_construction_cost_parameter(
             _qcp.construction_length, _qcp.construction_type
