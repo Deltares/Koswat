@@ -41,6 +41,7 @@ class KoswatInputProfileProtocol(DataObjectModelProtocol, Protocol):
     polderside_ground_level: float
     ground_price_builtup: float
     ground_price_unbuilt: float
+    ground_price_waterside: float
     factor_settlement: float
     pleistocene: float
     aquifer: float

@@ -45,7 +45,7 @@ class DikeProfileSectionFom(ConfigSectionFomProtocol, KoswatInputProfileBase):
                 _section_name
             )
 
-        def _get_float(input_val: Optional[str]) -> float:
+        def _get_float(input_val: str | None) -> float:
             if set_defaults:
                 return SectionConfigHelper.get_float(input_val)
             return SectionConfigHelper.get_float_without_default(input_val)
@@ -77,6 +77,9 @@ class DikeProfileSectionFom(ConfigSectionFomProtocol, KoswatInputProfileBase):
         )
         _section.ground_price_unbuilt = _get_float(
             input_dict.get("grondaankoop_onbebouwd", None)
+        )
+        _section.ground_price_waterside = _get_float(
+            input_dict.get("grondaankoop_buitendijks", None)
         )
         _section.factor_settlement = _get_float(input_dict.get("factorzetting", None))
         _section.pleistocene = _get_float(input_dict.get("pleistoceen", None))
