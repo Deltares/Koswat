@@ -28,10 +28,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
-from koswat.dike.surroundings.point import (
-    PointObstacleSurroundings,
-    PointSurroundingsProtocol,
-)
+from koswat.dike.surroundings.point import PointObstacleSurroundings
 
 
 class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
@@ -63,7 +60,7 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
 
     def _build_points_surroundings_list(
         self, entries: list[list[str]]
-    ) -> list[PointSurroundingsProtocol]:
+    ) -> list[PointObstacleSurroundings]:
         _point_list = []
         for idx, _point_entry in enumerate(entries):
             _point_entry.insert(0, idx)
@@ -71,7 +68,7 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
             _point_list.append(_ps)
         return _point_list
 
-    def _build_point_surroundings(self, entry: list[str]) -> PointSurroundingsProtocol:
+    def _build_point_surroundings(self, entry: list[str]) -> PointObstacleSurroundings:
         # Subtract the buffer from the distances, so that the resulting surroundings are already "buffered"
         # and can be directly used for calculations.
         return PointObstacleSurroundings(
