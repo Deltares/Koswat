@@ -69,6 +69,9 @@ New ground level surface (cost incl surtax):;0.0;0.0;0.0;0.0;0.0\n\
 Land purchase surface (quantity):;0.0;0.0;0.0;0.0;0.0\n\
 Land purchase surface (cost):;0.0;0.0;0.0;0.0;0.0\n\
 Land purchase surface (cost incl surtax):;0.0;0.0;0.0;0.0;0.0\n\
+Land purchase surface waterside (quantity):;0.0;0.0;0.0;0.0;0.0\n\
+Land purchase surface waterside (cost):;0.0;0.0;0.0;0.0;0.0\n\
+Land purchase surface waterside (cost incl surtax):;0.0;0.0;0.0;0.0;0.0\n\
 Construction length (quantity):;0.0;0.0;0.0;0.0;0.0\n\
 Construction length (cost):;0.0;0.0;0.0;0.0;0.0\n\
 Construction length (cost incl surtax):;0.0;0.0;0.0;0.0;0.0\n\
