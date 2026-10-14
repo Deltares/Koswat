@@ -35,6 +35,9 @@ New ground level surface (cost incl surtax):;31.39;31.39;13.87;7.6;0.03;0.03;-0.
 Land purchase surface (quantity):;50.04;50.04;22.11;12.11;0.04;0.04;-0.0
 Land purchase surface (cost):;694.07;694.07;306.68;3907.47;13.32;13.32;-0.0
 Land purchase surface (cost incl surtax):;980.03;980.03;433.04;5517.35;21.92;21.92;-0.0
+Land purchase surface waterside (quantity):;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+Land purchase surface waterside (cost):;nan;nan;nan;nan;nan;nan;nan
+Land purchase surface waterside (cost incl surtax):;nan;nan;nan;nan;nan;nan;nan
 Construction length (quantity):;0.0;0.0;0.0;6.4;4.0;8.0;12.5
 Construction length (cost):;0;0;500.0;984.89;781.35;3103.12;8435.17
 Construction length (cost incl surtax):;0;0;1456.0;2868.01;2275.3;9036.28;27793.9
