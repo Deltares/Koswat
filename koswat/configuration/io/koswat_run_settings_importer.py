@@ -35,6 +35,9 @@ from koswat.configuration.io.json.koswat_dike_section_input_json_fom import (
     KoswatDikeSectionInputJsonFom,
 )
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
+from koswat.configuration.io.json.koswat_general_json_reader import (
+    KoswatGeneralJsonReader,
+)
 from koswat.configuration.io.json.koswat_scenario_list_json_dir_reader import (
     KoswatSectionScenarioListJsonDirReader,
 )
@@ -84,7 +87,6 @@ from koswat.configuration.settings.reinforcements.koswat_stability_wall_toe_sett
 from koswat.configuration.settings.reinforcements.koswat_vps_settings import (
     KoswatVPSSettings,
 )
-from koswat.core.io.json.koswat_json_reader import KoswatJsonReader
 from koswat.core.io.koswat_importer_protocol import KoswatImporterProtocol
 from koswat.core.io.txt.koswat_txt_reader import KoswatTxtReader
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -98,7 +100,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
     def import_from(self, from_path: Path) -> KoswatRunSettings:
         # First get the FOM
         logging.info("Importing CSV configuration from %s", from_path)
-        _general_settings = self._import_general_settings(from_path)
+        _general_settings = KoswatGeneralJsonReader().read(from_path)
         _analysis_settings = _general_settings.analysis_section
 
         _dike_selected_sections = self._import_selected_dike_section_names(
@@ -216,11 +218,6 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             len(_run_settings.run_scenarios),
         )
         return _run_settings
-
-    def _import_general_settings(self, input_config_file: Path) -> KoswatGeneralJsonFom:
-        reader = KoswatJsonReader()
-        _json_fom = reader.read(input_config_file)
-        return KoswatGeneralJsonFom.from_json(_json_fom)
 
     def _get_reinforcement_settings(
         self, general_settings: KoswatGeneralJsonFom

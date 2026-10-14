@@ -8,6 +8,9 @@ from koswat.configuration.io.config_sections.dike_profile_section_fom import (
     DikeProfileSectionFom,
 )
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
+from koswat.configuration.io.json.koswat_general_json_reader import (
+    KoswatGeneralJsonReader,
+)
 from koswat.configuration.io.koswat_run_settings_importer import (
     KoswatRunSettingsImporter,
 )
@@ -188,8 +191,7 @@ class TestKoswatRunSettingsImporter:
 
     @pytest.fixture(name="general_settings")
     def _get_valid_general_settings(self) -> KoswatGeneralJsonFom:
-        _importer = KoswatRunSettingsImporter()
-        return _importer._import_general_settings(
+        return KoswatGeneralJsonReader().read(
             test_data.joinpath("section_input", "koswat_general.json")
         )
 
