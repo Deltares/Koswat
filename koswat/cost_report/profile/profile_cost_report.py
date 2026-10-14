@@ -44,7 +44,7 @@ class ProfileCostReport(CostReportProtocol):
     def total_cost(self) -> float:
         if not self.quantity_cost_parameters:
             return math.nan
-        return sum(
+        return self._get_summation_without_nans(
             qcp.total_cost for qcp in self.quantity_cost_parameters.get_parameters()
         )
 
@@ -52,7 +52,13 @@ class ProfileCostReport(CostReportProtocol):
     def total_cost_with_surtax(self) -> float:
         if not self.quantity_cost_parameters:
             return math.nan
-        return sum(
+        return self._get_summation_without_nans(
             qcp.total_cost_with_surtax
             for qcp in self.quantity_cost_parameters.get_parameters()
         )
+
+    def _get_summation_without_nans(self, values: list[float]) -> float:
+        def _without_nan_values(value: float) -> bool:
+            return not math.isnan(value) and value is not None
+
+        return sum(filter(_without_nan_values, values))
