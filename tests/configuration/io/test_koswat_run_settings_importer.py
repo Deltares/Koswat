@@ -134,6 +134,58 @@ class TestKoswatRunSettingsImporter:
         assert isinstance(_config, KoswatRunSettings)
         assert _config.run_scenarios == []
 
+    @pytest.mark.parametrize(
+        "fixture_name",
+        [
+            pytest.param("general_settings_dike_profile", id="dike_profile"),
+            pytest.param(
+                "general_settings_soil_polderside_measurement",
+                id="soil_polderside_measurement",
+            ),
+            pytest.param(
+                "general_settings_soil_waterside_measurement",
+                id="soil_waterside_measurement",
+            ),
+            pytest.param("general_settings_vps_measurement", id="vps_measurement"),
+            pytest.param(
+                "general_settings_piping_wall_measurement", id="piping_wall_measurement"
+            ),
+            pytest.param(
+                "general_settings_stability_wall_toe_measurement",
+                id="stability_wall_toe_measurement",
+            ),
+            pytest.param(
+                "general_settings_stability_wall_crest_measurement",
+                id="stability_wall_crest_measurement",
+            ),
+            pytest.param(
+                "general_settings_cofferdam_measurement", id="cofferdam_measurement"
+            ),
+            pytest.param("general_settings_surroundings", id="surroundings"),
+        ],
+    )
+    def test_when__get_dike_section_input_given_custom_section_settings_then_general_settings_are_overriden(
+        self, fixture_name: str, request: pytest.FixtureRequest
+    ) -> None:
+        # 1. Define test data.
+        _dike_selection = [
+            "some_section_settings",
+        ]
+        _settings, _settings_comparison = request.getfixturevalue(fixture_name)
+
+        # 2. Run test.
+        (
+            _profiles,
+            _reinforcement_settings_list,
+        ) = KoswatRunSettingsImporter()._get_dike_section_input(
+            _settings, _dike_selection
+        )
+
+        # 3. Verify expectations
+        assert len(_profiles) == 1
+        assert len(_reinforcement_settings_list) == 1
+        _settings_comparison(_profiles[0], _reinforcement_settings_list[0])
+
     @pytest.fixture(name="general_settings")
     def _get_valid_general_settings(self) -> KoswatGeneralJsonFom:
         _importer = KoswatRunSettingsImporter()
@@ -169,6 +221,7 @@ class TestKoswatRunSettingsImporter:
         assert general_settings.dike_profile_section.polderside_berm_width == 0.0
         assert general_settings.dike_profile_section.ground_price_builtup == 176.62
         assert general_settings.dike_profile_section.ground_price_unbuilt == 9.22
+        assert general_settings.dike_profile_section.ground_price_waterside == 50.0
         assert general_settings.dike_profile_section.factor_settlement == 1.2
         assert general_settings.dike_profile_section.pleistocene == -5.06
         assert general_settings.dike_profile_section.aquifer == -2.06
@@ -435,55 +488,3 @@ class TestKoswatRunSettingsImporter:
             assert reinforcement_settings.allow_waterside_reinforcement == False
 
         return general_settings, settings_comparison
-
-    @pytest.mark.parametrize(
-        "fixture_name",
-        [
-            pytest.param("general_settings_dike_profile", id="dike_profile"),
-            pytest.param(
-                "general_settings_soil_polderside_measurement",
-                id="soil_polderside_measurement",
-            ),
-            pytest.param(
-                "general_settings_soil_waterside_measurement",
-                id="soil_waterside_measurement",
-            ),
-            pytest.param("general_settings_vps_measurement", id="vps_measurement"),
-            pytest.param(
-                "general_settings_piping_wall_measurement", id="piping_wall_measurement"
-            ),
-            pytest.param(
-                "general_settings_stability_wall_toe_measurement",
-                id="stability_wall_toe_measurement",
-            ),
-            pytest.param(
-                "general_settings_stability_wall_crest_measurement",
-                id="stability_wall_crest_measurement",
-            ),
-            pytest.param(
-                "general_settings_cofferdam_measurement", id="cofferdam_measurement"
-            ),
-            pytest.param("general_settings_surroundings", id="surroundings"),
-        ],
-    )
-    def test_when__get_dike_section_input_given_custom_section_settings_then_general_settings_are_overriden(
-        self, fixture_name: str, request: pytest.FixtureRequest
-    ) -> None:
-        # 1. Define test data.
-        _dike_selection = [
-            "some_section_settings",
-        ]
-        _settings, _settings_comparison = request.getfixturevalue(fixture_name)
-
-        # 2. Run test.
-        (
-            _profiles,
-            _reinforcement_settings_list,
-        ) = KoswatRunSettingsImporter()._get_dike_section_input(
-            _settings, _dike_selection
-        )
-
-        # 3. Verify expectations
-        assert len(_profiles) == 1
-        assert len(_reinforcement_settings_list) == 1
-        _settings_comparison(_profiles[0], _reinforcement_settings_list[0])

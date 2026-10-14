@@ -25,6 +25,7 @@
         "Binnen_Berm_Hoogte": 2.82,
         "Grondaankoop_Bebouwd": 176.62,
         "Grondaankoop_Onbebouwd": 9.22,
+        "grondaankoop_buitendijks": 50,
         "FactorZetting": 1.2,
         "Pleistoceen": -5.06,
         "Aquifer": -2.06,
