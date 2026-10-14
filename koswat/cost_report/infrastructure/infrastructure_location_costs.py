@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import math
 from dataclasses import dataclass
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 
 
 @dataclass
@@ -34,7 +34,7 @@ class InfrastructureLocationCosts:
     `ProfileZoneCalculator`.
     """
 
-    location: PointSurroundings = None
+    location: PointInfrastructureSurroundings = None
     zone_a: float = 0.0
     zone_a_costs: float = 0.0
 

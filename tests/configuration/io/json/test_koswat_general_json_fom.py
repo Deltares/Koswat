@@ -224,7 +224,7 @@ class TestKoswatGeneralJsonFom:
             _config_fom.infrastructuur_section.infrastructure_costs_0dh
             == InfraCostsEnum.GEEN
         )
-        assert _config_fom.infrastructuur_section.buffer_waterside == 0
+        assert _config_fom.infrastructuur_section.buffer_crest_waterside == 0
         assert _config_fom.infrastructuur_section.roads_class2_width == 2
         assert _config_fom.infrastructuur_section.roads_class24_width == 5
         assert _config_fom.infrastructuur_section.roads_class47_width == 8

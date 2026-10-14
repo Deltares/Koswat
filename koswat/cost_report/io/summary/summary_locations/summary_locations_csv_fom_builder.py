@@ -21,12 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
 from collections import defaultdict
-from typing import Any, Type
+from typing import Any
 
 from koswat.core.io.csv.koswat_csv_fom import KoswatCsvFom
 from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointSurroundingsProtocol
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -43,7 +43,7 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
 
     def get_summary_reinforcement_type_column_order(
         self,
-    ) -> list[Type[ReinforcementProfileProtocol]]:
+    ) -> list[type[ReinforcementProfileProtocol]]:
         return [
             type(_report.profile_cost_report.reinforced_profile)
             for _report in self.koswat_summary.locations_profile_report_list
@@ -81,7 +81,7 @@ class SummaryLocationsCsvFomBuilder(BuilderProtocol):
         reinforcement_per_locations: list[StrategyLocationReinforcement],
     ) -> list[list[Any]]:
         def _location_as_row(
-            matrix_item: tuple[PointSurroundings, list[int]],
+            matrix_item: tuple[PointSurroundingsProtocol, list[int]],
         ) -> list[Any]:
             _ps, _m_values = matrix_item
             _location_as_row = [_ps.section, _ps.location.x, _ps.location.y]

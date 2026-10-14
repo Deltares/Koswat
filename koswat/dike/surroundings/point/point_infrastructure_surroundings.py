@@ -26,9 +26,11 @@ from dataclasses import dataclass, field
 
 from shapely.geometry import Point
 
+from .point_surroundings_protocol import PointSurroundingsProtocol
 
-@dataclass
-class PointSurroundings:
+
+@dataclass(kw_only=True)
+class PointInfrastructureSurroundings(PointSurroundingsProtocol):
     """
     Object representing a `meter` with `x`, `y` coordinates in a polder (or else).
     """
@@ -41,26 +43,26 @@ class PointSurroundings:
     def __hash__(self) -> int:
         """
         Overriding of the "magic" hash operator required
-        so that `PointSurroundings` can be used as a key in a python dict.
+        so that `PointInfrastructureSurroundings` can be used as a key in a python dict.
         """
         return hash(self.traject_order)
 
-    def __eq__(self, __value: object) -> bool:
+    def __eq__(self, value: object) -> bool:
         """
         Overriding of the "magic" equality operator required
-        so that `PointSurroundings` can be used as a key in a python dict.
+        so that `PointInfrastructureSurroundings` can be used as a key in a python dict.
         """
-        if not isinstance(__value, type(self)):
+        if not isinstance(value, type(self)):
             return False
-        return self.traject_order == __value.traject_order
+        return self.traject_order == value.traject_order
 
-    def merge(self, other: PointSurroundings) -> None:
+    def merge(self, other: PointInfrastructureSurroundings) -> None:
         """
-        Merges another `PointSurroundings` into this one by updating the
+        Merges another `PointInfrastructureSurroundings` into this one by updating the
         `surroundings_matrix` with the values from the other one.
 
         Args:
-            other (PointSurroundings): The other `PointSurroundings` to merge.
+            other (PointInfrastructureSurroundings): The other `PointInfrastructureSurroundings` to merge.
         """
 
         for _s_key, _s_value in other.surroundings_matrix.items():

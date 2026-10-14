@@ -1,13 +1,11 @@
 import math
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
-from typing import Callable, Iterator, Type
 
 import pytest
 from shapely import Point
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
-    PointObstacleSurroundings,
-)
+from koswat.dike.surroundings.point import PointObstacleSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
     BaseSurroundingsWrapper,
@@ -37,7 +35,7 @@ class TestObstacleSurroundingsWrapper:
     @pytest.fixture(name="mocked_room_calculator")
     def get_mocked_room_calculator(
         self,
-    ) -> Iterator[Type[ReinforcementRoomCalculatorProtocol]]:
+    ) -> Iterator[type[ReinforcementRoomCalculatorProtocol]]:
         @dataclass
         class MockedRoomCalculator(ReinforcementRoomCalculatorProtocol):
             return_value: bool
@@ -54,7 +52,7 @@ class TestObstacleSurroundingsWrapper:
         obstacles_surroundings_fixture: Callable[
             [list[tuple[Point, list[float]]]], ObstacleSurroundingsWrapper
         ],
-        mocked_room_calculator: Type[ReinforcementRoomCalculatorProtocol],
+        mocked_room_calculator: type[ReinforcementRoomCalculatorProtocol],
     ):
         # 1. Define test data.
         _location = Point(2.4, 2.4)
@@ -75,7 +73,7 @@ class TestObstacleSurroundingsWrapper:
         obstacles_surroundings_fixture: Callable[
             [list[tuple[Point, float]]], ObstacleSurroundingsWrapper
         ],
-        mocked_room_calculator: Type[ReinforcementRoomCalculatorProtocol],
+        mocked_room_calculator: type[ReinforcementRoomCalculatorProtocol],
     ):
         # 1. Define test data.
         _obstacles_distance = 24

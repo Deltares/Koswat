@@ -25,7 +25,7 @@ from dataclasses import dataclass
 from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -71,7 +71,10 @@ class InfrastructureProfileCostsCalculator:
         ]
 
     def _calculate_at_location(
-        self, zone_a_width: float, zone_b_width: float, location: PointSurroundings
+        self,
+        zone_a_width: float,
+        zone_b_width: float,
+        location: PointInfrastructureSurroundings,
     ) -> InfrastructureLocationCosts:
         _zone_a_limits = (0, zone_a_width)
         _zone_b_limits = (zone_a_width, zone_a_width + zone_b_width)

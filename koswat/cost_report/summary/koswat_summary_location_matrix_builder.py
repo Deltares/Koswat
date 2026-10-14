@@ -27,7 +27,7 @@ from koswat.core.protocols.builder_protocol import BuilderProtocol
 from koswat.cost_report.multi_location_profile.multi_location_profile_cost_report import (
     MultiLocationProfileCostReport,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointSurroundingsProtocol
 from koswat.strategies.strategy_input import StrategyLocationInput
 from koswat.strategies.strategy_reinforcement_input import (
     StrategyReinforcementInputBuilder,
@@ -52,11 +52,13 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
     locations_profile_report_list: list[MultiLocationProfileCostReport] = field(
         default_factory=lambda: []
     )
-    available_locations: list[PointSurroundings] = field(default_factory=lambda: [])
+    available_locations: list[PointSurroundingsProtocol] = field(
+        default_factory=lambda: []
+    )
 
     def _get_multi_location_profile_to_dict_matrix(
         self, locations_profile: MultiLocationProfileCostReport
-    ) -> dict[PointSurroundings, StrategyReinforcementTypeCosts]:
+    ) -> dict[PointSurroundingsProtocol, StrategyReinforcementTypeCosts]:
         _infra_costs = locations_profile.get_infra_costs_per_location()
 
         def create_strategy_location_reinforcement_costs():
@@ -78,7 +80,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
 
     def _get_list_summary_matrix_for_locations_with_reinforcements(
         self,
-    ) -> list[dict[PointSurroundings, StrategyReinforcementTypeCosts]]:
+    ) -> list[dict[PointSurroundingsProtocol, StrategyReinforcementTypeCosts]]:
         return list(
             map(
                 self._get_multi_location_profile_to_dict_matrix,
@@ -89,7 +91,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
     def _get_reinforcements_input_list(
         self,
         locations_per_reinforcement: list[
-            dict[PointSurroundings, StrategyReinforcementTypeCosts]
+            dict[PointSurroundingsProtocol, StrategyReinforcementTypeCosts]
         ],
     ) -> list[StrategyReinforcementInputProtocol]:
         def get_reinforcement(
@@ -161,7 +163,7 @@ class KoswatSummaryLocationMatrixBuilder(BuilderProtocol):
         # 4. Sort matrix by traject order for normalized usage in Koswat.
         def to_strategy_location(
             matrix_tuple: tuple[
-                PointSurroundings, list[StrategyReinforcementTypeCosts]
+                PointSurroundingsProtocol, list[StrategyReinforcementTypeCosts]
             ],
         ) -> StrategyLocationInput:
             return StrategyLocationInput(

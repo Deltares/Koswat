@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass, field
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointSurroundingsProtocol
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -43,7 +43,7 @@ class StrategyLocationReinforcement:
     This class is used to show the final chosen state for a location.
     """
 
-    location: PointSurroundings
+    location: PointSurroundingsProtocol
     # PHASED-OUT, this property should be removed once we confirm available measures
     # are filtered by the order strategy (cost-space evaluation)
     # use `filtered_measures` instead!

@@ -1,11 +1,9 @@
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 import pytest
 from shapely import Point
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
-    PointObstacleSurroundings,
-)
+from koswat.dike.surroundings.point import PointObstacleSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
     ObstacleSurroundingsWrapper,

@@ -21,9 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from typing import Protocol, runtime_checkable
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
-    PointObstacleSurroundings,
-)
+from koswat.dike.surroundings.point import PointObstacleSurroundings
 
 
 @runtime_checkable

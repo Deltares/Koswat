@@ -28,7 +28,7 @@ from koswat.cost_report.infrastructure.infrastructure_location_profile_cost_repo
     InfrastructureLocationProfileCostReport,
 )
 from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointSurroundingsProtocol
 
 
 @dataclass
@@ -38,7 +38,9 @@ class MultiLocationProfileCostReport(CostReportProtocol):
     Each location can have multiple infrastructure costs for different road classes.
     """
 
-    report_locations: list[PointSurroundings] = field(default_factory=lambda: [])
+    report_locations: list[PointSurroundingsProtocol] = field(
+        default_factory=lambda: []
+    )
     infra_multilocation_profile_cost_report: list[
         InfrastructureLocationProfileCostReport
     ] = field(default_factory=lambda: [])
@@ -46,17 +48,17 @@ class MultiLocationProfileCostReport(CostReportProtocol):
 
     def get_infra_costs_per_location(
         self,
-    ) -> dict[PointSurroundings, tuple[float, float]]:
+    ) -> dict[PointSurroundingsProtocol, tuple[float, float]]:
         """
         Gets the total costs related to infrastructures at each of the points for
         the profile type in `profile_cost_report`.
         Note a location can have multiple infrastructure costs for different road classes.
 
         Returns:
-            dict[PointSurroundings, tuple[float, float]]: Total cost per location (without and with surtax).
+            dict[PointSurroundingsProtocol, tuple[float, float]]: Total cost per location (without and with surtax).
         """
-        _infra_costs: dict[PointSurroundings, list[tuple[float, float]]] = defaultdict(
-            lambda: [(0.0, 0.0)]
+        _infra_costs: dict[PointSurroundingsProtocol, list[tuple[float, float]]] = (
+            defaultdict(lambda: [(0.0, 0.0)])
         )
         for _infra_costs_report in self.infra_multilocation_profile_cost_report:
             _infra_costs[_infra_costs_report.location].append(

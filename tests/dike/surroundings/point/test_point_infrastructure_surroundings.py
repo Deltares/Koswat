@@ -1,15 +1,19 @@
-from typing import Callable
+from collections.abc import Callable
 
 import pytest
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import (
+    PointInfrastructureSurroundings,
+    PointSurroundingsProtocol,
+)
 from tests.conftest import PointSurroundingsTestCase
 
 
-class TestPointSurroundings:
+class TestPointInfrastructureSurroundings:
     def test_initialize_point_surroundings(self):
-        _p_s = PointSurroundings()
-        assert isinstance(_p_s, PointSurroundings)
+        _p_s = PointInfrastructureSurroundings()
+        assert isinstance(_p_s, PointInfrastructureSurroundings)
+        assert isinstance(_p_s, PointSurroundingsProtocol)
         assert not _p_s.section
         assert not _p_s.location
         assert not _p_s.surroundings_matrix
@@ -17,7 +21,7 @@ class TestPointSurroundings:
     def test_get_total_infrastructure_per_zone_with_costs_calculator_case(
         self,
         point_surroundings_for_zones_builder_fixture: tuple[
-            Callable[[], PointSurroundings], PointSurroundingsTestCase
+            Callable[[], PointInfrastructureSurroundings], PointSurroundingsTestCase
         ],
     ):
         # 1. Define test data.
@@ -26,7 +30,8 @@ class TestPointSurroundings:
             _point_surroundings_case,
         ) = point_surroundings_for_zones_builder_fixture
         _ps = _point_surroundings_builder()
-        assert isinstance(_ps, PointSurroundings)
+        assert isinstance(_ps, PointInfrastructureSurroundings)
+        assert isinstance(_ps, PointSurroundingsProtocol)
 
         # 2. Run test.
         _result = _ps.get_total_infrastructure_per_zone(
@@ -58,7 +63,7 @@ class TestPointSurroundings:
         expected_values: list[int],
     ):
         # 1. Define test data.
-        _ps = PointSurroundings(surroundings_matrix=surroundings_matrix)
+        _ps = PointInfrastructureSurroundings(surroundings_matrix=surroundings_matrix)
 
         # 2. Run test.
         _total_infra = _ps.get_total_infrastructure_per_zone(*zones)

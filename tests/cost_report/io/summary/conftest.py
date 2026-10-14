@@ -1,5 +1,5 @@
+from collections.abc import Callable, Iterable
 from copy import deepcopy
-from typing import Callable, Iterable
 
 import pytest
 from shapely.geometry import Point
@@ -21,7 +21,7 @@ from koswat.cost_report.summary.koswat_summary import KoswatSummary
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
@@ -55,11 +55,13 @@ class MockLayerReport:
     material = ""
 
 
-def _create_locations() -> list[PointSurroundings]:
+def _create_locations() -> list[PointInfrastructureSurroundings]:
     _points = [(0.24, 0.42), (2.4, 0.42), (0.24, 2.4), (2.4, 2.4)]
 
-    def to_point(tuple_float: tuple[float, float], order: int) -> PointSurroundings:
-        _ps = PointSurroundings()
+    def to_point(
+        tuple_float: tuple[float, float], order: int
+    ) -> PointInfrastructureSurroundings:
+        _ps = PointInfrastructureSurroundings()
         _ps.location = Point(tuple_float[0], tuple_float[1])
         _ps.section = "A"
         _ps.traject_order = order
@@ -70,7 +72,7 @@ def _create_locations() -> list[PointSurroundings]:
 
 def _create_infra_reports(
     reinforced_profile: ReinforcementProfileProtocol,
-    available_points: list[PointSurroundings],
+    available_points: list[PointInfrastructureSurroundings],
 ) -> list[InfrastructureLocationProfileCostReport]:
     _infra_reports = []
     for i, _point in enumerate(available_points):
@@ -95,7 +97,7 @@ def _create_infra_reports(
 
 def _create_report(
     report_type: type[ReinforcementProfileProtocol],
-    available_points: list[PointSurroundings],
+    available_points: list[PointInfrastructureSurroundings],
     selected_locations: int,
 ) -> MultiLocationProfileCostReport:
     def _get_layer(material: str) -> MockLayerReport:
@@ -132,7 +134,7 @@ def _create_report(
 
 
 def get_locations_reinforcements(
-    summary: KoswatSummary, available_locations: list[PointSurroundings]
+    summary: KoswatSummary, available_locations: list[PointInfrastructureSurroundings]
 ) -> list[StrategyLocationReinforcement]:
     _matrix = []
     _available_reinforcements = [
@@ -215,7 +217,7 @@ def _get_cluster_shp_fom_factory() -> Iterable[
         reinforced_profile: ReinforcementProfileProtocol,
     ) -> StrategyLocationReinforcement:
         return StrategyLocationReinforcement(
-            location=PointSurroundings(location=Point(coordinates)),
+            location=PointInfrastructureSurroundings(location=Point(coordinates)),
             available_measures=[reinforced_profile],
             filtered_measures=[reinforced_profile],
         )

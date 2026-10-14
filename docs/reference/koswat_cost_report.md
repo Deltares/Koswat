@@ -17,7 +17,7 @@ A Koswat report is divided in different parts:
 When determining the costs of infrastructures we look mainly at:
 
 - The reinforcement profile (`ReinforcementProfileProtocol`) zones A and B. 
-- The distance between a dike and an infrastructure (`SurroundingsInfrastructure.points`, `PointSurroundings.surroundings_matrix`).
+- The distance between a dike and an infrastructure (`SurroundingsInfrastructure.points`, `PointInfrastructureSurroundings.surroundings_matrix`).
 
 These characteristics are then used to estimate how much surface of the infrastructures will be affected by the reinforced profile and therefore their associated cost.
 
@@ -46,7 +46,7 @@ However, when the crest's height of a `ReinforcementProfileProtocol` has increas
 
 ### Infrastructure's distances
 
-An infrastructure (`SurroundingsInfrastructure`) can be present at different locations (`SurroundingsInfrastructure.points`). Each of these locations (`PointSurroundings`) contains a dictionary (`surroundings_matrix: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.
+An infrastructure (`SurroundingsInfrastructure`) can be present at different locations (`SurroundingsInfrastructure.points`). Each of these locations (`PointInfrastructureSurroundings`) contains a dictionary (`surroundings_matrix: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.
 
 For instance, we could have `surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}`, which means:
 - Between `0` and `5` meters from the location we will find `1.5` meters of the infrastructure,

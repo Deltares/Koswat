@@ -1,4 +1,4 @@
-from typing import Callable, Iterator
+from collections.abc import Callable, Iterator
 
 import pytest
 from shapely.geometry import Point
@@ -9,9 +9,6 @@ from koswat.configuration.io.csv.koswat_simple_surroundings_csv_reader import (
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
-from koswat.configuration.io.csv.koswat_surroundings_csv_reader import (
-    KoswatSurroundingsCsvReader,
-)
 from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
@@ -19,14 +16,17 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
 from koswat.core.protocols import BuilderProtocol
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
-from koswat.dike.surroundings.point.point_surroundings_list_polderside_builder import (
+from koswat.dike.surroundings.point import (
+    PointInfrastructureSurroundings,
+    PointSurroundingsProtocol,
+)
+from koswat.dike.surroundings.point.point_surroundings_list_builder import (
     PointSurroundingsListBuilder,
 )
 from tests import test_data
 
 
-class TestPointSurroundingsListPoldersideBuilder:
+class TestPointSurroundingsListBuilder:
     def test_initialize_builder(self):
         _builder = PointSurroundingsListBuilder(None, None)
         assert isinstance(_builder, PointSurroundingsListBuilder)
@@ -47,14 +47,14 @@ class TestPointSurroundingsListPoldersideBuilder:
         # 3. Verify expectations.
         assert (
             str(exc_err.value)
-            == "No point fromt the *.shp file matches the ones in the *.csv file."
+            == "No point from the *.shp file matches the ones in the *.csv file."
         )
 
     @pytest.fixture(name="valid_builder")
     def _get_valid_koswat_point_surroundings_polderside_builder(
         self,
         distances_to_surrounding_point_builder: Callable[
-            [Point, list[float]], PointSurroundings
+            [Point, list[float]], PointInfrastructureSurroundings
         ],
     ) -> Iterator[PointSurroundingsListBuilder]:
         _koswat_csv_fom = KoswatSurroundingsCsvFom()
@@ -110,7 +110,7 @@ class TestPointSurroundingsListPoldersideBuilder:
         ]
 
         # 2. Run test.
-        _found_points = valid_builder._get_polderside_points(start_idx, end_idx)
+        _found_points = valid_builder._get_traject_points(start_idx, end_idx)
 
         # 3. Verify expectations.
         assert [_fp.location for _fp in _found_points] == _expected_points
@@ -118,7 +118,7 @@ class TestPointSurroundingsListPoldersideBuilder:
     def test_build_given_valid_data_then_returns_koswat_building_polderside(
         self,
         distances_to_surrounding_point_builder: Callable[
-            [Point, list[float]], PointSurroundings
+            [Point, list[float]], PointInfrastructureSurroundings
         ],
     ):
         # 1. Define test data
@@ -152,7 +152,7 @@ class TestPointSurroundingsListPoldersideBuilder:
         assert len(_point_surroundings_list) == len(_expected_points)
         _explored_locations = []
         for _spl in _point_surroundings_list:
-            assert isinstance(_spl, PointSurroundings)
+            assert isinstance(_spl, PointSurroundingsProtocol)
             assert _spl.location in _expected_points
             assert _spl.location not in _explored_locations
             _expected_points.append(_spl.location)
@@ -183,4 +183,6 @@ class TestPointSurroundingsListPoldersideBuilder:
         # 3. Verify expectations.
         assert isinstance(_point_surroundings, list)
         assert len(_point_surroundings) == 3728
-        assert all(isinstance(_ps, PointSurroundings) for _ps in _point_surroundings)
+        assert all(
+            isinstance(_ps, PointSurroundingsProtocol) for _ps in _point_surroundings
+        )

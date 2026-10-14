@@ -1,9 +1,9 @@
 import math
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+from koswat.dike.surroundings.point import (
     PointObstacleSurroundings,
+    PointSurroundingsProtocol,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
 
 
 class TestPointObstacleSurroundings:
@@ -13,10 +13,9 @@ class TestPointObstacleSurroundings:
 
         # 2. Verify expectations.
         assert isinstance(_pos, PointObstacleSurroundings)
-        assert isinstance(_pos, PointSurroundings)
+        assert isinstance(_pos, PointSurroundingsProtocol)
         assert not _pos.section
         assert not _pos.location
-        assert not _pos.surroundings_matrix
         assert math.isnan(_pos.inside_distance)
         assert math.isnan(_pos.outside_distance)
         assert math.isnan(_pos.angle_inside)
