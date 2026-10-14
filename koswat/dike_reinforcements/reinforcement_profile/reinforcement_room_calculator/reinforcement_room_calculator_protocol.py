@@ -21,19 +21,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from typing import Protocol, runtime_checkable
 
-from koswat.dike.surroundings.point import PointSurroundingsProtocol
+from koswat.dike.surroundings.point import PointObstacleSurroundings
 
 
 @runtime_checkable
 class ReinforcementRoomCalculatorProtocol(Protocol):
     def reinforcement_has_room(
-        self, point_obstacle_surroundings: PointSurroundingsProtocol
+        self, point_obstacle_surroundings: PointObstacleSurroundings
     ) -> bool:
         """
         Checks if there is enough room for a given reinforcement at a given point with obstacles.
 
         Args:
-            point_obstacle_surroundings (PointSurroundingsProtocol): The point surroundings to check.
+            point_obstacle_surroundings (PointObstacleSurroundings): The point surroundings to check.
 
         Returns:
             bool: True if there is enough room for reinforcement, False otherwise.
