@@ -30,7 +30,7 @@ from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
 )
 from koswat.core.io.csv.koswat_csv_reader import KoswatCsvReader
 from koswat.core.io.koswat_reader_protocol import KoswatReaderProtocol
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 
 
 class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
@@ -58,7 +58,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
     def _build_points_surroundings_list(
         self, distances_list: list[float], entries: list[list[str]]
-    ) -> list[PointSurroundings]:
+    ) -> list[PointInfrastructureSurroundings]:
         _point_list = []
         for idx, _point_entry in enumerate(entries):
             _point_entry.insert(0, idx)
@@ -68,7 +68,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
     def _build_point_surroundings(
         self, entry: list[str], distances_list: list[float]
-    ) -> PointSurroundings:
+    ) -> PointInfrastructureSurroundings:
         def csv_column_to_dict(csv_columns: list[str]) -> dict:
             """
             (Koswat #172) To avoid adding more entries than required,
@@ -95,7 +95,7 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
 
             return dict(_tuples_for_dict)
 
-        return PointSurroundings(
+        return PointInfrastructureSurroundings(
             section=entry[1],
             traject_order=entry[0],
             location=Point(float(entry[2]), float(entry[3])),

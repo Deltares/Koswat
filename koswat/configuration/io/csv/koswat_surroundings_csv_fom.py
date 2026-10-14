@@ -24,12 +24,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 
 
 @dataclass
 class KoswatSurroundingsCsvFom(KoswatCsvFomProtocol):
-    points_surroundings_list: list[PointSurroundings] = field(
+    points_surroundings_list: list[PointInfrastructureSurroundings] = field(
         default_factory=lambda: []
     )
     traject: str = ""

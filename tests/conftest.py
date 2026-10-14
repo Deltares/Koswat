@@ -1,10 +1,13 @@
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from typing import Callable, Iterable
 
 import pytest
 from shapely import Point
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import (
+    PointInfrastructureSurroundings,
+    PointSurroundingsProtocol,
+)
 
 _point_surroundings_cases = [
     pytest.param(4, 4, (1.5, 3), id="'A' [0, 4], 'B' [4, 8]"),
@@ -45,10 +48,10 @@ class PointSurroundingsTestCase:
 
 @pytest.fixture(name="basic_point_surroundings_builder")
 def _get_basic_point_surroundings_builder_fixture() -> (
-    Iterable[Callable[[], PointSurroundings]]
+    Iterable[Callable[[], PointSurroundingsProtocol]]
 ):
-    def build() -> PointSurroundings:
-        return PointSurroundings(
+    def build() -> PointSurroundingsProtocol:
+        return PointInfrastructureSurroundings(
             location=Point(2.4, 4.2), surroundings_matrix={5: 1.5, 10: 3, 15: 6}
         )
 
@@ -62,12 +65,14 @@ def _get_basic_point_surroundings_builder_fixture() -> (
 )
 def _get_point_surroundings_for_zones_builder_fixture(
     request: pytest.FixtureRequest,
-    basic_point_surroundings_builder: Callable[[], PointSurroundings],
-) -> Iterable[tuple[Callable[[], PointSurroundings], PointSurroundingsTestCase]]:
+    basic_point_surroundings_builder: Callable[[], PointSurroundingsProtocol],
+) -> Iterable[
+    tuple[Callable[[], PointSurroundingsProtocol], PointSurroundingsTestCase]
+]:
     """
     Simple fixture that can be used as an example on how infrastructure widths are determined
     based on the reinforcement profile's zones `A` and `B`. Because we call directly and
-    indirectly to the `PointSurroundings.get_total_infrastructure_per_zone` in different
+    indirectly to the `PointInfrastructureSurroundings.get_total_infrastructure_per_zone` in different
     sub-projects we required having this fixture at the top-most test level.
     """
 

@@ -1,8 +1,6 @@
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
-    PointObstacleSurroundings,
-)
+from koswat.dike.surroundings.point import PointObstacleSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )

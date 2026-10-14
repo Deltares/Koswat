@@ -1,8 +1,6 @@
 import pytest
 
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
-    PointObstacleSurroundings,
-)
+from koswat.dike.surroundings.point import PointObstacleSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_and_waterside_room_calculator import (
     PoldersideAndWatersideRoomCalculator,
 )

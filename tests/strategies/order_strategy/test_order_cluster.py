@@ -1,8 +1,8 @@
-from typing import Iterator
+from collections.abc import Iterator
 
 import pytest
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.strategies.order_strategy.order_cluster import OrderCluster
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
@@ -51,7 +51,9 @@ class TestOrderCluster:
         # Set locations.
         for _idx in range(0, 4):
             _dummy_location = StrategyLocationReinforcement(
-                location=PointSurroundings(section="test", traject_order=_idx),
+                location=PointInfrastructureSurroundings(
+                    section="test", traject_order=_idx
+                ),
                 available_measures=[],
                 filtered_measures=[],
             )
@@ -165,7 +167,7 @@ class TestOrderCluster:
         _selected_measure_value = "NotAMeasureDoesNotMatter"
         _merging_to = order_cluster_with_neighbors.left_neighbor
         _single_location = StrategyLocationReinforcement(
-            location=PointSurroundings(),
+            location=PointInfrastructureSurroundings(),
             available_measures=[_selected_measure_value],
             filtered_measures=[_selected_measure_value],
         )
@@ -195,7 +197,7 @@ class TestOrderCluster:
         _selected_measure_value = "NotAMeasureDoesNotMatter"
         _merging_to = order_cluster_with_neighbors.right_neighbor
         _single_location = StrategyLocationReinforcement(
-            location=PointSurroundings(),
+            location=PointInfrastructureSurroundings(),
             available_measures=[_selected_measure_value],
             filtered_measures=[_selected_measure_value],
         )

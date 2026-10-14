@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from pathlib import Path
-from typing import List
 
 from koswat.configuration.koswat_config_protocol import KoswatConfigProtocol
 from koswat.configuration.settings.koswat_run_scenario_settings import (
@@ -29,7 +28,7 @@ from koswat.configuration.settings.koswat_run_scenario_settings import (
 
 
 class KoswatRunSettings(KoswatConfigProtocol):
-    run_scenarios: List[KoswatRunScenarioSettings]
+    run_scenarios: list[KoswatRunScenarioSettings]
     output_dir: Path
 
     def __init__(self) -> None:

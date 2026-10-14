@@ -6,7 +6,9 @@ from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary_location_matrix_builder import (
     KoswatSummaryLocationMatrixBuilder,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import (
+    PointInfrastructureSurroundings,
+)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -26,8 +28,8 @@ class TestKoswatSummaryLocationMatrixBuilder:
         _section = "A"
 
         _builder.available_locations = [
-            PointSurroundings(section=_section, traject_order=1),
-            PointSurroundings(section=_section, traject_order=2),
+            PointInfrastructureSurroundings(section=_section, traject_order=1),
+            PointInfrastructureSurroundings(section=_section, traject_order=2),
         ]
         _builder.locations_profile_report_list = []
 
@@ -58,8 +60,8 @@ class TestKoswatSummaryLocationMatrixBuilder:
         # 1. Define test data.
         _section = "A"
         _locations = [
-            PointSurroundings(section=_section, traject_order=1),
-            PointSurroundings(section=_section, traject_order=2),
+            PointInfrastructureSurroundings(section=_section, traject_order=1),
+            PointInfrastructureSurroundings(section=_section, traject_order=2),
         ]
 
         _profile_report = MultiLocationProfileCostReport()

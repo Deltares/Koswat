@@ -1,6 +1,6 @@
 import math
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from typing import Callable, Iterable
 
 import pytest
 from shapely import Point
@@ -8,7 +8,7 @@ from shapely import Point
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -71,7 +71,7 @@ def _get_dummy_reinforcment_profile_builder() -> (
 )
 def _get_surroundings_infrastructure_fixture(
     point_surroundings_for_zones_builder_fixture: tuple[
-        Callable[[], PointSurroundings], PointSurroundingsTestCase
+        Callable[[], PointInfrastructureSurroundings], PointSurroundingsTestCase
     ],
     request: pytest.FixtureRequest,
 ) -> Iterable[tuple[SurroundingsInfrastructure, PointSurroundingsTestCase]]:

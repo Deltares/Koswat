@@ -1,12 +1,10 @@
-from typing import Optional
-
 import pytest
 
 from koswat.configuration.io.csv.koswat_surroundings_csv_fom import (
     KoswatSurroundingsCsvFom,
 )
 from koswat.core.io.csv.koswat_csv_fom_protocol import KoswatCsvFomProtocol
-from koswat.dike.surroundings.point.point_obstacle_surroundings import (
+from koswat.dike.surroundings.point import (
     PointObstacleSurroundings,
 )
 

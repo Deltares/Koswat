@@ -25,7 +25,7 @@ from koswat.cost_report.cost_report_protocol import CostReportProtocol
 from koswat.cost_report.infrastructure.infrastructure_location_costs import (
     InfrastructureLocationCosts,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -41,7 +41,7 @@ class InfrastructureLocationProfileCostReport(CostReportProtocol):
     infrastructure_location_costs: InfrastructureLocationCosts
 
     @property
-    def location(self) -> PointSurroundings | None:
+    def location(self) -> PointInfrastructureSurroundings | None:
         if not self.infrastructure_location_costs:
             return None
         return self.infrastructure_location_costs.location

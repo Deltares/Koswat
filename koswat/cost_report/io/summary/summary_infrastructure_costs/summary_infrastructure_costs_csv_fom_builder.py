@@ -32,7 +32,7 @@ from koswat.cost_report.multi_location_profile.multi_location_profile_cost_repor
     MultiLocationProfileCostReport,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
@@ -76,7 +76,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         locations_profile_report_list: list[MultiLocationProfileCostReport],
     ) -> list[list[Any]]:
         def _get_reinforcement_infra_costs(
-            location: PointSurroundings, profile_type: str
+            location: PointInfrastructureSurroundings, profile_type: str
         ) -> float:
             return round(
                 sum(
@@ -88,7 +88,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                 2,
             )
 
-        def _get_selected(location: PointSurroundings) -> list[Any]:
+        def _get_selected(location: PointInfrastructureSurroundings) -> list[Any]:
             _selected = next(
                 (
                     _rpl
@@ -104,13 +104,15 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                 ),
             ]
 
-        def _get_totals(location: PointSurroundings) -> list[float]:
+        def _get_totals(location: PointInfrastructureSurroundings) -> list[float]:
             return list(
                 _get_reinforcement_infra_costs(location, _profile_type)
                 for _profile_type in self._ordered_profile_types
             )
 
-        def _get_details(location: PointSurroundings, profile_type: str) -> list[float]:
+        def _get_details(
+            location: PointInfrastructureSurroundings, profile_type: str
+        ) -> list[float]:
             _details = []
             for _infra_type in self._ordered_infra_types:
                 _ilc = _infra_cost_per_loc_dict[location][profile_type][_infra_type]
@@ -125,7 +127,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             return _details
 
         def _location_as_row(
-            matrix_item: tuple[PointSurroundings, list[int]],
+            matrix_item: tuple[PointInfrastructureSurroundings, list[int]],
         ) -> list[Any]:
             _ps, _m_values = matrix_item
             _location_as_row = [_ps.section, _ps.location.x, _ps.location.y]
@@ -158,7 +160,10 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
     def _get_infra_location_costs(
         self,
         locations_profile_report_list: list[MultiLocationProfileCostReport],
-    ) -> dict[PointSurroundings, dict[str, dict[str, InfrastructureLocationCosts]]]:
+    ) -> dict[
+        PointInfrastructureSurroundings,
+        dict[str, dict[str, InfrastructureLocationCosts]],
+    ]:
         """
         Create a dictionary with the infrastructure cost per location/profile type/infra type.
 
@@ -167,18 +172,18 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                 List containing all the chosen profiles with their costs.
 
         Returns:
-            dict[ PointSurroundings, dict[str, dict[str, InfrastructureLocationCosts]] ]:
+            dict[ PointInfrastructureSurroundings, dict[str, dict[str, InfrastructureLocationCosts]] ]:
                 Dict containing the infrastructure cost per location/profile type/infra type.
         """
         _infra_location_cost_dict: dict[
-            PointSurroundings,
+            PointInfrastructureSurroundings,
             dict[str, dict[str, InfrastructureLocationCosts]],
         ] = defaultdict(
             lambda: defaultdict(lambda: defaultdict(InfrastructureLocationCosts))
         )
 
         def update_infra_location_cost_dict(
-            location: PointSurroundings,
+            location: PointInfrastructureSurroundings,
             profile_type_name: str,
             infra_name: str,
             costs: InfrastructureLocationCosts,

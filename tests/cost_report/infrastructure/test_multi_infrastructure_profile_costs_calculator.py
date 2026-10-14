@@ -1,4 +1,4 @@
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 import pytest
 
@@ -11,7 +11,7 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -32,7 +32,7 @@ class TestMultiInfrastructureProfileCostsCalculator:
     @pytest.fixture(name="infra_profile_cost_calc_builder")
     def _get_infrastructure_profile_cost_calculator_builder_fixture(
         self,
-        basic_point_surroundings_builder: Callable[[], PointSurroundings],
+        basic_point_surroundings_builder: Callable[[], PointInfrastructureSurroundings],
     ) -> Iterable[Callable[[int], InfrastructureProfileCostsCalculator]]:
         def build_calculator(n_points: int) -> InfrastructureProfileCostsCalculator:
             _infra = SurroundingsInfrastructure(

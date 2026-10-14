@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass, field
 
-from koswat.dike.surroundings.point.point_surroundings import PointSurroundings
+from koswat.dike.surroundings.point import PointSurroundingsProtocol
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
@@ -32,7 +32,7 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 
 @dataclass
 class StrategyLocationInput:
-    point_surrounding: PointSurroundings
+    point_surrounding: PointSurroundingsProtocol
     strategy_reinforcement_type_costs: list[StrategyReinforcementTypeCosts] = field(
         default_factory=lambda: []
     )
