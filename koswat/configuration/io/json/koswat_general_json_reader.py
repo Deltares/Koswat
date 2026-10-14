@@ -46,9 +46,14 @@ class KoswatGeneralJsonReader(KoswatReaderProtocol):
     def _normalize_imported_json(
         self, _generated_object: KoswatJsonFomProtocol
     ) -> KoswatJsonFomProtocol:
-        if _generated_object.surroundings_section.allow_waterside_reinforcement and (
-            _generated_object.dike_profile_section.ground_price_waterside is None
-            or math.isnan(_generated_object.dike_profile_section.ground_price_waterside)
+        if (
+            not _generated_object.surroundings_section.allow_waterside_reinforcement
+            and (
+                _generated_object.dike_profile_section.ground_price_waterside is None
+                or math.isnan(
+                    _generated_object.dike_profile_section.ground_price_waterside
+                )
+            )
         ):
             _generated_object.dike_profile_section.ground_price_waterside = 0.0
         return _generated_object
