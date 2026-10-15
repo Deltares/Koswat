@@ -115,7 +115,11 @@ class TestSurroundingsEnum:
         # 2. Verify results.
         assert isinstance(_result, tuple)
         assert len(_result) == 2
-        assert all(isinstance(item, SurroundingsInfrastructure) for item in _result)
+        assert all(isinstance(item, SurroundingsEnum) for item in _result)
+        assert all(
+            item.surrounding_type == SurroundingsInfrastructure for item in _result
+        )
+        assert all(road_class.name.lower() in item.name.lower() for item in _result)
 
     def test_when_get_infra_types_given_invalid_road_class_returns_nones(self):
         # 1. Define test data.
