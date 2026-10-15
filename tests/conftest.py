@@ -119,7 +119,7 @@ class PointSurroundingsTestCase:
     zone_b_limits: tuple[float, float]
     zone_c_limits: tuple[float, float]
     crest_buffer: float
-    expected_total_widths: list[float]
+    expected_total_lengths: list[float]
 
 
 @pytest.fixture(name="basic_point_surroundings_builder")
@@ -162,5 +162,5 @@ def _get_point_surroundings_for_zones_builder_fixture(
         zone_a_limits=request.param[2][0],
         zone_b_limits=request.param[2][1],
         zone_c_limits=request.param[2][2],
-        expected_total_widths=list(request.param[3]),
+        expected_total_lengths=list(request.param[3]),
     )

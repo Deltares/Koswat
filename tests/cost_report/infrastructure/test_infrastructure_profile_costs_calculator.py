@@ -86,24 +86,24 @@ class TestInfrastructureProfileCostsCalculator:
         # costs
         assert (
             _location_cost.zone_a_costs
-            == _zone_a_costs * _point_surroundings_case.expected_total_widths[0]
+            == _zone_a_costs * _point_surroundings_case.expected_total_lengths[0]
         )
         assert (
             _location_cost.zone_b_costs
-            == _zone_b_costs * _point_surroundings_case.expected_total_widths[1]
+            == _zone_b_costs * _point_surroundings_case.expected_total_lengths[1]
         )
         assert (
             _location_cost.zone_c_costs
-            == _zone_c_costs * _point_surroundings_case.expected_total_widths[2]
+            == _zone_c_costs * _point_surroundings_case.expected_total_lengths[2]
         )
 
         # surface
         assert (
-            _location_cost.zone_a == _point_surroundings_case.expected_total_widths[0]
+            _location_cost.zone_a == _point_surroundings_case.expected_total_lengths[0]
         )
         assert (
-            _location_cost.zone_b == _point_surroundings_case.expected_total_widths[1]
+            _location_cost.zone_b == _point_surroundings_case.expected_total_lengths[1]
         )
         assert (
-            _location_cost.zone_c == _point_surroundings_case.expected_total_widths[2]
+            _location_cost.zone_c == _point_surroundings_case.expected_total_lengths[2]
         )

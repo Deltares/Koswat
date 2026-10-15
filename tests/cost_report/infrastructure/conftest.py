@@ -82,8 +82,8 @@ def _get_surroundings_infrastructure_fixture(
 ) -> Iterable[tuple[SurroundingsInfrastructure, PointSurroundingsTestCase]]:
     _infra_width = request.param
     _builder, test_case = point_surroundings_for_zones_builder_fixture
-    test_case.expected_total_widths = list(
-        x * _infra_width for x in test_case.expected_total_widths
+    test_case.expected_total_lengths = list(
+        x * _infra_width for x in test_case.expected_total_lengths
     )
     yield SurroundingsInfrastructure(
         infrastructure_type=RoadClass.CLASS_2,

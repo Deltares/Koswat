@@ -54,9 +54,9 @@ class PointObstacleSurroundings(PointSurroundingsProtocol):
         return hash(self.traject_order)
 
     def merge(self, other: PointSurroundingsProtocol) -> None:
-        if not isinstance(other, PointSurroundingsProtocol):
+        if not isinstance(other, PointObstacleSurroundings):
             raise TypeError(
-                f"Expected an instance of PointSurroundingsProtocol, got {type(other)}"
+                f"Expected an instance of PointObstacleSurroundings, got {type(other)}"
             )
 
         def _get_min_value(value_1: float, value_2: float) -> float:

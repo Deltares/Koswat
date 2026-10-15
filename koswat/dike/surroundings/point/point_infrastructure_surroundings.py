@@ -60,9 +60,9 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
         return self.traject_order == value.traject_order
 
     def merge(self, other: PointSurroundingsProtocol) -> None:
-        if not isinstance(other, PointSurroundingsProtocol):
+        if not isinstance(other, PointInfrastructureSurroundings):
             raise TypeError(
-                f"Expected an instance of PointSurroundingsProtocol, got {type(other)}"
+                f"Expected an instance of PointInfrastructureSurroundings, got {type(other)}"
             )
 
         self.polderside_surroundings = self.imported_surroundings
