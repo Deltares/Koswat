@@ -53,7 +53,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         )
         self._ordered_infra_types = sorted(
             set(
-                _ilpcr.infrastructure_type.value.lower()
+                _ilpcr.infrastructure_type
                 for _ilpcr in self.koswat_summary.locations_profile_report_list[
                     0
                 ].infra_multilocation_profile_cost_report

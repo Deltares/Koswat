@@ -21,12 +21,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 
-class RoadClass(Enum):
+class RoadClass(StrEnum):
     CLASS_2 = "ROADS_CLASS_2"
     CLASS_7 = "ROADS_CLASS_7"
     CLASS_24 = "ROADS_CLASS_24"
     CLASS_47 = "ROADS_CLASS_47"
     CLASS_UNKNOWN = "ROADS_CLASS_UNKNOWN"
+
+    # def __hash__(self) -> int:
+    #     return hash(self.value)
