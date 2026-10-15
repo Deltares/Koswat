@@ -46,7 +46,7 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     )
 
     # Make sure some reinforment types don't influence the infra strategy.
-    _base_cost_multipliers = [0, 0.5, 1, 1.5, 2, 3]
+    _base_cost_multipliers = [0, 0.25, 0.5, 1, 1.5, 2, 3]
 
     _levels_data = [
         StrategyReinforcementTypeCosts(
