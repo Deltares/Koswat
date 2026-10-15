@@ -241,13 +241,12 @@ class TestOrderStrategy:
         example_location_reinforcements_with_buffering: list[
             StrategyLocationReinforcement
         ],
+        example_default_order: list[type[ReinforcementProfileProtocol]],
     ):
         # 1. Define test data.
         class MockedStrategy(OrderStrategyBase):
             def __init__(self) -> None:
-                self.reinforcement_order = (
-                    OrderStrategy.get_default_order_for_reinforcements()
-                )
+                self.reinforcement_order = example_default_order
 
             def apply(
                 self, location_reinforcements: list[StrategyLocationReinforcement]
