@@ -95,6 +95,9 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         _calculator.new_ground_level_surface = (
             self.reinforced_profile.new_ground_level_surface
         )
+        _calculator.new_ground_level_surface_waterside = (
+            self.reinforced_profile.new_ground_waterside
+        )
         _calculator.construction_length = (
             self.reinforced_profile.input_data.construction_length
         )
@@ -115,12 +118,24 @@ class QuantityCostParametersBuilder(BuilderProtocol):
 
         return _scp
 
-    def _get_land_purchase_cost_parameter(
+    def _get_land_purchase_polderside_cost_parameter(
         self, quantity: float, input_data: ReinforcementInputProfileProtocol
     ) -> SoilCostParameter:
         _lpcp = SoilCostParameter()
         _lpcp.quantity = quantity
         _lpcp.cost = input_data.ground_price
+        _lpcp.surtax = self.koswat_costs_settings.surtax_costs.get_land_purchase_surtax(
+            self.reinforced_profile.input_data.land_purchase_surtax_factor
+        )
+
+        return _lpcp
+
+    def _get_land_purchase_waterside_cost_parameter(
+        self, quantity: float, input_data: ReinforcementInputProfileProtocol
+    ) -> SoilCostParameter:
+        _lpcp = SoilCostParameter()
+        _lpcp.quantity = quantity
+        _lpcp.cost = input_data.ground_price_waterside
         _lpcp.surtax = self.koswat_costs_settings.surtax_costs.get_land_purchase_surtax(
             self.reinforced_profile.input_data.land_purchase_surtax_factor
         )
@@ -186,8 +201,16 @@ class QuantityCostParametersBuilder(BuilderProtocol):
             _qcp.new_ground_level_surface,
             dike_profile_costs.processing_ground_level_surface_m2,
         )
-        qc_parameters.land_purchase_surface = self._get_land_purchase_cost_parameter(
-            _qcp.new_ground_level_surface, self.reinforced_profile.input_data
+        qc_parameters.land_purchase_surface_polderside = (
+            self._get_land_purchase_polderside_cost_parameter(
+                _qcp.new_ground_level_surface, self.reinforced_profile.input_data
+            )
+        )
+        qc_parameters.land_purchase_surface_waterside = (
+            self._get_land_purchase_waterside_cost_parameter(
+                _qcp.new_ground_level_surface_waterside,
+                self.reinforced_profile.input_data,
+            )
         )
         qc_parameters.construction_length = self._get_construction_cost_parameter(
             _qcp.construction_length, _qcp.construction_type

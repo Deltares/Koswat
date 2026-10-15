@@ -158,4 +158,5 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             _infra_wrapper.roads_class_unknown = self._get_surroundings_infrastructure(
                 RoadClass.CLASS_UNKNOWN
             )
+
         return _infra_wrapper

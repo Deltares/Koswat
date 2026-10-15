@@ -6,9 +6,7 @@ from koswat.cost_report.profile.profile_cost_report import ProfileCostReport
 from koswat.cost_report.summary.koswat_summary_location_matrix_builder import (
     KoswatSummaryLocationMatrixBuilder,
 )
-from koswat.dike.surroundings.point import (
-    PointInfrastructureSurroundings,
-)
+from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
