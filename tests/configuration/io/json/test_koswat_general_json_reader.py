@@ -103,13 +103,11 @@ class TestKoswatGeneralJsonReader:
         assert analysis_section.export_shapefiles == True
 
     def _validate_measures_sections(self, _config_fom: KoswatGeneralJsonFom):
-        self._validate_soil_measure_section(_config_fom.soil_reinforcement_section)
+        self._validate_soil_measure_section(_config_fom.soil_measure_section)
         self._validate_soil_waterside_measure_section(
-            _config_fom.soil_waterside_reinforcement_section
+            _config_fom.soil_waterside_measure_section
         )
-        self._validate_vertical_piping_solution_section(
-            _config_fom.vertical_piping_solution_section
-        )
+        self._validate_vertical_piping_solution_section(_config_fom.vps_section)
         self._validate_piping_wall_section(_config_fom.piping_wall_section)
         self._validate_stability_wall_toe_section(
             _config_fom.stability_wall_toe_section
