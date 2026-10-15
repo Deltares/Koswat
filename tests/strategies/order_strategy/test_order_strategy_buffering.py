@@ -4,6 +4,9 @@ from koswat.strategies.order_strategy.order_strategy_buffering import (
     OrderStrategyBuffering,
 )
 from koswat.strategies.strategy_input import StrategyInput
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
+    StrategyReinforcementInputProtocol,
+)
 
 
 class TestOrderStrategyBuffering:
@@ -15,21 +18,24 @@ class TestOrderStrategyBuffering:
         assert isinstance(_strategy, OrderStrategyBuffering)
         assert isinstance(_strategy, OrderStrategyBase)
 
-    def test_apply_given_docs_example(self, example_strategy_input: StrategyInput):
+    def test_apply_given_docs_example(
+        self,
+        example_strategy_input: StrategyInput,
+        example_default_order: list[type[StrategyReinforcementInputProtocol]],
+    ):
         # 1. Define test data.
-        _reinforcement_order = OrderStrategy.get_default_order_for_reinforcements()
         _reinforcements = OrderStrategy.get_strategy_reinforcements(
             example_strategy_input.strategy_locations,
-            _reinforcement_order,
+            example_default_order,
         )
         _strategy = OrderStrategyBuffering(
-            reinforcement_order=_reinforcement_order,
+            reinforcement_order=example_default_order,
             reinforcement_min_buffer=example_strategy_input.reinforcement_min_buffer,
         )
 
         _expected_result_idx = [0, 0, 4, 4, 4, 4, 0, 5, 5, 5]
         _expected_result = list(
-            map(lambda x: _reinforcement_order[x], _expected_result_idx)
+            map(lambda x: example_default_order[x], _expected_result_idx)
         )
 
         # 2. Run test.
@@ -42,16 +48,17 @@ class TestOrderStrategyBuffering:
         )
 
     def test__get_buffer_mask_given_docs_example(
-        self, example_strategy_input: StrategyInput
+        self,
+        example_strategy_input: StrategyInput,
+        example_default_order: list[type[StrategyReinforcementInputProtocol]],
     ):
         # 1. Define test data.
-        _order_reinforcement = OrderStrategy.get_default_order_for_reinforcements()
         _reinforcements = OrderStrategy.get_strategy_reinforcements(
             example_strategy_input.strategy_locations,
-            _order_reinforcement,
+            example_default_order,
         )
         _strategy = OrderStrategyBuffering(
-            reinforcement_order=_order_reinforcement,
+            reinforcement_order=example_default_order,
             reinforcement_min_buffer=example_strategy_input.reinforcement_min_buffer,
         )
 
@@ -62,19 +69,20 @@ class TestOrderStrategyBuffering:
         assert _mask_result == [0, 0, 4, 4, 4, 4, 0, 5, 5, 5]
 
     def test__get_modified_example_last_location_gets_buffered(
-        self, example_strategy_input: StrategyInput
+        self,
+        example_strategy_input: StrategyInput,
+        example_default_order: list[type[StrategyReinforcementInputProtocol]],
     ):
         """
         This test fixes the problem related to Koswat #220.
         """
         # 1. Define test data.
-        _order_reinforcement = OrderStrategy.get_default_order_for_reinforcements()
         _reinforcements = OrderStrategy.get_strategy_reinforcements(
             example_strategy_input.strategy_locations,
-            _order_reinforcement,
+            example_default_order,
         )[:6]
         _strategy = OrderStrategyBuffering(
-            reinforcement_order=_order_reinforcement,
+            reinforcement_order=example_default_order,
             reinforcement_min_buffer=3,
         )
 

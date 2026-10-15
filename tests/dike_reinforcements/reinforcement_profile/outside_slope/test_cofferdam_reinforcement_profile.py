@@ -24,18 +24,7 @@ class TestCofferDamReinforcementProfile:
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)
 
-    def test_when_get_reinforcement_room_calculator_then_calculator_returns_true(self):
-        # 1. Given
-        _profile = CofferdamReinforcementProfile()
-
-        # 2. When
-        _calculator = _profile.get_reinforcement_room_calculator()
-
-        # 3. Then
-        assert isinstance(_calculator, ReinforcementRoomCalculatorProtocol)
-        assert _calculator.reinforcement_has_room() == True
-
-    def test_when_reinforcement_has_room_given_point_obstacle_location_then_calculator_returns_true(
+    def test_when_get_polderside_reinforcement_calculator_given_point_obstacle_location_then_calculator_returns_true(
         self,
     ):
         # 1. Given
@@ -45,7 +34,23 @@ class TestCofferDamReinforcementProfile:
         )  # The point obstacle location is not relevant for the cofferdam room calculator
 
         # 2. When
-        _calculator = _profile.get_reinforcement_room_calculator()
+        _calculator = _profile.get_polderside_reinforcement_calculator()
+
+        # 3. Then
+        assert isinstance(_calculator, ReinforcementRoomCalculatorProtocol)
+        assert _calculator.reinforcement_has_room(_point_obstacle_location) == True
+
+    def test_when_get_waterside_reinforcement_calculator_given_point_obstacle_location_then_calculator_returns_true(
+        self,
+    ):
+        # 1. Given
+        _profile = CofferdamReinforcementProfile()
+        _point_obstacle_location = (
+            PointObstacleSurroundings()
+        )  # The point obstacle location is not relevant for the cofferdam room calculator
+
+        # 2. When
+        _calculator = _profile.get_waterside_reinforcement_calculator()
 
         # 3. Then
         assert isinstance(_calculator, ReinforcementRoomCalculatorProtocol)

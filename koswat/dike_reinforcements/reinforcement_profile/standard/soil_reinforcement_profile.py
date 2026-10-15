@@ -41,7 +41,13 @@ class SoilReinforcementProfile(StandardReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> PoldersideOnlyRoomCalculator:
+    def get_polderside_reinforcement_calculator(self) -> PoldersideOnlyRoomCalculator:
+        return self._get_reinforcement_room_calculator()
+
+    def get_waterside_reinforcement_calculator(self) -> PoldersideOnlyRoomCalculator:
+        return self._get_reinforcement_room_calculator()
+
+    def _get_reinforcement_room_calculator(self) -> PoldersideOnlyRoomCalculator:
         return PoldersideOnlyRoomCalculator(
             required_polderside_width=self.polderside_width
         )

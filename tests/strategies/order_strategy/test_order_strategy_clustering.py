@@ -1,6 +1,3 @@
-from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
-    CofferdamReinforcementProfile,
-)
 from koswat.dike_reinforcements.reinforcement_profile.standard.soil_reinforcement_profile import (
     SoilReinforcementProfile,
 )
@@ -36,11 +33,12 @@ class TestOrderStrategyClustering:
         example_location_reinforcements_with_buffering: list[
             StrategyLocationReinforcement
         ],
+        example_default_order: list[type[OrderStrategyBase]],
     ):
         # 1. Define test data.
         _strategy = OrderStrategyClustering(
             reinforcement_min_length=example_strategy_input.reinforcement_min_length,
-            reinforcement_order=OrderStrategy.get_default_order_for_reinforcements(),
+            reinforcement_order=example_default_order,
         )
 
         # 2. Run test.
@@ -65,11 +63,12 @@ class TestOrderStrategyClustering:
         example_location_reinforcements_with_buffering: list[
             StrategyLocationReinforcement
         ],
+        example_default_order: list[type[OrderStrategyBase]],
     ):
         # 1. Define test data.
         _strategy = OrderStrategyClustering(
             reinforcement_min_length=2,
-            reinforcement_order=OrderStrategy.get_default_order_for_reinforcements(),
+            reinforcement_order=example_default_order,
         )
 
         _location_reinforcements = example_location_reinforcements_with_buffering
@@ -106,11 +105,12 @@ class TestOrderStrategyClustering:
         example_location_reinforcements_with_buffering: list[
             StrategyLocationReinforcement
         ],
+        example_default_order: list[type[OrderStrategyBase]],
     ):
         # 1. Define test data.
         _strategy = OrderStrategyClustering(
             reinforcement_min_length=example_strategy_input.reinforcement_min_length,
-            reinforcement_order=OrderStrategy.get_default_order_for_reinforcements(),
+            reinforcement_order=example_default_order,
         )
 
         # 2. Run test.
