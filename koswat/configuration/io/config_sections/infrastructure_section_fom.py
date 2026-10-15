@@ -78,13 +78,12 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
     def get_roads_class_width(self, road_class: RoadClass) -> float:
         if road_class == RoadClass.CLASS_2:
             return self.roads_class2_width
-        elif road_class == RoadClass.CLASS_7:
+        if road_class == RoadClass.CLASS_7:
             return self.roads_class7_width
-        elif road_class == RoadClass.CLASS_24:
+        if road_class == RoadClass.CLASS_24:
             return self.roads_class24_width
-        elif road_class == RoadClass.CLASS_47:
+        if road_class == RoadClass.CLASS_47:
             return self.roads_class47_width
-        elif road_class == RoadClass.CLASS_UNKNOWN:
+        if road_class == RoadClass.CLASS_UNKNOWN:
             return self.roads_unknown_width
-        else:
-            raise ValueError(f"Unknown road class: {road_class}")
+        raise ValueError(f"Unknown road class: {road_class}")
