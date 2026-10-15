@@ -49,7 +49,7 @@ from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import
 )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     """
     Builder to set up "fix" information such as costs derived from the koswat

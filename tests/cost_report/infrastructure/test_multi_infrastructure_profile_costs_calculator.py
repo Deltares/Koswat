@@ -54,7 +54,8 @@ class TestMultiInfrastructureProfileCostsCalculator:
     def test_given_reinforced_profile_generates_report_per_infrastructure_location(
         self,
         reinforcement_profile_builder: Callable[
-            [list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol
+            [list[tuple[float, float]], list[tuple[float, float]]],
+            ReinforcementProfileProtocol,
         ],
         infra_profile_cost_calc_builder: Callable[
             [int], InfrastructureProfileCostsCalculator
@@ -63,21 +64,21 @@ class TestMultiInfrastructureProfileCostsCalculator:
         # 1. Define data.
         _calc_with_two_locations = infra_profile_cost_calc_builder(2)
         _calc_with_one_location = infra_profile_cost_calc_builder(1)
-        _waterside_reinforced_points = [(-18, 0), (-18, 0), (-18, 0)]
+        _waterside_reinforced_points = [(-18.0, 0.0), (-18.0, 0.0), (-18.0, 0.0)]
         _points_base_profile = _waterside_reinforced_points + [
-            (0, 6),
-            (10, 6),
-            (34, -2),
-            (34, -2),
-            (34, -2),
+            (0.0, 6.0),
+            (10.0, 6.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
         ]
 
         _points_reinforced_profile = _waterside_reinforced_points + [
-            (0, 6),
-            (10, 6),
-            (34, -2),
-            (34, -2),
-            (34, -2),
+            (0.0, 6.0),
+            (10.0, 6.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
         ]
 
         # 2. Run test
@@ -89,7 +90,8 @@ class TestMultiInfrastructureProfileCostsCalculator:
         ).calculate(
             reinforcement_profile_builder(
                 _points_base_profile, _points_reinforced_profile
-            )
+            ),
+            0,
         )
 
         # 3. Verify epxectations

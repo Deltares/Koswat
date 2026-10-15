@@ -24,6 +24,7 @@ from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.point import (
     PointInfrastructureSurroundings,
 )
+from koswat.dike.surroundings.road_class import RoadClass
 from koswat.dike_reinforcements.input_profile.reinforcement_input_profile_protocol import (
     ReinforcementInputProfileProtocol,
 )
@@ -80,19 +81,21 @@ def _create_infra_reports(
     for i, _point in enumerate(available_points):
         _infra_report1 = InfrastructureLocationProfileCostReport(
             reinforced_profile=reinforced_profile,
-            infrastructure_type="TestInfra1",
+            infrastructure_type=RoadClass.CLASS_2,
             infrastructure_location_costs=InfrastructureLocationCosts(
                 location=_point,
-                zone_a=i,
-                zone_a_costs=i * 1.1,
-                zone_b=i * 2,
-                zone_b_costs=i * 2.2,
+                zone_a=0,
+                zone_a_costs=0,
+                zone_b=i,
+                zone_b_costs=i * 1.1,
+                zone_c=i * 2,
+                zone_c_costs=i * 2.2,
                 surtax=i * 3,
             ),
         )
         _infra_reports.append(_infra_report1)
         _infra_report2 = deepcopy(_infra_report1)
-        _infra_report2.infrastructure_type = "TestInfra2"
+        _infra_report2.infrastructure_type = RoadClass.CLASS_7
         _infra_reports.append(_infra_report2)
     return _infra_reports
 

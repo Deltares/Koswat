@@ -28,7 +28,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ProfileZoneCalculator:
     """
     Calculator to determine the width of zones `A`, `B`, and `C` of a reinforced
@@ -47,30 +47,27 @@ class ProfileZoneCalculator:
         return min(_upper_x_coords), max(_upper_x_coords)
 
     def _calculate_all_zones(self) -> tuple[float, float, float]:
-        _left_limit, _right_limit = self._get_profile_upper_x_coords(
+        _old_left_limit, _old_right_limit = self._get_profile_upper_x_coords(
             self.reinforced_profile.old_profile
         )
-        _zone_a = 0.0  # TODO
-        _zone_b = _right_limit - _left_limit
-        _zone_c = self.reinforced_profile.points[-1].x - _right_limit
+        _zone_a = _old_left_limit - self.reinforced_profile.points[0].x
+        _zone_b = _old_right_limit - _old_left_limit
+        _zone_c = self.reinforced_profile.points[-1].x - _old_right_limit
         return (_zone_a, _zone_b, _zone_c)
 
     def _calculate_a_c_zones(self) -> tuple[float, float, float]:
-        _left_limit, _ = self._get_profile_upper_x_coords(
-            self.reinforced_profile.old_profile
-        )
-        _zone_a = 0.0  # TODO
+        _zone_a, _zone_b, _zone_c = self._calculate_all_zones()
+        _zone_c = _zone_b + _zone_c
         _zone_b = 0.0
-        _zone_c = self.reinforced_profile.points[-1].x - _left_limit
         return (_zone_a, _zone_b, _zone_c)
 
     def calculate(self) -> tuple[float, float, float]:
         """
         Calculates the width of zones `A`, `B`, and `C` for the defined instance of
         `ReinforcementProfileProtocol`. The calculation is as follows:
-        - When `0dh` has not varied with respect to the base profile, then zones
+        - When crest height has not increased with respect to the base profile, then zones
         `A`, `B`, and `C` are calculated.
-        - When `0dh` has increased then only zone `A` and `C` are calculated.
+        - When crest height has increased then only zone `A` and `C` are calculated.
 
         Returns:
             tuple[float, float, float]: Calculated zone `A`, `B`, and `C` respectively.
@@ -80,6 +77,8 @@ class ProfileZoneCalculator:
 
         _new_height = self.reinforced_profile.profile_height
         _old_height = self.reinforced_profile.old_profile.profile_height
+
         if _new_height > _old_height and not math.isclose(_new_height, _old_height):
             return self._calculate_a_c_zones()
+
         return self._calculate_all_zones()

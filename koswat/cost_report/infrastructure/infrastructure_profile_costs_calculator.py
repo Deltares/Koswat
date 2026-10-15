@@ -47,7 +47,11 @@ class InfrastructureProfileCostsCalculator:
     zone_c_costs: float = 0.0
 
     def calculate(
-        self, zone_a_width: float, zone_b_width: float, zone_c_width: float
+        self,
+        zone_a_width: float,
+        zone_b_width: float,
+        zone_c_width: float,
+        buffer_crest_waterside: float,
     ) -> list[InfrastructureLocationCosts]:
         """
         Calculates the costs affecting this instance's infrastructure
@@ -64,10 +68,11 @@ class InfrastructureProfileCostsCalculator:
 
         return [
             self._calculate_at_location(
-                zone_a_width=zone_a_width,
-                zone_b_width=zone_b_width,
-                zone_c_width=zone_c_width,
-                location=_location,
+                zone_a_width,
+                zone_b_width,
+                zone_c_width,
+                buffer_crest_waterside,
+                _location,
             )
             for _location in self.infrastructure.points
             if any(_location.polderside_surroundings.items())
@@ -78,17 +83,33 @@ class InfrastructureProfileCostsCalculator:
         zone_a_width: float,
         zone_b_width: float,
         zone_c_width: float,
+        buffer_crest_waterside: float,
         location: PointInfrastructureSurroundings,
     ) -> InfrastructureLocationCosts:
-        _zone_a_limits = (-zone_a_width, 0)
-        _zone_b_limits = (0, zone_b_width)
-        _zone_c_limits = (
-            zone_b_width,
-            zone_b_width + zone_c_width
-        )
+        # Adjust zone limits based on the buffer at the crest on the waterside
+        # (should not exceed the width of zone A).
+        _adjusted_buffer = min(zone_a_width, buffer_crest_waterside)
+        _buffered_0_point = 0 - _adjusted_buffer
+        _zone_a_limits = (-zone_a_width, _buffered_0_point)
+        if zone_b_width:
+            _zone_b_limits = (
+                _buffered_0_point,
+                zone_b_width,
+            )
+            _zone_c_limits = (
+                zone_b_width,
+                zone_b_width + zone_c_width,
+            )
+        else:
+            _zone_a_limits = (-zone_a_width, _buffered_0_point)
+            _zone_b_limits = (math.nan, math.nan)
+            _zone_c_limits = (_buffered_0_point, zone_c_width)
+
         _total_zone_a, _total_zone_b, _total_zone_c = (
             location.get_total_infrastructure_per_zone(
-                _zone_a_limits, _zone_b_limits, _zone_c_limits
+                _zone_a_limits,
+                _zone_b_limits,
+                _zone_c_limits,
             )
         )
 

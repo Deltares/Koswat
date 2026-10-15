@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass, field
 
 from shapely.geometry import Point
@@ -69,11 +68,38 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
         self.polderside_surroundings = self.imported_surroundings
         self.waterside_surroundings = other.imported_surroundings
 
+    def _get_infrastructure_width(
+        self,
+        taken_keys: list[float],
+        limits: tuple[float, float],
+        surroundings_array: list[tuple[float, float]],
+    ) -> float:
+        _lower_limit, _upper_limit = limits
+        _total_width = 0.0
+        for _matrix_distance, value in surroundings_array:
+            if _matrix_distance in taken_keys:
+                if _matrix_distance >= _upper_limit:
+                    break
+                continue
+
+            if _matrix_distance < _lower_limit:
+                continue
+
+            if value != 0:
+                _total_width += value
+                taken_keys.append(_matrix_distance)
+
+            if _matrix_distance >= _upper_limit:
+                # We include the first value above the `upper_limit`,
+                # then we stop. (Design decission taken with PO).
+                break
+        return _total_width
+
     def get_total_infrastructure_per_zone(
         self, *zone_limit_collection: tuple[float, float]
     ) -> list[float]:
         """
-        Gets the total infrastructure width at each of the provided zones
+        Gets the total infrastructure length at each of the provided zones
         `zone_limit_collection` (`tuple[float, float, float]`).
         The zone limits are matched by rounding up their upper limit to the
         `polderside_surroundings` and `waterside_surroundings` keys
@@ -92,37 +118,53 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
             - Total infrastructure width at zones = `(6.0, 1.5, 9.0)`
 
         Returns:
-            list[float]: list with total width corresponding to each provided zone.
+            list[float]: list with total length corresponding to each provided zone.
         """
 
         # Prepare data.
-        _sorted_matrix_array = sorted(
+        _sorted_polderside_array = sorted(
             self.polderside_surroundings.items(), key=lambda item: item[0]
         )
+        _sorted_waterside_array = sorted(
+            self.waterside_surroundings.items(), key=lambda item: item[0]
+        )
 
-        _taken_keys = []
+        _taken_polderside_keys: list[float] = []
+        _taken_waterside_keys: list[float] = []
+
+        def get_waterside_limits(limits: tuple[float, float]) -> tuple[float, float]:
+            # change order and revert sign to make the limits positive for waterside calculations
+            _upper_limit, _lower_limit = limits
+            _lower_limit = max(-_lower_limit, 0)
+            _upper_limit = max(-_upper_limit, 0)
+            return _lower_limit, _upper_limit
+
+        def get_polderside_limits(limits: tuple[float, float]) -> tuple[float, float]:
+            _lower_limit, _upper_limit = limits
+            _lower_limit = max(_lower_limit, 0)
+            _upper_limit = max(_upper_limit, 0)
+            return _lower_limit, _upper_limit
 
         def matrix_idx_for_limits(limits: tuple[float, float]) -> float:
-            _lower_limit, _upper_limit = limits
-            if math.isclose(_upper_limit, 0, abs_tol=1e-09):
-                return 0
-            _total_width = 0
-            for _matrix_distance, value in _sorted_matrix_array:
-                if _matrix_distance in _taken_keys or (
-                    _matrix_distance < _lower_limit
-                    and not math.isclose(_matrix_distance, _lower_limit)
-                ):
-                    continue
+            _total_infrastructure_width = 0.0
 
-                _total_width += value
-                if value != 0:
-                    _taken_keys.append(_matrix_distance)
-                if _matrix_distance > _upper_limit or math.isclose(
-                    _matrix_distance, _upper_limit
-                ):
-                    # We include the first value above the `upper_limit`,
-                    # then we stop. (Design decission taken with PO).
-                    break
-            return _total_width
+            _waterside_limits = get_waterside_limits(limits)
+            if sum(_waterside_limits) > 0:
+                _total_infrastructure_width += self._get_infrastructure_width(
+                    _taken_waterside_keys, _waterside_limits, _sorted_waterside_array
+                )
 
-        return list(map(matrix_idx_for_limits, zone_limit_collection))
+            _polderside_limits = get_polderside_limits(limits)
+            if sum(_polderside_limits) > 0:
+                _total_infrastructure_width += self._get_infrastructure_width(
+                    _taken_polderside_keys, _polderside_limits, _sorted_polderside_array
+                )
+
+            return _total_infrastructure_width
+
+        # Calculate zone A last for correct priority handling
+        _zone_b_length = matrix_idx_for_limits(zone_limit_collection[1])
+        _zone_c_length = matrix_idx_for_limits(zone_limit_collection[2])
+        _zone_a_length = matrix_idx_for_limits(zone_limit_collection[0])
+
+        return [_zone_a_length, _zone_b_length, _zone_c_length]

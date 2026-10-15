@@ -37,34 +37,38 @@ class TestPointInfrastructureSurroundings:
         _result = _ps.get_total_infrastructure_per_zone(
             _point_surroundings_case.zone_a_limits,
             _point_surroundings_case.zone_b_limits,
+            _point_surroundings_case.zone_c_limits,
         )
 
         # 3. Verify expectations.
         assert _result == _point_surroundings_case.expected_total_widths
 
     @pytest.mark.parametrize(
-        "zones, surroundings_matrix, expected_values",
+        "zones, polderside_surroundings, expected_values",
         [
             pytest.param(
-                ([0, 5], [5, 25]), {30: 0, 35: 5}, [0, 0], id="No infra in zone A or B."
+                [(-5, 0), (0, 5), (5, 25)],
+                {30: 0, 35: 5},
+                [0.0, 0.0, 0.0],
+                id="No infra in zone A, B or C.",
             ),
             pytest.param(
-                ([0, 8], [8, 76]),
+                [(-5, 0), (0, 8), (8, 76)],
                 {5.0: 0.0, 10.0: 1.0, 20.0: 0.0, 25.0: 1.0},
-                [1, 1],
+                [0.0, 1.0, 1.0],
                 id="Overlapping distances.",
             ),
         ],
     )
     def test_get_total_infrastructure_per_zone_given_zones_and_surround_matrix(
         self,
-        zones: tuple[list[int], list[int]],
-        surroundings_matrix: dict[int, int],
-        expected_values: list[int],
+        zones: list[tuple[float, float]],
+        polderside_surroundings: dict[float, float],
+        expected_values: list[float],
     ):
         # 1. Define test data.
         _ps = PointInfrastructureSurroundings(
-            polderside_surroundings=surroundings_matrix
+            polderside_surroundings=polderside_surroundings
         )
 
         # 2. Run test.

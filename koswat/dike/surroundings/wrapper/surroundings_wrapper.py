@@ -40,6 +40,7 @@ class SurroundingsWrapper:
     subtraject: str = ""
     max_polderside_extension: float = float("nan")
     max_waterside_extension: float = float("nan")
+    buffer_crest_waterside: float = float("nan")
 
     obstacle_surroundings_wrapper: ObstacleSurroundingsWrapper = field(
         default_factory=ObstacleSurroundingsWrapper

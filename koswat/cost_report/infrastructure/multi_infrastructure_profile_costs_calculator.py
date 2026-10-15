@@ -35,7 +35,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
 )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class MultiInfrastructureProfileCostsCalculator:
     """
     Calculator that contains all possible "infrastructure" calculators
@@ -50,7 +50,9 @@ class MultiInfrastructureProfileCostsCalculator:
     )
 
     def calculate(
-        self, reinforced_profile: ReinforcementProfileProtocol
+        self,
+        reinforced_profile: ReinforcementProfileProtocol,
+        buffer_crest_waterside: float,
     ) -> list[InfrastructureLocationProfileCostReport]:
         """
         Calculates the costs related to applying the provided `reinforcement_profile`
@@ -65,13 +67,13 @@ class MultiInfrastructureProfileCostsCalculator:
             list[InfrastructureLocationProfileCostReport]: Collection of reports summarizing the cost-impact of a `reinforced_profile`.
         """
         _width_zone_a, _width_zone_b, _width_zone_c = ProfileZoneCalculator(
-            reinforced_profile=reinforced_profile
+            reinforced_profile=reinforced_profile,
         ).calculate()
 
         _reports = []
         for _calculator in self.infrastructure_calculators:
             _subreports = _calculator.calculate(
-                _width_zone_a, _width_zone_b, _width_zone_c
+                _width_zone_a, _width_zone_b, _width_zone_c, buffer_crest_waterside
             )
             _reports.extend(
                 [
