@@ -9,6 +9,9 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     SoilReinforcementProfile,
     StabilityWallCrestReinforcementProfile,
 )
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_waterside_reinforcement_profile import (
+    SoilWatersideReinforcementProfile,
+)
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
 from koswat.strategies.strategy_location_input import StrategyLocationInput
@@ -24,8 +27,7 @@ from koswat.strategies.strategy_reinforcement_type_costs import (
 from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 
-@pytest.fixture(name="example_strategy_input")
-def _get_example_strategy_input() -> Iterator[StrategyInput]:
+def _get_example_strategy_input(exclude_waterside: bool):
     # This is the data defined in the docs\reference\koswat_strategies.md
     # as examples. DON'T MODIFY IT!
     _initial_state_per_location = [
@@ -46,7 +48,18 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     )
 
     # Make sure some reinforment types don't influence the infra strategy.
-    _base_cost_multipliers = [0, 0.25, 0.5, 1, 1.5, 2, 3]
+    if exclude_waterside:
+        _waterside_soil_reinforcement_idx = _reinforcement_type_default_order.index(
+            SoilWatersideReinforcementProfile
+        )
+        _reinforcement_type_default_order.pop(_waterside_soil_reinforcement_idx)
+        _base_cost_multipliers = [0, 0.5, 1, 1.5, 2, 3]
+    else:
+        _base_cost_multipliers = [0, 0.25, 0.5, 1, 1.5, 2, 3]
+
+    assert len(_base_cost_multipliers) == len(
+        _reinforcement_type_default_order
+    ), "The base cost multipliers must match the number of reinforcement types in the default order."
 
     _levels_data = [
         StrategyReinforcementTypeCosts(
@@ -84,12 +97,20 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         for _idx, _rtc in enumerate(_levels_data)
     ]
 
-    yield StrategyInput(
+    return StrategyInput(
         strategy_locations=_strategy_locations,
         strategy_reinforcements=_strategy_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
+        waterside_reinforcement_allowed=not exclude_waterside,
     )
+
+
+@pytest.fixture(name="example_strategy_input")
+def _get_example_strategy_input_without_waterside_soil_reinforcement() -> (
+    Iterator[StrategyInput]
+):
+    yield _get_example_strategy_input(True)
 
 
 @pytest.fixture(name="example_location_input")
