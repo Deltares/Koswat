@@ -55,6 +55,7 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
         )
 
         _infra_calculator = MultiInfrastructureProfileCostsCalculatorBuilder(
+            reinforced_profile=self.reinforced_profile,
             infrastructure_wrapper=self.surroundings.infrastructure_surroundings_wrapper,
             cost_settings=self.koswat_costs_settings.infrastructure_costs,
             surtax_cost_settings=self.koswat_costs_settings.surtax_costs,

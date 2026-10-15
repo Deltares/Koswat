@@ -47,6 +47,9 @@ from koswat.dike.surroundings.surroundings_infrastructure import (
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 
 
 @dataclass(kw_only=True)
@@ -56,6 +59,8 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     settings (`InfraCostsEnum`, `SurtaxFactorEnum`) which directly determines the
     zone `A` and/or `B` costs that will be applied for each infrastructure.
     """
+
+    reinforced_profile: ReinforcementProfileProtocol
 
     infrastructure_wrapper: InfrastructureSurroundingsWrapper
     cost_settings: InfrastructureCostsSettings
@@ -123,6 +128,8 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
 
     def _get_zone_a_costs(self, adding_costs: float, removing_costs: float) -> float:
         # Waterside zone costs
+        if self.reinforced_profile.waterside_changed:
+            return adding_costs + removing_costs
         return self._get_zone_cost_for_non_rising_dike(adding_costs, removing_costs)
 
     def _get_zone_b_costs(self, adding_costs: float, removing_costs: float) -> float:

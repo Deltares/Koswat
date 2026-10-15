@@ -39,6 +39,7 @@ def _get_dummy_reinforcment_profile_builder() -> Iterable[
         layers_wrapper: ReinforcementLayersWrapper = None
         old_profile: KoswatProfileProtocol = None
         new_ground_level_surface: float = math.nan
+        waterside_changed: bool = False
 
     def assign_char_points(
         point_list: list[tuple[float, float]],

@@ -61,6 +61,11 @@ class ProfileZoneCalculator:
         _zone_b = 0.0
         return (_zone_a, _zone_b, _zone_c)
 
+    def _has_crest_height_increased(self) -> bool:
+        _new_height = self.reinforced_profile.profile_height
+        _old_height = self.reinforced_profile.old_profile.profile_height
+        return _new_height > _old_height and not math.isclose(_new_height, _old_height)
+
     def calculate(self) -> tuple[float, float, float]:
         """
         Calculates the width of zones `A`, `B`, and `C` for the defined instance of
@@ -75,10 +80,7 @@ class ProfileZoneCalculator:
         if not self.reinforced_profile or not self.reinforced_profile.old_profile:
             return (math.nan, math.nan, math.nan)
 
-        _new_height = self.reinforced_profile.profile_height
-        _old_height = self.reinforced_profile.old_profile.profile_height
-
-        if _new_height > _old_height and not math.isclose(_new_height, _old_height):
+        if self._has_crest_height_increased():
             return self._calculate_a_c_zones()
 
         return self._calculate_all_zones()

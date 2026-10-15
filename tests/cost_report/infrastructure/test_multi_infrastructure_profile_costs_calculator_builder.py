@@ -1,4 +1,5 @@
 import math
+from collections.abc import Callable
 
 import pytest
 
@@ -29,14 +30,22 @@ from koswat.dike.surroundings.surroundings_infrastructure import (
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
 from tests.conftest import PointSurroundingsTestCase
+
+_char_points = [(0.0, 0.0)] * 8
 
 
 class TestMultiInfrastructureProfileCostsCalculatorBuilder:
     def test_initialize(self):
         # 1. Define test data.
         _builder = MultiInfrastructureProfileCostsCalculatorBuilder(
-            cost_settings=None, infrastructure_wrapper=None, surtax_cost_settings=None
+            reinforced_profile=None,
+            cost_settings=None,
+            infrastructure_wrapper=None,
+            surtax_cost_settings=None,
         )
 
         # 2. Verify expectations
@@ -62,6 +71,10 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
     )
     def test_build_given_different_settings(
         self,
+        reinforcement_profile_builder: Callable[
+            [list[tuple[float, float]], list[tuple[float, float]]],
+            ReinforcementProfileProtocol,
+        ],
         surtax_cost_factor: SurtaxFactorEnum,
         non_rising_dike_costs_factor: InfraCostsEnum,
         surroundings_infrastructure_fixture: tuple[
@@ -81,7 +94,9 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
         _adding_roads = 24.0
         _removing_roads = 12.0
 
+        _reinforced_profile = reinforcement_profile_builder(_char_points, _char_points)
         _builder = MultiInfrastructureProfileCostsCalculatorBuilder(
+            reinforced_profile=_reinforced_profile,
             cost_settings=InfrastructureCostsSettings(
                 adding_roads_unknown=_adding_roads,
                 removing_roads_unknown=_removing_roads,
@@ -144,3 +159,65 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             general_calculator_validation(_c)
             for _c in _calculator.infrastructure_calculators
         )
+
+    @pytest.mark.parametrize(
+        "waterside_changed, non_rising_dike_costs_factor, expected_zone_a_costs",
+        [
+            pytest.param(False, InfraCostsEnum.GEEN, 0.0, id="No change - GEEN"),
+            pytest.param(False, InfraCostsEnum.HERSTEL, 24.0, id="No change - HERSTEL"),
+            pytest.param(False, InfraCostsEnum.VERVANG, 36.0, id="No change - VERVANG"),
+            pytest.param(True, InfraCostsEnum.GEEN, 36.0, id="Changed - GEEN"),
+            pytest.param(True, InfraCostsEnum.HERSTEL, 36.0, id="Changed - HERSTEL"),
+            pytest.param(True, InfraCostsEnum.VERVANG, 36.0, id="Changed - VERVANG"),
+        ],
+    )
+    def test_build_given_different_reinforcement_profile(
+        self,
+        reinforcement_profile_builder: Callable[
+            [list[tuple[float, float]], list[tuple[float, float]]],
+            ReinforcementProfileProtocol,
+        ],
+        waterside_changed: bool,
+        non_rising_dike_costs_factor: InfraCostsEnum | None,
+        expected_zone_a_costs: float,
+    ):
+        # 1. Define test data.
+        _infrastructure = SurroundingsInfrastructure(
+            infrastructure_type=RoadClass.CLASS_UNKNOWN,
+            infrastructure_width=10.0,
+            points=[],
+        )
+        _infra_wrapper = InfrastructureSurroundingsWrapper(
+            infrastructures_considered=True,
+            surtax_cost_factor=SurtaxFactorEnum.NORMAAL,
+            non_rising_dike_costs_factor=non_rising_dike_costs_factor,
+            roads_class_unknown=_infrastructure,
+        )
+        _reinforced_profile = reinforcement_profile_builder(_char_points, _char_points)
+        _reinforced_profile.waterside_changed = waterside_changed
+        _builder = MultiInfrastructureProfileCostsCalculatorBuilder(
+            reinforced_profile=_reinforced_profile,
+            cost_settings=InfrastructureCostsSettings(
+                removing_roads_unknown=12.0,
+                adding_roads_unknown=24.0,
+            ),
+            infrastructure_wrapper=_infra_wrapper,
+            surtax_cost_settings=SurtaxCostsSettings(
+                roads_normal=1.0, roads_easy=0.5, roads_hard=2.0
+            ),
+        )
+
+        # 2. Run test.
+        _calculator = _builder.build()
+
+        # Verify expectations
+        _infra_cost_calculator = next(
+            (
+                x
+                for x in _calculator.infrastructure_calculators
+                if x.infrastructure.infrastructure_type == RoadClass.CLASS_UNKNOWN
+            ),
+            None,
+        )
+        assert _infra_cost_calculator is not None
+        assert _infra_cost_calculator.zone_a_costs == expected_zone_a_costs

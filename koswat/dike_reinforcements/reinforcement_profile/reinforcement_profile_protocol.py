@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import math
 from typing import Protocol, runtime_checkable
 
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
@@ -50,3 +51,26 @@ class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
 
     def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
         pass
+
+    @property
+    def waterside_changed(self) -> bool:
+        """
+        Check if the waterside part of the reinforced profile is changed compared to the old profile.
+
+        Returns:
+            bool: True if the waterside part of the reinforced profile has changed compared to the old profile.
+        """
+        return (
+            not math.isclose(
+                self.input_data.waterside_slope,
+                self.old_profile.input_data.waterside_slope,
+            )
+            and not math.isclose(
+                self.input_data.waterside_berm_width,
+                self.old_profile.input_data.waterside_berm_width,
+            )
+            and not math.isclose(
+                self.input_data.waterside_berm_height,
+                self.old_profile.input_data.waterside_berm_height,
+            )
+        )
