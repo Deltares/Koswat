@@ -43,12 +43,16 @@ class StabilityWallCrestReinforcementProfile(StandardReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
-        if not self.allow_waterside_reinforcement:
-            return PoldersideOnlyRoomCalculator(
-                required_polderside_width=self.polderside_width
-            )
-        return PoldersideAndWatersideRoomCalculator(
+    def get_polderside_reinforcement_calculator(
+        self,
+    ) -> PoldersideOnlyRoomCalculator:
+        return PoldersideOnlyRoomCalculator(
             required_polderside_width=self.polderside_width,
-            required_waterside_width=self.waterside_width,
+        )
+
+    def get_waterside_reinforcement_calculator(
+        self,
+    ) -> PoldersideAndWatersideRoomCalculator:
+        return PoldersideAndWatersideRoomCalculator(
+            required_waterside_width=self.waterside_width
         )

@@ -113,6 +113,9 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _builder = MultiLocationProfileCostReportBuilder()
         _builder.surroundings = self.run_scenario_settings.surroundings
         _builder.koswat_costs_settings = self.run_scenario_settings.costs_setting
+        _builder.waterside_reinforcement_allowed = (
+            self.run_scenario_settings.reinforcement_settings.allow_waterside_reinforcement
+        )
         return _builder
 
     def _get_final_reinforcement_per_location(
@@ -127,6 +130,7 @@ class KoswatSummaryBuilder(BuilderProtocol):
         _strategy_input = StrategyInput(
             strategy_locations=_matrix,
             strategy_reinforcements=_reinforcements,
+            waterside_reinforcement_allowed=self.run_scenario_settings.reinforcement_settings.allow_waterside_reinforcement,
             reinforcement_min_buffer=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_buffer,
             reinforcement_min_length=self.run_scenario_settings.surroundings.obstacle_surroundings_wrapper.reinforcement_min_separation,
             reinforcement_max_width_polderside=self.run_scenario_settings.surroundings.max_polderside_extension,

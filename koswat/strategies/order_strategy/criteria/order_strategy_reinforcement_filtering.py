@@ -46,7 +46,7 @@ class OrderStrategyReinforcementFiltering:
     def __init__(self, strategy_input: StrategyInput) -> None:
         self.strategy_input = strategy_input
         self.prefilters: list[StrategyReinforcementFilterCriteriaProtocol] = [
-            StrategyReinforcementActiveFilterCriteria(),
+            StrategyReinforcementActiveFilterCriteria(self.strategy_input),
             StrategyReinforcementWidthsFilterCriteria(self.strategy_input),
         ]
 
