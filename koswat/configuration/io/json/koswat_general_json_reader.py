@@ -37,15 +37,15 @@ class KoswatGeneralJsonReader(KoswatReaderProtocol):
     def supports_file(self, file_path: Path) -> bool:
         return isinstance(file_path, Path) and file_path.suffix == ".json"
 
-    def read(self, from_path: Path) -> KoswatJsonFomProtocol:
+    def read(self, from_path: Path) -> KoswatGeneralJsonFom:
         reader = KoswatJsonReader()
         _json_fom = reader.read(from_path)
         _imported_json = KoswatGeneralJsonFom.from_json(_json_fom)
-        return _imported_json
+        return self._normalize_imported_json(_imported_json)
 
     def _normalize_imported_json(
-        self, _generated_object: KoswatJsonFomProtocol
-    ) -> KoswatJsonFomProtocol:
+        self, _generated_object: KoswatGeneralJsonFom
+    ) -> KoswatGeneralJsonFom:
         if (
             not _generated_object.surroundings_section.allow_waterside_reinforcement
             and (
