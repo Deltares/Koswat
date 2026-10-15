@@ -65,11 +65,11 @@ class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
                 self.input_data.waterside_slope,
                 self.old_profile.input_data.waterside_slope,
             )
-            and not math.isclose(
+            or not math.isclose(
                 self.input_data.waterside_berm_width,
                 self.old_profile.input_data.waterside_berm_width,
             )
-            and not math.isclose(
+            or not math.isclose(
                 self.input_data.waterside_berm_height,
                 self.old_profile.input_data.waterside_berm_height,
             )
