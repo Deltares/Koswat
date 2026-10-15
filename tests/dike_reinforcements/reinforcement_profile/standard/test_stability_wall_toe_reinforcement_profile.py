@@ -35,25 +35,8 @@ class TestStabilityWallToeReinforcementProfile:
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)
 
-    @pytest.mark.parametrize(
-        "allowed_waterside_reinforcement, expected_reinforcement_type",
-        [
-            pytest.param(
-                True,
-                PoldersideAndWatersideRoomCalculator,
-                id="allow_waterside_reinforcement",
-            ),
-            pytest.param(
-                False,
-                PoldersideOnlyRoomCalculator,
-                id="do_not_allow_waterside_reinforcement",
-            ),
-        ],
-    )
-    def test_when_get_reinforcement_room_calculator_given_waterside_reinforcement_then_returns_expected_calculator(
+    def test_when_get_polderside_reinforcement_calculator_then_returns_expected_calculator(
         self,
-        allowed_waterside_reinforcement: bool,
-        expected_reinforcement_type: Type[ReinforcementRoomCalculatorProtocol],
     ):
 
         # 1. Given
@@ -61,10 +44,25 @@ class TestStabilityWallToeReinforcementProfile:
         _profile.characteristic_points = CharacteristicPoints(
             p_1=Point(-2.4, 0), p_8=Point(4.2, 0)
         )
-        _profile.allow_waterside_reinforcement = allowed_waterside_reinforcement
 
         # 2. When
-        _result_calculator = _profile.get_reinforcement_room_calculator()
+        _result_calculator = _profile.get_polderside_reinforcement_calculator()
 
         # 3. Then
-        assert isinstance(_result_calculator, expected_reinforcement_type)
+        assert isinstance(_result_calculator, PoldersideOnlyRoomCalculator)
+
+    def test_when_get_waterside_reinforcement_calculator_then_returns_expected_calculator(
+        self,
+    ):
+
+        # 1. Given
+        _profile = StabilityWallToeReinforcementProfile()
+        _profile.characteristic_points = CharacteristicPoints(
+            p_1=Point(-2.4, 0), p_8=Point(4.2, 0)
+        )
+
+        # 2. When
+        _result_calculator = _profile.get_waterside_reinforcement_calculator()
+
+        # 3. Then
+        assert isinstance(_result_calculator, PoldersideAndWatersideRoomCalculator)

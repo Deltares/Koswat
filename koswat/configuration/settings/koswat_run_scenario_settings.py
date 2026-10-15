@@ -57,3 +57,9 @@ class KoswatRunScenarioSettings(KoswatConfigProtocol):
             + "_"
             + self.input_profile_case.input_data.dike_section
         )
+
+    @property
+    def is_waterside_reinforcement_allowed(self) -> bool:
+        if not self.reinforcement_settings:
+            return False
+        return self.reinforcement_settings.allow_waterside_reinforcement

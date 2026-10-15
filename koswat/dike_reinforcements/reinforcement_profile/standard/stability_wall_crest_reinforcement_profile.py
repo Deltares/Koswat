@@ -29,7 +29,6 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     PoldersideAndWatersideRoomCalculator,
     PoldersideOnlyRoomCalculator,
-    ReinforcementRoomCalculatorProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
@@ -54,5 +53,6 @@ class StabilityWallCrestReinforcementProfile(StandardReinforcementProfile):
         self,
     ) -> PoldersideAndWatersideRoomCalculator:
         return PoldersideAndWatersideRoomCalculator(
-            required_waterside_width=self.waterside_width
+            required_polderside_width=self.polderside_width,
+            required_waterside_width=self.waterside_width,
         )
