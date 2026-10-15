@@ -30,6 +30,3 @@ class RoadClass(StrEnum):
     CLASS_24 = "ROADS_CLASS_24"
     CLASS_47 = "ROADS_CLASS_47"
     CLASS_UNKNOWN = "ROADS_CLASS_UNKNOWN"
-
-    # def __hash__(self) -> int:
-    #     return hash(self.value)
