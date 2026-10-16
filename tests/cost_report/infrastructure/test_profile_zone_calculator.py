@@ -1,5 +1,5 @@
 import math
-from typing import Callable
+from collections.abc import Callable
 
 import pytest
 
@@ -10,7 +10,7 @@ from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_prot
     ReinforcementProfileProtocol,
 )
 
-_waterside_reinforced_points = [(-18, 0), (-18, 0), (-18, 0)]
+_waterside_reinforced_points = [(-18.0, 0.0), (-18.0, 0.0), (-18.0, 0.0)]
 
 
 class TestProfileZoneCalculator:
@@ -21,21 +21,22 @@ class TestProfileZoneCalculator:
         # 2. Verify expectations.
         assert isinstance(_calculator, ProfileZoneCalculator)
         assert not _calculator.reinforced_profile
-        assert _calculator.calculate() == (math.nan, math.nan)
+        assert _calculator.calculate() == (math.nan, math.nan, math.nan)
 
     def test_given_no_base_profile_calculate_returns_nan_tuple(
         self,
         reinforcement_profile_builder: Callable[
-            [list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol
+            [list[tuple[float, float]], list[tuple[float, float]]],
+            ReinforcementProfileProtocol,
         ],
     ):
         # 1. Define test data.
         _points_base_profile = _waterside_reinforced_points + [
-            (0, 6),
-            (10, 6),
-            (34, -2),
-            (34, -2),
-            (34, -2),
+            (0.0, 6.0),
+            (10.0, 6.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
         ]
         _reinforcement_profile = reinforcement_profile_builder(
             _points_base_profile, _points_base_profile
@@ -44,84 +45,87 @@ class TestProfileZoneCalculator:
         _reinforcement_profile.old_profile = None
 
         # 2. Run test.
-        _result = ProfileZoneCalculator(_reinforcement_profile).calculate()
+        _result = ProfileZoneCalculator(
+            reinforced_profile=_reinforcement_profile
+        ).calculate()
 
         # 3. Verify expectations.
-        assert _result == (math.nan, math.nan)
+        assert _result == (math.nan, math.nan, math.nan)
 
     @pytest.mark.parametrize(
         "points_reinforcement, expected_zones",
         [
-            # Without dh0 increase, we expect zone a and zone b calculated.
+            # Without 0dh increase, we expect zone a, b and c calculated.
             pytest.param(
                 _waterside_reinforced_points
-                + [(0, 6), (10, 6), (39.7, -0.6), (67.7, -0.6), (74, -2)],
-                (10, 64),
-                id="Without dh0 increase - Soil reinforcement",
+                + [(0.0, 6.0), (10.0, 6.0), (39.7, -0.6), (67.7, -0.6), (74.0, -2.0)],
+                (18.0, 10.0, 64.0),
+                id="Without 0dh increase - Soil reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (43.74, -1.5), (53.75, -1.5), (56, -2)],
-                (10, 46),
-                id="Without dh0 increase - Vertical Piping Solution",
+                (18, 10, 46),
+                id="Without 0dh increase - Vertical Piping Solution",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (46, -2), (46, -2), (46, -2)],
-                (10, 36),
-                id="Without dh0 increase - Piping Wall reinforcement",
+                (18, 10, 36),
+                id="Without 0dh increase - Piping Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (34, -2), (34, -2), (34, -2)],
-                (10, 24),
-                id="Without dh0 increase - Stability Wall reinforcement",
+                (18, 10, 24),
+                id="Without 0dh increase - Stability Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 6), (10, 6), (34, -2), (34, -2), (34, -2)],
-                (10, 24),
-                id="Without dh0 increase - Cofferdam reinforcement",
+                (18, 10, 24),
+                id="Without 0dh increase - Cofferdam reinforcement",
             ),
-            # With dh0 increase (of 1), we expect only zone b calculated.
+            # With 0dh increase (of 1), we expect only zone a anc c calculated.
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (40.87, -0.6), (68.87, -0.6), (74, -2)],
-                (0, 74),
-                id="With dh0 increase to 1 - Soil reinforcement",
+                (18, 0, 74),
+                id="With 0dh increase to 1 - Soil reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (44.17, -1.5), (54.17, -1.5), (56, -2)],
-                (0, 56),
-                id="With dh0 increase to 1 - Vertical Piping Solution",
+                (18, 0, 56),
+                id="With 0dh increase to 1 - Vertical Piping Solution",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (46, -2), (46, -2), (46, -2)],
-                (0, 46),
-                id="With dh0 increase to 1 - Piping Wall reinforcement",
+                (18, 0, 46),
+                id="With 0dh increase to 1 - Piping Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(3, 7), (13, 7), (34, -2), (34, -2), (34, -2)],
-                (0, 34),
-                id="With dh0 increase to 1 - Stability Wall reinforcement",
+                (18, 0, 34),
+                id="With 0dh increase to 1 - Stability Wall reinforcement",
             ),
             pytest.param(
                 _waterside_reinforced_points
                 + [(0, 7), (10, 7), (34, -2), (34, -2), (34, -2)],
-                (0, 34),
-                id="With dh0 increase to 1- Cofferdam reinforcement",
+                (18, 0, 34),
+                id="With 0dh increase to 1- Cofferdam reinforcement",
             ),
         ],
     )
     def test_given_reinforcement_profile_when_calculate_then_expected_zones(
         self,
-        points_reinforcement: list[tuple[float]],
-        expected_zones: tuple[float, float],
+        points_reinforcement: list[tuple[float, float]],
+        expected_zones: tuple[float, float, float],
         reinforcement_profile_builder: Callable[
-            [list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol
+            [list[tuple[float, float]], list[tuple[float, float]]],
+            ReinforcementProfileProtocol,
         ],
     ):
         # 1. Define test data.

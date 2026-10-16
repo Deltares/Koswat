@@ -30,6 +30,7 @@ from koswat.configuration.settings.koswat_general_settings import (
     SurtaxFactorEnum,
 )
 from koswat.core.io.json.koswat_json_fom_protocol import KoswatJsonFomProtocol
+from koswat.dike.surroundings.road_class import RoadClass
 
 
 @dataclass
@@ -73,3 +74,14 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
                 input_config["wegen_onbekend_breedte"]
             ),
         )
+
+    def get_roads_class_width(self, road_class: RoadClass) -> float:
+        if road_class == RoadClass.CLASS_2:
+            return self.roads_class2_width
+        if road_class == RoadClass.CLASS_7:
+            return self.roads_class7_width
+        if road_class == RoadClass.CLASS_24:
+            return self.roads_class24_width
+        if road_class == RoadClass.CLASS_47:
+            return self.roads_class47_width
+        return self.roads_unknown_width

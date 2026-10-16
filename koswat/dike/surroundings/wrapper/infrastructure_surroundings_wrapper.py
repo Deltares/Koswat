@@ -25,7 +25,7 @@ from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
 )
-from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
+from koswat.dike.surroundings.road_class import RoadClass
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -45,56 +45,31 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     # infrakosten_0dh
     non_rising_dike_costs_factor: InfraCostsEnum = InfraCostsEnum.GEEN
 
-    # Polderside infrastructures
-    roads_class_2_polderside: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE.name
-        )
-    )
-    roads_class_7_polderside: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_7_POLDERSIDE.name
-        )
-    )
-    roads_class_24_polderside: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_24_POLDERSIDE.name
-        )
-    )
-    roads_class_47_polderside: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_47_POLDERSIDE.name
-        )
-    )
-    roads_class_unknown_polderside: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_UNKNOWN_POLDERSIDE.name
-        )
-    )
+    buffer_crest_waterside: float = 0.0
 
-    # Waterside infrastructures
-    roads_class_2_waterside: SurroundingsInfrastructure = field(
+    # infrastructures
+    roads_class_2: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_2_WATERSIDE.name
+            infrastructure_type=RoadClass.CLASS_2
         )
     )
-    roads_class_7_waterside: SurroundingsInfrastructure = field(
+    roads_class_7: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_7_WATERSIDE.name
+            infrastructure_type=RoadClass.CLASS_7
         )
     )
-    roads_class_24_waterside: SurroundingsInfrastructure = field(
+    roads_class_24: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_24_WATERSIDE.name
+            infrastructure_type=RoadClass.CLASS_24
         )
     )
-    roads_class_47_waterside: SurroundingsInfrastructure = field(
+    roads_class_47: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_47_WATERSIDE.name
+            infrastructure_type=RoadClass.CLASS_47
         )
     )
-    roads_class_unknown_waterside: SurroundingsInfrastructure = field(
+    roads_class_unknown: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_name=SurroundingsEnum.ROADS_CLASS_UNKNOWN_WATERSIDE.name
+            infrastructure_type=RoadClass.CLASS_UNKNOWN
         )
     )

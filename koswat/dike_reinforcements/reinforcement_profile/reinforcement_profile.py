@@ -52,3 +52,7 @@ class ReinforcementProfile(ReinforcementProfileProtocol, KoswatProfileBase):
 
     def __str__(self) -> str:
         return self.output_name.replace(" ", "_")
+
+    @property
+    def waterside_changed(self) -> bool:
+        return False

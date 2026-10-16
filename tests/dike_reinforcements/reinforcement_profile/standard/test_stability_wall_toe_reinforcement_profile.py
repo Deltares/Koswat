@@ -35,6 +35,10 @@ class TestStabilityWallToeReinforcementProfile:
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)
 
+    def test_when_waterside_changed_then_returns_false(self):
+        _profile = StabilityWallToeReinforcementProfile()
+        assert _profile.waterside_changed is False
+
     @pytest.mark.parametrize(
         "allowed_waterside_reinforcement, expected_reinforcement_type",
         [

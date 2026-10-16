@@ -1,5 +1,5 @@
 import shutil
-from typing import Iterator
+from collections.abc import Iterator
 
 import pytest
 
@@ -13,6 +13,9 @@ from koswat.configuration.io.surroundings_wrapper_collection_importer import (
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
+)
+from koswat.dike.surroundings.surroundings_infrastructure import (
+    SurroundingsInfrastructure,
 )
 from koswat.dike.surroundings.wrapper.infrastructure_surroundings_wrapper import (
     InfrastructureSurroundingsWrapper,
@@ -114,6 +117,10 @@ class TestSurroundingsWrapper:
         assert isinstance(_infra, InfrastructureSurroundingsWrapper)
         assert any(_infra.surroundings_collection)
         assert all(
-            _sw.infrastructure_name != ""
+            isinstance(_sw, SurroundingsInfrastructure)
+            for _sw in _infra.surroundings_collection.values()
+        )
+        assert all(
+            _sw.infrastructure_type is not None
             for _sw in _infra.surroundings_collection.values()
         )

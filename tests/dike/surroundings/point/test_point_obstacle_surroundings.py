@@ -1,5 +1,7 @@
 import math
 
+import pytest
+
 from koswat.dike.surroundings.point import (
     PointObstacleSurroundings,
     PointSurroundingsProtocol,
@@ -70,3 +72,8 @@ class TestPointObstacleSurroundings:
         assert _pos_1.outside_distance == 20.0
         assert _pos_1.angle_inside == 15.0
         assert _pos_1.angle_outside == 40.0
+
+    def test_when_merge_given_invalid_input_then_raises_type_error(self):
+        _pos = PointObstacleSurroundings()
+        with pytest.raises(TypeError):
+            _pos.merge("invalid_input")

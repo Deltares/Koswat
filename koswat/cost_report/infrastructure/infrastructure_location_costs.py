@@ -30,16 +30,21 @@ class InfrastructureLocationCosts:
     """
     Simple data structure containing the results of the costs calculations
     for a given `ReinforcementProfileProtocol` profile.
-    The values related to `zone_a` and `zone_b` are calculated in the
+    The values related to `zone_a`, `zone_b`, and `zone_c` are calculated in the
     `ProfileZoneCalculator`.
     """
 
     location: PointInfrastructureSurroundings = None
+
     zone_a: float = 0.0
     zone_a_costs: float = 0.0
 
     zone_b: float = 0.0
     zone_b_costs: float = 0.0
+
+    zone_c: float = 0.0
+    zone_c_costs: float = 0.0
+
     surtax: float = 0.0
 
     @property
@@ -49,7 +54,11 @@ class InfrastructureLocationCosts:
                 return 0
             return cost
 
-        return valid_cost(self.zone_a_costs) + valid_cost(self.zone_b_costs)
+        return (
+            valid_cost(self.zone_a_costs)
+            + valid_cost(self.zone_b_costs)
+            + valid_cost(self.zone_c_costs)
+        )
 
     @property
     def total_cost_with_surtax(self) -> float:

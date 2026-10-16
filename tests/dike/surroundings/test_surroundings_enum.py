@@ -1,5 +1,6 @@
 import pytest
 
+from koswat.dike.surroundings.road_class import RoadClass
 from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -101,3 +102,31 @@ class TestSurroundingsEnum:
 
         # 3. Verify results.
         assert _result == _expected_enum
+
+    @pytest.mark.parametrize(
+        "road_class", [pytest.param(_rc, id=f"Road class: {_rc}") for _rc in RoadClass]
+    )
+    def test_when_get_infra_types_given_road_class_returns_infra_types(
+        self, road_class: RoadClass
+    ):
+        # 1. Run test.
+        _result = SurroundingsEnum.get_infra_types(road_class)
+
+        # 2. Verify results.
+        assert isinstance(_result, tuple)
+        assert len(_result) == 2
+        assert all(isinstance(item, SurroundingsEnum) for item in _result)
+        assert all(
+            item.surrounding_type == SurroundingsInfrastructure for item in _result
+        )
+        assert all(road_class.name.lower() in item.name.lower() for item in _result)
+
+    def test_when_get_infra_types_given_invalid_road_class_returns_nones(self):
+        # 1. Define test data.
+        _invalid_road_class = "invalid_road_class"
+
+        # 2. Run test.
+        _result = SurroundingsEnum.get_infra_types(_invalid_road_class)
+
+        # 3. Verify results.
+        assert _result == (None, None)

@@ -1,7 +1,6 @@
 import math
 
 from shapely.geometry import Point
-from sklearn import base
 
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
@@ -24,14 +23,8 @@ from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_re
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_base import (
-    ReinforcementRoomCalculatorBase,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
     ReinforcementRoomCalculatorProtocol,
-)
-from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile_builder import (
-    StandardReinforcementProfileBuilder,
 )
 from tests.acceptance_scenarios.koswat_input_profile_base_cases import InputProfileCases
 from tests.acceptance_scenarios.layers_cases import LayersCases
@@ -74,6 +67,7 @@ class TestMultiLocationProfileCostReportBuilder:
         class DummyReinforcedProfile(ReinforcementProfileProtocol):
             old_profile = None
             layers_wrapper = _base_profile.layers_wrapper
+            waterside_changed = False
 
             def get_reinforcement_room_calculator(self):
                 class DummyReinforcementRoomCalculator(

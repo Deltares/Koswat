@@ -99,5 +99,5 @@ class KoswatSurroundingsCsvReader(KoswatReaderProtocol):
             section=entry[1],
             traject_order=entry[0],
             location=Point(float(entry[2]), float(entry[3])),
-            surroundings_matrix=csv_column_to_dict(entry[4:]),
+            imported_surroundings=csv_column_to_dict(entry[4:]),
         )

@@ -1,6 +1,11 @@
+import pytest
+
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.point import PointObstacleSurroundings
+from koswat.dike_reinforcements.input_profile.cofferdam.cofferdam_input_profile import (
+    CofferdamInputProfile,
+)
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
@@ -23,6 +28,29 @@ class TestCofferDamReinforcementProfile:
         assert isinstance(_profile, ReinforcementProfileProtocol)
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)
+
+    @pytest.mark.parametrize(
+        "waterside_slope, expected",
+        [
+            pytest.param(1.0, False, id="No change"),
+            pytest.param(0.5, True, id="Reduced slope"),
+            pytest.param(1.5, True, id="Increased slope"),
+        ],
+    )
+    def test_when_waterside_changed_given_slope_returns_expected(
+        self, waterside_slope: float, expected: bool
+    ):
+        # 1. Given
+        _profile = CofferdamReinforcementProfile()
+        _profile.input_data = CofferdamInputProfile(waterside_slope=waterside_slope)
+        _profile.old_profile = KoswatProfileBase()
+        _profile.old_profile.input_data = CofferdamInputProfile(waterside_slope=1.0)
+
+        # 2. When
+        _changed = _profile.waterside_changed
+
+        # 3. Then
+        assert _changed == expected
 
     def test_when_get_reinforcement_room_calculator_then_calculator_returns_true(self):
         # 1. Given
