@@ -148,7 +148,7 @@ def _get_point_surroundings_for_zones_builder_fixture(
     tuple[Callable[[], PointSurroundingsProtocol], PointSurroundingsTestCase]
 ]:
     """
-    Simple fixture that can be used as an example on how infrastructure widths are determined
+    Simple fixture that can be used as an example on how infrastructure lengths are determined
     based on the reinforcement profile's zones `A`, `B` and `C`. Because we call directly and
     indirectly to the `PointInfrastructureSurroundings.get_total_infrastructure_per_zone` in different
     sub-projects we required having this fixture at the top-most test level.

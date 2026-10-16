@@ -59,9 +59,9 @@ However, when the crest's height of a `ReinforcementProfileProtocol` has increas
 An infrastructure (`SurroundingsInfrastructure`) can be present at different locations (`SurroundingsInfrastructure.points`). Each of these locations (`PointInfrastructureSurroundings`) contains a dictionary (`poldeside_surroundings: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.
 
 For instance, we could have `polderside_surroundings = {5: 1.5, 10: 0, 15: 2.5}`, which means:
-- Between `0` and `5` meters from the location we will find `1.5` meters of the infrastructure,
-- Between `5` and `10` meters from the location we will find `0` meters of the infrastructure,
-- Between `10` and `15` meters from the location we will find `2.5` meters of the infrastructure.
+- Between `0` and `5` meters from the location we will find `1.5` meters of the infrastructure length,
+- Between `5` and `10` meters from the location we will find `0` meters of the infrastructure length,
+- Between `10` and `15` meters from the location we will find `2.5` meters of the infrastructure length.
 
 In addition, each infrastructure has a fixed width (`SurroundingsInfrastructure.infrastructure_width`), which can later be used to calculate the total surface of said infrastructure affected by the given profile. So: `affected_infra_zone_x = meters_of_infrastructure_in_zone_x * infrastructure_width`, where `meters_of_infrastructure_in_zone_x` are the values calculated from the `surroundings_matrix` and `infrastructure_width` is the infrastructure fixed width.
 

@@ -68,14 +68,14 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
         self.polderside_surroundings = self.imported_surroundings
         self.waterside_surroundings = other.imported_surroundings
 
-    def _get_infrastructure_width(
+    def _get_infrastructure_length(
         self,
         taken_keys: list[float],
         limits: tuple[float, float],
         surroundings_array: list[tuple[float, float]],
     ) -> float:
         _lower_limit, _upper_limit = limits
-        _total_width = 0.0
+        _total_length = 0.0
         for _matrix_distance, value in surroundings_array:
             if _matrix_distance in taken_keys:
                 if _matrix_distance >= _upper_limit:
@@ -86,14 +86,14 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
                 continue
 
             if value != 0:
-                _total_width += value
+                _total_length += value
                 taken_keys.append(_matrix_distance)
 
             if _matrix_distance >= _upper_limit:
                 # We include the first value above the `upper_limit`,
                 # then we stop. (Design decission taken with PO).
                 break
-        return _total_width
+        return _total_length
 
     def get_total_infrastructure_per_zone(
         self, *zone_limit_collection: tuple[float, float]
@@ -115,7 +115,7 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
                 - `(-6, 0)` takes waterside key `5` and `10`.
                 - `(0, 4)` takes poldeside key `5`.
                 - `(4, 11)` takes polderside keys `10` and `15` because `5` was already taken.
-            - Total infrastructure width at zones = `(6.0, 1.5, 9.0)`
+            - Total infrastructure length at zones = `(6.0, 1.5, 9.0)`
 
         Returns:
             list[float]: list with total length corresponding to each provided zone.
@@ -145,26 +145,26 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
             _upper_limit = max(_upper_limit, 0)
             return _lower_limit, _upper_limit
 
-        def matrix_idx_for_limits(limits: tuple[float, float]) -> float:
-            _total_infrastructure_width = 0.0
+        def get_infrastructure_for_zone(limits: tuple[float, float]) -> float:
+            _total_infrastructure_length = 0.0
 
             _waterside_limits = get_waterside_limits(limits)
             if sum(_waterside_limits) > 0:
-                _total_infrastructure_width += self._get_infrastructure_width(
+                _total_infrastructure_length += self._get_infrastructure_length(
                     _taken_waterside_keys, _waterside_limits, _sorted_waterside_array
                 )
 
             _polderside_limits = get_polderside_limits(limits)
             if sum(_polderside_limits) > 0:
-                _total_infrastructure_width += self._get_infrastructure_width(
+                _total_infrastructure_length += self._get_infrastructure_length(
                     _taken_polderside_keys, _polderside_limits, _sorted_polderside_array
                 )
 
-            return _total_infrastructure_width
+            return _total_infrastructure_length
 
         # Calculate zone A last for correct priority handling
-        _zone_b_length = matrix_idx_for_limits(zone_limit_collection[1])
-        _zone_c_length = matrix_idx_for_limits(zone_limit_collection[2])
-        _zone_a_length = matrix_idx_for_limits(zone_limit_collection[0])
+        _zone_b_length = get_infrastructure_for_zone(zone_limit_collection[1])
+        _zone_c_length = get_infrastructure_for_zone(zone_limit_collection[2])
+        _zone_a_length = get_infrastructure_for_zone(zone_limit_collection[0])
 
         return [_zone_a_length, _zone_b_length, _zone_c_length]
