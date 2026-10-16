@@ -168,6 +168,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
                 zone_a_costs=_costs_a,
                 zone_b_costs=_costs_b,
                 zone_c_costs=_costs_c,
+                buffer_crest_waterside=self.infrastructure_wrapper.buffer_crest_waterside,
             )
 
         return MultiInfrastructureProfileCostsCalculator(

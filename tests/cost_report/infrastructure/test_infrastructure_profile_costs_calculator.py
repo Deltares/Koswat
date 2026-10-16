@@ -62,6 +62,7 @@ class TestInfrastructureProfileCostsCalculator:
             zone_a_costs=_zone_a_costs,
             zone_b_costs=_zone_b_costs,
             zone_c_costs=_zone_c_costs,
+            buffer_crest_waterside=_point_surroundings_case.crest_buffer,
         )
 
         # 2. Run test.
@@ -69,7 +70,6 @@ class TestInfrastructureProfileCostsCalculator:
             _point_surroundings_case.zone_a_width,
             _point_surroundings_case.zone_b_width,
             _point_surroundings_case.zone_c_width,
-            _point_surroundings_case.crest_buffer,
         )
 
         # 3. Verify expectations.

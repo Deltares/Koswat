@@ -19,6 +19,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import math
+
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_input_profile import (
     SoilWatersideInputProfile,
@@ -40,6 +42,23 @@ class SoilWatersideReinforcementProfile(StandardReinforcementProfile):
     layers_wrapper: ReinforcementLayersWrapper
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
+
+    @property
+    def waterside_changed(self) -> bool:
+        return (
+            not math.isclose(
+                self.input_data.waterside_slope,
+                self.old_profile.input_data.waterside_slope,
+            )
+            or not math.isclose(
+                self.input_data.waterside_berm_width,
+                self.old_profile.input_data.waterside_berm_width,
+            )
+            or not math.isclose(
+                self.input_data.waterside_berm_height,
+                self.old_profile.input_data.waterside_berm_height,
+            )
+        )
 
     def get_reinforcement_room_calculator(self) -> WatersideOnlyRoomCalculator:
         return WatersideOnlyRoomCalculator(

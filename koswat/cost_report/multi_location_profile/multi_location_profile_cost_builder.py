@@ -68,6 +68,6 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
             ),
             profile_cost_report=_profile_cost_report_builder.build(),
             infra_multilocation_profile_cost_report=_infra_calculator.calculate(
-                self.reinforced_profile, self.surroundings.buffer_crest_waterside
+                self.reinforced_profile
             ),
         )

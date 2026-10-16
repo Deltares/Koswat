@@ -84,6 +84,4 @@ class InfrastructureSectionFom(KoswatJsonFomProtocol):
             return self.roads_class24_width
         if road_class == RoadClass.CLASS_47:
             return self.roads_class47_width
-        if road_class == RoadClass.CLASS_UNKNOWN:
-            return self.roads_unknown_width
-        raise ValueError(f"Unknown road class: {road_class}")
+        return self.roads_unknown_width

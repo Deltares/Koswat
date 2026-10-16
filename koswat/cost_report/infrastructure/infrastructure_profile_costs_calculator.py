@@ -45,13 +45,13 @@ class InfrastructureProfileCostsCalculator:
     zone_a_costs: float = 0.0
     zone_b_costs: float = 0.0
     zone_c_costs: float = 0.0
+    buffer_crest_waterside: float = 0.0
 
     def calculate(
         self,
         zone_a_width: float,
         zone_b_width: float,
         zone_c_width: float,
-        buffer_crest_waterside: float,
     ) -> list[InfrastructureLocationCosts]:
         """
         Calculates the costs affecting this instance's infrastructure
@@ -71,7 +71,6 @@ class InfrastructureProfileCostsCalculator:
                 zone_a_width,
                 zone_b_width,
                 zone_c_width,
-                buffer_crest_waterside,
                 _location,
             )
             for _location in self.infrastructure.points
@@ -83,12 +82,11 @@ class InfrastructureProfileCostsCalculator:
         zone_a_width: float,
         zone_b_width: float,
         zone_c_width: float,
-        buffer_crest_waterside: float,
         location: PointInfrastructureSurroundings,
     ) -> InfrastructureLocationCosts:
         # Adjust zone limits based on the buffer at the crest on the waterside
         # (should not exceed the width of zone A).
-        _adjusted_buffer = min(zone_a_width, buffer_crest_waterside)
+        _adjusted_buffer = min(zone_a_width, self.buffer_crest_waterside)
         _buffered_0_point = 0 - _adjusted_buffer
         _zone_a_limits = (-zone_a_width, _buffered_0_point)
         if zone_b_width:

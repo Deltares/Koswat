@@ -91,7 +91,6 @@ class TestMultiInfrastructureProfileCostsCalculator:
             reinforcement_profile_builder(
                 _points_base_profile, _points_reinforced_profile
             ),
-            0,
         )
 
         # 3. Verify epxectations
