@@ -33,7 +33,7 @@ class TestInfrastructureSectionFom:
         # 3. Verify expectations
         assert isinstance(_result, float)
 
-    def test_when_get_roads_class_width_given_invalid_road_class_then_raises_value_error(
+    def test_when_get_roads_class_width_given_invalid_road_class_then_returns_width_for_unknown(
         self,
     ):
         # 1. Define test data
@@ -50,5 +50,7 @@ class TestInfrastructureSectionFom:
         )
 
         # 2. Execute test and verify expectations
-        with pytest.raises(ValueError):
-            _infrastructure_section_fom.get_roads_class_width("invalid")
+        _result = _infrastructure_section_fom.get_roads_class_width("invalid")
+
+        # 3. Verify expectations
+        assert _result == 99.0
