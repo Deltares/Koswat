@@ -3,16 +3,16 @@ import pytest
 from koswat.configuration.io.config_sections.infrastructure_section_fom import (
     InfrastructureSectionFom,
 )
-from koswat.dike.surroundings.road_class import RoadClass
+from koswat.dike.surroundings.road_class import RoadsClass
 
 
 class TestInfrastructureSectionFom:
     @pytest.mark.parametrize(
         "road_class",
-        [pytest.param(_rc, id=_rc.name) for _rc in RoadClass],
+        [pytest.param(_rc, id=_rc.name) for _rc in RoadsClass],
     )
     def test_when_get_roads_class_width_given_valid_road_class_then_width_returned(
-        self, road_class: RoadClass
+        self, road_class: RoadsClass
     ):
         # 1. Define test data
         _infrastructure_section_fom = InfrastructureSectionFom(

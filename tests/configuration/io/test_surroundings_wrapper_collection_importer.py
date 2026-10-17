@@ -13,6 +13,9 @@ from koswat.configuration.io.config_sections import (
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
+from koswat.configuration.settings.costs.infastructure_costs_settings import (
+    InfrastructureCostsSettings,
+)
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
@@ -50,6 +53,7 @@ class TestSurroundingsWrapperCollectionImporter:
             surroundings_section_fom=None,
             traject_loc_shp_file=None,
             selected_locations=[],
+            infrastructure_costs_settings=None,
         )
 
         # 2. Validate expectations.
@@ -124,11 +128,29 @@ class TestSurroundingsWrapperCollectionImporter:
             roads_unknown_width=0.67,
         )
 
+    @pytest.fixture(name="infrastructure_costs_settings_fixture")
+    def _get_infrastructure_costs_settings(
+        self,
+    ) -> Iterator[InfrastructureCostsSettings]:
+        yield InfrastructureCostsSettings(
+            removing_roads_klasse2=0.0,
+            removing_roads_klasse24=0.0,
+            removing_roads_klasse47=0.0,
+            removing_roads_klasse7=0.0,
+            removing_roads_unknown=0.0,
+            adding_roads_klasse2=0.0,
+            adding_roads_klasse24=0.0,
+            adding_roads_klasse47=0.0,
+            adding_roads_klasse7=0.0,
+            adding_roads_unknown=0.0,
+        )
+
     def test_given_valid_surroundings_path_when_build_returns_surrounding_wrapper(
         self,
         local_surroundings_dir_copy_fixture: Path,
         surroundings_section_fom_fixture: SurroundingsSectionFom,
         infrastructure_section_fom_fixture: InfrastructureSectionFom,
+        infrastructure_costs_settings_fixture: InfrastructureCostsSettings,
     ):
         # 1. Define test data.
         assert isinstance(surroundings_section_fom_fixture, SurroundingsSectionFom)
@@ -140,6 +162,7 @@ class TestSurroundingsWrapperCollectionImporter:
             surroundings_database_dir=local_surroundings_dir_copy_fixture,
             surroundings_section_fom=surroundings_section_fom_fixture,
             infrastructure_section_fom=infrastructure_section_fom_fixture,
+            infrastructure_costs=infrastructure_costs_settings_fixture,
             traject_loc_shp_file=_shp_file,
             selected_locations=[
                 # For traject 10-1

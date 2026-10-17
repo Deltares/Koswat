@@ -1,6 +1,6 @@
 import pytest
 
-from koswat.dike.surroundings.road_class import RoadClass
+from koswat.dike.surroundings.road_class import RoadsClass
 from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -104,10 +104,10 @@ class TestSurroundingsEnum:
         assert _result == _expected_enum
 
     @pytest.mark.parametrize(
-        "road_class", [pytest.param(_rc, id=f"Road class: {_rc}") for _rc in RoadClass]
+        "road_class", [pytest.param(_rc, id=f"Road class: {_rc}") for _rc in RoadsClass]
     )
     def test_when_get_infra_types_given_road_class_returns_infra_types(
-        self, road_class: RoadClass
+        self, road_class: RoadsClass
     ):
         # 1. Run test.
         _result = SurroundingsEnum.get_infra_types(road_class)

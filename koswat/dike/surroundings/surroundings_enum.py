@@ -25,7 +25,15 @@ import logging
 from dataclasses import dataclass
 from enum import Enum
 
-from koswat.dike.surroundings.road_class import RoadClass
+from koswat.dike.surroundings.road_class import RoadsClass
+from koswat.dike.surroundings.road_classes import (
+    RoadClass2,
+    RoadClass7,
+    RoadClass24,
+    RoadClass47,
+    RoadClassProtocol,
+    RoadClassUnknown,
+)
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -35,29 +43,29 @@ from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
 @dataclass
 class SurroundingsEnumType:
     surrounding_type: type[SurroundingsInfrastructure | SurroundingsObstacle]
-    dutch_text: str = ""
+    surroundings_class: type[RoadClassProtocol] | None
 
 
 class SurroundingsEnum(SurroundingsEnumType, Enum):
     # Simple format
-    OBSTACLE = SurroundingsObstacle, ""
+    OBSTACLE = SurroundingsObstacle, None
 
     # Extended format
-    ROADS_CLASS_2_POLDERSIDE = SurroundingsInfrastructure, "wegen_binnendijks_klasse2"
-    ROADS_CLASS_7_POLDERSIDE = SurroundingsInfrastructure, "wegen_binnendijks_klasse7"
-    ROADS_CLASS_24_POLDERSIDE = SurroundingsInfrastructure, "wegen_binnendijks_klasse24"
-    ROADS_CLASS_47_POLDERSIDE = SurroundingsInfrastructure, "wegen_binnendijks_klasse47"
+    ROADS_CLASS_2_POLDERSIDE = SurroundingsInfrastructure, RoadClass2
+    ROADS_CLASS_7_POLDERSIDE = SurroundingsInfrastructure, RoadClass7
+    ROADS_CLASS_24_POLDERSIDE = SurroundingsInfrastructure, RoadClass24
+    ROADS_CLASS_47_POLDERSIDE = SurroundingsInfrastructure, RoadClass47
     ROADS_CLASS_UNKNOWN_POLDERSIDE = (
         SurroundingsInfrastructure,
-        "wegen_binnendijks_klasseonbekend",
+        RoadClassUnknown,
     )
-    ROADS_CLASS_2_WATERSIDE = SurroundingsInfrastructure, "wegen_buitendijks_klasse2"
-    ROADS_CLASS_7_WATERSIDE = SurroundingsInfrastructure, "wegen_buitendijks_klasse7"
-    ROADS_CLASS_24_WATERSIDE = SurroundingsInfrastructure, "wegen_buitendijks_klasse24"
-    ROADS_CLASS_47_WATERSIDE = SurroundingsInfrastructure, "wegen_buitendijks_klasse47"
+    ROADS_CLASS_2_WATERSIDE = SurroundingsInfrastructure, RoadClass2
+    ROADS_CLASS_7_WATERSIDE = SurroundingsInfrastructure, RoadClass7
+    ROADS_CLASS_24_WATERSIDE = SurroundingsInfrastructure, RoadClass24
+    ROADS_CLASS_47_WATERSIDE = SurroundingsInfrastructure, RoadClass47
     ROADS_CLASS_UNKNOWN_WATERSIDE = (
         SurroundingsInfrastructure,
-        "wegen_buitendijks_klasseonbekend",
+        RoadClassUnknown,
     )
 
     @classmethod
@@ -86,26 +94,26 @@ class SurroundingsEnum(SurroundingsEnumType, Enum):
 
     @classmethod
     def get_infra_types(
-        cls, road_class: RoadClass
+        cls, road_class: RoadsClass
     ) -> tuple[SurroundingsEnum, SurroundingsEnum]:
         mapping = {
-            RoadClass.CLASS_2: (
+            RoadsClass.CLASS_2: (
                 cls.ROADS_CLASS_2_POLDERSIDE,
                 cls.ROADS_CLASS_2_WATERSIDE,
             ),
-            RoadClass.CLASS_7: (
+            RoadsClass.CLASS_7: (
                 cls.ROADS_CLASS_7_POLDERSIDE,
                 cls.ROADS_CLASS_7_WATERSIDE,
             ),
-            RoadClass.CLASS_24: (
+            RoadsClass.CLASS_24: (
                 cls.ROADS_CLASS_24_POLDERSIDE,
                 cls.ROADS_CLASS_24_WATERSIDE,
             ),
-            RoadClass.CLASS_47: (
+            RoadsClass.CLASS_47: (
                 cls.ROADS_CLASS_47_POLDERSIDE,
                 cls.ROADS_CLASS_47_WATERSIDE,
             ),
-            RoadClass.CLASS_UNKNOWN: (
+            RoadsClass.CLASS_UNKNOWN: (
                 cls.ROADS_CLASS_UNKNOWN_POLDERSIDE,
                 cls.ROADS_CLASS_UNKNOWN_WATERSIDE,
             ),

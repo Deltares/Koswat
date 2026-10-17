@@ -24,7 +24,7 @@ from __future__ import annotations
 from enum import StrEnum
 
 
-class RoadClass(StrEnum):
+class RoadsClass(StrEnum):
     CLASS_2 = "ROADS_CLASS_2"
     CLASS_7 = "ROADS_CLASS_7"
     CLASS_24 = "ROADS_CLASS_24"

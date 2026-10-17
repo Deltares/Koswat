@@ -23,7 +23,6 @@ import logging
 from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
-from typing import Optional
 
 from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
@@ -44,9 +43,11 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
 from koswat.configuration.io.shp.koswat_dike_locations_shp_reader import (
     KoswatDikeLocationsListShpReader,
 )
+from koswat.configuration.settings.costs.infastructure_costs_settings import (
+    InfrastructureCostsSettings,
+)
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
-from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
+from koswat.dike.surroundings.road_classes import RoadClassBuilder, RoadClassProtocol
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
@@ -67,6 +68,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
 
     traject_loc_shp_file: Path
     selected_locations: list[str]
+    infrastructure_costs: InfrastructureCostsSettings
 
     def _get_dike_locations_shp_fom(self) -> list[KoswatDikeLocationsShpFom]:
         _reader = KoswatDikeLocationsListShpReader()
@@ -91,12 +93,14 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                 continue
 
             # Build surroundings wrappers for all locations in the traject.
+            _obstacles, infrastructures = self._csv_dir_to_fom(
+                _csv_dir, self.surroundings_section_fom.obstacle_types
+            )
             _surroundings_wrapper_builder = SurroundingsWrapperBuilder(
                 surroundings_section_fom=self.surroundings_section_fom,
                 infrastructure_section_fom=self.infrastructure_section_fom,
-                surroundings_csv_fom_collection=self._csv_dir_to_fom(
-                    _csv_dir, self.surroundings_section_fom.obstacle_types
-                ),
+                obstacles=_obstacles,
+                infrastructures=infrastructures,
                 location_shp_fom=None,
             )
             for _location in _location_list:
@@ -112,58 +116,83 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
 
         return _surroundings_wrappers
 
-    def _csv_file_to_fom(
+    def _csv_obstacle_file_to_fom(
         self,
         csv_file: Path,
-        surrounding_type: SurroundingsEnum,
-        surrounding_buffer: Optional[float],
+        surrounding_buffer: float,
     ) -> KoswatSurroundingsCsvFom:
-        if surrounding_type.surrounding_type == SurroundingsObstacle:
-            _reader = KoswatSimpleSurroundingsCsvReader()
-            if surrounding_buffer and surrounding_buffer > 0.0:
-                _reader.surroundings_buffer = surrounding_buffer
-        else:
-            _reader = KoswatSurroundingsCsvReader()
+        _reader = KoswatSimpleSurroundingsCsvReader()
+        _reader.surroundings_buffer = surrounding_buffer
+        return _reader.read(csv_file)
 
-        _csv_fom = _reader.read(csv_file)
-        return _csv_fom
+    def _csv_infrastructure_file_to_fom(
+        self,
+        csv_file: Path,
+    ) -> KoswatSurroundingsCsvFom:
+        return KoswatSurroundingsCsvReader().read(csv_file)
 
     def _csv_dir_to_fom(
         self, csv_dir: Path, obstacle_types: dict[str, float]
-    ) -> dict[SurroundingsEnum, KoswatSurroundingsCsvFom]:
+    ) -> tuple[
+        KoswatSurroundingsCsvFom, dict[RoadClassProtocol, KoswatSurroundingsCsvFom]
+    ]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
         `KoswatSurroundingsCsvFom` objects, grouped by their type name.
 
         Args:
             csv_dir (Path): The directory containing the CSV files.
-            obstacle_types (list[str]): A list of custom obstacle names.
+            obstacle_types (dict[str, float]): A dictionary of custom obstacle names and their corresponding buffer values.
 
         Returns:
-            dict[SurroundingsEnum, KoswatSurroundingsCsvFom]: A dictionary of `KoswatSurroundingsCsvFom` objects, grouped by their type name.
+            tuple[
+                KoswatSurroundingsCsvFom, dict[RoadClassProtocol, KoswatSurroundingsCsvFom]
+            ]: A tuple containing the obstacle CSV FOM and a dictionary of infrastructure CSV FOMs, grouped by their type name.
         """
-        _imported_csv_foms: dict[SurroundingsEnum, KoswatSurroundingsCsvFom] = {}
+        _obstacle_csv_fom: KoswatSurroundingsCsvFom = None
+        _infrastructure_csv_foms: dict[RoadClassProtocol, KoswatSurroundingsCsvFom] = {}
 
         _traject_name = csv_dir.stem
         _read_obs_types = []
         _first_fom: KoswatSurroundingsCsvFom | None = None
+        _road_class_builder = RoadClassBuilder(
+            infrastructure_section=self.infrastructure_section_fom,
+            infrastructure_costs=self.infrastructure_costs,
+        )
         for _csv_file in csv_dir.glob("*.csv"):
-            # Map CSV file name to surrounding type.
             _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
-            _type_enum = SurroundingsEnum.translate(_type_name)
+            # Try to map file name an infrastructure surrounding type.
+            _road_class = _road_class_builder.build(_type_name)
 
-            if _type_enum == SurroundingsEnum.OBSTACLE:
-                if _type_name not in obstacle_types.keys():
+            if not _road_class:
+                # Obstacle surrounding type
+                if _type_name not in obstacle_types:
                     # In case of obstacles, only import those that are defined in the config file.
                     logging.info(
                         f"Skipping obstacle surrounding type {_type_name} for traject {_traject_name} as it is not defined in the config file."
                     )
                     continue
+
+                # Read obstacle surroundings file
+                _buffer = obstacle_types.get(_type_name, 0.0)
+                _csv_fom = self._csv_obstacle_file_to_fom(_csv_file, _buffer)
+                if _obstacle_csv_fom is None:
+                    _obstacle_csv_fom = _csv_fom
+                else:
+                    _obstacle_csv_fom.merge(_csv_fom)
                 _read_obs_types.append(_type_name)
+            else:
+                # Infrastructure surrounding type
+                _csv_fom = self._csv_infrastructure_file_to_fom(_csv_file)
+                if _road_class in _infrastructure_csv_foms:
+                    if _road_class.is_polderside:
+                        _csv_fom.merge(_infrastructure_csv_foms[_road_class])
+                    else:
+                        _infrastructure_csv_foms[_road_class].merge(_csv_fom)
+                else:
+                    _infrastructure_csv_foms[_road_class] = _csv_fom
 
             # Get FOM from CSV file.
-            _buffer = obstacle_types.get(_type_name, None)
-            _csv_fom = self._csv_file_to_fom(_csv_file, _type_enum, _buffer)
 
             if _first_fom is None:
                 _first_fom = _csv_fom
@@ -173,16 +202,11 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                         "Location mismatch detected between the first imported surroundings and the current."
                     )
 
-            if _type_enum in _imported_csv_foms.keys():
-                _imported_csv_foms[_type_enum].merge(_csv_fom)
-            else:
-                _imported_csv_foms[_type_enum] = _csv_fom
-
         # Log missing obstacle files.
-        for _obs_type in obstacle_types.keys():
+        for _obs_type in obstacle_types:
             if _obs_type not in _read_obs_types:
                 logging.warning(
                     f"Obstacle surrounding type {_obs_type} defined in config file is missing for traject {_traject_name}."
                 )
 
-        return _imported_csv_foms
+        return _obstacle_csv_fom, _infrastructure_csv_foms

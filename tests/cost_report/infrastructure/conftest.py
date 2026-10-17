@@ -9,7 +9,7 @@ from koswat.dike.characteristic_points.characteristic_points import Characterist
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike.surroundings.point import PointInfrastructureSurroundings
-from koswat.dike.surroundings.road_class import RoadClass
+from koswat.dike.surroundings.road_class import RoadsClass
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -86,7 +86,7 @@ def _get_surroundings_infrastructure_fixture(
         x * _infra_width for x in test_case.expected_total_lengths
     )
     yield SurroundingsInfrastructure(
-        infrastructure_type=RoadClass.CLASS_2,
+        infrastructure_type=RoadsClass.CLASS_2,
         # To simplify A / B / C total areas, we just set it to `1`.
         infrastructure_width=_infra_width,
         points=[_builder()],

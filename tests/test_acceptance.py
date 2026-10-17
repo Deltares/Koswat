@@ -12,6 +12,9 @@ from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     SurroundingsSectionFom,
 )
+from koswat.configuration.io.json.koswat_costs_json_fom import (
+    InfrastructureCostsSectionFom,
+)
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
@@ -154,7 +157,6 @@ class TestAcceptance:
         # Generate surroundings section File Object Model.
         _koswat_general_settings, _koswat_costs = koswat_acceptance_settings()
         _surroundings_settings = _koswat_general_settings.surroundings_section
-        _surroundings_settings.buildings = _include_obstacles
 
         # Generate Infrastructures section file model
         _infrastructure_settings = _koswat_general_settings.infrastructuur_section
@@ -163,10 +165,11 @@ class TestAcceptance:
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=_temp_dir.parent,
-            infrastructure_section_fom=_infrastructure_settings,
             surroundings_section_fom=_surroundings_settings,
-            selected_locations=[],
+            infrastructure_section_fom=_infrastructure_settings,
             traject_loc_shp_file=_shp_file,
+            selected_locations=[],
+            infrastructure_costs=_koswat_costs.infrastructure_costs,
         )
         _surroundings_wrapper_list = _importer.build()
         assert any(_surroundings_wrapper_list)

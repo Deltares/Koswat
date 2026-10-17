@@ -40,7 +40,7 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
-from koswat.dike.surroundings.road_class import RoadClass
+from koswat.dike.surroundings.road_class import RoadsClass
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -81,31 +81,31 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         return self.surtax_cost_settings.roads_easy
 
     def _get_infrastructure_costs(
-        self, infrastructure_type: RoadClass
+        self, infrastructure_type: RoadsClass
     ) -> tuple[float, float]:
         if not self.cost_settings:
             return (math.nan, math.nan)
-        if infrastructure_type == RoadClass.CLASS_2:
+        if infrastructure_type == RoadsClass.CLASS_2:
             return (
                 self.cost_settings.adding_roads_klasse2,
                 self.cost_settings.removing_roads_klasse2,
             )
-        if infrastructure_type == RoadClass.CLASS_7:
+        if infrastructure_type == RoadsClass.CLASS_7:
             return (
                 self.cost_settings.adding_roads_klasse7,
                 self.cost_settings.removing_roads_klasse7,
             )
-        if infrastructure_type == RoadClass.CLASS_24:
+        if infrastructure_type == RoadsClass.CLASS_24:
             return (
                 self.cost_settings.adding_roads_klasse24,
                 self.cost_settings.removing_roads_klasse24,
             )
-        if infrastructure_type == RoadClass.CLASS_47:
+        if infrastructure_type == RoadsClass.CLASS_47:
             return (
                 self.cost_settings.adding_roads_klasse47,
                 self.cost_settings.removing_roads_klasse47,
             )
-        if infrastructure_type == RoadClass.CLASS_UNKNOWN:
+        if infrastructure_type == RoadsClass.CLASS_UNKNOWN:
             return (
                 self.cost_settings.adding_roads_unknown,
                 self.cost_settings.removing_roads_unknown,
@@ -141,7 +141,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         return adding_costs + removing_costs
 
     def _get_zone_costs(
-        self, infrastructure_type: RoadClass
+        self, infrastructure_type: RoadsClass
     ) -> tuple[float, float, float]:
         _adding_costs, _removing_costs = self._get_infrastructure_costs(
             infrastructure_type
