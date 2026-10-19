@@ -24,7 +24,7 @@ With the introduction of more complex profiles and reinforcements, some the axio
 This confronts us with the question how we can make the current approach more durable.
 
 Examples of problematic situations:
-- The layers of the reinforced profile intersect with the original profile, for e.g. [case_dijk5_scen2_with_default_layers](../../tests/test_data/acceptance_reference_data/case_dijk5_scen2_with_default_layers/figures/dijk5_Stabiliteitswand_teen.png). Some code hacks have been introduced in `StandardReinforcementLayersWrapperBuilder._get_coating_added_geometry`. Still the calculated areas and surfaces are not according to reality.
+- The layers of the reinforced profile intersect with the original profile, for e.g. [case_dijk5_scen2_with_default_layers](../../tests/test_data/acceptance_reference_data/case_dijk5_scen2_with_default_layers/figures/dijk5_Stabiliteitswand_teen.png). Some code workarounds have been introduced in `StandardReinforcementLayersWrapperBuilder._get_coating_added_geometry`. Still the calculated areas and surfaces are not according to reality.
 - The change of profile consists out of disconnected reinforcement parts (e.g. for `SoilWatersideReinforcement`, where a waterside berm and a polderside slope change is added). For this the use of `MultiPolygons` is extended, but not fully implemented.
 
 A rigorous redesign of this subpackage and the related `calc_library` could be needed to get to a future-proof product.
