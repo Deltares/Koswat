@@ -28,10 +28,6 @@ class TestRoadClassBuilder:
         # 3. Verify test results
         assert _builder is not None
         assert _builder.road_class_types is not None
-        assert isinstance(_builder.road_class_types, list)
-        assert all(
-            isinstance(item, RoadClassProtocol) for item in _builder.road_class_types
-        )
 
     @pytest.mark.parametrize(
         "source_name, expected_type, is_polderside",

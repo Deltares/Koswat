@@ -185,11 +185,19 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             else:
                 # Infrastructure surrounding type
                 _csv_fom = self._csv_infrastructure_file_to_fom(_csv_file)
-                if _road_class in _infrastructure_csv_foms:
+                _existing_fom = next(
+                    (
+                        _fom
+                        for _rc, _fom in _infrastructure_csv_foms.items()
+                        if _rc.class_name == _road_class.class_name
+                    ),
+                    None,
+                )
+                if _existing_fom:
                     if _road_class.is_polderside:
-                        _csv_fom.merge(_infrastructure_csv_foms[_road_class])
+                        _csv_fom.merge(_existing_fom)
                     else:
-                        _infrastructure_csv_foms[_road_class].merge(_csv_fom)
+                        _existing_fom.merge(_csv_fom)
                 else:
                     _infrastructure_csv_foms[_road_class] = _csv_fom
 

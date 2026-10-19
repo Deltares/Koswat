@@ -7,10 +7,7 @@ from .road_class_protocol import (
 )
 
 
-@dataclass(kw_only=True, eq=False)
+@dataclass(eq=False)
 class RoadClass7(RoadClassBase, RoadClassProtocol):
+    class_name: ClassVar[str] = "roads_class_7"
     import_key: ClassVar[str] = "klasse7"
-
-    @property
-    def class_name(self) -> str:
-        return "roads_class_7"

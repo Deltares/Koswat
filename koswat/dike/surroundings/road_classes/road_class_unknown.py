@@ -7,7 +7,7 @@ from .road_class_protocol import (
 )
 
 
-@dataclass(kw_only=True, eq=False)
+@dataclass(eq=False)
 class RoadClassUnknown(RoadClassBase, RoadClassProtocol):
     class_name: ClassVar[str] = "roads_class_unknown"
     import_key: ClassVar[str] = "klasseonbekend"
