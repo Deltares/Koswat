@@ -17,11 +17,11 @@ class RoadClassBase(ABC, RoadClassProtocol):
     removing_costs: float = math.nan
 
     @classmethod
-    def get_polderside_source_name(cls) -> str:
+    def get_polderside_import_name(cls) -> str:
         return f"wegen_binnendijks_{cls.import_key}"
 
     @classmethod
-    def get_waterside_source_name(cls) -> str:
+    def get_waterside_import_name(cls) -> str:
         return f"wegen_buitendijks_{cls.import_key}"
 
     def __hash__(self) -> int:

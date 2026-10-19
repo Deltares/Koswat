@@ -12,11 +12,11 @@ class RoadClassProtocol(Protocol):
     removing_costs: float
 
     @classmethod
-    def get_polderside_source_name(cls) -> str:
+    def get_polderside_import_name(cls) -> str:
         pass
 
     @classmethod
-    def get_waterside_source_name(cls) -> str:
+    def get_waterside_import_name(cls) -> str:
         pass
 
     def __hash__(self) -> int:

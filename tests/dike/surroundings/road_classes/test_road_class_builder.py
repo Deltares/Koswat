@@ -33,19 +33,19 @@ class TestRoadClassBuilder:
         "source_name, expected_type, is_polderside",
         [
             pytest.param(
-                x.get_polderside_source_name(),
+                x.get_polderside_import_name(),
                 x,
                 True,
-                id=x.get_polderside_source_name(),
+                id=x.get_polderside_import_name(),
             )
             for x in RoadClassBuilder(None, None).road_class_types
         ]
         + [
             pytest.param(
-                x.get_waterside_source_name(),
+                x.get_waterside_import_name(),
                 x,
                 False,
-                id=x.get_waterside_source_name(),
+                id=x.get_waterside_import_name(),
             )
             for x in RoadClassBuilder(None, None).road_class_types
         ],

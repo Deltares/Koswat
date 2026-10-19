@@ -59,8 +59,8 @@ class RoadClassBuilder:
             (
                 x
                 for x in self.road_class_types
-                if x.get_polderside_source_name() == source_name
-                or x.get_waterside_source_name() == source_name
+                if x.get_polderside_import_name() == source_name
+                or x.get_waterside_import_name() == source_name
             ),
             None,
         )
@@ -69,7 +69,7 @@ class RoadClassBuilder:
 
         _road_class = _road_class_type()
         _road_class.is_polderside = (
-            source_name == _road_class.get_polderside_source_name()
+            source_name == _road_class.get_polderside_import_name()
         )
         self._set_road_class_properties(_road_class)
         return _road_class
