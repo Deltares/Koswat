@@ -1,17 +1,27 @@
-from typing import Protocol, runtime_checkable
+from typing import ClassVar, Protocol, runtime_checkable
 
 
 @runtime_checkable
 class RoadClassProtocol(Protocol):
-    polderside_name: str
-    waterside_name: str
-    is_polderside: bool
+    class_name: ClassVar[str]
+    import_key: ClassVar[str]
+
+    imported_name: str
+
     width: float
     adding_costs: float
     removing_costs: float
 
+    @classmethod
+    def get_polderside_source_name(cls) -> str:
+        pass
+
+    @classmethod
+    def get_waterside_source_name(cls) -> str:
+        pass
+
     @property
-    def key(self) -> str:
+    def is_polderside(self) -> bool:
         pass
 
     def __hash__(self) -> int:

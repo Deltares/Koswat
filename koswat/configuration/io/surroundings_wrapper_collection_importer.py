@@ -94,14 +94,14 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                 continue
 
             # Build surroundings wrappers for all locations in the traject.
-            _obstacles, infrastructures = self._csv_dir_to_fom(
+            _obstacles, _infrastructures = self._csv_dir_to_fom(
                 _csv_dir, self.surroundings_section_fom.obstacle_types
             )
             _surroundings_wrapper_builder = SurroundingsWrapperBuilder(
                 surroundings_section_fom=self.surroundings_section_fom,
                 infrastructure_section_fom=self.infrastructure_section_fom,
                 obstacles=_obstacles,
-                infrastructures=infrastructures,
+                infrastructures=_infrastructures,
                 location_shp_fom=None,
             )
             for _location in _location_list:

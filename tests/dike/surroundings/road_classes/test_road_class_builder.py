@@ -34,13 +34,23 @@ class TestRoadClassBuilder:
         )
 
     @pytest.mark.parametrize(
-        "name, expected_type, is_polderside",
+        "source_name, expected_type, is_polderside",
         [
-            pytest.param(x.polderside_name, x, True, id=x.polderside_name)
+            pytest.param(
+                x.get_polderside_source_name(),
+                x,
+                True,
+                id=x.get_polderside_source_name(),
+            )
             for x in RoadClassBuilder(None, None).road_class_types
         ]
         + [
-            pytest.param(x.waterside_name, x, False, id=x.waterside_name)
+            pytest.param(
+                x.get_waterside_source_name(),
+                x,
+                False,
+                id=x.get_waterside_source_name(),
+            )
             for x in RoadClassBuilder(None, None).road_class_types
         ],
     )
@@ -48,7 +58,7 @@ class TestRoadClassBuilder:
         self,
         infrastructure_section_fom_fixture: InfrastructureSectionFom,
         infrastructure_costs_settings_fixture: InfrastructureCostsSettings,
-        name: str,
+        source_name: str,
         expected_type: type[RoadClassProtocol],
         is_polderside: bool,
     ):
@@ -59,7 +69,7 @@ class TestRoadClassBuilder:
         )
 
         # 2. Execute test
-        _result = _builder.build(name)
+        _result = _builder.build(source_name)
 
         # 3. Verify expectations
         assert _result is not None

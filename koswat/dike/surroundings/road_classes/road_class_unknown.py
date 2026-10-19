@@ -1,5 +1,5 @@
-import math
 from dataclasses import dataclass
+from typing import ClassVar
 
 from .road_class_base import RoadClassBase
 from .road_class_protocol import (
@@ -9,13 +9,5 @@ from .road_class_protocol import (
 
 @dataclass(kw_only=True, eq=False)
 class RoadClassUnknown(RoadClassBase, RoadClassProtocol):
-    polderside_name: str = "wegen_binnendijks_klasseonbekend"
-    waterside_name: str = "wegen_buitendijks_klasseonbekend"
-    is_polderside: bool = False
-    width: float = math.nan
-    adding_costs: float = math.nan
-    removing_costs: float = math.nan
-
-    @property
-    def key(self) -> str:
-        return "roads_class_unknown"
+    class_name: ClassVar[str] = "roads_class_unknown"
+    import_key: ClassVar[str] = "klasseonbekend"

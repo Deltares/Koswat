@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from koswat.configuration.io.config_sections.infrastructure_section_fom import (
     InfrastructureSectionFom,
@@ -67,33 +67,34 @@ class RoadClassBuilder:
             self.infrastructure_costs.removing_roads_unknown,
         )
 
-    def build(self, name: str) -> RoadClassProtocol | None:
+    def build(self, source_name: str) -> RoadClassProtocol | None:
         """
         Build a road class instance based on the given name.
 
         Args:
-            name (str): The name of the road class to build.
+            source_name (str): The name of the road class to build.
 
         Returns:
             RoadClassProtocol | None: An instance of the corresponding road class if found, otherwise None.
         """
 
-        def get_road_class_type() -> tuple[type[RoadClassProtocol] | None, bool]:
+        def get_road_class() -> type[RoadClassProtocol] | None:
             return next(
                 (
-                    (x, True) if x.polderside_name == name else (x, False)
+                    x
                     for x in self.road_class_types
-                    if x.polderside_name == name or x.waterside_name == name
+                    if x.get_polderside_source_name() == source_name
+                    or x.get_waterside_source_name() == source_name
                 ),
-                (None, False),
+                None,
             )
 
-        _road_class_type, _is_polderside = get_road_class_type()
+        _road_class_type = get_road_class()
         if not _road_class_type:
             return None
 
         _road_class = _road_class_type()
-        _road_class.is_polderside = _is_polderside
+        _road_class.imported_name = source_name
         _road_class.width = self._get_road_class_width(_road_class_type)
         _road_class.adding_costs, _road_class.removing_costs = (
             self._get_road_class_costs(_road_class_type)
