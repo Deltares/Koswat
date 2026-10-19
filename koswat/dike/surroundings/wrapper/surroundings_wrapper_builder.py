@@ -77,26 +77,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             max_waterside_extension=self.surroundings_section_fom.max_waterside_extension,
         )
 
-    def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
-        _obs_wrapper = ObstacleSurroundingsWrapper(
-            reinforcement_min_separation=self.surroundings_section_fom.construction_distance,
-            reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
-        )
-
-        _obs_wrapper.obstacles.points = PointSurroundingsListBuilder(
-            koswat_shp_fom=self.location_shp_fom,
-            koswat_csv_fom=self.obstacles,
-        ).build()
-
-        # At least 1 obstacle type should be present to determine the location coordinates.
-        if not any(_obs_wrapper.obstacles.points):
-            raise ValueError(
-                "At least 1 obstacle type should be present to determine the location coordinates."
-            )
-
-        return _obs_wrapper
-
-    def _get_infrastructure_surroundings_from_fom(
+    def _get_infrastructure_surroundings_from_fom_collection(
         self, road_class_type: type[RoadClassProtocol]
     ) -> tuple[RoadClassProtocol, list[PointInfrastructureSurroundings]]:
         if road_class_type not in [type(k) for k in self.infrastructures]:
@@ -123,11 +104,30 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             ).build(),
         )
 
+    def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
+        _obs_wrapper = ObstacleSurroundingsWrapper(
+            reinforcement_min_separation=self.surroundings_section_fom.construction_distance,
+            reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
+        )
+
+        _obs_wrapper.obstacles.points = PointSurroundingsListBuilder(
+            koswat_shp_fom=self.location_shp_fom,
+            koswat_csv_fom=self.obstacles,
+        ).build()
+
+        # At least 1 obstacle type should be present to determine the location coordinates.
+        if not any(_obs_wrapper.obstacles.points):
+            raise ValueError(
+                "At least 1 obstacle type should be present to determine the location coordinates."
+            )
+
+        return _obs_wrapper
+
     def _get_surroundings_infrastructure(
         self, road_class_type: type[RoadClassProtocol]
     ) -> SurroundingsInfrastructure:
-        _road_class, _points = self._get_infrastructure_surroundings_from_fom(
-            road_class_type
+        _road_class, _points = (
+            self._get_infrastructure_surroundings_from_fom_collection(road_class_type)
         )
         return SurroundingsInfrastructure(
             infrastructure_type=_road_class,
