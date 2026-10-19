@@ -133,16 +133,16 @@ class TestSurroundingsWrapperCollectionImporter:
         self,
     ) -> Iterator[InfrastructureCostsSettings]:
         yield InfrastructureCostsSettings(
-            removing_roads_klasse2=0.0,
-            removing_roads_klasse24=0.0,
-            removing_roads_klasse47=0.0,
-            removing_roads_klasse7=0.0,
-            removing_roads_unknown=0.0,
-            adding_roads_klasse2=0.0,
-            adding_roads_klasse24=0.0,
-            adding_roads_klasse47=0.0,
-            adding_roads_klasse7=0.0,
-            adding_roads_unknown=0.0,
+            removing_roads_klasse2=1.0,
+            removing_roads_klasse24=2.0,
+            removing_roads_klasse47=3.0,
+            removing_roads_klasse7=4.0,
+            removing_roads_unknown=5.0,
+            adding_roads_klasse2=2.0,
+            adding_roads_klasse24=4.0,
+            adding_roads_klasse47=5.0,
+            adding_roads_klasse7=6.0,
+            adding_roads_unknown=10.0,
         )
 
     def test_given_valid_surroundings_path_when_build_returns_surrounding_wrapper(

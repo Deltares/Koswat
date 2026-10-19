@@ -28,6 +28,9 @@ from koswat.configuration.settings.costs.construction_costs_settings import (
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
 )
+from koswat.configuration.settings.costs.infastructure_costs_settings import (
+    InfrastructureCostsSettings,
+)
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
@@ -312,12 +315,26 @@ class TestAcceptance:
             roads_unknown_width=8,
         )
 
+        _infrastructure_costs = InfrastructureCostsSettings(
+            removing_roads_klasse2=1.0,
+            removing_roads_klasse7=2.0,
+            removing_roads_klasse24=3.0,
+            removing_roads_klasse47=4.0,
+            removing_roads_unknown=5.0,
+            adding_roads_klasse2=1.0,
+            adding_roads_klasse7=2.0,
+            adding_roads_klasse24=3.0,
+            adding_roads_klasse47=4.0,
+            adding_roads_unknown=5.0,
+        )
+
         _surroundings = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=_test_dir,
             infrastructure_section_fom=_infrastructure_section,
             surroundings_section_fom=_surroundings_section,
             traject_loc_shp_file=_shp_trajects_file,
             selected_locations=[],
+            infrastructure_costs=_infrastructure_costs,
         ).build()[0]
 
         assert isinstance(scenario_case, KoswatScenario)
