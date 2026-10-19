@@ -58,7 +58,7 @@ class SoilWatersideInputProfileCalculation(
 
     def build(self) -> SoilWatersideInputProfile:
         # Apply a minor waterslide slope adjustment to the scenario to ensure calculating
-        # proper cost on the waterside.
+        # proportional costs on the waterside slope, even if not changed.
         self.scenario = deepcopy(self.scenario)
         self.scenario.waterside_slope = 1.01 * self.scenario.waterside_slope
 
