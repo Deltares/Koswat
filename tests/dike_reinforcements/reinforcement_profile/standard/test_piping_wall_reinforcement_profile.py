@@ -35,8 +35,17 @@ class TestPipingWallReinforcementProfile:
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)
 
-    def test_when_get_polderside_reinforcement_calculator_then_returns_expected_calculator(
+    @pytest.mark.parametrize(
+        "allow_waterside, expected_calculator",
+        [
+            (True, PoldersideAndWatersideRoomCalculator),
+            (False, PoldersideOnlyRoomCalculator),
+        ],
+    )
+    def test_when_get_reinforcement_room_calculator_then_returns_expected_calculator(
         self,
+        allow_waterside: bool,
+        expected_calculator: Type[ReinforcementRoomCalculatorProtocol],
     ):
 
         # 1. Given
@@ -46,23 +55,9 @@ class TestPipingWallReinforcementProfile:
         )
 
         # 2. When
-        _result_calculator = _profile.get_polderside_reinforcement_calculator()
-
-        # 3. Then
-        assert isinstance(_result_calculator, PoldersideOnlyRoomCalculator)
-
-    def test_when_get_waterside_reinforcement_calculator_then_returns_expected_calculator(
-        self,
-    ):
-
-        # 1. Given
-        _profile = PipingWallReinforcementProfile()
-        _profile.characteristic_points = CharacteristicPoints(
-            p_1=Point(-2.4, 0), p_8=Point(4.2, 0)
+        _result_calculator = _profile.get_reinforcement_room_calculator(
+            waterside_allowed=allow_waterside
         )
 
-        # 2. When
-        _result_calculator = _profile.get_waterside_reinforcement_calculator()
-
         # 3. Then
-        assert isinstance(_result_calculator, PoldersideAndWatersideRoomCalculator)
+        assert isinstance(_result_calculator, expected_calculator)

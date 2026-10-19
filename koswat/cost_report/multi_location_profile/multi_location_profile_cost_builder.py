@@ -38,12 +38,6 @@ from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWr
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_base import (
-    ReinforcementRoomCalculatorBase,
-)
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_factory import (
-    ReinforcementRoomCalculatorFactory,
-)
 
 
 @dataclass
@@ -68,10 +62,8 @@ class MultiLocationProfileCostReportBuilder(BuilderProtocol):
         ).build()
 
         # Multi-location profile cost report
-        _room_calculator = (
-            ReinforcementRoomCalculatorFactory.get_reinforcement_room_calculator(
-                self.reinforced_profile, self.waterside_reinforcement_allowed
-            )
+        _room_calculator = self.reinforced_profile.get_reinforcement_room_calculator(
+            self.waterside_reinforcement_allowed
         )
 
         return MultiLocationProfileCostReport(

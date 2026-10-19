@@ -29,6 +29,9 @@ from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrappe
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     PoldersideOnlyRoomCalculator,
 )
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+    ReinforcementRoomCalculatorProtocol,
+)
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
@@ -41,13 +44,9 @@ class SoilReinforcementProfile(StandardReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_polderside_reinforcement_calculator(self) -> PoldersideOnlyRoomCalculator:
-        return self._get_reinforcement_room_calculator()
-
-    def get_waterside_reinforcement_calculator(self) -> PoldersideOnlyRoomCalculator:
-        return self._get_reinforcement_room_calculator()
-
-    def _get_reinforcement_room_calculator(self) -> PoldersideOnlyRoomCalculator:
+    def get_reinforcement_room_calculator(
+        self, waterside_allowed: bool
+    ) -> ReinforcementRoomCalculatorProtocol:
         return PoldersideOnlyRoomCalculator(
             required_polderside_width=self.polderside_width
         )

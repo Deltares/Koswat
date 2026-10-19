@@ -75,13 +75,7 @@ class TestMultiLocationProfileCostReportBuilder:
             old_profile = None
             layers_wrapper = _base_profile.layers_wrapper
 
-            def get_polderside_reinforcement_calculator(self):
-                return self._get_reinforcement_room_calculator()
-
-            def get_waterside_reinforcement_calculator(self):
-                return self._get_reinforcement_room_calculator()
-
-            def _get_reinforcement_room_calculator(self):
+            def get_reinforcement_room_calculator(self, waterside_allowed: bool):
                 class DummyReinforcementRoomCalculator(
                     ReinforcementRoomCalculatorProtocol
                 ):
