@@ -26,15 +26,14 @@ from koswat.dike_reinforcements.input_profile.piping_wall.piping_wall_input_prof
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from .decorators import (
-    polder_and_waterside_room_calculator,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
     ReinforcementRoomCalculatorProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
 )
+
+from .decorators import polder_and_waterside_room_calculator
 
 
 class PipingWallReinforcementProfile(StandardReinforcementProfile):

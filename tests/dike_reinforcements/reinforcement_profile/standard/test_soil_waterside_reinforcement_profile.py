@@ -1,5 +1,6 @@
-import pytest
 from typing import Type
+
+import pytest
 from shapely import Point
 
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
