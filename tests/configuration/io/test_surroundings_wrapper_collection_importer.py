@@ -53,7 +53,7 @@ class TestSurroundingsWrapperCollectionImporter:
             surroundings_section_fom=None,
             traject_loc_shp_file=None,
             selected_locations=[],
-            infrastructure_costs_settings=None,
+            infrastructure_costs=None,
         )
 
         # 2. Validate expectations.
@@ -199,7 +199,10 @@ class TestSurroundingsWrapperCollectionImporter:
             assert any(_sw.infrastructure_surroundings_wrapper.roads_class_2.points)
             assert any(_sw.infrastructure_surroundings_wrapper.roads_class_24.points)
 
-    def test_when_build_given_location_mismatch_then_exception_raised(self):
+    def test_when_build_given_location_mismatch_then_exception_raised(
+        self,
+        infrastructure_section_fom_fixture: InfrastructureSectionFom,
+    ):
         # 1. Define test data.
         _csv_dir = Path.joinpath(test_data, "acceptance", "surroundings_analysis")
         _surroundings_section_fom = SurroundingsSectionFom(
@@ -215,13 +218,14 @@ class TestSurroundingsWrapperCollectionImporter:
         _builder = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=_csv_dir,
             surroundings_section_fom=_surroundings_section_fom,
-            infrastructure_section_fom=None,
+            infrastructure_section_fom=infrastructure_section_fom_fixture,
             traject_loc_shp_file=_shp_file,
             selected_locations=[
                 # For traject 10-3
                 "10-1-2-A-1-A",
                 "10-1-1-A-1-A",
             ],
+            infrastructure_costs=InfrastructureCostsSettings(),
         )
 
         # 2. Execute test and verify exception.
@@ -231,6 +235,7 @@ class TestSurroundingsWrapperCollectionImporter:
     def test_given_no_matching_obstacle_files_when_build_then_no_wrappers_returned(
         self,
         local_surroundings_dir_copy_fixture: Path,
+        infrastructure_section_fom_fixture: InfrastructureSectionFom,
     ):
         # 1. Define test data.
         _surroundings_section_fom = SurroundingsSectionFom(
@@ -248,7 +253,7 @@ class TestSurroundingsWrapperCollectionImporter:
         _builder = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=local_surroundings_dir_copy_fixture,
             surroundings_section_fom=_surroundings_section_fom,
-            infrastructure_section_fom=None,
+            infrastructure_section_fom=infrastructure_section_fom_fixture,
             traject_loc_shp_file=_shp_file,
             selected_locations=[
                 # For traject 10-1
@@ -261,6 +266,7 @@ class TestSurroundingsWrapperCollectionImporter:
                 "10-1-2-A-1-A",
                 "10-1-1-A-1-A",
             ],
+            infrastructure_costs=InfrastructureCostsSettings(),
         )
 
         # 2. Run test.

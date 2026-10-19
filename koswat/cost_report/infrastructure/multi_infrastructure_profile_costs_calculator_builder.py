@@ -40,7 +40,7 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
-from koswat.dike.surroundings.road_class import RoadsClass
+from koswat.dike.surroundings.road_classes import RoadClassProtocol
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -57,13 +57,13 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     """
     Builder to set up "fix" information such as costs derived from the koswat
     settings (`InfraCostsEnum`, `SurtaxFactorEnum`) which directly determines the
-    zone `A` and/or `B` costs that will be applied for each infrastructure.
+    zone `A`, `B` and `C` costs that will be applied for each infrastructure.
     """
 
     reinforced_profile: ReinforcementProfileProtocol
 
     infrastructure_wrapper: InfrastructureSurroundingsWrapper
-    cost_settings: InfrastructureCostsSettings
+    cost_settings: InfrastructureCostsSettings  # TODO: remove?
 
     # We are only interested in the `roads_` properties.
     surtax_cost_settings: SurtaxCostsSettings
@@ -79,38 +79,6 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             return self.surtax_cost_settings.roads_hard
 
         return self.surtax_cost_settings.roads_easy
-
-    def _get_infrastructure_costs(
-        self, infrastructure_type: RoadsClass
-    ) -> tuple[float, float]:
-        if not self.cost_settings:
-            return (math.nan, math.nan)
-        if infrastructure_type == RoadsClass.CLASS_2:
-            return (
-                self.cost_settings.adding_roads_klasse2,
-                self.cost_settings.removing_roads_klasse2,
-            )
-        if infrastructure_type == RoadsClass.CLASS_7:
-            return (
-                self.cost_settings.adding_roads_klasse7,
-                self.cost_settings.removing_roads_klasse7,
-            )
-        if infrastructure_type == RoadsClass.CLASS_24:
-            return (
-                self.cost_settings.adding_roads_klasse24,
-                self.cost_settings.removing_roads_klasse24,
-            )
-        if infrastructure_type == RoadsClass.CLASS_47:
-            return (
-                self.cost_settings.adding_roads_klasse47,
-                self.cost_settings.removing_roads_klasse47,
-            )
-        if infrastructure_type == RoadsClass.CLASS_UNKNOWN:
-            return (
-                self.cost_settings.adding_roads_unknown,
-                self.cost_settings.removing_roads_unknown,
-            )
-        return math.nan, math.nan
 
     def _get_zone_cost_for_non_rising_dike(
         self, adding_costs: float, removing_costs: float
@@ -141,11 +109,10 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         return adding_costs + removing_costs
 
     def _get_zone_costs(
-        self, infrastructure_type: RoadsClass
+        self, infrastructure_type: RoadClassProtocol
     ) -> tuple[float, float, float]:
-        _adding_costs, _removing_costs = self._get_infrastructure_costs(
-            infrastructure_type
-        )
+        _adding_costs = infrastructure_type.adding_costs
+        _removing_costs = infrastructure_type.removing_costs
         return (
             self._get_zone_a_costs(_adding_costs, _removing_costs),
             self._get_zone_b_costs(_adding_costs, _removing_costs),

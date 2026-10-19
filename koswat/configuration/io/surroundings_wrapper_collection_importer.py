@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
+from copy import deepcopy
 from dataclasses import dataclass
 from itertools import groupby
 from pathlib import Path
@@ -195,7 +196,7 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             # Get FOM from CSV file.
 
             if _first_fom is None:
-                _first_fom = _csv_fom
+                _first_fom = deepcopy(_csv_fom)
             else:
                 if not _first_fom.locations_identical(_csv_fom):
                     raise ValueError(

@@ -10,6 +10,9 @@ from koswat.configuration.io.config_sections import (
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
     SurroundingsWrapperCollectionImporter,
 )
+from koswat.configuration.settings.costs.infastructure_costs_settings import (
+    InfrastructureCostsSettings,
+)
 from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
@@ -83,6 +86,19 @@ class TestSurroundingsWrapper:
             roads_unknown_width=5,
         )
 
+        _infrastructure_costs = InfrastructureCostsSettings(
+            removing_roads_klasse2=1.0,
+            removing_roads_klasse7=2.0,
+            removing_roads_klasse24=3.0,
+            removing_roads_klasse47=4.0,
+            removing_roads_unknown=5.0,
+            adding_roads_klasse2=1.0,
+            adding_roads_klasse7=2.0,
+            adding_roads_klasse24=3.0,
+            adding_roads_klasse47=4.0,
+            adding_roads_unknown=5.0,
+        )
+
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=_temp_dir.parent,
@@ -90,6 +106,7 @@ class TestSurroundingsWrapper:
             surroundings_section_fom=_surroundings_settings,
             selected_locations=["10-1-3-C-1-D-1"],
             traject_loc_shp_file=_shp_file,
+            infrastructure_costs=_infrastructure_costs,
         )
         _surroundings_wrapper_list = _importer.build()
         assert len(_surroundings_wrapper_list) == 1

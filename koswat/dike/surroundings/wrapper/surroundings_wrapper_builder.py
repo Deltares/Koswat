@@ -96,27 +96,42 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
         return _obs_wrapper
 
-    def _get_surroundings_infrastructure(
+    def _get_infrastructure_surroundings_from_fom(
         self, road_class_type: type[RoadClassProtocol]
-    ) -> SurroundingsInfrastructure:
-        (_key, _value) = next(
+    ) -> tuple[RoadClassProtocol, list[PointInfrastructureSurroundings]]:
+        if road_class_type not in [type(k) for k in self.infrastructures]:
+            return road_class_type(), []
+
+        _key, _value = next(
             (
                 (k, v)
                 for k, v in self.infrastructures.items()
                 if isinstance(k, road_class_type)
             ),
-            (None, None),
         )
-        if _key is None or _value is None:
-            raise ValueError(
-                f"No infrastructure found for road class type: {road_class_type}"
-            )
-        return SurroundingsInfrastructure(
-            infrastructure_type=_key,
-            points=PointSurroundingsListBuilder(
+        return (
+            _key,
+            PointSurroundingsListBuilder(
                 koswat_shp_fom=self.location_shp_fom,
-                koswat_csv_fom=_value,
+                koswat_csv_fom=self.infrastructures[
+                    next(
+                        k
+                        for k in self.infrastructures
+                        if isinstance(k, road_class_type)
+                    )
+                ],
             ).build(),
+        )
+
+    def _get_surroundings_infrastructure(
+        self, road_class_type: type[RoadClassProtocol]
+    ) -> SurroundingsInfrastructure:
+        _road_class, _points = self._get_infrastructure_surroundings_from_fom(
+            road_class_type
+        )
+        return SurroundingsInfrastructure(
+            infrastructure_type=_road_class,
+            points=_points,
         )
 
     def _get_infrastructure_surroundings_wrapper(

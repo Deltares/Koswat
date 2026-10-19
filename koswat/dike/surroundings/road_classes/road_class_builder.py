@@ -103,7 +103,7 @@ class RoadClassBuilder:
         _road_class = _road_class_type()
         _road_class.is_polderside = _is_polderside
         _road_class.width = self._get_road_class_width(_road_class_type)
-        _road_class.adding_cost, _road_class.removing_cost = self._get_road_class_costs(
-            _road_class_type
+        _road_class.adding_costs, _road_class.removing_costs = (
+            self._get_road_class_costs(_road_class_type)
         )
         return _road_class

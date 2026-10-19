@@ -23,7 +23,7 @@ from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calcul
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder import (
     MultiInfrastructureProfileCostsCalculatorBuilder,
 )
-from koswat.dike.surroundings.road_class import RoadsClass
+from koswat.dike.surroundings.road_classes import RoadClassUnknown
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -83,12 +83,12 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
     ):
         # 1. Define test data.
         _infrastructure, _ = surroundings_infrastructure_fixture
-        _infrastructure.infrastructure_type = RoadsClass.CLASS_UNKNOWN
+        # _infrastructure.infrastructure_type = RoadClassUnknown()
         _infra_wrapper = InfrastructureSurroundingsWrapper(
             infrastructures_considered=True,
             surtax_cost_factor=surtax_cost_factor,
             non_rising_dike_costs_factor=non_rising_dike_costs_factor,
-            roads_class_unknown=_infrastructure,
+            roads_class_2=_infrastructure,
         )
 
         _adding_roads = 24.0
@@ -183,8 +183,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
     ):
         # 1. Define test data.
         _infrastructure = SurroundingsInfrastructure(
-            infrastructure_type=RoadsClass.CLASS_UNKNOWN,
-            infrastructure_width=10.0,
+            infrastructure_type=RoadClassUnknown(width=10.0),
             points=[],
         )
         _infra_wrapper = InfrastructureSurroundingsWrapper(
@@ -215,7 +214,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             (
                 x
                 for x in _calculator.infrastructure_calculators
-                if x.infrastructure.infrastructure_type == RoadsClass.CLASS_UNKNOWN
+                if isinstance(x.infrastructure.infrastructure_type, RoadClassUnknown)
             ),
             None,
         )
