@@ -29,10 +29,10 @@ from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input
 class StrategyReinforcementFilterCriteriaProtocol(Protocol):
     def criteria_met_by(
         self, strategy_reinforcements: list[StrategyReinforcementInputProtocol]
-    ) -> list[StrategyReinforcementInputProtocol]:
+    ) -> bool:
         """
-        Determines which reinforcement profiles meet the collection criteria.
+        Determines whether a reinforcement profile meets the criteria.
 
         Returns:
-            list[StrategyReinforcementInputProtocol]: List of reinforcement profiles that meet the collection criteria.
+            bool: True if the reinforcement profile meets the criteria, False otherwise.
         """

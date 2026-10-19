@@ -22,6 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
+from koswat.strategies.criteria.strategy_reinforcement_allowed_waterside_filter_criteria import (
+    StrategyReinforcementAllowedWatersideFilterCriteria,
+)
 from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
     StrategyReinforcementFilterCriteriaProtocol,
 )
@@ -38,9 +41,16 @@ class StrategyReinforcementActiveFilterCriteria(
     It allows only active reinforcements or those of type `CofferdamReinforcementProfile` to pass the filter.
     """
 
+    def __init__(self, strategy_input) -> None:
+        self._waterside_criteria = StrategyReinforcementAllowedWatersideFilterCriteria(
+            strategy_input.waterside_reinforcement_allowed
+        )
+
     def criteria_met_by(
         self, strategy_reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
+        if not self._waterside_criteria.criteria_met_by(strategy_reinforcement):
+            return False
         return (
             strategy_reinforcement.active
             or strategy_reinforcement.reinforcement_type

@@ -1,5 +1,6 @@
 import copy
 from collections.abc import Iterator
+from typing import Callable
 
 import pytest
 
@@ -8,6 +9,12 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     SoilReinforcementProfile,
     StabilityWallCrestReinforcementProfile,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
+    ReinforcementProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.soil_waterside_reinforcement_profile import (
+    SoilWatersideReinforcementProfile,
 )
 from koswat.strategies.order_strategy.order_strategy import OrderStrategy
 from koswat.strategies.strategy_input import StrategyInput
@@ -18,14 +25,16 @@ from koswat.strategies.strategy_location_reinforcement import (
 from koswat.strategies.strategy_reinforcement_input import (
     StrategyReinforcementInputBuilder,
 )
+from koswat.strategies.strategy_reinforcement_input.strategy_reinforcement_input_protocol import (
+    StrategyReinforcementInputProtocol,
+)
 from koswat.strategies.strategy_reinforcement_type_costs import (
     StrategyReinforcementTypeCosts,
 )
 from koswat.strategies.strategy_reinforcement_widths import StrategyReinforcementWidths
 
 
-@pytest.fixture(name="example_strategy_input")
-def _get_example_strategy_input() -> Iterator[StrategyInput]:
+def _get_example_strategy_input(exclude_waterside: bool):
     # This is the data defined in the docs\reference\koswat_strategies.md
     # as examples. DON'T MODIFY IT!
     _initial_state_per_location = [
@@ -46,7 +55,18 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
     )
 
     # Make sure some reinforment types don't influence the infra strategy.
-    _base_cost_multipliers = [0, 0.5, 1, 1.5, 2, 3]
+    if exclude_waterside:
+        _waterside_soil_reinforcement_idx = _reinforcement_type_default_order.index(
+            SoilWatersideReinforcementProfile
+        )
+        _reinforcement_type_default_order.pop(_waterside_soil_reinforcement_idx)
+        _base_cost_multipliers = [0, 0.5, 1, 1.5, 2, 3]
+    else:
+        _base_cost_multipliers = [0, 0.25, 0.5, 1, 1.5, 2, 3]
+
+    assert len(_base_cost_multipliers) == len(
+        _reinforcement_type_default_order
+    ), "The base cost multipliers must match the number of reinforcement types in the default order."
 
     _levels_data = [
         StrategyReinforcementTypeCosts(
@@ -84,12 +104,28 @@ def _get_example_strategy_input() -> Iterator[StrategyInput]:
         for _idx, _rtc in enumerate(_levels_data)
     ]
 
-    yield StrategyInput(
+    return StrategyInput(
         strategy_locations=_strategy_locations,
         strategy_reinforcements=_strategy_reinforcements,
         reinforcement_min_buffer=1,
         reinforcement_min_length=5,
+        waterside_reinforcement_allowed=not exclude_waterside,
     )
+
+
+@pytest.fixture(name="example_strategy_input_generator")
+def _get_example_strategy_input_generator() -> Callable[[bool], StrategyInput]:
+    def get_strategy_input(exclude_waterside: bool) -> StrategyInput:
+        return _get_example_strategy_input(exclude_waterside)
+
+    return get_strategy_input
+
+
+@pytest.fixture(name="example_strategy_input")
+def _get_example_strategy_input_without_waterside_soil_reinforcement(
+    example_strategy_input_generator,
+) -> Iterator[StrategyInput]:
+    yield example_strategy_input_generator(True)
 
 
 @pytest.fixture(name="example_location_input")
@@ -122,20 +158,34 @@ def _get_example_location_input(
     yield example_strategy_input.strategy_locations
 
 
+@pytest.fixture(name="example_default_order", scope="session")
+def _get_example_default_order() -> list[type[ReinforcementProfileProtocol]]:
+    _reinforcement_order = OrderStrategy.get_default_order_for_reinforcements()
+    return _exclude_waterside_soil_reinforcement(_reinforcement_order)
+
+
+def _exclude_waterside_soil_reinforcement(
+    strategy_reinforcements: list[StrategyReinforcementInputProtocol],
+) -> list[StrategyReinforcementInputProtocol]:
+    _idx = strategy_reinforcements.index(SoilWatersideReinforcementProfile)
+    strategy_reinforcements.pop(_idx)
+    return strategy_reinforcements
+
+
 @pytest.fixture(name="example_location_reinforcements_with_buffering")
 def _get_example_location_reinforcements_with_buffering(
     example_strategy_input: StrategyInput,
+    example_default_order: list[type[ReinforcementProfileProtocol]],
 ) -> Iterator[list[StrategyLocationReinforcement]]:
     _result_after_buffering_idx = [0, 0, 3, 3, 3, 3, 0, 4, 4, 4]
-    _measure_order = OrderStrategy.get_default_order_for_reinforcements()
     _location_reinforcements = []
     for _idx, _location in enumerate(example_strategy_input.strategy_locations):
         _measure_idx = _result_after_buffering_idx[_idx]
         _location_reinforcements.append(
             StrategyLocationReinforcement(
                 location=_location,
-                available_measures=[_measure_order[_measure_idx]],
-                filtered_measures=[_measure_order[_measure_idx]],
+                available_measures=[example_default_order[_measure_idx]],
+                filtered_measures=[example_default_order[_measure_idx]],
             )
         )
 

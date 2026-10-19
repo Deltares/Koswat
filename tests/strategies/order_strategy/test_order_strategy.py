@@ -1,4 +1,5 @@
 from copy import deepcopy
+from typing import Iterator
 
 import pytest
 
@@ -6,6 +7,7 @@ from koswat.dike_reinforcements.reinforcement_profile import (
     CofferdamReinforcementProfile,
     PipingWallReinforcementProfile,
     SoilReinforcementProfile,
+    SoilWatersideReinforcementProfile,
     StabilityWallCrestReinforcementProfile,
     StabilityWallToeReinforcementProfile,
     VPSReinforcementProfile,
@@ -25,12 +27,19 @@ from koswat.strategies.strategy_output import StrategyOutput
 class TestOrderStrategy:
     _default_reinforcements = [
         SoilReinforcementProfile,
+        SoilWatersideReinforcementProfile,
         VPSReinforcementProfile,
         PipingWallReinforcementProfile,
         StabilityWallToeReinforcementProfile,
         StabilityWallCrestReinforcementProfile,
         CofferdamReinforcementProfile,
     ]
+
+    @pytest.fixture(name="example_order_strategy_input")
+    def _get_example_order_strategy_input(
+        self, example_strategy_input_generator
+    ) -> Iterator[StrategyInput]:
+        yield example_strategy_input_generator(False)
 
     def test_initialize(self):
         # This test is just to ensure the design principle
@@ -50,7 +59,7 @@ class TestOrderStrategy:
 
     def test_get_strategy_order_given_example_returns_default_order(
         self,
-        example_strategy_input: StrategyInput,
+        example_order_strategy_input: StrategyInput,
     ):
         # 1. Define test data.
         _expected_result = self._default_reinforcements
@@ -58,7 +67,7 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input
+            example_order_strategy_input
         )
 
         # 3. Verify expectations
@@ -73,17 +82,17 @@ class TestOrderStrategy:
     def test_get_order_strategy_given_example_ignores_inactive_reinforcement(
         self,
         idx: int,
-        example_strategy_input: StrategyInput,
+        example_order_strategy_input: StrategyInput,
     ):
         # 1. Define test data.
-        example_strategy_input.strategy_reinforcements[idx].active = False
+        example_order_strategy_input.strategy_reinforcements[idx].active = False
         _expected_result = deepcopy(self._default_reinforcements)
         _expected_result.remove(self._default_reinforcements[idx])
         _strategy = OrderStrategy()
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input
+            example_order_strategy_input
         )
 
         # 3. Verify expectations
@@ -91,16 +100,18 @@ class TestOrderStrategy:
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
     def test_get_strategy_order_given_example_does_not_ignore_last_reinforcement(
-        self, example_strategy_input: StrategyInput
+        self, example_order_strategy_input: StrategyInput
     ):
         # 1. Define test data.
-        example_strategy_input.strategy_reinforcements[-1].active = False  # Cofferdam
+        example_order_strategy_input.strategy_reinforcements[-1].active = (
+            False  # Cofferdam
+        )
         _expected_result = self._default_reinforcements
         _strategy = OrderStrategy()
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input
+            example_order_strategy_input
         )
 
         # 3. Verify expectations
@@ -108,17 +119,19 @@ class TestOrderStrategy:
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
     def test_get_strategy_order_increased_soil_cost_keeps_reinforcement(
-        self, example_strategy_input: StrategyInput
+        self, example_order_strategy_input: StrategyInput
     ):
         # 1. Define test data.
-        example_strategy_input.strategy_reinforcements[0].base_costs_with_surtax *= 20
+        example_order_strategy_input.strategy_reinforcements[
+            0
+        ].base_costs_with_surtax *= 20
         _expected_result = self._default_reinforcements
 
         _strategy = OrderStrategy()
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input
+            example_order_strategy_input
         )
 
         # 3. Verify expectations
@@ -127,17 +140,19 @@ class TestOrderStrategy:
         assert _reinforcements[-1] == CofferdamReinforcementProfile
 
     def test_get_strategy_order_increased_soil_surface_keeps_reinforcement(
-        self, example_strategy_input: StrategyInput
+        self, example_order_strategy_input: StrategyInput
     ):
         # 1. Define test data.
-        example_strategy_input.strategy_reinforcements[0].ground_level_surface += 15
+        example_order_strategy_input.strategy_reinforcements[
+            0
+        ].ground_level_surface += 15
         _expected_result = self._default_reinforcements
 
         _strategy = OrderStrategy()
 
         # 2. Run test.
         _reinforcements = _strategy._get_strategy_order_for_reinforcements(
-            example_strategy_input
+            example_order_strategy_input
         )
 
         # 3. Verify expectations
@@ -182,7 +197,7 @@ class TestOrderStrategy:
         assert _reinforcements == _expected_result
 
     def test_get_strategy_reinforcements_given_example(
-        self, example_strategy_input: StrategyInput
+        self, example_order_strategy_input: StrategyInput
     ):
         # 1. Define test data.
         _default_order = OrderStrategy.get_default_order_for_reinforcements()
@@ -190,13 +205,13 @@ class TestOrderStrategy:
 
         # 2. Run test.
         _location_reinforcements = OrderStrategy.get_strategy_reinforcements(
-            example_strategy_input.strategy_locations, _default_order
+            example_order_strategy_input.strategy_locations, _default_order
         )
 
         # 3. Verify expectations
         assert isinstance(_location_reinforcements, list)
         assert len(_location_reinforcements) == len(
-            example_strategy_input.strategy_locations
+            example_order_strategy_input.strategy_locations
         )
         assert all(
             isinstance(_lr, StrategyLocationReinforcement)
@@ -227,13 +242,12 @@ class TestOrderStrategy:
         example_location_reinforcements_with_buffering: list[
             StrategyLocationReinforcement
         ],
+        example_default_order: list[type[ReinforcementProfileProtocol]],
     ):
         # 1. Define test data.
         class MockedStrategy(OrderStrategyBase):
             def __init__(self) -> None:
-                self.reinforcement_order = (
-                    OrderStrategy.get_default_order_for_reinforcements()
-                )
+                self.reinforcement_order = example_default_order
 
             def apply(
                 self, location_reinforcements: list[StrategyLocationReinforcement]
@@ -255,19 +269,21 @@ class TestOrderStrategy:
         # 3. Verify expectations.
         assert _result_clusters == _expected_clusters
 
-    def test_apply_strategy_given_example(self, example_strategy_input: StrategyInput):
+    def test_apply_strategy_given_example(
+        self, example_order_strategy_input: StrategyInput
+    ):
         # 1. Define test data.
-        assert isinstance(example_strategy_input, StrategyInput)
+        assert isinstance(example_order_strategy_input, StrategyInput)
 
         # 2. Run test.
-        _strategy_output = OrderStrategy().apply_strategy(example_strategy_input)
+        _strategy_output = OrderStrategy().apply_strategy(example_order_strategy_input)
 
         # 3. Verify final expectations.
         assert isinstance(_strategy_output, StrategyOutput)
 
         _result = _strategy_output.location_reinforcements
         assert isinstance(_result, list)
-        assert len(_result) == len(example_strategy_input.strategy_locations)
+        assert len(_result) == len(example_order_strategy_input.strategy_locations)
         assert all(isinstance(_sr, StrategyLocationReinforcement) for _sr in _result)
 
         # Basically the same checks as in `test__apply_min_distance_given_example`.
