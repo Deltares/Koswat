@@ -1,5 +1,3 @@
-from fnmatch import filterfalse
-
 import pytest
 
 from koswat.configuration.io.config_sections.infrastructure_section_fom import (
