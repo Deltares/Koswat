@@ -80,27 +80,22 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     def _get_infrastructure_surroundings_from_fom_collection(
         self, road_class_type: type[RoadClassProtocol]
     ) -> tuple[RoadClassProtocol, list[PointInfrastructureSurroundings]]:
-        if road_class_type not in [type(k) for k in self.infrastructures]:
-            return road_class_type(), []
-
         _key, _value = next(
             (
                 (k, v)
                 for k, v in self.infrastructures.items()
                 if isinstance(k, road_class_type)
             ),
+            (None, None),
         )
+        if _key is None or _value is None:
+            return road_class_type(), []
+
         return (
             _key,
             PointSurroundingsListBuilder(
                 koswat_shp_fom=self.location_shp_fom,
-                koswat_csv_fom=self.infrastructures[
-                    next(
-                        k
-                        for k in self.infrastructures
-                        if isinstance(k, road_class_type)
-                    )
-                ],
+                koswat_csv_fom=_value,
             ).build(),
         )
 

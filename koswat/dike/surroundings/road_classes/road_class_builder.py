@@ -11,6 +11,7 @@ from .road_class_2 import RoadClass2
 from .road_class_7 import RoadClass7
 from .road_class_24 import RoadClass24
 from .road_class_47 import RoadClass47
+from .road_class_base import RoadClassBase
 from .road_class_protocol import RoadClassProtocol
 from .road_class_unknown import RoadClassUnknown
 
@@ -25,7 +26,7 @@ class RoadClassBuilder:
     infrastructure_costs: InfrastructureCostsSettings
 
     @property
-    def road_class_types(self) -> list[type[RoadClassProtocol]]:
+    def road_class_types(self) -> list[type[RoadClassBase]]:
         return [RoadClass2, RoadClass7, RoadClass24, RoadClass47, RoadClassUnknown]
 
     def _set_road_class_properties(self, road_class: RoadClassProtocol) -> None:
