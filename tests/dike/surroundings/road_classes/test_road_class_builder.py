@@ -36,13 +36,11 @@ class TestRoadClassBuilder:
     @pytest.mark.parametrize(
         "name, expected_type, is_polderside",
         [
-            pytest.param(
-                x.polderside_name, x, True, id=f"polderside_{x.polderside_name}"
-            )
+            pytest.param(x.polderside_name, x, True, id=x.polderside_name)
             for x in RoadClassBuilder(None, None).road_class_types
         ]
         + [
-            pytest.param(x.waterside_name, x, False, id=f"waterside_{x.waterside_name}")
+            pytest.param(x.waterside_name, x, False, id=x.waterside_name)
             for x in RoadClassBuilder(None, None).road_class_types
         ],
     )

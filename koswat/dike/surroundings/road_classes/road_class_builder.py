@@ -18,23 +18,15 @@ from .road_class_unknown import RoadClassUnknown
 @dataclass
 class RoadClassBuilder:
     """
-    Builder class for a road type class.
+    Builder class for a road class instance.
     """
 
     infrastructure_section: InfrastructureSectionFom
     infrastructure_costs: InfrastructureCostsSettings
-    _type_collection: dict[type[RoadClassProtocol], tuple[str, str]] = field(
-        default_factory=dict
-    )
 
     @property
     def road_class_types(self) -> list[type[RoadClassProtocol]]:
         return [RoadClass2, RoadClass7, RoadClass24, RoadClass47, RoadClassUnknown]
-
-    def __post_init__(self):
-        self._type_collection = {
-            x: (x.polderside_name, x.waterside_name) for x in self.road_class_types
-        }
 
     def _get_road_class_width(self, road_class_type: type[RoadClassProtocol]) -> float:
         if road_class_type == RoadClass2:
