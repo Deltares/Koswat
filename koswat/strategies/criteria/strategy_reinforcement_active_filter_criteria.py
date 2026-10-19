@@ -22,8 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from koswat.dike_reinforcements.reinforcement_profile.outside_slope.cofferdam_reinforcement_profile import (
     CofferdamReinforcementProfile,
 )
-from koswat.dike_reinforcements.reinforcement_profile.standard.soil_waterside_reinforcement_profile import (
-    SoilWatersideReinforcementProfile,
+from koswat.strategies.criteria.strategy_reinforcement_allowed_waterside_filter_criteria import (
+    StrategyReinforcementAllowedWatersideFilterCriteria,
 )
 from koswat.strategies.strategy_reinforcement_filter_criteria_protocol import (
     StrategyReinforcementFilterCriteriaProtocol,
@@ -42,27 +42,17 @@ class StrategyReinforcementActiveFilterCriteria(
     """
 
     def __init__(self, strategy_input) -> None:
-        self._allowed_waterside_reinforcement = (
+        self._waterside_criteria = StrategyReinforcementAllowedWatersideFilterCriteria(
             strategy_input.waterside_reinforcement_allowed
         )
 
     def criteria_met_by(
         self, strategy_reinforcement: StrategyReinforcementInputProtocol
     ) -> bool:
-        if self._is_not_allowed_waterside_reinforcement(strategy_reinforcement):
+        if not self._waterside_criteria.criteria_met_by(strategy_reinforcement):
             return False
         return (
             strategy_reinforcement.active
             or strategy_reinforcement.reinforcement_type
             == CofferdamReinforcementProfile
-        )
-
-    def _is_not_allowed_waterside_reinforcement(
-        self, strategy_reinforcement: StrategyReinforcementInputProtocol
-    ) -> bool:
-        # Should be then treated as not active, and thus filtered out, if waterside reinforcement is not allowed
-        return (
-            not self._allowed_waterside_reinforcement
-            and strategy_reinforcement.reinforcement_type
-            == SoilWatersideReinforcementProfile
         )
