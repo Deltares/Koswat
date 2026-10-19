@@ -36,14 +36,14 @@ class RoadClassBuilder:
             x: (x.polderside_name, x.waterside_name) for x in self.road_class_types
         }
 
-    def _get_road_class_width(self, road_class: type[RoadClassProtocol]) -> float:
-        if road_class == RoadClass2:
+    def _get_road_class_width(self, road_class_type: type[RoadClassProtocol]) -> float:
+        if road_class_type == RoadClass2:
             return self.infrastructure_section.roads_class2_width
-        if road_class == RoadClass7:
+        if road_class_type == RoadClass7:
             return self.infrastructure_section.roads_class7_width
-        if road_class == RoadClass24:
+        if road_class_type == RoadClass24:
             return self.infrastructure_section.roads_class24_width
-        if road_class == RoadClass47:
+        if road_class_type == RoadClass47:
             return self.infrastructure_section.roads_class47_width
         return self.infrastructure_section.roads_unknown_width
 

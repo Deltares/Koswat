@@ -13,10 +13,6 @@ from koswat.configuration.io.surroundings_wrapper_collection_importer import (
 from koswat.configuration.settings.costs.infastructure_costs_settings import (
     InfrastructureCostsSettings,
 )
-from koswat.configuration.settings.koswat_general_settings import (
-    InfraCostsEnum,
-    SurtaxFactorEnum,
-)
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -44,7 +40,10 @@ class TestSurroundingsWrapper:
 
     @pytest.fixture(name="acceptance_surroundings_wrapper_fixture")
     def _get_surroundings_wrapper_with_infrastructure_fixture(
-        self, request: pytest.FixtureRequest
+        self,
+        request: pytest.FixtureRequest,
+        infrastructure_section_fom_fixture: InfrastructureSectionFom,
+        infrastructure_costs_settings_fixture: InfrastructureCostsSettings,
     ) -> Iterator[SurroundingsWrapper]:
         # Shp locations file
         _shp_file = test_data.joinpath("acceptance", "shp", "dike_locations.shp")
@@ -73,40 +72,14 @@ class TestSurroundingsWrapper:
             obstacle_types={"bebouwing": 5},
         )
 
-        # Generate Infrastructures section file model
-        _infrastructure_settings = InfrastructureSectionFom(
-            active=True,
-            surtax_factor_roads=SurtaxFactorEnum.NORMAAL,
-            infrastructure_costs_0dh=InfraCostsEnum.GEEN,
-            buffer_crest_waterside=0.24,
-            roads_class2_width=1,
-            roads_class7_width=2,
-            roads_class24_width=3,
-            roads_class47_width=4,
-            roads_unknown_width=5,
-        )
-
-        _infrastructure_costs = InfrastructureCostsSettings(
-            removing_roads_klasse2=1.0,
-            removing_roads_klasse7=2.0,
-            removing_roads_klasse24=3.0,
-            removing_roads_klasse47=4.0,
-            removing_roads_unknown=5.0,
-            adding_roads_klasse2=1.0,
-            adding_roads_klasse7=2.0,
-            adding_roads_klasse24=3.0,
-            adding_roads_klasse47=4.0,
-            adding_roads_unknown=5.0,
-        )
-
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=_temp_dir.parent,
-            infrastructure_section_fom=_infrastructure_settings,
+            infrastructure_section_fom=infrastructure_section_fom_fixture,
             surroundings_section_fom=_surroundings_settings,
             selected_locations=["10-1-3-C-1-D-1"],
             traject_loc_shp_file=_shp_file,
-            infrastructure_costs=_infrastructure_costs,
+            infrastructure_costs=infrastructure_costs_settings_fixture,
         )
         _surroundings_wrapper_list = _importer.build()
         assert len(_surroundings_wrapper_list) == 1
