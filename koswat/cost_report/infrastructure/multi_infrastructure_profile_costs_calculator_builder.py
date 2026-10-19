@@ -23,9 +23,6 @@ import logging
 import math
 from dataclasses import dataclass
 
-from koswat.configuration.settings.costs.infastructure_costs_settings import (
-    InfrastructureCostsSettings,
-)
 from koswat.configuration.settings.costs.surtax_costs_settings import (
     SurtaxCostsSettings,
 )
@@ -63,7 +60,6 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
     reinforced_profile: ReinforcementProfileProtocol
 
     infrastructure_wrapper: InfrastructureSurroundingsWrapper
-    cost_settings: InfrastructureCostsSettings  # TODO: remove?
 
     # We are only interested in the `roads_` properties.
     surtax_cost_settings: SurtaxCostsSettings
