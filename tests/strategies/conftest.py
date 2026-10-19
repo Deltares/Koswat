@@ -1,5 +1,6 @@
 import copy
 from collections.abc import Iterator
+from typing import Callable
 
 import pytest
 
@@ -112,11 +113,19 @@ def _get_example_strategy_input(exclude_waterside: bool):
     )
 
 
+@pytest.fixture(name="example_strategy_input_generator")
+def _get_example_strategy_input_generator() -> Callable[[bool], StrategyInput]:
+    def get_strategy_input(exclude_waterside: bool) -> StrategyInput:
+        return _get_example_strategy_input(exclude_waterside)
+
+    return get_strategy_input
+
+
 @pytest.fixture(name="example_strategy_input")
-def _get_example_strategy_input_without_waterside_soil_reinforcement() -> (
-    Iterator[StrategyInput]
-):
-    yield _get_example_strategy_input(True)
+def _get_example_strategy_input_without_waterside_soil_reinforcement(
+    example_strategy_input_generator,
+) -> Iterator[StrategyInput]:
+    yield example_strategy_input_generator(True)
 
 
 @pytest.fixture(name="example_location_input")

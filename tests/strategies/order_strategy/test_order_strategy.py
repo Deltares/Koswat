@@ -22,7 +22,6 @@ from koswat.strategies.strategy_location_reinforcement import (
     StrategyLocationReinforcement,
 )
 from koswat.strategies.strategy_output import StrategyOutput
-from tests.strategies.conftest import _get_example_strategy_input
 
 
 class TestOrderStrategy:
@@ -37,8 +36,10 @@ class TestOrderStrategy:
     ]
 
     @pytest.fixture(name="example_order_strategy_input")
-    def _get_example_order_strategy_input(self) -> Iterator[StrategyInput]:
-        yield _get_example_strategy_input(exclude_waterside=False)
+    def _get_example_order_strategy_input(
+        self, example_strategy_input_generator
+    ) -> Iterator[StrategyInput]:
+        yield example_strategy_input_generator(False)
 
     def test_initialize(self):
         # This test is just to ensure the design principle
