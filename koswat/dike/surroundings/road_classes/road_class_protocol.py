@@ -18,6 +18,3 @@ class RoadClassProtocol(Protocol):
     @classmethod
     def get_waterside_import_name(cls) -> str:
         pass
-
-    def __hash__(self) -> int:
-        pass
