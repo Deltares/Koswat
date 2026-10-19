@@ -111,9 +111,9 @@ class InfrastructureProfileCostsCalculator:
             )
         )
 
-        _surface_zone_a = _total_zone_a * self.infrastructure.infrastructure_width
-        _surface_zone_b = _total_zone_b * self.infrastructure.infrastructure_width
-        _surface_zone_c = _total_zone_c * self.infrastructure.infrastructure_width
+        _surface_zone_a = _total_zone_a * self.infrastructure.infrastructure_type.width
+        _surface_zone_b = _total_zone_b * self.infrastructure.infrastructure_type.width
+        _surface_zone_c = _total_zone_c * self.infrastructure.infrastructure_type.width
 
         return InfrastructureLocationCosts(
             location=location,

@@ -19,14 +19,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import math
 from dataclasses import dataclass, field
 
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
 from koswat.dike.surroundings.point import PointInfrastructureSurroundings
-from koswat.dike.surroundings.road_class import RoadClass
+from koswat.dike.surroundings.road_classes import RoadClassProtocol
 
 
 @dataclass
@@ -39,6 +38,5 @@ class SurroundingsInfrastructure(KoswatSurroundingsProtocol):
     how long that infrastructure is.
     """
 
-    infrastructure_type: RoadClass
-    infrastructure_width: float = math.nan
+    infrastructure_type: RoadClassProtocol = None
     points: list[PointInfrastructureSurroundings] = field(default_factory=lambda: [])

@@ -55,6 +55,9 @@ from koswat.configuration.io.surroundings_wrapper_collection_importer import (
 from koswat.configuration.io.txt.koswat_dike_selection_txt_fom import (
     KoswatDikeSelectionTxtFom,
 )
+from koswat.configuration.settings.costs.infastructure_costs_settings import (
+    InfrastructureCostsSettings,
+)
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
 )
@@ -130,6 +133,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             _general_settings.infrastructuur_section,
             _general_settings.analysis_section.dike_section_location_shp_file,
             [_s.scenario_dike_section for _s in _scenario_fom_list],
+            _dike_costs.infrastructure_costs,
         )
 
         logging.info("Importing CSV configuration completed.")
@@ -384,6 +388,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
         infrastructure_section: InfrastructureSectionFom,
         traject_shp_file: Path,
         dike_selections: list[str],
+        infrastructure_costs: InfrastructureCostsSettings,
     ) -> list[SurroundingsWrapper]:
         _builder = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=surroundings_database_dir,
@@ -391,6 +396,7 @@ class KoswatRunSettingsImporter(KoswatImporterProtocol):
             traject_loc_shp_file=traject_shp_file,
             selected_locations=dike_selections,
             surroundings_section_fom=surroundings_section,
+            infrastructure_costs=infrastructure_costs,
         )
         return _builder.build()
 

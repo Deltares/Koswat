@@ -25,7 +25,13 @@ from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
 )
-from koswat.dike.surroundings.road_class import RoadClass
+from koswat.dike.surroundings.road_classes import (
+    RoadClass2,
+    RoadClass7,
+    RoadClass24,
+    RoadClass47,
+    RoadClassUnknown,
+)
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -50,26 +56,26 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
     # infrastructures
     roads_class_2: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass.CLASS_2
+            infrastructure_type=RoadClass2()
         )
     )
     roads_class_7: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass.CLASS_7
+            infrastructure_type=RoadClass7()
         )
     )
     roads_class_24: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass.CLASS_24
+            infrastructure_type=RoadClass24()
         )
     )
     roads_class_47: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass.CLASS_47
+            infrastructure_type=RoadClass47()
         )
     )
     roads_class_unknown: SurroundingsInfrastructure = field(
         default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass.CLASS_UNKNOWN
+            infrastructure_type=RoadClassUnknown()
         )
     )
