@@ -61,5 +61,6 @@ class SoilWatersideReinforcementProfile(StandardReinforcementProfile):
         self,
     ) -> PoldersideAndWatersideRoomCalculator:
         return PoldersideAndWatersideRoomCalculator(
-            required_waterside_width=self.waterside_width
+            required_waterside_width=self.waterside_width,
+            required_polderside_width=self.polderside_width,
         )
