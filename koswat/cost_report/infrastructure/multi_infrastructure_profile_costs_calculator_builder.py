@@ -138,7 +138,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             infrastructure_calculators=list(
                 map(
                     get_infra_calculator,
-                    self.infrastructure_wrapper.surroundings_collection.values(),
+                    self.infrastructure_wrapper.infrastructures_collection.values(),
                 )
             )
         )
