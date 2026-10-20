@@ -98,12 +98,10 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
         def build_surroundings_points(
             fom_points: KoswatSurroundingsCsvFom,
         ) -> list[PointInfrastructureSurroundings]:
-            return (
-                PointSurroundingsListBuilder(
-                    koswat_shp_fom=self.location_shp_fom,
-                    koswat_csv_fom=fom_points,
-                ).build(),
-            )
+            return PointSurroundingsListBuilder(
+                koswat_shp_fom=self.location_shp_fom,
+                koswat_csv_fom=fom_points,
+            ).build()
 
         return {
             _infrastructure_type.infrastructure_name: SurroundingsInfrastructure(
