@@ -99,18 +99,18 @@ class TestSurroundingsWrapper:
         # Obstacles
         _obs = _wrapper.obstacle_surroundings_wrapper
         assert isinstance(_obs, ObstacleSurroundingsWrapper)
-        assert any(_obs.surroundings_collection)
+        assert _obs.obstacles
         assert any(_obs.obstacles.points)
 
         # Infra
         _infra = _wrapper.infrastructure_surroundings_wrapper
         assert isinstance(_infra, InfrastructureSurroundingsWrapper)
-        assert any(_infra.surroundings_collection)
+        assert any(_infra.infrastructures_collection)
         assert all(
             isinstance(_sw, SurroundingsInfrastructure)
-            for _sw in _infra.surroundings_collection.values()
+            for _sw in _infra.infrastructures_collection.values()
         )
         assert all(
             _sw.infrastructure_type is not None
-            for _sw in _infra.surroundings_collection.values()
+            for _sw in _infra.infrastructures_collection.values()
         )

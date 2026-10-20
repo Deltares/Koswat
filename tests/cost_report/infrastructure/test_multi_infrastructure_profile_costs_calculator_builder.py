@@ -83,7 +83,9 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             infrastructures_considered=True,
             surtax_cost_factor=surtax_cost_factor,
             non_rising_dike_costs_factor=non_rising_dike_costs_factor,
-            roads_class_2=_infrastructure,
+            infrastructures_collection={
+                _infrastructure.infrastructure_type.class_name: _infrastructure
+            },
         )
 
         _reinforced_profile = reinforcement_profile_builder(_char_points, _char_points)
@@ -127,7 +129,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
         assert isinstance(_calculator, MultiInfrastructureProfileCostsCalculator)
         assert isinstance(_calculator.infrastructure_calculators, list)
         # One calculator for each of the property types.
-        _expected_calculators = len(_infra_wrapper.surroundings_collection)
+        _expected_calculators = len(_infra_wrapper.infrastructures_collection)
         assert len(_calculator.infrastructure_calculators) == _expected_calculators
 
         def general_calculator_validation(
@@ -191,7 +193,9 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             infrastructures_considered=True,
             surtax_cost_factor=SurtaxFactorEnum.NORMAAL,
             non_rising_dike_costs_factor=non_rising_dike_costs_factor,
-            roads_class_unknown=_infrastructure,
+            infrastructures_collection={
+                _infrastructure.infrastructure_type.class_name: _infrastructure
+            },
         )
         _reinforced_profile = reinforcement_profile_builder(_char_points, _char_points)
         _reinforced_profile.waterside_changed = waterside_changed
