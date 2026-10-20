@@ -32,10 +32,13 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
+from koswat.dike.surroundings.infrastructure_types import InfrastructureTypeProtocol
+from koswat.dike.surroundings.point.point_infrastructure_surroundings import (
+    PointInfrastructureSurroundings,
+)
 from koswat.dike.surroundings.point.point_surroundings_list_builder import (
     PointSurroundingsListBuilder,
 )
-from koswat.dike.surroundings.road_classes import RoadClassProtocol
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -54,7 +57,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     infrastructure_section_fom: InfrastructureSectionFom
     location_shp_fom: KoswatDikeLocationsShpFom
     obstacles: KoswatSurroundingsCsvFom
-    infrastructures: dict[RoadClassProtocol, KoswatSurroundingsCsvFom]
+    infrastructures: dict[InfrastructureTypeProtocol, KoswatSurroundingsCsvFom]
 
     def build(self) -> SurroundingsWrapper:
         return SurroundingsWrapper(
@@ -86,27 +89,37 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
         return _obs_wrapper
 
+    def _get_infrastructures_collection(
+        self,
+    ) -> dict[str, SurroundingsInfrastructure]:
+        if not self.infrastructure_section_fom.active:
+            return {}
+
+        def build_surroundings_points(
+            fom_points: KoswatSurroundingsCsvFom,
+        ) -> list[PointInfrastructureSurroundings]:
+            return (
+                PointSurroundingsListBuilder(
+                    koswat_shp_fom=self.location_shp_fom,
+                    koswat_csv_fom=fom_points,
+                ).build(),
+            )
+
+        return {
+            _infrastructure_type.infrastructure_name: SurroundingsInfrastructure(
+                infrastructure_type=_infrastructure_type,
+                points=build_surroundings_points(_fom_points),
+            )
+            for _infrastructure_type, _fom_points in self.infrastructures.items()
+        }
+
     def _get_infrastructure_surroundings_wrapper(
         self,
     ) -> InfrastructureSurroundingsWrapper:
-        _infra_wrapper = InfrastructureSurroundingsWrapper(
+        return InfrastructureSurroundingsWrapper(
             infrastructures_considered=self.infrastructure_section_fom.active,
             surtax_cost_factor=self.infrastructure_section_fom.surtax_factor_roads,
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrastructure_costs_0dh,
             buffer_crest_waterside=self.infrastructure_section_fom.buffer_crest_waterside,
-            infrastructures_collection={},
+            infrastructures_collection=self._get_infrastructures_collection(),
         )
-
-        if self.infrastructure_section_fom.active:
-            _infra_wrapper.infrastructures_collection = {
-                _road_class.class_name: SurroundingsInfrastructure(
-                    infrastructure_type=_road_class,
-                    points=PointSurroundingsListBuilder(
-                        koswat_shp_fom=self.location_shp_fom,
-                        koswat_csv_fom=_points,
-                    ).build(),
-                )
-                for _road_class, _points in self.infrastructures.items()
-            }
-
-        return _infra_wrapper

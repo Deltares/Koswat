@@ -20,7 +20,7 @@ from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calcul
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator_builder import (
     MultiInfrastructureProfileCostsCalculatorBuilder,
 )
-from koswat.dike.surroundings.road_classes import RoadClassUnknown
+from koswat.dike.surroundings.infrastructure_types import RoadClassUnknown
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -84,7 +84,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             surtax_cost_factor=surtax_cost_factor,
             non_rising_dike_costs_factor=non_rising_dike_costs_factor,
             infrastructures_collection={
-                _infrastructure.infrastructure_type.class_name: _infrastructure
+                _infrastructure.infrastructure_type.infrastructure_name: _infrastructure
             },
         )
 
@@ -194,7 +194,7 @@ class TestMultiInfrastructureProfileCostsCalculatorBuilder:
             surtax_cost_factor=SurtaxFactorEnum.NORMAAL,
             non_rising_dike_costs_factor=non_rising_dike_costs_factor,
             infrastructures_collection={
-                _infrastructure.infrastructure_type.class_name: _infrastructure
+                _infrastructure.infrastructure_type.infrastructure_name: _infrastructure
             },
         )
         _reinforced_profile = reinforcement_profile_builder(_char_points, _char_points)

@@ -3,12 +3,12 @@ from abc import ABC
 from dataclasses import dataclass
 from typing import ClassVar
 
-from .road_class_protocol import RoadClassProtocol
+from .infrastructure_type_protocol import InfrastructureTypeProtocol
 
 
 @dataclass
-class RoadClassBase(ABC, RoadClassProtocol):
-    class_name: ClassVar[str]
+class RoadClassBase(ABC, InfrastructureTypeProtocol):
+    infrastructure_name: ClassVar[str]
     import_key: ClassVar[str]
 
     is_polderside: bool = False
@@ -25,4 +25,4 @@ class RoadClassBase(ABC, RoadClassProtocol):
         return f"wegen_buitendijks_{cls.import_key}"
 
     def __hash__(self) -> int:
-        return hash(self.class_name)
+        return hash(self.infrastructure_name)

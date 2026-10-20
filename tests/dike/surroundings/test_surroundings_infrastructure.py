@@ -1,7 +1,7 @@
+from koswat.dike.surroundings.infrastructure_types import RoadClass2
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
-from koswat.dike.surroundings.road_classes import RoadClass2
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
