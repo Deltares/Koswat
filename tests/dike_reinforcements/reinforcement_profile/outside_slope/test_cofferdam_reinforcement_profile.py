@@ -52,19 +52,9 @@ class TestCofferDamReinforcementProfile:
         # 3. Then
         assert _changed == expected
 
-    def test_when_get_reinforcement_room_calculator_then_calculator_returns_true(self):
-        # 1. Given
-        _profile = CofferdamReinforcementProfile()
-
-        # 2. When
-        _calculator = _profile.get_reinforcement_room_calculator()
-
-        # 3. Then
-        assert isinstance(_calculator, ReinforcementRoomCalculatorProtocol)
-        assert _calculator.reinforcement_has_room() == True
-
-    def test_when_reinforcement_has_room_given_point_obstacle_location_then_calculator_returns_true(
-        self,
+    @pytest.mark.parametrize("allow_waterside", [True, False])
+    def test_when_get_reinforcement_room_calculator_given_point_obstacle_location_then_calculator_returns_true(
+        self, allow_waterside: bool
     ):
         # 1. Given
         _profile = CofferdamReinforcementProfile()
@@ -73,7 +63,9 @@ class TestCofferDamReinforcementProfile:
         )  # The point obstacle location is not relevant for the cofferdam room calculator
 
         # 2. When
-        _calculator = _profile.get_reinforcement_room_calculator()
+        _calculator = _profile.get_reinforcement_room_calculator(
+            waterside_allowed=allow_waterside
+        )
 
         # 3. Then
         assert isinstance(_calculator, ReinforcementRoomCalculatorProtocol)

@@ -1,5 +1,7 @@
 import pytest
+from shapely import Point
 
+from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
 from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_input_profile import (
@@ -7,6 +9,15 @@ from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_inpu
 )
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile_protocol import (
     ReinforcementProfileProtocol,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_and_waterside_room_calculator import (
+    PoldersideAndWatersideRoomCalculator,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_only_room_calculator import (
+    PoldersideOnlyRoomCalculator,
+)
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.reinforcement_room_calculator_protocol import (
+    ReinforcementRoomCalculatorProtocol,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard import (
     SoilWatersideReinforcementProfile,
@@ -61,3 +72,30 @@ class TestSoilWatersideReinforcementProfile:
 
         # 3. Verify result
         assert _result is expected_value
+
+    @pytest.mark.parametrize(
+        "allow_waterside, expected_calculator",
+        [
+            (True, PoldersideAndWatersideRoomCalculator),
+            (False, PoldersideOnlyRoomCalculator),
+        ],
+    )
+    def test_when_get_reinforcement_room_calculator_then_returns_expected_calculator(
+        self,
+        allow_waterside: bool,
+        expected_calculator: type[ReinforcementRoomCalculatorProtocol],
+    ):
+
+        # 1. Given
+        _profile = SoilWatersideReinforcementProfile()
+        _profile.characteristic_points = CharacteristicPoints(
+            p_1=Point(-2.4, 0), p_8=Point(4.2, 0)
+        )
+
+        # 2. When
+        _result_calculator = _profile.get_reinforcement_room_calculator(
+            waterside_allowed=allow_waterside
+        )
+
+        # 3. Then
+        assert isinstance(_result_calculator, expected_calculator)

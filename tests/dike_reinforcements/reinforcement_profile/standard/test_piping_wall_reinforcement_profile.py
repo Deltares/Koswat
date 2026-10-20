@@ -40,24 +40,16 @@ class TestPipingWallReinforcementProfile:
         assert _profile.waterside_changed is False
 
     @pytest.mark.parametrize(
-        "allowed_waterside_reinforcement, expected_reinforcement_type",
+        "allow_waterside, expected_calculator",
         [
-            pytest.param(
-                True,
-                PoldersideAndWatersideRoomCalculator,
-                id="allow_waterside_reinforcement",
-            ),
-            pytest.param(
-                False,
-                PoldersideOnlyRoomCalculator,
-                id="do_not_allow_waterside_reinforcement",
-            ),
+            (True, PoldersideAndWatersideRoomCalculator),
+            (False, PoldersideOnlyRoomCalculator),
         ],
     )
-    def test_when_get_reinforcement_room_calculator_given_waterside_reinforcement_then_returns_expected_calculator(
+    def test_when_get_reinforcement_room_calculator_then_returns_expected_calculator(
         self,
-        allowed_waterside_reinforcement: bool,
-        expected_reinforcement_type: Type[ReinforcementRoomCalculatorProtocol],
+        allow_waterside: bool,
+        expected_calculator: Type[ReinforcementRoomCalculatorProtocol],
     ):
 
         # 1. Given
@@ -65,10 +57,11 @@ class TestPipingWallReinforcementProfile:
         _profile.characteristic_points = CharacteristicPoints(
             p_1=Point(-2.4, 0), p_8=Point(4.2, 0)
         )
-        _profile.allow_waterside_reinforcement = allowed_waterside_reinforcement
 
         # 2. When
-        _result_calculator = _profile.get_reinforcement_room_calculator()
+        _result_calculator = _profile.get_reinforcement_room_calculator(
+            waterside_allowed=allow_waterside
+        )
 
         # 3. Then
-        assert isinstance(_result_calculator, expected_reinforcement_type)
+        assert isinstance(_result_calculator, expected_calculator)

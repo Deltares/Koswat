@@ -47,9 +47,19 @@ class ReinforcementProfileProtocol(KoswatProfileProtocol, Protocol):
     new_ground_level_surface: float
     new_ground_waterside: float
     new_ground_polderside: float
-    allow_waterside_reinforcement: bool
 
-    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
+    def get_reinforcement_room_calculator(
+        self, waterside_allowed: bool
+    ) -> ReinforcementRoomCalculatorProtocol:
+        """
+        Retrieves a calculator that takes into account the available room at the waterside and/or polderside.
+
+        Args:
+            waterside_allowed (bool): Whether to take into account the available room at the waterside.
+
+        Returns:
+            ReinforcementRoomCalculatorProtocol: The calculator.
+        """
         pass
 
     @property

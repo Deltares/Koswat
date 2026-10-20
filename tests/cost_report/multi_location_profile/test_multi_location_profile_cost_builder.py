@@ -69,7 +69,7 @@ class TestMultiLocationProfileCostReportBuilder:
             layers_wrapper = _base_profile.layers_wrapper
             waterside_changed = False
 
-            def get_reinforcement_room_calculator(self):
+            def get_reinforcement_room_calculator(self, waterside_allowed: bool):
                 class DummyReinforcementRoomCalculator(
                     ReinforcementRoomCalculatorProtocol
                 ):
