@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from dataclasses import asdict
+from copy import deepcopy
 
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
@@ -57,6 +57,11 @@ class SoilWatersideInputProfileCalculation(
         self.scenario = None
 
     def build(self) -> SoilWatersideInputProfile:
+        # Apply a minor waterslide slope adjustment to the scenario to ensure calculating
+        # proportional costs on the waterside slope, even if not changed.
+        self.scenario = deepcopy(self.scenario)
+        self.scenario.waterside_slope = 1.01 * self.scenario.waterside_slope
+
         _reinforced_data = self._get_reinforcement_profile(
             SoilWatersideInputProfile, self.base_profile.input_data, self.scenario
         )
