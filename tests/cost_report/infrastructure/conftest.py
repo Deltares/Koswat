@@ -8,6 +8,7 @@ from shapely import Point
 from koswat.dike.characteristic_points.characteristic_points import CharacteristicPoints
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike.profile.koswat_profile import KoswatProfileBase
+from koswat.dike.surroundings.infrastructure_types import RoadClass2
 from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -25,11 +26,12 @@ from tests.conftest import PointSurroundingsTestCase
 
 
 @pytest.fixture(name="reinforcement_profile_builder")
-def _get_dummy_reinforcment_profile_builder() -> (
-    Iterable[
-        Callable[[list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol]
+def _get_dummy_reinforcment_profile_builder() -> Iterable[
+    Callable[
+        [list[tuple[float, float]], list[tuple[float, float]]],
+        ReinforcementProfileProtocol,
     ]
-):
+]:
     @dataclass
     class DummyReinforcementProfile(KoswatProfileBase, ReinforcementProfileProtocol):
         output_name: str = "Dummy reinforcement"
@@ -37,8 +39,11 @@ def _get_dummy_reinforcment_profile_builder() -> (
         layers_wrapper: ReinforcementLayersWrapper = None
         old_profile: KoswatProfileProtocol = None
         new_ground_level_surface: float = math.nan
+        waterside_changed: bool = False
 
-    def assign_char_points(point_list: list[tuple[float]]) -> CharacteristicPoints:
+    def assign_char_points(
+        point_list: list[tuple[float, float]],
+    ) -> CharacteristicPoints:
         return CharacteristicPoints(
             p_1=Point(point_list[0]),
             p_2=Point(point_list[1]),
@@ -51,8 +56,8 @@ def _get_dummy_reinforcment_profile_builder() -> (
         )
 
     def reinforcement_profile_builder(
-        base_points: list[tuple[float]],
-        reinforcment_points: list[tuple[float]],
+        base_points: list[tuple[float, float]],
+        reinforcment_points: list[tuple[float, float]],
     ) -> ReinforcementProfileProtocol:
         return DummyReinforcementProfile(
             characteristic_points=assign_char_points(reinforcment_points),
@@ -77,12 +82,15 @@ def _get_surroundings_infrastructure_fixture(
 ) -> Iterable[tuple[SurroundingsInfrastructure, PointSurroundingsTestCase]]:
     _infra_width = request.param
     _builder, test_case = point_surroundings_for_zones_builder_fixture
-    test_case.expected_total_widths = list(
-        x * _infra_width for x in test_case.expected_total_widths
+    test_case.expected_total_lengths = list(
+        x * _infra_width for x in test_case.expected_total_lengths
     )
     yield SurroundingsInfrastructure(
-        infrastructure_name="dummy infrastructure",
-        # To simplify A / B total areas, we just set it to `1`.
-        infrastructure_width=_infra_width,
+        # To simplify A / B / C total areas, we just set it to `1`.
+        infrastructure_type=RoadClass2(
+            width=_infra_width,
+            adding_costs=24.0,
+            removing_costs=12.0,
+        ),
         points=[_builder()],
     ), test_case

@@ -11,6 +11,7 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
+from koswat.dike.surroundings.infrastructure_types import RoadClass2
 from koswat.dike.surroundings.point import PointInfrastructureSurroundings
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -36,9 +37,8 @@ class TestMultiInfrastructureProfileCostsCalculator:
     ) -> Iterable[Callable[[int], InfrastructureProfileCostsCalculator]]:
         def build_calculator(n_points: int) -> InfrastructureProfileCostsCalculator:
             _infra = SurroundingsInfrastructure(
-                infrastructure_name="dummy infrastructure",
                 # To simplify A / B total areas, we just set it to `1`.
-                infrastructure_width=1,
+                infrastructure_type=RoadClass2(width=1),
                 points=[basic_point_surroundings_builder()] * n_points,
             )
             return InfrastructureProfileCostsCalculator(
@@ -53,7 +53,8 @@ class TestMultiInfrastructureProfileCostsCalculator:
     def test_given_reinforced_profile_generates_report_per_infrastructure_location(
         self,
         reinforcement_profile_builder: Callable[
-            [list[tuple[float]], list[tuple[float]]], ReinforcementProfileProtocol
+            [list[tuple[float, float]], list[tuple[float, float]]],
+            ReinforcementProfileProtocol,
         ],
         infra_profile_cost_calc_builder: Callable[
             [int], InfrastructureProfileCostsCalculator
@@ -62,21 +63,21 @@ class TestMultiInfrastructureProfileCostsCalculator:
         # 1. Define data.
         _calc_with_two_locations = infra_profile_cost_calc_builder(2)
         _calc_with_one_location = infra_profile_cost_calc_builder(1)
-        _waterside_reinforced_points = [(-18, 0), (-18, 0), (-18, 0)]
+        _waterside_reinforced_points = [(-18.0, 0.0), (-18.0, 0.0), (-18.0, 0.0)]
         _points_base_profile = _waterside_reinforced_points + [
-            (0, 6),
-            (10, 6),
-            (34, -2),
-            (34, -2),
-            (34, -2),
+            (0.0, 6.0),
+            (10.0, 6.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
         ]
 
         _points_reinforced_profile = _waterside_reinforced_points + [
-            (0, 6),
-            (10, 6),
-            (34, -2),
-            (34, -2),
-            (34, -2),
+            (0.0, 6.0),
+            (10.0, 6.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
+            (34.0, -2.0),
         ]
 
         # 2. Run test
@@ -88,7 +89,7 @@ class TestMultiInfrastructureProfileCostsCalculator:
         ).calculate(
             reinforcement_profile_builder(
                 _points_base_profile, _points_reinforced_profile
-            )
+            ),
         )
 
         # 3. Verify epxectations

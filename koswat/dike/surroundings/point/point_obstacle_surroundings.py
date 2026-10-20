@@ -29,7 +29,7 @@ from shapely import Point
 from .point_surroundings_protocol import PointSurroundingsProtocol
 
 
-@dataclass
+@dataclass(kw_only=True)
 class PointObstacleSurroundings(PointSurroundingsProtocol):
     """
     Object representing a `meter` with `x`, `y` coordinates in a polder (or else),
@@ -53,7 +53,12 @@ class PointObstacleSurroundings(PointSurroundingsProtocol):
         """
         return hash(self.traject_order)
 
-    def merge(self, other: PointObstacleSurroundings) -> None:
+    def merge(self, other: PointSurroundingsProtocol) -> None:
+        if not isinstance(other, PointObstacleSurroundings):
+            raise TypeError(
+                f"Expected an instance of PointObstacleSurroundings, got {type(other)}"
+            )
+
         def _get_min_value(value_1: float, value_2: float) -> float:
             if math.isnan(value_1):
                 return value_2

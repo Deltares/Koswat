@@ -19,9 +19,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import math
 from dataclasses import dataclass, field
 
+from koswat.dike.surroundings.infrastructure_types import InfrastructureTypeProtocol
 from koswat.dike.surroundings.koswat_surroundings_protocol import (
     KoswatSurroundingsProtocol,
 )
@@ -38,6 +38,5 @@ class SurroundingsInfrastructure(KoswatSurroundingsProtocol):
     how long that infrastructure is.
     """
 
-    infrastructure_name: str = ""
-    infrastructure_width: float = math.nan
+    infrastructure_type: InfrastructureTypeProtocol = None
     points: list[PointInfrastructureSurroundings] = field(default_factory=lambda: [])

@@ -40,11 +40,11 @@ class KoswatSimpleSurroundingsCsvReader(KoswatReaderProtocol):
         A;199186.66;515698.01;500;500;-76.0;104.0
     """
 
-    surroundings_buffer: float | None = None
+    surroundings_buffer: float = 0.0
 
     @property
     def applied_surroundings_buffer(self) -> float:
-        if self.surroundings_buffer is None or self.surroundings_buffer <= 0.0:
+        if self.surroundings_buffer <= 0.0:
             return 0.0
         return self.surroundings_buffer
 

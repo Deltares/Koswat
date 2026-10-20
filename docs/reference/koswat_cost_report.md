@@ -16,8 +16,8 @@ A Koswat report is divided in different parts:
 
 When determining the costs of infrastructures we look mainly at:
 
-- The reinforcement profile (`ReinforcementProfileProtocol`) zones A and B. 
-- The distance between a dike and an infrastructure (`SurroundingsInfrastructure.points`, `PointInfrastructureSurroundings.surroundings_matrix`).
+- The reinforcement profile (`ReinforcementProfileProtocol`) zones A, B and C.
+- The distance between a dike and an infrastructure (`SurroundingsInfrastructure.points`, `PointInfrastructureSurroundings.polderside_surroundings` and `PointInfrastructureSurroundings.waterside_surroundings`).
 
 These characteristics are then used to estimate how much surface of the infrastructures will be affected by the reinforced profile and therefore their associated cost.
 
@@ -26,52 +26,62 @@ These characteristics are then used to estimate how much surface of the infrastr
 
 A reinforced profile can be different from its original state in many ways, however here we are only intestered in two things:
 
-1. The new profile's width from the original waterside crest point.
-2. Whether there is a crest's height increase (`dh0`),
+1. The new profile's width on both the waterside and the polderside.
+2. Whether there is a crest's height increase (`0dh`),
 
-By using the old and the reinforced profile's geometries, we can determine what we call zone `A` and zone `B`, `A + B = {profile's width from waterside crest point}`. 
+By using the old and the reinforced profile's geometries, we can determine what we call zone `A`, zone `B` and zone `C`. 
 
-- Zone `A` represents the width of the dike old profile's crest (highest surface).
-- Zone `B` the distance between said crest and the end of the dike's reinforcement.
+- Zone `A` represents the width of the waterside part of the dike's reinforcement.
+- Zone `B` represents the width of the dike old profile's crest (highest surface).
+- Zone `C` the distance between said crest and the end of the dike's reinforcement.
 
-|![Dike profile with zone A and B](./imgs/surroundings_zone_a_b.png)|
+A significant portion of the infrastructure that should be in zone `B`, appears to be in zone `A` due to inaccuracies in the infrastructure databases.
+To compensate for this inaccuracy, a buffer (`Buffer_Kruin_Buitendijks`) is added.
+The right side of zone `A` is moved to the waterside by the value of this buffer.
+
+We assume all infrastructure in zone `A` needs to be replaced, unless the waterside profile has not changed. In that case the costs depend on the setting of `Infrakosten_0dh`.
+The infrastructure costs in zone `B` depend on the setting of `Infrakosten_0dh`.
+We assume all infrastructure in zone `C` needs to be replaced.
+
+|![Dike profile with zone A and B](./imgs/surroundings_zone_a_b_c.png)|
 |:--:|
-|Image 1. Reinforcement with `dh0 = 0`|
+|Image 1. Reinforcement with `0dh = 0`|
 
-However, when the crest's height of a `ReinforcementProfileProtocol` has increased in comparison to its original profile (`ReinforcementProfileProtocol.old_profile`, `KoswatProfileProtocol`) then we set zone `A = 0` and therefore `B = {profile's width from waterside crest point}`.
+However, when the crest's height of a `ReinforcementProfileProtocol` has increased in comparison to its original profile (`ReinforcementProfileProtocol.old_profile`, `KoswatProfileProtocol`) then we set zone `B = 0`.
+ and therefore `C = {profile's width from waterside crest point}`.
 
-|![Dike profile with zone B](./imgs/surroundings_zone_b.png)|
+|![Dike profile with zone B](./imgs/surroundings_zone_a_c.png)|
 |:--:|
-|Image 2. Reinforcement with `dh0 = 1`|
+|Image 2. Reinforcement with `0dh = 1`|
 
 ### Infrastructure's distances
 
-An infrastructure (`SurroundingsInfrastructure`) can be present at different locations (`SurroundingsInfrastructure.points`). Each of these locations (`PointInfrastructureSurroundings`) contains a dictionary (`surroundings_matrix: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.
+An infrastructure (`SurroundingsInfrastructure`) can be present at different locations (`SurroundingsInfrastructure.points`). Each of these locations (`PointInfrastructureSurroundings`) contains a dictionary for the polderside and waterside surroundings (`polderside_surroundings/waterside_surroundings: dict[float, float]`) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance at the respective side of the dike.
 
-For instance, we could have `surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}`, which means:
-- Between `0` and `5` meters from the location we will find `1.5` meters of the infrastructure,
-- Between `5` and `10` meters from the location we will find `0` meters of the infrastructure,
-- Between `10` and `15` meters from the location we will find `2.5` meters of the infrastructure.
+For instance, we could have `polderside_surroundings = {5: 1.5, 10: 0, 15: 2.5}`, which means:
+- Between `0` and `5` meters from the location we will find `1.5` meters of the infrastructure length,
+- Between `5` and `10` meters from the location we will find `0` meters of the infrastructure length,
+- Between `10` and `15` meters from the location we will find `2.5` meters of the infrastructure length.
 
-In addition, each infrastructure has a fixed width (`SurroundingsInfrastructure.infrastructure_width`), which can later be used to calculate the total surface of said infrastructure affected by the given profile. So: `affected_infra_zone_x = meters_of_infrastructure_in_zone_x * infrastructure_width`, where `meters_of_infrastructure_in_zone_x` are the values calculated from the `surroundings_matrix` and `infrastructure_width` is the infrastructure fixed width.
+In addition, each infrastructure has a fixed width (`SurroundingsInfrastructure.infrastructure_type.width`), which can later be used to calculate the total surface of said infrastructure affected by the given profile. So: `affected_infra_zone_x = meters_of_infrastructure_in_zone_x * width`, where `meters_of_infrastructure_in_zone_x` are the values calculated from the `polderside_surroundings`, `waterside_surroundings` and `width` is the infrastructure fixed width.
 
 ### Cost calculation
 
-After defining the profile's zones `A` and `B` we can easily find how much of each infrastructures is affected by checking the `surroundings_matrix` indices and "rounding" up. It is agreed that at the overlapping points between `A` and `B`, the affected surface, and therefore costs, will only be computed for zone `A`; this is done regardless of the chosen infrastructure costs type (`InfraCostsEnum`).
+After defining the profile's zones `A`, `B` and `C` we can easily find how much of each infrastructures is affected by checking the `surroundings_matrix` indices and "rounding" up. It is agreed that at the overlapping points between zones, the affected surface, and therefore costs, will only be computed for zone `B`; this is done regardless of the chosen infrastructure costs type (`InfraCostsEnum`).
 
 Once the total area is known, we only need to multiply them by their related costs for adding and/or removing infrastructure's material.
 
 #### Example
 
-Using as example the previous `surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}` we can demostrate this when `A = 4` and `B = 10`.
+Using as example the previous `polderside_surroundings = {5: 1.5, 10: 0, 15: 2.5}` we can demonstrate this when `B = 4` and `C = 10`.
 
 1. Estimate zone limits:
-    - `zone_a` goes from 0 to 4,
-    - `zone_b` goes from 4 to 14.
+    - `zone_b` goes from 0 to 4,
+    - `zone_c` goes from 4 to 14.
 2. Estimate affected points in the surroundings matrix:
-    - `zone_a` affects only up until key `5`, so 1.5 meters of infrastructure.
-    - `zone_b` affects keys `10` and `15`, so 2.5 meters of infrastructure.
-        - Note that we do not take `5` as has already been considered for `zone_a`.
+    - `zone_b` affects only up until key `5`, so 1.5 meters of infrastructure.
+    - `zone_c` affects keys `10` and `15`, so 2.5 meters of infrastructure.
+        - Note that we do not take `5` as has already been considered for `zone_b`.
 
 
 ## Generated files

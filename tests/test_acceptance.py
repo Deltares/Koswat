@@ -12,6 +12,9 @@ from koswat.configuration.io.config_sections import (
     InfrastructureSectionFom,
     SurroundingsSectionFom,
 )
+from koswat.configuration.io.json.koswat_costs_json_fom import (
+    InfrastructureCostsSectionFom,
+)
 from koswat.configuration.io.json.koswat_general_json_fom import KoswatGeneralJsonFom
 from koswat.configuration.io.koswat_costs_importer import KoswatCostsImporter
 from koswat.configuration.io.surroundings_wrapper_collection_importer import (
@@ -24,6 +27,9 @@ from koswat.configuration.settings.costs.construction_costs_settings import (
 )
 from koswat.configuration.settings.costs.dike_profile_costs_settings import (
     DikeProfileCostsSettings,
+)
+from koswat.configuration.settings.costs.infastructure_costs_settings import (
+    InfrastructureCostsSettings,
 )
 from koswat.configuration.settings.costs.koswat_costs_settings import (
     KoswatCostsSettings,
@@ -154,7 +160,6 @@ class TestAcceptance:
         # Generate surroundings section File Object Model.
         _koswat_general_settings, _koswat_costs = koswat_acceptance_settings()
         _surroundings_settings = _koswat_general_settings.surroundings_section
-        _surroundings_settings.buildings = _include_obstacles
 
         # Generate Infrastructures section file model
         _infrastructure_settings = _koswat_general_settings.infrastructuur_section
@@ -163,10 +168,11 @@ class TestAcceptance:
         # Generate wrapper
         _importer = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=_temp_dir.parent,
-            infrastructure_section_fom=_infrastructure_settings,
             surroundings_section_fom=_surroundings_settings,
-            selected_locations=[],
+            infrastructure_section_fom=_infrastructure_settings,
             traject_loc_shp_file=_shp_file,
+            selected_locations=[],
+            infrastructure_costs=_koswat_costs.infrastructure_costs,
         )
         _surroundings_wrapper_list = _importer.build()
         assert any(_surroundings_wrapper_list)
@@ -309,12 +315,26 @@ class TestAcceptance:
             roads_unknown_width=8,
         )
 
+        _infrastructure_costs = InfrastructureCostsSettings(
+            removing_roads_klasse2=1.0,
+            removing_roads_klasse7=2.0,
+            removing_roads_klasse24=3.0,
+            removing_roads_klasse47=4.0,
+            removing_roads_unknown=5.0,
+            adding_roads_klasse2=1.0,
+            adding_roads_klasse7=2.0,
+            adding_roads_klasse24=3.0,
+            adding_roads_klasse47=4.0,
+            adding_roads_unknown=5.0,
+        )
+
         _surroundings = SurroundingsWrapperCollectionImporter(
             surroundings_database_dir=_test_dir,
             infrastructure_section_fom=_infrastructure_section,
             surroundings_section_fom=_surroundings_section,
             traject_loc_shp_file=_shp_trajects_file,
             selected_locations=[],
+            infrastructure_costs=_infrastructure_costs,
         ).build()[0]
 
         assert isinstance(scenario_case, KoswatScenario)

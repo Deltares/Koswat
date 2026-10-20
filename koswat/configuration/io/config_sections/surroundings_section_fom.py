@@ -35,7 +35,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
     allow_waterside_reinforcement: bool
     max_polderside_extension: float
     max_waterside_extension: float
-    obstacle_types: dict[str, Optional[float]] = field(default_factory=dict)
+    obstacle_types: dict[str, float] = field(default_factory=dict)
 
     @classmethod
     def from_config(
@@ -71,7 +71,7 @@ class SurroundingsSectionFom(KoswatJsonFomProtocol):
                 _type.get("type")
                 .lower()
                 .strip(): SectionConfigHelper.get_float_without_default(
-                    _type.get("buffer", None)
+                    _type.get("buffer", 0.0)
                 )
                 for _type in input_config.get("omgevingtypes", [])
             },

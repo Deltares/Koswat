@@ -19,10 +19,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import math
+
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_profile import (
     ReinforcementProfile,
 )
 
 
 class OutsideSlopeReinforcementProfile(ReinforcementProfile):
-    pass
+    @property
+    def waterside_changed(self) -> bool:
+        return not math.isclose(
+            self.input_data.waterside_slope,
+            self.old_profile.input_data.waterside_slope,
+        )
