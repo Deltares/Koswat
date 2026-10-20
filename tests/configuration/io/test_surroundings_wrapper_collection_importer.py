@@ -196,8 +196,18 @@ class TestSurroundingsWrapperCollectionImporter:
                 _sw.infrastructure_surroundings_wrapper,
                 InfrastructureSurroundingsWrapper,
             )
-            assert any(_sw.infrastructure_surroundings_wrapper.roads_class_2.points)
-            assert any(_sw.infrastructure_surroundings_wrapper.roads_class_24.points)
+
+            def assert_roads_class(
+                infra_wrapper: InfrastructureSurroundingsWrapper, road_class: str
+            ):
+                return road_class in infra_wrapper.infrastructures_collection and any(
+                    infra_wrapper.infrastructures_collection[road_class].points
+                )
+
+            assert all(
+                assert_roads_class(_sw.infrastructure_surroundings_wrapper, _rc)
+                for _rc in _sw.infrastructure_surroundings_wrapper.infrastructures_collection
+            )
 
     def test_when_build_given_location_mismatch_then_exception_raised(
         self,
