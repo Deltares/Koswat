@@ -168,68 +168,76 @@
 <h2 id="infrastructure-report">Infrastructure report<a class="headerlink" href="#infrastructure-report" title="Permanent link">&para;</a></h2>
 <p>When determining the costs of infrastructures we look mainly at:</p>
 <ul>
-<li>The reinforcement profile (<code>ReinforcementProfileProtocol</code>) zones A and B. </li>
-<li>The distance between a dike and an infrastructure (<code>SurroundingsInfrastructure.points</code>, <code>PointInfrastructureSurroundings.surroundings_matrix</code>).</li>
+<li>The reinforcement profile (<code>ReinforcementProfileProtocol</code>) zones A, B and C.</li>
+<li>The distance between a dike and an infrastructure (<code>SurroundingsInfrastructure.points</code>, <code>PointInfrastructureSurroundings.polderside_surroundings</code> and <code>PointInfrastructureSurroundings.waterside_surroundings</code>).</li>
 </ul>
 <p>These characteristics are then used to estimate how much surface of the infrastructures will be affected by the reinforced profile and therefore their associated cost.</p>
 <h3 id="reinforcement-profile-zones">Reinforcement profile zones<a class="headerlink" href="#reinforcement-profile-zones" title="Permanent link">&para;</a></h3>
 <p>A reinforced profile can be different from its original state in many ways, however here we are only intestered in two things:</p>
 <ol>
-<li>The new profile's width from the original waterside crest point.</li>
-<li>Whether there is a crest's height increase (<code>dh0</code>),</li>
+<li>The new profile's width on both the waterside and the polderside.</li>
+<li>Whether there is a crest's height increase (<code>0dh</code>),</li>
 </ol>
-<p>By using the old and the reinforced profile's geometries, we can determine what we call zone <code>A</code> and zone <code>B</code>, <code>A + B = {profile's width from waterside crest point}</code>. </p>
+<p>By using the old and the reinforced profile's geometries, we can determine what we call zone <code>A</code>, zone <code>B</code> and zone <code>C</code>. </p>
 <ul>
-<li>Zone <code>A</code> represents the width of the dike old profile's crest (highest surface).</li>
-<li>Zone <code>B</code> the distance between said crest and the end of the dike's reinforcement.</li>
+<li>Zone <code>A</code> represents the width of the waterside part of the dike's reinforcement.</li>
+<li>Zone <code>B</code> represents the width of the dike old profile's crest (highest surface).</li>
+<li>Zone <code>C</code> the distance between said crest and the end of the dike's reinforcement.</li>
 </ul>
+<p>A significant portion of the infrastructure that should be in zone <code>B</code>, appears to be in zone <code>A</code> due to inaccuracies in the infrastructure databases.
+To compensate for this inaccuracy, a buffer (<code>Buffer_Kruin_Buitendijks</code>) is added.
+The right side of zone <code>A</code> is moved to the waterside by the value of this buffer.</p>
+<p>We assume all infrastructure in zone <code>A</code> needs to be replaced, unless the waterside profile has not changed. In that case the costs depend on the setting of <code>Infrakosten_0dh</code>.
+The infrastructure costs in zone <code>B</code> depend on the setting of <code>Infrakosten_0dh</code>.
+We assume all infrastructure in zone <code>C</code> needs to be replaced.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;"><img alt="Dike profile with zone A and B" src="imgs/surroundings_zone_a_b.png" /></th>
+<th style="text-align: center;"><img alt="Dike profile with zone A and B" src="imgs/surroundings_zone_a_b_c.png" /></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">Image 1. Reinforcement with <code>dh0 = 0</code></td>
+<td style="text-align: center;">Image 1. Reinforcement with <code>0dh = 0</code></td>
 </tr>
 </tbody>
 </table>
-<p>However, when the crest's height of a <code>ReinforcementProfileProtocol</code> has increased in comparison to its original profile (<code>ReinforcementProfileProtocol.old_profile</code>, <code>KoswatProfileProtocol</code>) then we set zone <code>A = 0</code> and therefore <code>B = {profile's width from waterside crest point}</code>.</p>
+<p>However, when the crest's height of a <code>ReinforcementProfileProtocol</code> has increased in comparison to its original profile (<code>ReinforcementProfileProtocol.old_profile</code>, <code>KoswatProfileProtocol</code>) then we set zone <code>B = 0</code>.
+ and therefore <code>C = {profile's width from waterside crest point}</code>.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;"><img alt="Dike profile with zone B" src="imgs/surroundings_zone_b.png" /></th>
+<th style="text-align: center;"><img alt="Dike profile with zone B" src="imgs/surroundings_zone_a_c.png" /></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">Image 2. Reinforcement with <code>dh0 = 1</code></td>
+<td style="text-align: center;">Image 2. Reinforcement with <code>0dh = 1</code></td>
 </tr>
 </tbody>
 </table>
 <h3 id="infrastructures-distances">Infrastructure's distances<a class="headerlink" href="#infrastructures-distances" title="Permanent link">&para;</a></h3>
-<p>An infrastructure (<code>SurroundingsInfrastructure</code>) can be present at different locations (<code>SurroundingsInfrastructure.points</code>). Each of these locations (<code>PointInfrastructureSurroundings</code>) contains a dictionary (<code>surroundings_matrix: dict[float, float]</code>) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance.</p>
-<p>For instance, we could have <code>surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}</code>, which means:
-- Between <code>0</code> and <code>5</code> meters from the location we will find <code>1.5</code> meters of the infrastructure,
-- Between <code>5</code> and <code>10</code> meters from the location we will find <code>0</code> meters of the infrastructure,
-- Between <code>10</code> and <code>15</code> meters from the location we will find <code>2.5</code> meters of the infrastructure.</p>
-<p>In addition, each infrastructure has a fixed width (<code>SurroundingsInfrastructure.infrastructure_width</code>), which can later be used to calculate the total surface of said infrastructure affected by the given profile. So: <code>affected_infra_zone_x = meters_of_infrastructure_in_zone_x * infrastructure_width</code>, where <code>meters_of_infrastructure_in_zone_x</code> are the values calculated from the <code>surroundings_matrix</code> and <code>infrastructure_width</code> is the infrastructure fixed width.</p>
+<p>An infrastructure (<code>SurroundingsInfrastructure</code>) can be present at different locations (<code>SurroundingsInfrastructure.points</code>). Each of these locations (<code>PointInfrastructureSurroundings</code>) contains a dictionary for the polderside and waterside surroundings (<code>polderside_surroundings/waterside_surroundings: dict[float, float]</code>) where the key is the distance between said location and the infrastructure and the values represent the length of the infrastructure found at that distance at the respective side of the dike.</p>
+<p>For instance, we could have <code>polderside_surroundings = {5: 1.5, 10: 0, 15: 2.5}</code>, which means:
+- Between <code>0</code> and <code>5</code> meters from the location we will find <code>1.5</code> meters of the infrastructure length,
+- Between <code>5</code> and <code>10</code> meters from the location we will find <code>0</code> meters of the infrastructure length,
+- Between <code>10</code> and <code>15</code> meters from the location we will find <code>2.5</code> meters of the infrastructure length.</p>
+<p>In addition, each infrastructure has a fixed width (<code>SurroundingsInfrastructure.infrastructure_type.width</code>), which can later be used to calculate the total surface of said infrastructure affected by the given profile. So: <code>affected_infra_zone_x = meters_of_infrastructure_in_zone_x * width</code>, where <code>meters_of_infrastructure_in_zone_x</code> are the values calculated from the <code>polderside_surroundings</code>, <code>waterside_surroundings</code> and <code>width</code> is the infrastructure fixed width.</p>
 <h3 id="cost-calculation">Cost calculation<a class="headerlink" href="#cost-calculation" title="Permanent link">&para;</a></h3>
-<p>After defining the profile's zones <code>A</code> and <code>B</code> we can easily find how much of each infrastructures is affected by checking the <code>surroundings_matrix</code> indices and "rounding" up. It is agreed that at the overlapping points between <code>A</code> and <code>B</code>, the affected surface, and therefore costs, will only be computed for zone <code>A</code>; this is done regardless of the chosen infrastructure costs type (<code>InfraCostsEnum</code>).</p>
+<p>After defining the profile's zones <code>A</code>, <code>B</code> and <code>C</code> we can easily find how much of each infrastructures is affected by checking the <code>surroundings_matrix</code> indices and "rounding" up. It is agreed that at the overlapping points between zones, the affected surface, and therefore costs, will only be computed for zone <code>B</code>; this is done regardless of the chosen infrastructure costs type (<code>InfraCostsEnum</code>).</p>
 <p>Once the total area is known, we only need to multiply them by their related costs for adding and/or removing infrastructure's material.</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
-<p>Using as example the previous <code>surroundings_matrix = {5: 1.5, 10: 0, 15: 2.5}</code> we can demostrate this when <code>A = 4</code> and <code>B = 10</code>.</p>
+<p>Using as example the previous <code>polderside_surroundings = {5: 1.5, 10: 0, 15: 2.5}</code> we can demonstrate this when <code>B = 4</code> and <code>C = 10</code>.</p>
 <ol>
 <li>Estimate zone limits:<ul>
-<li><code>zone_a</code> goes from 0 to 4,</li>
-<li><code>zone_b</code> goes from 4 to 14.</li>
+<li><code>zone_b</code> goes from 0 to 4,</li>
+<li><code>zone_c</code> goes from 4 to 14.</li>
 </ul>
 </li>
 <li>Estimate affected points in the surroundings matrix:<ul>
-<li><code>zone_a</code> affects only up until key <code>5</code>, so 1.5 meters of infrastructure.</li>
-<li><code>zone_b</code> affects keys <code>10</code> and <code>15</code>, so 2.5 meters of infrastructure.<ul>
-<li>Note that we do not take <code>5</code> as has already been considered for <code>zone_a</code>.</li>
+<li><code>zone_b</code> affects only up until key <code>5</code>, so 1.5 meters of infrastructure.</li>
+<li><code>zone_c</code> affects keys <code>10</code> and <code>15</code>, so 2.5 meters of infrastructure.<ul>
+<li>Note that we do not take <code>5</code> as has already been considered for <code>zone_b</code>.</li>
 </ul>
 </li>
 </ul>

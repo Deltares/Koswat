@@ -196,20 +196,14 @@ All reinforcements will be calculated without using the waterside of the dike. H
 <li><code>SECTIE</code>, section of the location in the dike's traject,</li>
 <li><code>Xcoord</code>, x coordinate of the location,</li>
 <li><code>Ycoord</code>, y coordinate of the location, </li>
-<li><code>afst_{x}m</code>, distance from the reference point of the location, where 'x' are all the values between <code>5</code> and <code>200</code> with steps of 5, thus 40 columns. The values in these cells define whether there are obstacles or infrastructures at this distance or not and in <code>Koswat</code> are usually built in the <code>SurroundingsPoint.surroundings_matrix</code>, each type of surrounding interprets the weights in a different manner.</li>
 </ul>
 <h2 id="obstacles">Obstacles<a class="headerlink" href="#obstacles" title="Permanent link">&para;</a></h2>
-<p>An obstacle usually represents a building. Because they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
+<p>Obstacle represent e.g. buildings, waters, railways, etc. Because, in principle, they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
 The distance from the reference point of the dike to the closes point of the obstacle is given.</p>
-<p>The values in the columns <code>afst_{x}m</code> are either <code>1</code> or <code>0</code> and are simply interpreted as having a surrounding or not. Thus ignoring other characteristics of the surrounding and just focusing on its presence.</p>
+<p>For each type of obstacle only the closest obstacle per location is given, both for the polderside (<code>dist_binnen</code>) and the waterside (<code>dist_buiten</code>).</p>
 <h3 id="obstacle-types">Obstacle types<a class="headerlink" href="#obstacle-types" title="Permanent link">&para;</a></h3>
-<p>Currently we identify and support the following surroundings as written in the <code>.csv</code> file names:</p>
-<ul>
-<li><code>bebouwing_binnendijks</code> (buildings), </li>
-<li><code>spoorwegen_binnendijks</code> (railways),</li>
-<li><code>waters_binnendijks</code> (waters),</li>
-</ul>
-<p>As reminder, at the moment we only support 'inside the dike's' surroundings.</p>
+<p>The user can configure their own types of obstacles (<code>OmgevingTypes</code>).
+For each type optionally a buffer can be given to indicate the minimum distance to keep between the obstacle and the reinforcement (<code>Buffer</code>).</p>
 <h2 id="infrastructures">Infrastructures<a class="headerlink" href="#infrastructures" title="Permanent link">&para;</a></h2>
 <p>Infrastructures are mostly "roads". Contrary to the <a href="#obstacles">obstacles</a> these infrastructures do not become a boundary for a reinforcement and they will simply be either displaced or repaired when applying a reinforcement requires their space. When this occurs, it is reflected as additional costs for the given type of reinforcement at that location. In short, these costs are calculated based on:</p>
 <ul>
@@ -217,6 +211,7 @@ The distance from the reference point of the dike to the closes point of the obs
 <li>The length of the infrastructure at that location (the values in the columns <code>afst_{x}m</code>),</li>
 <li>The required technique (repair, displace, nothing) for the type of infrastructure (also from <code>koswat_general.json</code> settings) and its related costs (<code>koswat_costs.json</code>).</li>
 </ul>
+<p>The lengths of the infrastructures at a certain distance from the reference point at that location are given in columns <code>afst_{x}m</code>. Here 'x' are all the values between <code>5</code> and <code>200</code> with steps of 5, thus 40 columns. The values in these cells define whether there are obstacles or infrastructures at this distance or not and in <code>Koswat</code> are usually built in the <code>SurroundingsPoint.polderside_surroundings</code> and <code>SurroundingsPoint.waterside_surroundings</code>. Each type of surrounding interprets the weights in a different manner.</p>
 <p>With the above values we know what's the <strong>affected area</strong> of an infrastructure when a reinforced profile needs to be applied and therefore can estimate their costs.</p>
 <p>The distance from the reference point of the dike to the center point of the infrastructure is given.</p>
 <h3 id="infrastructures-types">Infrastructures types<a class="headerlink" href="#infrastructures-types" title="Permanent link">&para;</a></h3>
@@ -228,7 +223,7 @@ The distance from the reference point of the dike to the closes point of the obs
 <li><code>wegen_binnendijks_klasse47</code> (roads class 47),</li>
 <li><code>wegen_binnendijks_klasseonbekend</code> (roads of unknown class),</li>
 </ul>
-<p>As reminder, at the moment we only support 'inside the dike's' surroundings.</p>
+<p>The can be given for the polderside (<code>binnendijks</code>) and the waterside (<code>buitendijks</code>).</p>
 <h2 id="surroundings-in-the-code">Surroundings in the code<a class="headerlink" href="#surroundings-in-the-code" title="Permanent link">&para;</a></h2>
 <p>But, how are these surroundings represented in the code? As earlier described, we distinguish surroundings by either <a href="#obstacles">obstacles</a> or <a href="#infrastructures">infrastructures</a>. This is also reflected in the code where we create a general <code>SurroundingsWrapper</code>, which as the name states, wraps the obstacle and infrastructure surroundings in separate properties, each implementing an specialitzation of the <code>BaseSurroundingsWrapper</code> so that: </p>
 <ul>
