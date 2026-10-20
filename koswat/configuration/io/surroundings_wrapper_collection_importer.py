@@ -129,11 +129,50 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
         _reader.surroundings_buffer = surrounding_buffer
         return _reader.read(csv_file)
 
+    def _process_obstacle_file(
+        self,
+        obstacle_type: str,
+        csv_file: Path,
+        obstacle_csv_fom: KoswatSurroundingsCsvFom,
+    ) -> KoswatSurroundingsCsvFom:
+        _buffer = self.surroundings_section_fom.obstacle_types.get(obstacle_type, 0.0)
+        _csv_fom = self._csv_obstacle_file_to_fom(csv_file, _buffer)
+        if obstacle_csv_fom is not None:
+            obstacle_csv_fom.merge(_csv_fom)
+            return obstacle_csv_fom
+
+        return _csv_fom
+
     def _csv_infrastructure_file_to_fom(
         self,
         csv_file: Path,
     ) -> KoswatSurroundingsCsvFom:
         return KoswatSurroundingsCsvReader().read(csv_file)
+
+    def _process_infrastructure_file(
+        self,
+        infrastructure_type: InfrastructureTypeProtocol,
+        csv_file: Path,
+        infrastructure_csv_foms: dict[
+            InfrastructureTypeProtocol, KoswatSurroundingsCsvFom
+        ],
+    ) -> KoswatSurroundingsCsvFom:
+        _csv_fom = self._csv_infrastructure_file_to_fom(csv_file)
+        _existing_fom = next(
+            (
+                _fom
+                for _rc, _fom in infrastructure_csv_foms.items()
+                if _rc.infrastructure_name == infrastructure_type.infrastructure_name
+            ),
+            None,
+        )
+        if _existing_fom:
+            if not infrastructure_type.is_polderside:
+                _existing_fom.merge(_csv_fom)
+                return _existing_fom
+            _csv_fom.merge(_existing_fom)
+
+        return _csv_fom
 
     def _csv_dir_to_fom(self, csv_dir: Path, obstacle_types: dict[str, float]) -> tuple[
         KoswatSurroundingsCsvFom,
@@ -178,35 +217,16 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                     )
                     continue
 
-                # Read obstacle surroundings file
-                _buffer = obstacle_types.get(_type_name, 0.0)
-                _csv_fom = self._csv_obstacle_file_to_fom(_csv_file, _buffer)
-                if _obstacle_csv_fom is None:
-                    _obstacle_csv_fom = _csv_fom
-                else:
-                    _obstacle_csv_fom.merge(_csv_fom)
+                _csv_fom = self._process_obstacle_file(
+                    _type_name, _csv_file, _obstacle_csv_fom
+                )
+                _obstacle_csv_fom = _csv_fom
                 _read_obs_types.append(_type_name)
             else:
-                # Infrastructure surrounding type
-                _csv_fom = self._csv_infrastructure_file_to_fom(_csv_file)
-                _existing_fom = next(
-                    (
-                        _fom
-                        for _rc, _fom in _infrastructure_csv_foms.items()
-                        if _rc.infrastructure_name
-                        == _infrastructure_type.infrastructure_name
-                    ),
-                    None,
+                _csv_fom = self._process_infrastructure_file(
+                    _infrastructure_type, _csv_file, _infrastructure_csv_foms
                 )
-                if _existing_fom:
-                    if _infrastructure_type.is_polderside:
-                        _csv_fom.merge(_existing_fom)
-                    else:
-                        _existing_fom.merge(_csv_fom)
-                else:
-                    _infrastructure_csv_foms[_infrastructure_type] = _csv_fom
-
-            # Get FOM from CSV file.
+                _infrastructure_csv_foms[_infrastructure_type] = _csv_fom
 
             if _first_fom is None:
                 _first_fom = deepcopy(_csv_fom)

@@ -40,6 +40,7 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
     location: Point | None = None
 
     imported_surroundings: dict[float, float] = field(default_factory=dict)
+
     polderside_surroundings: dict[float, float] = field(default_factory=dict)
     waterside_surroundings: dict[float, float] = field(default_factory=dict)
 
