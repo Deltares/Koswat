@@ -48,7 +48,10 @@ from koswat.configuration.settings.costs.infastructure_costs_settings import (
     InfrastructureCostsSettings,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.road_classes import RoadClassBuilder, RoadClassProtocol
+from koswat.dike.surroundings.infrastructure_types import (
+    InfrastructureTypeBuilder,
+    InfrastructureTypeProtocol,
+)
 from koswat.dike.surroundings.wrapper.surroundings_wrapper import SurroundingsWrapper
 from koswat.dike.surroundings.wrapper.surroundings_wrapper_builder import (
     SurroundingsWrapperBuilder,
@@ -132,10 +135,9 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
     ) -> KoswatSurroundingsCsvFom:
         return KoswatSurroundingsCsvReader().read(csv_file)
 
-    def _csv_dir_to_fom(
-        self, csv_dir: Path, obstacle_types: dict[str, float]
-    ) -> tuple[
-        KoswatSurroundingsCsvFom, dict[RoadClassProtocol, KoswatSurroundingsCsvFom]
+    def _csv_dir_to_fom(self, csv_dir: Path, obstacle_types: dict[str, float]) -> tuple[
+        KoswatSurroundingsCsvFom,
+        dict[InfrastructureTypeProtocol, KoswatSurroundingsCsvFom],
     ]:
         """
         Converts all CSV surrounding files in the provided `csv_dir` into a dictionary of
@@ -151,21 +153,23 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
             ]: A tuple containing the obstacle CSV FOM and a dictionary of infrastructure CSV FOMs, grouped by their type name.
         """
         _obstacle_csv_fom: KoswatSurroundingsCsvFom = None
-        _infrastructure_csv_foms: dict[RoadClassProtocol, KoswatSurroundingsCsvFom] = {}
+        _infrastructure_csv_foms: dict[
+            InfrastructureTypeProtocol, KoswatSurroundingsCsvFom
+        ] = {}
 
         _traject_name = csv_dir.stem
         _read_obs_types = []
         _first_fom: KoswatSurroundingsCsvFom | None = None
-        _road_class_builder = RoadClassBuilder(
+        _infrastructure_type_builder = InfrastructureTypeBuilder(
             infrastructure_section=self.infrastructure_section_fom,
             infrastructure_costs=self.infrastructure_costs,
         )
         for _csv_file in csv_dir.glob("*.csv"):
             _type_name = _csv_file.stem.replace(f"T_{_traject_name}_", "")
             # Try to map file name an infrastructure surrounding type.
-            _road_class = _road_class_builder.build(_type_name)
+            _infrastructure_type = _infrastructure_type_builder.build(_type_name)
 
-            if not _road_class:
+            if not _infrastructure_type:
                 # Obstacle surrounding type
                 if _type_name not in obstacle_types:
                     # In case of obstacles, only import those that are defined in the config file.
@@ -189,17 +193,18 @@ class SurroundingsWrapperCollectionImporter(BuilderProtocol):
                     (
                         _fom
                         for _rc, _fom in _infrastructure_csv_foms.items()
-                        if _rc.class_name == _road_class.class_name
+                        if _rc.infrastructure_name
+                        == _infrastructure_type.infrastructure_name
                     ),
                     None,
                 )
                 if _existing_fom:
-                    if _road_class.is_polderside:
+                    if _infrastructure_type.is_polderside:
                         _csv_fom.merge(_existing_fom)
                     else:
                         _existing_fom.merge(_csv_fom)
                 else:
-                    _infrastructure_csv_foms[_road_class] = _csv_fom
+                    _infrastructure_csv_foms[_infrastructure_type] = _csv_fom
 
             # Get FOM from CSV file.
 

@@ -25,23 +25,13 @@ from koswat.configuration.settings.koswat_general_settings import (
     InfraCostsEnum,
     SurtaxFactorEnum,
 )
-from koswat.dike.surroundings.road_classes import (
-    RoadClass2,
-    RoadClass7,
-    RoadClass24,
-    RoadClass47,
-    RoadClassUnknown,
-)
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
-)
-from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
-    BaseSurroundingsWrapper,
 )
 
 
 @dataclass
-class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
+class InfrastructureSurroundingsWrapper:
 
     infrastructures_considered: bool = True
 
@@ -53,29 +43,6 @@ class InfrastructureSurroundingsWrapper(BaseSurroundingsWrapper):
 
     buffer_crest_waterside: float = 0.0
 
-    # infrastructures
-    roads_class_2: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass2()
-        )
-    )
-    roads_class_7: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass7()
-        )
-    )
-    roads_class_24: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass24()
-        )
-    )
-    roads_class_47: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClass47()
-        )
-    )
-    roads_class_unknown: SurroundingsInfrastructure = field(
-        default_factory=lambda: SurroundingsInfrastructure(
-            infrastructure_type=RoadClassUnknown()
-        )
+    infrastructures_collection: dict[str, SurroundingsInfrastructure] = field(
+        default_factory=dict
     )

@@ -37,7 +37,7 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
-from koswat.dike.surroundings.road_classes import RoadClassProtocol
+from koswat.dike.surroundings.infrastructure_types import InfrastructureTypeProtocol
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -105,7 +105,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
         return adding_costs + removing_costs
 
     def _get_zone_costs(
-        self, infrastructure_type: RoadClassProtocol
+        self, infrastructure_type: InfrastructureTypeProtocol
     ) -> tuple[float, float, float]:
         _adding_costs = infrastructure_type.adding_costs
         _removing_costs = infrastructure_type.removing_costs
@@ -138,7 +138,7 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
             infrastructure_calculators=list(
                 map(
                     get_infra_calculator,
-                    self.infrastructure_wrapper.surroundings_collection.values(),
+                    self.infrastructure_wrapper.infrastructures_collection.values(),
                 )
             )
         )

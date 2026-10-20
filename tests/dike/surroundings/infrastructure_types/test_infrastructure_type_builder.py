@@ -6,13 +6,13 @@ from koswat.configuration.io.config_sections.infrastructure_section_fom import (
 from koswat.configuration.settings.costs.infastructure_costs_settings import (
     InfrastructureCostsSettings,
 )
-from koswat.dike.surroundings.road_classes import (
-    RoadClassBuilder,
-    RoadClassProtocol,
+from koswat.dike.surroundings.infrastructure_types import (
+    InfrastructureTypeBuilder,
+    InfrastructureTypeProtocol,
 )
 
 
-class TestRoadClassBuilder:
+class TestInfrastructureTypeBuilder:
 
     def test_when_initialized_then_builder_created(self):
         # 1. Define test data
@@ -20,14 +20,14 @@ class TestRoadClassBuilder:
         _infrastructure_costs_settings = None
 
         # 2. Execute test
-        _builder = RoadClassBuilder(
+        _builder = InfrastructureTypeBuilder(
             infrastructure_section=_infrastructure_section_fom,
             infrastructure_costs=_infrastructure_costs_settings,
         )
 
         # 3. Verify test results
         assert _builder is not None
-        assert _builder.road_class_types is not None
+        assert _builder.infrastructure_types is not None
 
     @pytest.mark.parametrize(
         "source_name, expected_type, is_polderside",
@@ -38,7 +38,7 @@ class TestRoadClassBuilder:
                 True,
                 id=x.get_polderside_import_name(),
             )
-            for x in RoadClassBuilder(None, None).road_class_types
+            for x in InfrastructureTypeBuilder(None, None).infrastructure_types
         ]
         + [
             pytest.param(
@@ -47,19 +47,19 @@ class TestRoadClassBuilder:
                 False,
                 id=x.get_waterside_import_name(),
             )
-            for x in RoadClassBuilder(None, None).road_class_types
+            for x in InfrastructureTypeBuilder(None, None).infrastructure_types
         ],
     )
-    def test_when_build_given_valid_parameters_then_road_classes_created(
+    def test_when_build_given_valid_parameters_then_infrastructure_type_created(
         self,
         infrastructure_section_fom_fixture: InfrastructureSectionFom,
         infrastructure_costs_settings_fixture: InfrastructureCostsSettings,
         source_name: str,
-        expected_type: type[RoadClassProtocol],
+        expected_type: type[InfrastructureTypeProtocol],
         is_polderside: bool,
     ):
         # Define test data
-        _builder = RoadClassBuilder(
+        _builder = InfrastructureTypeBuilder(
             infrastructure_section=infrastructure_section_fom_fixture,
             infrastructure_costs=infrastructure_costs_settings_fixture,
         )
@@ -69,7 +69,7 @@ class TestRoadClassBuilder:
 
         # 3. Verify expectations
         assert _result is not None
-        assert isinstance(_result, RoadClassProtocol)
+        assert isinstance(_result, InfrastructureTypeProtocol)
         assert isinstance(_result, expected_type)
         assert _result.is_polderside is is_polderside
 
@@ -79,7 +79,7 @@ class TestRoadClassBuilder:
         infrastructure_costs_settings_fixture: InfrastructureCostsSettings,
     ):
         # 1. Define test data
-        _builder = RoadClassBuilder(
+        _builder = InfrastructureTypeBuilder(
             infrastructure_section=infrastructure_section_fom_fixture,
             infrastructure_costs=infrastructure_costs_settings_fixture,
         )

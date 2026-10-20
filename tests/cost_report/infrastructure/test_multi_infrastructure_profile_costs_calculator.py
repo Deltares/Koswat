@@ -11,8 +11,8 @@ from koswat.cost_report.infrastructure.infrastructure_profile_costs_calculator i
 from koswat.cost_report.infrastructure.multi_infrastructure_profile_costs_calculator import (
     MultiInfrastructureProfileCostsCalculator,
 )
+from koswat.dike.surroundings.infrastructure_types import RoadClass2
 from koswat.dike.surroundings.point import PointInfrastructureSurroundings
-from koswat.dike.surroundings.road_classes import RoadClass2
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )

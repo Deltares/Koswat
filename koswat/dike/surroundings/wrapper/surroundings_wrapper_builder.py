@@ -32,19 +32,12 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.point import (
+from koswat.dike.surroundings.infrastructure_types import InfrastructureTypeProtocol
+from koswat.dike.surroundings.point.point_infrastructure_surroundings import (
     PointInfrastructureSurroundings,
 )
 from koswat.dike.surroundings.point.point_surroundings_list_builder import (
     PointSurroundingsListBuilder,
-)
-from koswat.dike.surroundings.road_classes import (
-    RoadClass2,
-    RoadClass7,
-    RoadClass24,
-    RoadClass47,
-    RoadClassProtocol,
-    RoadClassUnknown,
 )
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
@@ -64,7 +57,7 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     infrastructure_section_fom: InfrastructureSectionFom
     location_shp_fom: KoswatDikeLocationsShpFom
     obstacles: KoswatSurroundingsCsvFom
-    infrastructures: dict[RoadClassProtocol, KoswatSurroundingsCsvFom]
+    infrastructures: dict[InfrastructureTypeProtocol, KoswatSurroundingsCsvFom]
 
     def build(self) -> SurroundingsWrapper:
         return SurroundingsWrapper(
@@ -75,28 +68,6 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             infrastructure_surroundings_wrapper=self._get_infrastructure_surroundings_wrapper(),
             max_polderside_extension=self.surroundings_section_fom.max_polderside_extension,
             max_waterside_extension=self.surroundings_section_fom.max_waterside_extension,
-        )
-
-    def _get_infrastructure_surroundings_from_fom_collection(
-        self, road_class_type: type[RoadClassProtocol]
-    ) -> tuple[RoadClassProtocol, list[PointInfrastructureSurroundings]]:
-        _key, _value = next(
-            (
-                (k, v)
-                for k, v in self.infrastructures.items()
-                if isinstance(k, road_class_type)
-            ),
-            (None, None),
-        )
-        if _key is None or _value is None:
-            return road_class_type(), []
-
-        return (
-            _key,
-            PointSurroundingsListBuilder(
-                koswat_shp_fom=self.location_shp_fom,
-                koswat_csv_fom=_value,
-            ).build(),
         )
 
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
@@ -118,41 +89,35 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
         return _obs_wrapper
 
-    def _get_surroundings_infrastructure(
-        self, road_class_type: type[RoadClassProtocol]
-    ) -> SurroundingsInfrastructure:
-        _road_class, _points = (
-            self._get_infrastructure_surroundings_from_fom_collection(road_class_type)
-        )
-        return SurroundingsInfrastructure(
-            infrastructure_type=_road_class,
-            points=_points,
-        )
+    def _get_infrastructures_collection(
+        self,
+    ) -> dict[str, SurroundingsInfrastructure]:
+        if not self.infrastructure_section_fom.active:
+            return {}
+
+        def build_surroundings_points(
+            fom_points: KoswatSurroundingsCsvFom,
+        ) -> list[PointInfrastructureSurroundings]:
+            return PointSurroundingsListBuilder(
+                koswat_shp_fom=self.location_shp_fom,
+                koswat_csv_fom=fom_points,
+            ).build()
+
+        return {
+            _infrastructure_type.infrastructure_name: SurroundingsInfrastructure(
+                infrastructure_type=_infrastructure_type,
+                points=build_surroundings_points(_fom_points),
+            )
+            for _infrastructure_type, _fom_points in self.infrastructures.items()
+        }
 
     def _get_infrastructure_surroundings_wrapper(
         self,
     ) -> InfrastructureSurroundingsWrapper:
-        _infra_wrapper = InfrastructureSurroundingsWrapper(
+        return InfrastructureSurroundingsWrapper(
             infrastructures_considered=self.infrastructure_section_fom.active,
             surtax_cost_factor=self.infrastructure_section_fom.surtax_factor_roads,
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrastructure_costs_0dh,
             buffer_crest_waterside=self.infrastructure_section_fom.buffer_crest_waterside,
+            infrastructures_collection=self._get_infrastructures_collection(),
         )
-        if self.infrastructure_section_fom.active:
-            _infra_wrapper.roads_class_2 = self._get_surroundings_infrastructure(
-                RoadClass2
-            )
-            _infra_wrapper.roads_class_7 = self._get_surroundings_infrastructure(
-                RoadClass7
-            )
-            _infra_wrapper.roads_class_24 = self._get_surroundings_infrastructure(
-                RoadClass24
-            )
-            _infra_wrapper.roads_class_47 = self._get_surroundings_infrastructure(
-                RoadClass47
-            )
-            _infra_wrapper.roads_class_unknown = self._get_surroundings_infrastructure(
-                RoadClassUnknown
-            )
-
-        return _infra_wrapper
