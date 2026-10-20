@@ -36,6 +36,8 @@ class InfrastructureLocationCosts:
 
     location: PointInfrastructureSurroundings = None
 
+    # TODO: create Zone class
+
     zone_a: float = 0.0
     zone_a_costs: float = 0.0
 
