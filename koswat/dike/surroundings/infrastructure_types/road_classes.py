@@ -31,4 +31,4 @@ class RoadClass47(RoadClassBase):
 @dataclass(eq=False)
 class RoadClassUnknown(RoadClassBase):
     infrastructure_name: ClassVar[str] = "roads_class_unknown"
-    import_key: ClassVar[str] = "klasseunknown"
+    import_key: ClassVar[str] = "klasseonbekend"
