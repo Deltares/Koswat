@@ -70,6 +70,20 @@ class ClusterShpFom:
         return self.reinforced_profile.polderside_width
 
     @property
+    def old_waterside_width(self) -> float:
+        """
+        The original waterside width.
+        """
+        return self.reinforced_profile.old_profile.waterside_width
+
+    @property
+    def new_waterside_width(self) -> float:
+        """
+        The new waterside width.
+        """
+        return self.reinforced_profile.waterside_width
+
+    @property
     def base_geometry(self) -> LineString:
         """
         The resulting geometry of all `locations` excluding the
@@ -92,6 +106,21 @@ class ClusterShpFom:
             LineString: Resulting `base_geometry` with a buffer.
         """
         return self.base_geometry.buffer(-width, cap_style=2, single_sided=True)
+
+    def get_waterside_buffered_geometry(self, width: float) -> LineString:
+        """
+        The `base_geometry` with an applied buffer (`width`) that
+        represents the waterside's width. The waterside is the opposite
+        side of the polderside, therefore the buffer is applied with the
+        opposite sign.
+
+        Args:
+            width (float): Profile's waterside width.
+
+        Returns:
+            LineString: Resulting `base_geometry` with a buffer.
+        """
+        return self.base_geometry.buffer(width, cap_style=2, single_sided=True)
 
     @staticmethod
     def add_neighbour_extent(

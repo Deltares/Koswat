@@ -32,17 +32,23 @@ class ClusterGeoDataFrameOutputFom(FileObjectModelProtocol):
     base_layer: GeoDataFrame | None
     initial_state: GeoDataFrame | None
     new_state: GeoDataFrame | None
+    initial_state_waterside: GeoDataFrame | None
+    new_state_waterside: GeoDataFrame | None
 
     def __init__(self, gdf_tuples: tuple[GeoDataFrame]):
         self.base_layer = None
         self.initial_state = None
         self.new_state = None
+        self.initial_state_waterside = None
+        self.new_state_waterside = None
 
         if not gdf_tuples:
             return
         self.base_layer = gdf_tuples[0]
         self.initial_state = gdf_tuples[1]
         self.new_state = gdf_tuples[2]
+        self.initial_state_waterside = gdf_tuples[3]
+        self.new_state_waterside = gdf_tuples[4]
 
     def is_valid(self) -> bool:
         """
@@ -56,5 +62,5 @@ class ClusterGeoDataFrameOutputFom(FileObjectModelProtocol):
             return gdf is not None
 
         return all(
-            map(validate_gdf, [self.base_layer, self.initial_state, self.new_state])
+            map(validate_gdf, [self.base_layer, self.initial_state, self.new_state, self.initial_state_waterside, self.new_state_waterside])
         )

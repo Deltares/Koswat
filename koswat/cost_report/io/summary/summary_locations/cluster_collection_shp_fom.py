@@ -111,7 +111,7 @@ class ClusterCollectionShpFom:
 
         def to_gdf_entry(
             cluster_shp_fom: ClusterShpFom,
-        ) -> tuple[dict, dict, dict]:
+        ) -> tuple[dict, dict, dict, dict, dict]:
             _base_dict = {
                 "dijkvak": cluster_shp_fom.reinforced_profile.input_data.dike_section,
                 "maatregel": cluster_shp_fom.reinforced_profile.output_name,
@@ -119,16 +119,30 @@ class ClusterCollectionShpFom:
                 "bs_pld_oud": cluster_shp_fom.old_polderside_width,
                 "bs_pld_nw": cluster_shp_fom.new_polderside_width,
             }
+            _waterside_dict = {
+                "dijkvak": _base_dict["dijkvak"],
+                "maatregel": _base_dict["maatregel"],
+                "lengte": _base_dict["lengte"],
+                "bs_wtr_oud": cluster_shp_fom.old_waterside_width,
+                "bs_wtr_nw": cluster_shp_fom.new_waterside_width,
+            }
 
             def buffered_entry(buffered_value: float) -> dict:
                 return _base_dict | dict(
                     geometry=cluster_shp_fom.get_buffered_geometry(buffered_value)
                 )
 
+            def waterside_buffered_entry(buffered_value: float) -> dict:
+                return _waterside_dict | dict(
+                    geometry=cluster_shp_fom.get_waterside_buffered_geometry(buffered_value)
+                )
+
             return (
                 _base_dict | dict(geometry=cluster_shp_fom.base_geometry),
                 buffered_entry(cluster_shp_fom.old_polderside_width),
                 buffered_entry(cluster_shp_fom.new_polderside_width),
+                waterside_buffered_entry(cluster_shp_fom.old_waterside_width),
+                waterside_buffered_entry(cluster_shp_fom.new_waterside_width),
             )
 
         def dict_list_to_gdf(dict_entries: list[dict]) -> GeoDataFrame:
