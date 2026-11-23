@@ -3,6 +3,7 @@ import math
 import pytest
 
 from koswat.dike.surroundings.point import (
+    PointInfrastructureSurroundings,
     PointObstacleSurroundings,
     PointSurroundingsProtocol,
 )
@@ -22,6 +23,24 @@ class TestPointObstacleSurroundings:
         assert math.isnan(_pos.outside_distance)
         assert math.isnan(_pos.angle_inside)
         assert math.isnan(_pos.angle_outside)
+
+    @pytest.mark.parametrize(
+        "obstacle_type", [PointObstacleSurroundings, PointInfrastructureSurroundings]
+    )
+    def test_when_testing_equality_given_comparable_type_then_return_true(
+        self, obstacle_type: type[PointSurroundingsProtocol]
+    ):
+        # Given
+        _traject_order = 123
+        _this = PointObstacleSurroundings(traject_order=_traject_order)
+        _other = obstacle_type()
+        _other.traject_order = _traject_order
+
+        # When
+        result: bool = _this == _other
+
+        # Then
+        assert result
 
     def test_merge_point_obstacle_surroundings(self):
         # 1. Define test data.
