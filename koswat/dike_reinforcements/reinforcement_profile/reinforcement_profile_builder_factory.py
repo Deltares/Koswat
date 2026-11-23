@@ -19,6 +19,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from dataclasses import replace
+
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
@@ -97,8 +99,22 @@ class ReinforcementProfileBuilderFactory:
         _builder = self.get_reinforcement_builder(reinforcement_profile_type)
         _builder.base_profile = self.base_profile
         _builder.reinforcement_settings = self.reinforcement_settings
-        _builder.scenario = self.scenario
+        _builder.scenario = self.get_scenario(reinforcement_profile_type)
         return _builder.build()
+
+    def get_scenario(
+        self, reinforcement_profile_type: type[ReinforcementProfileProtocol]
+    ) -> KoswatScenario:
+        """
+        Gets the scenario to be used for the given reinforcement type.
+        Only the waterside soil reinforcement gets an adjusted `waterside_slope`;
+        all other reinforcements use the original scenario.
+        """
+        if issubclass(reinforcement_profile_type, SoilWatersideReinforcementProfile):
+            return replace(
+                self.scenario, waterside_slope=self.scenario.waterside_slope + 0.01
+            )
+        return self.scenario
 
     @staticmethod
     def get_available_reinforcements() -> list[ReinforcementProfileProtocol]:
