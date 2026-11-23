@@ -56,9 +56,9 @@ class PointInfrastructureSurroundings(PointSurroundingsProtocol):
         Overriding of the "magic" equality operator required
         so that `PointInfrastructureSurroundings` can be used as a key in a python dict.
         """
-        if not isinstance(value, type(self)):
+        if not isinstance(value, PointSurroundingsProtocol):
             return False
-        return self.traject_order == value.traject_order
+        return hash(self) == hash(value)
 
     def merge(self, other: PointSurroundingsProtocol) -> None:
         if not isinstance(other, PointInfrastructureSurroundings):
