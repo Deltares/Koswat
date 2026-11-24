@@ -153,6 +153,7 @@ class TestCofferdamInputProfileCalculation:
         assert _result.polderside_ground_level == 2.3
         assert _result.ground_price_builtup == 150
         assert _result.ground_price_unbuilt == 10
+        assert _result.ground_price_waterside == 20
         assert _result.factor_settlement == 1.2
         assert _result.pleistocene == -6.7
         assert _result.aquifer == -2.3

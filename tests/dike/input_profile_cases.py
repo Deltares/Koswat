@@ -16,6 +16,7 @@ default_case = KoswatInputProfileBase.from_dict(
         polderside_ground_level=0,
         ground_price_builtup=150,
         ground_price_unbuilt=10,
+        ground_price_waterside=20,
         factor_settlement=1.2,
         pleistocene=-5,
         aquifer=-2,
