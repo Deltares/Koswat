@@ -98,6 +98,9 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         _calculator.new_ground_level_surface_waterside = (
             self.reinforced_profile.new_ground_waterside
         )
+        _calculator.new_ground_level_surface_polderside = (
+            self.reinforced_profile.new_ground_polderside
+        )       
         _calculator.construction_length = (
             self.reinforced_profile.input_data.construction_length
         )
@@ -203,7 +206,8 @@ class QuantityCostParametersBuilder(BuilderProtocol):
         )
         qc_parameters.land_purchase_surface_polderside = (
             self._get_land_purchase_polderside_cost_parameter(
-                _qcp.new_ground_level_surface, self.reinforced_profile.input_data
+                _qcp.new_ground_level_surface_polderside,
+                self.reinforced_profile.input_data,
             )
         )
         qc_parameters.land_purchase_surface_waterside = (
