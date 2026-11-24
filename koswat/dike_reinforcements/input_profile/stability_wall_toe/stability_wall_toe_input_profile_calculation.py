@@ -85,7 +85,7 @@ class StabilityWallToeInputProfileCalculation(
             # Length of wall zoals bij kwelscherm
             _length_piping = (
                 (seepage_length / 6)
-                + (old_data.polderside_ground_level - old_data.aquifer)
+                + old_data.thickness_cover_layer
                 + 1  # 1 m in bestaande dijklichaam
             )
 

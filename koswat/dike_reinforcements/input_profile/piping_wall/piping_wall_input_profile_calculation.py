@@ -72,7 +72,7 @@ class PipingWallInputProfileCalculation(
             return 0.0
         _length_piping = (
             (seepage_length / 6.0)
-            + (old_data.polderside_ground_level - old_data.aquifer)
+            + old_data.thickness_cover_layer
             + 1.0
         )
         return round(

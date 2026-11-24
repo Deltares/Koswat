@@ -74,7 +74,9 @@ class CofferdamInputProfileCalculation(
             _length_piping = 0.0
         else:
             _length_piping = (
-                (seepage_length / 6.0) + (new_crest_height - 0.5) - old_data.aquifer
+                (seepage_length / 6.0)
+                + old_data.thickness_cover_layer
+                + (new_crest_height - 0.5) - old_data.polderside_ground_level
             )
 
         return round(

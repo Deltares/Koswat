@@ -44,7 +44,6 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
     ground_price_waterside: float = math.nan
     factor_settlement: float = math.nan
     pleistocene: float = math.nan
-    aquifer: float = math.nan
     thickness_cover_layer: float = math.nan
     thickness_grass_layer: float = math.nan
     thickness_clay_layer: float = math.nan
@@ -110,7 +109,6 @@ class KoswatInputProfileBase(KoswatInputProfileProtocol):
             self.factor_settlement, other.factor_settlement
         )
         self.pleistocene = _set_default(self.pleistocene, other.pleistocene)
-        self.aquifer = _set_default(self.aquifer, other.aquifer)
         self.thickness_cover_layer = _set_default(
             self.thickness_cover_layer, other.thickness_cover_layer
         )

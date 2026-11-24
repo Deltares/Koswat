@@ -83,7 +83,6 @@ class DikeProfileSectionFom(ConfigSectionFomProtocol, KoswatInputProfileBase):
         )
         _section.factor_settlement = _get_float(input_dict.get("factorzetting", None))
         _section.pleistocene = _get_float(input_dict.get("pleistoceen", None))
-        _section.aquifer = _get_float(input_dict.get("aquifer", None))
         _section.thickness_cover_layer = _get_float(
             input_dict.get("dikte_deklaag", None)
         )

@@ -76,8 +76,7 @@ class ReinforcementInputProfileCalculationBase(ABC):
         _reinforced_profile.ground_price_waterside = base_data.ground_price_waterside
         _reinforced_profile.factor_settlement = base_data.factor_settlement
         _reinforced_profile.pleistocene = base_data.pleistocene
-        _reinforced_profile.aquifer = base_data.aquifer
-
+        _reinforced_profile.thickness_cover_layer = base_data.thickness_cover_layer
         return _reinforced_profile
 
     @staticmethod

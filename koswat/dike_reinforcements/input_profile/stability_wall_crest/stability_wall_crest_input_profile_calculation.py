@@ -79,7 +79,9 @@ class StabilityWallCrestInputProfileCalculation(
                 _length_piping = 0.0
             else:
                 _length_piping = (
-                    (seepage_length / 6) + (new_crest_height - 0.5) - old_data.aquifer
+                    (seepage_length / 6) 
+                    + old_data.thickness_cover_layer
+                    + (new_crest_height - 0.5) - old_data.polderside_ground_level 
                 )
         else:
             _length_stability = 0
@@ -90,7 +92,7 @@ class StabilityWallCrestInputProfileCalculation(
                 # Length of wall zoals bij kwelscherm
                 _length_piping = (
                     (seepage_length / 6)
-                    + (old_data.polderside_ground_level - old_data.aquifer)
+                    + old_data.thickness_cover_layer
                     + 1  # 1 m in bestaande dijklichaam
                 )
 
