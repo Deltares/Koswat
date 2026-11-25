@@ -19,6 +19,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import math
+
 from koswat.dike.koswat_profile_protocol import KoswatProfileProtocol
 from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_input_profile import (
     SoilWatersideInputProfile,
@@ -26,8 +28,11 @@ from koswat.dike_reinforcements.input_profile.soil_waterside.soil_waterside_inpu
 from koswat.dike_reinforcements.reinforcement_layers.reinforcement_layers_wrapper import (
     ReinforcementLayersWrapper,
 )
-from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
-    WatersideOnlyRoomCalculator,
+from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator.polderside_and_waterside_room_calculator import (
+    PoldersideAndWatersideRoomCalculator,
+)
+from koswat.dike_reinforcements.reinforcement_profile.standard.decorators import (
+    polder_and_waterside_room_calculator,
 )
 from koswat.dike_reinforcements.reinforcement_profile.standard.standard_reinforcement_profile import (
     StandardReinforcementProfile,
@@ -41,7 +46,25 @@ class SoilWatersideReinforcementProfile(StandardReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> WatersideOnlyRoomCalculator:
-        return WatersideOnlyRoomCalculator(
-            required_waterside_width=self.waterside_width
+    @property
+    def waterside_changed(self) -> bool:
+        return (
+            not math.isclose(
+                self.input_data.waterside_slope,
+                self.old_profile.input_data.waterside_slope,
+            )
+            or not math.isclose(
+                self.input_data.waterside_berm_width,
+                self.old_profile.input_data.waterside_berm_width,
+            )
+            or not math.isclose(
+                self.input_data.waterside_berm_height,
+                self.old_profile.input_data.waterside_berm_height,
+            )
         )
+
+    @polder_and_waterside_room_calculator
+    def get_reinforcement_room_calculator(
+        self, waterside_allowed: bool
+    ) -> PoldersideAndWatersideRoomCalculator:
+        pass

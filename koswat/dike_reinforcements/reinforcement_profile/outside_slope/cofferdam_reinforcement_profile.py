@@ -41,7 +41,9 @@ class CofferdamReinforcementProfile(OutsideSlopeReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> ReinforcementRoomCalculatorProtocol:
+    def get_reinforcement_room_calculator(
+        self, waterside_allowed: bool
+    ) -> ReinforcementRoomCalculatorProtocol:
         class CofferdamRoomCalculator(ReinforcementRoomCalculatorProtocol):
             def reinforcement_has_room(self, *args) -> bool:
                 return True

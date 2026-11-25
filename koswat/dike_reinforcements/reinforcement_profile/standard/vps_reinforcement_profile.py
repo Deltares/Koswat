@@ -41,7 +41,9 @@ class VPSReinforcementProfile(StandardReinforcementProfile):
     old_profile: KoswatProfileProtocol
     new_ground_level_surface: float
 
-    def get_reinforcement_room_calculator(self) -> PoldersideOnlyRoomCalculator:
+    def get_reinforcement_room_calculator(
+        self, waterside_allowed: bool
+    ) -> PoldersideOnlyRoomCalculator:
         return PoldersideOnlyRoomCalculator(
             required_polderside_width=self.polderside_width
         )

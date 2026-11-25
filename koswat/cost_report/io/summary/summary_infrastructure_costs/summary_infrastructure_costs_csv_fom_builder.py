@@ -52,14 +52,12 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
             )
         )
         self._ordered_infra_types = sorted(
-            list(
-                set(
-                    _ilpcr.infrastructure_name
-                    for _ilpcr in self.koswat_summary.locations_profile_report_list[
-                        0
-                    ].infra_multilocation_profile_cost_report
-                )
-            )
+            set(
+                _ilpcr.infrastructure_type.infrastructure_name
+                for _ilpcr in self.koswat_summary.locations_profile_report_list[
+                    0
+                ].infra_multilocation_profile_cost_report
+            ),
         )
 
         return KoswatCsvMultiHeaderFom(
@@ -122,6 +120,8 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                         round(_ilc.zone_a_costs * _ilc.surtax, 2),
                         _ilc.zone_b,
                         round(_ilc.zone_b_costs * _ilc.surtax, 2),
+                        _ilc.zone_c,
+                        round(_ilc.zone_c_costs * _ilc.surtax, 2),
                     ]
                 )
             return _details
@@ -195,7 +195,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
                 update_infra_location_cost_dict(
                     _ilpcr.infrastructure_location_costs.location,
                     _lpr.profile_type_name,
-                    _ilpcr.infrastructure_name,
+                    _ilpcr.infrastructure_type.infrastructure_name,
                     _ilpcr.infrastructure_location_costs,
                 )
 
@@ -206,7 +206,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         Get the headers for the CSV file.
             Line 1: Profile types
             Line 2: Infra types
-            Line 3: Zone A and B lengths and costs
+            Line 3: Zone A, B and C lengths and costs
 
         Returns:
             list[list[str]]: Headers for the CSV file.
@@ -219,7 +219,7 @@ class SummaryInfrastructureCostsCsvFomBuilder(BuilderProtocol):
         _surtax_note = "*) Kosten incl. opslagfactoren"
 
         # Collect header fragments
-        _zones = ["A", "B"]
+        _zones = ["A", "B", "C"]
         _zone_keys = []
         for _zone in _zones:
             _zone_keys.extend(

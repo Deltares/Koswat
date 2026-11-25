@@ -37,18 +37,21 @@ class TestInfrastructureProfileCostsCalculator:
         will be used so that based on the width of the `zone_a` we round up its value
         until a key match is found.
         Example given:
-            - if `zone_a = 4` then range is `[0, 4]` and:
-                - matrix keys `0` an `5`, both included,
-                - `zone_a_width = a + b`.
-            - if `zone_b = 1` then range `[4, 5]` and:
-                - matrix keys `10` as `0` and `5` were claimed by `zone_a`.
-                - `zone_b_width = c`.
+            - if `zone_a = 6` then waterside range is `[0, 6]` and:
+                - waterside keys `0` and `5`, both included,
+            - if `zone_b = 4` then polderside range is `[0, 4]` and:
+                - polderside keys `0` an `5`, both included,
+                - `zone_b_width = a + b`.
+            - if `zone_c = 1` then polderside range is `[4, 5]` and:
+                - polderside keys `10` as `0` and `5` were claimed by `zone_b`.
+                - `zone_c_width = c`.
         """
         # 1. Define test data.
         # Set costs to 1 for easy comparisons.
         _surtax = 1.0
         _zone_a_costs = 1.0
         _zone_b_costs = 1.0
+        _zone_c_costs = 1.0
         (
             _infrastructure_fixture,
             _point_surroundings_case,
@@ -58,11 +61,15 @@ class TestInfrastructureProfileCostsCalculator:
             surtax=_surtax,
             zone_a_costs=_zone_a_costs,
             zone_b_costs=_zone_b_costs,
+            zone_c_costs=_zone_c_costs,
+            buffer_crest_waterside=_point_surroundings_case.crest_buffer,
         )
 
         # 2. Run test.
         _locations_costs = _calculator.calculate(
-            _point_surroundings_case.zone_a_width, _point_surroundings_case.zone_b_width
+            _point_surroundings_case.zone_a_width,
+            _point_surroundings_case.zone_b_width,
+            _point_surroundings_case.zone_c_width,
         )
 
         # 3. Verify expectations.
@@ -75,17 +82,28 @@ class TestInfrastructureProfileCostsCalculator:
             == _infrastructure_fixture.points[0].location
         )
         assert _location_cost.surtax == _surtax
+
+        # costs
         assert (
             _location_cost.zone_a_costs
-            == _zone_a_costs * _point_surroundings_case.expected_total_widths[0]
+            == _zone_a_costs * _point_surroundings_case.expected_total_lengths[0]
         )
         assert (
             _location_cost.zone_b_costs
-            == _zone_b_costs * _point_surroundings_case.expected_total_widths[1]
+            == _zone_b_costs * _point_surroundings_case.expected_total_lengths[1]
         )
         assert (
-            _location_cost.zone_a == _point_surroundings_case.expected_total_widths[0]
+            _location_cost.zone_c_costs
+            == _zone_c_costs * _point_surroundings_case.expected_total_lengths[2]
+        )
+
+        # surface
+        assert (
+            _location_cost.zone_a == _point_surroundings_case.expected_total_lengths[0]
         )
         assert (
-            _location_cost.zone_b == _point_surroundings_case.expected_total_widths[1]
+            _location_cost.zone_b == _point_surroundings_case.expected_total_lengths[1]
+        )
+        assert (
+            _location_cost.zone_c == _point_surroundings_case.expected_total_lengths[2]
         )

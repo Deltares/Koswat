@@ -19,24 +19,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from abc import ABC
-
-from koswat.dike.surroundings.koswat_surroundings_protocol import (
-    KoswatSurroundingsProtocol,
-)
+from typing import ClassVar, Protocol, runtime_checkable
 
 
-class BaseSurroundingsWrapper(ABC):
-    @property
-    def surroundings_collection(self) -> dict[str, KoswatSurroundingsProtocol]:
-        """
-        The collection of `KoswatSurroundingsProtocol` objects that are considered for a scenario analysis.
+@runtime_checkable
+class InfrastructureTypeProtocol(Protocol):
+    infrastructure_name: ClassVar[str]
 
-        Returns:
-            dict[str, KoswatSurroundingsProtocol]: Collection of surroundings to include in analysis.
-        """
-        return {
-            _prop: _value
-            for _prop, _value in self.__dict__.items()
-            if isinstance(_value, KoswatSurroundingsProtocol)
-        }
+    is_polderside: bool
+    width: float
+    adding_costs: float
+    removing_costs: float

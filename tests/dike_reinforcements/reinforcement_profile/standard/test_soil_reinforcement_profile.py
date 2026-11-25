@@ -19,3 +19,7 @@ class TestSoilReinforcementProfile:
         assert isinstance(_profile, ReinforcementProfileProtocol)
         assert isinstance(_profile, KoswatProfileProtocol)
         assert isinstance(_profile, KoswatProfileBase)
+
+    def test_when_waterside_changed_then_returns_false(self):
+        _profile = SoilReinforcementProfile()
+        assert _profile.waterside_changed is False

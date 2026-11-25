@@ -54,26 +54,18 @@ Their headers are divided in the following columns:
 - `SECTIE`, section of the location in the dike's traject,
 - `Xcoord`, x coordinate of the location,
 - `Ycoord`, y coordinate of the location, 
-- `afst_{x}m`, distance from the reference point of the location, where 'x' are all the values between `5` and `200` with steps of 5, thus 40 columns. The values in these cells define whether there are obstacles or infrastructures at this distance or not and in `Koswat` are usually built in the `SurroundingsPoint.surroundings_matrix`, each type of surrounding interprets the weights in a different manner.
-
 
 ## Obstacles
 
-An obstacle usually represents a building. Because they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
+Obstacle represent e.g. buildings, waters, railways, etc. Because, in principle, they cannot be removed they become a constraint to the possible reinforcements that can be applied at a given location. For instance, if a dike's reinforcement will become 5 meters wider, but within that distance there are obstacles, said reinforcement will be discarded as a possible option at that location.
 The distance from the reference point of the dike to the closes point of the obstacle is given.
 
-The values in the columns `afst_{x}m` are either `1` or `0` and are simply interpreted as having a surrounding or not. Thus ignoring other characteristics of the surrounding and just focusing on its presence.
+For each type of obstacle only the closest obstacle per location is given, both for the polderside (`dist_binnen`) and the waterside (`dist_buiten`).
 
 ### Obstacle types
 
-Currently we identify and support the following surroundings as written in the `.csv` file names:
-
-- `bebouwing_binnendijks` (buildings), 
-- `spoorwegen_binnendijks` (railways),
-- `waters_binnendijks` (waters),
-
-As reminder, at the moment we only support 'inside the dike's' surroundings.
-
+The user can configure their own types of obstacles (`OmgevingTypes`).
+For each type optionally a buffer can be given to indicate the minimum distance to keep between the obstacle and the reinforcement (`Buffer`).
 
 ## Infrastructures
 
@@ -82,6 +74,8 @@ Infrastructures are mostly "roads". Contrary to the [obstacles](#obstacles) thes
 - The width of the infrastructure (taken from the `Koswat_general.json` settings),
 - The length of the infrastructure at that location (the values in the columns `afst_{x}m`),
 - The required technique (repair, displace, nothing) for the type of infrastructure (also from `koswat_general.json` settings) and its related costs (`koswat_costs.json`).
+
+The lengths of the infrastructures at a certain distance from the reference point at that location are given in columns `afst_{x}m`. Here 'x' are all the values between `5` and `200` with steps of 5, thus 40 columns. The values in these cells define whether there are obstacles or infrastructures at this distance or not and in `Koswat` are usually built in the `SurroundingsPoint.polderside_surroundings` and `SurroundingsPoint.waterside_surroundings`. Each type of surrounding interprets the weights in a different manner.
 
 With the above values we know what's the __affected area__ of an infrastructure when a reinforced profile needs to be applied and therefore can estimate their costs.
 
@@ -97,7 +91,7 @@ Currently we identify and support the following surroundings as written in the `
 - `wegen_binnendijks_klasse47` (roads class 47),
 - `wegen_binnendijks_klasseonbekend` (roads of unknown class),
 
-As reminder, at the moment we only support 'inside the dike's' surroundings.
+The can be given for the polderside (`binnendijks`) and the waterside (`buitendijks`).
 
 ## Surroundings in the code
 

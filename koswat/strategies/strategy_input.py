@@ -38,8 +38,10 @@ class StrategyInput:
     strategy_reinforcements: list[StrategyReinforcementInputProtocol] = field(
         default_factory=lambda: []
     )
+    waterside_reinforcement_allowed: bool = False
     reinforcement_min_buffer: float = 0.0
     reinforcement_min_length: float = 0.0
+
     # By default there are no maximum width boundaries,
     # so we set them to NaN to indicate that they are not defined.
     reinforcement_max_width_polderside: float = float("nan")

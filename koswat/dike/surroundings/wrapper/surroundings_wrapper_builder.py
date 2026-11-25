@@ -32,11 +32,13 @@ from koswat.configuration.io.shp.koswat_dike_locations_shp_fom import (
     KoswatDikeLocationsShpFom,
 )
 from koswat.core.protocols.builder_protocol import BuilderProtocol
-from koswat.dike.surroundings.point import PointInfrastructureSurroundings
+from koswat.dike.surroundings.infrastructure_types import InfrastructureTypeProtocol
+from koswat.dike.surroundings.point.point_infrastructure_surroundings import (
+    PointInfrastructureSurroundings,
+)
 from koswat.dike.surroundings.point.point_surroundings_list_builder import (
     PointSurroundingsListBuilder,
 )
-from koswat.dike.surroundings.surroundings_enum import SurroundingsEnum
 from koswat.dike.surroundings.surroundings_infrastructure import (
     SurroundingsInfrastructure,
 )
@@ -54,7 +56,8 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
     surroundings_section_fom: SurroundingsSectionFom
     infrastructure_section_fom: InfrastructureSectionFom
     location_shp_fom: KoswatDikeLocationsShpFom
-    surroundings_csv_fom_collection: dict[SurroundingsEnum, KoswatSurroundingsCsvFom]
+    obstacles: KoswatSurroundingsCsvFom
+    infrastructures: dict[InfrastructureTypeProtocol, KoswatSurroundingsCsvFom]
 
     def build(self) -> SurroundingsWrapper:
         return SurroundingsWrapper(
@@ -67,25 +70,16 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
             max_waterside_extension=self.surroundings_section_fom.max_waterside_extension,
         )
 
-    def _get_surroundings_from_fom(
-        self, csv_fom: SurroundingsEnum
-    ) -> list[PointInfrastructureSurroundings]:
-        if csv_fom not in self.surroundings_csv_fom_collection:
-            return []
-        return PointSurroundingsListBuilder(
-            koswat_shp_fom=self.location_shp_fom,
-            koswat_csv_fom=self.surroundings_csv_fom_collection[csv_fom],
-        ).build()
-
     def _get_obstacle_surroundings_wrapper(self) -> ObstacleSurroundingsWrapper:
         _obs_wrapper = ObstacleSurroundingsWrapper(
             reinforcement_min_separation=self.surroundings_section_fom.construction_distance,
             reinforcement_min_buffer=self.surroundings_section_fom.construction_buffer,
         )
 
-        _obs_wrapper.obstacles.points = self._get_surroundings_from_fom(
-            SurroundingsEnum.OBSTACLE
-        )
+        _obs_wrapper.obstacles.points = PointSurroundingsListBuilder(
+            koswat_shp_fom=self.location_shp_fom,
+            koswat_csv_fom=self.obstacles,
+        ).build()
 
         # At least 1 obstacle type should be present to determine the location coordinates.
         if not any(_obs_wrapper.obstacles.points):
@@ -95,83 +89,35 @@ class SurroundingsWrapperBuilder(BuilderProtocol):
 
         return _obs_wrapper
 
-    def _get_surroundings_infrastructure(
-        self, surroundings_enum: SurroundingsEnum
-    ) -> SurroundingsInfrastructure:
-        # Map the enum name to the corresponding attribute name in InfrastructureSectionFom
-        # TODO: Remove the need for this mapping
-        _mapped_name = (
-            surroundings_enum.name.lower()
-            .replace("_polderside", "_width")
-            .replace("_waterside", "_width")
-            .replace("class_unknown", "unknown")
-            .replace("class_", "class")
-        )
-        return SurroundingsInfrastructure(
-            infrastructure_name=surroundings_enum.name,
-            points=self._get_surroundings_from_fom(surroundings_enum),
-            infrastructure_width=getattr(self.infrastructure_section_fom, _mapped_name),
-        )
+    def _get_infrastructures_collection(
+        self,
+    ) -> dict[str, SurroundingsInfrastructure]:
+        if not self.infrastructure_section_fom.active:
+            return {}
+
+        def build_surroundings_points(
+            fom_points: KoswatSurroundingsCsvFom,
+        ) -> list[PointInfrastructureSurroundings]:
+            return PointSurroundingsListBuilder(
+                koswat_shp_fom=self.location_shp_fom,
+                koswat_csv_fom=fom_points,
+            ).build()
+
+        return {
+            _infrastructure_type.infrastructure_name: SurroundingsInfrastructure(
+                infrastructure_type=_infrastructure_type,
+                points=build_surroundings_points(_fom_points),
+            )
+            for _infrastructure_type, _fom_points in self.infrastructures.items()
+        }
 
     def _get_infrastructure_surroundings_wrapper(
         self,
     ) -> InfrastructureSurroundingsWrapper:
-        _infra_wrapper = InfrastructureSurroundingsWrapper(
+        return InfrastructureSurroundingsWrapper(
             infrastructures_considered=self.infrastructure_section_fom.active,
             surtax_cost_factor=self.infrastructure_section_fom.surtax_factor_roads,
             non_rising_dike_costs_factor=self.infrastructure_section_fom.infrastructure_costs_0dh,
+            buffer_crest_waterside=self.infrastructure_section_fom.buffer_crest_waterside,
+            infrastructures_collection=self._get_infrastructures_collection(),
         )
-        if self.infrastructure_section_fom.active:
-            # Polderside infra
-            _infra_wrapper.roads_class_2_polderside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_2_POLDERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_7_polderside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_7_POLDERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_24_polderside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_24_POLDERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_47_polderside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_47_POLDERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_unknown_polderside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_UNKNOWN_POLDERSIDE
-                )
-            )
-            # Waterside infra
-            _infra_wrapper.roads_class_2_waterside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_2_WATERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_7_waterside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_7_WATERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_24_waterside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_24_WATERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_47_waterside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_47_WATERSIDE
-                )
-            )
-            _infra_wrapper.roads_class_unknown_waterside = (
-                self._get_surroundings_infrastructure(
-                    SurroundingsEnum.ROADS_CLASS_UNKNOWN_WATERSIDE
-                )
-            )
-        return _infra_wrapper

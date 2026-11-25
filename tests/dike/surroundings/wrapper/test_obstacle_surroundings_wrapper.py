@@ -7,9 +7,6 @@ from shapely import Point
 
 from koswat.dike.surroundings.point import PointObstacleSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
-from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
-    BaseSurroundingsWrapper,
-)
 from koswat.dike.surroundings.wrapper.obstacle_surroundings_wrapper import (
     ObstacleSurroundingsWrapper,
 )
@@ -25,7 +22,6 @@ class TestObstacleSurroundingsWrapper:
 
         # 2. Verify expectations.
         assert isinstance(_wrapper, ObstacleSurroundingsWrapper)
-        assert isinstance(_wrapper, BaseSurroundingsWrapper)
 
         assert not any(_wrapper.obstacles.points)
 

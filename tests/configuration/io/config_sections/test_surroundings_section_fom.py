@@ -75,8 +75,8 @@ class TestSurroundingsSectionFom:
             "constructieafstand": 100.0,
             "constructieovergang": 20.0,
             "omgevingtypes": [
-                {"type": "bebouwing", "buffer": 5},
-                {"type": "spoorwegen", "buffer": 10},
+                {"type": "bebouwing", "buffer": 5.0},
+                {"type": "spoorwegen", "buffer": 10.0},
                 {"type": "water"},
             ],
             "toegestaanbuitendijkseversterking": False,
@@ -97,9 +97,9 @@ class TestSurroundingsSectionFom:
         assert _surroundings_section_fom.max_polderside_extension == 15.0
         assert _surroundings_section_fom.max_waterside_extension == 25.0
         assert _surroundings_section_fom.obstacle_types == {
-            "bebouwing": 5,
-            "spoorwegen": 10,
-            "water": None,
+            "bebouwing": 5.0,
+            "spoorwegen": 10.0,
+            "water": 0.0,
         }
 
     def test_from_config_with_invalid_buffer(self):

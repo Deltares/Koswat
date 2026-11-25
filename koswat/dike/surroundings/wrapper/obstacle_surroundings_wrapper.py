@@ -24,16 +24,13 @@ from dataclasses import dataclass, field
 
 from koswat.dike.surroundings.point import PointObstacleSurroundings
 from koswat.dike.surroundings.surroundings_obstacle import SurroundingsObstacle
-from koswat.dike.surroundings.wrapper.base_surroundings_wrapper import (
-    BaseSurroundingsWrapper,
-)
 from koswat.dike_reinforcements.reinforcement_profile.reinforcement_room_calculator import (
     ReinforcementRoomCalculatorProtocol,
 )
 
 
 @dataclass
-class ObstacleSurroundingsWrapper(BaseSurroundingsWrapper):
+class ObstacleSurroundingsWrapper:
     reinforcement_min_separation: float = math.nan
     reinforcement_min_buffer: float = math.nan
 

@@ -43,12 +43,11 @@ class TestKoswatSimpleSurroundingsCsvReader:
             pytest.param(0.0, 0.0, id="Zero buffer"),
             pytest.param(10.0, 10.0, id="Non-zero buffer"),
             pytest.param(-5.0, 0.0, id="Negative buffer"),
-            pytest.param(None, 0.0, id="None buffer"),
         ],
     )
     def test_when_build_point_surroundings_then_reduced_surroundings_matrix(
         self,
-        given_surroundings_buffer: Optional[float],
+        given_surroundings_buffer: float,
         expected_applied_surroundings_buffer: float,
     ):
         # 1. Define test data.

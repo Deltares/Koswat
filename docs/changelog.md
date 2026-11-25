@@ -1,3 +1,22 @@
+## v0.18.0-rc0 (2026-10-20)
+
+### Feat
+
+- #392 add waterside infra to the infra strategy (#414)
+- include waterside soil reinforcement in strategies (#415)
+- add costs for grondaankoop buitendijks (#412)
+- apply maximum polder / water side extension (#407)
+- #370 adjust waterside soil reinforcement calculation (#398)
+- #394 add profile settings (#396)
+
+### Fix
+
+- added relative imports to individual files (#406)
+- We no longer filter out reinforcements when compared to Soil one. (#400)
+- #384 matplotlib error (#401)
+- #318 full flexibility in obstacle layers (#387)
+- #364 add lighter stability wall (#383)
+
 ## v0.17.0 (2026-10-05)
 
 ## v0.17.0-rc5 (2026-10-05)
