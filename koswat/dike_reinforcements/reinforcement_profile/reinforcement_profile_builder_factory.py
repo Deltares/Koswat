@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from dataclasses import replace
+import math
 
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
@@ -107,14 +108,18 @@ class ReinforcementProfileBuilderFactory:
     ) -> KoswatScenario:
         """
         Gets the scenario to be used for the given reinforcement type.
-        Only the waterside soil reinforcement gets an adjusted `waterside_slope`;
-        all other reinforcements use the original scenario. Quick fix, but should be improved in the future.
+        When a factor_settlement is defined, d_h is multiplied by it.
+        Only the waterside soil reinforcement gets an adjusted waterside_slope;
+        all other reinforcements use the original scenario. 
+        Quick fix, should be improved in the future.
         """
+        _scenario = replace(self.scenario)
         if issubclass(reinforcement_profile_type, SoilWatersideReinforcementProfile):
-            return replace(
-                self.scenario, waterside_slope=self.scenario.waterside_slope + 0.01
-            )
-        return self.scenario
+            _scenario.waterside_slope += 0.01
+        _factor_settlement = self.base_profile.input_data.factor_settlement
+        if not math.isnan(_factor_settlement):
+            _scenario.d_h *= _factor_settlement
+        return _scenario
 
     @staticmethod
     def get_available_reinforcements() -> list[ReinforcementProfileProtocol]:
