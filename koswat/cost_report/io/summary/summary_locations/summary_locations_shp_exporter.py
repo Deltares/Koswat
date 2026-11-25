@@ -21,11 +21,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from pathlib import Path
 
+from geopandas import GeoDataFrame
+
 from koswat.core.io.koswat_exporter_protocol import KoswatExporterProtocol
 from koswat.cost_report.io.summary.summary_locations.cluster_collection_shp_fom import (
     ClusterCollectionShpFom,
 )
 from koswat.cost_report.summary.koswat_summary import KoswatSummary
+
+
+def merge_polderside_and_waterside(
+    polderside: GeoDataFrame, waterside: GeoDataFrame
+) -> GeoDataFrame:
+    """
+    Merges the polderside and waterside geodataframes into one, with one row per
+    cluster. Both geodataframes are generated from the same clusters, so their
+    rows correspond one-to-one.
+
+    Args:
+        polderside (GeoDataFrame): Geodataframe with the polderside geometries.
+        waterside (GeoDataFrame): Geodataframe with the waterside geometries.
+
+    Returns:
+        GeoDataFrame: The polderside attributes, extended with the waterside
+            widths, and the union of both geometries.
+    """
+    _merged = polderside.copy()
+    _merged["bs_wtr_oud"] = waterside["bs_wtr_oud"]
+    _merged["bs_wtr_nw"] = waterside["bs_wtr_nw"]
+    _merged["geometry"] = polderside.geometry.union(waterside.geometry)
+    return _merged
 
 
 class SummaryLocationsShpExporter(KoswatExporterProtocol):
@@ -46,18 +71,23 @@ class SummaryLocationsShpExporter(KoswatExporterProtocol):
 
         # Export clusters to file
         _clusters.base_layer.to_file(_measures)
-        _clusters.initial_state.to_file(_old)
-        _clusters.new_state.to_file(_new)
+                
+        merge_polderside_and_waterside(
+            _clusters.initial_state, _clusters.initial_state_waterside
+            ).to_file(_old)
+        merge_polderside_and_waterside(
+            _clusters.new_state, _clusters.new_state_waterside
+            ).to_file(_new)
+                
+        # # Get clusters for steps
+        # _step_clusters = ClusterCollectionShpFom.from_summary(
+        #     koswat_summary, lambda x: x.get_selected_measure_steps()[1]
+        # ).generate_geodataframes()
 
-        # Get clusters for steps
-        _step_clusters = ClusterCollectionShpFom.from_summary(
-            koswat_summary, lambda x: x.get_selected_measure_steps()[1]
-        ).generate_geodataframes()
+        # if not _step_clusters.is_valid():
+        #     return
 
-        if not _step_clusters.is_valid():
-            return
-
-        # Export clusters to file
-        _step_clusters.new_state.to_file(
-            export_path.joinpath("summary_locations_step.shp")
-        )
+        # # Export clusters to file
+        # _step_clusters.new_state.to_file(
+        #     export_path.joinpath("summary_locations_step.shp")
+        # )
