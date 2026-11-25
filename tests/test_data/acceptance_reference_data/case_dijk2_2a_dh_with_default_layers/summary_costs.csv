@@ -1,41 +1,41 @@
 Profile type;Grondmaatregel binnendijks;Grondmaatregel buitendijks;Verticale piping oplossing;Kwelscherm;Stabiliteitswand teen;Stabiliteitswand kruin;Kistdam
 Strategy reinforcement order;-1;-1;-1;-1;-1;-1;-1
-Cost per km (Euro/km);800957.3;800957.3;1492177.3;1640957.3;1957059.7;5110036.7;9187155.01
-Cost per km incl surtax (Euro/km);1943781.86;1943781.86;3769852.84;3129861.86;5635216.69;14816685.72;29882149.06
-New grass volume (quantity):;1.8;1.8;4.8;1.8;0.04;0.04;0.03
-New grass volume (cost):;22.39;22.39;59.71;22.39;0.48;0.48;0.43
-New grass volume (cost incl surtax):;56.18;56.18;149.82;56.18;1.33;1.33;1.18
-New clay volume (quantity):;14.05;14.05;16.05;14.05;11.29;11.29;24.18
-New clay volume (cost):;253.6;253.6;289.7;253.6;203.71;203.71;436.39
-New clay volume (cost incl surtax):;636.29;636.29;726.86;636.29;565.69;565.69;1211.85
-New core volume (quantity):;27.21;27.21;27.21;27.21;10.45;10.45;1.79
-New core volume (cost):;298.81;298.81;298.81;298.81;114.7;114.7;19.64
-New core volume (cost incl surtax):;749.71;749.71;749.71;749.71;318.52;318.52;54.55
-Reused grass volume (quantity):;7.35;7.35;7.35;7.35;7.35;7.35;13.83
-Reused grass volume (cost):;44.39;44.39;44.39;44.39;44.39;44.39;83.53
-Reused grass volume (cost incl surtax):;111.38;111.38;111.38;111.38;123.28;123.28;231.97
-Reused core volume (quantity):;11.73;11.73;11.73;11.73;11.73;11.73;23.46
-Reused core volume (cost):;54.76;54.76;54.76;54.76;54.76;54.76;109.57
-Reused core volume (cost incl surtax):;137.39;137.39;137.39;137.39;152.07;152.07;304.27
+Cost per km (Euro/km);800957.3;1048931.39;1492177.3;1640957.3;1957059.7;5110036.7;9187155.01
+Cost per km incl surtax (Euro/km);1943781.86;2843943.66;3769852.84;3129861.86;5635216.69;14816685.72;29882149.06
+New grass volume (quantity):;1.8;1.83;4.8;1.8;0.04;0.04;0.03
+New grass volume (cost):;22.39;22.72;59.71;22.39;0.48;0.48;0.43
+New grass volume (cost incl surtax):;56.18;63.1;149.82;56.18;1.33;1.33;1.18
+New clay volume (quantity):;14.05;26.76;16.05;14.05;11.29;11.29;24.18
+New clay volume (cost):;253.6;483.09;289.7;253.6;203.71;203.71;436.39
+New clay volume (cost incl surtax):;636.29;1341.55;726.86;636.29;565.69;565.69;1211.85
+New core volume (quantity):;27.21;15.79;27.21;27.21;10.45;10.45;1.79
+New core volume (cost):;298.81;173.42;298.81;298.81;114.7;114.7;19.64
+New core volume (cost incl surtax):;749.71;481.59;749.71;749.71;318.52;318.52;54.55
+Reused grass volume (quantity):;7.35;13.83;7.35;7.35;7.35;7.35;13.83
+Reused grass volume (cost):;44.39;83.53;44.39;44.39;44.39;44.39;83.53
+Reused grass volume (cost incl surtax):;111.38;231.97;111.38;111.38;123.28;123.28;231.97
+Reused core volume (quantity):;11.73;23.46;11.73;11.73;11.73;11.73;23.46
+Reused core volume (cost):;54.76;109.57;54.76;54.76;54.76;54.76;109.57
+Reused core volume (cost incl surtax):;137.39;304.27;137.39;137.39;152.07;152.07;304.27
 Removed material volume (quantity):;0;0;0;0;0;0;0
 Removed material volume (cost):;0.0;0.0;0.0;0.0;0.0;0.0;0.0
 Removed material volume (cost incl surtax):;0.0;0.0;0.0;0.0;0.0;0.0;0.0
-New grass layer surface (quantity):;32.83;32.83;42.83;32.83;27.25;27.25;49.95
-New grass layer surface (cost):;28.89;28.89;37.69;28.89;23.98;23.98;43.95
-New grass layer surface (cost incl surtax):;72.48;72.48;94.56;72.48;66.58;66.58;122.05
-New clay layer surface (quantity):;30.93;30.93;40.93;30.93;25.59;25.59;48.26
-New clay layer surface (cost):;20.1;20.1;26.6;20.1;16.63;16.63;31.37
-New clay layer surface (cost incl surtax):;50.44;50.44;66.75;50.44;46.19;46.19;87.12
-New core layer surface (quantity):;27.51;27.51;27.51;27.51;22.52;22.52;45.17
-New core layer surface (cost):;16.51;16.51;16.51;16.51;13.51;13.51;27.1
-New core layer surface (cost incl surtax):;41.41;41.41;41.41;41.41;37.52;37.52;75.25
-New ground level surface (quantity):;6.0;6.0;16.0;6.0;0.0;0.0;0.0
-New ground level surface (cost):;1.5;1.5;4.0;1.5;0.0;0.0;0.0
-New ground level surface (cost incl surtax):;3.76;3.76;10.04;3.76;0.0;0.0;0.0
-Land purchase surface polderside (quantity):;6.0;6.0;16.0;6.0;0.0;0.0;0.0
-Land purchase surface polderside (cost):;60.0;60.0;160.0;900.0;0.0;0.0;0.0
-Land purchase surface polderside (cost incl surtax):;84.72;84.72;225.92;1270.8;0.0;0.0;0.0
-Land purchase surface waterside (quantity):;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+New grass layer surface (quantity):;32.83;55.68;42.83;32.83;27.25;27.25;49.95
+New grass layer surface (cost):;28.89;49.0;37.69;28.89;23.98;23.98;43.95
+New grass layer surface (cost incl surtax):;72.48;136.07;94.56;72.48;66.58;66.58;122.05
+New clay layer surface (quantity):;30.93;53.78;40.93;30.93;25.59;25.59;48.26
+New clay layer surface (cost):;20.1;34.96;26.6;20.1;16.63;16.63;31.37
+New clay layer surface (cost incl surtax):;50.44;97.08;66.75;50.44;46.19;46.19;87.12
+New core layer surface (quantity):;27.51;50.35;27.51;27.51;22.52;22.52;45.17
+New core layer surface (cost):;16.51;30.21;16.51;16.51;13.51;13.51;27.1
+New core layer surface (cost incl surtax):;41.41;83.9;41.41;41.41;37.52;37.52;75.25
+New ground level surface (quantity):;6.0;6.09;16.0;6.0;0.0;0.0;0.0
+New ground level surface (cost):;1.5;1.52;4.0;1.5;0.0;0.0;0.0
+New ground level surface (cost incl surtax):;3.76;4.23;10.04;3.76;0.0;0.0;0.0
+Land purchase surface polderside (quantity):;6.0;6.09;16.0;6.0;0.0;0.0;0.0
+Land purchase surface polderside (cost):;60.0;60.9;160.0;900.0;0.0;0.0;0.0
+Land purchase surface polderside (cost incl surtax):;84.72;100.18;225.92;1270.8;0.0;0.0;0.0
+Land purchase surface waterside (quantity):;0.0;0.08;0.0;0.0;0.0;0.0;0.0
 Land purchase surface waterside (cost):;nan;nan;nan;nan;nan;nan;nan
 Land purchase surface waterside (cost incl surtax):;nan;nan;nan;nan;nan;nan;nan
 Construction length (quantity):;0.0;0.0;0.0;0.0;7;12.5;12.5

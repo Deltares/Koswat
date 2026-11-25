@@ -19,8 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from dataclasses import asdict
-
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
     KoswatReinforcementSettings,
@@ -62,7 +60,9 @@ class SoilWatersideInputProfileCalculation(
         )
         assert isinstance(_reinforced_data, SoilWatersideInputProfile)
 
-        _reinforced_data.active = self.reinforcement_settings.soil_settings.active
+        _reinforced_data.active = (
+            self.reinforcement_settings.soil_waterside_settings.active
+        )
 
         # Polderside berm calculation (identical to PipingWall)
         _calculated_factors = BermCalculatedFactors.from_calculation_input(
@@ -98,11 +98,11 @@ class SoilWatersideInputProfileCalculation(
 
         # Settings
         _reinforced_data.soil_surtax_factor = (
-            self.reinforcement_settings.soil_settings.soil_surtax_factor
+            self.reinforcement_settings.soil_waterside_settings.soil_surtax_factor
         )
         _reinforced_data.constructive_surtax_factor = None
         _reinforced_data.land_purchase_surtax_factor = (
-            self.reinforcement_settings.soil_settings.land_purchase_surtax_factor
+            self.reinforcement_settings.soil_waterside_settings.land_purchase_surtax_factor
         )
 
         return _reinforced_data
