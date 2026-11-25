@@ -98,6 +98,8 @@ class MultiInfrastructureProfileCostsCalculatorBuilder(BuilderProtocol):
 
     def _get_zone_b_costs(self, adding_costs: float, removing_costs: float) -> float:
         # Crest zone costs
+        if self.reinforced_profile.waterside_changed:
+            return adding_costs + removing_costs
         return self._get_zone_cost_for_non_rising_dike(adding_costs, removing_costs)
 
     def _get_zone_c_costs(self, adding_costs: float, removing_costs: float) -> float:

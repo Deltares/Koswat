@@ -53,6 +53,15 @@ class PointObstacleSurroundings(PointSurroundingsProtocol):
         """
         return hash(self.traject_order)
 
+    def __eq__(self, value: object) -> bool:
+        """
+        Overriding of the "magic" equality operator required
+        so that `PointSurroundings` can be used as a key in a python dict.
+        """
+        if not isinstance(value, PointSurroundingsProtocol):
+            return False
+        return hash(self) == hash(value)
+
     def merge(self, other: PointSurroundingsProtocol) -> None:
         if not isinstance(other, PointObstacleSurroundings):
             raise TypeError(

@@ -19,6 +19,24 @@ class TestPointInfrastructureSurroundings:
         assert not _p_s.location
         assert not _p_s.polderside_surroundings
 
+    @pytest.mark.parametrize(
+        "obstacle_type", [PointObstacleSurroundings, PointInfrastructureSurroundings]
+    )
+    def test_when_testing_equality_given_comparable_type_then_return_true(
+        self, obstacle_type: type[PointSurroundingsProtocol]
+    ):
+        # Given
+        _traject_order = 123
+        _this = PointInfrastructureSurroundings(traject_order=_traject_order)
+        _other = obstacle_type()
+        _other.traject_order = _traject_order
+
+        # When
+        result: bool = _this == _other
+
+        # Then
+        assert result
+
     def test_when_merge_given_valid_input_then_merges_correctly(self):
         # 1. Define test data.
         _polderside_surroundings = {10: 1.0, 20: 2.0}
