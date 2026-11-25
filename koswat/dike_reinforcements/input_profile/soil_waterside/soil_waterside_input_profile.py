@@ -29,3 +29,7 @@ from koswat.dike_reinforcements.input_profile.soil.soil_input_profile import (
 @dataclass
 class SoilWatersideInputProfile(SoilInputProfile):
     reinforcement_domain_name: str = "Grondmaatregel buitendijks profiel"
+
+    @property
+    def ground_price(self) -> float:
+        return self.ground_price_waterside

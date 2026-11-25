@@ -22,6 +22,7 @@ def _get_valid_input_data_fixture() -> Iterator[KoswatInputProfileProtocol]:
         polderside_ground_level=2.3,
         ground_price_builtup=150,
         ground_price_unbuilt=10,
+        ground_price_waterside=20,
         factor_settlement=1.2,
         pleistocene=-6.7,
         aquifer=-2.3,
