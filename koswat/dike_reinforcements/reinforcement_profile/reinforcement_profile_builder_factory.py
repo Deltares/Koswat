@@ -99,16 +99,16 @@ class ReinforcementProfileBuilderFactory:
         _builder = self.get_reinforcement_builder(reinforcement_profile_type)
         _builder.base_profile = self.base_profile
         _builder.reinforcement_settings = self.reinforcement_settings
-        _builder.scenario = self.get_scenario(reinforcement_profile_type)
+        _builder.scenario = self._get_scenario(reinforcement_profile_type)
         return _builder.build()
 
-    def get_scenario(
+    def _get_scenario(
         self, reinforcement_profile_type: type[ReinforcementProfileProtocol]
     ) -> KoswatScenario:
         """
         Gets the scenario to be used for the given reinforcement type.
         Only the waterside soil reinforcement gets an adjusted `waterside_slope`;
-        all other reinforcements use the original scenario.
+        all other reinforcements use the original scenario. Quick fix, but should be improved in the future.
         """
         if issubclass(reinforcement_profile_type, SoilWatersideReinforcementProfile):
             return replace(
