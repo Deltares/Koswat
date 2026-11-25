@@ -19,8 +19,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from dataclasses import replace
 import math
+from dataclasses import replace
 
 from koswat.configuration.settings.koswat_scenario import KoswatScenario
 from koswat.configuration.settings.reinforcements.koswat_reinforcement_settings import (
@@ -110,7 +110,7 @@ class ReinforcementProfileBuilderFactory:
         Gets the scenario to be used for the given reinforcement type.
         When a factor_settlement is defined, d_h is multiplied by it.
         Only the waterside soil reinforcement gets an adjusted waterside_slope;
-        all other reinforcements use the original scenario. 
+        all other reinforcements use the original scenario.
         Quick fix, should be improved in the future.
         """
         _scenario = replace(self.scenario)
